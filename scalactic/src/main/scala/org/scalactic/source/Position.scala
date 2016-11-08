@@ -46,7 +46,7 @@ case class Position(fileName: String, filePathname: String, lineNumber: Int)
  */
 object Position {
 
-  import scala.language.experimental.macros
+  // import scala.language.experimental.macros
 
   /**
    * Implicit method, implemented with a macro, that returns the enclosing
@@ -54,6 +54,6 @@ object Position {
    *
    * @return the enclosing source position
    */
-  implicit def here: Position = macro PositionMacro.genPosition
+  implicit def here: Position = ??? // macro PositionMacro.genPosition
 }
 

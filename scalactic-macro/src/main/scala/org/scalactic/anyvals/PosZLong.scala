@@ -718,7 +718,7 @@ object PosZLong {
   def from(value: Long): Option[PosZLong] =
     if (value >= 0L) Some(new PosZLong(value)) else None
 
-  import language.experimental.macros
+  // import language.experimental.macros
   import scala.language.implicitConversions
 
   /**
@@ -753,7 +753,9 @@ object PosZLong {
    *     <code>Long</code> literal, the invocation of this method will not
    *     compile.)
    */
-  implicit def apply(value: Long): PosZLong = macro PosZLongMacro.apply
+  implicit def apply(value: Long): PosZLong =
+    PosZLong.from(value).get
+    // macro PosZLongMacro.apply
 
   /**
    * Implicit widening conversion from <code>PosZLong</code> to

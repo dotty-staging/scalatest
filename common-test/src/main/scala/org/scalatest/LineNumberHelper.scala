@@ -2,8 +2,8 @@ package org.scalatest
 
 private[scalatest] trait LineNumberHelper {
 
-  import scala.language.experimental.macros
+  // import scala.language.experimental.macros
 
-  def thisLineNumber = macro LineNumberMacro.thisLineNumberImpl
+  def thisLineNumber: Int = ??? // macro LineNumberMacro.thisLineNumberImpl
 
 }

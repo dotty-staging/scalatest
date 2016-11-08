@@ -710,9 +710,9 @@ object PosInt {
    *     in a <code>Some[PosInt]</code>, if it is positive, else <code>None</code>.
    */
   def from(value: Int): Option[PosInt] =
-    if (PosIntMacro.isValid(value)) Some(new PosInt(value)) else None
+    if (value > 0) Some(new PosInt(value)) else None
 
-  import language.experimental.macros
+  // import language.experimental.macros
 
   /**
    * A factory method, implemented via a macro, that produces a <code>PosInt</code>
@@ -742,7 +742,9 @@ object PosInt {
    *     <code>Int</code> literal, the invocation of this method will not
    *     compile.)
    */
-  implicit def apply(value: Int): PosInt = macro PosIntMacro.apply
+  implicit def apply(value: Int): PosInt =
+    PosInt.from(value).get
+    // macro PosIntMacro.apply
 
   /**
    * Implicit widening conversion from <code>PosInt</code> to <code>Int</code>.

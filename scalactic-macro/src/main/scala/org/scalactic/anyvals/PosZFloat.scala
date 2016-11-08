@@ -456,7 +456,7 @@ object PosZFloat {
   def from(value: Float): Option[PosZFloat] =
     if (value >= 0.0F) Some(new PosZFloat(value)) else None
 
-  import language.experimental.macros
+  // import language.experimental.macros
   import scala.language.implicitConversions
 
   /**
@@ -492,7 +492,9 @@ object PosZFloat {
    *     literal, the invocation of this method will not
    *     compile.)
    */
-  implicit def apply(value: Float): PosZFloat = macro PosZFloatMacro.apply
+  implicit def apply(value: Float): PosZFloat =
+    PosZFloat.from(value).get
+    // macro PosZFloatMacro.apply
 
   /**
    * Implicit widening conversion from <code>PosZFloat</code> to

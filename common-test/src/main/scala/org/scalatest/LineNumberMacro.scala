@@ -15,13 +15,13 @@
  */
 package org.scalatest
 
-import scala.reflect.macros._
+// import scala.reflect.macros._
 
-private[scalatest] object LineNumberMacro {
+// private[scalatest] object LineNumberMacro {
 
-  def thisLineNumberImpl(context: Context): context.Expr[Int] = {
-        val lineNumber = context.enclosingPosition.line
-    context.literal(lineNumber)
-  }
+//   def thisLineNumberImpl(context: Context): context.Expr[Int] = {
+//         val lineNumber = context.enclosingPosition.line
+//     context.literal(lineNumber)
+//   }
 
-}
+// }

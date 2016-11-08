@@ -16,14 +16,14 @@
 package org.scalatest
 
 import org.scalactic._
-import reflect.macros.Context
+// import reflect.macros.Context
 
-/**
- * Macro implementation that provides rich error message for boolean expression assertion.
- */
-private[scalatest] object ExpectationsMacro {
+// /**
+//  * Macro implementation that provides rich error message for boolean expression assertion.
+//  */
+// private[scalatest] object ExpectationsMacro {
 
-  def expect(context: Context)(expression: context.Expr[Boolean])(prettifier: context.Expr[Prettifier], pos: context.Expr[source.Position]): context.Expr[Fact] =
-    new BooleanMacro[context.type](context, "expectationsHelper").genMacro[Fact](expression, "macroExpect", context.literal(""), prettifier, pos)
+//   def expect(context: Context)(expression: context.Expr[Boolean])(prettifier: context.Expr[Prettifier], pos: context.Expr[source.Position]): context.Expr[Fact] =
+//     new BooleanMacro[context.type](context, "expectationsHelper").genMacro[Fact](expression, "macroExpect", context.literal(""), prettifier, pos)
 
-}
+// }

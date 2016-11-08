@@ -15,8 +15,8 @@
 */
 package org.scalactic.anyvals
 
-import org.scalactic.Resources
-import reflect.macros.Context
+// import org.scalactic.Resources
+// import reflect.macros.Context
 
 /**
  * Trait providing assertion methods that can be called at compile time from macros
@@ -171,221 +171,221 @@ import reflect.macros.Context
  */
 trait CompileTimeAssertions {
 
-  /**
-   * Ensures a given expression of type <code>Int</code> is a literal with a valid value according to a given validation function.
-   *
-   * <p>
-   * If the given <code>Int</code> expression is a literal whose value satisfies the given validation function, this method will
-   * return normally. Otherwise, if the given <code>Int</code> expression is not a literal, this method will complete abruptly with
-   * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
-   * given <code>Int</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
-   * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
-   *
-   * <p>
-   * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
-   * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
-   *
-   * @param c the compiler context for this assertion
-   * @param value the <code>Int</code> expression to validate
-   * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
-   * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
-   * @param isValid a function used to validate a literal value parsed from the given expression
-   */
-  def ensureValidIntLiteral(c: Context)(value: c.Expr[Int], notValidMsg: String, notLiteralMsg: String)(isValid: Int => Boolean): Unit = {
+//   /**
+//    * Ensures a given expression of type <code>Int</code> is a literal with a valid value according to a given validation function.
+//    *
+//    * <p>
+//    * If the given <code>Int</code> expression is a literal whose value satisfies the given validation function, this method will
+//    * return normally. Otherwise, if the given <code>Int</code> expression is not a literal, this method will complete abruptly with
+//    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
+//    * given <code>Int</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
+//    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
+//    * </p>
+//    *
+//    * <p>
+//    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
+//    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
+//    * </p>
+//    *
+//    * @param c the compiler context for this assertion
+//    * @param value the <code>Int</code> expression to validate
+//    * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
+//    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
+//    * @param isValid a function used to validate a literal value parsed from the given expression
+//    */
+//   def ensureValidIntLiteral(c: Context)(value: c.Expr[Int], notValidMsg: String, notLiteralMsg: String)(isValid: Int => Boolean): Unit = {
 
-    import c.universe._
+//     import c.universe._
 
-    value.tree match {
-      case Literal(intConst) =>
-        val literalValue = intConst.value.toString.toInt
-        if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
-      case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    }
-  }
+//     value.tree match {
+//       case Literal(intConst) =>
+//         val literalValue = intConst.value.toString.toInt
+//         if (!isValid(literalValue))
+//           c.abort(c.enclosingPosition, notValidMsg)
+//       case _ =>
+//         c.abort(c.enclosingPosition, notLiteralMsg)
+//     }
+//   }
 
-  /**
-   * Ensures a given expression of type <code>Long</code> is a literal with a valid value according to a given validation function.
-   *
-   * <p>
-   * If the given <code>Long</code> expression is a literal whose value satisfies the given validation function, this method will
-   * return normally. Otherwise, if the given <code>Long</code> expression is not a literal, this method will complete abruptly with
-   * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
-   * given <code>Long</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
-   * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
-   *
-   * <p>
-   * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
-   * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
-   *
-   * @param c the compiler context for this assertion
-   * @param value the <code>Long</code> expression to validate
-   * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
-   * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
-   * @param isValid a function used to validate a literal value parsed from the given expression
-   */
-  def ensureValidLongLiteral(c: Context)(value: c.Expr[Long], notValidMsg: String, notLiteralMsg: String)(isValid: Long => Boolean): Unit = {
+//   /**
+//    * Ensures a given expression of type <code>Long</code> is a literal with a valid value according to a given validation function.
+//    *
+//    * <p>
+//    * If the given <code>Long</code> expression is a literal whose value satisfies the given validation function, this method will
+//    * return normally. Otherwise, if the given <code>Long</code> expression is not a literal, this method will complete abruptly with
+//    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
+//    * given <code>Long</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
+//    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
+//    * </p>
+//    *
+//    * <p>
+//    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
+//    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
+//    * </p>
+//    *
+//    * @param c the compiler context for this assertion
+//    * @param value the <code>Long</code> expression to validate
+//    * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
+//    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
+//    * @param isValid a function used to validate a literal value parsed from the given expression
+//    */
+//   def ensureValidLongLiteral(c: Context)(value: c.Expr[Long], notValidMsg: String, notLiteralMsg: String)(isValid: Long => Boolean): Unit = {
 
-    import c.universe._
+//     import c.universe._
 
-    value.tree match {
-      case Literal(longConst) =>
-        val literalValue = longConst.value.toString.toLong
-        if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
-      case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    }
-  }
+//     value.tree match {
+//       case Literal(longConst) =>
+//         val literalValue = longConst.value.toString.toLong
+//         if (!isValid(literalValue))
+//           c.abort(c.enclosingPosition, notValidMsg)
+//       case _ =>
+//         c.abort(c.enclosingPosition, notLiteralMsg)
+//     }
+//   }
 
-  /**
-   * Ensures a given expression of type <code>Float</code> is a literal with a valid value according to a given validation function.
-   *
-   * <p>
-   * If the given <code>Float</code> expression is a literal whose value satisfies the given validation function, this method will
-   * return normally. Otherwise, if the given <code>Float</code> expression is not a literal, this method will complete abruptly with
-   * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
-   * given <code>Float</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
-   * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
-   *
-   * <p>
-   * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
-   * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
-   *
-   * @param c the compiler context for this assertion
-   * @param value the <code>Float</code> expression to validate
-   * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
-   * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
-   * @param isValid a function used to validate a literal value parsed from the given expression
-   */
-  def ensureValidFloatLiteral(c: Context)(value: c.Expr[Float], notValidMsg: String, notLiteralMsg: String)(isValid: Float => Boolean): Unit = {
+//   /**
+//    * Ensures a given expression of type <code>Float</code> is a literal with a valid value according to a given validation function.
+//    *
+//    * <p>
+//    * If the given <code>Float</code> expression is a literal whose value satisfies the given validation function, this method will
+//    * return normally. Otherwise, if the given <code>Float</code> expression is not a literal, this method will complete abruptly with
+//    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
+//    * given <code>Float</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
+//    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
+//    * </p>
+//    *
+//    * <p>
+//    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
+//    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
+//    * </p>
+//    *
+//    * @param c the compiler context for this assertion
+//    * @param value the <code>Float</code> expression to validate
+//    * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
+//    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
+//    * @param isValid a function used to validate a literal value parsed from the given expression
+//    */
+//   def ensureValidFloatLiteral(c: Context)(value: c.Expr[Float], notValidMsg: String, notLiteralMsg: String)(isValid: Float => Boolean): Unit = {
 
-    import c.universe._
+//     import c.universe._
 
-    value.tree match {
-      case Literal(floatConst) =>
-        val literalValue = floatConst.value.toString.toFloat
-        if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
-      case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    }
-  }
+//     value.tree match {
+//       case Literal(floatConst) =>
+//         val literalValue = floatConst.value.toString.toFloat
+//         if (!isValid(literalValue))
+//           c.abort(c.enclosingPosition, notValidMsg)
+//       case _ =>
+//         c.abort(c.enclosingPosition, notLiteralMsg)
+//     }
+//   }
 
-  /**
-   * Ensures a given expression of type <code>Double</code> is a literal with a valid value according to a given validation function.
-   *
-   * <p>
-   * If the given <code>Double</code> expression is a literal whose value satisfies the given validation function, this method will
-   * return normally. Otherwise, if the given <code>Double</code> expression is not a literal, this method will complete abruptly with
-   * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
-   * given <code>Double</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
-   * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
-   *
-   * <p>
-   * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
-   * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
-   *
-   * @param c the compiler context for this assertion
-   * @param value the <code>Double</code> expression to validate
-   * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
-   * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
-   * @param isValid a function used to validate a literal value parsed from the given expression
-   */
-  def ensureValidDoubleLiteral(c: Context)(value: c.Expr[Double], notValidMsg: String, notLiteralMsg: String)(isValid: Double => Boolean): Unit = {
+//   /**
+//    * Ensures a given expression of type <code>Double</code> is a literal with a valid value according to a given validation function.
+//    *
+//    * <p>
+//    * If the given <code>Double</code> expression is a literal whose value satisfies the given validation function, this method will
+//    * return normally. Otherwise, if the given <code>Double</code> expression is not a literal, this method will complete abruptly with
+//    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
+//    * given <code>Double</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
+//    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
+//    * </p>
+//    *
+//    * <p>
+//    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
+//    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
+//    * </p>
+//    *
+//    * @param c the compiler context for this assertion
+//    * @param value the <code>Double</code> expression to validate
+//    * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
+//    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
+//    * @param isValid a function used to validate a literal value parsed from the given expression
+//    */
+//   def ensureValidDoubleLiteral(c: Context)(value: c.Expr[Double], notValidMsg: String, notLiteralMsg: String)(isValid: Double => Boolean): Unit = {
 
-    import c.universe._
+//     import c.universe._
 
-    value.tree match {
-      case Literal(doubleConst) =>
-        val literalValue = doubleConst.value.toString.toDouble
-        if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
-      case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    }
-  }
+//     value.tree match {
+//       case Literal(doubleConst) =>
+//         val literalValue = doubleConst.value.toString.toDouble
+//         if (!isValid(literalValue))
+//           c.abort(c.enclosingPosition, notValidMsg)
+//       case _ =>
+//         c.abort(c.enclosingPosition, notLiteralMsg)
+//     }
+//   }
 
-  /**
-   * Ensures a given expression of type <code>String</code> is a literal with a valid value according to a given validation function.
-   *
-   * <p>
-   * If the given <code>String</code> expression is a literal whose value satisfies the given validation function, this method will
-   * return normally. Otherwise, if the given <code>String</code> expression is not a literal, this method will complete abruptly with
-   * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
-   * given <code>String</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
-   * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
-   *
-   * <p>
-   * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
-   * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
-   *
-   * @param c the compiler context for this assertion
-   * @param value the <code>String</code> expression to validate
-   * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
-   * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
-   * @param isValid a function used to validate a literal value parsed from the given expression
-   */
-  def ensureValidStringLiteral(c: Context)(value: c.Expr[String], notValidMsg: String, notLiteralMsg: String)(isValid: String => Boolean): Unit = {
+//   /**
+//    * Ensures a given expression of type <code>String</code> is a literal with a valid value according to a given validation function.
+//    *
+//    * <p>
+//    * If the given <code>String</code> expression is a literal whose value satisfies the given validation function, this method will
+//    * return normally. Otherwise, if the given <code>String</code> expression is not a literal, this method will complete abruptly with
+//    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
+//    * given <code>String</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
+//    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
+//    * </p>
+//    *
+//    * <p>
+//    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
+//    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
+//    * </p>
+//    *
+//    * @param c the compiler context for this assertion
+//    * @param value the <code>String</code> expression to validate
+//    * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
+//    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
+//    * @param isValid a function used to validate a literal value parsed from the given expression
+//    */
+//   def ensureValidStringLiteral(c: Context)(value: c.Expr[String], notValidMsg: String, notLiteralMsg: String)(isValid: String => Boolean): Unit = {
 
-    import c.universe._
+//     import c.universe._
 
-    value.tree match {
-      case Literal(stringConst) =>
-        val literalValue = stringConst.value.toString
-        if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
-      case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    }
-  }
+//     value.tree match {
+//       case Literal(stringConst) =>
+//         val literalValue = stringConst.value.toString
+//         if (!isValid(literalValue))
+//           c.abort(c.enclosingPosition, notValidMsg)
+//       case _ =>
+//         c.abort(c.enclosingPosition, notLiteralMsg)
+//     }
+//   }
 
-  /**
-   * Ensures a given expression of type <code>Char</code> is a literal with a valid value according to a given validation function.
-   *
-   * <p>
-   * If the given <code>Char</code> expression is a literal whose value satisfies the given validation function, this method will
-   * return normally. Otherwise, if the given <code>Char</code> expression is not a literal, this method will complete abruptly with
-   * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
-   * given <code>Char</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
-   * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
-   *
-   * <p>
-   * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
-   * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
-   *
-   * @param c the compiler context for this assertion
-   * @param value the <code>Char</code> expression to validate
-   * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
-   * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
-   * @param isValid a function used to validate a literal value parsed from the given expression
-   */
-  def ensureValidCharLiteral(c: Context)(value: c.Expr[Char], notValidMsg: String, notLiteralMsg: String)(isValid: Char => Boolean): Unit = {
+//   /**
+//    * Ensures a given expression of type <code>Char</code> is a literal with a valid value according to a given validation function.
+//    *
+//    * <p>
+//    * If the given <code>Char</code> expression is a literal whose value satisfies the given validation function, this method will
+//    * return normally. Otherwise, if the given <code>Char</code> expression is not a literal, this method will complete abruptly with
+//    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
+//    * given <code>Char</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
+//    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
+//    * </p>
+//    *
+//    * <p>
+//    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
+//    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
+//    * </p>
+//    *
+//    * @param c the compiler context for this assertion
+//    * @param value the <code>Char</code> expression to validate
+//    * @param notValidMsg a <code>String</code> message to include in the exception thrown if the expression is a literal, but not valid
+//    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
+//    * @param isValid a function used to validate a literal value parsed from the given expression
+//    */
+//   def ensureValidCharLiteral(c: Context)(value: c.Expr[Char], notValidMsg: String, notLiteralMsg: String)(isValid: Char => Boolean): Unit = {
 
-    import c.universe._
+//     import c.universe._
 
-    value.tree match {
-      case Literal(charConst) =>
-        val literalValue = charConst.value.toString.head
-        if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
-      case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    }
-  }
+//     value.tree match {
+//       case Literal(charConst) =>
+//         val literalValue = charConst.value.toString.head
+//         if (!isValid(literalValue))
+//           c.abort(c.enclosingPosition, notValidMsg)
+//       case _ =>
+//         c.abort(c.enclosingPosition, notLiteralMsg)
+//     }
+//   }
 }
 
 /**

@@ -609,7 +609,7 @@ final class BeWord {
       override def toString: String = "be definedAt " + Prettifier.default(resultOfDefinedAt.right)
     }
 
-  import language.experimental.macros
+  // import language.experimental.macros
 
   /**
    * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
@@ -619,7 +619,8 @@ final class BeWord {
    *               ^
    * </pre>
    **/
-  def apply(aType: ResultOfATypeInvocation[_]): Matcher[Any] = macro TypeMatcherMacro.aTypeMatcherImpl
+  def apply(aType: ResultOfATypeInvocation[_]): Matcher[Any] =
+    ??? // macro TypeMatcherMacro.aTypeMatcherImpl
 
   /**
    * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
@@ -629,7 +630,8 @@ final class BeWord {
    *               ^
    * </pre>
    **/
-  def apply(anType: ResultOfAnTypeInvocation[_]): Matcher[Any] = macro TypeMatcherMacro.anTypeMatcherImpl
+  def apply(anType: ResultOfAnTypeInvocation[_]): Matcher[Any] =
+    ??? // macro TypeMatcherMacro.anTypeMatcherImpl
 
   /**
    * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:

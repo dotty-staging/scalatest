@@ -418,8 +418,9 @@ private[scalactic] object DigitChar {
   def from(value: Char): Option[DigitChar] =
     if (value >= MinValue && value <= MaxValue) Some(new DigitChar(value))
     else None
-  import scala.language.experimental.macros
-  implicit def apply(value: Char): DigitChar = macro DigitCharMacro.apply
+  // import scala.language.experimental.macros
+  implicit def apply(value: Char): DigitChar = DigitChar.from(value).get
+    // macro DigitCharMacro.apply
 
   /** The smallest value representable as a DigitChar. */
   final val MinValue = '0'

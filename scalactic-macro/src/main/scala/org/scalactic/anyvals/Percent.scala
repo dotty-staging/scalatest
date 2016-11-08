@@ -23,8 +23,10 @@ private[scalactic] final class Percent private (val value: Int) extends AnyVal {
 private[scalactic] object Percent {
   def from(value: Int): Option[Percent] =
     if (value >= 0 && value <= 100) Some(new Percent(value)) else None
-  import scala.language.experimental.macros
-  def apply(value: Int): Percent = macro PercentMacro.apply
+  // import scala.language.experimental.macros
+  def apply(value: Int): Percent =
+    Percent.from(value).get
+    // macro PercentMacro.apply
 }
 
 private[scalactic] final class LPercent private (val value: Long) extends AnyVal {
@@ -61,8 +63,10 @@ private[scalactic] final class TLA private (val value: String) extends AnyVal {
 private[scalactic] object TLA {
   def from(value: String): Option[TLA] =
     if (value.length == 3) Some(new TLA(value)) else None
-  import scala.language.experimental.macros
-  def apply(value: String): TLA = macro TLAMacro.apply
+  // import scala.language.experimental.macros
+  def apply(value: String): TLA =
+    TLA.from(value).get
+    // macro TLAMacro.apply
 }
 
 private[scalactic] final class Digit private (val value: Char) extends AnyVal {
@@ -71,7 +75,9 @@ private[scalactic] final class Digit private (val value: Char) extends AnyVal {
 private[scalactic] object Digit {
   def from(value: Char): Option[Digit] =
     if (value >= '0' && value <= '9') Some(new Digit(value)) else None
-  import scala.language.experimental.macros
-  def apply(value: Char): Digit = macro DigitMacro.apply
+  // import scala.language.experimental.macros
+  def apply(value: Char): Digit =
+    Digit.from(value).get
+    // macro DigitMacro.apply
 }
 

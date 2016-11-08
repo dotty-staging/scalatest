@@ -764,7 +764,7 @@ object PosLong {
   def from(value: Long): Option[PosLong] =
     if (value > 0L) Some(new PosLong(value)) else None
 
-  import language.experimental.macros
+  // import language.experimental.macros
 
   /**
    * A factory method, implemented via a macro, that produces a
@@ -799,7 +799,9 @@ object PosLong {
    *     literal, the invocation of this method will not
    *     compile.)
    */
-  implicit def apply(value: Long): PosLong = macro PosLongMacro.apply
+  implicit def apply(value: Long): PosLong =
+    PosLong.from(value).get
+    // macro PosLongMacro.apply
 
   /**
    * Implicit widening conversion from <code>PosLong</code> to

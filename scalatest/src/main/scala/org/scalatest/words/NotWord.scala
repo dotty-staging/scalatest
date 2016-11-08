@@ -282,7 +282,7 @@ final class NotWord {
     }
   }
 
-  import scala.language.experimental.macros
+  // import scala.language.experimental.macros
 
   /**
    * This method enables the following syntax, where, for example, <code>num</code> is an <code>Int</code> and <code>odd</code>
@@ -293,7 +293,11 @@ final class NotWord {
    *                    ^
    * </pre>
    **/
-  def matchPattern(right: PartialFunction[Any, _]): Matcher[Any] = macro MatchPatternMacro.notMatchPatternMatcher
+  def matchPattern(right: PartialFunction[Any, _]): Matcher[Any] =
+    Matcher { a =>
+      MatchResult(right.isDefinedAt(a), "MM Failure", "MM NegatedFailure")
+    }
+    // macro MatchPatternMacro.notMatchPatternMatcher
 
   /**
    * This method enables the following syntax:
@@ -793,7 +797,8 @@ final class NotWord {
    *                    ^
    * </pre>
    **/
-  def be(aType: ResultOfATypeInvocation[_]) = macro TypeMatcherMacro.notATypeMatcher
+  def be(aType: ResultOfATypeInvocation[_]): Matcher[Any] =
+    ??? // macro TypeMatcherMacro.notATypeMatcher
 
   /**
    * This method enables the following syntax:
@@ -803,7 +808,8 @@ final class NotWord {
    *                    ^
    * </pre>
    **/
-  def be(anType: ResultOfAnTypeInvocation[_]) = macro TypeMatcherMacro.notAnTypeMatcher
+  def be(anType: ResultOfAnTypeInvocation[_]): Matcher[Any] =
+    ??? // macro TypeMatcherMacro.notAnTypeMatcher
 
   /**
    * This method enables the following syntax:

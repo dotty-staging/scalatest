@@ -15,20 +15,20 @@
 */
 package org.scalactic.anyvals
 
-import reflect.macros.Context
-import CompileTimeAssertions._
+// import reflect.macros.Context
+// import CompileTimeAssertions._
 
-private[scalactic] object DigitCharMacro {
-  def apply(c: Context)(value: c.Expr[Char]): c.Expr[DigitChar] = {
-    val notValidMsg =
-      "DigitChar.apply can only be invoked on Char literals that are digits, " +
-      "like '8'."
-    val notLiteralMsg =
-      "DigitChar.apply can only be invoked on Char literals that are digits, like '8'." +
-      " Please use DigitChar.from instead."
-    ensureValidCharLiteral(c)(value, notValidMsg, notLiteralMsg) { c =>
-      c >= '0' && c <= '9'
-    }
-    c.universe.reify { DigitChar.from(value.splice).get }
-  }
-}
+// private[scalactic] object DigitCharMacro {
+//   def apply(c: Context)(value: c.Expr[Char]): c.Expr[DigitChar] = {
+//     val notValidMsg =
+//       "DigitChar.apply can only be invoked on Char literals that are digits, " +
+//       "like '8'."
+//     val notLiteralMsg =
+//       "DigitChar.apply can only be invoked on Char literals that are digits, like '8'." +
+//       " Please use DigitChar.from instead."
+//     ensureValidCharLiteral(c)(value, notValidMsg, notLiteralMsg) { c =>
+//       c >= '0' && c <= '9'
+//     }
+//     c.universe.reify { DigitChar.from(value.splice).get }
+//   }
+// }

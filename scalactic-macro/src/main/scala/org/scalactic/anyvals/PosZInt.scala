@@ -129,7 +129,7 @@ import scala.collection.immutable.Range
  *
  * @param value The <code>Int</code> value underlying this <code>PosZInt</code>.
  */
-final class PosZInt private (val value: Int) extends AnyVal {
+final class PosZInt private[anyvals] (val value: Int) extends AnyVal {
 
   /**
    * A string representation of this <code>PosZInt</code>.
@@ -724,7 +724,7 @@ object PosZInt {
   def from(value: Int): Option[PosZInt] =
     if (value >= 0) Some(new PosZInt(value)) else None
 
-  import language.experimental.macros
+  // import language.experimental.macros
   import scala.language.implicitConversions
 
   /**
@@ -759,7 +759,9 @@ object PosZInt {
    *     <code>Int</code> literal, the invocation of this method will not
    *     compile.)
    */
-  implicit def apply(value: Int): PosZInt = macro PosZIntMacro.apply
+  implicit def apply(value: Int): PosZInt =
+    PosZInt.from(value).get
+    // macro PosZIntMacro.apply
 
   /**
    * Implicit widening conversion from <code>PosZInt</code> to

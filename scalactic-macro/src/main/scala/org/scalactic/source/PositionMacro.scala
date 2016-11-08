@@ -15,77 +15,77 @@
  */
 package org.scalactic.source
 
-import scala.reflect.macros.Context
+// import scala.reflect.macros.Context
 
-/**
- * Helper class for Position macro. (Will be removed from the public API if possible in a subsequent 3.0.0-RCx release.)
- */
-object PositionMacro {
+// /**
+//  * Helper class for Position macro. (Will be removed from the public API if possible in a subsequent 3.0.0-RCx release.)
+//  */
+// object PositionMacro {
 
-  /**
-   * Helper method for Position macro.
-   */
-  def genPosition(context: Context) = {
-    import context.universe._
+//   /**
+//    * Helper method for Position macro.
+//    */
+//   def genPosition(context: Context) = {
+//     import context.universe._
 
-    context.Expr(
-      Apply(
-        Select(
-          Select(
-            Select(
-              Select(
-                Select(
-                  Ident(newTermName("_root_")),
-                  newTermName("org")
-                ),
-              newTermName("scalactic")
-              ),
-              newTermName("source")
-            ),
-            newTermName("Position")
-          ),
-          newTermName("apply")
-        ),
-        List(
-          Literal(Constant(context.enclosingPosition.source.file.name)),
-          Literal(Constant(context.enclosingPosition.source.path)),
-          Literal(Constant(context.enclosingPosition.line))
-        )
-      )
-    )
-  }
+//     context.Expr(
+//       Apply(
+//         Select(
+//           Select(
+//             Select(
+//               Select(
+//                 Select(
+//                   Ident(newTermName("_root_")),
+//                   newTermName("org")
+//                 ),
+//               newTermName("scalactic")
+//               ),
+//               newTermName("source")
+//             ),
+//             newTermName("Position")
+//           ),
+//           newTermName("apply")
+//         ),
+//         List(
+//           Literal(Constant(context.enclosingPosition.source.file.name)),
+//           Literal(Constant(context.enclosingPosition.source.path)),
+//           Literal(Constant(context.enclosingPosition.line))
+//         )
+//       )
+//     )
+//   }
 
-  /**
-   * Helper method for Position macro.
-   */
-  def genPositionExplicit(context: Context) = {
-    import context.universe._
+//   /**
+//    * Helper method for Position macro.
+//    */
+//   def genPositionExplicit(context: Context) = {
+//     import context.universe._
 
-    context.Expr(
-      Apply(
-        Select(
-          Select(
-            Select(
-              Select(
-                Select(
-                  Ident(newTermName("_root_")),
-                  newTermName("org")
-                ),
-                newTermName("scalactic")
-              ),
-              newTermName("source")
-            ),
-            newTermName("Position")
-          ),
-          newTermName("apply")
-        ),
-        List(
-          Literal(Constant(context.enclosingPosition.source.file.name)),
-          Literal(Constant(context.enclosingPosition.source.path)),
-          Literal(Constant(context.enclosingPosition.line))
-        )
-      )
-    )
-  }
+//     context.Expr(
+//       Apply(
+//         Select(
+//           Select(
+//             Select(
+//               Select(
+//                 Select(
+//                   Ident(newTermName("_root_")),
+//                   newTermName("org")
+//                 ),
+//                 newTermName("scalactic")
+//               ),
+//               newTermName("source")
+//             ),
+//             newTermName("Position")
+//           ),
+//           newTermName("apply")
+//         ),
+//         List(
+//           Literal(Constant(context.enclosingPosition.source.file.name)),
+//           Literal(Constant(context.enclosingPosition.source.path)),
+//           Literal(Constant(context.enclosingPosition.line))
+//         )
+//       )
+//     )
+//   }
 
-}
+// }

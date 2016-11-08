@@ -22,7 +22,9 @@ final class OddInt private (val value: Int) extends AnyVal {
 object OddInt {
   def from(value: Int): Option[OddInt] =
     if (value % 2 == 1) Some(new OddInt(value)) else None
-  import scala.language.experimental.macros
-  def apply(value: Int): OddInt = macro OddIntMacro.apply
+  // import scala.language.experimental.macros
+  def apply(value: Int): OddInt =
+    OddInt.from(value).get
+    // macro OddIntMacro.apply
 }
 

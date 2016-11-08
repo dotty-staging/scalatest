@@ -15,17 +15,17 @@
 */
 package org.scalactic.anyvals
 
-import reflect.macros.Context
+// import reflect.macros.Context
 
-private[anyvals] object OddIntMacro extends CompileTimeAssertions {
-  def apply(c: Context)(value: c.Expr[Int]): c.Expr[OddInt] = {
-    val notValidMsg =
-      "OddInt.apply can only be invoked on odd Int literals, like OddInt(3)."
-    val notLiteralMsg =
-      "OddInt.apply can only be invoked on Int literals, like " +
-      "OddInt(3). Please use OddInt.from instead."
-    ensureValidIntLiteral(c)(value, notValidMsg, notLiteralMsg) { i => i % 2 == 1 }
-    c.universe.reify { OddInt.from(value.splice).get }
-  }
-}
+// private[anyvals] object OddIntMacro extends CompileTimeAssertions {
+//   def apply(c: Context)(value: c.Expr[Int]): c.Expr[OddInt] = {
+//     val notValidMsg =
+//       "OddInt.apply can only be invoked on odd Int literals, like OddInt(3)."
+//     val notLiteralMsg =
+//       "OddInt.apply can only be invoked on Int literals, like " +
+//       "OddInt(3). Please use OddInt.from instead."
+//     ensureValidIntLiteral(c)(value, notValidMsg, notLiteralMsg) { i => i % 2 == 1 }
+//     c.universe.reify { OddInt.from(value.splice).get }
+//   }
+// }
 

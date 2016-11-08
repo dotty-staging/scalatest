@@ -347,8 +347,8 @@ final class PosFloat private (val value: Float) extends AnyVal {
 
   def round: PosZInt = {
     import scala.util.Failure
-import scala.util.Success
-import scala.util.Try
+    import scala.util.Success
+    import scala.util.Try
     val roundedInt: Int = math.round(value)
     val result = Try(PosZInt.from(math.round(value)).get)
     result match {
@@ -474,7 +474,7 @@ object PosFloat {
   def from(value: Float): Option[PosFloat] =
     if (value > 0.0F) Some(new PosFloat(value)) else None
 
-  import language.experimental.macros
+  // import language.experimental.macros
   import scala.language.implicitConversions
 
   /**
@@ -510,7 +510,9 @@ object PosFloat {
    *     literal, the invocation of this method will not
    *     compile.)
    */
-  implicit def apply(value: Float): PosFloat = macro PosFloatMacro.apply
+  implicit def apply(value: Float): PosFloat =
+    PosFloat.from(value).get
+    // macro PosFloatMacro.apply
 
   /**
    * Implicit widening conversion from <code>PosFloat</code> to

@@ -15,21 +15,21 @@
 */
 package org.scalactic.anyvals
 
-import reflect.macros.Context
-import org.scalactic.Resources
+// import reflect.macros.Context
+// import org.scalactic.Resources
 
-import CompileTimeAssertions._
-private[scalactic] object DigitStringMacro {
-  def apply(c: Context)(value: c.Expr[String]): c.Expr[DigitString] = {
-    val notValidMsg =
-      "DigitString.apply can only be invoked on String literals that contain all decimal digits ('0' through '9'), " +
-      "like \"123\"."
-    val notLiteralMsg =
-      "DigitString.apply can only be invoked on String literals that contain all decimal digits ('0' through '9'), like \"123\"" +
-      " Please use DigitString.from instead."
-    ensureValidStringLiteral(c)(value, notValidMsg, notLiteralMsg) { s =>
-      s.forall(c => c >= '0' && c <= '9')
-    }
-    c.universe.reify { DigitString.from(value.splice).get }
-  }
-}
+// import CompileTimeAssertions._
+// private[scalactic] object DigitStringMacro {
+//   def apply(c: Context)(value: c.Expr[String]): c.Expr[DigitString] = {
+//     val notValidMsg =
+//       "DigitString.apply can only be invoked on String literals that contain all decimal digits ('0' through '9'), " +
+//       "like \"123\"."
+//     val notLiteralMsg =
+//       "DigitString.apply can only be invoked on String literals that contain all decimal digits ('0' through '9'), like \"123\"" +
+//       " Please use DigitString.from instead."
+//     ensureValidStringLiteral(c)(value, notValidMsg, notLiteralMsg) { s =>
+//       s.forall(c => c >= '0' && c <= '9')
+//     }
+//     c.universe.reify { DigitString.from(value.splice).get }
+//   }
+// }

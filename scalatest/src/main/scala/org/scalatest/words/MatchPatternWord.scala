@@ -16,7 +16,7 @@
 package org.scalatest.words
 
 import org.scalactic.Prettifier
-import org.scalatest.matchers.{MatchPatternMacro, MatchResult, Matcher}
+import org.scalatest.matchers.{MatchResult, Matcher} // MatchPatternMacro,
 
 /**
  * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
@@ -27,7 +27,7 @@ import org.scalatest.matchers.{MatchPatternMacro, MatchResult, Matcher}
  */
 final class MatchPatternWord {
 
-  import scala.language.experimental.macros
+  // import scala.language.experimental.macros
 
   /**
    * This method enables the following syntax:
@@ -37,7 +37,12 @@ final class MatchPatternWord {
    *               ^
    * </pre>
    */
-  def apply(right: PartialFunction[Any, _]) = macro MatchPatternMacro.matchPatternMatcher
+  def apply(right: PartialFunction[Any, _]): Matcher[Any] =
+    Matcher { a =>
+      MatchResult(right.isDefinedAt(a), "MM Failure", "MM NegatedFailure")
+    }
+    // macro MatchPatternMacro.matchPatternMatcher
+
 
   /**
    * Overrides toString to return "matchPattern"

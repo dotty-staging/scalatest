@@ -458,7 +458,7 @@ object PosZDouble {
   def from(value: Double): Option[PosZDouble] =
     if (value >= 0.0) Some(new PosZDouble(value)) else None
 
-  import language.experimental.macros
+  // import language.experimental.macros
   import scala.language.implicitConversions
 
   /**
@@ -494,7 +494,9 @@ object PosZDouble {
    *     literal, the invocation of this method will not
    *     compile.)
    */
-  implicit def apply(value: Double): PosZDouble = macro PosZDoubleMacro.apply
+  implicit def apply(value: Double): PosZDouble =
+    PosZDouble.from(value).get
+    // macro PosZDoubleMacro.apply
 
   /**
    * Implicit widening conversion from <code>PosZDouble</code> to

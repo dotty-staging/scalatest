@@ -1444,7 +1444,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def be[U](resultOfAnWordApplication: ResultOfAnWordToAnMatcherApplication[U]): Matcher[T with U] = outerInstance.and(MatcherWords.not.be(resultOfAnWordApplication))
 
-    import language.experimental.macros
+    // import language.experimental.macros
 
     /**
      * This method enables the following syntax:
@@ -1454,7 +1454,8 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                  ^
      * </pre>
      **/
-    def be(aType: ResultOfATypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.andNotATypeMatcher
+    def be(aType: ResultOfATypeInvocation[_]): Matcher[T] =
+      ??? // macro TypeMatcherMacro.andNotATypeMatcher
 
     /**
      * This method enables the following syntax:
@@ -1464,7 +1465,8 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                  ^
      * </pre>
      **/
-    def be(anType: ResultOfAnTypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.andNotAnTypeMatcher
+    def be(anType: ResultOfAnTypeInvocation[_]): Matcher[T] =
+      ??? // macro TypeMatcherMacro.andNotAnTypeMatcher
 
     /**
      * This method enables the following syntax:
@@ -1847,7 +1849,11 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                  ^
      * </pre>
      **/
-    def matchPattern(right: PartialFunction[Any, _]) = macro MatchPatternMacro.andNotMatchPatternMatcher
+    def matchPattern(right: PartialFunction[Any, _]): Matcher[Any] =
+      Matcher { a =>
+        MatchResult(right.isDefinedAt(a), "MM Failure", "MM NegatedFailure")
+      }
+      // macro MatchPatternMacro.andNotMatchPatternMatcher
   }
 
   /**
@@ -2726,7 +2732,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def be[U](resultOfAnWordApplication: ResultOfAnWordToAnMatcherApplication[U]): Matcher[T with U] = outerInstance.or(MatcherWords.not.be(resultOfAnWordApplication))
 
-    import language.experimental.macros
+    // import language.experimental.macros
 
     /**
      * This method enables the following syntax:
@@ -2736,7 +2742,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                 ^
      * </pre>
      **/
-    def be(aType: ResultOfATypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.orNotATypeMatcher
+    def be(aType: ResultOfATypeInvocation[_]): Matcher[T] =
+      ???
+      // macro TypeMatcherMacro.orNotATypeMatcher
 
     /**
      * This method enables the following syntax:
@@ -2746,7 +2754,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                 ^
      * </pre>
      **/
-    def be(anType: ResultOfAnTypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.orNotAnTypeMatcher
+    def be(anType: ResultOfAnTypeInvocation[_]): Matcher[T] =
+      ???
+      // macro TypeMatcherMacro.orNotAnTypeMatcher
 
     /**
      * This method enables the following syntax:
@@ -3128,7 +3138,11 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                 ^
      * </pre>
      **/
-    def matchPattern(right: PartialFunction[Any, _]) = macro MatchPatternMacro.orNotMatchPatternMatcher
+    def matchPattern(right: PartialFunction[Any, _]): Matcher[Any] =
+      Matcher { a =>
+        MatchResult(right.isDefinedAt(a), "MM Failure", "MM NegatedFailure")
+      }
+      // macro MatchPatternMacro.orNotMatchPatternMatcher
   }
 
   /**

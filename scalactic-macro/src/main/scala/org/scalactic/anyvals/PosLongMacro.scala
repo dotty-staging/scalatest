@@ -15,18 +15,18 @@
  */
 package org.scalactic.anyvals
 
-import org.scalactic.Resources
-import reflect.macros.Context
+// import org.scalactic.Resources
+// import reflect.macros.Context
 
-private[scalactic] object PosLongMacro extends CompileTimeAssertions {
+// private[scalactic] object PosLongMacro extends CompileTimeAssertions {
 
-  def apply(c: Context)(value: c.Expr[Long]): c.Expr[PosLong] = {
-    val notValidMsg = Resources.notValidPosLong
-    val notLiteralMsg = Resources.notLiteralPosLong
+//   def apply(c: Context)(value: c.Expr[Long]): c.Expr[PosLong] = {
+//     val notValidMsg = Resources.notValidPosLong
+//     val notLiteralMsg = Resources.notLiteralPosLong
 
-    import c.universe._
+//     import c.universe._
 
-    ensureValidLongLiteral(c)(value, notValidMsg, notLiteralMsg) { i => i > 0L }
-    reify { PosLong.from(value.splice).get }
-  }
-}
+//     ensureValidLongLiteral(c)(value, notValidMsg, notLiteralMsg) { i => i > 0L }
+//     reify { PosLong.from(value.splice).get }
+//   }
+// }

@@ -217,7 +217,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
       indicateSuccess(shouldBeTrue, result.negatedFailureMessage(prettifier), result.failureMessage(prettifier))
   }
 
-  import scala.language.experimental.macros
+  // import scala.language.experimental.macros
 
   /**
    * This method enables the following syntax:
@@ -227,7 +227,8 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    *                   ^
    * </pre>
    **/
-  def be(aType: ResultOfATypeInvocation[_]): Assertion = macro TypeMatcherMacro.assertATypeShouldBeTrueImpl
+  def be(aType: ResultOfATypeInvocation[_]): Assertion =
+    ??? // macro TypeMatcherMacro.assertATypeShouldBeTrueImpl
 
   /**
    * This method enables the following syntax:
@@ -237,7 +238,8 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    *                   ^
    * </pre>
    **/
-  def be(anType: ResultOfAnTypeInvocation[_]): Assertion = macro TypeMatcherMacro.assertAnTypeShouldBeTrueImpl
+  def be(anType: ResultOfAnTypeInvocation[_]): Assertion =
+    ??? // macro TypeMatcherMacro.assertAnTypeShouldBeTrueImpl
 
   /**
    * This method enables the following syntax:
@@ -1081,7 +1083,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
       indicateSuccess(shouldBeTrue, FailureMessages.endedWith(prettifier, left, expectedSubstring), FailureMessages.didNotEndWith(prettifier, left, expectedSubstring))
   }
 
-  import scala.language.experimental.macros
+  // import scala.language.experimental.macros
 
   /**
    * This method enables the following syntax:
@@ -1091,7 +1093,11 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    *                   ^
    * </pre>
    **/
-  def matchPattern(right: PartialFunction[Any, _]) = macro MatchPatternMacro.matchPattern
+  def matchPattern(right: PartialFunction[Any, _]): Matcher[Any] =
+    Matcher { a =>
+      MatchResult(right.isDefinedAt(a), "MM Failure", "MM NegatedFailure")
+    }
+    // macro MatchPatternMacro.matchPattern
 
   /**
    * Overrides toString to return pretty text.
