@@ -108,179 +108,179 @@ import scala.collection.mutable.HashSet
  *
  * @author Bill Venners
  */
-class JUnit3Suite extends TestCase with Suite with AssertionsForJUnit { thisSuite =>
+// class JUnit3Suite extends TestCase with Suite with AssertionsForJUnit { thisSuite =>
 
-  // This is volatile, because who knows what Thread JUnit will fire through this.
-  @volatile private var theTracker = new Tracker
+//   // This is volatile, because who knows what Thread JUnit will fire through this.
+//   @volatile private var theTracker = new Tracker
 
-  /**
-   * Returns the set of test names that will be executed by JUnit when <code>run</code> is invoked
-   * on an instance of this class, or the instance is passed directly to JUnit for running.
-   *
-   * <p>
-   * The iterator obtained by invoking <code>elements</code> on this
-   * returned <code>Set</code> will produce the test names in their <em>natural order</em>, as determined by <code>String</code>'s
-   * <code>compareTo</code> method. Nevertheless, this method is not consulted by JUnit when it
-   * runs the tests, and JUnit may run the tests in any order.
-   * </p>
-   */
-  override def testNames: Set[String] = {
+//   /**
+//    * Returns the set of test names that will be executed by JUnit when <code>run</code> is invoked
+//    * on an instance of this class, or the instance is passed directly to JUnit for running.
+//    *
+//    * <p>
+//    * The iterator obtained by invoking <code>elements</code> on this
+//    * returned <code>Set</code> will produce the test names in their <em>natural order</em>, as determined by <code>String</code>'s
+//    * <code>compareTo</code> method. Nevertheless, this method is not consulted by JUnit when it
+//    * runs the tests, and JUnit may run the tests in any order.
+//    * </p>
+//    */
+//   override def testNames: Set[String] = {
 
-    def isTestMethod(m: Method) = {
+//     def isTestMethod(m: Method) = {
 
-      val isInstanceMethod = !Modifier.isStatic(m.getModifiers())
+//       val isInstanceMethod = !Modifier.isStatic(m.getModifiers())
 
-      // name must have at least 4 chars (minimum is "test")
-      val simpleName = m.getName
-      val firstFour = if (simpleName.length >= 4) simpleName.substring(0, 4) else ""
+//       // name must have at least 4 chars (minimum is "test")
+//       val simpleName = m.getName
+//       val firstFour = if (simpleName.length >= 4) simpleName.substring(0, 4) else ""
 
-      val paramTypes = m.getParameterTypes
-      val hasNoParams = paramTypes.length == 0
-      val hasVoidReturnType = m.getReturnType == Void.TYPE
+//       val paramTypes = m.getParameterTypes
+//       val hasNoParams = paramTypes.length == 0
+//       val hasVoidReturnType = m.getReturnType == Void.TYPE
 
-      // won't discover testNames because it has a non-Unit return type
-      isInstanceMethod && (firstFour == "test") && hasNoParams && hasVoidReturnType
-    }
+//       // won't discover testNames because it has a non-Unit return type
+//       isInstanceMethod && (firstFour == "test") && hasNoParams && hasVoidReturnType
+//     }
 
-    val testNameArray =
-      for (m <- getClass.getMethods; if isTestMethod(m))
-      yield m.getName
+//     val testNameArray =
+//       for (m <- getClass.getMethods; if isTestMethod(m))
+//       yield m.getName
 
-    TreeSet[String]() ++ testNameArray
-  }
+//     TreeSet[String]() ++ testNameArray
+//   }
 
-  /**
-   * Returns an empty <code>Map</code>, because tags are not supported by JUnit 3.
-   */
-  override def tags = Map()
+//   /**
+//    * Returns an empty <code>Map</code>, because tags are not supported by JUnit 3.
+//    */
+//   override def tags = Map()
 
-  /**
-   * Returns the number of tests expected to be run by JUnit when <code>run</code> is invoked
-   * on this <code>Suite</code>.
-   *
-   * <p>
-   * If <code>tagsToInclude</code> in the passed <code>Filter</code> is defined, this class's
-   * implementation of this method returns 0. Else this class's implementation of this method
-   * returns the size of the set returned by <code>testNames</code> on the current instance.
-   * </p>
-   */
-  override def expectedTestCount(filter: Filter) =
-    if (filter.tagsToInclude.isDefined) 0 else testNames.size
+//   /**
+//    * Returns the number of tests expected to be run by JUnit when <code>run</code> is invoked
+//    * on this <code>Suite</code>.
+//    *
+//    * <p>
+//    * If <code>tagsToInclude</code> in the passed <code>Filter</code> is defined, this class's
+//    * implementation of this method returns 0. Else this class's implementation of this method
+//    * returns the size of the set returned by <code>testNames</code> on the current instance.
+//    * </p>
+//    */
+//   override def expectedTestCount(filter: Filter) =
+//     if (filter.tagsToInclude.isDefined) 0 else testNames.size
 
-  /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * class, given this class's <code>run</code> method delegates to JUnit to run
-   * its tests.
-   *
-   * <p>
-   * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runNestedSuites</code>. Because this
-   * trait does not actually use <code>runNestedSuites</code>, the attempt to mix
-   * in behavior would very likely not work.
-   * </p>
-   *
-   * @param args the <code>Args</code> for this run
-   *
-   * @throws UnsupportedOperationException always.
-   */
-  override final protected def runNestedSuites(args: Args): Status = {
+//   /**
+//    * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
+//    * class, given this class's <code>run</code> method delegates to JUnit to run
+//    * its tests.
+//    *
+//    * <p>
+//    * The main purpose of this method implementation is to render a compiler error an attempt
+//    * to mix in a trait that overrides <code>runNestedSuites</code>. Because this
+//    * trait does not actually use <code>runNestedSuites</code>, the attempt to mix
+//    * in behavior would very likely not work.
+//    * </p>
+//    *
+//    * @param args the <code>Args</code> for this run
+//    *
+//    * @throws UnsupportedOperationException always.
+//    */
+//   override final protected def runNestedSuites(args: Args): Status = {
 
-    throw new UnsupportedOperationException
-  }
+//     throw new UnsupportedOperationException
+//   }
 
-  /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * class, given this class's <code>run</code> method delegates to JUnit to run
-   * its tests.
-   *
-   * <p>
-   * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runTests</code>. Because this
-   * trait does not actually use <code>runTests</code>, the attempt to mix
-   * in behavior would very likely not work.
-   * </p>
-   *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   *
-   * @throws UnsupportedOperationException always.
-   */
-  override protected final def runTests(testName: Option[String], args: Args): Status = {
-    throw new UnsupportedOperationException
-  }
+//   /**
+//    * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
+//    * class, given this class's <code>run</code> method delegates to JUnit to run
+//    * its tests.
+//    *
+//    * <p>
+//    * The main purpose of this method implementation is to render a compiler error an attempt
+//    * to mix in a trait that overrides <code>runTests</code>. Because this
+//    * trait does not actually use <code>runTests</code>, the attempt to mix
+//    * in behavior would very likely not work.
+//    * </p>
+//    *
+//    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
+//    *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
+//    * @param args the <code>Args</code> for this run
+//    *
+//    * @throws UnsupportedOperationException always.
+//    */
+//   override protected final def runTests(testName: Option[String], args: Args): Status = {
+//     throw new UnsupportedOperationException
+//   }
 
-  /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * class, given this class's <code>run</code> method delegates to JUnit to run
-   * its tests.
-   *
-   * <p>
-   * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runTest</code>. Because this
-   * trait does not actually use <code>runTest</code>, the attempt to mix
-   * in behavior would very likely not work.
-   * </p>
-   *
-   * @param testName the name of one test to run.
-   * @param args the <code>Args</code> for this run
-   *
-   * @throws UnsupportedOperationException always.
-   */
-  override protected final def runTest(testName: String, args: Args): Status = {
-        throw new UnsupportedOperationException
-  }
+//   /**
+//    * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
+//    * class, given this class's <code>run</code> method delegates to JUnit to run
+//    * its tests.
+//    *
+//    * <p>
+//    * The main purpose of this method implementation is to render a compiler error an attempt
+//    * to mix in a trait that overrides <code>runTest</code>. Because this
+//    * trait does not actually use <code>runTest</code>, the attempt to mix
+//    * in behavior would very likely not work.
+//    * </p>
+//    *
+//    * @param testName the name of one test to run.
+//    * @param args the <code>Args</code> for this run
+//    *
+//    * @throws UnsupportedOperationException always.
+//    */
+//   override protected final def runTest(testName: String, args: Args): Status = {
+//         throw new UnsupportedOperationException
+//   }
 
-  /**
-   * Overrides to use JUnit 3 to run the test(s).
-   *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
-   *
-   */
-  override def run(testName: Option[String], args: Args): Status = {
+//   /**
+//    * Overrides to use JUnit 3 to run the test(s).
+//    *
+//    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
+//    *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
+//    * @param args the <code>Args</code> for this run
+//    * @return a <code>Status</code> object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
+//    *
+//    */
+//   override def run(testName: Option[String], args: Args): Status = {
 
-    import args._
+//     import args._
 
-    theTracker = tracker
-    val status = new ScalaTestStatefulStatus
+//     theTracker = tracker
+//     val status = new ScalaTestStatefulStatus
 
-    if (!filter.tagsToInclude.isDefined) {
-      val testResult = new TestResult
-      testResult.addListener(new MyTestListener(wrapReporterIfNecessary(thisSuite, reporter), tracker, status))
-      testName match {
-        case None => new TestSuite(this.getClass).run(testResult)
-        case Some(tn) =>
-          if (!testNames.contains(tn))
-            throw new IllegalArgumentException(Resources.testNotFound(testName))
-          setName(tn)
-          run(testResult)
-      }
-    }
+//     if (!filter.tagsToInclude.isDefined) {
+//       val testResult = new TestResult
+//       testResult.addListener(new MyTestListener(wrapReporterIfNecessary(thisSuite, reporter), tracker, status))
+//       testName match {
+//         case None => new TestSuite(this.getClass).run(testResult)
+//         case Some(tn) =>
+//           if (!testNames.contains(tn))
+//             throw new IllegalArgumentException(Resources.testNotFound(testName))
+//           setName(tn)
+//           run(testResult)
+//       }
+//     }
 
-    status.setCompleted()
-    status
-  }
+//     status.setCompleted()
+//     status
+//   }
 
-  /**
-   * Suite style name.
-   *
-   * @return <code>JUnit3Suite</code>
-   */
-  final override val styleName: String = "JUnit3Suite"
+//   /**
+//    * Suite style name.
+//    *
+//    * @return <code>JUnit3Suite</code>
+//    */
+//   final override val styleName: String = "JUnit3Suite"
 
-  final override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData =
-    new TestData {
-      val configMap = theConfigMap
-      val name = testName
-      val scopes = Vector.empty
-      val text = testName
-      val tags = Set.empty[String]
-      val pos = None
-    }
-}
+//   final override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData =
+//     new TestData {
+//       val configMap = theConfigMap
+//       val name = testName
+//       val scopes = Vector.empty
+//       val text = testName
+//       val tags = Set.empty[String]
+//       val pos = None
+//     }
+// }
 
 private[scalatest] class MyTestListener(report: Reporter, tracker: Tracker, status: ScalaTestStatefulStatus) extends TestListener {
 
@@ -289,7 +289,7 @@ private[scalatest] class MyTestListener(report: Reporter, tracker: Tracker, stat
 
   private def getSuiteNameForTestCase(testCase: Test) =
     testCase match {
-      case junit3Suite: JUnit3Suite => junit3Suite.suiteName
+      // case junit3Suite: JUnit3Suite => junit3Suite.suiteName
       case _ => Suite.getSimpleNameOfAnObjectsClass(testCase) // Should never happen, but just in case
     }
 

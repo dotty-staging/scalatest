@@ -531,7 +531,7 @@ import tools.SuiteDiscoveryHelper
  *
  * @author Bill Venners
  */
-trait Suite extends Assertions with Serializable { thisSuite =>
+class Suite extends Assertions with Serializable { thisSuite =>
 
   import Suite.InformerInParens
 
