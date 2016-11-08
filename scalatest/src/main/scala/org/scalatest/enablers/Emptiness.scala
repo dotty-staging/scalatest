@@ -136,28 +136,28 @@ object Emptiness {
       def isEmpty(jmap: JMAP[K, V]): Boolean = jmap.isEmpty
     }
 
-  import scala.language.reflectiveCalls
+  // import scala.language.reflectiveCalls
 
-  /**
-   * Enable <code>Emptiness</code> implementation for any arbitrary object with a <code>isEmpty()</code> method that returns <code>Boolean</code>
-   *
-   * @tparam T any type that has a <code>isEmpty()</code> method that returns <code>Boolean</code>
-   * @return <code>Emptiness[T]</code> that supports <code>T</code> in <code>be empty</code> syntax
-   */
-  implicit def emptinessOfAnyRefWithIsEmptyMethod[T <: AnyRef { def isEmpty(): Boolean}]: Emptiness[T] =
-    new Emptiness[T] {
-      def isEmpty(obj: T): Boolean = obj.isEmpty
-    }
+  // /**
+  //  * Enable <code>Emptiness</code> implementation for any arbitrary object with a <code>isEmpty()</code> method that returns <code>Boolean</code>
+  //  *
+  //  * @tparam T any type that has a <code>isEmpty()</code> method that returns <code>Boolean</code>
+  //  * @return <code>Emptiness[T]</code> that supports <code>T</code> in <code>be empty</code> syntax
+  //  */
+  // implicit def emptinessOfAnyRefWithIsEmptyMethod[T <: AnyRef { def isEmpty(): Boolean}]: Emptiness[T] =
+  //   new Emptiness[T] {
+  //     def isEmpty(obj: T): Boolean = obj.isEmpty
+  //   }
 
-  /**
-   * Enable <code>Emptiness</code> implementation for any arbitrary object with a <code>isEmpty</code> method that returns <code>Boolean</code>
-   *
-   * @tparam T any type that has a parameterless <code>isEmpty</code> method that returns <code>Boolean</code>
-   * @return <code>Emptiness[T]</code> that supports <code>T</code> in <code>be empty</code> syntax
-   */
-  implicit def emptinessOfAnyRefWithParameterlessIsEmptyMethod[T <: AnyRef { def isEmpty: Boolean}]: Emptiness[T] =
-    new Emptiness[T] {
-      def isEmpty(obj: T): Boolean = obj.isEmpty
-    }
+  // /**
+  //  * Enable <code>Emptiness</code> implementation for any arbitrary object with a <code>isEmpty</code> method that returns <code>Boolean</code>
+  //  *
+  //  * @tparam T any type that has a parameterless <code>isEmpty</code> method that returns <code>Boolean</code>
+  //  * @return <code>Emptiness[T]</code> that supports <code>T</code> in <code>be empty</code> syntax
+  //  */
+  // implicit def emptinessOfAnyRefWithParameterlessIsEmptyMethod[T <: AnyRef { def isEmpty: Boolean}]: Emptiness[T] =
+  //   new Emptiness[T] {
+  //     def isEmpty(obj: T): Boolean = obj.isEmpty
+  //   }
 }
 

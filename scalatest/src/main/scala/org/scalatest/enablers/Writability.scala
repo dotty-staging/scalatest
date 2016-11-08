@@ -69,28 +69,28 @@ object Writability {
       def isWritable(file: FILE): Boolean = file.canWrite
     }
 
-  import scala.language.reflectiveCalls
+  // import scala.language.reflectiveCalls
 
-  /**
-   * Enable <code>Writability</code> implementation for any arbitrary object with a <code>isWritable()</code> method that returns <code>Boolean</code>
-   *
-   * @tparam T any type that has a <code>isWritable()</code> method that returns <code>Boolean</code>
-   * @return <code>Writability[T]</code> that supports <code>T</code> in <code>be</code> <code>writable</code> syntax
-   */
-  implicit def writabilityOfAnyRefWithIsWritableMethod[T <: AnyRef { def isWritable(): Boolean}]: Writability[T] =
-    new Writability[T] {
-      def isWritable(obj: T): Boolean = obj.isWritable
-    }
+  // /**
+  //  * Enable <code>Writability</code> implementation for any arbitrary object with a <code>isWritable()</code> method that returns <code>Boolean</code>
+  //  *
+  //  * @tparam T any type that has a <code>isWritable()</code> method that returns <code>Boolean</code>
+  //  * @return <code>Writability[T]</code> that supports <code>T</code> in <code>be</code> <code>writable</code> syntax
+  //  */
+  // implicit def writabilityOfAnyRefWithIsWritableMethod[T <: AnyRef { def isWritable(): Boolean}]: Writability[T] =
+  //   new Writability[T] {
+  //     def isWritable(obj: T): Boolean = obj.isWritable
+  //   }
 
-  /**
-   * Enable <code>Writability</code> implementation for any arbitrary object with a parameterless <code>isWritable</code> method that returns <code>Boolean</code>
-   *
-   * @tparam T any type that has a parameterless <code>isWritable</code> method that returns <code>Boolean</code>
-   * @return <code>Writability[T]</code> that supports <code>T</code> in <code>be</code> <code>writable</code> syntax
-   */
-  implicit def writabilityOfAnyRefWithParameterlessIsWritableMethod[T <: AnyRef { def isWritable: Boolean}]: Writability[T] =
-    new Writability[T] {
-      def isWritable(obj: T): Boolean = obj.isWritable
-    }
+  // /**
+  //  * Enable <code>Writability</code> implementation for any arbitrary object with a parameterless <code>isWritable</code> method that returns <code>Boolean</code>
+  //  *
+  //  * @tparam T any type that has a parameterless <code>isWritable</code> method that returns <code>Boolean</code>
+  //  * @return <code>Writability[T]</code> that supports <code>T</code> in <code>be</code> <code>writable</code> syntax
+  //  */
+  // implicit def writabilityOfAnyRefWithParameterlessIsWritableMethod[T <: AnyRef { def isWritable: Boolean}]: Writability[T] =
+  //   new Writability[T] {
+  //     def isWritable(obj: T): Boolean = obj.isWritable
+  //   }
 }
 

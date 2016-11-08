@@ -173,93 +173,93 @@ object Size {
       def sizeOf(str: String): Long = str.length
     }
 
-  import scala.language.reflectiveCalls
+  // import scala.language.reflectiveCalls
 
-  /**
-   * Enable <code>Size</code> implementation for arbitary object with <code>size()</code> method that returns <code>Int</code>.
-   *
-   * @tparam T any type with <code>size()</code> method that returns <code>Int</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
-   */
-  implicit def sizeOfAnyRefWithSizeMethodForInt[T <: AnyRef { def size(): Int}]: Size[T] =
-    new Size[T] {
-      def sizeOf(obj: T): Long = obj.size
-    }
+  // /**
+  //  * Enable <code>Size</code> implementation for arbitary object with <code>size()</code> method that returns <code>Int</code>.
+  //  *
+  //  * @tparam T any type with <code>size()</code> method that returns <code>Int</code>
+  //  * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+  //  */
+  // implicit def sizeOfAnyRefWithSizeMethodForInt[T <: AnyRef { def size(): Int}]: Size[T] =
+  //   new Size[T] {
+  //     def sizeOf(obj: T): Long = obj.size
+  //   }
 
-  /**
-   * Enable <code>Size</code> implementation for arbitary object with parameterless <code>size</code> method that returns <code>Int</code>.
-   *
-   * @tparam T any type with parameterless <code>size</code> method that returns <code>Int</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
-   */
-  implicit def sizeOfAnyRefWithParameterlessSizeMethodForInt[T <: AnyRef { def size: Int}]: Size[T] =
-    new Size[T] {
-      def sizeOf(obj: T): Long = obj.size
-    }
+  // /**
+  //  * Enable <code>Size</code> implementation for arbitary object with parameterless <code>size</code> method that returns <code>Int</code>.
+  //  *
+  //  * @tparam T any type with parameterless <code>size</code> method that returns <code>Int</code>
+  //  * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+  //  */
+  // implicit def sizeOfAnyRefWithParameterlessSizeMethodForInt[T <: AnyRef { def size: Int}]: Size[T] =
+  //   new Size[T] {
+  //     def sizeOf(obj: T): Long = obj.size
+  //   }
 
-  /**
-   * Enable <code>Size</code> implementation for arbitary object with <code>getSize()</code> method that returns <code>Int</code>.
-   *
-   * @tparam T any type with <code>getSize()</code> method that returns <code>Int</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
-   */
-  implicit def sizeOfAnyRefWithGetSizeMethodForInt[T <: AnyRef { def getSize(): Int}]: Size[T] =
-    new Size[T] {
-      def sizeOf(obj: T): Long = obj.getSize
-    }
+  // /**
+  //  * Enable <code>Size</code> implementation for arbitary object with <code>getSize()</code> method that returns <code>Int</code>.
+  //  *
+  //  * @tparam T any type with <code>getSize()</code> method that returns <code>Int</code>
+  //  * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+  //  */
+  // implicit def sizeOfAnyRefWithGetSizeMethodForInt[T <: AnyRef { def getSize(): Int}]: Size[T] =
+  //   new Size[T] {
+  //     def sizeOf(obj: T): Long = obj.getSize
+  //   }
 
-  /**
-   * Enable <code>Size</code> implementation for arbitary object with parameterless <code>getSize</code> method that returns <code>Int</code>.
-   *
-   * @tparam T any type with parameterless <code>getSize</code> method that returns <code>Int</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
-   */
-  implicit def sizeOfAnyRefWithParameterlessGetSizeMethodForInt[T <: AnyRef { def getSize: Int}]: Size[T] =
-    new Size[T] {
-      def sizeOf(obj: T): Long = obj.getSize
-    }
+  // /**
+  //  * Enable <code>Size</code> implementation for arbitary object with parameterless <code>getSize</code> method that returns <code>Int</code>.
+  //  *
+  //  * @tparam T any type with parameterless <code>getSize</code> method that returns <code>Int</code>
+  //  * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+  //  */
+  // implicit def sizeOfAnyRefWithParameterlessGetSizeMethodForInt[T <: AnyRef { def getSize: Int}]: Size[T] =
+  //   new Size[T] {
+  //     def sizeOf(obj: T): Long = obj.getSize
+  //   }
 
-  /**
-   * Enable <code>Size</code> implementation for arbitary object with <code>size()</code> method that returns <code>Long</code>.
-   *
-   * @tparam T any type with <code>size()</code> method that returns <code>Long</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
-   */
-  implicit def sizeOfAnyRefWithSizeMethodForLong[T <: AnyRef { def size(): Long}]: Size[T] =
-    new Size[T] {
-      def sizeOf(obj: T): Long = obj.size
-    }
+  // /**
+  //  * Enable <code>Size</code> implementation for arbitary object with <code>size()</code> method that returns <code>Long</code>.
+  //  *
+  //  * @tparam T any type with <code>size()</code> method that returns <code>Long</code>
+  //  * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+  //  */
+  // implicit def sizeOfAnyRefWithSizeMethodForLong[T <: AnyRef { def size(): Long}]: Size[T] =
+  //   new Size[T] {
+  //     def sizeOf(obj: T): Long = obj.size
+  //   }
 
-  /**
-   * Enable <code>Size</code> implementation for arbitary object with parameterless <code>size</code> method that returns <code>Long</code>.
-   *
-   * @tparam T any type with parameterless <code>size</code> method that returns <code>Long</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
-   */
-  implicit def sizeOfAnyRefWithParameterlessSizeMethodForLong[T <: AnyRef { def size: Long}]: Size[T] =
-    new Size[T] {
-      def sizeOf(obj: T): Long = obj.size
-    }
+  // /**
+  //  * Enable <code>Size</code> implementation for arbitary object with parameterless <code>size</code> method that returns <code>Long</code>.
+  //  *
+  //  * @tparam T any type with parameterless <code>size</code> method that returns <code>Long</code>
+  //  * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+  //  */
+  // implicit def sizeOfAnyRefWithParameterlessSizeMethodForLong[T <: AnyRef { def size: Long}]: Size[T] =
+  //   new Size[T] {
+  //     def sizeOf(obj: T): Long = obj.size
+  //   }
 
-  /**
-   * Enable <code>Size</code> implementation for arbitary object with <code>getSize()</code> method that returns <code>Long</code>.
-   *
-   * @tparam T any type with <code>getSize()</code> method that returns <code>Long</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
-   */
-  implicit def sizeOfAnyRefWithGetSizeMethodForLong[T <: AnyRef { def getSize(): Long}]: Size[T] =
-    new Size[T] {
-      def sizeOf(obj: T): Long = obj.getSize
-    }
+  // /**
+  //  * Enable <code>Size</code> implementation for arbitary object with <code>getSize()</code> method that returns <code>Long</code>.
+  //  *
+  //  * @tparam T any type with <code>getSize()</code> method that returns <code>Long</code>
+  //  * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+  //  */
+  // implicit def sizeOfAnyRefWithGetSizeMethodForLong[T <: AnyRef { def getSize(): Long}]: Size[T] =
+  //   new Size[T] {
+  //     def sizeOf(obj: T): Long = obj.getSize
+  //   }
 
-  /**
-   * Enable <code>Size</code> implementation for arbitary object with <code>getSize</code> method that returns <code>Long</code>.
-   *
-   * @tparam T any type with <code>getSize</code> method that returns <code>Long</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
-   */
-  implicit def sizeOfAnyRefWithParameterlessGetSizeMethodForLong[T <: AnyRef { def getSize: Long}]: Size[T] =
-    new Size[T] {
-      def sizeOf(obj: T): Long = obj.getSize
-    }
+  // /**
+  //  * Enable <code>Size</code> implementation for arbitary object with <code>getSize</code> method that returns <code>Long</code>.
+  //  *
+  //  * @tparam T any type with <code>getSize</code> method that returns <code>Long</code>
+  //  * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+  //  */
+  // implicit def sizeOfAnyRefWithParameterlessGetSizeMethodForLong[T <: AnyRef { def getSize: Long}]: Size[T] =
+  //   new Size[T] {
+  //     def sizeOf(obj: T): Long = obj.getSize
+  //   }
 }

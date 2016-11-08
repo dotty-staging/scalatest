@@ -66,28 +66,28 @@ object Definition {
       def isDefined(option: OPT[E]): Boolean = option.isDefined
     }
 
-  import scala.language.reflectiveCalls
+  // import scala.language.reflectiveCalls
 
-  /**
-   * Provides <code>Definition</code> implementation for any arbitrary object with a <code>isDefined()</code> method that returns <code>Boolean</code>
-   *
-   * @tparam T any type that has a <code>isDefined()</code> method that returns <code>Boolean</code>
-   * @return <code>Definition[T]</code> that supports <code>T</code> in <code>be defined</code> syntax
-   */
-  implicit def definitionOfAnyRefWithIsDefinedMethod[T <: AnyRef { def isDefined(): Boolean}]: Definition[T] =
-    new Definition[T] {
-      def isDefined(obj: T): Boolean = obj.isDefined
-    }
+  // /**
+  //  * Provides <code>Definition</code> implementation for any arbitrary object with a <code>isDefined()</code> method that returns <code>Boolean</code>
+  //  *
+  //  * @tparam T any type that has a <code>isDefined()</code> method that returns <code>Boolean</code>
+  //  * @return <code>Definition[T]</code> that supports <code>T</code> in <code>be defined</code> syntax
+  //  */
+  // implicit def definitionOfAnyRefWithIsDefinedMethod[T <: AnyRef { def isDefined(): Boolean}]: Definition[T] =
+  //   new Definition[T] {
+  //     def isDefined(obj: T): Boolean = obj.isDefined
+  //   }
 
-  /**
-   * Provides <code>Definition</code> implementation for any arbitrary object with a <code>isDefined</code> method that returns <code>Boolean</code>
-   *
-   * @tparam T any type that has a parameterless <code>isDefined</code> method that returns <code>Boolean</code>
-   * @return <code>Definition[T]</code> that supports <code>T</code> in <code>be defined</code> syntax
-   */
-  implicit def definitionOfAnyRefWithParameterlessIsDefinedMethod[T <: AnyRef { def isDefined: Boolean}]: Definition[T] =
-    new Definition[T] {
-      def isDefined(obj: T): Boolean = obj.isDefined
-    }
+  // /**
+  //  * Provides <code>Definition</code> implementation for any arbitrary object with a <code>isDefined</code> method that returns <code>Boolean</code>
+  //  *
+  //  * @tparam T any type that has a parameterless <code>isDefined</code> method that returns <code>Boolean</code>
+  //  * @return <code>Definition[T]</code> that supports <code>T</code> in <code>be defined</code> syntax
+  //  */
+  // implicit def definitionOfAnyRefWithParameterlessIsDefinedMethod[T <: AnyRef { def isDefined: Boolean}]: Definition[T] =
+  //   new Definition[T] {
+  //     def isDefined(obj: T): Boolean = obj.isDefined
+  //   }
 }
 

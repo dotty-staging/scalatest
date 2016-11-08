@@ -70,51 +70,51 @@ object Messaging {
       def messageOf(exception: EX): String = exception.getMessage
     }
 
-  import scala.language.reflectiveCalls
+  // import scala.language.reflectiveCalls
 
-  /**
-   * Provides <code>Messaging</code> implementation for any arbitrary object with a <code>message()</code> method that returns <code>String</code>
-   *
-   * @tparam T any type that has a <code>message()</code> method that returns <code>String</code>
-   * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
-   */
-  implicit def messagingNatureOfAnyRefWithMessageMethod[T <: AnyRef { def message(): String}]: Messaging[T] =
-    new Messaging[T] {
-      def messageOf(obj: T): String = obj.message
-    }
+  // /**
+  //  * Provides <code>Messaging</code> implementation for any arbitrary object with a <code>message()</code> method that returns <code>String</code>
+  //  *
+  //  * @tparam T any type that has a <code>message()</code> method that returns <code>String</code>
+  //  * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
+  //  */
+  // implicit def messagingNatureOfAnyRefWithMessageMethod[T <: AnyRef { def message(): String}]: Messaging[T] =
+  //   new Messaging[T] {
+  //     def messageOf(obj: T): String = obj.message
+  //   }
 
-  /**
-   * Provides <code>Messaging</code> implementation for any arbitrary object with a parameterless <code>message</code> method that returns <code>String</code>
-   *
-   * @tparam T any type that has a parameterless <code>message</code> method that returns <code>String</code>
-   * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
-   */
-  implicit def messagingNatureOfAnyRefWithParameterlessMessageMethod[T <: AnyRef { def message: String}]: Messaging[T] =
-    new Messaging[T] {
-      def messageOf(obj: T): String = obj.message
-    }
+  // /**
+  //  * Provides <code>Messaging</code> implementation for any arbitrary object with a parameterless <code>message</code> method that returns <code>String</code>
+  //  *
+  //  * @tparam T any type that has a parameterless <code>message</code> method that returns <code>String</code>
+  //  * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
+  //  */
+  // implicit def messagingNatureOfAnyRefWithParameterlessMessageMethod[T <: AnyRef { def message: String}]: Messaging[T] =
+  //   new Messaging[T] {
+  //     def messageOf(obj: T): String = obj.message
+  //   }
 
-  /**
-   * Provides <code>Messaging</code> implementation for any arbitrary object with a <code>getMessage()</code> method that returns <code>String</code>
-   *
-   * @tparam T any type that has a <code>getMessage()</code> method that returns <code>String</code>
-   * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
-   */
-  implicit def messagingNatureOfAnyRefWithGetMessageMethod[T <: AnyRef { def getMessage(): String}]: Messaging[T] =
-    new Messaging[T] {
-      def messageOf(obj: T): String = obj.getMessage
-    }
+  // /**
+  //  * Provides <code>Messaging</code> implementation for any arbitrary object with a <code>getMessage()</code> method that returns <code>String</code>
+  //  *
+  //  * @tparam T any type that has a <code>getMessage()</code> method that returns <code>String</code>
+  //  * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
+  //  */
+  // implicit def messagingNatureOfAnyRefWithGetMessageMethod[T <: AnyRef { def getMessage(): String}]: Messaging[T] =
+  //   new Messaging[T] {
+  //     def messageOf(obj: T): String = obj.getMessage
+  //   }
 
-  /**
-   * Provides <code>Messaging</code> implementation for any arbitrary object with a parameterless <code>getMessage</code> method that returns <code>String</code>
-   *
-   * @tparam T any type that has a parameterless <code>getMessage</code> method that returns <code>String</code>
-   * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
-   */
-  implicit def messagingNatureOfAnyRefWithParameterlessGetMessageMethod[T <: AnyRef { def getMessage: String}]: Messaging[T] =
-    new Messaging[T] {
-      def messageOf(obj: T): String = obj.getMessage
-    }
+  // /**
+  //  * Provides <code>Messaging</code> implementation for any arbitrary object with a parameterless <code>getMessage</code> method that returns <code>String</code>
+  //  *
+  //  * @tparam T any type that has a parameterless <code>getMessage</code> method that returns <code>String</code>
+  //  * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
+  //  */
+  // implicit def messagingNatureOfAnyRefWithParameterlessGetMessageMethod[T <: AnyRef { def getMessage: String}]: Messaging[T] =
+  //   new Messaging[T] {
+  //     def messageOf(obj: T): String = obj.getMessage
+  //   }
 }
 
 
