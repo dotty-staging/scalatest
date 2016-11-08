@@ -1366,18 +1366,20 @@ $columnsOfIndexes$
           |        //SCALATESTJS-ONLY val stackDepth = 1
           |
           |        indicateFailure(
-          |          (sde: StackDepthException) => FailureMessages.propertyException(prettifier, UnquotedString(ex.getClass.getSimpleName)) +
-          |            ( sde.failedCodeFileNameAndLineNumberString match { case Some(s) => " (" + s + ")"; case None => "" }) + "\n" +
-          |            "  " + FailureMessages.thrownExceptionsMessage(prettifier, if (ex.getMessage == null) "None" else UnquotedString(ex.getMessage)) + "\n" +
-          |            (
-          |              ex match {
-          |                case sd: StackDepth if sd.failedCodeFileNameAndLineNumberString.isDefined =>
-          |                  "  " + FailureMessages.thrownExceptionsLocation(prettifier, UnquotedString(sd.failedCodeFileNameAndLineNumberString.get)) + "\n"
-          |                case _ => ""
-          |              }
-          |            ) +
-          |            "  " + FailureMessages.occurredAtRow(prettifier, idx) + "\n" +
-          |            $namesAndValues$
+          |          (sde: StackDepthException) => """.stripMargin +
+          // FailureMessages.propertyException(prettifier, UnquotedString(ex.getClass.getSimpleName)) +
+          //           |            ( sde.failedCodeFileNameAndLineNumberString match { case Some(s) => " (" + s + ")"; case None => "" }) + "\n" +
+          //           |            "  " + FailureMessages.thrownExceptionsMessage(prettifier, if (ex.getMessage == null) "None" else UnquotedString(ex.getMessage)) + "\n" +
+          //           |            (
+          //           |              ex match {
+          //           |                case sd: StackDepth if sd.failedCodeFileNameAndLineNumberString.isDefined =>
+          //           |                  "  " + FailureMessages.thrownExceptionsLocation(prettifier, UnquotedString(sd.failedCodeFileNameAndLineNumberString.get)) + "\n"
+          //           |                case _ => ""
+          //           |              }
+          //           |            ) +
+          //           |            "  " + FailureMessages.occurredAtRow(prettifier, idx) + "\n" +
+          //           |            $namesAndValues$
+          """
           |            "  )",
           |          FailureMessages.undecoratedPropertyCheckFailureMessage,
           |          List($alphaLower$),
@@ -1714,24 +1716,26 @@ $columnsOfIndexes$
          |                  result.failedElements :+ ((index,
          |                    head,
          |                    new org.scalatest.exceptions.TableDrivenPropertyCheckFailedException(
-         |                      ((sde: StackDepthException) => FailureMessages.propertyException(prettifier, UnquotedString(ex.getClass.getSimpleName)) +
-         |                        (sde.failedCodeFileNameAndLineNumberString match {
-         |                          case Some(s) => " (" + s + ")";
-         |                          case None => ""
-         |                        }) + "\n" +
-         |                        "  " + FailureMessages.thrownExceptionsMessage(prettifier, if (ex.getMessage == null) "None" else UnquotedString(ex.getMessage)) + "\n" +
-         |                        (
-         |                          ex match {
-         |                            case sd: StackDepth if sd.failedCodeFileNameAndLineNumberString.isDefined =>
-         |                              "  " + FailureMessages.thrownExceptionsLocation(prettifier, UnquotedString(sd.failedCodeFileNameAndLineNumberString.get)) + "\n"
-         |                            case _ => ""
-         |                          }
-         |                          ) +
-         |                        "  " + FailureMessages.occurredAtRow(prettifier, index) + "\n" +
-         |                        indentErrorMessages(namesOfArgs.zip(head.productIterator.toSeq).map { case (name, value) =>
-         |                          name + " = " + value
-         |                        }.toIndexedSeq).mkString("\n") +
-         |                        "  )"),
+         |                      (sde: StackDepthException) => "", """.stripMargin +
+         // FailureMessages.propertyException(prettifier, UnquotedString(ex.getClass.getSimpleName)) +
+         // |                        (sde.failedCodeFileNameAndLineNumberString match {
+         // |                          case Some(s) => " (" + s + ")";
+         // |                          case None => ""
+         // |                        }) + "\n" +
+         // |                        "  " + FailureMessages.thrownExceptionsMessage(prettifier, if (ex.getMessage == null) "None" else UnquotedString(ex.getMessage)) + "\n" +
+         // |                        (
+         // |                          ex match {
+         // |                            case sd: StackDepth if sd.failedCodeFileNameAndLineNumberString.isDefined =>
+         // |                              "  " + FailureMessages.thrownExceptionsLocation(prettifier, UnquotedString(sd.failedCodeFileNameAndLineNumberString.get)) + "\n"
+         // |                            case _ => ""
+         // |                          }
+         // |                          ) +
+         // |                        "  " + FailureMessages.occurredAtRow(prettifier, index) + "\n" +
+         // |                        indentErrorMessages(namesOfArgs.zip(head.productIterator.toSeq).map { case (name, value) =>
+         // |                          name + " = " + value
+         // |                        }.toIndexedSeq).mkString("\n") +
+         // |                        "  )"),
+         """
          |                      Some(ex),
          |                      pos,
          |                      None,

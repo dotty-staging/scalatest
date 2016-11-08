@@ -65,7 +65,7 @@ import GeneratorChecks.stackDepthMethodName
           else throw new TestFailedException((sde: StackDepthException) => Some("too many discarded evaluations"), None, pos, None)
         case Failure(ex) =>
           throw new GeneratorDrivenPropertyCheckFailedException(
-            (sde: StackDepthException) => FailureMessages.propertyException(prettifier, UnquotedString(sde.getClass.getSimpleName)) + "\n" +
+            (sde: StackDepthException) => """FailureMessages.propertyException(prettifier, UnquotedString(sde.getClass.getSimpleName)) + "\n" +
               ( sde.failedCodeFileNameAndLineNumberString match { case Some(s) => " (" + s + ")"; case None => "" }) + "\n" +
               "  " + FailureMessages.propertyFailed(prettifier, succeededCount) + "\n" +
               (
@@ -78,7 +78,7 @@ import GeneratorChecks.stackDepthMethodName
               "  " + FailureMessages.occurredOnValues + "\n" +
               prettyArgs(argsPassed, prettifier) + "\n" +
               "  )" +
-              "", // getLabelDisplay(scalaCheckLabels),
+              "" """, // getLabelDisplay(scalaCheckLabels),
             Some(ex),
             pos,
             None,

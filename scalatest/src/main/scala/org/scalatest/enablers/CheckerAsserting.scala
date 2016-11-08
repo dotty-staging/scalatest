@@ -114,7 +114,7 @@ abstract class UnitCheckerAsserting {
             val stackDepth = 1
 
             indicateFailure(
-              sde => FailureMessages.propertyException(prettifier, UnquotedString(sde.getClass.getSimpleName)) + "\n" +
+              sde => """FailureMessages.propertyException(prettifier, UnquotedString(sde.getClass.getSimpleName)) + "\n" +
               ( sde.failedCodeFileNameAndLineNumberString match { case Some(s) => " (" + s + ")"; case None => "" }) + "\n" +
               "  " + FailureMessages.propertyFailed(prettifier, result.succeeded) + "\n" +
               (
@@ -127,7 +127,7 @@ abstract class UnitCheckerAsserting {
               "  " + FailureMessages.occurredOnValues + "\n" +
               prettyArgs(getArgsWithSpecifiedNames(argNames, scalaCheckArgs), prettifier) + "\n" +
               "  )" +
-              getLabelDisplay(scalaCheckLabels),
+              getLabelDisplay(scalaCheckLabels)""",
               FailureMessages.propertyFailed(prettifier, result.succeeded),
               scalaCheckArgs,
               scalaCheckLabels.toList,
@@ -138,7 +138,7 @@ abstract class UnitCheckerAsserting {
           case Test.PropException(scalaCheckArgs, e, scalaCheckLabels) =>
 
             indicateFailure(
-              sde => FailureMessages.propertyException(prettifier, UnquotedString(e.getClass.getSimpleName)) + "\n" +
+              sde => """FailureMessages.propertyException(prettifier, UnquotedString(e.getClass.getSimpleName)) + "\n" +
               "  " + FailureMessages.thrownExceptionsMessage(prettifier, if (e.getMessage == null) "None" else UnquotedString(e.getMessage)) + "\n" +
               (
                 e match {
@@ -150,7 +150,7 @@ abstract class UnitCheckerAsserting {
               "  " + FailureMessages.occurredOnValues + "\n" +
               prettyArgs(getArgsWithSpecifiedNames(argNames, scalaCheckArgs), prettifier) + "\n" +
               "  )" +
-              getLabelDisplay(scalaCheckLabels),
+              getLabelDisplay(scalaCheckLabels)""",
               FailureMessages.propertyException(prettifier, UnquotedString(e.getClass.getName)),
               scalaCheckArgs,
               scalaCheckLabels.toList,
