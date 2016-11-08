@@ -151,14 +151,14 @@ private[scalatest] object AMatcher {
   def apply[T](name: String)(fun: T => Boolean)(implicit ev: ClassTag[T]) =
     new AMatcher[T] {
       val nounName = name
-      def apply(left: T): MatchResult = 
+      def apply(left: T): MatchResult =
         MatchResult(
-          fun(left), 
+          fun(left),
           Resources.rawWasNotA,
           Resources.rawWasA,
           Vector(left, UnquotedString(nounName))
         )
       override def toString: String = "AMatcher[" + ev.runtimeClass.getName + "](" + Prettifier.default(name) + ", " + ev.runtimeClass.getName + " => Boolean)"
     }
-  
+
 }

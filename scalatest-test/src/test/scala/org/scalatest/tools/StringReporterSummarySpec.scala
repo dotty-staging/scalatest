@@ -74,7 +74,7 @@ class StringReporterSummarySpec extends UnitSpec {
   val secondOrdinal = firstOrdinal.next
   val thirdOrdinal = secondOrdinal.next
 
-  val justOneTestFailed: Vector[ExceptionalEvent] = 
+  val justOneTestFailed: Vector[ExceptionalEvent] =
     Vector(
       TestFailed(
         ordinal = firstOrdinal,
@@ -96,7 +96,7 @@ class StringReporterSummarySpec extends UnitSpec {
       )
     )
 
-  val oneTestFailedAndOneTestCanceled: Vector[ExceptionalEvent] = 
+  val oneTestFailedAndOneTestCanceled: Vector[ExceptionalEvent] =
 
     Vector(
       justOneTestFailed(0),
@@ -299,7 +299,7 @@ class StringReporterSummarySpec extends UnitSpec {
         )
       )
     }
- 
+
     it("should sort the passed exceptionalEvents in ordinal order") {
       val fragments =
         summaryFragments(
@@ -388,7 +388,7 @@ class StringReporterSummarySpec extends UnitSpec {
           )
 
         fragments.take(initialFragmentsForJustOneFailedTest.size) should be (initialFragmentsForJustOneFailedTest)
-        fragments.length should equal (initialFragmentsForJustOneFailedTest.size + StringReporter.shortStackTraceSize) 
+        fragments.length should equal (initialFragmentsForJustOneFailedTest.size + StringReporter.shortStackTraceSize)
       }
 
       it("should produce a good summary when reminders are enabled with full stack traces") {
@@ -407,7 +407,7 @@ class StringReporterSummarySpec extends UnitSpec {
           )
 
         fragments.take(initialFragmentsForJustOneFailedTest.size) should be (initialFragmentsForJustOneFailedTest)
-        fragments.length should be > (initialFragmentsForJustOneFailedTest.size + StringReporter.shortStackTraceSize) 
+        fragments.length should be > (initialFragmentsForJustOneFailedTest.size + StringReporter.shortStackTraceSize)
       }
     }
 
@@ -536,7 +536,7 @@ class StringReporterSummarySpec extends UnitSpec {
           scopesPendingCount = 0
         )
 
-      val oneSuiteAborted: Vector[ExceptionalEvent] = 
+      val oneSuiteAborted: Vector[ExceptionalEvent] =
         Vector(
           SuiteAborted(
             ordinal = firstOrdinal,
@@ -584,14 +584,14 @@ class StringReporterSummarySpec extends UnitSpec {
               summaryWithOneAbortedSuite.testsFailedCount.toString,
               summaryWithOneAbortedSuite.testsCanceledCount.toString,
               summaryWithOneAbortedSuite.testsIgnoredCount.toString,
-              summaryWithOneAbortedSuite.testsPendingCount.toString), 
+              summaryWithOneAbortedSuite.testsPendingCount.toString),
             AnsiCyan),
           Fragment(Resources.oneSuiteAborted, AnsiRed),
           Fragment("StringReporterSummarySpec:", AnsiRed),
           Fragment(Resources.specTextAndNote("", Resources.abortedNote), AnsiRed),
           Fragment(
             "  I meant to do that! (StringReporterSummarySpec.scala:" +
-              tfeLineNumber + ")", 
+              tfeLineNumber + ")",
             AnsiRed)
         )
 
@@ -668,7 +668,7 @@ class StringReporterSummarySpec extends UnitSpec {
 
         fragments.length should equal (
           initialFragmentsForJustOneAbortedSuite.size +
-          StringReporter.shortStackTraceSize) 
+          StringReporter.shortStackTraceSize)
       }
 
       it("should produce a good summary when reminders are enabled with full stack traces") {
@@ -691,7 +691,7 @@ class StringReporterSummarySpec extends UnitSpec {
 
         fragments.length should be > (
           initialFragmentsForJustOneAbortedSuite.size +
-          StringReporter.shortStackTraceSize) 
+          StringReporter.shortStackTraceSize)
       }
     }
 

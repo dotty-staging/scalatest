@@ -35,7 +35,7 @@ class BeforeAndAfterEachTestDataSuite extends FunSuite {
       super.run(testName, args)
     }
   }
-  
+
   class MySuite extends TheSuper with BeforeAndAfterEachTestData with BeforeAndAfterAllConfigMap {
     var beforeEachTestDataCalledBeforeRunTest = false
     var afterEachTestDataCalledAfterRunTest = false
@@ -84,7 +84,7 @@ class BeforeAndAfterEachTestDataSuite extends FunSuite {
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
     assert(a.runTestWasCalled)
   }
-  
+
   test("super's run must be called") {
     val a = new MySuite
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
@@ -96,7 +96,7 @@ class BeforeAndAfterEachTestDataSuite extends FunSuite {
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
     assert(a.beforeEachTestDataCalledBeforeRunTest)
   }
-  
+
   test("afterEach gets called after runTest") {
     val a = new MySuite
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
@@ -108,13 +108,13 @@ class BeforeAndAfterEachTestDataSuite extends FunSuite {
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
     assert(a.beforeAllConfigCalledBeforeExecute)
   }
-  
+
   test("afterAll gets called after run") {
     val a = new MySuite
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
     assert(a.afterAllConfigCalledAfterExecute)
   }
-  
+
   test("beforeEach(config) gets the config passed to run") {
     val a = new MySuite
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
@@ -142,16 +142,16 @@ class BeforeAndAfterEachTestDataSuite extends FunSuite {
   // test exceptions with runTest
   test("If any invocation of beforeEach completes abruptly with an exception, runTest " +
     "will complete abruptly with the same exception.") {
-    
+
     class MySuite extends Suite with BeforeAndAfterEachTestData with BeforeAndAfterAllConfigMap {
-      override def beforeEach(td: TestData): Unit = { throw new NumberFormatException } 
+      override def beforeEach(td: TestData): Unit = { throw new NumberFormatException }
     }
     assertThrows[NumberFormatException] {
       val a = new MySuite
       a.run(Some("july"), Args(StubReporter))
     }
   }
-  
+
   test("If any call to super.runTest completes abruptly with an exception, runTest " +
     "will complete abruptly with the same exception, however, before doing so, it will invoke afterEach") {
     trait FunkySuite extends Suite {
@@ -171,8 +171,8 @@ class BeforeAndAfterEachTestDataSuite extends FunSuite {
     }
     assert(a.afterEachCalled)
   }
-  
-  test("If both super.runTest and afterEach complete abruptly with an exception, runTest " + 
+
+  test("If both super.runTest and afterEach complete abruptly with an exception, runTest " +
     "will complete abruptly with the exception thrown by super.runTest.") {
     trait FunkySuite extends Suite {
       protected override def runTest(testName: String, args: Args): Status = {
@@ -192,10 +192,10 @@ class BeforeAndAfterEachTestDataSuite extends FunSuite {
     }
     assert(a.afterEachCalled)
   }
-  
+
   test("If super.runTest returns normally, but afterEach completes abruptly with an " +
     "exception, runTest will return a status that is already completed and contains the exception as an unreportedException.") {
-       
+
     class MySuite extends FunSuite with BeforeAndAfterEachTestData with BeforeAndAfterAllConfigMap {
       override def afterEach(td: TestData): Unit = { throw new NumberFormatException }
       test("test July") {}
@@ -206,11 +206,11 @@ class BeforeAndAfterEachTestDataSuite extends FunSuite {
     import OptionValues._
     assert(status.unreportedException.value.isInstanceOf[NumberFormatException])
   }
- 
+
   // test exceptions with run
   test("If any invocation of beforeAll completes abruptly with an exception, run " +
     "will complete abruptly with the same exception.") {
-    
+
     class MySuite extends FunSuite with BeforeAndAfterEachTestData with BeforeAndAfterAllConfigMap {
       override def beforeAll(cm: ConfigMap): Unit = { throw new NumberFormatException }
       test("test July") {}
@@ -220,7 +220,7 @@ class BeforeAndAfterEachTestDataSuite extends FunSuite {
       a.run(None, Args(StubReporter))
     }
   }
- 
+
   test("If any call to super.run completes abruptly with an exception, run " +
     "will complete abruptly with the same exception, however, before doing so, it will invoke afterAll") {
     trait FunkySuite extends FunSuite {
@@ -243,8 +243,8 @@ class BeforeAndAfterEachTestDataSuite extends FunSuite {
     }
     assert(a.afterAllCalled)
   }
-   
-  test("If both super.run and afterAll complete abruptly with an exception, run " + 
+
+  test("If both super.run and afterAll complete abruptly with an exception, run " +
     "will complete abruptly with the exception thrown by super.run.") {
     trait FunkySuite extends FunSuite {
       override def run(testName: Option[String], args: Args): Status = {
@@ -267,7 +267,7 @@ class BeforeAndAfterEachTestDataSuite extends FunSuite {
     }
     assert(a.afterAllCalled)
   }
-  
+
   test("If super.run returns normally, but afterAll completes abruptly with an " +
     "exception, runTest will return a status that contains that exception as an unreportedException (using BeforeAndAfterAllConfigMap).") {
     class MySuite extends FunSuite with BeforeAndAfterEachTestData with BeforeAndAfterAllConfigMap {

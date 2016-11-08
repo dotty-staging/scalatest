@@ -34,7 +34,7 @@ import org.scalatest.tools.{TestSpecificReporter, DistributedTestRunnerSuite, Te
  * To make it easier for users to write tests that run in parallel, this trait runs each test in its own instance of the class.
  * Running each test in its own instance enables tests to use the same instance <code>vars</code> and mutable objects referenced from
  * instance variables without needing to synchronize. Although ScalaTest provides functional approaches to
- * factoring out common test code that can help avoid such issues, running each test in its own instance is an insurance policy that makes 
+ * factoring out common test code that can help avoid such issues, running each test in its own instance is an insurance policy that makes
  * running tests in parallel easier and less error prone.
  * </p>
  *

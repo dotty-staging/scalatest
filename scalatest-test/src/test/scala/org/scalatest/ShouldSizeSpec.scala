@@ -350,7 +350,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
       }
 
       it("should throw TestFailedException with normal error message if specified size is negative") {
-        val set = mutable.Set(1, 2) 
+        val set = mutable.Set(1, 2)
         val caught1 = intercept[TestFailedException] {(
           set should have size (-2))
         }
@@ -364,8 +364,8 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
           set1 should { have size (5) and (have size (2 - 1)) }
         }
         assert(caught1.getMessage === FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, set1, 2, 5))
-        
-        val set2 = mutable.Set(1, 2) 
+
+        val set2 = mutable.Set(1, 2)
         val caught2 = intercept[TestFailedException] {(
           set2 should ((have size (5)) and (have size (2 - 1))))
         }
@@ -583,7 +583,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
     describe("on scala.collection.immutable.HashSet") {
 
       import scala.collection.immutable.HashSet
-        
+
       it("should do nothing if set size matches specified size") {
         HashSet(1, 2) should have size (2)
         HashSet("one", "two") should have size (2)
@@ -779,7 +779,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
           set1 should { have size (5) and (have size (2 - 1)) }
         }
         assert(caught1.getMessage === FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, set1, 2, 5))
-        
+
         val set2 = mutable.HashSet(1, 2)
         val caught2 = intercept[TestFailedException] {
           set2 should ((have size (5)) and (have size (2 - 1)))
@@ -999,7 +999,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
       val javaList: java.util.List[Int] = new java.util.ArrayList
       javaList.add(1)
       javaList.add(2)
-      
+
       it("should do nothing if list size matches specified size") {
         javaList should have size (2)
         // check((lst: java.util.List[Int]) => returnsNormally(lst should have size (lst.size)))
@@ -1362,13 +1362,13 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
            map1 should { not { have size (3) } and not { have size (2) }}
         }
         assert(caught1.getMessage === FailureMessages.commaBut(prettifier, UnquotedString(FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, map1, 2, 3)), UnquotedString(FailureMessages.hadSize(prettifier, map1, 2))))
-        
+
         val map2 = mutable.Map("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should ((not have size (3)) and (not have size (2)))
         }
         assert(caught2.getMessage === FailureMessages.commaBut(prettifier, UnquotedString(FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, map2, 2, 3)), UnquotedString(FailureMessages.hadSize(prettifier, map2, 2))))
-        
+
         val map3 = mutable.Map("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should (not have size (3) and not have size (2))
@@ -1616,7 +1616,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
 
       it("should throw an assertion error when set size doesn't match and used in a logical-or expression") {
         val map = HashMap("one" -> 1, "two" -> 2)
-        
+
         val caught1 = intercept[TestFailedException] {
           map should { have size (55) or (have size (22)) }
         }
@@ -1635,7 +1635,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
 
       it("should throw an assertion error when set size matches and used in a logical-and expression with not") {
         val map = HashMap("one" -> 1, "two" -> 2)
-        
+
         val caught1 = intercept[TestFailedException] {
           map should { not { have size (3) } and not { have size (2) }}
         }
@@ -1747,7 +1747,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
            map1 should { have size (5) and (have size (2 - 1)) }
         }
         assert(caught1.getMessage === FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, map1, 2, 5))
-        
+
         val map2 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
            map2 should ((have size (5)) and (have size (2 - 1)))
@@ -2116,13 +2116,13 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
     // I repeat these with copy and paste, becuase I need to test that each static structural type works, and
     // that makes it hard to pass them to a common "behaves like" method
     describe("on an arbitrary object that has an empty-paren Int size method") {
-  
+
       class Sizey(len: Int) {
         def size(): Int = len
         override def toString = "sizey"
       }
       val obj = new Sizey(2)
-  
+
       implicit val sizeOfSizey =
         new Size[Sizey] {
           def sizeOf(o: Sizey): Long = o.size()
@@ -2132,36 +2132,36 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
         obj should have size (2)
         check((len: Int) => returnsNormally(new Sizey(len) should have size (len)))
       }
-  
+
       it("should do nothing if object size does not match and used with should not") {
         obj should not { have size (3) }
         check((len: Int, wrongLen: Int) => len != wrongLen ==> returnsNormally(new Sizey(len) should not { have size (wrongLen) }))
       }
-  
+
       it("should do nothing when object size matches and used in a logical-and expression") {
         obj should { have size (2) and (have size (3 - 1)) }
         obj should ((have size (2)) and (have size (3 - 1)))
         obj should (have size (2) and have size (3 - 1))
       }
-  
+
       it("should do nothing when object size matches and used in a logical-or expression") {
         obj should { have size (77) or (have size (3 - 1)) }
         obj should ((have size (77)) or (have size (3 - 1)))
         obj should (have size (77) or have size (3 - 1))
       }
-  
+
       it("should do nothing when object size doesn't match and used in a logical-and expression with not") {
         obj should { not { have size (5) } and not { have size (3) }}
         obj should ((not have size (5)) and (not have size (3)))
         obj should (not have size (5) and not have size (3))
       }
-  
+
       it("should do nothing when object size doesn't match and used in a logical-or expression with not") {
         obj should { not { have size (2) } or not { have size (3) }}
         obj should ((not have size (2)) or (not have size (3)))
         obj should (not have size (2) or not have size (3))
       }
-  
+
       it("should throw TestFailedException if object size does not match specified size") {
         val caught1 = intercept[TestFailedException] {
           obj should have size (3)
@@ -2169,7 +2169,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
         assert(caught1.getMessage === FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, UnquotedString("sizey"), 2, 3))
         check((len: Int) => throwsTestFailedException(new Sizey(len) should have size (len + 1)))
       }
-  
+
       it("should throw TestFailedException with normal error message if specified size is negative") {
         val caught1 = intercept[TestFailedException] {
           obj should have size (-2)
@@ -2177,7 +2177,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
         assert(caught1.getMessage === FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, UnquotedString("sizey"), 2, -2))
         check((len: Int) => throwsTestFailedException(new Sizey(len) should have size (if ((len == 0) || (len == MIN_VALUE)) -1 else -len)))
       }
-  
+
       it("should throw an assertion error when object size doesn't match and used in a logical-and expression") {
 
         val caught1 = intercept[TestFailedException] {
@@ -2195,7 +2195,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
         }
         assert(caught3.getMessage === FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, UnquotedString("sizey"), 2, 5))
       }
-  
+
       it("should throw an assertion error when object size doesn't match and used in a logical-or expression") {
 
         val caught1 = intercept[TestFailedException] {
@@ -2213,7 +2213,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
         }
         assert(caught3.getMessage === FailureMessages.commaAnd(prettifier, UnquotedString(FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, UnquotedString("sizey"), 2, 55)), UnquotedString(FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, UnquotedString("sizey"), 2, 22))))
       }
-  
+
       it("should throw an assertion error when object size matches and used in a logical-and expression with not") {
 
         val caught1 = intercept[TestFailedException] {
@@ -2231,7 +2231,7 @@ class ShouldSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAss
         }
         assert(caught3.getMessage === FailureMessages.commaBut(prettifier, UnquotedString(FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, UnquotedString("sizey"), 2, 3)), UnquotedString(FailureMessages.hadSize(prettifier, UnquotedString("sizey"), 2))))
       }
-  
+
       it("should throw an assertion error when object size matches and used in a logical-or expression with not") {
 
         val caught1 = intercept[TestFailedException] {

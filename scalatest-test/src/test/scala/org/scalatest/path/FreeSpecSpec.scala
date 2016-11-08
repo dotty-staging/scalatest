@@ -204,11 +204,11 @@ class FreeSpecSpec extends org.scalatest.FunSpec with GivenWhenThen {
         e.testNames.iterator.toList
       }
     }
-    // TODO: put a better message in the instantation exception or probably wrap it in something that 
+    // TODO: put a better message in the instantation exception or probably wrap it in something that
     // has a better message, explaining the probable solutoin is to add an "override def newInstance"
 
     it("should throw DuplicateTestNameException if a duplicate test name registration is attempted") {
-      
+
       intercept[DuplicateTestNameException] {
         class AFreeSpec extends  PathFreeSpec {
           "should test this" in {}
@@ -475,7 +475,7 @@ class FreeSpecSpec extends org.scalatest.FunSpec with GivenWhenThen {
       // 99
       val tse = rep.testSucceededEventsReceived
       assert(tse.size === 1)
-      assert(tse(0).testName === "run this") 
+      assert(tse(0).testName === "run this")
       val tfe = rep.testFailedEventsReceived
       assert(tfe.size === 0)
       val tste = rep.testStartingEventsReceived
@@ -953,7 +953,7 @@ class FreeSpecSpec extends org.scalatest.FunSpec with GivenWhenThen {
             Thread.sleep(100)
           }
         }
-        override def newInstance = new AFreeSpec        
+        override def newInstance = new AFreeSpec
       }
       val a = new AFreeSpec
       val rep = new EventRecordingReporter
@@ -988,9 +988,9 @@ class FreeSpecSpec extends org.scalatest.FunSpec with GivenWhenThen {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 12)
     }
   }
-  
+
   describe("when failure happens") {
-    
+
     it("should fire TestFailed event with correct stack depth info when test failed") {
       class TestSpec extends FreeSpec {
         "fail scenario" in {
@@ -1012,14 +1012,14 @@ class FreeSpecSpec extends org.scalatest.FunSpec with GivenWhenThen {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "FreeSpecSpec.scala")
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 12)
     }
-    
+
     it("should generate TestRegistrationClosedException with correct stack depth info when has an in nested inside an in") {
       class TestSpec extends FreeSpec {
         //var registrationClosedThrown = false
         "a feature" - {
           "a scenario" in {
             "nested scenario" in {
-              
+
             }
           }
         }

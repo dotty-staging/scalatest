@@ -19,19 +19,19 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfKeyWordApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfKeyWordApplication ") {
-    
+
     it("should have pretty toString when expectedKey is null") {
       val result = new ResultOfKeyWordApplication(null)
       result.toString should be ("key (null)")
     }
-    
+
     it("should have pretty toString when expectedKey is not null") {
       val result = new ResultOfKeyWordApplication("Bob")
       result.toString should be ("key (\"Bob\")")
     }
-    
+
   }
-  
+
 }

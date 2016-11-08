@@ -24,7 +24,7 @@
  *
  * gets transformed to this scala:
  *
- *   trait Ignore extends java.lang.annotation.Annotation 
+ *   trait Ignore extends java.lang.annotation.Annotation
  */
 
 import java.io.File

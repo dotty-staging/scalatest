@@ -15,7 +15,7 @@
  */
 package org.scalatest.examples.spec.tagging;
 
-import java.lang.annotation.*; 
+import java.lang.annotation.*;
 import org.scalatest.TagAnnotation;
 
 @TagAnnotation

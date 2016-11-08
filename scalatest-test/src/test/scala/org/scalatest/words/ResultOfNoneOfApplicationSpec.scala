@@ -19,23 +19,23 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfNoneOfApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfNoneOfApplication ") {
-    
+
     it("should have pretty toString when right is empty") {
       val result = new ResultOfNoneOfApplication(Vector.empty)
       result.toString should be ("noneOf ()")
     }
-    
+
     it("should have pretty toString when right contains 1 element") {
       val result = new ResultOfNoneOfApplication(Vector("Bob"))
       result.toString should be ("noneOf (\"Bob\")")
     }
-    
+
     it("should have pretty toString when right contains > 1 elements") {
       val result = new ResultOfNoneOfApplication(Vector("Bob", "Alice"))
       result.toString should be ("noneOf (\"Bob\", \"Alice\")")
     }
   }
-  
+
 }

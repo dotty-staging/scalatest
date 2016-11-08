@@ -16,9 +16,9 @@
 package org.scalactic
 
 /**
- * An <code>Equivalence[A]</code> implementation that determines the equality of two objects by normalizing 
+ * An <code>Equivalence[A]</code> implementation that determines the equality of two objects by normalizing
  * one or both objects, then comparing the results using an &ldquo;after normalization&rdquo; <code>Equivalence</code> referenced from
- * the <code>afterNormalizationEquivalence</code>  member. By default, the <code>afterNormalizationEquivalence</code> is 
+ * the <code>afterNormalizationEquivalence</code>  member. By default, the <code>afterNormalizationEquivalence</code> is
  * an instance of <a href="Equivalence$.html"><code>Equivalence.default[A]</code></a>.
  * </p>
  *
@@ -28,7 +28,7 @@ package org.scalactic
  * of <code>Normalization</code> passed to <code>being</code>. Here's an example:
  * </p>
  *
- * <pre class="stREPL"> 
+ * <pre class="stREPL">
  * scala&gt; import org.scalactic._
  * import org.scalactic._
  *
@@ -85,7 +85,7 @@ trait NormalizingEquivalence[A] extends Equivalence[A] { thisNormEq =>
    * Returns a new <code>NormalizingEquivalence</code> that combines this and the passed <code>Normalization</code>.
    *
    * <p>
-   * The <code>normalized</code> method of the <code>NormalizingEquivalence</code>'s returned by this method returns a result 
+   * The <code>normalized</code> method of the <code>NormalizingEquivalence</code>'s returned by this method returns a result
    * obtained by forwarding the passed value first to this <code>NormalizingEquivalence</code>'s implementation of the method,
    * then passing that result to the passed <code>Normalization</code>'s implementation of the method.
    * Essentially, the body of the composed <code>normalized</code> method is:
@@ -104,7 +104,7 @@ trait NormalizingEquivalence[A] extends Equivalence[A] { thisNormEq =>
   /**
    * Converts this <code>NormalizingEquivalence</code> to a <code>Normalization</code>.
    *
-   * @return a <code>Normalization</code> whose <code>normalized</code> method 
+   * @return a <code>Normalization</code> whose <code>normalized</code> method
    *     is implemented by forwarding to the <code>normalized</code> method of this <code>NormalizingEquivalence</code>.
    */
   final def toNormalization: Normalization[A] =

@@ -35,7 +35,7 @@ class ExampleSpec extends WordSpec with OneInstancePerTest {
       builder.append("fun!")
       assert(builder.toString === "ScalaTest is fun!")
       assert(buffer.isEmpty)
-    } 
+    }
   }
 
   //SCALATESTJS-ONLY def newInstance: Suite with OneInstancePerTest = new ExampleSpec

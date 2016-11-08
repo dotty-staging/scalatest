@@ -29,11 +29,11 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
       val string = "Hi"
       val obj: AnyRef = string
       val otherString = new String("Hi")
-      
+
       string shouldBe theSameInstanceAs (string)
       obj shouldBe theSameInstanceAs (string)
       string shouldBe theSameInstanceAs (obj)
-      
+
       val caught1 = intercept[TestFailedException] {
         otherString shouldBe theSameInstanceAs (string)
       }
@@ -42,18 +42,18 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
       assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
     // SKIP-SCALATESTJS-END
-    
+
     it("should work with any") {
       Array(1, 2) shouldBe Array(1, 2)
       1 shouldBe 1
-      
+
       val caught1 = intercept[TestFailedException] {
         1 shouldBe 2
       }
       assert(caught1.getMessage === "1 was not equal to 2")
       assert(caught1.failedCodeFileName === Some("ShouldBeShorthandSpec.scala"))
       assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       val s: String = null
       val caught2 = intercept[TestFailedException] {
         s shouldBe "hi"
@@ -61,7 +61,7 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
       assert(caught2.getMessage === "null was not equal to \"hi\"")
       assert(caught2.failedCodeFileName === Some("ShouldBeShorthandSpec.scala"))
       assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       8 shouldBe > (7)
       val caught3 = intercept[TestFailedException] {
         7 shouldBe > (7)
@@ -69,15 +69,15 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
       assert(caught3.message === Some("7 was not greater than 7"))
       assert(caught3.failedCodeFileName === Some("ShouldBeShorthandSpec.scala"))
       assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
-      5 shouldBe < (7) 
+
+      5 shouldBe < (7)
       val caught4 = intercept[TestFailedException] {
         7 shouldBe < (7)
       }
       assert(caught4.message === Some("7 was not less than 7"))
       assert(caught4.failedCodeFileName === Some("ShouldBeShorthandSpec.scala"))
       assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       9 shouldBe >= (7)
       val caught5 = intercept[TestFailedException] {
         6 shouldBe >= (7)
@@ -85,7 +85,7 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
       assert(caught5.message === Some("6 was not greater than or equal to 7"))
       assert(caught5.failedCodeFileName === Some("ShouldBeShorthandSpec.scala"))
       assert(caught5.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       3 shouldBe <= (7)
       val caught6 = intercept[TestFailedException] {
         8 shouldBe <= (7)
@@ -93,7 +93,7 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
       assert(caught6.message === Some("8 was not less than or equal to 7"))
       assert(caught6.failedCodeFileName === Some("ShouldBeShorthandSpec.scala"))
       assert(caught6.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       true shouldBe true
       val caught7 = intercept[TestFailedException] {
         true shouldBe false
@@ -102,9 +102,9 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
       assert(caught7.failedCodeFileName === Some("ShouldBeShorthandSpec.scala"))
       assert(caught7.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
-    
+
     it("should work with BeMatcher") {
-      
+
       class OddMatcher extends BeMatcher[Int] {
         def apply(left: Int): MatchResult = {
           MatchResult(
@@ -116,10 +116,10 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
       }
       val odd = new OddMatcher
       val even = not (odd)
-      
+
       1 shouldBe odd
       2 shouldBe even
-      
+
       val caught1 = intercept[TestFailedException] {
         4 shouldBe (odd)
       }
@@ -137,10 +137,10 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
 
     // SKIP-SCALATESTJS-START
     it("should work with symbol") {
-      
+
       emptyMock shouldBe 'empty
       isEmptyMock shouldBe 'empty
-      
+
       emptyMock shouldBe a ('empty)
 
       emptyMock shouldBe an ('empty)
@@ -151,7 +151,7 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
       assert(ex1.message === Some("NoPredicateMock has neither an empty nor an isEmpty method"))
       assert(ex1.failedCodeFileName === Some("ShouldBeShorthandSpec.scala"))
       assert(ex1.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       // Check message for name that starts with a consonant (should use a instead of an)
       val ex2 = intercept[TestFailedException] {
         noPredicateMock shouldBe 'full
@@ -196,9 +196,9 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
       assert(ex7.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
     // SKIP-SCALATESTJS-END
-    
+
     it("should work with BePropertyMatcher") {
-      
+
       case class MyFile(
         val name: String,
         val file: Boolean,
@@ -224,25 +224,25 @@ class ShouldBeShorthandSpec extends FunSpec with EmptyMocks with BookPropertyMat
 
       val book = new Book("A Tale of Two Cities", "Dickens", 1859, 45, true)
       val badBook = new Book("A Tale of Two Cities", "Dickens", 1859, 45, false)
-      
+
       book shouldBe goodRead
-      
+
       val caught1 = intercept[TestFailedException] {
         badBook shouldBe goodRead
       }
       assert(caught1.message === Some("Book(A Tale of Two Cities,Dickens,1859,45,false) was not goodRead"))
       assert(caught1.failedCodeFileName === Some("ShouldBeShorthandSpec.scala"))
       assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       book shouldBe a (goodRead)
-      
+
       val caught2 = intercept[TestFailedException] {
         badBook shouldBe a (goodRead)
       }
       assert(caught2.message === Some("Book(A Tale of Two Cities,Dickens,1859,45,false) was not a goodRead"))
       assert(caught2.failedCodeFileName === Some("ShouldBeShorthandSpec.scala"))
       assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       book shouldBe an (goodRead)
       val caught3 = intercept[TestFailedException] {
         badBook shouldBe an (goodRead)

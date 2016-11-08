@@ -29,7 +29,7 @@ package org.scalactic.source
  * is the simple file name. For example, if the <code>filePathname</code> were <code>"/Users/this/is/a/class/Act.scala"</code>,
  * the <code>fileName</code> would be <code>"Act.scala"</code>.
  * </p>
- * 
+ *
  * <p>
  * <em>Note: Class <code>Position</code> is in part inspired by the <a href="https://github.com/lihaoyi/sourcecode" target="_blank"><code>sourcecode</code></a> library designed by Li Haoyi.</a></em>
  * </p>

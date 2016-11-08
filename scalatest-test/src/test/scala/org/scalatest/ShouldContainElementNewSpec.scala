@@ -22,7 +22,7 @@ import org.scalactic.Explicitly
 import SharedHelpers.thisLineNumber
 import Matchers._
 
-// Calling this ShouldContainElementNewSpec so that it is easy to 
+// Calling this ShouldContainElementNewSpec so that it is easy to
 // keep track of the new tests that we'll need to port over to
 // inspector shorthands.
 class ShouldContainElementNewSpec extends FunSpec with Explicitly {
@@ -47,7 +47,7 @@ class ShouldContainElementNewSpec extends FunSpec with Explicitly {
       implicit val e = new Equality[Int] {
         def areEqual(a: Int, b: Any): Boolean = a != b
       }
-      
+
       val e2 = intercept[TestFailedException] {
         Vector(2, 2) should contain (2)
       }
@@ -66,7 +66,7 @@ class ShouldContainElementNewSpec extends FunSpec with Explicitly {
     }
 
     it("should use an Equality of the element type of the left-hand \"holder\" on a String") {
-      
+
       "22" should contain ('2')
       val e1 = intercept[TestFailedException] {
         "22" should not contain ('2')
@@ -78,7 +78,7 @@ class ShouldContainElementNewSpec extends FunSpec with Explicitly {
       implicit val e = new Equality[Char] {
         def areEqual(a: Char, b: Any): Boolean = a != b
       }
-      
+
       val e2 = intercept[TestFailedException] {
         "22" should contain ('2')
       }
@@ -97,7 +97,7 @@ class ShouldContainElementNewSpec extends FunSpec with Explicitly {
     }
 
     it("should use an Equality of the element type of the left-hand \"holder\" on an Array") {
-      
+
       Array(2, 2) should contain (2)
       val e1 = intercept[TestFailedException] {
         Array(2, 2) should not contain (2)
@@ -109,7 +109,7 @@ class ShouldContainElementNewSpec extends FunSpec with Explicitly {
       implicit val e = new Equality[Int] {
         def areEqual(a: Int, b: Any): Boolean = a != b
       }
-      
+
       val e2 = intercept[TestFailedException] {
         Array(2, 2) should contain (2)
       }

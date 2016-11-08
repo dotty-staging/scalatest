@@ -32,6 +32,6 @@ class AddSpec extends AsyncFlatSpec {
     // must have result type Assertion:
     assert(sum == 3)
   }
-  
+
 }
 

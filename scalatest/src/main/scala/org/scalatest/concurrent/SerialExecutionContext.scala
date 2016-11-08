@@ -26,7 +26,7 @@ This is private[scalatest] so that no one can actually use it except
 when we install it as the default. It can't be used generally because
 we special case it in the AsyncEngine. Whatever is referenced from
 executionContext is what is passed into AsyncEngine, and then we
-do a runtime type check to see if it is this one, and if so, we 
+do a runtime type check to see if it is this one, and if so, we
 call runNow.
 */
 private[scalatest] class SerialExecutionContext extends ExecutionContext {
@@ -70,11 +70,11 @@ private[scalatest] class SerialExecutionContext extends ExecutionContext {
 
      If so, it will loop back and find that as yet the Future[Outcome]
      is not completed, so it will execute the while body again:
-  
+
       while (!future.isCompleted) {
         // It will execute here again
       }
- 
+
      It will find out that the queue does actually contain a job to do:
 
      // queue.peek will return a job to do, not null
@@ -95,11 +95,11 @@ private[scalatest] class SerialExecutionContext extends ExecutionContext {
 
      Thus it will skip the wait() call and loop back to the top
      of the outer while. That will finally return false:
-    
+
       while (!future.isCompleted) {
         // Doesn't get here
       } // Just hops down here because the future is now complete
- 
+
       And runNow will return, as this test has finished running.
    */
   /*def runNow(future: Future[Outcome]): Unit = {

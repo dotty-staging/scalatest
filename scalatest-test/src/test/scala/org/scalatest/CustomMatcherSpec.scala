@@ -34,10 +34,10 @@ trait CustomMatchers {
 
       val fileOrDir = if (left.isFile) "file" else "directory"
 
-      val failureMessageSuffix = 
+      val failureMessageSuffix =
         fileOrDir + " named " + left.getName + " did not exist"
 
-      val negatedFailureMessageSuffix = 
+      val negatedFailureMessageSuffix =
         fileOrDir + " named " + left.getName + " existed"
 
       MatchResult(
@@ -160,4 +160,4 @@ class CustomMatcherSpec extends FunSpec with CustomMatchers {
     }
   }
 }
- 
+

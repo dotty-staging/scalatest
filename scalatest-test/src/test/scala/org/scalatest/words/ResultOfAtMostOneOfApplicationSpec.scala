@@ -19,23 +19,23 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfAtMostOneOfApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfAtMostOneOfApplication ") {
-    
+
     it("should have pretty toString when right is empty") {
       val result = new ResultOfAtMostOneOfApplication(Vector.empty)
       result.toString should be ("atMostOneOf ()")
     }
-    
+
     it("should have pretty toString when right contains 1 element") {
       val result = new ResultOfAtMostOneOfApplication(Vector("Bob"))
       result.toString should be ("atMostOneOf (\"Bob\")")
     }
-    
+
     it("should have pretty toString when right contains > 1 elements") {
       val result = new ResultOfAtMostOneOfApplication(Vector("Bob", "Alice"))
       result.toString should be ("atMostOneOf (\"Bob\", \"Alice\")")
     }
   }
-  
+
 }

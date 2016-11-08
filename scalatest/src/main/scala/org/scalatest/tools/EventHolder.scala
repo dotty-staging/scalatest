@@ -30,7 +30,7 @@ private[tools] class EventHolder(val event: Event, val message: Option[String], 
     val rerunner: Option[String], val summary: Option[Summary], val isRerun: Boolean) {
 
   requireNonNull(event, message, throwable, rerunner, summary)
- 
+
   def this(event: Event, message: Option[String], throwable: Option[Throwable],
       rerunner: Option[String]) = this(event, message, throwable, rerunner, None, false)
 

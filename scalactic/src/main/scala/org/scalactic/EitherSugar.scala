@@ -46,7 +46,7 @@ private[scalactic] trait EitherSugar {
   implicit class NothingRightEitherizer[L](either: Either[L, Nothing]) {
     def toOr: Nothing Or L = Or.from(either)
   }
-} 
+}
 
 /**
  * Companion object for <code>EitherSugar</code> enabling its members to be

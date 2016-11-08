@@ -52,7 +52,7 @@ class ExampleSpec extends AsyncFlatSpec with BeforeAndAfter {
   after {
     actor ! Clear // clean up the fixture
   }
-  
+
   "Testing" should "be easy" in {
     actor ! Append("easy!")
     val futureString = actor ? GetValue

@@ -29,9 +29,9 @@ sealed abstract class Location extends Product with Serializable
 final case class TopOfClass(className: String) extends Location
 
 /**
- * The location in a source file where the method identified by the passed <code>methodId</code> 
- * in the class whose fully qualified name is pased as <code>className</code> is declared.  
- * The methodId is obtained by calling <code>toGenericString</code> on the <code>java.lang.reflect.Method</code> 
+ * The location in a source file where the method identified by the passed <code>methodId</code>
+ * in the class whose fully qualified name is pased as <code>className</code> is declared.
+ * The methodId is obtained by calling <code>toGenericString</code> on the <code>java.lang.reflect.Method</code>
  * object representing the method.
  *
  * @param className the fully qualified class name
@@ -49,7 +49,7 @@ final case class TopOfMethod(className: String, methodId: String) extends Locati
 final case class LineInFile(lineNumber: Int, fileName: String, filePathname: Option[String]) extends Location
 
 /**
- * Indicates the location should be taken from the stack depth exception, included elsewhere in 
+ * Indicates the location should be taken from the stack depth exception, included elsewhere in
  * the event that contained this location.
  */
 final case object SeeStackDepthException extends Location

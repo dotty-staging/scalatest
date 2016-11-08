@@ -47,32 +47,32 @@ private[scalatest] class SbtCommandParser extends StandardTokenParsers {
 /*
   def stArgs: Parser[Any] = rep(stArgsOpt)
 
-  def stArgsOpt: Parser[Any] = include | 
-                              exclude | 
-                              concurrent | 
-                              membersonly | 
-                              wildcard | 
-                              suite | 
-                              junit | 
-                              testng | 
-                              stdout | 
-                              stderr | 
-                              graphic | 
-                              file | 
-                              junitxml | 
-                              dashboard | 
-                              html | 
+  def stArgsOpt: Parser[Any] = include |
+                              exclude |
+                              concurrent |
+                              membersonly |
+                              wildcard |
+                              suite |
+                              junit |
+                              testng |
+                              stdout |
+                              stderr |
+                              graphic |
+                              file |
+                              junitxml |
+                              dashboard |
+                              html |
                               reporterclass
 
   def include: Parser[Any] = "include" ~ list
   def exclude: Parser[Any] = "exclude" ~ list
- 
+
   def concurrent: Parser[Any] = "concurrent"
   def membersonly: Parser[Any] = "membersonly" ~ list
   def wildcard: Parser[Any] = "wildcard" ~ list
 
   def list: Parser[Any] = "(" ~> repsep(stringLit, ",") <~ ")"
- 
+
   def stdout: Parser[Any] = "stdout" ~ opt("(" ~ config ~ ")")
   def stderr: Parser[Any] = "stderr" ~ opt("(" ~ config ~ ")")
   def graphic: Parser[Any] = "graphic" ~ opt("(" ~ limitedConfig ~ ")")
@@ -85,34 +85,34 @@ private[scalatest] class SbtCommandParser extends StandardTokenParsers {
   def archive: Parser[Any] = "archive" ~ "=" ~ "\"" ~ numericLit ~ "\""
 
   def config: Parser[Any] = "config" ~ "=" ~ "\"" ~ rep(configOpt) ~ "\""
- 
-  def configOpt: Parser[Any] = "dropteststarting" | 
-                           "droptestsucceeded" | 
-                           "droptestignored" | 
-                           "droptestpending" | 
-                           "dropsuitestarting" | 
-                           "dropsuitecompleted" | 
-                           "dropinfoprovided" | 
-                           "nocolor" | 
-                           "shortstacks" | 
-                           "fullstacks" | 
+
+  def configOpt: Parser[Any] = "dropteststarting" |
+                           "droptestsucceeded" |
+                           "droptestignored" |
+                           "droptestpending" |
+                           "dropsuitestarting" |
+                           "dropsuitecompleted" |
+                           "dropinfoprovided" |
+                           "nocolor" |
+                           "shortstacks" |
+                           "fullstacks" |
                            "durations"
-  
+
   def limitedConfig: Parser[Any] = "config=\"" ~ rep(limitedConfigOpt) ~ "\""
-                           
-  def limitedConfigOpt: Parser[Any] = "dropteststarting" | 
-                                  "droptestsucceeded" | 
-                                  "droptestignored" | 
-                                  "droptestpending" | 
-                                  "dropsuitestarting" | 
-                                  "dropsuitecompleted" | 
+
+  def limitedConfigOpt: Parser[Any] = "dropteststarting" |
+                                  "droptestsucceeded" |
+                                  "droptestignored" |
+                                  "droptestpending" |
+                                  "dropsuitestarting" |
+                                  "dropsuitecompleted" |
                                   "dropinfoprovided"
 */
 }
 
 private[scalatest] object SbtCommandParser {
   def main(args: Array[String]): Unit = {
-    
+
     (new SbtCommandParser).parseCommand("""st""")
 /*
     (new SbtCommandParser).parseCommand("""st include("a", "b", "c")""")

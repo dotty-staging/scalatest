@@ -30,7 +30,7 @@ final class RegexWithGroups(val regex: Regex, val groups: IndexedSeq[String]) {
   override def toString: String = "\"" + regex.toString + "\"" + (
     if (groups.isEmpty)
       ""
-    else 
+    else
       (if (groups.size > 1) " withGroups (" else " withGroup (") + groups.map("\"" + _ + "\"").mkString(", ") + ")"
   )
 }

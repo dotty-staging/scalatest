@@ -16,7 +16,7 @@
 package org.scalactic
 
 /**
- * Provides three implicit methods that loosen the equality constraint defined by <code>TypeCheckedTripleEquals</code> 
+ * Provides three implicit methods that loosen the equality constraint defined by <code>TypeCheckedTripleEquals</code>
  * for Scala <code>Traversable</code>s to one that more closely matches Scala's approach to <code>Traversable</code> equality.
  *
  * <p>
@@ -98,13 +98,13 @@ package org.scalactic
  * <a href="SetEqualityConstraints.html"><code>SetEqualityConstraints</code></a>,
  * and <a href="MapEqualityConstraints.html"><code>MapEqualityConstraints</code></a>.
  * </p>
- * 
+ *
  * @author Bill Venners
  */
 trait TraversableEqualityConstraints extends SeqEqualityConstraints with SetEqualityConstraints with MapEqualityConstraints
 
 /**
- * Companion object that facilitates the importing of <code>TraversableEqualityConstraints</code> members as 
+ * Companion object that facilitates the importing of <code>TraversableEqualityConstraints</code> members as
  * an alternative to mixing it in. One use case is to import <code>TraversableEqualityConstraints</code> members so you can use
  * them in the Scala interpreter.
  */

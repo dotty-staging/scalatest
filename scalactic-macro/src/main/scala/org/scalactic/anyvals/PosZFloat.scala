@@ -25,7 +25,7 @@ import scala.collection.immutable.NumericRange
  * as efficient as an <code>Float</code>, being boxed only when a
  * <code>Float</code> would have been boxed.
  * </p>
- * 
+ *
  * <p>
  * The <code>PosZFloat.apply</code> factory method is
  * implemented in terms of a macro that checks literals for
@@ -35,7 +35,7 @@ import scala.collection.immutable.NumericRange
  * <code>PosZFloat</code> instance at run time or an error at
  * compile time. Here's an example:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import anyvals._
  * import anyvals._
@@ -91,7 +91,7 @@ import scala.collection.immutable.NumericRange
  * scala&gt; PosZFloat.from(y)
  * res5: Option[org.scalactic.anyvals.PosZFloat] = None
  * </pre>
- * 
+ *
  * <p>
  * The <code>PosZFloat.apply</code> factory method is marked implicit, so that
  * you can pass literal <code>Float</code>s into methods that require
@@ -133,7 +133,7 @@ import scala.collection.immutable.NumericRange
  * </p>
  *
  * @param value The <code>Float</code> value underlying this <code>PosZFloat</code>.
- */ 
+ */
 final class PosZFloat private (val value: Float) extends AnyVal {
 
   /**
@@ -531,6 +531,6 @@ object PosZFloat {
   implicit val posZFloatOrd: Ordering[PosZFloat] =
     new Ordering[PosZFloat] {
       def compare(x: PosZFloat, y: PosZFloat): Int = x.toFloat.compare(y)
-    } 
+    }
 }
 

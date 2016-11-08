@@ -24,7 +24,7 @@ import org.scalactic._
 class RetriesSpec extends FunSpec {
 
   describe("The Retries trait") {
-    
+
     describe("offers a withRetryOnFailure method that") {
 
       it("should return Succeeded on Succeeded") {
@@ -67,7 +67,7 @@ class RetriesSpec extends FunSpec {
             executionCount += 1
             if (executionCount == 1) firstFailed else secondFailed
           }
-        outcome should be theSameInstanceAs firstFailed 
+        outcome should be theSameInstanceAs firstFailed
         executionCount shouldBe 2
       }
       it("should return Failed if fails first then gives Pending") { // unlikely case
@@ -111,7 +111,7 @@ class RetriesSpec extends FunSpec {
       }
     }
     describe("offers a withRetryOnFailure(delay) method that") {
-      
+
       it("should return Succeeded on Succeeded") {
         var executionCount = 0
         val outcome =
@@ -152,7 +152,7 @@ class RetriesSpec extends FunSpec {
             executionCount += 1
             if (executionCount == 1) firstFailed else secondFailed
           }
-        outcome should be theSameInstanceAs firstFailed 
+        outcome should be theSameInstanceAs firstFailed
         executionCount shouldBe 2
       }
       it("should return Failed if fails first then gives Pending") { // unlikely case
@@ -237,7 +237,7 @@ class RetriesSpec extends FunSpec {
             executionCount += 1
             if (executionCount == 1) firstCanceled else secondCanceled
           }
-        outcome should be theSameInstanceAs firstCanceled 
+        outcome should be theSameInstanceAs firstCanceled
         executionCount shouldBe 2
       }
       it("should return Canceled if cancels first then gives Pending") { // unlikely case
@@ -317,7 +317,7 @@ class RetriesSpec extends FunSpec {
             executionCount += 1
             if (executionCount == 1) firstCanceled else secondCanceled
           }
-        outcome should be theSameInstanceAs firstCanceled 
+        outcome should be theSameInstanceAs firstCanceled
         executionCount shouldBe 2
       }
       it("should return Canceled if cancels first then gives Pending") { // unlikely case
@@ -385,7 +385,7 @@ class RetriesSpec extends FunSpec {
             executionCount += 1
             if (executionCount == 1) firstFailed else secondFailed
           }
-        outcome should be theSameInstanceAs firstFailed 
+        outcome should be theSameInstanceAs firstFailed
         executionCount shouldBe 2
       }
       it("should return Failed if fails first then gives Pending") { // unlikely case
@@ -436,7 +436,7 @@ class RetriesSpec extends FunSpec {
             executionCount += 1
             if (executionCount == 1) firstCanceled else secondCanceled
           }
-        outcome should be theSameInstanceAs firstCanceled 
+        outcome should be theSameInstanceAs firstCanceled
         executionCount shouldBe 2
       }
       it("should return Canceled if cancels first then gives Pending") { // unlikely case
@@ -504,7 +504,7 @@ class RetriesSpec extends FunSpec {
             executionCount += 1
             if (executionCount == 1) firstFailed else secondFailed
           }
-        outcome should be theSameInstanceAs firstFailed 
+        outcome should be theSameInstanceAs firstFailed
         executionCount shouldBe 2
       }
       it("should return Failed if fails first then gives Pending") { // unlikely case
@@ -555,7 +555,7 @@ class RetriesSpec extends FunSpec {
             executionCount += 1
             if (executionCount == 1) firstCanceled else secondCanceled
           }
-        outcome should be theSameInstanceAs firstCanceled 
+        outcome should be theSameInstanceAs firstCanceled
         executionCount shouldBe 2
       }
       it("should return Canceled if cancels first then gives Pending") { // unlikely case

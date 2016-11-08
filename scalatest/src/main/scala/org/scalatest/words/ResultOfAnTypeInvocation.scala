@@ -29,7 +29,7 @@ import org.scalactic._
 final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * an [Exception] should be thrownBy { ... }
@@ -51,9 +51,9 @@ final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
    */
   def should(notWord: NotWord): PleaseUseNoExceptionShouldSyntaxInstead =
     new PleaseUseNoExceptionShouldSyntaxInstead
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * an [RuntimeException] shouldBe thrownBy { ... }
@@ -61,7 +61,7 @@ final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
    * </pre>
    **/
   def shouldBe(thrownBy: ResultOfThrownByApplication)(implicit prettifier: Prettifier, pos: source.Position): org.scalatest.Assertion = {
-    
+
     val caught = try {
       thrownBy.execute()
       None
@@ -187,6 +187,6 @@ final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
       else indicateSuccess(Resources.exceptionThrown(clazz.getName))
     }
   }
-  
+
   override def toString: String = "an [" + clazz.getName + "]"
 }

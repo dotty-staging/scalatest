@@ -23,11 +23,11 @@ package org.scalatest.words
  * @author Chee Seng
  */
 final class ResultOfThrownByApplication(fun: => Unit) {
-  
+
   /**
    * Execute the passed-in body of code.
    */
   def execute(): Unit = fun
-  
+
   override def toString: String = "thrownBy { ... }"
 }

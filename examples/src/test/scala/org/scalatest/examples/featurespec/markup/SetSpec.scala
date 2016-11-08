@@ -45,7 +45,7 @@ It is also good idea to override methods `foreach` and
 `size` for efficiency.
 
   """ }
-  
+
   feature("An element can be added to an empty mutable Set") {
     scenario("When an element is added to an empty mutable Set") {
       Given("an empty mutable Set")

@@ -90,7 +90,7 @@ package org.scalatest
  * </ul>
  *
  * <p>
- * The error messages produced by inspector methods are designed to make sense no matter how deeply you nest the method invocations. 
+ * The error messages produced by inspector methods are designed to make sense no matter how deeply you nest the method invocations.
  * Here's an example of a nested inspection that fails and the resulting error message:
  * </p>
  *
@@ -98,10 +98,10 @@ package org.scalatest
  * scala&gt; forAll (yss) { ys =&gt;
  *      |   forAll (ys) { y =&gt; y should be &lt; 2 }
  *      | }
- * org.scalatest.exceptions.TestFailedException: forAll failed, because: 
- *   at index 0, forAll failed, because: 
- *     at index 1, 2 was not less than 2 (&lt;console&gt;:20) 
- *   in List(1, 2, 3) (&lt;console&gt;:20) 
+ * org.scalatest.exceptions.TestFailedException: forAll failed, because:
+ *   at index 0, forAll failed, because:
+ *     at index 1, 2 was not less than 2 (&lt;console&gt;:20)
+ *   in List(1, 2, 3) (&lt;console&gt;:20)
  * in List(List(1, 2, 3), List(1, 2, 3), List(1, 2, 3))
  *      at org.scalatest.InspectorsHelper$.doForAll(Inspectors.scala:146)
  *      ...
@@ -128,17 +128,17 @@ package org.scalatest
  *
  * <pre class="stREPL">
  * scala&gt; forAll (xs) { x =&gt; x should be &lt; 3 }
- * org.scalatest.exceptions.TestFailedException: forAll failed, because: 
- *   at index 2, 3 was not less than 3 (&lt;console&gt;:18) 
+ * org.scalatest.exceptions.TestFailedException: forAll failed, because:
+ *   at index 2, 3 was not less than 3 (&lt;console&gt;:18)
  * in List(1, 2, 3, 4, 5)
  *      at org.scalatest.InspectorsHelper$.doForAll(Inspectors.scala:146)
  *      ...
  *
  * scala&gt; forEvery (xs) { x =&gt; x should be &lt; 3 }
- * org.scalatest.exceptions.TestFailedException: forEvery failed, because: 
- *   at index 2, 3 was not less than 3 (&lt;console&gt;:18), 
- *   at index 3, 4 was not less than 3 (&lt;console&gt;:18), 
- *   at index 4, 5 was not less than 3 (&lt;console&gt;:18) 
+ * org.scalatest.exceptions.TestFailedException: forEvery failed, because:
+ *   at index 2, 3 was not less than 3 (&lt;console&gt;:18),
+ *   at index 3, 4 was not less than 3 (&lt;console&gt;:18),
+ *   at index 4, 5 was not less than 3 (&lt;console&gt;:18)
  * in List(1, 2, 3, 4, 5)
  *      at org.scalatest.InspectorsHelper$.doForEvery(Inspectors.scala:226)
  *      ...
@@ -148,46 +148,46 @@ package org.scalatest
  * Note that if you're using matchers, you can alternatively use <em>inspector shorthands</em> for writing non-nested
  * inspections. Here's an example:
  * </p>
- * 
+ *
  * <pre>
  * scala&gt; all (xs) should be &gt; 3
- * org.scalatest.exceptions.TestFailedException: 'all' inspection failed, because: 
- *   at index 0, 1 was not greater than 3 
+ * org.scalatest.exceptions.TestFailedException: 'all' inspection failed, because:
+ *   at index 0, 1 was not greater than 3
  * in List(1, 2, 3, 4, 5)
  *      at org.scalatest.InspectorsHelper$.doForAll(Inspectors.scala:146)
  * </pre>
  *
  * <p>
  * You can use <code>Inspectors</code> on any <code>scala.collection.GenTraversable</code>, <code>java.util.Collection</code>,
- * <code>java.util.Map</code> (with <a href="Entry.html"><code>Entry</code></a>), <code>Array</code>, or <code>String</code>. 
+ * <code>java.util.Map</code> (with <a href="Entry.html"><code>Entry</code></a>), <code>Array</code>, or <code>String</code>.
  * Here are some examples:
  * </p>
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest._
  * import org.scalatest._
- * 
+ *
  * scala&gt; import Inspectors._
  * import Inspectors._
- * 
+ *
  * scala&gt; import Matchers._
  * import Matchers._
- * 
+ *
  * scala&gt; forAll (Array(1, 2, 3)) { e =&gt; e should be &lt; 5 }
- * 
+ *
  * scala&gt; import collection.JavaConverters._
  * import collection.JavaConverters._
- * 
+ *
  * scala&gt; val js = List(1, 2, 3).asJava
  * js: java.util.List[Int] = [1, 2, 3]
- * 
+ *
  * scala&gt; forAll (js) { j =&gt; j should be &lt; 5 }
- * 
- * scala&gt; val jmap = Map("a" -&gt; 1, "b" -&gt; 2).asJava 
+ *
+ * scala&gt; val jmap = Map("a" -&gt; 1, "b" -&gt; 2).asJava
  * jmap: java.util.Map[String,Int] = {a=1, b=2}
- * 
+ *
  * scala&gt; forAtLeast(1, jmap) { e =&gt; e shouldBe Entry("b", 2) }
- * 
+ *
  * scala&gt; forAtLeast(2, "hello, world!") { c =&gt; c shouldBe 'o' }
  * </pre>
  */
@@ -197,7 +197,7 @@ package org.scalatest
 /*
 
 Commenting this out entirely now that we're going the Asserting route. Will
-leave it checked in commented out until we get Inspectors working with Fact, 
+leave it checked in commented out until we get Inspectors working with Fact,
 which should be a couple days I "expect".
 
 private[scalatest] trait FactInspectors {
@@ -406,7 +406,7 @@ private[scalatest] trait FactInspectors {
   def forExactly(succeededCount: Int, xs: String)(fun: Char => Expectation)(implicit collecting: Collecting[Char, String]): Expectation = {
     doForExactly(succeededCount, collecting.genTraversableFrom(xs), xs, false, "Inspectors.scala", "forExactly", stackDepthAdjustment)(fun)
   }
-  
+
   private[scalatest] def forNo[E, C[_]](xs: C[E])(fun: E => Expectation)(implicit collecting: Collecting[E, C[E]]): Expectation = {
     doForNo(collecting.genTraversableFrom(xs), xs, false, "Inspectors.scala", "forNo", stackDepthAdjustment)(fun)
   }
@@ -549,17 +549,17 @@ private[scalatest] object FactInspectorsHelper {
       case _ => false
     }
 
-  def shouldPropagate(throwable: Throwable): Boolean = 
+  def shouldPropagate(throwable: Throwable): Boolean =
     throwable match {
       case _: exceptions.TestPendingException |
            _: exceptions.TestCanceledException => true
       case _ if Suite.anExceptionThatShouldCauseAnAbort(throwable) => true
       case _ => false
     }
-  
+
   def createMessage(messageKey: String, t: Throwable, xsIsMap: Boolean): String =
     t match {
-      case sde: exceptions.StackDepthException => 
+      case sde: exceptions.StackDepthException =>
         sde.failedCodeFileNameAndLineNumberString match {
           case Some(failedCodeFileNameAndLineNumber) =>
             if (xsIsMap)
@@ -578,18 +578,18 @@ private[scalatest] object FactInspectorsHelper {
         else
           Resources.forAssertionsGenTraversableMessageWithoutStackDepth(messageKey, if (t.getMessage != null) t.getMessage else "null")
     }
-  
-  def elementLabel(count: Int): String = 
+
+  def elementLabel(count: Int): String =
     if (count > 1) Resources.forAssertionsElements(count.toString) else Resources.forAssertionsElement(count.toString)
-  
-  case class ForResult[T](passedCount: Int = 0, messageAcc: IndexedSeq[String] = IndexedSeq.empty, 
+
+  case class ForResult[T](passedCount: Int = 0, messageAcc: IndexedSeq[String] = IndexedSeq.empty,
                                  passedElements: IndexedSeq[(Int, T)] = IndexedSeq.empty, failedElements: IndexedSeq[(Int, T, Throwable)] = IndexedSeq.empty)
-  
+
   @tailrec
   def runFor[T](itr: Iterator[T], xsIsMap: Boolean, index:Int, result: ForResult[T], fun: T => Expectation, stopFun: ForResult[_] => Boolean): ForResult[T] = {
     if (itr.hasNext) {
       val head = itr.next
-      val newResult = 
+      val newResult =
         try {
           val fact = fun(head)
           if (fact.isYes) // TODO: Write a test for VacuousYes, and if get it, throw TCE here.
@@ -604,7 +604,7 @@ private[scalatest] object FactInspectorsHelper {
           }
         }
         catch {
-          case e if !shouldPropagate(e) => 
+          case e if !shouldPropagate(e) =>
             val messageKey = head match {
               case tuple: Tuple2[_, _] if xsIsMap => tuple._1.toString
               case entry: Entry[_, _] if xsIsMap => entry.getKey.toString
@@ -620,14 +620,14 @@ private[scalatest] object FactInspectorsHelper {
     else
       result
   }
-  
+
   def keyOrIndexLabel(xs: Any, passedElements: IndexedSeq[(Int, _)]): String = {
-    def makeAndLabel(indexes: IndexedSeq[Int]): String = 
+    def makeAndLabel(indexes: IndexedSeq[Int]): String =
       if (indexes.length > 1)
         indexes.dropRight(1).mkString(", ") + " and " + indexes.last
       else
         indexes.mkString(", ")
-      
+
     val (xsIsMap, elements) = xs match {
       // SKIP-SCALATESTJS-START
       case _: collection.GenMap[_, _] | _: java.util.Map[_, _] =>
@@ -643,7 +643,7 @@ private[scalatest] object FactInspectorsHelper {
           }
         }
         (true, elements)
-      case _ => 
+      case _ =>
         (false, passedElements.map(_._1))
     }
 
@@ -658,12 +658,12 @@ private[scalatest] object FactInspectorsHelper {
       else
         Resources.forAssertionsIndexLabel(elements.mkString(", "))
   }
-  
+
   def doForAll[E](xs: GenTraversable[E], original: Any, shorthand: Boolean, sourceFileName: String, methodName: String, stackDepthAdjustment: Int)(fun: E => Expectation): Expectation = {
     val xsIsMap = isMap(original)
-    val result = 
+    val result =
       runFor(xs.toIterator, xsIsMap, 0, new ForResult[E], fun, _.failedElements.length > 0)
-    if (result.failedElements.length > 0) 
+    if (result.failedElements.length > 0)
       throw new exceptions.TestFailedException(
         sde =>
           Some(
@@ -677,19 +677,19 @@ private[scalatest] object FactInspectorsHelper {
       )
       else Yes("forAll inspection succeeded")
   }
-  
+
   def doForAtLeast[T](min: Int, xs: GenTraversable[T], original: Any, shorthand: Boolean, sourceFileName: String, methodName: String, stackDepthAdjustment: Int)(fun: T => Expectation): Expectation = {
     @tailrec
     def forAtLeastAcc(itr: Iterator[T], includeIndex: Boolean, index: Int, passedCount: Int, messageAcc: IndexedSeq[String]): (Int, IndexedSeq[String]) = {
       if (itr.hasNext) {
         val head = itr.next
-        val (newPassedCount, newMessageAcc) = 
+        val (newPassedCount, newMessageAcc) =
           try {
             fun(head)
             (passedCount + 1, messageAcc)
           }
           catch {
-            case e if !shouldPropagate(e) => 
+            case e if !shouldPropagate(e) =>
               val xsIsMap = isMap(original)
               val messageKey = head match {
                 case tuple: Tuple2[_, _] if xsIsMap => tuple._1.toString
@@ -706,14 +706,14 @@ private[scalatest] object FactInspectorsHelper {
       else
         (passedCount, messageAcc)
     }
-    
+
     if (min <= 0)
       throw new IllegalArgumentException(Resources.forAssertionsMoreThanZero("'min'"))
-    
+
     val (passedCount, messageAcc) = forAtLeastAcc(xs.toIterator, xs.isInstanceOf[Seq[T]], 0, 0, IndexedSeq.empty)
     if (passedCount < min)
       throw new exceptions.TestFailedException(
-        sde => 
+        sde =>
           Some(
             if (shorthand)
               if (passedCount > 0)
@@ -731,19 +731,19 @@ private[scalatest] object FactInspectorsHelper {
       )
       else Yes("forAtLeast inspection succeeded")
   }
-  
+
   def doForEvery[T](xs: GenTraversable[T], original: Any, shorthand: Boolean, sourceFileName: String, methodName: String, stackDepthAdjustment: Int)(fun: T => Expectation): Expectation = {
     @tailrec
     def runAndCollectErrorMessage[T](itr: Iterator[T], messageList: IndexedSeq[String], index: Int)(fun: T => Expectation): IndexedSeq[String] = {
       if (itr.hasNext) {
         val head = itr.next
-        val newMessageList = 
+        val newMessageList =
           try {
             fun(head)
             messageList
           }
           catch {
-            case e if !shouldPropagate(e) => 
+            case e if !shouldPropagate(e) =>
               val xsIsMap = isMap(original)
               val messageKey = head match {
                 case tuple: Tuple2[_, _] if xsIsMap => tuple._1.toString
@@ -752,7 +752,7 @@ private[scalatest] object FactInspectorsHelper {
               }
               messageList :+ createMessage(messageKey, e, xsIsMap)
           }
-        
+
         runAndCollectErrorMessage(itr, newMessageList, index + 1)(fun)
       }
       else
@@ -773,17 +773,17 @@ private[scalatest] object FactInspectorsHelper {
         )
       else Yes("forEvery inspection succeeded")
   }
-  
+
   def doForExactly[T](succeededCount: Int, xs: GenTraversable[T], original: Any, shorthand: Boolean, sourceFileName: String, methodName: String, stackDepthAdjustment: Int)(fun: T => Expectation): Expectation = {
     if (succeededCount <= 0)
       throw new IllegalArgumentException(Resources.forAssertionsMoreThanZero("'succeededCount'"))
-    
+
     val xsIsMap = isMap(original)
-    val result = 
+    val result =
       runFor(xs.toIterator, xsIsMap, 0, new ForResult[T], fun, _.passedCount > succeededCount)
     if (result.passedCount != succeededCount)
       throw new exceptions.TestFailedException(
-        sde => 
+        sde =>
           Some(
             if (shorthand)
               if (result.passedCount == 0)

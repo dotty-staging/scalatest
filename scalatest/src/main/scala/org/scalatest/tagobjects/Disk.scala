@@ -28,16 +28,16 @@ import org.scalatest.Tag
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.tagobjects.disk
- * 
+ *
  * import org.scalatest._
  * import tagobjects.Disk
- * 
+ *
  * class SetSpec extends FlatSpec {
- * 
+ *
  *   "An empty Set" should "have size 0" taggedAs(Disk) in {
  *     assert(Set.empty.size === 0)
  *   }
  * }
  * </pre>
  */
-object Disk extends Tag("org.scalatest.tags.Disk") 
+object Disk extends Tag("org.scalatest.tags.Disk")

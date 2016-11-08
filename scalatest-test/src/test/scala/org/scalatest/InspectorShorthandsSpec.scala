@@ -37,17 +37,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
 
   def examples =
     Table[Set[Int] => GenTraversable[Int]](
-      ("Fun"), 
-      ((set: Set[Int]) => set), 
-      ((set: Set[Int]) => set.toList), 
-      ((set: Set[Int]) => set.toSeq), 
-      ((set: Set[Int]) => set.toArray), 
-      ((set: Set[Int]) => set.toIndexedSeq), 
+      ("Fun"),
+      ((set: Set[Int]) => set),
+      ((set: Set[Int]) => set.toList),
+      ((set: Set[Int]) => set.toSeq),
+      ((set: Set[Int]) => set.toArray),
+      ((set: Set[Int]) => set.toIndexedSeq),
       ((set: Set[Int]) => Vector(set.toSeq: _*)),
       // SKIP-SCALATESTJS-START
-      ((set: Set[Int]) => set.par), 
-      ((set: Set[Int]) => set.toList.par), 
-      ((set: Set[Int]) => set.toSeq.par), 
+      ((set: Set[Int]) => set.par),
+      ((set: Set[Int]) => set.toList.par),
+      ((set: Set[Int]) => set.toSeq.par),
       ((set: Set[Int]) => set.toIndexedSeq.par),
       ((set: Set[Int]) => collection.mutable.Set(set.toSeq: _*).par),
       ((set: Set[Int]) => { val l = new collection.mutable.ListBuffer() ++= set; l }.par),
@@ -55,24 +55,24 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       ((set: Set[Int]) => collection.mutable.IndexedSeq(set.toSeq: _*).par),
       // SKIP-SCALATESTJS-END
       ((set: Set[Int]) => collection.mutable.Set(set.toSeq: _*)),
-      ((set: Set[Int]) => { val l = new collection.mutable.ListBuffer() ++= set; l }), 
-      ((set: Set[Int]) => collection.mutable.Seq(set.toSeq: _*)), 
+      ((set: Set[Int]) => { val l = new collection.mutable.ListBuffer() ++= set; l }),
+      ((set: Set[Int]) => collection.mutable.Seq(set.toSeq: _*)),
       ((set: Set[Int]) => collection.mutable.IndexedSeq(set.toSeq: _*))
     )
-    
-  def nullableExamples = 
+
+  def nullableExamples =
     Table[Set[String] => GenTraversable[String]](
-      ("Fun"), 
-      ((set: Set[String]) => set), 
-      ((set: Set[String]) => set.toList), 
-      ((set: Set[String]) => set.toSeq), 
-      ((set: Set[String]) => set.toArray[String]), 
-      ((set: Set[String]) => set.toIndexedSeq), 
+      ("Fun"),
+      ((set: Set[String]) => set),
+      ((set: Set[String]) => set.toList),
+      ((set: Set[String]) => set.toSeq),
+      ((set: Set[String]) => set.toArray[String]),
+      ((set: Set[String]) => set.toIndexedSeq),
       ((set: Set[String]) => Vector(set.toSeq: _*)),
       // SKIP-SCALATESTJS-START
-      ((set: Set[String]) => set.par), 
-      ((set: Set[String]) => set.toList.par), 
-      ((set: Set[String]) => set.toSeq.par), 
+      ((set: Set[String]) => set.par),
+      ((set: Set[String]) => set.toList.par),
+      ((set: Set[String]) => set.toSeq.par),
       ((set: Set[String]) => set.toIndexedSeq.par),
       ((set: Set[String]) => collection.mutable.Set(set.toSeq: _*).par),
       ((set: Set[String]) => { val l = new collection.mutable.ListBuffer() ++= set; l }.par),
@@ -80,24 +80,24 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       ((set: Set[String]) => collection.mutable.IndexedSeq(set.toSeq: _*).par),
       // SKIP-SCALATESTJS-END
       ((set: Set[String]) => collection.mutable.Set(set.toSeq: _*)),
-      ((set: Set[String]) => { val l = new collection.mutable.ListBuffer() ++= set; l }), 
-      ((set: Set[String]) => collection.mutable.Seq(set.toSeq: _*)), 
+      ((set: Set[String]) => { val l = new collection.mutable.ListBuffer() ++= set; l }),
+      ((set: Set[String]) => collection.mutable.Seq(set.toSeq: _*)),
       ((set: Set[String]) => collection.mutable.IndexedSeq(set.toSeq: _*))
     )
-    
-  def traversableExamples = 
+
+  def traversableExamples =
     Table[Set[Set[String]] => GenTraversable[GenTraversable[String]]](
-      ("Fun"), 
-      ((set: Set[Set[String]]) => set), 
-      ((set: Set[Set[String]]) => set.toList), 
-      ((set: Set[Set[String]]) => set.toSeq), 
-      ((set: Set[Set[String]]) => set.toArray[GenTraversable[String]]), 
-      ((set: Set[Set[String]]) => set.toIndexedSeq), 
+      ("Fun"),
+      ((set: Set[Set[String]]) => set),
+      ((set: Set[Set[String]]) => set.toList),
+      ((set: Set[Set[String]]) => set.toSeq),
+      ((set: Set[Set[String]]) => set.toArray[GenTraversable[String]]),
+      ((set: Set[Set[String]]) => set.toIndexedSeq),
       ((set: Set[Set[String]]) => Vector(set.toSeq: _*)),
       // SKIP-SCALATESTJS-START
-      ((set: Set[Set[String]]) => set.par), 
-      ((set: Set[Set[String]]) => set.toList.par), 
-      ((set: Set[Set[String]]) => set.toSeq.par), 
+      ((set: Set[Set[String]]) => set.par),
+      ((set: Set[Set[String]]) => set.toList.par),
+      ((set: Set[Set[String]]) => set.toSeq.par),
       ((set: Set[Set[String]]) => set.toIndexedSeq.par),
       ((set: Set[Set[String]]) => collection.mutable.Set(set.toSeq: _*).par),
       ((set: Set[Set[String]]) => { val l = new collection.mutable.ListBuffer() ++= set; l }.par),
@@ -105,24 +105,24 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       ((set: Set[Set[String]]) => collection.mutable.IndexedSeq(set.toSeq: _*).par),
       // SKIP-SCALATESTJS-END
       ((set: Set[Set[String]]) => collection.mutable.Set(set.toSeq: _*)),
-      ((set: Set[Set[String]]) => { val l = new collection.mutable.ListBuffer() ++= set; l }), 
-      ((set: Set[Set[String]]) => collection.mutable.Seq(set.toSeq: _*)), 
+      ((set: Set[Set[String]]) => { val l = new collection.mutable.ListBuffer() ++= set; l }),
+      ((set: Set[Set[String]]) => collection.mutable.Seq(set.toSeq: _*)),
       ((set: Set[Set[String]]) => collection.mutable.IndexedSeq.empty ++ set)
     )
-    
-  def seqExamples = 
+
+  def seqExamples =
     Table[Set[GenSeq[String]] => GenTraversable[GenSeq[String]]](
-      ("Fun"), 
-      ((set: Set[GenSeq[String]]) => set), 
-      ((set: Set[GenSeq[String]]) => set.toList), 
-      ((set: Set[GenSeq[String]]) => set.toSeq), 
-      ((set: Set[GenSeq[String]]) => set.toArray[GenSeq[String]]), 
-      ((set: Set[GenSeq[String]]) => set.toIndexedSeq), 
+      ("Fun"),
+      ((set: Set[GenSeq[String]]) => set),
+      ((set: Set[GenSeq[String]]) => set.toList),
+      ((set: Set[GenSeq[String]]) => set.toSeq),
+      ((set: Set[GenSeq[String]]) => set.toArray[GenSeq[String]]),
+      ((set: Set[GenSeq[String]]) => set.toIndexedSeq),
       ((set: Set[GenSeq[String]]) => Vector(set.toSeq: _*)),
       // SKIP-SCALATESTJS-START
-      ((set: Set[GenSeq[String]]) => set.par), 
-      ((set: Set[GenSeq[String]]) => set.toList.par), 
-      ((set: Set[GenSeq[String]]) => set.toSeq.par), 
+      ((set: Set[GenSeq[String]]) => set.par),
+      ((set: Set[GenSeq[String]]) => set.toList.par),
+      ((set: Set[GenSeq[String]]) => set.toSeq.par),
       ((set: Set[GenSeq[String]]) => set.toIndexedSeq.par),
       ((set: Set[GenSeq[String]]) => collection.mutable.Set(set.toSeq: _*).par),
       ((set: Set[GenSeq[String]]) => { val l = new collection.mutable.ListBuffer() ++= set; l }.par),
@@ -130,24 +130,24 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       ((set: Set[GenSeq[String]]) => collection.mutable.IndexedSeq(set.toSeq: _*).par),
       // SKIP-SCALATESTJS-END
       ((set: Set[GenSeq[String]]) => collection.mutable.Set(set.toSeq: _*)),
-      ((set: Set[GenSeq[String]]) => { val l = new collection.mutable.ListBuffer() ++= set; l }), 
-      ((set: Set[GenSeq[String]]) => collection.mutable.Seq(set.toSeq: _*)), 
+      ((set: Set[GenSeq[String]]) => { val l = new collection.mutable.ListBuffer() ++= set; l }),
+      ((set: Set[GenSeq[String]]) => collection.mutable.Seq(set.toSeq: _*)),
       ((set: Set[GenSeq[String]]) => collection.mutable.IndexedSeq.empty ++ set)
     )
-    
-  def mapExamples = 
+
+  def mapExamples =
     Table[Set[GenMap[String, String]] => GenTraversable[GenMap[String, String]]](
-      ("Fun"), 
-      ((set: Set[GenMap[String, String]]) => set), 
-      ((set: Set[GenMap[String, String]]) => set.toList), 
-      ((set: Set[GenMap[String, String]]) => set.toSeq), 
-      ((set: Set[GenMap[String, String]]) => set.toArray[GenMap[String, String]]), 
-      ((set: Set[GenMap[String, String]]) => set.toIndexedSeq), 
+      ("Fun"),
+      ((set: Set[GenMap[String, String]]) => set),
+      ((set: Set[GenMap[String, String]]) => set.toList),
+      ((set: Set[GenMap[String, String]]) => set.toSeq),
+      ((set: Set[GenMap[String, String]]) => set.toArray[GenMap[String, String]]),
+      ((set: Set[GenMap[String, String]]) => set.toIndexedSeq),
       ((set: Set[GenMap[String, String]]) => Vector(set.toSeq: _*)),
       // SKIP-SCALATESTJS-START
-      ((set: Set[GenMap[String, String]]) => set.par), 
-      ((set: Set[GenMap[String, String]]) => set.toList.par), 
-      ((set: Set[GenMap[String, String]]) => set.toSeq.par), 
+      ((set: Set[GenMap[String, String]]) => set.par),
+      ((set: Set[GenMap[String, String]]) => set.toList.par),
+      ((set: Set[GenMap[String, String]]) => set.toSeq.par),
       ((set: Set[GenMap[String, String]]) => set.toIndexedSeq.par),
       ((set: Set[GenMap[String, String]]) => collection.mutable.Set(set.toSeq: _*).par),
       ((set: Set[GenMap[String, String]]) => { val l = new collection.mutable.ListBuffer() ++= set; l }.par),
@@ -155,25 +155,25 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       ((set: Set[GenMap[String, String]]) => collection.mutable.IndexedSeq(set.toSeq: _*).par),
       // SKIP-SCALATESTJS-END
       ((set: Set[GenMap[String, String]]) => collection.mutable.Set(set.toSeq: _*)),
-      ((set: Set[GenMap[String, String]]) => { val l = new collection.mutable.ListBuffer() ++= set; l }), 
-      ((set: Set[GenMap[String, String]]) => collection.mutable.Seq(set.toSeq: _*)), 
+      ((set: Set[GenMap[String, String]]) => { val l = new collection.mutable.ListBuffer() ++= set; l }),
+      ((set: Set[GenMap[String, String]]) => collection.mutable.Seq(set.toSeq: _*)),
       ((set: Set[GenMap[String, String]]) => collection.mutable.IndexedSeq.empty ++ set)
     )
-    
+
   describe("all ") {
-    
+
     it("should pass when all elements passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
-        all(col) should be < 4 
+        all(col) should be < 4
       }
     }
-  
+
     it("should throw TestFailedException with correct stack depth and message when at least one element failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          all(col) should not equal 2 
+          all(col) should not equal 2
         }
         e.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -190,13 +190,13 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
-    
+
+
     it("should throw TestFailedException with correct stack depth and message when more than one element failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should be < 2 
+          all(col) should be < 2
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -214,12 +214,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'equal' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should equal (2) 
+          all(col) should equal (2)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -239,10 +239,10 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
     }
 
     it("should throw TestFailedException with correct stack depth and message when 'shouldEqual' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) shouldEqual 2 
+          all(col) shouldEqual 2
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -263,17 +263,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
 
     it("should use Equality from 'shouldEqual'") {
       val xs = List(1, 1, 1)
-      all (xs) shouldEqual 1 
+      all (xs) shouldEqual 1
       implicit val e = new Equality[Int] {
         def areEqual(a: Int, b: Any): Boolean = a != b
       }
       intercept[exceptions.TestFailedException] {
-        all (xs) should equal (1) 
+        all (xs) should equal (1)
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'shouldEqual tolerance' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 4))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) shouldEqual 2 +- 1
@@ -298,7 +298,7 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
     it("should throw TestFailedException with correct stack depth and message when 'shouldEqual null' failed") {
       val col: Set[String] = Set(null, null, "hi")
       val e2 = intercept[exceptions.TestFailedException] {
-        all (col) shouldEqual null 
+        all (col) shouldEqual null
       }
       e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
       e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -318,31 +318,31 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
 
     it("should use Equality from 'should equal'") {
       val xs = List(1, 1, 1)
-      all (xs) should equal (1) 
+      all (xs) should equal (1)
       implicit val e = new Equality[Int] {
         def areEqual(a: Int, b: Any): Boolean = a != b
       }
       intercept[exceptions.TestFailedException] {
-        all (xs) should equal (1) 
+        all (xs) should equal (1)
       }
     }
-    
+
     it("should use Equality from 'should not equal'") {
       val xs = List(1, 1, 1)
-      all (xs) should not equal (2) 
+      all (xs) should not equal (2)
       implicit val e = new Equality[Int] {
         def areEqual(a: Int, b: Any): Boolean = a != b
       }
       intercept[exceptions.TestFailedException] {
-        all (xs) should not equal (2) 
+        all (xs) should not equal (2)
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not equal' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should not equal (2) 
+          all(col) should not equal (2)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -360,12 +360,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'be' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should be (2) 
+          all(col) should be (2)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -383,12 +383,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should not be (2) 
+          all(col) should not be (2)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -406,12 +406,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'be less than comparison' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should be < 2 
+          all(col) should be < 2
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -429,12 +429,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be less than comparison' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should not be < (2) 
+          all(col) should not be < (2)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -452,12 +452,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'be less than or equal comparison' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should be <= 2 
+          all(col) should be <= 2
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -475,12 +475,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be less than or equal comparison' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should not be <= (2) 
+          all(col) should not be <= (2)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -498,12 +498,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'be greater than comparison' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should be > 2 
+          all(col) should be > 2
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -521,12 +521,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be greater than comparison' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should not be > (2) 
+          all(col) should not be > (2)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -544,12 +544,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'be greater than or equal comparison' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should be >= 2 
+          all(col) should be >= 2
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -567,12 +567,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be greater than or equal comparison' failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should not be >= (2) 
+          all(col) should not be >= (2)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -592,7 +592,7 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
     }
 
     it("should throw TestFailedException with correct stack depth and message when 'be null' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("1", "2", "3"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should be (null)
@@ -613,10 +613,10 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be null' failed") {
-      forAll(nullableExamples) { colFun => 
-        val col = 
+      forAll(nullableExamples) { colFun =>
+        val col =
           try {
             Some(colFun(Set("1", null, "3")))
           }
@@ -625,9 +625,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
               // Some collection cannot contains null value, e.g. mutable.Set
               None
           }
-        
+
         col match {
-          case Some(col) => 
+          case Some(col) =>
             val e2 = intercept[exceptions.TestFailedException] {
               all(col) should not be (null)
             }
@@ -645,7 +645,7 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
                 tfe.getCause should be (null)
               case other => fail("Expected cause to be TestFailedException, but got: " + other)
             }
-            
+
           case None => Succeeded // Do nothing when the collection cannot contains null value.
         }
       }
@@ -658,10 +658,10 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
     }
 
     it("should throw TestFailedException with correct stack depth and message when 'be symbol' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should be ('empty) 
+          all(col) should be ('empty)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -679,12 +679,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'shouldBe symbol' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
-          all (col) shouldBe 'empty 
+          all (col) shouldBe 'empty
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -702,12 +702,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be symbol' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("peace 1", "", "peace 2"))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should not be ('empty) 
+          all(col) should not be ('empty)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -726,14 +726,14 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       }
     }
     // SKIP-SCALATESTJS-END
-    
+
     class EmptyBePropertyMatcher extends BePropertyMatcher[String] {
       def apply(left: String) = BePropertyMatchResult(left.isEmpty, "empty")
     }
     val empty = new EmptyBePropertyMatcher()
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'be property' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should be (empty)
@@ -754,9 +754,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be property' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not be (empty)
@@ -780,10 +780,10 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
 
     // SKIP-SCALATESTJS-START
     it("should throw TestFailedException with correct stack depth and message when 'be a symbol' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should be a 'empty 
+          all(col) should be a 'empty
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -804,10 +804,10 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
 
 
     it("should throw TestFailedException with correct stack depth and message when 'shouldBe a symbol' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) shouldBe a ('empty) 
+          all(col) shouldBe a ('empty)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -825,12 +825,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be a symbol' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should not be a ('empty) 
+          all(col) should not be a ('empty)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -849,9 +849,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       }
     }
     // SKIP-SCALATESTJS-END
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'be a property' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should be a empty
@@ -872,9 +872,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be a property' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not be a (empty)
@@ -898,10 +898,10 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
 
     // SKIP-SCALATESTJS-START
     it("should throw TestFailedException with correct stack depth and message when 'be an symbol' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should be an 'empty 
+          all(col) should be an 'empty
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -919,12 +919,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'shouldBe an symbol' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) shouldBe an ('empty) 
+          all(col) shouldBe an ('empty)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -942,12 +942,12 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be an symbol' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should not be an ('empty) 
+          all(col) should not be an ('empty)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -966,9 +966,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       }
     }
     // SKIP-SCALATESTJS-END
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'be an property' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should be an empty
@@ -989,9 +989,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be an property' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not be an (empty)
@@ -1012,10 +1012,10 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'be theSameInstanceAs' failed") {
       val theInstance = "2"
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("1", "2", "3"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should be theSameInstanceAs theInstance
@@ -1036,10 +1036,10 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not be theSameInstanceAs' failed") {
       val theInstance = "2"
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("1", theInstance, "3"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not be theSameInstanceAs (theInstance)
@@ -1060,16 +1060,16 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     class StringLengthMatcher(expectedValue: Int) extends HavePropertyMatcher[String, Int] {
       def apply(value: String) = {
         new HavePropertyMatchResult(value.length == expectedValue, "length", expectedValue, value.length)
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'have property' failed") {
       def length(expectedValue: Int) = new StringLengthMatcher(expectedValue)
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should have (length(0))
@@ -1090,10 +1090,10 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not have property' failed") {
       def length(expectedValue: Int) = new StringLengthMatcher(expectedValue)
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not have length(5)
@@ -1114,9 +1114,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'have length' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should have length (0)
@@ -1137,9 +1137,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not have length' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not have length (0)
@@ -1160,9 +1160,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'have size' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should have size (0)
@@ -1183,9 +1183,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'not have size' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("", "boom!", ""))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not have size (0)
@@ -1206,9 +1206,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string startWith' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello A!", "hi B", "hello C"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should startWith ("hello")
@@ -1229,9 +1229,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string not startWith' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello A!", "hi B", "hello C"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not startWith ("hello")
@@ -1252,9 +1252,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string endWith' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello folks", "hi folks", "hai girls"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should endWith ("folks")
@@ -1275,9 +1275,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string not endWith' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello folks", "hi folks", "hai girls"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not endWith ("folks")
@@ -1298,9 +1298,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string include' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello folks!", "hi folks!", "hai girls!"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should include ("folks")
@@ -1321,9 +1321,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string not include' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello folks!", "hi folks!", "hai girls!"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not include ("folks")
@@ -1344,9 +1344,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string startWith regex' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello A!", "hi B", "hello C"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should startWith regex "hel*o"
@@ -1367,9 +1367,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string not startWith regex' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello A!", "hi B", "hello C"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not startWith regex ("hel*o")
@@ -1390,9 +1390,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string endWith regex' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello folks!", "hi folks!", "hai girls!"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should endWith regex "folks!"
@@ -1413,9 +1413,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string not endWith regex' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello folks!", "hi folks!", "hai girls!"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not endWith regex ("folks!")
@@ -1436,9 +1436,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string include regex' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello folks!", "hi folks!", "hai girls!"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should include regex "folks"
@@ -1459,9 +1459,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string not include regex' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("hello folks!", "hi folks!", "hai girls!"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not include regex ("folks")
@@ -1482,9 +1482,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string fullyMatch regex' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("1.23", "-5", "8a"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should fullyMatch regex """(-)?(\d+)(\.\d*)?"""
@@ -1505,9 +1505,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'string not fullyMatch regex' failed") {
-      forAll(nullableExamples) { colFun => 
+      forAll(nullableExamples) { colFun =>
         val col = colFun(Set("1.23", "-5", "8a"))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not fullyMatch regex ("""(-)?(\d+)(\.\d*)?""")
@@ -1531,10 +1531,10 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
 
     // SKIP-SCALATESTJS-START
     it("should throw TestFailedException with correct stack depth and message when 'traversable be symbol' failed") {
-      forAll(traversableExamples) { colFun => 
+      forAll(traversableExamples) { colFun =>
         val col = colFun(Set(Set(), Set("boom!"), Set()))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should be ('empty) 
+          all(col) should be ('empty)
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -1554,10 +1554,10 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
     }
 
     it("should throw TestFailedException with correct stack depth and message when 'traversable not be symbol' failed") {
-      forAll(traversableExamples) { colFun => 
+      forAll(traversableExamples) { colFun =>
         val col = colFun(Set(Set(), Set("boom!"), Set()))
         val e2 = intercept[exceptions.TestFailedException] {
-          all(col) should not be 'empty 
+          all(col) should not be 'empty
         }
         e2.failedCodeFileName should be (Some("InspectorShorthandsSpec.scala"))
         e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
@@ -1576,9 +1576,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       }
     }
     // SKIP-SCALATESTJS-END
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'seq have length' failed") {
-      forAll(seqExamples) { colFun => 
+      forAll(seqExamples) { colFun =>
         val col = colFun(Set(Seq(), Seq("boom!"), Seq()))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should have length 0
@@ -1599,9 +1599,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'seq not have length' failed") {
-      forAll(seqExamples) { colFun => 
+      forAll(seqExamples) { colFun =>
         val col = colFun(Set(Seq(), Seq("boom!"), Seq()))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not have length (0)
@@ -1622,9 +1622,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'traversable have size' failed") {
-      forAll(traversableExamples) { colFun => 
+      forAll(traversableExamples) { colFun =>
         val col = colFun(Set(Set(), Set("boom!"), Set()))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should have size 0
@@ -1645,9 +1645,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'traversable not have size' failed") {
-      forAll(traversableExamples) { colFun => 
+      forAll(traversableExamples) { colFun =>
         val col = colFun(Set(Set(), Set("boom!"), Set()))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not have size (0)
@@ -1668,9 +1668,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'traversable contain' failed") {
-      forAll(traversableExamples) { colFun => 
+      forAll(traversableExamples) { colFun =>
         val col = colFun(Set(Set("1", "2", "3"), Set("4", "5", "6"), Set("2", "6", "8")))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should contain ("2")
@@ -1691,9 +1691,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'traversable not contain' failed") {
-      forAll(traversableExamples) { colFun => 
+      forAll(traversableExamples) { colFun =>
         val col = colFun(Set(Set("1", "2", "3"), Set("4", "5", "6"), Set("2", "6", "8")))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not contain "2"
@@ -1714,9 +1714,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'map contain key' failed") {
-      forAll(mapExamples) { colFun => 
+      forAll(mapExamples) { colFun =>
         val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three"), Map("4" -> "four", "5" -> "five", "6" -> "six"), Map("2" -> "two", "6" -> "six", "8" -> "eight")))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should contain key "2"
@@ -1737,9 +1737,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'map not contain key' failed") {
-      forAll(mapExamples) { colFun => 
+      forAll(mapExamples) { colFun =>
         val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three"), Map("4" -> "four", "5" -> "five", "6" -> "six"), Map("2" -> "two", "6" -> "six", "8" -> "eight")))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not contain key ("2")
@@ -1760,9 +1760,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'map contain value' failed") {
-      forAll(mapExamples) { colFun => 
+      forAll(mapExamples) { colFun =>
         val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three"), Map("4" -> "four", "5" -> "five", "6" -> "six"), Map("2" -> "two", "6" -> "six", "8" -> "eight")))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should contain value "two"
@@ -1783,9 +1783,9 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'map not contain value' failed") {
-      forAll(mapExamples) { colFun => 
+      forAll(mapExamples) { colFun =>
         val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three"), Map("4" -> "four", "5" -> "five", "6" -> "six"), Map("2" -> "two", "6" -> "six", "8" -> "eight")))
         val e2 = intercept[exceptions.TestFailedException] {
           all(col) should not contain value ("two")
@@ -1808,17 +1808,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
     }
 
     describe("when work with theSameElementsAs contain matcher") {
-      
+
       it("should work correctly with all(traversable) should contain succeeded") {
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "3"), Set("2", "3", "1"), Set("3", "2", "1")))
           all(col) should contain theSameElementsAs Set("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should contain failed") {
         val right = Set("1", "2", "8")
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "8"), Set("2", "3", "1"), Set("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain theSameElementsAs right
@@ -1839,11 +1839,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should contain succeeded") {
         all(List(Array("1", "2", "3"), Array("2", "3", "1"), Array("3", "2", "1"))) should contain theSameElementsAs Set("1", "2", "3")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should contain failed") {
         val right = Set("1", "2", "8")
         val col = List(Array("1", "2", "8"), Array("2", "3", "1"), Array("3", "8", "1"))
@@ -1866,17 +1866,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("2", "3", "1"), Seq("3", "2", "1")))
           all(col) should contain theSameElementsAs List("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should contain failed") {
         val right = Set("1", "2", "8")
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain theSameElementsAs right
@@ -1897,17 +1897,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(map) should contain succeeded") {
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "2" -> "two", "1" -> "one")))
           all(col) should contain theSameElementsAs List("1" -> "one", "2" -> "two", "3" -> "three")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(map) should contain failed") {
         val right = List("1" -> "one", "2" -> "two", "8" -> "eight")
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "8" -> "eight"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "8" -> "eight", "1" -> "one")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain theSameElementsAs right
@@ -1928,17 +1928,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(traversable) should not contain succeeded") {
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "3"), Set("2", "3", "1"), Set("3", "2", "1")))
           all(col) should not contain theSameElementsAs (Set("1", "2", "8"))
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should not contain failed") {
         val right = Set("1", "2", "8")
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "8"), Set("2", "3", "1"), Set("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain theSameElementsAs (right)
@@ -1959,11 +1959,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should not contain succeeded") {
         all(List(Array("1", "2", "3"), Array("2", "3", "1"), Array("3", "2", "1"))) should not contain theSameElementsAs (Set("1", "2", "8"))
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should not contain failed") {
         val right = Set("1", "2", "8")
         val col = List(Array("1", "2", "8"), Array("2", "3", "1"), Array("3", "8", "1"))
@@ -1986,17 +1986,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should not contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("2", "3", "1"), Seq("3", "2", "1")))
           all(col) should not contain theSameElementsAs (List("1", "2", "8"))
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should not contain failed") {
         val right = Set("1", "2", "8")
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain theSameElementsAs (right)
@@ -2017,17 +2017,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(map) should not contain succeeded") {
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "2" -> "two", "1" -> "one")))
           all(col) should not contain theSameElementsAs (Map("1" -> "one", "2" -> "two", "8" -> "eight"))
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(map) should not contain failed") {
         val right = Map("1" -> "one", "2" -> "two", "8" -> "eight")
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "8" -> "eight"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "8" -> "eight", "1" -> "one")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain theSameElementsAs (right)
@@ -2049,19 +2049,19 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     describe("when work with theSameElementsInOrderAs contain matcher") {
-      
+
       it("should work correctly with all(traversable) should contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "3")))
           all(col) should contain theSameElementsInOrderAs Set("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should contain failed") {
         val right = Set("1", "2", "8")
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "8"), List("1", "6", "8")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain theSameElementsInOrderAs right
@@ -2082,11 +2082,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should contain succeeded") {
         all(List(Array("1", "2", "3"))) should contain theSameElementsInOrderAs Set("1", "2", "3")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should contain failed") {
         val right = Set("1", "2", "8")
         val col = List(Array("1", "2", "8"), Array("2", "8", "1"), Array("8", "2", "1"))
@@ -2109,17 +2109,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3")))
           all(col) should contain theSameElementsInOrderAs List("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should contain failed") {
         val right = Set("1", "2", "8")
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain theSameElementsInOrderAs right
@@ -2142,15 +2142,15 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       }
 
       it("should work correctly with all(see) should not contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "3")))
           all(col) should not contain theSameElementsInOrderAs (Set("1", "2", "8"))
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should not contain failed") {
         val right = Set("1", "2", "8")
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "8"), List("2", "3", "1"), List("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain theSameElementsInOrderAs (right)
@@ -2171,11 +2171,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should not contain succeeded") {
         all(List(Array("1", "2", "3"), Array("2", "3", "1"), Array("3", "2", "1"))) should not contain theSameElementsInOrderAs (Set("1", "2", "8"))
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should not contain failed") {
         val right = Set("1", "2", "8")
         val col = List(Array("1", "2", "8"), Array("2", "3", "1"), Array("3", "8", "1"))
@@ -2198,17 +2198,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should not contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("2", "3", "1"), Seq("3", "2", "1")))
           all(col) should not contain theSameElementsInOrderAs (List("1", "2", "8"))
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should not contain failed") {
         val right = Set("1", "2", "8")
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain theSameElementsInOrderAs (right)
@@ -2230,19 +2230,19 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     describe("when work with allOf contain matcher") {
-      
+
       it("should work correctly with all(traversable) should contain succeeded") {
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "3"), Set("3", "2", "1", "8")))
           all(col) should contain allOf ("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "8"), Set("1", "6", "8")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain allOf ("1", "2", "8")
@@ -2263,11 +2263,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should contain succeeded") {
         all(List(Array("1", "2", "3"), Array("3", "2", "1", "8"))) should contain allOf ("1", "2", "3")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
         val col = List(Array("1", "2", "8"), Array("2", "8", "1"), Array("8", "6", "1"))
@@ -2290,17 +2290,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("3", "2", "1", "8")))
           all(col) should contain allOf ("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("6", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain allOf ("1", "2", "8")
@@ -2321,17 +2321,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(map) should contain succeeded") {
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three")))
           all(col) should contain allOf ("1" -> "one", "2" -> "two", "3" -> "three")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(map) should contain failed") {
         val right = "(" + Array("1" -> "one", "2" -> "two", "8" -> "eight").mkString(", ") + ")"
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "8" -> "eight"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "8" -> "eight", "1" -> "one")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain allOf ("1" -> "one", "2" -> "two", "8" -> "eight")
@@ -2354,15 +2354,15 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       }
 
       it("should work correctly with all(traversable) should not contain succeeded") {
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "3")))
           all(col) should not contain allOf ("1", "2", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "8"), Set("2", "3", "1"), Set("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain allOf ("1", "2", "8")
@@ -2383,11 +2383,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should not contain succeeded") {
         all(List(Array("1", "2", "3"), Array("2", "3", "1"), Array("3", "2", "1"))) should not contain allOf ("1", "2", "8")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
         val col = List(Array("1", "2", "8"), Array("2", "3", "1"), Array("3", "8", "1"))
@@ -2410,17 +2410,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should not contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("2", "3", "1"), Seq("3", "2", "1")))
           all(col) should not contain allOf ("1", "2", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain allOf ("1", "2", "8")
@@ -2441,17 +2441,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(map) should not contain succeeded") {
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "2" -> "two", "1" -> "one")))
           all(col) should not contain allOf ("1" -> "one", "2" -> "two", "8" -> "eight")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(map) should not contain failed") {
         val right = Array("1" -> "one", "2" -> "two", "8" -> "eight")
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "8" -> "eight"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "8" -> "eight", "1" -> "one")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain allOf ("1" -> "one", "2" -> "two", "8" -> "eight")
@@ -2473,19 +2473,19 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     describe("when work with inOrder contain matcher") {
-      
+
       it("should work correctly with all(traversable) should contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "3"), List("1", "2", "3", "8")))
           all(col) should contain inOrder ("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "8"), List("1", "6", "8")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain inOrder ("1", "2", "8")
@@ -2506,11 +2506,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should contain succeeded") {
         all(List(Array("1", "2", "3"), Array("1", "2", "3", "8"))) should contain inOrder ("1", "2", "3")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
         val col = List(Array("1", "2", "8"), Array("2", "8", "1"), Array("8", "6", "1"))
@@ -2533,17 +2533,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("1", "2", "3", "8")))
           all(col) should contain inOrder ("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("6", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain inOrder ("1", "2", "8")
@@ -2564,17 +2564,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-      
+
       it("should work correctly with all(traversable) should not contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "3")))
           all(col) should not contain inOrder ("1", "2", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "8"), List("2", "8", "1"), List("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain inOrder ("1", "2", "8")
@@ -2595,11 +2595,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should not contain succeeded") {
         all(List(Array("1", "2", "3"), Array("2", "3", "1"), Array("3", "2", "1"))) should not contain inOrder ("1", "2", "8")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
         val col = List(Array("1", "2", "8"), Array("2", "3", "1"), Array("3", "8", "1"))
@@ -2622,17 +2622,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should not contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("2", "3", "1"), Seq("3", "2", "1")))
           all(col) should not contain inOrder ("1", "2", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain inOrder ("1", "2", "8")
@@ -2654,19 +2654,19 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     describe("when work with atLeastOneOf contain matcher") {
-      
+
       it("should work correctly with all(traversable) should contain succeeded") {
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "3"), Set("1", "2", "3", "8")))
           all(col) should contain atLeastOneOf ("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should contain failed") {
         val right = "(\"3\", \"5\", \"7\")"
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "8"), Set("1", "6", "8")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain atLeastOneOf ("3", "5", "7")
@@ -2687,11 +2687,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should contain succeeded") {
         all(List(Array("1", "2", "3"), Array("1", "2", "3", "8"))) should contain atLeastOneOf ("1", "2", "3")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should contain failed") {
         val right = "(\"3\", \"5\", \"9\")"
         val col = List(Array("1", "2", "8"), Array("2", "8", "1"), Array("8", "6", "1"))
@@ -2714,17 +2714,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("1", "2", "3", "8")))
           all(col) should contain atLeastOneOf ("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should contain failed") {
         val right = "(\"3\", \"5\", \"9\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("6", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain atLeastOneOf ("3", "5", "9")
@@ -2745,17 +2745,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(map) should contain succeeded") {
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three")))
           all(col) should contain atLeastOneOf ("1" -> "one", "6" -> "six", "8" -> "eight")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(map) should contain failed") {
         val right = "(" + Array("3" -> "three", "5" -> "five", "7" -> "seven").mkString(", ") + ")"
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "8" -> "eight"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "8" -> "eight", "1" -> "one")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain atLeastOneOf ("3" -> "three", "5" -> "five", "7" -> "seven")
@@ -2778,15 +2778,15 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       }
 
       it("should work correctly with all(traversable) should not contain succeeded") {
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "3")))
           all(col) should not contain atLeastOneOf ("6", "7", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should not contain failed") {
         val right = "(\"6\", \"7\", \"8\")"
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "8"), Set("2", "8", "1"), Set("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain atLeastOneOf ("6", "7", "8")
@@ -2807,11 +2807,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should not contain succeeded") {
         all(List(Array("1", "2", "3"), Array("2", "3", "1"), Array("3", "2", "1"))) should not contain atLeastOneOf ("6", "7", "8")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should not contain failed") {
         val right = "(\"6\", \"7\", \"8\")"
         val col = List(Array("1", "2", "8"), Array("2", "3", "1"), Array("3", "8", "1"))
@@ -2834,17 +2834,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should not contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("2", "3", "1"), Seq("3", "2", "1")))
           all(col) should not contain atLeastOneOf ("6", "7", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should not contain failed") {
         val right = "(\"6\", \"7\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain atLeastOneOf ("6", "7", "8")
@@ -2865,17 +2865,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(map) should not contain succeeded") {
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "2" -> "two", "1" -> "one")))
           all(col) should not contain atLeastOneOf ("6" -> "six", "7" -> "seven", "8" -> "eight")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(map) should not contain failed") {
         val right = Array("6" -> "six", "7" -> "seven", "8" -> "eight")
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "8" -> "eight"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "8" -> "eight", "1" -> "one")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain atLeastOneOf ("6" -> "six", "7" -> "seven", "8" -> "eight")
@@ -2897,19 +2897,19 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     describe("when work with only contain matcher") {
-      
+
       it("should work correctly with all(traversable) should contain succeeded") {
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("2", "1"), Set("1", "2")))
           all(col) should contain only ("1", "2")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "8"), Set("1", "2", "3", "8")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain only ("1", "2", "8")
@@ -2930,11 +2930,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should contain succeeded") {
         all(List(Array("1", "2", "3"), Array("1", "3", "2"))) should contain only ("1", "2", "3")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
         val col = List(Array("1", "2", "8"), Array("2", "8", "1"), Array("8", "6", "1"))
@@ -2957,17 +2957,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("1", "3", "2")))
           all(col) should contain only ("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("6", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain only ("1", "2", "8")
@@ -2988,17 +2988,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(map) should contain succeeded") {
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three")))
           all(col) should contain only ("1" -> "one", "2" -> "two", "3" -> "three")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(map) should contain failed") {
         val right = "(" + Array("1" -> "one", "2" -> "two", "8" -> "eight").mkString(", ") + ")"
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "8" -> "eight"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "8" -> "eight", "1" -> "one")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain only ("1" -> "one", "2" -> "two", "8" -> "eight")
@@ -3021,15 +3021,15 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
       }
 
       it("should work correctly with all(traversable) should not contain succeeded") {
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "3")))
           all(col) should not contain only ("1", "2", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "8"), Set("2", "8", "1"), Set("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain only ("1", "2", "8")
@@ -3050,11 +3050,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should not contain succeeded") {
         all(List(Array("1", "2", "3"), Array("2", "3", "1"), Array("3", "2", "1"))) should not contain only ("1", "2", "8")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
         val col = List(Array("1", "2", "8"), Array("2", "3", "1"), Array("3", "8", "1"))
@@ -3077,17 +3077,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should not contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("2", "3", "1"), Seq("3", "2", "1")))
           all(col) should not contain only ("6", "7", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain only ("1", "2", "8")
@@ -3108,17 +3108,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(map) should not contain succeeded") {
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "2" -> "two", "1" -> "one")))
           all(col) should not contain only ("1" -> "one", "2" -> "two", "8" -> "eight")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(map) should not contain failed") {
         val right = Array("1" -> "one", "2" -> "two", "8" -> "eight")
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "8" -> "eight"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "8" -> "eight", "1" -> "one")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain only ("1" -> "one", "2" -> "two", "8" -> "eight")
@@ -3140,19 +3140,19 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     describe("when work with inOrderOnly contain matcher") {
 
       it("should work correctly with all(traversable) should contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "3")))
           all(col) should contain inOrderOnly ("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "8"), List("1", "6", "8")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain inOrderOnly ("1", "2", "8")
@@ -3173,11 +3173,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should contain succeeded") {
         all(List(Array("1", "2", "3"), Array("1", "2", "3"))) should contain inOrderOnly ("1", "2", "3")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
         val col = List(Array("1", "2", "8"), Array("2", "8", "1"), Array("8", "2", "1"))
@@ -3200,17 +3200,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("1", "2", "3")))
           all(col) should contain inOrderOnly ("1", "2", "3")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "8", "1"), Seq("8", "2", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain inOrderOnly ("1", "2", "8")
@@ -3231,17 +3231,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-      
+
       it("should work correctly with all(traversable) should not contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "3")))
           all(col) should not contain inOrderOnly ("1", "2", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(List("1", "2", "8"), List("2", "8", "1"), List("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain inOrderOnly ("1", "2", "8")
@@ -3262,11 +3262,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should not contain succeeded") {
         all(List(Array("1", "2", "3"), Array("2", "3", "1"), Array("3", "2", "1"))) should not contain inOrderOnly ("1", "2", "8")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
         val col = List(Array("1", "2", "8"), Array("2", "3", "1"), Array("3", "8", "1"))
@@ -3289,17 +3289,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should not contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("2", "3", "1"), Seq("3", "2", "1")))
           all(col) should not contain inOrderOnly ("1", "2", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should not contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain inOrderOnly ("1", "2", "8")
@@ -3321,19 +3321,19 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
         }
       }
     }
-    
+
     describe("when work with noneOf contain matcher") {
-      
+
       it("should work correctly with all(traversable) should contain succeeded") {
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "3"), Set("3", "2", "1", "8")))
           all(col) should contain noneOf ("6", "7", "9")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "8"), Set("1", "6", "8")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain noneOf ("1", "2", "8")
@@ -3354,11 +3354,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should contain succeeded") {
         all(List(Array("1", "2", "3"), Array("3", "2", "1", "8"))) should contain noneOf ("6", "7", "9")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
         val col = List(Array("1", "2", "8"), Array("2", "8", "1"), Array("8", "6", "1"))
@@ -3380,17 +3380,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("3", "2", "1", "8")))
           all(col) should contain noneOf ("6", "7", "9")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should contain failed") {
         val right = "(\"1\", \"2\", \"8\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("6", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain noneOf ("1", "2", "8")
@@ -3411,17 +3411,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(map) should contain succeeded") {
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three")))
           all(col) should contain noneOf ("6" -> "six", "7" -> "seven", "8" -> "eight")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(map) should contain failed") {
         val right = "(" + Array("1" -> "one", "2" -> "two", "8" -> "eight").mkString(", ") + ")"
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "8" -> "eight"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "8" -> "eight", "1" -> "one")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should contain noneOf ("1" -> "one", "2" -> "two", "8" -> "eight")
@@ -3442,17 +3442,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(traversable) should not contain succeeded") {
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "3")))
           all(col) should not contain noneOf ("1", "2", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(traversable) should not contain failed") {
         val right = "(\"6\", \"7\", \"9\")"
-        forAll(traversableExamples) { colFun => 
+        forAll(traversableExamples) { colFun =>
           val col = colFun(Set(Set("1", "2", "8"), Set("2", "3", "1"), Set("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain noneOf ("6", "7", "9")
@@ -3473,11 +3473,11 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(array) should not contain succeeded") {
         all(List(Array("1", "2", "3"), Array("2", "3", "1"), Array("3", "2", "1"))) should not contain noneOf ("1", "2", "8")
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(array) should not contain failed") {
         val right = "(\"6\", \"7\", \"9\")"
         val col = List(Array("1", "2", "8"), Array("2", "3", "1"), Array("3", "8", "1"))
@@ -3499,17 +3499,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           case other => fail("Expected cause to be TestFailedException, but got: " + other)
         }
       }
-    
+
       it("should work correctly with all(seq) should not contain succeeded") {
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "3"), Seq("2", "3", "1"), Seq("3", "2", "1")))
           all(col) should not contain noneOf ("1", "2", "8")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(seq) should not contain failed") {
         val right = "(\"6\", \"7\", \"9\")"
-        forAll(seqExamples) { colFun => 
+        forAll(seqExamples) { colFun =>
           val col = colFun(Set(Seq("1", "2", "8"), Seq("2", "3", "1"), Seq("3", "8", "1")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain noneOf ("6", "7", "9")
@@ -3530,17 +3530,17 @@ class InspectorShorthandsSpec extends FunSpec with TableDrivenPropertyChecks {
           }
         }
       }
-    
+
       it("should work correctly with all(map) should not contain succeeded") {
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "3" -> "three"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "2" -> "two", "1" -> "one")))
           all(col) should not contain noneOf ("1" -> "one", "2" -> "two", "8" -> "eight")
         }
       }
-    
+
       it("should throw TestFailedException with correct message and stack depth when all(map) should not contain failed") {
         val right = Array("6" -> "six", "7" -> "seven", "9" -> "nine")
-        forAll(mapExamples) { colFun => 
+        forAll(mapExamples) { colFun =>
           val col = colFun(Set(Map("1" -> "one", "2" -> "two", "8" -> "eight"), Map("2" -> "two", "3" -> "three", "1" -> "one"), Map("3" -> "three", "8" -> "eight", "1" -> "one")))
           val e = intercept[exceptions.TestFailedException] {
             all(col) should not contain noneOf ("6" -> "six", "7" -> "seven", "9" -> "nine")

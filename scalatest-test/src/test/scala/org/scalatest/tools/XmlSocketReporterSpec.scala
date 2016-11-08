@@ -46,7 +46,7 @@ import org.scalatest._
 import SharedHelpers._
 
 class XmlSocketReporterSpec extends FunSpec with Eventually {
-  
+
   class SocketEventRecorder(socket: ServerSocket) extends Runnable {
     @volatile
     var stopped: Boolean = false
@@ -54,61 +54,61 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
     private var in: BufferedReader = null
     @volatile
     var ready: Boolean = false
-    
+
     var testStartingList = new ListBuffer[Elem]
     def testStartingEvents = testStartingList.toArray
-    
+
     var testSucceededList = new ListBuffer[Elem]
     def testSucceededEvents = testSucceededList.toArray
-    
+
     var testFailedList = new ListBuffer[Elem]
     def testFailedEvents = testFailedList.toArray
-    
+
     var testIgnoredList = new ListBuffer[Elem]
     def testIgnoredEvents = testIgnoredList.toArray
-    
+
     var testPendingList = new ListBuffer[Elem]
     def testPendingEvents = testPendingList.toArray
-    
+
     var testCanceledList = new ListBuffer[Elem]
     def testCanceledEvents = testCanceledList.toArray
-    
+
     var scopeOpenedList = new ListBuffer[Elem]
     def scopeOpenedEvents = scopeOpenedList.toArray
-    
+
     var scopeClosedList = new ListBuffer[Elem]
     def scopeClosedEvents = scopeClosedList.toArray
-    
+
     var scopePendingList = new ListBuffer[Elem]
     def scopePendingEvents = scopePendingList.toArray
-    
+
     var suiteStartingList = new ListBuffer[Elem]
     def suiteStartingEvents = suiteStartingList.toArray
-    
+
     var suiteCompletedList = new ListBuffer[Elem]
     def suiteCompletedEvents = suiteCompletedList.toArray
-    
+
     var suiteAbortedList = new ListBuffer[Elem]
     def suiteAbortedEvents = suiteAbortedList.toArray
-    
+
     var runStartingList = new ListBuffer[Elem]
     def runStartingEvents = runStartingList.toArray
-    
+
     var runCompletedList = new ListBuffer[Elem]
     def runCompletedEvents = runCompletedList.toArray
-    
+
     var runStoppedList = new ListBuffer[Elem]
     def runStoppedEvents = runStoppedList.toArray
-    
+
     var runAbortedList = new ListBuffer[Elem]
     def runAbortedEvents = runAbortedList.toArray
-    
+
     var infoProvidedList = new ListBuffer[Elem]
     def infoProvidedEvents = infoProvidedList.toArray
-    
+
     var markupProvidedList = new ListBuffer[Elem]
     def markupProvidedEvents = markupProvidedList.toArray
-    
+
     def run(): Unit = {
       try {
         connection = socket.accept
@@ -124,7 +124,7 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
               if (eventRawXml == "" && line.length > 0)
                 endingXml = line.substring(0, 1) + "/" + line.substring(1)
               eventRawXml += line + "\n"
-              if (line.trim == endingXml.trim) 
+              if (line.trim == endingXml.trim)
                 eventXml = XML.loadString(eventRawXml)
               else if (!connection.isClosed && !in.ready)
                 Thread.sleep(10)
@@ -165,19 +165,19 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
       }
     }
   }
-  
+
   def checkStringOption(value: String, expectedValueOpt: Option[String]): Unit = {
     expectedValueOpt match {
-      case Some(expectedValue) => 
+      case Some(expectedValue) =>
         assert(value === expectedValue)
       case None =>
         assert(value === "")
     }
   }
-  
+
   def checkLongOption(value: Long, expectedValueOpt: Option[Long]): Unit = {
     expectedValueOpt match {
-      case Some(expectedValue) => 
+      case Some(expectedValue) =>
         assert(value === expectedValue)
       case None =>
         assert(value === "")
@@ -194,9 +194,9 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
     assert((scopeOpened \ "location" \ "LineInFile" \ "lineNumber").text === lineNumber.toString)
     assert((scopeOpened \ "location" \ "LineInFile" \ "filePathname").text endsWith s"org${sep}scalatest${sep}tools${sep}${fileName}")
   }
-  
-  def checkTestStarting(testStarting:Elem, suiteName: String, suiteId: String, suiteClassName: Option[String], 
-                        testName: String, testText: String, fileName: String, lineNumber: Int, 
+
+  def checkTestStarting(testStarting:Elem, suiteName: String, suiteId: String, suiteClassName: Option[String],
+                        testName: String, testText: String, fileName: String, lineNumber: Int,
                         rerunner: Option[String]): Unit = {
     assert((testStarting \ "suiteName").text === suiteName)
     assert((testStarting \ "suiteId").text === suiteId)
@@ -208,8 +208,8 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
     assert((testStarting \ "location" \ "LineInFile" \ "filePathname").text endsWith s"org${sep}scalatest${sep}tools${sep}${fileName}")
     checkStringOption((testStarting \ "rerunner").text, rerunner)
   }
-  
-  def checkTestSucceeded(testSucceeded: Elem, suiteName: String, suiteId: String, suiteClassName: Option[String], 
+
+  def checkTestSucceeded(testSucceeded: Elem, suiteName: String, suiteId: String, suiteClassName: Option[String],
                          testName: String, testText: String, fileName: String, lineNumber: Int, rerunner: Option[String] = None): Unit = {
     assert((testSucceeded \ "suiteName").text === suiteName)
     assert((testSucceeded \ "suiteId").text === suiteId)
@@ -221,8 +221,8 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
     assert((testSucceeded \ "location" \ "LineInFile" \ "filePathname").text endsWith s"org${sep}scalatest${sep}tools${sep}${fileName}")
     checkStringOption((testSucceeded \ "rerunner").text, rerunner)
   }
-  
-  def checkTestFailed(testFailed: Elem, message: String, suiteName: String, suiteId: String, suiteClassName: Option[String], 
+
+  def checkTestFailed(testFailed: Elem, message: String, suiteName: String, suiteId: String, suiteClassName: Option[String],
                       testName: String, testText: String, rerunner: Option[String]): Unit = {
     assert((testFailed \ "message").text === message)
     assert((testFailed \ "suiteName").text === suiteName)
@@ -232,9 +232,9 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
     assert((testFailed \ "testText").text === testText)
     checkStringOption((testFailed \ "rerunner").text, rerunner)
   }
-  
-  def checkTestPending(testPending: Elem, suiteName: String, suiteId: String, suiteClassName: Option[String], 
-                       testName: String, testText: String, fileName: String, lineNumber: Int, 
+
+  def checkTestPending(testPending: Elem, suiteName: String, suiteId: String, suiteClassName: Option[String],
+                       testName: String, testText: String, fileName: String, lineNumber: Int,
                        rerunner: Option[String]): Unit = {
     assert((testPending \ "suiteName").text === suiteName)
     assert((testPending \ "suiteId").text === suiteId)
@@ -246,8 +246,8 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
     assert((testPending \ "location" \ "LineInFile" \ "filePathname").text endsWith s"org${sep}scalatest${sep}tools${sep}${fileName}")
     checkStringOption((testPending \ "rerunner").text, rerunner)
   }
-  
-  def checkTestIgnored(testIgnored: Elem, suiteName: String, suiteId: String, suiteClassName: Option[String], 
+
+  def checkTestIgnored(testIgnored: Elem, suiteName: String, suiteId: String, suiteClassName: Option[String],
                        testName: String, testText: String, fileName: String, lineNumber: Int): Unit = {
     assert((testIgnored \ "suiteName").text === suiteName)
     assert((testIgnored \ "suiteId").text === suiteId)
@@ -258,8 +258,8 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
     assert((testIgnored \ "location" \ "LineInFile" \ "lineNumber").text === lineNumber.toString)
     assert((testIgnored \ "location" \ "LineInFile" \ "filePathname").text endsWith s"org${sep}scalatest${sep}tools${sep}${fileName}")
   }
-  
-  def checkTestCanceled(testCanceled: Elem, message: String, suiteName: String, suiteId: String, suiteClassName: Option[String], 
+
+  def checkTestCanceled(testCanceled: Elem, message: String, suiteName: String, suiteId: String, suiteClassName: Option[String],
                         testName: String, testText: String, fileName: String, lineNumber: Int): Unit = {
     assert((testCanceled \ "message").text === message)
     assert((testCanceled \ "suiteName").text === suiteName)
@@ -271,8 +271,8 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
     assert((testCanceled \ "location" \ "LineInFile" \ "lineNumber").text === lineNumber.toString)
     assert((testCanceled \ "location" \ "LineInFile" \ "filePathname").text endsWith s"org${sep}scalatest${sep}tools${sep}${fileName}")
   }
-  
-  def checkSuiteStarting(suiteStarting: Elem, suiteName: String, suiteId: String, suiteClassName: Option[String], 
+
+  def checkSuiteStarting(suiteStarting: Elem, suiteName: String, suiteId: String, suiteClassName: Option[String],
                          topOfClassName: String, rerunner: Option[String] = None, threadName: String, timeStamp: Long): Unit = {
     assert((suiteStarting \ "suiteName").text === suiteName)
     assert((suiteStarting \ "suiteId").text === suiteId)
@@ -282,8 +282,8 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
     assert((suiteStarting \ "threadName").text === threadName)
     assert((suiteStarting \ "timeStamp").text === timeStamp.toString)
   }
-  
-  def checkSuiteCompleted(suiteCompleted: Elem, suiteName: String, suiteId: String, suiteClassName: Option[String], 
+
+  def checkSuiteCompleted(suiteCompleted: Elem, suiteName: String, suiteId: String, suiteClassName: Option[String],
                           duration: Option[Long], topOfClassName: String, rerunner: Option[String], threadName: String, timeStamp: Long): Unit = {
     assert((suiteCompleted \ "suiteName").text === suiteName)
     assert((suiteCompleted \ "suiteId").text === suiteId)
@@ -294,8 +294,8 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
     assert((suiteCompleted \ "threadName").text === threadName)
     assert((suiteCompleted \ "timeStamp").text === timeStamp.toString)
   }
-  
-  def checkSuiteAborted(suiteAborted: Elem, message: String, suiteName: String, suiteId: String, suiteClassName: Option[String],  
+
+  def checkSuiteAborted(suiteAborted: Elem, message: String, suiteName: String, suiteId: String, suiteClassName: Option[String],
                         duration: Option[Long], topOfClassName: String, rerunner: Option[String], threadName: String, timeStamp: Long): Unit = {
     assert((suiteAborted \ "message").text === message)
     assert((suiteAborted \ "suiteName").text === suiteName)
@@ -309,10 +309,10 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
   }
 
   describe("Socket Reporter") {
-    
+
     it("should send TestStarting, TestSucceeded, TestFailed, TestIgnored, TestPending, " +
        "TestCanceled, ScopeOpened, ScopeClosed and ScopePending event using socket") {
-      
+
       class TestSpec extends FunSpec {
         describe("A Feature") {
           it("should succeed") {}
@@ -325,7 +325,7 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
           pending
         }
       }
-      
+
       val socket = new ServerSocket(0)
       val eventRecorder = new SocketEventRecorder(socket)
       val eventRecorderThread = new Thread(eventRecorder)
@@ -336,63 +336,63 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
       eventRecorder.stopped = true
       rep.dispose()
       eventually(timeout(Span(30, Seconds))) { assert(eventRecorder.ready) } // Wait until the receiver is ready
-      
-        
+
+
       assert(eventRecorder.scopeOpenedEvents.length === 2)
-      checkScopeEvents(eventRecorder.scopeOpenedEvents(0), "A Feature", spec.suiteName, spec.suiteId, 
+      checkScopeEvents(eventRecorder.scopeOpenedEvents(0), "A Feature", spec.suiteName, spec.suiteId,
                      Some(spec.getClass.getName), "XmlSocketReporterSpec.scala", thisLineNumber - 26)
-      checkScopeEvents(eventRecorder.scopeOpenedEvents(1), "A Pending Feature", spec.suiteName, spec.suiteId, 
+      checkScopeEvents(eventRecorder.scopeOpenedEvents(1), "A Pending Feature", spec.suiteName, spec.suiteId,
                      Some(spec.getClass.getName), "XmlSocketReporterSpec.scala", thisLineNumber - 21)
       assert(eventRecorder.scopeClosedEvents.length === 1)
-      checkScopeEvents(eventRecorder.scopeClosedEvents(0), "A Feature", spec.suiteName, spec.suiteId, 
+      checkScopeEvents(eventRecorder.scopeClosedEvents(0), "A Feature", spec.suiteName, spec.suiteId,
                      Some(spec.getClass.getName), "XmlSocketReporterSpec.scala", thisLineNumber - 31)
       assert(eventRecorder.scopePendingEvents.length === 1)
-      checkScopeEvents(eventRecorder.scopePendingEvents(0), "A Pending Feature", spec.suiteName, spec.suiteId, 
+      checkScopeEvents(eventRecorder.scopePendingEvents(0), "A Pending Feature", spec.suiteName, spec.suiteId,
                      Some(spec.getClass.getName), "XmlSocketReporterSpec.scala", thisLineNumber - 27)
-                     
+
       assert(eventRecorder.testStartingEvents.length === 4)
-      checkTestStarting(eventRecorder.testStartingEvents(0), spec.suiteName, spec.suiteId, Some(spec.getClass.getName), 
-                        "A Feature should succeed", "should succeed", "XmlSocketReporterSpec.scala", thisLineNumber - 37, 
+      checkTestStarting(eventRecorder.testStartingEvents(0), spec.suiteName, spec.suiteId, Some(spec.getClass.getName),
+                        "A Feature should succeed", "should succeed", "XmlSocketReporterSpec.scala", thisLineNumber - 37,
                         None) // rerunner should be none, as the suite is an inner class.
-      checkTestStarting(eventRecorder.testStartingEvents(1), spec.suiteName, spec.suiteId, Some(spec.getClass.getName), 
-                        "A Feature should failed", "should failed", "XmlSocketReporterSpec.scala", thisLineNumber - 39, 
+      checkTestStarting(eventRecorder.testStartingEvents(1), spec.suiteName, spec.suiteId, Some(spec.getClass.getName),
+                        "A Feature should failed", "should failed", "XmlSocketReporterSpec.scala", thisLineNumber - 39,
                         None)
-      checkTestStarting(eventRecorder.testStartingEvents(2), spec.suiteName, spec.suiteId, Some(spec.getClass.getName), 
-                        "A Feature should pending", "should pending", "XmlSocketReporterSpec.scala", thisLineNumber - 40, 
+      checkTestStarting(eventRecorder.testStartingEvents(2), spec.suiteName, spec.suiteId, Some(spec.getClass.getName),
+                        "A Feature should pending", "should pending", "XmlSocketReporterSpec.scala", thisLineNumber - 40,
                         None)
-      checkTestStarting(eventRecorder.testStartingEvents(3), spec.suiteName, spec.suiteId, Some(spec.getClass.getName), 
-                        "A Feature should canceled", "should canceled", "XmlSocketReporterSpec.scala", thisLineNumber - 42, 
+      checkTestStarting(eventRecorder.testStartingEvents(3), spec.suiteName, spec.suiteId, Some(spec.getClass.getName),
+                        "A Feature should canceled", "should canceled", "XmlSocketReporterSpec.scala", thisLineNumber - 42,
                         None)
-      
+
       assert(eventRecorder.testSucceededEvents.length === 1)
-      checkTestSucceeded(eventRecorder.testSucceededEvents(0), spec.suiteName, spec.suiteId, Some(spec.getClass.getName), 
+      checkTestSucceeded(eventRecorder.testSucceededEvents(0), spec.suiteName, spec.suiteId, Some(spec.getClass.getName),
                          "A Feature should succeed", "should succeed", "XmlSocketReporterSpec.scala", thisLineNumber - 51, None)
-      
+
       assert(eventRecorder.testFailedEvents.length === 1)
-      checkTestFailed(eventRecorder.testFailedEvents(0), "1 did not equal 2", spec.suiteName, spec.suiteId, Some(spec.getClass.getName), 
+      checkTestFailed(eventRecorder.testFailedEvents(0), "1 did not equal 2", spec.suiteName, spec.suiteId, Some(spec.getClass.getName),
                       "A Feature should failed", "should failed", None)
 
       assert(eventRecorder.testPendingEvents.length === 1)
-      checkTestPending(eventRecorder.testPendingEvents(0), spec.suiteName, spec.suiteId, Some(spec.getClass.getName), 
+      checkTestPending(eventRecorder.testPendingEvents(0), spec.suiteName, spec.suiteId, Some(spec.getClass.getName),
                        "A Feature should pending", "should pending", "XmlSocketReporterSpec.scala", thisLineNumber - 56, None)
 
       assert(eventRecorder.testIgnoredEvents.length === 1)
-      checkTestIgnored(eventRecorder.testIgnoredEvents(0), spec.suiteName, spec.suiteId, Some(spec.getClass.getName), 
+      checkTestIgnored(eventRecorder.testIgnoredEvents(0), spec.suiteName, spec.suiteId, Some(spec.getClass.getName),
                        "A Feature should ignored", "should ignored", "XmlSocketReporterSpec.scala", thisLineNumber - 61)
-      
+
       assert(eventRecorder.testCanceledEvents.length === 1)
-      checkTestCanceled(eventRecorder.testCanceledEvents(0), "cancel on purpose", spec.suiteName, spec.suiteId, Some(spec.getClass.getName), 
-                        "A Feature should canceled", "should canceled", "XmlSocketReporterSpec.scala", thisLineNumber - 63)        
+      checkTestCanceled(eventRecorder.testCanceledEvents(0), "cancel on purpose", spec.suiteName, spec.suiteId, Some(spec.getClass.getName),
+                        "A Feature should canceled", "should canceled", "XmlSocketReporterSpec.scala", thisLineNumber - 63)
     }
-    
+
     it("should send SuiteStarting, SuiteCompleted, SuiteAborted event using socket") {
       val socket = new ServerSocket(0)
       val eventRecorder = new SocketEventRecorder(socket)
       val eventRecorderThread = new Thread(eventRecorder)
       eventRecorderThread.start()
-      
+
       val timeStamp = (new Date).getTime
-      
+
       val rep = new XmlSocketReporter("localhost", socket.getLocalPort)
       rep(SuiteStarting(new Ordinal(0), "a suite name", "a suite Id", Some("a class name"), None, Some(TopOfClass("a class name")), Some("a rerunner"),
                         None, Thread.currentThread.getName, timeStamp))
@@ -405,28 +405,28 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
       rep.dispose()
       eventRecorder.stopped = true
       eventually(timeout(Span(10, Seconds))) { assert(eventRecorder.ready) } // Wait until the receiver is ready
-      
-      
+
+
       assert(eventRecorder.suiteStartingEvents.length === 2)
       checkSuiteStarting(eventRecorder.suiteStartingEvents(0), "a suite name", "a suite Id", Some("a class name"), "a class name", Some("a rerunner"), Thread.currentThread.getName, timeStamp)
       checkSuiteStarting(eventRecorder.suiteStartingEvents(1), "another suite name", "another suite Id", Some("another class name"), "another class name", Some("another rerunner"), Thread.currentThread.getName, timeStamp)
-      
+
       assert(eventRecorder.suiteCompletedEvents.length === 1)
       checkSuiteCompleted(eventRecorder.suiteCompletedEvents(0), "a suite name", "a suite Id", Some("a class name"), Some(1000L), "a class name", Some("a rerunner"), Thread.currentThread.getName, timeStamp)
-      
+
       assert(eventRecorder.suiteAbortedEvents.length === 1)
-      checkSuiteAborted(eventRecorder.suiteAbortedEvents(0), "error message", "another suite name", "another suite Id", Some("another class name"), Some(1000L), "another class name", Some("another rerunner"), 
+      checkSuiteAborted(eventRecorder.suiteAbortedEvents(0), "error message", "another suite name", "another suite Id", Some("another class name"), Some(1000L), "another class name", Some("another rerunner"),
                         Thread.currentThread.getName, timeStamp)
     }
-    
+
     it("should send RunStarting, RunCompleted, RunStopped and RunAborted event using socket") {
       val socket = new ServerSocket(0)
       val eventRecorder = new SocketEventRecorder(socket)
       val eventRecorderThread = new Thread(eventRecorder)
       eventRecorderThread.start()
-      
+
       val timeStamp = (new Date).getTime
-      
+
       val rep = new XmlSocketReporter("localhost", socket.getLocalPort)
       rep(RunStarting(new Ordinal(0), 10, ConfigMap("key 1" -> "value 1"), None, None, None, Thread.currentThread.getName, timeStamp))
       rep(RunCompleted(new Ordinal(0), Some(1000L), Some(Summary(1, 2, 3, 4, 5, 6, 7, 8)), None, None, None, Thread.currentThread.getName, timeStamp))
@@ -436,15 +436,15 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
       rep.dispose()
       eventRecorder.stopped = true
       eventually(timeout(Span(10, Seconds))) { assert(eventRecorder.ready) } // Wait until the receiver is ready
-      
-      
+
+
       assert(eventRecorder.runStartingEvents.length === 1)
       assert((eventRecorder.runStartingEvents(0) \ "testCount").text === "10")
       assert((eventRecorder.runStartingEvents(0) \ "configMap" \ "entry" \ "key").text === "key 1")
       assert((eventRecorder.runStartingEvents(0) \ "configMap" \ "entry" \ "value").text === "value 1")
       assert((eventRecorder.runStartingEvents(0) \ "threadName").text === Thread.currentThread.getName)
       assert((eventRecorder.runStartingEvents(0) \ "timeStamp").text === timeStamp.toString)
-      
+
       assert(eventRecorder.runCompletedEvents.length === 1)
       assert((eventRecorder.runCompletedEvents(0) \ "duration").text.toLong === 1000L)
       assert((eventRecorder.runCompletedEvents(0) \ "summary" \ "testsSucceededCount").text.toInt === 1)
@@ -457,7 +457,7 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
       assert((eventRecorder.runCompletedEvents(0) \ "summary" \ "scopesPendingCount").text.toInt === 8)
       assert((eventRecorder.runCompletedEvents(0) \ "threadName").text === Thread.currentThread.getName)
       assert((eventRecorder.runCompletedEvents(0) \ "timeStamp").text === timeStamp.toString)
-      
+
       assert(eventRecorder.runStoppedEvents.length === 1)
       assert((eventRecorder.runStoppedEvents(0) \ "duration").text.toLong === 1000L)
       assert((eventRecorder.runStoppedEvents(0) \ "summary" \ "testsSucceededCount").text.toInt === 8)
@@ -470,7 +470,7 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
       assert((eventRecorder.runStoppedEvents(0) \ "summary" \ "scopesPendingCount").text.toInt === 15)
       assert((eventRecorder.runStoppedEvents(0) \ "threadName").text === Thread.currentThread.getName)
       assert((eventRecorder.runStoppedEvents(0) \ "timeStamp").text === timeStamp.toString)
-      
+
       assert(eventRecorder.runAbortedEvents.length === 1)
       assert((eventRecorder.runAbortedEvents(0) \ "message").text === "Suite aborted")
       assert((eventRecorder.runAbortedEvents(0) \ "duration").text.toLong === 1000L)
@@ -485,15 +485,15 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
       assert((eventRecorder.runAbortedEvents(0) \ "threadName").text === Thread.currentThread.getName)
       assert((eventRecorder.runAbortedEvents(0) \ "timeStamp").text === timeStamp.toString)
     }
-    
+
     it("should send InfoProvided and MarkupProvided event using socket") {
       val socket = new ServerSocket(0)
       val eventRecorder = new SocketEventRecorder(socket)
       val eventRecorderThread = new Thread(eventRecorder)
       eventRecorderThread.start()
-      
+
       val timeStamp = (new Date).getTime
-      
+
       val rep = new XmlSocketReporter("localhost", socket.getLocalPort)
       rep(InfoProvided(new Ordinal(0), "some info", Some(NameInfo("a suite name", "a suite Id", Some("a suite class"), Some("a test name"))),
           None, None, Some(LineInFile(168, "XmlSocketReporterSpec.scala", None)), None, Thread.currentThread.getName, timeStamp))
@@ -502,8 +502,8 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
       rep.dispose()
       eventRecorder.stopped = true
       eventually(timeout(Span(10, Seconds))) { assert(eventRecorder.ready) } // Wait until the receiver is ready
-        
-      
+
+
       assert(eventRecorder.infoProvidedEvents.length === 1)
       assert((eventRecorder.infoProvidedEvents(0) \ "message").text === "some info")
       assert((eventRecorder.infoProvidedEvents(0) \ "nameInfo" \ "suiteName").text === "a suite name")
@@ -514,7 +514,7 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
       assert((eventRecorder.infoProvidedEvents(0) \ "location" \ "LineInFile" \ "fileName").text === "XmlSocketReporterSpec.scala")
       assert((eventRecorder.infoProvidedEvents(0) \ "threadName").text === Thread.currentThread.getName)
       assert((eventRecorder.infoProvidedEvents(0) \ "timeStamp").text === timeStamp.toString)
-      
+
       assert(eventRecorder.markupProvidedEvents.length === 1)
       assert((eventRecorder.markupProvidedEvents(0) \ "text").text === "some markup")
       assert((eventRecorder.markupProvidedEvents(0) \ "nameInfo" \ "suiteName").text === "another suite name")
@@ -526,18 +526,18 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
       assert((eventRecorder.markupProvidedEvents(0) \ "threadName").text === Thread.currentThread.getName)
       assert((eventRecorder.markupProvidedEvents(0) \ "timeStamp").text === timeStamp.toString)
     }
-    
+
     it("should send multilines indented error message correctly") {
-      
-      //forAll failed, because: 
-        //at index 0, forAll failed, because: 
+
+      //forAll failed, because:
+        //at index 0, forAll failed, because:
       val socket = new ServerSocket(0)
       val eventRecorder = new SocketEventRecorder(socket)
       val eventRecorderThread = new Thread(eventRecorder)
       eventRecorderThread.start()
-      
+
       val timeStamp = (new Date).getTime
-      
+
       val rep = new XmlSocketReporter("localhost", socket.getLocalPort)
       rep(TestFailed(new Ordinal(0), "test <function1> failed, because: \n  <function1> is buggy.", "TestSuite", "com.test.TestSuite", Some("com.test.TestSuite"),
                      "test 1", "test 1", collection.immutable.IndexedSeq.empty[RecordableEvent], Some(new RuntimeException("test <function1> failed, because: \n  <function1> is buggy."))))
@@ -546,18 +546,18 @@ class XmlSocketReporterSpec extends FunSpec with Eventually {
       rep(InfoProvided(new Ordinal(0), "some <function1> info, because: \n  <function1> is buggy.", Some(NameInfo("TestSuite", "com.test.TestSuite", Some("com.test.TestSuite"), Some("test 2"))),
           Some(new RuntimeException("some <function1> info, because: \n  <function1> is buggy.")), None, Some(LineInFile(168, "XmlSocketReporterSpec.scala", None)), None, Thread.currentThread.getName, timeStamp))
       eventRecorder.stopped = true
-      eventually(timeout(Span(10, Seconds))) { assert(eventRecorder.ready) } // Wait until the receiver is ready             
-      
+      eventually(timeout(Span(10, Seconds))) { assert(eventRecorder.ready) } // Wait until the receiver is ready
+
       assert(eventRecorder.testFailedEvents.length === 1)
       val testFailed = eventRecorder.testFailedEvents(0)
-      assert((testFailed \ "message").text === "test <function1> failed, because: \n  <function1> is buggy.") 
+      assert((testFailed \ "message").text === "test <function1> failed, because: \n  <function1> is buggy.")
       assert((testFailed \ "throwable" \ "message").text === "test <function1> failed, because: \n  <function1> is buggy.")
-      
+
       assert(eventRecorder.testCanceledEvents.length === 1)
       val testCanceled = eventRecorder.testCanceledEvents(0)
       assert((testCanceled \ "message").text === "test <function1> canceled, because: \n  <function1> is buggy.")
       assert((testCanceled \ "throwable" \ "message").text === "test <function1> canceled, because: \n  <function1> is buggy.")
-      
+
       assert(eventRecorder.infoProvidedEvents.length === 1)
       val infoProvided = eventRecorder.infoProvidedEvents(0)
       assert((infoProvided \ "message").text === "some <function1> info, because: \n  <function1> is buggy.")

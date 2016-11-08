@@ -63,13 +63,13 @@ class ExampleSpec extends fixture.FunSpec with DbFixture {
       db.append("easy!")
       assert(db.toString === "ScalaTest is easy!")
     }
-    
+
     it("should be fun") { db =>
       db.append("fun!")
       assert(db.toString === "ScalaTest is fun!")
     }
   }
-  
+
   // This test doesn't need a Db
   describe("Test code") {
     it("should be clear") { () =>

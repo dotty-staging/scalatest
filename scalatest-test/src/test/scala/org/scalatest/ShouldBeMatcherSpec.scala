@@ -41,7 +41,7 @@ class ShouldBeMatcherSpec extends FunSpec with Checkers with ReturnsNormallyThro
     it("should do nothing if a BeMatcher matches") {
       1 should be (odd)
       2 should be (even)
-      
+
       // 1 shouldBe odd
       // 2 shouldBe even
     }
@@ -390,7 +390,7 @@ class ShouldBeMatcherSpec extends FunSpec with Checkers with ReturnsNormallyThro
 
       1 should be (likable)
       2 should not be (unlikable)
-      
+
       // 1 shouldBe likable
 
       val caught1 = intercept[TestFailedException] {
@@ -409,7 +409,7 @@ class ShouldBeMatcherSpec extends FunSpec with Checkers with ReturnsNormallyThro
       val oddAsInt = odd compose { (s: String) => s.toInt }
       "3" should be (oddAsInt)
       "4" should not be (oddAsInt)
-      
+
       // "3" shouldBe oddAsInt
     }
   }
@@ -422,7 +422,7 @@ class ShouldBeMatcherSpec extends FunSpec with Checkers with ReturnsNormallyThro
       "xx" should be (lessThanThreeInLength)
       "xxx" should not be (lessThanThreeInLength)
       "xxxx" should not be (lessThanThreeInLength)
-      
+
       // "" shouldBe lessThanThreeInLength
       // "x" shouldBe lessThanThreeInLength
       // "xx" shouldBe lessThanThreeInLength

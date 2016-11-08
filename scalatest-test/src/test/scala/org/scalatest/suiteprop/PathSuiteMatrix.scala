@@ -20,7 +20,7 @@ import SharedHelpers._
 import prop.TableDrivenPropertyChecks
 
 class PathSuiteMatrix extends PropSpec with Matchers with TableDrivenPropertyChecks {
-  
+
   property("A path trait should execute the first test, and only the first test, on initial instance creation") {
 
     new OnlyFirstTestExecutedOnCreationExamples {

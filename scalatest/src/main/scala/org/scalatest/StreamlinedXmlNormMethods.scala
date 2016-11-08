@@ -34,13 +34,13 @@ import org.scalactic.{NormMethods, Uniformity}
  *      |   &lt;/day&gt;
  *      | &lt;/good&gt;
  * res1: Boolean = false
- * 
+ *
  * scala&gt; import org.scalactic._
  * import org.scalactic._
- * 
+ *
  * scala&gt; import TripleEquals._
  * import TripleEquals._
- * 
+ *
  * scala&gt; import org.scalatest.StreamlinedXmlNormMethods._
  * import org.scalatest.StreamlinedXmlNormMethods._
  *
@@ -71,7 +71,7 @@ trait StreamlinedXmlNormMethods extends StreamlinedXml with NormMethods {
 }
 
 /**
- * Companion object that facilitates the importing of <code>StreamlinedXmlNormMethods</code> members as 
+ * Companion object that facilitates the importing of <code>StreamlinedXmlNormMethods</code> members as
  * an alternative to mixing it the trait. One use case is to import <code>StreamlinedXmlNormMethods</code>'s implicit so you can use
  * it in the Scala interpreter.
  *

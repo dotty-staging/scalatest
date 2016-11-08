@@ -28,16 +28,16 @@ import org.scalatest._
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.fixture.configmapfixture
- * 
+ *
  * import org.scalatest._
- * 
+ *
  * class ExampleSpec extends fixture.FlatSpec with fixture.ConfigMapFixture with Matchers {
- * 
+ *
  *   "The config map" should "contain hello" in { configMap =&gt;
  *     // Use the configMap passed to runTest in the test
  *     configMap should contain key "hello"
  *   }
- * 
+ *
  *   it should "contain world" in { configMap =&gt;
  *     configMap should contain key "world"
  *   }
@@ -58,7 +58,7 @@ import org.scalatest._
  * - should contain world *** FAILED ***
  *   Map() did not contain key "world" (<console>:24)</span>
  * </pre>
- * 
+ *
  * <p>
  * If you do define <code>"hello"</code> and <code>"world"</code> keys
  * in the confg map, the tests will success:
@@ -71,7 +71,7 @@ import org.scalatest._
  * - should contain hello
  * - should contain world</span>
  * </pre>
- * 
+ *
  * @author Bill Venners
  */
 trait ConfigMapFixture { this: fixture.TestSuite =>

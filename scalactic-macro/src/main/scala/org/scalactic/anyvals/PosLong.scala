@@ -29,7 +29,7 @@ import scala.language.implicitConversions
  * will usually be as efficient as an <code>Long</code>, being
  * boxed only when an <code>Long</code> would have been boxed.
  * </p>
- * 
+ *
  * <p>
  * The <code>PosLong.apply</code> factory method is implemented
  * in terms of a macro that checks literals for validity at
@@ -38,7 +38,7 @@ import scala.language.implicitConversions
  * <code>PosLong</code> instance at run time or an error at
  * compile time. Here's an example:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import anyvals._
  * import anyvals._
@@ -91,7 +91,7 @@ import scala.language.implicitConversions
  * scala&gt; PosLong.from(y)
  * res4: Option[org.scalactic.anyvals.PosLong] = None
  * </pre>
- * 
+ *
  * <p>
  * The <code>PosLong.apply</code> factory method is marked
  * implicit, so that you can pass literal <code>Long</code>s
@@ -141,7 +141,7 @@ import scala.language.implicitConversions
  * </p>
  *
  * @param value The <code>Long</code> value underlying this <code>PosLong</code>.
- */ 
+ */
 final class PosLong private (val value: Long) extends AnyVal {
 
   /**
@@ -863,7 +863,7 @@ object PosLong {
    */
   implicit def widenToPosZLong(pos: PosLong): PosZLong = PosZLong.from(pos.value).get
 
-  /** 
+  /**
    * Implicit widening conversion from <code>PosLong</code> to
    * <code>PosZFloat</code>.
    *
@@ -874,7 +874,7 @@ object PosLong {
    */
   implicit def widenToPosZFloat(pos: PosLong): PosZFloat = PosZFloat.from(pos.value).get
 
-  /** 
+  /**
    * Implicit widening conversion from <code>PosLong</code> to
    * <code>PosZDouble</code>.
    *
@@ -891,5 +891,5 @@ object PosLong {
   implicit val posLongOrd: Ordering[PosLong] =
     new Ordering[PosLong] {
       def compare(x: PosLong, y: PosLong): Int = x.toLong.compare(y)
-    } 
+    }
 }

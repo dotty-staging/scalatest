@@ -19,7 +19,7 @@ package org.scalatest.time
  * Trait providing four implicit conversions that allow you to specify spans of time
  * by invoking "units" methods such as <code>millis</code>, <code>seconds</code>, and <code>minutes</code>
  * on <code>Int</code>, <code>Long</code>, <code>Float</code>, and <code>Double</code>.
- * 
+ *
  * <p>
  * This trait enables you to specify a span of time in a clear, boilerplate-free way when you
  * need to provide an instance of <a href="Span.html"><code>Span</code></a>. This
@@ -284,7 +284,7 @@ trait SpanSugar {
   /**
    * Class containing methods that return a <code>Span</code> time value calculated from the
    * <code>Long</code> value passed to the <code>GrainOfTime</code> constructor.
-   * 
+   *
    * @param value the value to be converted
    */
   class GrainOfTime(value: Long) {
@@ -318,78 +318,78 @@ trait SpanSugar {
     def microseconds: Span = Span(value, Microseconds)
 
     /**
-     * A units method for one millisecond. 
-     * 
+     * A units method for one millisecond.
+     *
      * @return A <code>Span</code> representing the value passed to the constructor in milliseconds
      */
     def millisecond: Span = Span(value, Millisecond)
-    
+
     /**
-     * A units method for milliseconds. 
-     * 
+     * A units method for milliseconds.
+     *
      * @return A <code>Span</code> representing the value passed to the constructor in milliseconds
      */
     def milliseconds: Span = Span(value, Milliseconds)
 
     /**
-     * A shorter units method for milliseconds. 
-     * 
+     * A shorter units method for milliseconds.
+     *
      * @return A <code>Span</code> representing the value passed to the constructor in milliseconds
      */
     def millis: Span = Span(value, Millis)
 
     /**
-     * A units method for one second. 
-     * 
+     * A units method for one second.
+     *
      * @return A <code>Span</code> representing the value passed to the constructor in seconds
      */
-    def second: Span = Span(value, Second) 
-    
+    def second: Span = Span(value, Second)
+
     /**
-     * A units method for seconds. 
-     * 
+     * A units method for seconds.
+     *
      * @return A <code>Span</code> representing the value passed to the constructor in seconds
      */
     def seconds: Span = Span(value, Seconds)
 
     /**
-     * A units method for one minute. 
-     * 
+     * A units method for one minute.
+     *
      * @return A <code>Span</code> representing the value passed to the constructor in minutes
      */
     def minute: Span = Span(value, Minute)
 
     /**
-     * A units method for minutes. 
-     * 
+     * A units method for minutes.
+     *
      * @return A <code>Span</code> representing the value passed to the constructor in minutes
      */
     def minutes: Span = Span(value, Minutes)
-    
+
     /**
-     * A units method for one hour. 
-     * 
+     * A units method for one hour.
+     *
      * @return A <code>Span</code> representing the value passed to the constructor in hours
      */
     def hour: Span = Span(value, Hour)
 
     /**
-     * A units method for hours. 
-     * 
+     * A units method for hours.
+     *
      * @return A <code>Span</code> representing the value passed to the constructor in hours
      */
     def hours: Span = Span(value, Hours)
-    
+
     /**
-     * A units method for one day. 
-     * 
+     * A units method for one day.
+     *
      * @return A <code>Span</code> representing the value passed to the constructor in days
      */
     def day: Span = Span(value, Day)
 
     /**
-     * A units method for days. 
-     * 
+     * A units method for days.
+     *
      * @return A <code>Span</code> representing the value passed to the constructor multiplied in days
      */
     def days: Span = Span(value, Days)
@@ -513,15 +513,15 @@ trait SpanSugar {
 
   /**
    * Implicit conversion that adds time units methods to <code>Int</code>s.
-   * 
+   *
    * @param i: the <code>Int</code> to which to add time units methods
    * @return a <code>GrainOfTime</code> wrapping the passed <code>Int</code>
    */
   implicit def convertIntToGrainOfTime(i: Int): GrainOfTime = new GrainOfTime(i)
-  
+
   /**
    * Implicit conversion that adds time units methods to <code>Long</code>s.
-   * 
+   *
    * @param i: the <code>Long</code> to which to add time units methods
    * @return a <code>GrainOfTime</code> wrapping the passed <code>Long</code>
    */
@@ -546,7 +546,7 @@ trait SpanSugar {
 }
 
 /**
- * Companion object that facilitates the importing of <code>SpanSugar</code> members as 
+ * Companion object that facilitates the importing of <code>SpanSugar</code> members as
  * an alternative to mixing it in. One use case is to import <code>SpanSugar</code> members so you can use
  * them in the Scala interpreter:
  *

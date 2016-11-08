@@ -38,7 +38,7 @@ import org.scalactic._
 class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * xs should contain oneOf (1, 2)
@@ -82,7 +82,7 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * xs should contain atLeastOneOf (1, 2)
@@ -125,9 +125,9 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
     else
       indicateSuccess(shouldBeTrue, FailureMessages.containedAtLeastOneElementOf(prettifier, left, right), FailureMessages.didNotContainAtLeastOneElementOf(prettifier, left, right))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * xs should contain noneOf (1, 2)
@@ -170,9 +170,9 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
     else
       indicateSuccess(shouldBeTrue, FailureMessages.didNotContainAtLeastOneElementOf(prettifier, left, right), FailureMessages.containedAtLeastOneElementOf(prettifier, left, right))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * xs should contain theSameElementsAs (List(1, 2))
@@ -185,9 +185,9 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
     else
       indicateSuccess(shouldBeTrue, FailureMessages.containedSameElements(prettifier, left, right), FailureMessages.didNotContainSameElements(prettifier, left, right))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * xs should contain theSameElementsInOrderAs (List(1, 2))
@@ -200,9 +200,9 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
     else
       indicateSuccess(shouldBeTrue, FailureMessages.containedSameElementsInOrder(prettifier, left, right), FailureMessages.didNotContainSameElementsInOrder(prettifier, left, right))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * xs should contain only (1, 2)
@@ -248,7 +248,7 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * xs should contain inOrderOnly (1, 2)
@@ -275,9 +275,9 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
         FailureMessages.didNotContainInOrderOnlyElements(prettifier, left, UnquotedString(right.map(r => FailureMessages.decorateToStringValue(prettifier, r)).mkString(", ")))
       )
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * xs should contain allOf (1, 2)
@@ -320,9 +320,9 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
     else
       indicateSuccess(shouldBeTrue, FailureMessages.containedAllElementsOf(prettifier, left, right), FailureMessages.didNotContainAllElementsOf(prettifier, left, right))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * xs should contain inOrder (1, 2)
@@ -395,9 +395,9 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
     else
       indicateSuccess(shouldBeTrue, FailureMessages.containedValue(prettifier, left, expectedValue), FailureMessages.didNotContainValue(prettifier, left, expectedValue))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * xs should contain atMostOneOf (1, 2)
@@ -451,7 +451,7 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
         FailureMessages.didNotContainAtMostOneElementOf(prettifier, left, right)
       )
   }
-  
+
   override def toString: String = "ResultOfContainWord(" + Prettifier.default(left) + ", " + Prettifier.default(shouldBeTrue) + ")"
 }
 

@@ -379,7 +379,7 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
       }
 
       it("should throw a TestFailedException when set doesn't contain the specified element and used in a logical-or expression") {
-        val set1 = mutable.Set(1, 2) 
+        val set1 = mutable.Set(1, 2)
         val caught1 = intercept[TestFailedException] {(
           set1 should { contain (55) or (contain (22)) }
         )}
@@ -398,14 +398,14 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
           set1 should { not { contain (3) } and not { contain (2) }}
         )}
         assert(caught1.getMessage === set1 + " did not contain element 3, but " + set1 + " contained element 2")
-        
-        val set2 = mutable.Set(1, 2) 
+
+        val set2 = mutable.Set(1, 2)
         val caught2 = intercept[TestFailedException] {(
           set2 should ((not contain (3)) and (not contain (2))))
         }
         assert(caught2.getMessage === set2 + " did not contain element 3, but " + set2 + " contained element 2")
-        
-        val set3 = mutable.Set(1, 2) 
+
+        val set3 = mutable.Set(1, 2)
         val caught3 = intercept[TestFailedException] {(
           set3 should (not contain (3) and not contain (2)))
         }
@@ -418,14 +418,14 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
           set1 should { not { contain (2) } or not { contain (2) } }
         )}
         assert(caught1.getMessage === set1 + " contained element 2, and " + set1 + " contained element 2")
-        
-        val set2 = mutable.Set(1, 2) 
+
+        val set2 = mutable.Set(1, 2)
         val caught2 = intercept[TestFailedException] {(
           set2 should ((not contain (2)) or (not contain (2))))
         }
         assert(caught2.getMessage === set2 + " contained element 2, and " + set2 + " contained element 2")
-        
-        val set3 = mutable.Set(1, 2) 
+
+        val set3 = mutable.Set(1, 2)
         val caught3 = intercept[TestFailedException] {(
           set3 should (not contain (2) or not contain (2)))
         }
@@ -574,7 +574,7 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
     describe("on scala.collection.immutable.HashSet ") {
 
       import scala.collection.immutable.HashSet
-        
+
       it("should do nothing if set contains the specified element") {
         HashSet(1, 2) should contain (2)
         HashSet(1, 2) should (contain (2))
@@ -775,8 +775,8 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
            set1 should { contain (5) and (contain (2 - 1)) }
         }
         assert(caught1.getMessage === set1 + " did not contain element 5")
-        
-        val set2 = mutable.HashSet(1, 2) 
+
+        val set2 = mutable.HashSet(1, 2)
         val caught2 = intercept[TestFailedException] {(
           set2 should (contain (5) and contain (2 - 1)))
         }
@@ -803,14 +803,14 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
            set1 should { not { contain (3) } and not { contain (2) }}
         }
         assert(caught1.getMessage === set1 + " did not contain element 3, but " + set1 + " contained element 2")
-        
-        val set2 = mutable.HashSet(1, 2) 
+
+        val set2 = mutable.HashSet(1, 2)
         val caught2 = intercept[TestFailedException] {(
           set2 should ((not contain (3)) and (not contain (2))))
         }
         assert(caught2.getMessage === set2 + " did not contain element 3, but " + set2 + " contained element 2")
-        
-        val set3 = mutable.HashSet(1, 2) 
+
+        val set3 = mutable.HashSet(1, 2)
         val caught3 = intercept[TestFailedException] {(
           set3 should (not contain (3) and not contain (2)))
         }
@@ -818,7 +818,7 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
       }
 
       it("should throw a TestFailedException when set contains the specified element and used in a logical-or expression with not") {
-        val set1 = mutable.HashSet(1, 2) 
+        val set1 = mutable.HashSet(1, 2)
         val caught1 = intercept[TestFailedException] {
           set1 should { not { contain (2) } or not { contain (2) }}
         }
@@ -1124,7 +1124,7 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
       val javaList: java.util.List[Int] = new java.util.ArrayList
       javaList.add(1)
       javaList.add(2)
-      
+
       it("should do nothing if list contains the specified element") {
         javaList should contain (2)
         javaList should (contain (2))
@@ -1432,7 +1432,7 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
       }
 
       it("should throw TestFailedException if map does not contain the specified element") {
-        val map = mutable.Map("one" -> 1, "two" -> 2) 
+        val map = mutable.Map("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {(
           map should contain ("three" -> 3)
         )}
@@ -1440,13 +1440,13 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
       }
 
       it("should throw TestFailedException if contains the specified element when used with not") {
-        val map1 = mutable.Map("one" -> 1, "two" -> 2) 
+        val map1 = mutable.Map("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {(
           map1 should (not contain ("two" -> 2))
         )}
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " contained element (two,2)")
-        
-        val map2 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.Map("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {(
           map2 should not (contain ("two" -> 2))
         )}
@@ -1491,8 +1491,8 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
           map2 should ((contain ("fifty five" -> 55)) or (contain ("twenty two" -> 22)))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " did not contain element (fifty five,55), and " + decorateToStringValue(prettifier, map2) + " did not contain element (twenty two,22)")
-        
-        val map3 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.Map("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {(
           map3 should (contain ("fifty five" -> 55) or contain ("twenty two" -> 22)))
         }
@@ -1525,13 +1525,13 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
           map1 should { not { contain ("two" -> 2) } or not { contain ("two" -> 2) }}
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " contained element (two,2), and " + decorateToStringValue(prettifier, map1) + " contained element (two,2)")
-        
+
         val map2 = mutable.Map("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should ((not contain ("two" -> 2)) or (not contain ("two" -> 2)))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " contained element (two,2), and " + decorateToStringValue(prettifier, map2) + " contained element (two,2)")
-        
+
         val map3 = mutable.Map("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should (not contain ("two" -> 2) or not contain ("two" -> 2))
@@ -1918,19 +1918,19 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
       }
 
       it("should throw TestFailedException if contains the specified element when used with not") {
-        val map1 = mutable.HashMap("one" -> 1, "two" -> 2) 
+        val map1 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {(
           map1 should (not contain ("two" -> 2)))
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " contained element (two,2)")
-        
-        val map2 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {(
           map2 should not (contain ("two" -> 2)))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " contained element (two,2)")
-        
-        val map3 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {(
           map3 should not contain ("two" -> 2))
         }
@@ -1943,14 +1943,14 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
           map1 should { contain ("five" -> 5) and (contain ("two" -> 2)) }
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " did not contain element (five,5)")
-        
-        val map2 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {(
           map2 should ((contain ("five" -> 5)) and (contain ("two" -> 2))))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " did not contain element (five,5)")
-        
-        val map3 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {(
           map3 should (contain ("five" -> 5) and contain ("two" -> 2)))
         }
@@ -1958,7 +1958,7 @@ class ShouldContainElementSpec extends FunSpec with Checkers with ReturnsNormall
       }
 
       it("should throw an TestFailedException when map doesn't contain specified element and used in a logical-or expression") {
-        val map1 = mutable.HashMap("one" -> 1, "two" -> 2) 
+        val map1 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {(
           map1 should { contain ("fifty five" -> 55) or (contain ("twenty two" -> 22)) }
         )}

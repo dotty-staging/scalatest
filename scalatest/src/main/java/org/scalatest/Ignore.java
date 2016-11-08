@@ -15,7 +15,7 @@
  */
 package org.scalatest;
 
-import java.lang.annotation.*; 
+import java.lang.annotation.*;
 
 /**
  * Annotation used to tag a test, or suite of tests, as ignored.
@@ -31,16 +31,16 @@ import java.lang.annotation.*;
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.ignoreall
- * 
+ *
  * import org.scalatest._
- * 
+ *
  * @Ignore
  * class SetSpec extends FlatSpec {
- * 
+ *
  *   "An empty Set" should "have size 0" in {
  *     assert(Set.empty.size === 0)
  *   }
- * 
+ *
  *   it should "produce NoSuchElementException when head is invoked" in {
  *     intercept[NoSuchElementException] {
  *       Set.empty.head
@@ -104,7 +104,7 @@ import java.lang.annotation.*;
  * <span class="stYellow">- an empty Set should have size 0 !!! IGNORED !!!</span>
  * <span class="stGreen">- invoking head on an empty Set should produce NoSuchElementException</span>
  * </pre>
- * 
+ *
  * <p>
  * Note that because reflection is not supported on Scala.js, this annotation will only work on the JVM, not on Scala.js.
  * </p>

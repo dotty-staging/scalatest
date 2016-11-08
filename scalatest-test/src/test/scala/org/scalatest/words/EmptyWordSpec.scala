@@ -18,13 +18,13 @@ package org.scalatest.words
 import org.scalatest._
 
 class EmptyWordSpec extends FunSpec with Matchers {
-  
+
   describe("EmptyWord ") {
-    
+
     it("should have pretty toString") {
       empty.toString should be ("empty")
     }
-    
+
   }
-  
+
 }

@@ -22,16 +22,16 @@ import TripleEqualsSupport._
 /**
  * Trait that can be mixed into a <code>Suite</code> to disable the implicit conversions provided by default in trait
  * <a href="Assertions.html"><code>Assertions</code></a>, which trait <code>Suite</code> extends.
- * 
+ *
  * <p>
  * This trait can be used to quickly solve a problem in which ScalaTest's default implicit conversion is clashing with those of some other library
  * you need to use in your tests. After mixing in this trait, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
- * class MySuite extends FunSuite with NonImplicitAssertions { 
- *   // ... 
- * } 
+ * class MySuite extends FunSuite with NonImplicitAssertions {
+ *   // ...
+ * }
  * </pre>
  *
  * <p>
@@ -66,7 +66,7 @@ import TripleEqualsSupport._
 trait NonImplicitAssertions extends Assertions {
 
   /**
-   * Overrides the <code>super</code> implementation of <code>convertToEqualizer</code>, turning off the implicit 
+   * Overrides the <code>super</code> implementation of <code>convertToEqualizer</code>, turning off the implicit
    * modifier (if present) to remove the method from the space of implicit conversions.
    *
    * @param left the object whose type to convert to <code>Equalizer</code>.
@@ -96,28 +96,28 @@ trait NonImplicitAssertions extends Assertions {
  * Welcome to Scala version 2.9.1.final (Java HotSpot(TM) 64-Bit Server VM, Java 1.6.0_29).
  * Type in expressions to have them evaluated.
  * Type :help for more information.
- * 
+ *
  * scala&gt; import org.scalatest._
  * import org.scalatest._
- * 
+ *
  * scala&gt; import NonImplicitAssertions._
  * import NonImplicitAssertions._
- * 
+ *
  * scala&gt; assert(1 + 1 === 2)
  * &lt;console&gt;:14: error: value === is not a member of Int
  *              assert(1 + 1 === 2)
  *                            ^
- * 
+ *
  * scala&gt; assert(1 + 1 == 2)
  *
  * scala&gt; expect(2) { 1 + 1 }
- * 
+ *
  * scala&gt; expect(2) { 1 + 1 + 1 }
  * org.scalatest.TestFailedException: Expected 2, but got 3
  *   at org.scalatest.Assertions$class.newAssertionFailedException(Assertions.scala:318)
  *   at org.scalatest.NonImplicitAssertions$.newAssertionFailedException(NonImplicitAssertions.scala:73)
  *   ...
- * 
+ *
  * scala&gt; intercept[IndexOutOfBoundsException] { "hi".charAt(-1) }
  * res3: IndexOutOfBoundsException = java.lang.StringIndexOutOfBoundsException: String index out of range: -1
  * </pre>

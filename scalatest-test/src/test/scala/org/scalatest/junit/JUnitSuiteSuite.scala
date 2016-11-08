@@ -76,7 +76,7 @@ import _root_.org.junit.Test
             testSucceededCount += 1
           case event: TestFailed =>
             testFailedEvent = Some(event)
-          case _ => 
+          case _ =>
         }
       }
 

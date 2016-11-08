@@ -22,7 +22,7 @@ import java.lang.reflect.{InvocationTargetException, Method, Modifier}
  * Trait that facilitates the testing of private methods.
  *
  * To test a private method, mix in trait <code>PrivateMethodTester</code> and
- * create a <code>PrivateMethod</code> object, like this: 
+ * create a <code>PrivateMethod</code> object, like this:
  *
  * <pre class="stHighlight">
  * val decorateToStringValue = PrivateMethod[String]('decorateToStringValue)
@@ -59,7 +59,7 @@ import java.lang.reflect.{InvocationTargetException, Method, Modifier}
  * the private method to a companion object for the trait and test it using <code>PrivateMethodTester</code> that
  * way. If the private trait method you want to test uses the trait's state, your best options are to test it
  * indirectly via a non-private trait method that calls the private method, or make the private method package access
- * and test it directly via regular static method invocations. 
+ * and test it directly via regular static method invocations.
  * </p>
  *
  *
@@ -143,7 +143,7 @@ trait PrivateMethodTester {
   final class Invoker(target: AnyRef) {
 
     requireNonNull(target)
-    
+
     /**
      * Invoke a private method. This method will attempt to invoke via reflection a private method.
      * The name of the method to invoke is contained in the <code>methodName</code> field of the passed <code>Invocation</code>.
@@ -177,7 +177,7 @@ trait PrivateMethodTester {
           // First, the arrays must have the same length:
           if (args.length == paramTypes.length) {
             val zipped = args.toList zip paramTypes.toList
-  
+
             // If arg.asInstanceOf[AnyRef] has class java.lang.Integer, this needs to match the paramType Class instance for int
 
             def argMatchesParamType(arg: Any, paramType: Class[_]) = {
@@ -196,7 +196,7 @@ trait PrivateMethodTester {
                 }
               }
             }
-            
+
             // The args classes need only be assignable to the parameter type. So therefore the parameter type
             // must be assignable *from* the corresponding arg class type.
             val invalidArgs =
@@ -236,13 +236,13 @@ trait PrivateMethodTester {
 
         isInstanceMethod && (simpleName == methodNameToInvoke || simpleName.endsWith("$$"+ methodNameToInvoke)) && argsHaveValidTypes
       }
-  
+
       // Store in an array, because may have both isEmpty and empty, in which case I
       // will throw an exception.
       val methodArray =
         for (m <- target.getClass.getDeclaredMethods; if isMethodToInvoke(m))
           yield m
-  
+
       if (methodArray.length == 0)
         throw new IllegalArgumentException("Can't find a private method named: " + methodNameToInvoke)
       else if (methodArray.length > 1)
@@ -281,7 +281,7 @@ trait PrivateMethodTester {
 }
 
 /**
- * Companion object that facilitates the importing of <code>PrivateMethodTester</code> members as 
+ * Companion object that facilitates the importing of <code>PrivateMethodTester</code> members as
  * an alternative to mixing it in. One use case is to import <code>PrivateMethodTester</code> members so you can use
  * them in the Scala interpreter:
  *
@@ -291,7 +291,7 @@ trait PrivateMethodTester {
  * Type in expressions to have them evaluated.
  * Type :help for more information.
  * &nbsp;
- * scala> import org.scalatest.PrivateMethodTester._                 
+ * scala> import org.scalatest.PrivateMethodTester._
  * import org.scalatest.PrivateMethodTester._
  * &nbsp;
  * scala> class Example {
@@ -302,10 +302,10 @@ trait PrivateMethodTester {
  * scala> val example = new Example
  * example: Example = Example@d8b6fe
  * &nbsp;
- * scala> val addSesame = PrivateMethod[String]('addSesame)           
+ * scala> val addSesame = PrivateMethod[String]('addSesame)
  * addSesame: org.scalatest.PrivateMethodTester.PrivateMethod[String] = org.scalatest.PrivateMethodTester$PrivateMethod@5cdf95
  * &nbsp;
- * scala> example invokePrivate addSesame("open")                     
+ * scala> example invokePrivate addSesame("open")
  * res0: String = open sesame
  * <pre>
  *

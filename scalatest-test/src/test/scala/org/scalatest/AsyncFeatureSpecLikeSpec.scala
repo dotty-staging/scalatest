@@ -371,7 +371,7 @@ class AsyncFeatureSpecLikeSpec extends FunSpec {
         // context.
         // override implicit def executionContext: ExecutionContext = new ExecutionContext { def execute(runnable: Runnable) = runnable.run; def reportFailure(cause: Throwable) = () }
 
-        def sum(xs: List[Int]): Future[Int] = 
+        def sum(xs: List[Int]): Future[Int] =
           xs match {
             case Nil => Future.successful(0)
             case x :: xs => Future(x).flatMap(xx => sum(xs).map(xxx => xx + xxx))

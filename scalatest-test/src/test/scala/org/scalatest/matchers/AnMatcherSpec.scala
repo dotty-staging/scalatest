@@ -20,21 +20,21 @@ import Matchers._
 import java.io.File
 
 class AnMatcherSpec extends FunSpec {
-  
+
   describe("AnMatcher ") {
-    
+
     describe("instance created by AnMatcher apply method") {
-      
+
       val anMatcher = AnMatcher[List[Int]]("list") { list =>
-        true 
+        true
       }
-      
+
       it("should have pretty toString") {
         anMatcher.toString should be ("AnMatcher[scala.collection.immutable.List](\"list\", scala.collection.immutable.List => Boolean)")
       }
-      
+
     }
-    
+
   }
-  
+
 }

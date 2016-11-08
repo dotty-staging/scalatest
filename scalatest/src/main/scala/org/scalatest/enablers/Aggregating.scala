@@ -32,7 +32,7 @@ import scala.annotation.tailrec
  * implicit implementations for several types out of the box in the
  * <a href="Aggregating$.html"><code>Aggregating</code> companion object</a>:
  * </p>
- * 
+ *
  * <ul>
  * <li><code>scala.collection.GenTraversable</code></li>
  * <li><code>String</code></li>
@@ -40,11 +40,11 @@ import scala.annotation.tailrec
  * <li><code>java.util.Collection</code></li>
  * <li><code>java.util.Map</code></li>
  * </ul>
- * 
+ *
  * <p>
  * The <code>contain</code> syntax enabled by this trait is:
  * <p>
- * 
+ *
  * <ul>
  * <li><code>result</code> <code>should</code> <code>contain</code> <code>atLeastOneOf</code> <code>(1, 2, 3)</code></li>
  * <li><code>result</code> <code>should</code> <code>contain</code> <code>atMostOneOf</code> <code>(1, 2, 3)</code></li>
@@ -52,7 +52,7 @@ import scala.annotation.tailrec
  * <li><code>result</code> <code>should</code> <code>contain</code> <code>allOf</code> <code>(1, 2, 3)</code></li>
  * <li><code>result</code> <code>should</code> <code>contain</code> <code>theSameElementsAs</code> <code>(List(1, 2, 3))</code></li>
  * </ul>
- * 
+ *
  * <p>
  * You can enable the <code>contain</code> matcher syntax enabled by <code>Aggregating</code> on your own
  * type <code>U</code> by defining an <code>Aggregating[U]</code> for the type and making it available implicitly.
@@ -66,7 +66,7 @@ import scala.annotation.tailrec
  */
 trait Aggregating[-A] {
 
-// TODO: Write tests that a NotAllowedException is thrown when no elements are passed, maybe if only one element is passed, and 
+// TODO: Write tests that a NotAllowedException is thrown when no elements are passed, maybe if only one element is passed, and
 // likely if an object is repeated in the list.
   /**
    * Implements <code>contain</code> <code>atLeastOneOf</code> syntax for aggregations of type <code>A</code>.
@@ -128,16 +128,16 @@ trait Aggregating[-A] {
 object Aggregating {
 
   // TODO: Throwing exceptions is slow. Just do a pattern match and test the type before trying to cast it.
-  private[scalatest] def tryEquality[T](left: Any, right: Any, equality: Equality[T]): Boolean = 
+  private[scalatest] def tryEquality[T](left: Any, right: Any, equality: Equality[T]): Boolean =
     try equality.areEqual(left.asInstanceOf[T], right)
       catch {
         case cce: ClassCastException => false
     }
-  
+
   private[scalatest] def checkTheSameElementsAs[T](left: GenTraversable[T], right: GenTraversable[Any], equality: Equality[T]): Boolean = {
     case class ElementCount(element: Any, leftCount: Int, rightCount: Int)
     object ZipNoMatch
-    
+
     def leftNewCount(next: Any, count: IndexedSeq[ElementCount]): IndexedSeq[ElementCount] = {
       val idx = count.indexWhere(ec => tryEquality(next, ec.element, equality))
       if (idx >= 0) {
@@ -147,7 +147,7 @@ object Aggregating {
       else
         count :+ ElementCount(next, 1, 0)
     }
-    
+
     def rightNewCount(next: Any, count: IndexedSeq[ElementCount]): IndexedSeq[ElementCount] = {
       val idx = count.indexWhere(ec => tryEquality(next, ec.element, equality))
       if (idx >= 0) {
@@ -157,15 +157,15 @@ object Aggregating {
       else
         count :+ ElementCount(next, 0, 1)
     }
-    
-    val counts = right.toIterable.zipAll(left.toIterable, ZipNoMatch, ZipNoMatch).aggregate(IndexedSeq.empty[ElementCount])( 
-      { case (count, (nextLeft, nextRight)) => 
+
+    val counts = right.toIterable.zipAll(left.toIterable, ZipNoMatch, ZipNoMatch).aggregate(IndexedSeq.empty[ElementCount])(
+      { case (count, (nextLeft, nextRight)) =>
           if (nextLeft == ZipNoMatch || nextRight == ZipNoMatch)
             return false  // size not match, can fail early
           rightNewCount(nextRight, leftNewCount(nextLeft, count))
-      }, 
+      },
       { case (count1, count2) =>
-          count2.foldLeft(count1) { case (count, next) => 
+          count2.foldLeft(count1) { case (count, next) =>
             val idx = count.indexWhere(ec => tryEquality(next.element, ec.element, equality))
             if (idx >= 0) {
               val currentElementCount = count(idx)
@@ -176,20 +176,20 @@ object Aggregating {
           }
       }
     )
-    
+
     !counts.exists(e => e.leftCount != e.rightCount)
   }
-  
+
   private[scalatest] def checkOnly[T](left: GenTraversable[T], right: GenTraversable[Any], equality: Equality[T]): Boolean =
     left.forall(l => right.find(r => tryEquality(l, r, equality)).isDefined) &&
     right.forall(r => left.find(l => tryEquality(l, r, equality)).isDefined)
-  
+
   private[scalatest] def checkAllOf[T](left: GenTraversable[T], right: GenTraversable[Any], equality: Equality[T]): Boolean = {
     @tailrec
     def checkEqual(left: GenTraversable[T], rightItr: Iterator[Any]): Boolean = {
       if (rightItr.hasNext) {
         val nextRight = rightItr.next
-        if (left.exists(t => equality.areEqual(t, nextRight))) 
+        if (left.exists(t => equality.areEqual(t, nextRight)))
           checkEqual(left, rightItr)
         else
           false // Element not found, let's fail early
@@ -199,12 +199,12 @@ object Aggregating {
     }
     checkEqual(left, right.toIterator)
   }
-  
+
   private[scalatest] def checkAtMostOneOf[T](left: GenTraversable[T], right: GenTraversable[Any], equality: Equality[T]): Boolean = {
-    
-    def countElements: Int = 
+
+    def countElements: Int =
       right.aggregate(0)(
-        { case (count, nextRight) => 
+        { case (count, nextRight) =>
             if (left.exists(l => equality.areEqual(l, nextRight))) {
               val newCount = count + 1
               if (newCount > 1)
@@ -214,11 +214,11 @@ object Aggregating {
             }
             else
               count
-        }, 
+        },
         { case (count1, count2) => count1 + count2 }
       )
     val count = countElements
-    count <= 1      
+    count <= 1
   }
 
   import scala.language.higherKinds
@@ -231,7 +231,7 @@ object Aggregating {
    * @tparam TRAV any subtype of <code>GenTraversable</code>
    * @return <code>Aggregating[TRAV[E]]</code> that supports <code>GenTraversable</code> in relevant <code>contain</code> syntax
    */
-  implicit def aggregatingNatureOfGenTraversable[E, TRAV[e] <: scala.collection.GenTraversable[e]](implicit equality: Equality[E]): Aggregating[TRAV[E]] = 
+  implicit def aggregatingNatureOfGenTraversable[E, TRAV[e] <: scala.collection.GenTraversable[e]](implicit equality: Equality[E]): Aggregating[TRAV[E]] =
     new Aggregating[TRAV[E]] {
       def containsAtLeastOneOf(trav: TRAV[E], elements: scala.collection.Seq[Any]): Boolean = {
         trav.exists((e: E) => elements.exists((ele: Any) => equality.areEqual(e, ele)))
@@ -279,7 +279,7 @@ object Aggregating {
    * @tparam E the type of the element in the <code>Array</code>
    * @return <code>Aggregating[Array[E]]</code> that supports <code>Array</code> in relevant <code>contain</code> syntax
    */
-  implicit def aggregatingNatureOfArray[E](implicit equality: Equality[E]): Aggregating[Array[E]] = 
+  implicit def aggregatingNatureOfArray[E](implicit equality: Equality[E]): Aggregating[Array[E]] =
     new Aggregating[Array[E]] {
       def containsAtLeastOneOf(array: Array[E], elements: scala.collection.Seq[Any]): Boolean = {
         new ArrayWrapper(array).exists((e: E) => elements.exists((ele: Any) => equality.areEqual(e, ele)))
@@ -314,7 +314,7 @@ object Aggregating {
    * @tparam E type of elements in the <code>Array</code>
    * @return <code>Aggregating</code> of type <code>Array[E]</code>
    */
-  implicit def convertEqualityToArrayAggregating[E](equality: Equality[E]): Aggregating[Array[E]] = 
+  implicit def convertEqualityToArrayAggregating[E](equality: Equality[E]): Aggregating[Array[E]] =
     aggregatingNatureOfArray(equality)
 
   /**
@@ -323,7 +323,7 @@ object Aggregating {
    * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of <code>Char</code> in the <code>String</code>
    * @return <code>Aggregating[String]</code> that supports <code>String</code> in relevant <code>contain</code> syntax
    */
-  implicit def aggregatingNatureOfString(implicit equality: Equality[Char]): Aggregating[String] = 
+  implicit def aggregatingNatureOfString(implicit equality: Equality[Char]): Aggregating[String] =
     new Aggregating[String] {
       def containsAtLeastOneOf(s: String, elements: scala.collection.Seq[Any]): Boolean = {
         s.exists((e: Char) => elements.exists((ele: Any) => equality.areEqual(e, ele)))
@@ -369,7 +369,7 @@ object Aggregating {
    * @tparam JCOL any subtype of <code>java.util.Collection</code>
    * @return <code>Aggregating[JCOL[E]]</code> that supports <code>java.util.Collection</code> in relevant <code>contain</code> syntax
    */
-  implicit def aggregatingNatureOfJavaCollection[E, JCOL[e] <: java.util.Collection[e]](implicit equality: Equality[E]): Aggregating[JCOL[E]] = 
+  implicit def aggregatingNatureOfJavaCollection[E, JCOL[e] <: java.util.Collection[e]](implicit equality: Equality[E]): Aggregating[JCOL[E]] =
     new Aggregating[JCOL[E]] {
       def containsAtLeastOneOf(col: JCOL[E], elements: scala.collection.Seq[Any]): Boolean = {
         col.asScala.exists((e: E) => elements.exists((ele: Any) => equality.areEqual(e, ele)))
@@ -407,7 +407,7 @@ object Aggregating {
    * @tparam JCOL subtype of <code>java.util.Collection</code>
    * @return <code>Aggregating</code> of type <code>JCOL[E]</code>
    */
-  implicit def convertEqualityToJavaCollectionAggregating[E, JCOL[e] <: java.util.Collection[e]](equality: Equality[E]): Aggregating[JCOL[E]] = 
+  implicit def convertEqualityToJavaCollectionAggregating[E, JCOL[e] <: java.util.Collection[e]](equality: Equality[E]): Aggregating[JCOL[E]] =
     aggregatingNatureOfJavaCollection(equality)
 
   /**
@@ -419,9 +419,9 @@ object Aggregating {
    * @tparam JMAP any subtype of <code>java.util.Map</code>
    * @return <code>Aggregating[JMAP[K, V]]</code> that supports <code>java.util.Map</code> in relevant <code>contain</code> syntax
    */
-  implicit def aggregatingNatureOfJavaMap[K, V, JMAP[k, v] <: java.util.Map[k, v]](implicit equality: Equality[java.util.Map.Entry[K, V]]): Aggregating[JMAP[K, V]] = 
+  implicit def aggregatingNatureOfJavaMap[K, V, JMAP[k, v] <: java.util.Map[k, v]](implicit equality: Equality[java.util.Map.Entry[K, V]]): Aggregating[JMAP[K, V]] =
     new Aggregating[JMAP[K, V]] {
-    
+
       import scala.collection.JavaConverters._
       def containsAtLeastOneOf(map: JMAP[K, V], elements: scala.collection.Seq[Any]): Boolean = {
         map.entrySet.asScala.exists((e: java.util.Map.Entry[K, V]) => elements.exists((ele: Any) => equality.areEqual(e, ele)))
@@ -461,7 +461,7 @@ object Aggregating {
    * @tparam JMAP any subtype of <code>java.util.Map</code>
    * @return <code>Aggregating</code> of type <code>JMAP[K, V]</code>
    */
-  implicit def convertEqualityToJavaMapAggregating[K, V, JMAP[k, v] <: java.util.Map[k, v]](equality: Equality[java.util.Map.Entry[K, V]]): Aggregating[JMAP[K, V]] = 
+  implicit def convertEqualityToJavaMapAggregating[K, V, JMAP[k, v] <: java.util.Map[k, v]](equality: Equality[java.util.Map.Entry[K, V]]): Aggregating[JMAP[K, V]] =
     aggregatingNatureOfJavaMap(equality)
 
   /**

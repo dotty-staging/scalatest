@@ -29,7 +29,7 @@ private[scalactic] object GuessANumberMacro extends CompileTimeAssertions {
       i >= 1 && i <= 10
     }
     c.universe.reify { GuessANumber.from(value.splice).get }
-  } 
+  }
 }
 
 import CompileTimeAssertions._
@@ -45,7 +45,7 @@ private[scalactic] object PercentMacro {
       i >= 0 && i <= 100
     }
     c.universe.reify { Percent.from(value.splice).get }
-  } 
+  }
 }
 
 private[scalactic] object TLAMacro {
@@ -60,7 +60,7 @@ private[scalactic] object TLAMacro {
       s.length == 3
     }
     c.universe.reify { TLA.from(value.splice).get }
-  } 
+  }
 }
 
 private[scalactic] object DigitMacro {
@@ -75,5 +75,5 @@ private[scalactic] object DigitMacro {
       c >= '0' && c <= '9'
     }
     c.universe.reify { Digit.from(value.splice).get }
-  } 
+  }
 }

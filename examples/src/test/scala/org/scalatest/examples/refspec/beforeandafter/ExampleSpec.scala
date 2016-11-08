@@ -20,19 +20,19 @@ import org.scalatest.BeforeAndAfter
 import collection.mutable.ListBuffer
 
 class ExampleSpec extends RefSpec with BeforeAndAfter {
- 
+
   val builder = new StringBuilder
   val buffer = new ListBuffer[String]
- 
+
   before {
     builder.append("ScalaTest is ")
   }
- 
+
   after {
     builder.clear()
     buffer.clear()
   }
- 
+
   object `Testing ` {
     def `should be easy` {
       builder.append("easy!")
@@ -40,7 +40,7 @@ class ExampleSpec extends RefSpec with BeforeAndAfter {
       assert(buffer.isEmpty)
       buffer += "sweet"
     }
- 
+
     def `should be fun` {
       builder.append("fun!")
       assert(builder.toString === "ScalaTest is fun!")

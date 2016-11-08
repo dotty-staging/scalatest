@@ -19,7 +19,7 @@ package org.scalactic
  Describe need to deal with flickers. Fix them so they pass 100% if you can, but if not, the problem
  is wastes people's time looking at them. Or if they happen too often it is the cry wolf problem, and people
  don't bother looking anymore when the CI server fails. They get jaded and red doesn't mean the same.
- Best thing to do is fix it, but sometimes that's not practical. In such situations, cancel when the 
+ Best thing to do is fix it, but sometimes that's not practical. In such situations, cancel when the
  problem occurs.
 
  If just needed one place, just write it in place
@@ -81,7 +81,7 @@ val InternalServerError =
  *     e.getMessage == "500:Internal Server Error"
  *   }
  * </pre>
- * 
+ *
  * <p>
  * Using this <code>Catcher</code> in a ScalaTest <code>withFixture</code> method would look like:
  * </p>

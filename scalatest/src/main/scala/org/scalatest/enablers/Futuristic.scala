@@ -85,7 +85,7 @@ object Futuristic {
         // so the subsequent map will only happen if this recoverWith
         // does not happen.
         futuristic recoverWith {
-          case firstEx: Throwable => 
+          case firstEx: Throwable =>
             try {
               cleanup
               Future.failed(firstEx)

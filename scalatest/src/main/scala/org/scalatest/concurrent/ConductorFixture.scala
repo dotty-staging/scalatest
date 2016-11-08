@@ -34,23 +34,23 @@ import org.scalatest.OutcomeOf.outcomeOf
  * import java.util.concurrent.ArrayBlockingQueue
  *
  * class ArrayBlockingQueueSuite extends fixture.FunSuite with ConductorFixture with Matchers {
- * 
+ *
  *   test("calling put on a full queue blocks the producer thread") { conductor =&gt; import conductor._
  *
  *     val buf = new ArrayBlockingQueue[Int](1)
- * 
+ *
  *     thread("producer") {
  *       buf put 42
  *       buf put 17
  *       beat should be (1)
  *     }
- * 
+ *
  *     thread("consumer") {
  *       waitForBeat(1)
  *       buf.take should be (42)
  *       buf.take should be (17)
  *     }
- * 
+ *
  *     whenFinished {
  *       buf should be ('empty)
  *     }
@@ -91,7 +91,7 @@ trait ConductorFixture extends TestSuiteMixin with Conductors { this: fixture.Te
    * Defines type <code>Fixture</code> to be <code>Conductor</code>.
    */
   type FixtureParam = Conductor
-  
+
   /**
    * Creates a new <code>Conductor</code>, passes the <code>Conductor</code> to the
    * specified test function, and ensures that <code>conduct</code> gets invoked

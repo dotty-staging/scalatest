@@ -28,7 +28,7 @@ import org.scalatest.events.{TopOfClass, TopOfMethod}
  * <p>
  * Because this style uses reflection at runtime to discover scopes and tests, it can only be supported on the JVM, not Scala.js.
  * Thus in ScalaTest 3.0.0, class <code>org.scalatest.Spec</code> was moved to the <code>org.scalatest.refspec</code> package and renamed
- * <code>RefSpec</code>, with the intention of later moving it to a separate module available only on the JVM. If the 
+ * <code>RefSpec</code>, with the intention of later moving it to a separate module available only on the JVM. If the
  * <code>org.scalatest.refspec._</code> package contained a <code>fixture</code> subpackage, then importing <code>org.scalatest.refspec._</code>
  * would import the name <code>fixture</code> as <code>org.scalatest.refspec.fixture</code>. This would likely be confusing for users,
  * who expect <code>fixture</code> to mean <code>org.scalatest.fixture</code>.
@@ -60,7 +60,7 @@ abstract class Spec extends SpecLike {
 }
 
 private[scalatest] object Spec {
-  
+
   def isTestMethod(m: Method): Boolean = {
 
     val isInstanceMethod = !Modifier.isStatic(m.getModifiers())
@@ -70,24 +70,24 @@ private[scalatest] object Spec {
 
     // name must have at least one encoded space: "$u0220"
     val includesEncodedSpace = m.getName.indexOf("$u0020") >= 0
-    
+
     val isOuterMethod = m.getName.endsWith("$$outer")
-    
+
     val isNestedMethod = m.getName.matches(".+\\$\\$.+\\$[1-9]+")
 
     // def maybe(b: Boolean) = if (b) "" else "!"
     // println("m.getName: " + m.getName + ": " + maybe(isInstanceMethod) + "isInstanceMethod, " + maybe(hasNoParams) + "hasNoParams, " + maybe(includesEncodedSpace) + "includesEncodedSpace")
     isInstanceMethod && hasNoParamOrFixtureParam && includesEncodedSpace && !isOuterMethod && !isNestedMethod
   }
-  
+
   import java.security.MessageDigest
   import scala.io.Codec
-  
+
   // The following compactify code is written based on scala compiler source code at:-
   // https://github.com/scala/scala/blob/master/src/reflect/scala/reflect/internal/StdNames.scala#L47
-  
+
   private val compactifiedMarker = "$$$$"
-  
+
   def equalIfRequiredCompactify(value: String, compactified: String): Boolean = {
     if (compactified.matches(".+\\$\\$\\$\\$.+\\$\\$\\$\\$.+")) {
       val firstDolarIdx = compactified.indexOf("$$$$")
@@ -95,12 +95,12 @@ private[scalatest] object Spec {
       val prefix = compactified.substring(0, firstDolarIdx)
       val suffix = compactified.substring(lastDolarIdx + 4)
       val lastIndexOfDot = value.lastIndexOf(".")
-      val toHash = 
-        if (lastIndexOfDot >= 0) 
+      val toHash =
+        if (lastIndexOfDot >= 0)
           value.substring(0, value.length - 1).substring(value.lastIndexOf(".") + 1)
         else
           value
-          
+
       val bytes = Codec.toUTF8(toHash.toArray)
       val md5 = MessageDigest.getInstance("MD5")
       md5.update(bytes)

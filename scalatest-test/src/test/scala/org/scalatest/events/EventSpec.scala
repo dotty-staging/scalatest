@@ -97,7 +97,7 @@ class EventSpec extends FunSpec with Checkers {
     }
   }
 */
-  
+
   describe("A TestCanceled event") {
     it("should carry suite class name as its rerunner when it is fired from top level suite") {
       val rep = new EventRecordingReporter
@@ -107,7 +107,7 @@ class EventSpec extends FunSpec with Checkers {
       assert(canceledEvents.length === 1)
       assert(canceledEvents(0).rerunner === Some(suite.getClass.getName))
     }
-    
+
     it("should carry top level suite class name as its rerunner when it is fired from nested suites") {
       val rep = new EventRecordingReporter
       val suite = new ExampleCancelInNestedSuite

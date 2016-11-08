@@ -93,4 +93,4 @@ private[concurrent] class PimpedReadWriteLock(lock: ReadWriteLock) {
    */
   def write[T](f: => T): T = PimpedReadWriteLock.withLock(lock.writeLock) {f}
 }
- 
+

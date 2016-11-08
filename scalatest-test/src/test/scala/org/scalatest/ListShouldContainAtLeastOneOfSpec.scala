@@ -32,7 +32,7 @@ class ListShouldContainAtLeastOneOfSpec extends FunSpec {
     new Equality[String] {
       def areEqual(a: String, b: Any): Boolean = a.toUpperCase == b
     }
-  
+
   //ADDITIONAL//
 
   describe("a List") {
@@ -200,7 +200,7 @@ The bottom two don't, but still I don't want to support that in general.
           (toList should (not contain atLeastOneOf (" TO ", " YOU "))) (after being lowerCased and trimmed)
         }
       }
-      
+
       it("should throw NotAllowedException with correct stack depth and message when RHS contain duplicated value") {
         val e1 = intercept[exceptions.NotAllowedException] {
           toList should (not contain atLeastOneOf ("fee", "fie", "foe", "fie", "fum"))
@@ -210,7 +210,7 @@ The bottom two don't, but still I don't want to support that in general.
         e1.message should be (Some(Resources.atLeastOneOfDuplicate))
       }
     }
-    
+
     describe("when used with shouldNot contain atLeastOneOf (...) syntax") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {
@@ -277,7 +277,7 @@ The bottom two don't, but still I don't want to support that in general.
           (toList shouldNot (contain atLeastOneOf (" TO ", " YOU "))) (after being lowerCased and trimmed)
         }
       }
-      
+
       it("should throw NotAllowedException with correct stack depth and message when RHS contain duplicated value") {
         val e1 = intercept[exceptions.NotAllowedException] {
           toList shouldNot (contain atLeastOneOf ("fee", "fie", "foe", "fie", "fum"))
@@ -549,7 +549,7 @@ The top two don't, but still I don't want to support that in general.
         e1.message should be (Some(Resources.atLeastOneOfDuplicate))
       }
     }
-    
+
     describe("when used with shouldNot contain atLeastOneOf (...) syntax") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {

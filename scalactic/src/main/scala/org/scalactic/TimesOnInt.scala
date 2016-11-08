@@ -18,7 +18,7 @@ package org.scalactic
 /**
  * Trait providing an implicit conversion that adds a <code>times</code> method to <code>Int</code>s that
  * will repeat a given side-effecting operation multiple times.
- * 
+ *
  * <p>
  * Here's an example in which a friendly greeting is printed three times:
  * </p>
@@ -75,7 +75,7 @@ trait TimesOnInt {
    * When an instance of this class is constructed, 0 and any positive number may be passed as <code>num</code>,
    * but a negative number will result in an <code>IllegalArgumentException</code>. If constructed with 0, the <code>times</code> method
    * on the resulting instance will return without invoking the function passed to it. If constructed with 1, the <code>times</code> method
-   * will invoke the function passed to it once then return. 
+   * will invoke the function passed to it once then return.
    * </p>
    *
    * @param num the integer to which the <code>times</code> method will be added.
@@ -90,7 +90,7 @@ trait TimesOnInt {
      *
      * <p>
      * If the function completes abruptly with an exception, this method will complete abruptly with the same
-     * exception immediately. Thus in the case of an exception, this method may actually invoke the 
+     * exception immediately. Thus in the case of an exception, this method may actually invoke the
      * passed function fewer than <code>num</code> times.
      * </p>
      *
@@ -121,13 +121,13 @@ trait TimesOnInt {
  *
  * <p>
  * One use case of this companion object is to import <code>TimesOnInt</code> members so you can use them in the Scala interpreter.
- * Here's an example: 
+ * Here's an example:
  * </p>
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest.TimesOnInt._
  * import org.scalatest.TimesOnInt._
- * 
+ *
  * scala&gt; 3 times println("Hello again, world!")
  * Hello again, world!
  * Hello again, world!

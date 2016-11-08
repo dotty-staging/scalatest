@@ -48,7 +48,7 @@ trait TestSuite extends org.scalatest.fixture.Suite with org.scalatest.TestSuite
      *
      * <p>
      * This method makes it easier to invoke the <code>withFixture</code> method
-     * that takes a <code>NoArgTest</code>. For example, if a <code>fixture.Suite</code> 
+     * that takes a <code>NoArgTest</code>. For example, if a <code>fixture.Suite</code>
      * mixes in <code>SeveredStackTraces</code>, it will inherit an implementation
      * of <code>withFixture(NoArgTest)</code> provided by
      * <code>SeveredStackTraces</code> that implements the stack trace severing
@@ -73,7 +73,7 @@ trait TestSuite extends org.scalatest.fixture.Suite with org.scalatest.TestSuite
      * @param fixture the <code>FixtureParam</code>
      * @return an new instance of <code>NoArgTest</code>
      */
-    def toNoArgTest(fixture: FixtureParam) = 
+    def toNoArgTest(fixture: FixtureParam) =
       new NoArgTest {
         val name = thisOneArgTest.name
         val configMap = thisOneArgTest.configMap

@@ -33,7 +33,7 @@ And this confusion of Success(Failed) is what the Or is intended to alleviate.
 */
 
 /**
- * Wrapper class for <code>Future[Outcome]</code> that presents a more convenient API for 
+ * Wrapper class for <code>Future[Outcome]</code> that presents a more convenient API for
  * manipulation in <code>withFixture</code> methods in async styles.
  *
  * <p>
@@ -47,12 +47,12 @@ And this confusion of Success(Failed) is what the Or is intended to alleviate.
  * A thrown <code>TestCanceledException</code> should result in a successful <code>Future</code>
  * containing an <code>org.scalatest.Canceled</code>; A thrown <code>TestPendingException</code> should result in
  * a successful <code>Future</code> containing a <code>org.scalatest.Pending</code>.
- * If manipulating a <code>Future[Outcome]</code> directly, by contrast, any thrown exception would result in 
+ * If manipulating a <code>Future[Outcome]</code> directly, by contrast, any thrown exception would result in
  * a failed <code>Future</code>.
  * </p>
  *
  * <p>
- * Additionally, to be consistent with corresponding transformations in traditional testing styles, 
+ * Additionally, to be consistent with corresponding transformations in traditional testing styles,
  * methods registering callbacks should return a new future outcome that doesn't complete until
  * both the original future outcome has completed and the subsequent callback has completed execution.
  * Additionally, if the callback itself throws an exception, that exception should determine the result
@@ -73,7 +73,7 @@ And this confusion of Success(Failed) is what the Or is intended to alleviate.
  * that a run-aborting exception occurred during the computation. Any other, non-run-aborting exception will be represented
  * as an non-<code>Succeeded</code> <code>Outcome</code>: one of <code>Failed</code>, <code>Canceled</code>, or <code>Pending</code>.
  * </p>
- * 
+ *
  * <p>
  * The methods of <code>FutureOutcome</code> include the following callback registration methods:
  * </p>

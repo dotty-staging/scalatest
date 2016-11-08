@@ -19,7 +19,7 @@ import org.scalactic.source
 
 /**
  * Trait providing an <code>apply</code> method to which status updates about a running suite of tests can be reported.
- * 
+ *
  * <p>
  * An <code>Notifier</code> is essentially
  * used to wrap a <code>Reporter</code> and provide easy ways to send status updates

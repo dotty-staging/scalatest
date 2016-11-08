@@ -63,7 +63,7 @@ class JUnit3SuiteSpec extends FunSpec {
 
     it("should not return names of methods that start with test, take no params, but have a return type " +
             "other than Unit from testNames") {
-      
+
       val a = new TestWithNonUnitMethod
       assert(a.testNames === TreeSet("testThat", "testThis"))
     }
@@ -119,7 +119,7 @@ class JUnit3SuiteSpec extends FunSpec {
     it("should execute all tests when run is called with testName None") {
 
       TestWasCalledSuite.reinitialize()
-      
+
       val b = new TestWasCalledSuite
       b.run(None, Args(SilentReporter))
       assert(TestWasCalledSuite.theTestThisCalled)

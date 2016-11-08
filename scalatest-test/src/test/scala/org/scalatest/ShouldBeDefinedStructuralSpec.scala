@@ -22,30 +22,30 @@ import org.scalactic.Prettifier
 class ShouldBeDefinedStructuralSpec extends FunSpec with Matchers {
 
   private val prettifier = Prettifier.default
-  
+
   val fileName: String = "ShouldBeDefinedStructuralSpec.scala"
-    
-  def wasNotDefined(left: Any): String = 
+
+  def wasNotDefined(left: Any): String =
     FailureMessages.wasNotDefined(prettifier, left)
-    
-  def wasDefined(left: Any): String = 
+
+  def wasDefined(left: Any): String =
     FailureMessages.wasDefined(prettifier, left)
-  
+
   describe("defined matcher") {
-    
+
     describe("when work with arbitrary object with isDefined() method") {
-      
+
       class MyDefinition(value: Boolean) {
         def isDefined(): Boolean = value
         override def toString = "definition"
       }
       val objTrue = new MyDefinition(true)
       val objFalse = new MyDefinition(false)
-      
+
       it("should do nothing for 'objTrue should be (defined)'") {
         objTrue should be (defined)
       }
-      
+
       it("should throw TFE with correct stack depth for 'objFalse should be (defined)'") {
         val caught1 = intercept[TestFailedException] {
           objFalse should be (defined)
@@ -54,11 +54,11 @@ class ShouldBeDefinedStructuralSpec extends FunSpec with Matchers {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should do nothing if for 'objFalse should not be defined'") {
         objFalse should not be defined
       }
-      
+
       it("should throw TFE with correct stack depth for 'objTrue should not be defined'") {
         val caught1 = intercept[TestFailedException] {
           objTrue should not be defined
@@ -68,20 +68,20 @@ class ShouldBeDefinedStructuralSpec extends FunSpec with Matchers {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with arbitrary object with isDefined method") {
-      
+
       class MyDefinition(value: Boolean) {
         def isDefined: Boolean = value
         override def toString = "definition"
       }
       val objTrue = new MyDefinition(true)
       val objFalse = new MyDefinition(false)
-      
+
       it("should do nothing for 'objTrue should be (defined)'") {
         objTrue should be (defined)
       }
-      
+
       it("should throw TFE with correct stack depth for 'objFalse should be (defined)'") {
         val caught1 = intercept[TestFailedException] {
           objFalse should be (defined)
@@ -90,11 +90,11 @@ class ShouldBeDefinedStructuralSpec extends FunSpec with Matchers {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should do nothing if for 'objFalse should not be defined'") {
         objFalse should not be defined
       }
-      
+
       it("should throw TFE with correct stack depth for 'objTrue should not be defined'") {
         val caught1 = intercept[TestFailedException] {
           objTrue should not be defined
@@ -104,20 +104,20 @@ class ShouldBeDefinedStructuralSpec extends FunSpec with Matchers {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with arbitrary object with isDefined val") {
-      
+
       class MyDefinition(value: Boolean) {
         val isDefined: Boolean = value
         override def toString = "definition"
       }
       val objTrue = new MyDefinition(true)
       val objFalse = new MyDefinition(false)
-      
+
       it("should do nothing for 'objTrue should be (defined)'") {
         objTrue should be (defined)
       }
-      
+
       it("should throw TFE with correct stack depth for 'objFalse should be (defined)'") {
         val caught1 = intercept[TestFailedException] {
           objFalse should be (defined)
@@ -126,11 +126,11 @@ class ShouldBeDefinedStructuralSpec extends FunSpec with Matchers {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should do nothing if for 'objFalse should not be defined'") {
         objFalse should not be defined
       }
-      
+
       it("should throw TFE with correct stack depth for 'objTrue should not be defined'") {
         val caught1 = intercept[TestFailedException] {
           objTrue should not be defined
@@ -140,7 +140,7 @@ class ShouldBeDefinedStructuralSpec extends FunSpec with Matchers {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
   }
-  
+
 }

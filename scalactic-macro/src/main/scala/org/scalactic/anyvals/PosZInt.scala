@@ -25,7 +25,7 @@ import scala.collection.immutable.Range
  * as efficient as an <code>Int</code>, being boxed only when an
  * <code>Int</code> would have been boxed.
  * </p>
- * 
+ *
  * <p>
  * The <code>PosZInt.apply</code> factory method is implemented in terms of a
  * macro that checks literals for validity at compile time. Calling
@@ -33,7 +33,7 @@ import scala.collection.immutable.Range
  * produce a valid <code>PosZInt</code> instance at run time or an error at
  * compile time. Here's an example:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import anyvals._
  * import anyvals._
@@ -85,7 +85,7 @@ import scala.collection.immutable.Range
  * scala&gt; PosZInt.from(y)
  * res5: Option[org.scalactic.anyvals.PosZInt] = None
  * </pre>
- * 
+ *
  * <p>
  * The <code>PosZInt.apply</code> factory method is marked implicit, so that
  * you can pass literal <code>Int</code>s into methods that require
@@ -128,7 +128,7 @@ import scala.collection.immutable.Range
  * </p>
  *
  * @param value The <code>Int</code> value underlying this <code>PosZInt</code>.
- */ 
+ */
 final class PosZInt private (val value: Int) extends AnyVal {
 
   /**
@@ -840,5 +840,5 @@ object PosZInt {
   implicit val posZIntOrd: Ordering[PosZInt] =
     new Ordering[PosZInt] {
       def compare(x: PosZInt, y: PosZInt): Int = x - y
-    } 
+    }
 }

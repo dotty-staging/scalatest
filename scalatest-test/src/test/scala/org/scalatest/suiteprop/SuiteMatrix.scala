@@ -30,7 +30,7 @@ class SuiteMatrix extends PropSpec with Matchers with TableDrivenPropertyChecks 
       }
     }
   }
-  
+
   // Add a property for completely empty suites and their empty tags
   property("should, if no test is marked as ignored and there are no tests tagged, return an empty tags map") {
     new InfoInsideTestFiredAfterTestExamples {
@@ -39,7 +39,7 @@ class SuiteMatrix extends PropSpec with Matchers with TableDrivenPropertyChecks 
       }
     }
   }
-  
+
   property("should, if the first test is marked as ignored, return a tags map from the tags method that says the first test is ignored") {
     new FirstTestIgnoredExamples {
       forAll (examples) { suite =>
@@ -67,7 +67,7 @@ class SuiteMatrix extends PropSpec with Matchers with TableDrivenPropertyChecks 
       }
     }
   }
-  
+
   property("should, if both the second test is marked as ignored and both are marked Slow, return a tags map from the tags method that says the second test is ignored and both are Slow") {
 
     new TwoSlowTestsExample {
@@ -83,7 +83,7 @@ class SuiteMatrix extends PropSpec with Matchers with TableDrivenPropertyChecks 
       }
     }
   }
-  
+
   property("should, if both tests are marked Slow and the first test Weak, return a tags map from the tags method that says both are Slow and the first also Weak") {
 
     new TwoSlowAndOneWeakTestExamples {

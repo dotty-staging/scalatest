@@ -51,40 +51,40 @@ class StopOnFailureProp extends AllSuiteProp {
   def fixtureWordSpec = new ExampleStopOnFailureFixtureWordSpec
   def pathFreeSpec = new ExampleStopOnFailurePathFreeSpec
   def pathFunSpec = new ExampleStopOnFailurePathFunSpec
-  
+
   test("StopOnFailure when mixed in should stop to execute tests in suite when encounter a failed test.") {
     forAll(examples.filter(_.supported)) { s =>
       val rep = new EventRecordingReporter
       val stopper = Stopper.default
       s.run(None, Args(reporter = rep, stopper = stopper))
-      
+
       assert(stopper.stopRequested, "Expected stopRequested to be true, but it is not.")
-      
+
       if (s.supportStopTest) {
         val testStartingList = rep.testStartingEventsReceived
         assert(testStartingList.length === 4)
-      
+
         val succeededTestName = testStartingList(0).testName
         val pendingTestName = testStartingList(1).testName
         val canceledTestName = testStartingList(2).testName
         val failedTestName = testStartingList(3).testName
         val testSucceededList = rep.testSucceededEventsReceived
-      
+
         assert(testSucceededList.length === 1)
         assert(testSucceededList(0).testName === succeededTestName)
-      
+
         val testPendingList = rep.testPendingEventsReceived
         assert(testPendingList.length === 1)
         assert(testPendingList(0).testName === pendingTestName)
-      
+
         val testCanceledList = rep.testCanceledEventsReceived
         assert(testCanceledList.length === 1)
         assert(testCanceledList(0).testName === canceledTestName)
-      
+
         val testFailedList = rep.testFailedEventsReceived
         assert(testFailedList.length === 1)
         assert(testFailedList(0).testName === failedTestName)
-      
+
         val testIgnoredList = rep.testIgnoredEventsReceived
         assert(testIgnoredList.length === 1)
       }
@@ -126,7 +126,7 @@ class ExampleStopOnFailureJUnit3Suite extends JUnit3Suite with StopOnFailure wit
   def testMethod3(): Unit = { cancel }
   def testMethod4(): Unit = { fail }
   def testMethod5(): Unit = {}
-  
+
   override val supportStopTest: Boolean = false
 }
 
@@ -134,9 +134,9 @@ class ExampleStopOnFailureJUnit3Suite extends JUnit3Suite with StopOnFailure wit
 class ExampleStopOnFailureJUnitSuite extends JUnitSuite with StopOnFailure with StopOnFailureFixtureServices {
   @Test
   def testMethod1(): Unit = {}
-  @Test 
+  @Test
   def testMethod2(): Unit = { pending }
-  @Test 
+  @Test
   def testMethod3(): Unit = { cancel }
   @Test
   @org.junit.Ignore
@@ -145,7 +145,7 @@ class ExampleStopOnFailureJUnitSuite extends JUnitSuite with StopOnFailure with 
   def testMethod5(): Unit = { fail }
   @Test
   def testMethod6(): Unit = {}
-  
+
   override val supportStopTest: Boolean = false
 }
 
@@ -164,7 +164,7 @@ class ExampleStopOnFailureTestNGSuite extends TestNGSuite with StopOnFailure wit
   def testMethod5(): Unit = { fail }
   @TestNG
   def testMethod6(): Unit = {}
-  
+
   override val supportStopTest: Boolean = false
 }
 // SKIP-SCALATESTJS-END

@@ -28,16 +28,16 @@ import org.scalatest.Tag
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.tagobjects.slow
- * 
+ *
  * import org.scalatest._
  * import tagobjects.Slow
- * 
+ *
  * class SetSpec extends FlatSpec {
- * 
+ *
  *   "An empty Set" should "have size 0" taggedAs(Slow) in {
  *     assert(Set.empty.size === 0)
  *   }
  * }
  * </pre>
  */
-object Slow extends Tag("org.scalatest.tags.Slow") 
+object Slow extends Tag("org.scalatest.tags.Slow")

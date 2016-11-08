@@ -28,7 +28,7 @@ import org.scalactic.Requirements._
  * facilitate porting JUnit tests to ScalaTest, and to make it easy for users who prefer JUnit's approach to isolation to obtain similar
  * behavior in ScalaTest.
  * </td></tr></table>
- * 
+ *
  * <p>
  * If you mix this trait into a <a href="Suite.html"><code>Suite</code></a>, you can initialize shared reassignable
  * fixture variables as well as shared mutable fixture objects in the constructor of the
@@ -46,19 +46,19 @@ import org.scalactic.Requirements._
  * import org.scalatest.FunSuite
  * import org.scalatest.OneInstancePerTest
  * import collection.mutable.ListBuffer
- * 
+ *
  * class MySuite extends FunSuite with OneInstancePerTest {
- * 
+ *
  *   val builder = new StringBuilder("ScalaTest is ")
  *   val buffer = new ListBuffer[String]
- * 
+ *
  *   test("easy") {
  *     builder.append("easy!")
  *     assert(builder.toString === "ScalaTest is easy!")
  *     assert(buffer.isEmpty)
  *     buffer += "sweet"
  *   }
- * 
+ *
  *   test("fun") {
  *     builder.append("fun!")
  *     assert(builder.toString === "ScalaTest is fun!")
@@ -74,16 +74,16 @@ import org.scalactic.Requirements._
  * <a href="path/FunSpec.html"><code>path.FunSpec</code></a> and <a href="path/FreeSpec.html"><code>path.FreeSpec</code></a>, to make it obvious
  * these traits run each test in a new, isolated instance.
  * </p>
- * 
+ *
  * <p>
  * For the details on how <code>OneInstancePerTest</code> works, see the documentation for methods <code>runTests</code> and <code>runTest</code>,
  * which this trait overrides.
  * </p>
- * 
+ *
  * @author Bill Venners
  */
 trait OneInstancePerTest extends SuiteMixin {
-  
+
   this: Suite =>
 
   /**
@@ -91,14 +91,14 @@ trait OneInstancePerTest extends SuiteMixin {
    * own instance of this <code>Suite</code>'s class.
    *
    * <p>
-   * This trait's implementation of <code>runTest</code> 
+   * This trait's implementation of <code>runTest</code>
    * uses the <code>runTestInNewInstance</code> flag of the passed <code>Args</code> object to determine whether this instance is the general instance responsible
    * for running all tests in the suite (<code>runTestInNewInstance</code> is <code>true</code>), or a test-specific instance
    * responsible for running just one test (<code>runTestInNewInstance</code> is <code>false</code>).
    * Note that these <code>Boolean</code> values are reverse those used by <code>runTests</code>, because <code>runTests</code> always inverts the <code>Boolean</code> value
    * of <code>runTestInNewInstance</code> when invoking <code>runTest</code>.
    * </p>
-   * 
+   *
    * <p>
    * If <code>runTestInNewInstance</code> is <code>true</code>, this trait's implementation of this method creates a new instance of this class (by
    * invoking <code>newInstance</code> on itself), then invokes <code>run</code> on the new instance,
@@ -110,7 +110,7 @@ trait OneInstancePerTest extends SuiteMixin {
    * completes abruptly with an exception, then this <code>runTests</code> method will complete
    * abruptly with the same exception.
    * </p>
-   * 
+   *
    * <p>
    * If <code>runTestInNewInstance</code> is <code>false</code>, this trait's implementation of this method simply invokes <code>super.runTest</code>,
    * passing along the same <code>testName</code> and <code>args</code> objects.
@@ -136,17 +136,17 @@ trait OneInstancePerTest extends SuiteMixin {
    * own instance of this <code>Suite</code>'s class.
    *
    * <p>
-   * This trait's implementation of <code>runTest</code> 
+   * This trait's implementation of <code>runTest</code>
    * uses the <code>runTestInNewInstance</code> flag of the passed <code>Args</code> object to determine whether this instance is the general instance responsible
    * for running all tests in the suite (<code>runTestInNewInstance</code> is <code>false</code>), or a test-specific instance
    * responsible for running just one test (<code>runTestInNewInstance</code> is <code>true</code>). Note that these <code>Boolean</code> values are
    * reverse those used by <code>runTest</code>, because <code>runTests</code> always inverts the <code>Boolean</code> value of
    * <code>runTestInNewInstance</code> when invoking <code>runTest</code>.
    * </p>
-   * 
+   *
    * <p>
    * If <code>runTestInNewInstance</code> is <code>false</code>, this trait's implementation of this method will invoke
-   * <code>super.runTests</code>, passing along <code>testName</code> and <code>args</code>, but with the 
+   * <code>super.runTests</code>, passing along <code>testName</code> and <code>args</code>, but with the
    * <code>runTestInNewInstance</code> flag set to <code>true</code>. By setting <code>runTestInNewInstance</code> to
    * <code>true</code>, <code>runTests</code> is telling <code>runTest</code> to create a new instance to run each test.
    * </p>
@@ -188,7 +188,7 @@ trait OneInstancePerTest extends SuiteMixin {
       super.runTests(testName, args.copy(runTestInNewInstance = true))
     }
   }
-  
+
 /*
 Just read through the code again to refresh my memory of how the runTestInNewInstance flag works.
 The reason I was a bit confused is it kind of means the opposite thing in runTests as runTest. In

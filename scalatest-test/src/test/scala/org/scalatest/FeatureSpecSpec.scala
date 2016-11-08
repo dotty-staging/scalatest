@@ -639,7 +639,7 @@ class FeatureSpecSpec extends FunSpec {
       assert(!k.theTestThatCalled)
       assert(!k.theTestTheOtherCalled)
     }
-    
+
     it("should return the correct test count from its expectedTestCount method") {
 
       val a = new FeatureSpec {
@@ -729,7 +729,7 @@ class FeatureSpecSpec extends FunSpec {
       val f = new Suites(a, b, c, d, e)
       assert(f.expectedTestCount(Filter()) === 10)
     }
-    
+
     it("should send an InfoProvided event for an info") {
       class MySuite extends FeatureSpec  {
         info(
@@ -753,7 +753,7 @@ class FeatureSpecSpec extends FunSpec {
         scenario("should do that") {
           assert(2 + 2 === 4)
         }
-        
+
         scenario("should do something else") {
           assert(2 + 2 === 4)
           pending
@@ -1118,7 +1118,7 @@ class FeatureSpecSpec extends FunSpec {
         assert(caught.getMessage === "Feature clauses cannot be nested.")
       }
     }
-    
+
     class ExamplePrefixSpec extends FeatureSpec {
       feature("A Feature") {
         scenario("A Scenario") {
@@ -1126,7 +1126,7 @@ class FeatureSpecSpec extends FunSpec {
         }
       }
     }
-    
+
     it("should prefix feature text with 'Feature: '") {
       val rep = new EventRecordingReporter
       (new ExamplePrefixSpec).run(None, Args(rep))
@@ -1137,7 +1137,7 @@ class FeatureSpecSpec extends FunSpec {
       assert(scopeClosed.size === 1)
       assert(scopeClosed(0).message === "Feature: A Feature")
     }
-    
+
     it("should prefix scenario text with 'Scenario: '") {
       val rep = new EventRecordingReporter
       (new ExamplePrefixSpec).run(None, Args(rep))
@@ -1190,9 +1190,9 @@ class FeatureSpecSpec extends FunSpec {
       assert(rep.testIgnoredEventsReceived.length == 1)
       assert(rep.testIgnoredEventsReceived(0).testName == "Scenario: test 5")
     }
-    
+
     describe("when failure happens") {
-      
+
       it("should fire TestFailed event with correct stack depth info when test failed") {
         class TestSpec extends FeatureSpec {
           scenario("fail scenario") {
@@ -1213,7 +1213,7 @@ class FeatureSpecSpec extends FunSpec {
         assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "FeatureSpecSpec.scala")
         assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 11)
       }
-      
+
       it("should generate NotAllowedException with correct stack depth info when has a feature nested inside a feature") {
         class TestSpec extends FeatureSpec {
           feature("a feature") {
@@ -1231,7 +1231,7 @@ class FeatureSpecSpec extends FunSpec {
         assert(caught.failedCodeFileName.get === "FeatureSpecSpec.scala")
         assert(caught.failedCodeLineNumber.get === thisLineNumber - 12)
       }
-      
+
       it("should generate TestRegistrationClosedException with correct stack depth info when has a scenario nested inside a scenario") {
         class TestSpec extends FeatureSpec {
           var registrationClosedThrown = false
@@ -1245,7 +1245,7 @@ class FeatureSpecSpec extends FunSpec {
           override def withFixture(test: NoArgTest): Outcome = {
             val outcome = test.apply()
             outcome match {
-              case Exceptional(ex: TestRegistrationClosedException) => 
+              case Exceptional(ex: TestRegistrationClosedException) =>
                 registrationClosedThrown = true
               case _ =>
             }

@@ -19,21 +19,21 @@ import org.scalatest._
 import Matchers._
 
 class AMatcherSpec extends FunSpec {
-  
+
   describe("AMatcher ") {
-    
+
     describe("instance created by AMatcher apply method") {
-      
+
       val aMatcher = AMatcher[List[Int]]("list") { list =>
-        true 
+        true
       }
-      
+
       it("should have pretty toString") {
         aMatcher.toString should be ("AMatcher[scala.collection.immutable.List](\"list\", scala.collection.immutable.List => Boolean)")
       }
-      
+
     }
-    
+
   }
-  
+
 }

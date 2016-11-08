@@ -41,7 +41,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
 
   sealed abstract class Node(val parentOption: Option[Branch]) {
     def indentationLevel: Int = {
-      def calcLevel(currentParentOpt: Option[Branch], currentLevel: Int): Int = 
+      def calcLevel(currentParentOpt: Option[Branch], currentLevel: Int): Int =
         currentParentOpt match {
           case None => currentLevel
           case Some(parent) => calcLevel(parent.parentOption, currentLevel + 1)
@@ -66,7 +66,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
     parent: Branch,
     testName: String, // The full test name
     testText: String, // The last portion of the test name that showed up on an inner most nested level
-    testFun: T, 
+    testFun: T,
     location: Option[Location],
     pos: Option[source.Position],
     recordedDuration: Option[Long] = None,
@@ -81,9 +81,9 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
   case class DescriptionBranch(
     parent: Branch,
     descriptionText: String,
-    childPrefix: Option[String], // If defined, put it at the beginning of any child descriptionText or testText 
+    childPrefix: Option[String], // If defined, put it at the beginning of any child descriptionText or testText
     location: Option[Location]
-  ) extends Branch(Some(parent))   
+  ) extends Branch(Some(parent))
 
   // Access to the testNamesList, testsMap, and tagsMap must be synchronized, because the test methods are invoked by
   // the primary constructor, but testNames, tags, and runTest get invoked directly or indirectly
@@ -184,7 +184,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
         println(Resources.infoProvided(message))
         payload match {
           case Some(p) => println(Resources.payloadToString(payload.get.toString))
-          case _ => 
+          case _ =>
         }
       }
     }
@@ -196,7 +196,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
         println(Resources.noteProvided(message))
         payload match {
           case Some(p) => println(Resources.payloadToString(payload.get.toString))
-          case _ => 
+          case _ =>
         }
       }
     }
@@ -208,7 +208,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
         println(Resources.alertProvided(message))
         payload match {
           case Some(p) => println(Resources.payloadToString(payload.get.toString))
-          case _ => 
+          case _ =>
         }
       }
     }
@@ -236,7 +236,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
   ): Status = {
 
     requireNonNull(testName, args)
-    
+
     import args._
 
     val (theStopper, report, testStartTime) =
@@ -265,7 +265,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
           reportNoteProvided(theSuite, report, tracker, Some(testName), message, payload, 1, location, isConstructingThread)
         }
       )
-      
+
     val alerterForThisTest =
       ConcurrentAlerter(
         (message, payload, isConstructingThread, location) => {
@@ -290,8 +290,8 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
 
       val duration = System.currentTimeMillis - testStartTime
       val durationToReport = theTest.recordedDuration.getOrElse(duration)
-      val recordEvents = messageRecorderForThisTest.recordedEvents(false, false) ++ 
-                         (if (theTest.recordedMessages.isDefined) 
+      val recordEvents = messageRecorderForThisTest.recordedEvents(false, false) ++
+                         (if (theTest.recordedMessages.isDefined)
                             theTest.recordedMessages.get.recordedEvents(false, theSuite, report, tracker, testName, theTest.indentationLevel + 1, includeIcon)
                           else
                             Vector.empty)
@@ -302,8 +302,8 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
       case _: TestPendingException =>
         val duration = System.currentTimeMillis - testStartTime
         // testWasPending = true so info's printed out in the finally clause show up yellow
-        val recordEvents = messageRecorderForThisTest.recordedEvents(true, false) ++ 
-                           (if (theTest.recordedMessages.isDefined) 
+        val recordEvents = messageRecorderForThisTest.recordedEvents(true, false) ++
+                           (if (theTest.recordedMessages.isDefined)
                              theTest.recordedMessages.get.recordedEvents(true, theSuite, report, tracker, testName, theTest.indentationLevel + 1, includeIcon)
                            else
                              Vector.empty)
@@ -312,8 +312,8 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
       case e: TestCanceledException =>
         val duration = System.currentTimeMillis - testStartTime
         // testWasCanceled = true so info's printed out in the finally clause show up yellow
-        val recordEvents = messageRecorderForThisTest.recordedEvents(false, true) ++ 
-                           (if (theTest.recordedMessages.isDefined) 
+        val recordEvents = messageRecorderForThisTest.recordedEvents(false, true) ++
+                           (if (theTest.recordedMessages.isDefined)
                              theTest.recordedMessages.get.recordedEvents(false, theSuite, report, tracker, testName, theTest.indentationLevel + 1, includeIcon)
                            else
                              Vector.empty)
@@ -322,7 +322,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
       case e if !anExceptionThatShouldCauseAnAbort(e) =>
         val duration = System.currentTimeMillis - testStartTime
         val durationToReport = theTest.recordedDuration.getOrElse(duration)
-        val recordEvents = messageRecorderForThisTest.recordedEvents(false, false) ++ 
+        val recordEvents = messageRecorderForThisTest.recordedEvents(false, false) ++
                            (if (theTest.recordedMessages.isDefined)
                              theTest.recordedMessages.get.recordedEvents(false, theSuite, report, tracker, testName, theTest.indentationLevel + 1, includeIcon)
                            else
@@ -359,7 +359,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
   ): Status = {
 
     import args.stopper
-    
+
     // TODO: Inspect this and make sure it does not need synchronization, and either way, document why.
     val statusList = new ListBuffer[Status]()
 
@@ -371,9 +371,9 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
         val indentationLevel = desc.indentationLevel
         reportScopeOpened(theSuite, args.reporter, args.tracker, descriptionTextWithOptionalPrefix, indentationLevel, false, lineInFile)
         traverseSubNodes()
-        if (desc.pending) 
+        if (desc.pending)
           reportScopePending(theSuite, args.reporter, args.tracker, descriptionTextWithOptionalPrefix, indentationLevel, false, lineInFile)
-        else 
+        else
           reportScopeClosed(theSuite, args.reporter, args.tracker, descriptionTextWithOptionalPrefix, indentationLevel, false, lineInFile)
       case Trunk =>
         traverseSubNodes()
@@ -441,7 +441,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
     // into error messages on the standard error stream.
     val report = Suite.wrapReporterIfNecessary(theSuite, reporter)
     val newArgs = if (report eq reporter) args else args.copy(reporter = report)
-    
+
     val statusBuffer = new ListBuffer[Status]()
 
     // If a testName is passed to run, just run that, else run the tests returned
@@ -473,7 +473,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
 
     // Set the flag that indicates registration is closed (because run has now been invoked),
     // which will disallow any further invocations of "test" or "ignore" with
-    // an RegistrationClosedException.    
+    // an RegistrationClosedException.
     val oldBundle = atomic.get
     val (currentBranch, testNamesList, testsMap, tagsMap, registrationClosed) = oldBundle.unpack
     if (!registrationClosed)
@@ -572,7 +572,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
     if (registrationClosed)
       throw new TestRegistrationClosedException(registrationClosedMessageFun, posOrElseStackDepthFun(pos, getStackDepthFun(sourceFile, methodName, stackDepth + adjustment)))
 
-    val branchLocation = 
+    val branchLocation =
       location match {
         case Some(loc) => Some(loc)
         case None =>
@@ -583,14 +583,14 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
               getLineInFile(stackTraceElements, stackDepth)
           }
       }
-    
+
     val oldBranch = currentBranch
     val newBranch = DescriptionBranch(currentBranch, description, childPrefix, branchLocation)
 
     // Update atomic, making the current branch to the new branch
     updateAtomic(oldBundle, Bundle(newBranch, testNamesList, testsMap, tagsMap, registrationClosed))
     oldBranch.subNodes ::= newBranch
-    
+
     try {
       fun // Execute the function
     }
@@ -598,7 +598,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
       case e: exceptions.TestPendingException =>
         newBranch.pending = true
     }
-      
+
     { // Put the old branch back as the current branch
       val oldBundle = atomic.get
       val (currentBranch, testNamesList, testsMap, tagsMap, registrationClosed) = oldBundle.unpack
@@ -659,7 +659,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
       //SCALATESTJS-ONLY val duplicateTestNameAdjustment = -1
       throw new DuplicateTestNameException(testName, posOrElseStackDepthFun(pos, getStackDepthFun(sourceFileName, methodName, stackDepth + adjustment + duplicateTestNameAdjustment)))
     }
-    val testLocation = 
+    val testLocation =
       location match {
         case Some(loc) => Some(loc)
         case None =>
@@ -726,28 +726,28 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
     if (testTags.exists(_ == null))
       throw new NullArgumentException("a test tag was null")
   }
-  
+
   private[scalatest] def testPath(testName: String): List[Int] = {
     val theTestOpt = atomic.get.testsMap.get(testName)
     theTestOpt match {
       case Some(theTest) =>
         findPath(theTest.parent, theTest, List.empty)
-      case None => 
+      case None =>
         throw new IllegalArgumentException("Test name '" + testName + "' not found.")
     }
   }
- 
+
   @tailrec
   private def findPath(branch: Branch, node: Node, currentPath: List[Int]): List[Int] = {
     val idx = branch.subNodes.reverse.indexOf(node)
     branch.parentOption match {
-      case Some(parent) => 
+      case Some(parent) =>
         findPath(parent, branch, idx :: currentPath)
-      case None => 
+      case None =>
         idx :: currentPath
     }
   }
-  
+
   private[scalatest] def createTestDataFor(testName: String, theConfigMap: ConfigMap, theSuite: Suite) = {
     val theTest = atomic.get.testsMap(testName)
     new TestData {
@@ -759,10 +759,10 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
       val pos = theTest.pos
     }
   }
-  
+
   private[scalatest] def testTags(testName: String, theSuite: Suite): Set[String] = {
     // SKIP-SCALATESTJS-START
-    val suiteTags = for { 
+    val suiteTags = for {
       a <- theSuite.getClass.getAnnotations
       annotationClass = a.annotationType
       if annotationClass.isAnnotationPresent(classOf[TagAnnotation])
@@ -772,7 +772,7 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
     val testTagSet = atomic.get.tagsMap.getOrElse(testName, Set.empty)
     Set.empty ++ suiteTags ++ testTagSet
   }
-  
+
   private[scalatest] def testScopes(testName: String): collection.immutable.IndexedSeq[String] = {
     @tailrec
     def testScopesAcc(branch: Branch, acc: collection.immutable.IndexedSeq[String]): collection.immutable.IndexedSeq[String] = {
@@ -791,17 +791,17 @@ private[scalatest] sealed abstract class SuperEngine[T](concurrentBundleModMessa
     theTestOpt match {
       case Some(theTest) =>
         testScopesAcc(theTest.parent, collection.immutable.IndexedSeq.empty)
-      case None => 
+      case None =>
         throw new IllegalArgumentException("Test name '" + testName + "' not found.")
     }
   }
-  
+
   private[scalatest] def testText(testName: String): String = {
     val theTestOpt = atomic.get.testsMap.get(testName)
     theTestOpt match {
       case Some(theTest) =>
         theTest.testText
-      case None => 
+      case None =>
         throw new IllegalArgumentException("Test name '" + testName + "' not found.")
     }
   }
@@ -817,7 +817,7 @@ private[scalatest] class FixtureEngine[FixtureParam](concurrentBundleModMessageF
 
 private[scalatest] class PathEngine(concurrentBundleModMessageFun: => String, simpleClassName: String)
     extends Engine(concurrentBundleModMessageFun, simpleClassName) { thisEngine =>
- 
+
   /*
   Anything that the initial instance sets will need to be made volatile or atomic.
   But stuff used only by ensure probably does not, because ..., well ensure gets called
@@ -879,24 +879,24 @@ private[scalatest] class PathEngine(concurrentBundleModMessageFun: => String, si
           usedPathSet = Set.empty[String]
           targetLeafHasBeenReached = false
           nextTargetPath = None
-          // testResultsRegistered = false 
-          currentInstance = callingInstance.newInstance  
+          // testResultsRegistered = false
+          currentInstance = callingInstance.newInstance
         }
       }
     }
   }
 /*
  * (theSuite, report, tracker, testName, theTest, includeIcon) => MessageRecordingInformer2
- * 
- * 
+ *
+ *
  */
   def handleTest(handlingSuite: Suite, testText: String, testFun: () => Outcome, testRegistrationClosedMessageFun: => String, sourceFileName: String, methodName: String, stackDepth: Int, adjustment: Int, location: Option[Location], pos: Option[source.Position], testTags: Tag*): Unit = {
 
-    if (insideAPathTest) 
+    if (insideAPathTest)
       throw new TestRegistrationClosedException(testRegistrationClosedMessageFun, posOrElseStackDepthFun(pos, getStackDepthFun(sourceFileName, methodName, stackDepth + adjustment)))
-    
+
     insideAPathTest = true
-    
+
     try {
       describeRegisteredNoTests = false
       val nextPath = getNextPath()
@@ -937,7 +937,7 @@ private[scalatest] class PathEngine(concurrentBundleModMessageFun: => String, si
 
         var durationOfRunningTest: Long = -1
         var startTime: Long = System.currentTimeMillis
-        val outcome = 
+        val outcome =
           try { // TODO: Correctly record the time a test takes and report that
             // I think I need to replace the Informer with one that records the message and whether the
             // thread was this thread, and then...
@@ -1000,7 +1000,7 @@ private[scalatest] class PathEngine(concurrentBundleModMessageFun: => String, si
     if (targetLeafHasBeenReached && nextTargetPath.isEmpty) {
       nextTargetPath = Some(nextPath)
     }
-    else if (isInTargetPath(nextPath, targetPath)) { 
+    else if (isInTargetPath(nextPath, targetPath)) {
       val oldCurrentPath = currentPath // I added !previousDescribeWasEmpty to get a sibling describe following an empty describe to get executed.
       currentPath = nextPath
       if (!registeredPathSet.contains(nextPath)) {
@@ -1036,7 +1036,7 @@ private[scalatest] class PathEngine(concurrentBundleModMessageFun: => String, si
           getBranch(b.subNodes(index).asInstanceOf[Branch], tail)
       }
     }
-    
+
     val oldBranch = currentBranch
     val newBranch = getBranch(Trunk, path)
     // oldBranch.subNodes ::= newBranch
@@ -1067,7 +1067,7 @@ private[scalatest] class PathEngine(concurrentBundleModMessageFun: => String, si
 
     // Set the flag that indicates registration is closed (because run has now been invoked),
     // which will disallow any further invocations of "test" or "ignore" with
-    // an RegistrationClosedException.    
+    // an RegistrationClosedException.
     val oldBundle = atomic.get
     val (currentBranch, testNamesList, testsMap, tagsMap, registrationClosed) = oldBundle.unpack
     if (!registrationClosed)
@@ -1133,12 +1133,12 @@ private[scalatest] class PathEngine(concurrentBundleModMessageFun: => String, si
         throw new ConcurrentModificationException(Resources.concurrentDocumenterMod(theSuite.getClass.getName))
     }
   }
-   
+
   def handleIgnoredTest(testText: String, f: () => Outcome, testRegistrationClosedMessageFun: => String, sourceFileName: String, methodName: String, stackDepth: Int, adjustment: Int, location: Option[Location], pos: Option[source.Position], testTags: Tag*): Unit = {
 
-    if (insideAPathTest) 
+    if (insideAPathTest)
       throw new TestRegistrationClosedException(testRegistrationClosedMessageFun, posOrElseStackDepthFun(pos, getStackDepthFun(sourceFileName, methodName, stackDepth + adjustment)))
-    
+
     describeRegisteredNoTests = false
     val nextPath = getNextPath()
     if (isInTargetPath(nextPath, targetPath)) {
@@ -1152,7 +1152,7 @@ private[scalatest] class PathEngine(concurrentBundleModMessageFun: => String, si
 }
 
 private[scalatest] object PathEngine {
-  
+
    private[this] val engine = new ThreadLocal[PathEngine]
 
    def setEngine(en: PathEngine): Unit = {
@@ -1166,7 +1166,7 @@ private[scalatest] object PathEngine {
      engine.set(null)
      if (en == null) (new PathEngine(Resources.concurrentSpecMod, "Spec")) else en
    }
-   
+
   /*
    * First time this is instantiated, targetPath will be None. In that case, execute the
    * first test, and each describe clause on the way to the first test (the all zeros path).

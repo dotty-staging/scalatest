@@ -43,7 +43,7 @@ final class ResultOfLengthWordApplication(val expectedLength: Long) {
       }
     }
   }
-  
+
   /**
    * Overrides toString to return "length (X)", where X is the expectedLength
    */

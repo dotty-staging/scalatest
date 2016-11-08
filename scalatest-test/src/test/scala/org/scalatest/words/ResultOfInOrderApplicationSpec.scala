@@ -19,23 +19,23 @@ import org.scalatest._
 import Matchers._
 
 class RResultOfInOrderApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfInOrderApplication ") {
-    
+
     it("should have pretty toString when right is empty") {
       val result = new ResultOfInOrderApplication(Vector.empty)
       result.toString should be ("inOrder ()")
     }
-    
+
     it("should have pretty toString when right contains 1 element") {
       val result = new ResultOfInOrderApplication(Vector("Bob"))
       result.toString should be ("inOrder (\"Bob\")")
     }
-    
+
     it("should have pretty toString when right contains > 1 elements") {
       val result = new ResultOfInOrderApplication(Vector("Bob", "Alice"))
       result.toString should be ("inOrder (\"Bob\", \"Alice\")")
     }
   }
-  
+
 }

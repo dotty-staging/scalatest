@@ -90,7 +90,7 @@ class TestCanceledException(
     this(
       StackDepthException.toExceptionFunction(message),
       cause,
-      Right((_: StackDepthException) => failedCodeStackDepth), 
+      Right((_: StackDepthException) => failedCodeStackDepth),
       None
     )
 
@@ -208,7 +208,7 @@ class TestCanceledException(
     mod.setStackTrace(getStackTrace)
     mod
   }
-  
+
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the payload option replaced with the result of passing

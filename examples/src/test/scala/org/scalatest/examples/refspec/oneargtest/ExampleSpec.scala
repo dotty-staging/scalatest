@@ -42,11 +42,11 @@ class ExampleSpec extends fixture.Spec {
       f.writer.flush()
       assert(f.file.length === 18)
     }
- 
+
     def `should be fun` { f: FixtureParam =>
       f.writer.write("fun!")
       f.writer.flush()
       assert(f.file.length === 17)
     }
-  } 
+  }
 }

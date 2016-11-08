@@ -21,7 +21,7 @@ package org.scalatest.matchers
  *
  * <p>
  * This class is intended to be used with the <code>mapResult</code> method of
- * <a href="MatcherProducers.html"><code>MatcherProducers</code></a>, which you can use to 
+ * <a href="MatcherProducers.html"><code>MatcherProducers</code></a>, which you can use to
  * modify error messages when composing matchers. This class exists to enable those error messages
  * to be modified <em>lazily</em>, so that <code>toString</code> is invoked on the given
  * <code>arg</code>, and its result transformed by the given function <code>f</code>, <em>only when and if</em>
@@ -48,7 +48,7 @@ package org.scalatest.matchers
  * @param f a function that given the <code>arg</code> will produce a <code>String</code>
  */
 final case class LazyArg(val arg: Any)(f: Any => String) {
- 
+
   /**
    * Returns the result of invoking the function <code>f</code>, passed to the <code>LazyArg</code>
    * constructor, on field <code>arg</code>.

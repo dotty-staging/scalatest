@@ -18,13 +18,13 @@ package org.scalatest.words
 import org.scalatest._
 
 class LengthWordSpec extends FunSpec with Matchers {
-  
+
   describe("LengthWord ") {
-    
+
     it("should have pretty toString") {
       length.toString should be ("length")
     }
-    
+
   }
-  
+
 }

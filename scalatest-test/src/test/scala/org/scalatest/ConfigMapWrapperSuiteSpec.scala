@@ -27,7 +27,7 @@ class ConfigMapWrapperSuiteSpec extends FunSuite with SeveredStackTraces {
     wrapped.run(None, Args(SilentReporter, Stopper.default, Filter(), configMap, None, new Tracker, Set.empty))
     assert(SavesConfigMapSuite.savedConfigMap === Some(configMap))
   }
-  
+
   test("configMap's expected test count should return the underlying's value") {
     val clazz = getClass.getClassLoader.loadClass("org.scalatest.SavesConfigMapSuite").asInstanceOf[Class[_ <: Suite]]
     val suite = new ConfigMapWrapperSuite(clazz)

@@ -36,7 +36,7 @@ class ExampleSpec extends FeatureSpec {
         assert(builder.toString === "ScalaTest is designed to encourage clear code!")
       }
     }
-    
+
     // This test needs the ListBuffer[String] fixture
     scenario("User needs to understand what the tests are doing") {
       new Buffer {

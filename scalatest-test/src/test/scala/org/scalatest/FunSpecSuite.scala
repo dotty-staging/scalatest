@@ -76,7 +76,7 @@ class FunSpecSuite extends FunSuite {
     assert(a.example2WasInvokedAfterExample1)
     assert(a.example3WasInvokedAfterExample2)
   }
-   
+
   test("two plain-old specifiers should show up in order of appearance in testNames") {
     class MySpec extends FunSpec with Matchers {
       var example1WasInvoked = false
@@ -97,7 +97,7 @@ class FunSpecSuite extends FunSuite {
     assert(a.testNames.iterator.toList(0) === "should get invoked")
     assert(a.testNames.iterator.toList(1) === "should also get invoked")
   }
- 
+
   test("plain-old specifier test names should include an enclosing describe string, separated by a space") {
     class MySpec extends FunSpec with Matchers {
       describe("A Stack") {
@@ -127,7 +127,7 @@ class FunSpecSuite extends FunSuite {
     assert(a.testNames.iterator.toList(0) === "A Stack (when not empty) must allow me to pop")
     assert(a.testNames.iterator.toList(1) === "A Stack (when not full) must allow me to push")
   }
-  
+
   test("should be able to mix in BeforeAndAfterEach with BeforeAndAfterAll without any problems") {
     class MySpec extends FunSpec with Matchers with BeforeAndAfterEach with BeforeAndAfterAll {
       describe("A Stack") {
@@ -142,8 +142,8 @@ class FunSpecSuite extends FunSuite {
     val a = new MySpec
     a.run(None, Args(SilentReporter))
   }
-  
-  // Test for good strings in report for top-level examples  
+
+  // Test for good strings in report for top-level examples
   test("Top-level plain-old specifiers should yield good strings in a TestSucceeded report") {
     var reportHadCorrectTestName = false
     var reportHadCorrectSpecText = false
@@ -175,7 +175,7 @@ class FunSpecSuite extends FunSuite {
     assert(reportHadCorrectSpecText)
     assert(reportHadCorrectFormattedSpecText)
   }
-    
+
   test("Top-level plain-old specifiers should yield good strings in a testSucceeded report") {
     var reportHadCorrectTestName = false
     var reportHadCorrectSpecText = false
@@ -418,7 +418,7 @@ class FunSpecSuite extends FunSuite {
     assert(infoReportHadCorrectFormattedSpecText)
   }
 
-  
+
   // Tests for good strings in report for nested-two-levels examples
   test("Nested-two-levels plain-old specifiers should yield good strings in a TestSucceeded report") { //ZZZ
     var infoReportHadCorrectTestName = false
@@ -436,7 +436,7 @@ class FunSpecSuite extends FunSuite {
           case ScopeOpened(ordinal, message, nameInfo, formatter, location, payload, threadName, timeStamp) =>
             // scopeOpened should be invoked before the other method
             assert(!theOtherMethodHasBeenInvoked)
-            if (!scopeOpenedHasBeenInvokedOnce) { 
+            if (!scopeOpenedHasBeenInvokedOnce) {
               scopeOpenedHasBeenInvokedOnce = true
               if (message.indexOf("My") >= 0)
                 infoReportHadCorrectTestName = true
@@ -513,7 +513,7 @@ class FunSpecSuite extends FunSuite {
           case ScopeOpened(ordinal, message, nameInfo, formatter, location, payload, threadName, timeStamp) =>
             // scopeOpened should be invoked before the other method
             assert(!theOtherMethodHasBeenInvoked)
-            if (!scopeOpenedHasBeenInvokedOnce) { 
+            if (!scopeOpenedHasBeenInvokedOnce) {
               scopeOpenedHasBeenInvokedOnce = true
               if (message.indexOf("My") >= 0)
                 infoReportHadCorrectTestName = true
@@ -609,7 +609,7 @@ class FunSpecSuite extends FunSuite {
     assert(reportHadCorrectSpecText)
     assert(reportHadCorrectFormattedSpecText)
   }
-  
+
   test("Top-level 'shared behavior - plain-old specifiers' should yield good strings in a TestSucceeded report") {
     var reportHadCorrectTestName = false
     var reportHadCorrectSpecText = false
@@ -785,8 +785,8 @@ class FunSpecSuite extends FunSuite {
     }
     val a = new MySpec
     a.run(None, Args(SilentReporter))
-  }  
-  
+  }
+
   test("Only a passed test name should be invoked.") {
     var correctTestWasInvoked = false
     var wrongTestWasInvoked = false
@@ -805,7 +805,7 @@ class FunSpecSuite extends FunSuite {
     assert(correctTestWasInvoked)
     assert(!wrongTestWasInvoked)
   }
-  
+
   test("Config map should make it through to runTest") {
     var foundMyGoodie = false
     class MySpec extends FunSpec with Matchers {
@@ -817,9 +817,9 @@ class FunSpecSuite extends FunSuite {
     }
     val a = new MySpec
     a.run(None, Args(StubReporter, Stopper.default, Filter(), ConfigMap("my goodie" -> "hi"), None, new Tracker, Set.empty))
-    assert(foundMyGoodie)  
+    assert(foundMyGoodie)
   }
-  
+
   // I think delete this one. Repeat.
   test("In a TestSucceeded report, the example name should start with '<description> should' if nested two levels inside describe clauses") {
     var testSucceededReportHadCorrectTestName = false
@@ -829,7 +829,7 @@ class FunSpecSuite extends FunSuite {
           case TestSucceeded(ordinal, suiteName, suiteId, suiteClassName, testName, testText, testEvents, duration, formatter, location, rerunnable, payload, threadName, timeStamp) =>
             if (testName.indexOf("A Stack (when working right) should push and pop properly") != -1) {
               testSucceededReportHadCorrectTestName = true
-            }  
+            }
           case _ =>
         }
       }
@@ -845,7 +845,7 @@ class FunSpecSuite extends FunSuite {
     a.run(None, Args(new MyReporter))
     assert(testSucceededReportHadCorrectTestName)
   }
-  
+
   test("expectedTestCount is the number of plain-old specifiers if no shares") {
     class MySpec extends FunSpec with Matchers {
       it("must one") {/* ASSERTION_SUCCEED */}
@@ -869,7 +869,7 @@ class FunSpecSuite extends FunSuite {
           case TestSucceeded(ordinal, suiteName, suiteId, suiteClassName, testName, testText, testEvents, duration, formatter, location, rerunnable, payload, threadName, timeStamp) =>
             if (testName.indexOf("this thing must start with proper words") != -1) {
               testSucceededReportHadCorrectTestName = true
-            }  
+            }
           case _ =>
         }
       }
@@ -890,7 +890,7 @@ class FunSpecSuite extends FunSuite {
           case TestSucceeded(ordinal, suiteName, suiteId, suiteClassName, testName, testText, testEvents, duration, formatter, location, rerunnable, payload, threadName, timeStamp) =>
             if (testName.indexOf("this thing must start with proper words") != -1) {
               testSucceededReportHadCorrectTestName = true
-            }  
+            }
           case _ =>
         }
       }
@@ -922,7 +922,7 @@ class FunSpecSuite extends FunSuite {
     a.run(None, Args(new MyReporter))
     assert(testFailedReportHadCorrectTestName)
   }
-  
+
   test("In a TestStarting report, the example name should start with '<description> ' if nested one level " +
         "inside a describe clause and registered with it") {
     var testSucceededReportHadCorrectTestName = false
@@ -933,7 +933,7 @@ class FunSpecSuite extends FunSuite {
             if (testName == "A Stack needs to push and pop properly") {
               testSucceededReportHadCorrectTestName = true
             }
-          case _ => 
+          case _ =>
         }
       }
     }
@@ -946,7 +946,7 @@ class FunSpecSuite extends FunSuite {
     a.run(None, Args(new MyReporter))
     assert(testSucceededReportHadCorrectTestName)
   }
-    
+
   test("Specs should send defined formatters") {
     class MyReporter extends Reporter {
 
@@ -1112,7 +1112,7 @@ class FunSpecSuite extends FunSuite {
     assert(myRep.scopeOpenedCalled)
     assert(myRep.expectedMessageReceived)
   }
- 
+
   // Testing Shared behaviors
   test("a shared specifier invoked with 'should behave like a' should get invoked") {
     class MySpec extends FunSpec with BeforeAndAfterEach with BeforeAndAfterAll {
@@ -1126,7 +1126,7 @@ class FunSpecSuite extends FunSuite {
       describe("A Stack") {
         describe("(when not empty)") {
           it("should allow me to pop") {/* ASSERTION_SUCCEED */}
-          it should behave like invocationVerifier(1) 
+          it should behave like invocationVerifier(1)
         }
         describe("(when not full)") {
           it("should allow me to push") {/* ASSERTION_SUCCEED */}
@@ -1137,7 +1137,7 @@ class FunSpecSuite extends FunSuite {
     a.run(None, Args(SilentReporter))
     assert(a.sharedExampleInvoked)
   }
-  
+
   test("two examples in a shared behavior should get invoked") {
     class MySpec extends FunSpec with BeforeAndAfterEach with BeforeAndAfterAll {
       var sharedExampleInvoked = false
@@ -1197,7 +1197,7 @@ class FunSpecSuite extends FunSuite {
     assert(a.example2WasInvokedAfterExample1)
     assert(a.example3WasInvokedAfterExample2)
   }
-  
+
   test("three examples in a shared behavior should not get invoked at all if the behavior isn't used in a like clause") {
     class MySpec extends FunSpec with Matchers {
       var example1WasInvoked = false
@@ -1227,7 +1227,7 @@ class FunSpecSuite extends FunSuite {
     assert(!a.example2WasInvokedAfterExample1)
     assert(!a.example3WasInvokedAfterExample2)
   }
-  
+
   // Probably delete
   test("The test name for a shared specifier invoked with 'should behave like a' should be verbatim if top level") {
     var testSucceededReportHadCorrectTestName = false
@@ -1238,7 +1238,7 @@ class FunSpecSuite extends FunSuite {
           case TestSucceeded(ordinal, suiteName, suiteId, suiteClassName, testName, testText, testEvents, duration, formatter, location, rerunnable, payload, threadName, timeStamp) =>
             if (testName.indexOf("it should be invoked") != -1) {
               testSucceededReportHadCorrectTestName = true
-            }  
+            }
           case _ =>
         }
       }
@@ -1251,13 +1251,13 @@ class FunSpecSuite extends FunSuite {
           /* ASSERTION_SUCCEED */
         }
       }
-      it should behave like invocationVerifier(1) 
+      it should behave like invocationVerifier(1)
     }
     val a = new MySpec
     a.run(None, Args(new MyReporter))
     assert(testSucceededReportHadCorrectTestName)
   }
-  
+
   ignore("The example name for a shared example invoked with 'it should behave like' should start with '<description> should' if nested one level in a describe clause") {
     var testSucceededReportHadCorrectTestName = false
     class MyReporter extends Reporter {
@@ -1267,7 +1267,7 @@ class FunSpecSuite extends FunSuite {
           case TestSucceeded(ordinal, suiteName, suiteId, suiteClassName, testName, testText, testEvents, duration, formatter, location, rerunnable, payload, threadName, timeStamp) =>
             if (testName.indexOf("A Stack should pop properly") != -1) {
               testSucceededReportHadCorrectTestName = true
-            }  
+            }
           case _ =>
         }
       }
@@ -1281,14 +1281,14 @@ class FunSpecSuite extends FunSuite {
         }
       }
       describe("A Stack") {
-        it should behave like invocationVerifier(1) 
+        it should behave like invocationVerifier(1)
       }
     }
     val a = new MySpec
     a.run(None, Args(new MyReporter))
     assert(testSucceededReportHadCorrectTestName)
   }
- 
+
   test("expectedTestCount should not include tests in shares if never called") {
     class MySpec extends FunSpec with Matchers {
       class Misbehavior extends FunSpec with Matchers {
@@ -1317,7 +1317,7 @@ class FunSpecSuite extends FunSuite {
       it("should two") {/* ASSERTION_SUCCEED */}
       describe("behavior") {
         it("should three") {/* ASSERTION_SUCCEED */}
-        it should behave like misbehavior(1) 
+        it should behave like misbehavior(1)
         it("should four") {/* ASSERTION_SUCCEED */}
       }
       it("should five") {/* ASSERTION_SUCCEED */}
@@ -1336,11 +1336,11 @@ class FunSpecSuite extends FunSuite {
       it("should two") {/* ASSERTION_SUCCEED */}
       describe("behavior") {
         it("should three") {/* ASSERTION_SUCCEED */}
-        it should behave like misbehavior(1) 
+        it should behave like misbehavior(1)
         it("should four") {/* ASSERTION_SUCCEED */}
       }
       it("should five") {/* ASSERTION_SUCCEED */}
-      it should behave like misbehavior(1) 
+      it should behave like misbehavior(1)
     }
     val a = new MySpec
     assert(a.expectedTestCount(Filter()) === 9)

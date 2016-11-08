@@ -24,5 +24,5 @@ import org.scalactic.Prettifier
  * @author Bill Venners
  */
 class ResultOfOnlyApplication(val right: scala.collection.Seq[Any]) {
-  override def toString: String = "only (" + right.map(Prettifier.default(_)).mkString(", ") + ")" 
+  override def toString: String = "only (" + right.map(Prettifier.default(_)).mkString(", ") + ")"
 }

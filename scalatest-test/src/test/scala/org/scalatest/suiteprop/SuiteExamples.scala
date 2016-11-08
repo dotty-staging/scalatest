@@ -67,7 +67,7 @@ trait SuiteExamples extends Tables {
   val fixtureFlatSpec: fixture.FlatSpec with FixtureServices
   val subjectFixtureFlatSpec: fixture.FlatSpec with FixtureServices
   val shorthandSubjectFixtureFlatSpec: fixture.FlatSpec with FixtureServices
-  
+
   val flatSpecWithMust: FlatSpec with FixtureServices
   val subjectFlatSpecWithMust: FlatSpec with FixtureServices
   val shorthandSubjectFlatSpecWithMust: FlatSpec with FixtureServices
@@ -108,7 +108,7 @@ trait SuiteExamples extends Tables {
       spec,
       fixtureSpec, // TODO: Need nested ones
       // SKIP-SCALATESTJS-END
-      
+
       funSuite,
       fixtureFunSuite,
 

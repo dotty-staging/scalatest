@@ -35,7 +35,7 @@ class ExampleSpec extends WordSpec {
       assert(f.buffer.isEmpty)
       f.buffer += "sweet"
     }
-  
+
     "be fun" in {
       val f = fixture
       f.builder.append("fun!")

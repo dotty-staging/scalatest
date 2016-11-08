@@ -49,8 +49,8 @@ private[tools] case class ReporterConfigurations(
   val standardOutReporterConfiguration: Option[StandardOutReporterConfiguration],
   val standardErrReporterConfiguration: Option[StandardErrReporterConfiguration],
   val htmlReporterConfigurationList: List[HtmlReporterConfiguration],
-  val customReporterConfigurationList: List[CustomReporterConfiguration], 
-  val xmlSocketReporterConfigurationList: List[XmlSocketReporterConfiguration], 
+  val customReporterConfigurationList: List[CustomReporterConfiguration],
+  val xmlSocketReporterConfigurationList: List[XmlSocketReporterConfiguration],
   val socketReporterConfigurationList: List[SocketReporterConfiguration]
 ) extends Seq[ReporterConfiguration] {
 
@@ -65,8 +65,8 @@ private[tools] case class ReporterConfigurations(
       standardOutReporterConfiguration.toList,
       standardErrReporterConfiguration.toList,
       htmlReporterConfigurationList,
-      customReporterConfigurationList, 
-      xmlSocketReporterConfigurationList, 
+      customReporterConfigurationList,
+      xmlSocketReporterConfigurationList,
       socketReporterConfigurationList
     )
 

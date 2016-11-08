@@ -19,7 +19,7 @@ import org.scalactic.Requirements._
 
 /**
  * Trait that causes the nested suites of any suite it is mixed into to be run sequentially even if
- * a <code>Distributor</code> is passed to <code>runNestedSuites</code>. This trait overrides the 
+ * a <code>Distributor</code> is passed to <code>runNestedSuites</code>. This trait overrides the
  * <code>runNestedSuites</code> method and fowards every parameter passed to it to a superclass invocation
  * of <code>runNestedSuites</code>, except it always passes <code>None</code> for the <code>Distributor</code>.
  * Mix in this trait into any suite whose nested suites need to be run sequentially even with the rest of the

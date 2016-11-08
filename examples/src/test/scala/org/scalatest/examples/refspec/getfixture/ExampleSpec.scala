@@ -24,9 +24,9 @@ class ExampleSpec extends RefSpec {
     val builder = new StringBuilder("ScalaTest is ")
     val buffer = new ListBuffer[String]
   }
-  
+
   def fixture = new Fixture
-  
+
   object `Testing ` {
     def `should be easy` {
       val f = fixture
@@ -35,7 +35,7 @@ class ExampleSpec extends RefSpec {
       assert(f.buffer.isEmpty)
       f.buffer += "sweet"
     }
-  
+
     def `should be fun` {
       val f = fixture
       f.builder.append("fun!")

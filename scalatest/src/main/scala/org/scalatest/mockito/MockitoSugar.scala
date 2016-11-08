@@ -72,7 +72,7 @@ trait MockitoSugar {
   def mock[T <: AnyRef](implicit classTag: ClassTag[T]): T = {
     mockitoMock(classTag.runtimeClass.asInstanceOf[Class[T]])
   }
-  
+
   /**
    * Invokes the <code>mock(classToMock: Class[T], defaultAnswer: Answer[_])</code> method on the <code>Mockito</code> companion object (<em>i.e.</em>, the
    * static <code>mock(java.lang.Class<T> classToMock, org.mockito.stubbing.Answer defaultAnswer)</code> method in Java class <code>org.mockito.Mockito</code>).
@@ -96,7 +96,7 @@ trait MockitoSugar {
   def mock[T <: AnyRef](defaultAnswer: Answer[_])(implicit classTag: ClassTag[T]): T = {
     mockitoMock(classTag.runtimeClass.asInstanceOf[Class[T]], defaultAnswer)
   }
-  
+
   /**
    * Invokes the <code>mock(classToMock: Class[T], mockSettings: MockSettings)</code> method on the <code>Mockito</code> companion object (<em>i.e.</em>, the
    * static <code>mock(java.lang.Class<T> classToMock, org.mockito.MockSettings mockSettings)</code> method in Java class <code>org.mockito.Mockito</code>).
@@ -120,7 +120,7 @@ trait MockitoSugar {
   def mock[T <: AnyRef](mockSettings: MockSettings)(implicit classTag: ClassTag[T]): T = {
     mockitoMock(classTag.runtimeClass.asInstanceOf[Class[T]], mockSettings)
   }
-  
+
   /**
    * Invokes the <code>mock(classToMock: Class[T], name: String)</code> method on the <code>Mockito</code> companion object (<em>i.e.</em>, the
    * static <code>mock(java.lang.Class<T> classToMock, java.lang.String name)</code> method in Java class <code>org.mockito.Mockito</code>).
@@ -147,7 +147,7 @@ trait MockitoSugar {
 }
 
 /**
- * Companion object that facilitates the importing of <code>MockitoSugar</code> members as 
+ * Companion object that facilitates the importing of <code>MockitoSugar</code> members as
  * an alternative to mixing it in. One use case is to import <code>MockitoSugar</code> members so you can use
  * them in the Scala interpreter.
  */

@@ -20,8 +20,8 @@ import org.scalatest._
 class DecidersSpec extends FunSpec with Explicitly with StringNormalizations {
 
   describe("The 'decided by' syntax") {
-    it("should enable users to explicitly choose an Equality for a === use") { 
-  
+    it("should enable users to explicitly choose an Equality for a === use") {
+
       assert(3 === 3)
       assert(3 !== 4)
       implicit val e = new Equality[Int] {
@@ -39,7 +39,7 @@ class DecidersSpec extends FunSpec with Explicitly with StringNormalizations {
 
   describe("The 'after being' syntax") {
 
-    it("should enable users to explicitly choose a Normalization for a === use") { 
+    it("should enable users to explicitly choose a Normalization for a === use") {
 
       assert("hello" !== "HELLO")
       assert(("hello" === "HELLo") (after being lowerCased))
@@ -53,7 +53,7 @@ class DecidersSpec extends FunSpec with Explicitly with StringNormalizations {
       assert(("hello" !== "Helloooo") (after being lowerCased))
     }
 
-    it("should enable users to explicitly build a Normalization for a === use by composing with 'and', with or without parens") { 
+    it("should enable users to explicitly build a Normalization for a === use by composing with 'and', with or without parens") {
 
       assert("hello" !== "HELLO")
       assert(("hello" === " HELLo ") (after being (lowerCased and trimmed)))
@@ -74,7 +74,7 @@ class DecidersSpec extends FunSpec with Explicitly with StringNormalizations {
       assert(("  HeLlO" === "HeLlO\n") (after being lowerCased and trimmed))
     }
 
-    it("should enable users to explicitly specify an equality and one or more normalizations") { 
+    it("should enable users to explicitly specify an equality and one or more normalizations") {
 
       implicit val e = new Equality[String] {
         def areEqual(a: String, b: Any): Boolean = a != b

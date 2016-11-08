@@ -217,7 +217,7 @@ class AsyncFreeSpecLikeSpec2 extends org.scalatest.AsyncFunSpec {
         "test 3" in { fixture =>
           assert(count == 2)
         }
-        
+
       }
 
       val rep = new EventRecordingReporter

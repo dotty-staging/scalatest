@@ -21,9 +21,9 @@ import matchers.{BePropertyMatcher, BePropertyMatchResult}
 import java.io.File
 
 class ResultOfAWordToBePropertyMatcherApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfAWordToBePropertyMatcherApplication ") {
-    
+
     case class MyFile(
       val name: String,
       val file: Boolean,
@@ -36,11 +36,11 @@ class ResultOfAWordToBePropertyMatcherApplicationSpec extends FunSpec {
       }
       override def toString: String = "file"
     }
-    
+
     it("should have pretty toString") {
       val result = new ResultOfAWordToBePropertyMatcherApplication(new FileBePropertyMatcher)
       result.toString should be ("a file")
     }
   }
-  
+
 }

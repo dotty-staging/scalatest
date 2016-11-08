@@ -21,17 +21,17 @@ package org.scalatest
  * <table><tr><td class="usage">
  * <strong>Recommended Usage</strong>:
  * Use trait <code>BeforeAndAfterEach</code> when you want to stack traits that perform side-effects before and/or after tests, rather
- * than at the beginning or end of tests. 
+ * than at the beginning or end of tests.
  * <em>Note: For more insight into where <code>BeforeAndAfterEach</code> fits into the big picture, see the </em>
  * <a href="FlatSpec.html#sharedFixtures">Shared fixtures</a></em> section in the documentation for your chosen style trait.
  * </td></tr></table>
- * 
+ *
  * <p>
  * A test <em>fixture</em> is composed of the objects and other artifacts (files, sockets, database
  * connections, <em>etc.</em>) tests use to do their work.
  * When multiple tests need to work with the same fixtures, it is important to try and avoid
  * duplicating the fixture code across those tests. The more code duplication you have in your
- * tests, the greater drag the tests will have on refactoring the actual production code, and 
+ * tests, the greater drag the tests will have on refactoring the actual production code, and
  * the slower your compile will likely be.
  * Trait <code>BeforeAndAfterEach</code> offers one way to eliminate such code duplication:
  * a <code>beforeEach</code> method that will be run before each test (like JUnit's <code>setUp</code>),
@@ -44,19 +44,19 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.composingbeforeandaftereach
- * 
+ *
  * import org.scalatest._
  * import collection.mutable.ListBuffer
- * 
+ *
  * trait Builder extends BeforeAndAfterEach { this: Suite =&gt;
- * 
+ *
  *   val builder = new StringBuilder
- * 
+ *
  *   override def beforeEach() {
  *     builder.append("ScalaTest is ")
  *     super.beforeEach() // To be stackable, must call super.beforeEach
  *   }
- * 
+ *
  *   override def afterEach() {
  *     try {
  *       super.afterEach() // To be stackable, must call super.afterEach
@@ -66,11 +66,11 @@ package org.scalatest
  *     }
  *   }
  * }
- * 
+ *
  * trait Buffer extends BeforeAndAfterEach { this: Suite =&gt;
- * 
+ *
  *   val buffer = new ListBuffer[String]
- * 
+ *
  *   override def afterEach() {
  *     try {
  *       super.afterEach() // To be stackable, must call super.afterEach
@@ -80,16 +80,16 @@ package org.scalatest
  *     }
  *   }
  * }
- * 
+ *
  * class ExampleSpec extends FlatSpec with Builder with Buffer {
- * 
+ *
  *   "Testing" should "be easy" in {
  *     builder.append("easy!")
  *     assert(builder.toString === "ScalaTest is easy!")
  *     assert(buffer.isEmpty)
  *     buffer += "sweet"
  *   }
- * 
+ *
  *   it should "be fun" in {
  *     builder.append("fun!")
  *     assert(builder.toString === "ScalaTest is fun!")
@@ -163,7 +163,7 @@ trait BeforeAndAfterEach extends SuiteMixin {
    * after running each test. It runs each test by invoking <code>super.runTest</code>, passing along
    * the two parameters passed to it.
    * </p>
-   * 
+   *
    * <p>
    * If any invocation of <code>beforeEach</code> completes abruptly with an exception, this
    * method will complete abruptly with the same exception. If any call to
@@ -189,7 +189,7 @@ trait BeforeAndAfterEach extends SuiteMixin {
       super.runTest(testName, args)
     }
     catch {
-      case e: Exception => 
+      case e: Exception =>
         thrownException = Some(e)
         FailedStatus
     }
@@ -233,7 +233,7 @@ trait BeforeAndAfterEach extends SuiteMixin {
             try {
               afterEach()
             }
-            catch { 
+            catch {
               case e: Throwable if !Suite.anExceptionThatShouldCauseAnAbort(e) && thrownException.isDefined =>
                 // We will swallow the exception thrown from afterEach if it is not test-aborting and exception was already thrown by beforeEach or test itself.
             }

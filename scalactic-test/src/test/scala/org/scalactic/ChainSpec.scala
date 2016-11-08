@@ -131,8 +131,8 @@ class ChainSpec extends UnitSpec {
     }
   }
   it should "have an apply method" in {
-    Chain(1, 2, 3)(0) shouldEqual 1 
-    Chain(1, 2, 3)(1) shouldEqual 2 
+    Chain(1, 2, 3)(0) shouldEqual 1
+    Chain(1, 2, 3)(1) shouldEqual 2
     Chain("hi")(0) shouldEqual "hi"
     Chain(7, 8, 9)(2) shouldEqual 9
     the [IndexOutOfBoundsException] thrownBy {
@@ -253,7 +253,7 @@ class ChainSpec extends UnitSpec {
   // Could have an implicit conversion from Every[Char] to CharSequence like
   // there is for Seq in Predef.
   /*
-  scala> Vector(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).collect { case i if i > 10 == 0 => i / 2 }  
+  scala> Vector(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).collect { case i if i > 10 == 0 => i / 2 }
   res1: scala.collection.immutable.Vector[Int] = Vector()
   */
   it should "have an collectFirst method" in {
@@ -376,7 +376,7 @@ class ChainSpec extends UnitSpec {
   }
 
   /*
-  it should not have an drop method 
+  it should not have an drop method
     scala> Vector(1, 2, 3).drop(3)
     res1: scala.collection.immutable.Vector[Int] = Vector()
 
@@ -1207,7 +1207,7 @@ class ChainSpec extends UnitSpec {
     scala> Vector(1, 2, 3).take(-1)
     res12: scala.collection.immutable.Vector[Int] = Vector()
 
-  it should not have a takeRight method 
+  it should not have a takeRight method
     scala> Vector(1).takeRight(1)
     res13: scala.collection.immutable.Vector[Int] = Vector(1)
     scala> Vector(1).takeRight(0)

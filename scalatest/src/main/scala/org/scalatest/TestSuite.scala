@@ -18,12 +18,12 @@ package org.scalatest
 import org.scalactic._
 
 /**
- * The base trait of ScalaTest's <em>synchronous testing styles</em>, which defines a 
+ * The base trait of ScalaTest's <em>synchronous testing styles</em>, which defines a
  * <code>withFixture</code> lifecycle method that accepts as its parameter a test function
  * that returns an <a href="Outcome.html"><code>Outcome</code></a>.
  *
  * <p>
- * The <code>withFixture</code> method add by this trait has the 
+ * The <code>withFixture</code> method add by this trait has the
  * following signature and implementation:
  * </p>
  *
@@ -94,7 +94,7 @@ import org.scalactic._
  * <p>
  * If you want to perform an action only for certain outcomes, you can use
  * a pattern match.
- * For example, if you want to perform an action if a test fails, you'd 
+ * For example, if you want to perform an action if a test fails, you'd
  * match on <code>Failed</code>, like this:
  * </p>
  *
@@ -122,7 +122,7 @@ import org.scalactic._
  * For example, if a particular exception intermittently causes a test to fail, and can
  * transform those failures into cancelations, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * // Your implementation
  * override def withFixture(test: NoArgTest) = {
@@ -141,7 +141,7 @@ trait TestSuite extends Suite { thisTestSuite =>
    * A test function taking no arguments and returning an <code>Outcome</code>.
    *
    * <p>
-   * For more detail and examples, see the relevant section in the 
+   * For more detail and examples, see the relevant section in the
    * <a href="FlatSpec.html#withFixtureNoArgTest">documentation for trait <code>fixture.FlatSpec</code></a>.
    * </p>
    */
@@ -205,7 +205,7 @@ trait TestSuite extends Suite { thisTestSuite =>
    * </p>
    *
    * <p>
-   * This trait's implementation of this method simply returns <code>SucceededStatus</code> 
+   * This trait's implementation of this method simply returns <code>SucceededStatus</code>
    * and has no other effect.
    * </p>
    *

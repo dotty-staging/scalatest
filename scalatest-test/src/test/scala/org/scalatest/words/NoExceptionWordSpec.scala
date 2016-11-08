@@ -18,13 +18,13 @@ package org.scalatest.words
 import org.scalatest._
 
 class NoExceptionWordSpec extends FunSpec with Matchers {
-  
+
   describe("NoExceptionWord ") {
-    
+
     it("should have pretty toString") {
       noException.toString should be ("noException")
     }
-    
+
   }
-  
+
 }

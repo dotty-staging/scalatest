@@ -35,11 +35,11 @@ import scala.collection.GenTraversable
  * A map of configuration data.
  *
  * <p>
- * A <code>ConfigMap</code> can be populated from the <a href="tools/Runner$.html"><code>Runner</code></a> command line via <code>-D</code> 
+ * A <code>ConfigMap</code> can be populated from the <a href="tools/Runner$.html"><code>Runner</code></a> command line via <code>-D</code>
  * arguments. <code>Runner</code> passes it to many methods where you can use it to configure your
  * test runs. For example, <code>Runner</code> passed the <code>ConfigMap</code> to:
  * </p>
- * 
+ *
  * <ul>
  * <li>the <code>apply</code> method of <a href="Reporter.html"><code>Reporter</code></a>s via <code>RunStarting</code> events</li>
  * <li>the <code>run</code> method of <a href="Suite.html"><code>Suite</code></a>
@@ -96,7 +96,7 @@ import scala.collection.GenTraversable
  * </pre>
  *
  * @param underlying an immutable <code>Map</code> that holds the key/value pairs contained in this <code>ConfigMap</code>
- * 
+ *
  * @author Bill Venners
  */
 class ConfigMap(underlying: Map[String, Any]) extends Map[String, Any] with MapLike[String, Any, ConfigMap] with java.io.Serializable {

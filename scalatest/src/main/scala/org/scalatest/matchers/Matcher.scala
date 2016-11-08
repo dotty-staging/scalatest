@@ -35,7 +35,7 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * <p></p> <!-- needed otherwise the heading below shows up in the wrong place. dumb scaladoc algo -->
  *
  * <h2>Creating custom matchers</h2>
- * 
+ *
  * <p>
  * If none of the built-in matcher syntax satisfies a particular need you have, you can create
  * custom <code>Matcher</code>s that allow
@@ -46,9 +46,9 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * <pre class="stHighlight">
  * file.getName should endWith (".txt")
  * </pre>
- * 
+ *
  * <p>
- * You might prefer 
+ * You might prefer
  * to create a custom <code>Matcher[java.io.File]</code>
  * named <code>endWithExtension</code>, so you could write expressions like:
  * </p>
@@ -58,7 +58,7 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * file should not endWithExtension "txt"
  * file should (exist and endWithExtension ("txt"))
  * </pre>
- * 
+ *
  * <p>
  * One good way to organize custom matchers is to place them inside one or more
  * traits that you can then mix into the suites that need them. Here's an example:
@@ -103,7 +103,7 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * <code>apply</code> method that takes the type decared in <code>Matcher</code>'s type parameter, in this case <code>java.io.File</code>.
  * The apply method will return a <code>MatchResult</code> whose <code>matches</code> field will indicate whether the match succeeded.
  * The <code>failureMessage</code> field will provide a programmer-friendly error message indicating, in the event of a match failure, what caused
- * the match to fail. 
+ * the match to fail.
  * </p>
  *
  * <p>
@@ -133,7 +133,7 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * import Matchers._
  * import java.io.File
  * import CustomMatchers._
- * 
+ *
  * new File("essay.text") should endWithExtension ("txt")
  * </pre>
  *
@@ -270,7 +270,7 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * <p>
  * Now you have a <code>Matcher[File]</code> whose <code>apply</code> method first
  * invokes the converter function to convert the passed <code>File</code> to a <code>String</code>,
- * then passes the resulting <code>String</code> to <code>endWith</code>. Thus, you could use this version 
+ * then passes the resulting <code>String</code> to <code>endWith</code>. Thus, you could use this version
  * <code>endWithExtension</code> like the previous one:
  * </p>
  *
@@ -464,7 +464,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    * </pre>
    *
    * <p>
-   * If for some odd reason, you wanted a <code>Matcher[String]</code> that 
+   * If for some odd reason, you wanted a <code>Matcher[String]</code> that
    * checked whether a string, when converted to an <code>Int</code>,
    * was odd, you could make one by composing <code>beOdd</code> with
    * a function that converts a string to an <code>Int</code>, like this:
@@ -627,7 +627,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def size(expectedSize: Long): MatcherFactory1[T, Size] = and(MatcherWords.have.size(expectedSize))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -695,9 +695,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                      ^
      * </pre>
      **/
-    def theSameElementsAs(right: GenTraversable[_]): MatcherFactory1[T, Aggregating] = 
+    def theSameElementsAs(right: GenTraversable[_]): MatcherFactory1[T, Aggregating] =
       outerInstance.and(MatcherWords.contain.theSameElementsAs(right))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -706,7 +706,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                      ^
      * </pre>
      **/
-    def theSameElementsInOrderAs(right: GenTraversable[_]): MatcherFactory1[T, Sequencing] = 
+    def theSameElementsInOrderAs(right: GenTraversable[_]): MatcherFactory1[T, Sequencing] =
       outerInstance.and(MatcherWords.contain.theSameElementsInOrderAs(right))
 
     /**
@@ -741,7 +741,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def allElementsOf(elements: GenTraversable[Any]): MatcherFactory1[T, Aggregating] =
       outerInstance.and(MatcherWords.contain.allElementsOf(elements))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -763,7 +763,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def inOrderElementsOf(elements: GenTraversable[Any]): MatcherFactory1[T, Sequencing] =
       outerInstance.and(MatcherWords.contain.inOrderElementsOf(elements))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -785,7 +785,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def oneElementOf(elements: GenTraversable[Any]): MatcherFactory1[T, Containing] =
       outerInstance.and(MatcherWords.contain.oneElementOf(elements))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -807,7 +807,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def atLeastOneElementOf(elements: GenTraversable[Any]): MatcherFactory1[T, Aggregating] =
       outerInstance.and(MatcherWords.contain.atLeastOneElementOf(elements))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -816,9 +816,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                      ^
      * </pre>
      **/
-    def only(right: Any*): MatcherFactory1[T, Aggregating] = 
+    def only(right: Any*): MatcherFactory1[T, Aggregating] =
       outerInstance.and(MatcherWords.contain.only(right.toList: _*)(prettifier, pos))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -840,7 +840,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def noElementsOf(elements: GenTraversable[Any]): MatcherFactory1[T, Containing] =
       outerInstance.and(MatcherWords.contain.noElementsOf(elements))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -863,7 +863,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
     def atMostOneElementOf(elements: GenTraversable[Any]): MatcherFactory1[T, Aggregating] =
       outerInstance.and(MatcherWords.contain.atMostOneElementOf(elements))
   }
-  
+
   /**
    * This method enables the following syntax:
    *
@@ -935,7 +935,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def an[U](bePropertyMatcher: BePropertyMatcher[U]): Matcher[T with AnyRef with U] = and(MatcherWords.be.an(bePropertyMatcher))
-    
+
     /**
      * This method enables the following syntax, where <code>integerNumber</code> is an <a href="AnMatcher.html"><code>AnMatcher</code></a>:
      *
@@ -955,7 +955,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def theSameInstanceAs(anyRef: AnyRef): Matcher[T with AnyRef] = and(MatcherWords.be.theSameInstanceAs(anyRef))
-    
+
     /**
      * This method enables the following syntax, where <code>fraction</code> refers to a <code>PartialFunction</code>:
      *
@@ -994,7 +994,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def regex(regexString: String): Matcher[T with String] = and(MatcherWords.fullyMatch.regex(regexString))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -1053,7 +1053,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def regex(regexWithGroups: RegexWithGroups): Matcher[T with String] = and(MatcherWords.include.regex(regexWithGroups))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -1092,7 +1092,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def regex(regexString: String): Matcher[T with String] = and(MatcherWords.startWith.regex(regexString))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -1151,7 +1151,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def regex(regexWithGroups: RegexWithGroups): Matcher[T with String] = and(MatcherWords.endWith.regex(regexWithGroups))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -1225,7 +1225,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
               Resources.rawDidNotEqualNull,
               Resources.rawMidSentenceEqualedNull,
               Resources.rawDidNotEqualNull,
-              Vector.empty, 
+              Vector.empty,
               Vector(left)
             )
           }
@@ -1266,7 +1266,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def have(resultOfSizeWordApplication: ResultOfSizeWordApplication): MatcherFactory1[T, Size] =
       outerInstance.and(MatcherWords.not.apply(MatcherWords.have.size(resultOfSizeWordApplication.expectedSize)))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1403,7 +1403,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def be[U](resultOfAWordApplication: ResultOfAWordToAMatcherApplication[U]): Matcher[T with U] = outerInstance.and(MatcherWords.not.be(resultOfAWordApplication))
-    
+
     /**
      * This method enables the following syntax, where <code>directory</code> is a <a href="BePropertyMatcher.html"><code>BePropertyMatcher</code></a>:
      *
@@ -1455,7 +1455,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def be(aType: ResultOfATypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.andNotATypeMatcher
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1465,7 +1465,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def be(anType: ResultOfAnTypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.andNotAnTypeMatcher
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -1485,7 +1485,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def be[U](spread: Spread[U]): Matcher[T with U] = outerInstance.and(MatcherWords.not.be(spread))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -1496,7 +1496,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def be[A, U <: PartialFunction[A, _]](resultOfDefinedAt: ResultOfDefinedAt[A]): Matcher[T with U] =
       outerInstance.and(MatcherWords.not.be(resultOfDefinedAt))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1505,9 +1505,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                  ^
      * </pre>
      **/
-    def be(sortedWord: SortedWord) = 
+    def be(sortedWord: SortedWord) =
       outerInstance.and(MatcherWords.not.be(sortedWord))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1516,7 +1516,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                  ^
      * </pre>
      **/
-    def be(readableWord: ReadableWord) = 
+    def be(readableWord: ReadableWord) =
       outerInstance.and(MatcherWords.not.be(readableWord))
 
     /**
@@ -1527,9 +1527,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                  ^
      * </pre>
      **/
-    def be(writableWord: WritableWord) = 
+    def be(writableWord: WritableWord) =
       outerInstance.and(MatcherWords.not.be(writableWord))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1538,9 +1538,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                  ^
      * </pre>
      **/
-    def be(emptyWord: EmptyWord) = 
+    def be(emptyWord: EmptyWord) =
       outerInstance.and(MatcherWords.not.be(emptyWord))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1549,9 +1549,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                  ^
      * </pre>
      **/
-    def be(definedWord: DefinedWord) = 
+    def be(definedWord: DefinedWord) =
       outerInstance.and(MatcherWords.not.be(definedWord))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1661,7 +1661,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfOneElementOfApplication): MatcherFactory1[T, Containing] =
       outerInstance.and(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1683,7 +1683,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfAtLeastOneElementOfApplication): MatcherFactory1[T, Aggregating] =
       outerInstance.and(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1705,7 +1705,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfNoElementsOfApplication): MatcherFactory1[T, Containing] =
       outerInstance.and(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1716,7 +1716,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfTheSameElementsAsApplication): MatcherFactory1[T, Aggregating] =
       outerInstance.and(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1727,7 +1727,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfTheSameElementsInOrderAsApplication): MatcherFactory1[T, Sequencing] =
       outerInstance.and(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1738,7 +1738,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfOnlyApplication): MatcherFactory1[T, Aggregating] =
       outerInstance.and(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1749,7 +1749,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfInOrderOnlyApplication): MatcherFactory1[T, Sequencing] =
       outerInstance.and(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1771,7 +1771,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfAllElementsOfApplication): MatcherFactory1[T, Aggregating] =
       outerInstance.and(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1793,7 +1793,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfInOrderElementsOfApplication): MatcherFactory1[T, Sequencing] =
       outerInstance.and(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -1859,7 +1859,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    * </pre>
    **/
   def and(notWord: NotWord): AndNotWord = new AndNotWord
-  
+
   /**
    * This method enables the following syntax:
    *
@@ -1868,9 +1868,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    *          ^
    * </pre>
    **/
-  def and(existWord: ExistWord): MatcherFactory1[T, Existence] = 
+  def and(existWord: ExistWord): MatcherFactory1[T, Existence] =
     outerInstance.and(MatcherWords.exist.matcherFactory)
-    
+
   /**
    * This method enables the following syntax:
    *
@@ -1879,7 +1879,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    *          ^
    * </pre>
    **/
-  def and(notExist: ResultOfNotExist): MatcherFactory1[T, Existence] = 
+  def and(notExist: ResultOfNotExist): MatcherFactory1[T, Existence] =
     outerInstance.and(MatcherWords.not.exist)
 
   /**
@@ -1909,7 +1909,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def size(expectedSize: Long): MatcherFactory1[T, Size] = or(MatcherWords.have.size(expectedSize))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -1968,7 +1968,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def value(expectedValue: Any): MatcherFactory1[T, ValueMapping] = outerInstance.or(MatcherWords.contain.value(expectedValue))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -1977,9 +1977,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                     ^
      * </pre>
      **/
-    def theSameElementsAs(right: GenTraversable[_]): MatcherFactory1[T, Aggregating] = 
+    def theSameElementsAs(right: GenTraversable[_]): MatcherFactory1[T, Aggregating] =
       outerInstance.or(MatcherWords.contain.theSameElementsAs(right))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -1988,9 +1988,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                     ^
      * </pre>
      **/
-    def theSameElementsInOrderAs(right: GenTraversable[_]): MatcherFactory1[T, Sequencing] = 
+    def theSameElementsInOrderAs(right: GenTraversable[_]): MatcherFactory1[T, Sequencing] =
       outerInstance.or(MatcherWords.contain.theSameElementsInOrderAs(right))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2012,7 +2012,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def allElementsOf(elements: GenTraversable[Any]): MatcherFactory1[T, Aggregating] =
       outerInstance.or(MatcherWords.contain.allElementsOf(elements))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2034,7 +2034,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def inOrderElementsOf(elements: GenTraversable[Any]): MatcherFactory1[T, Sequencing] =
       outerInstance.or(MatcherWords.contain.inOrderElementsOf(elements))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2056,7 +2056,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def oneElementOf(elements: GenTraversable[Any]): MatcherFactory1[T, Containing] =
       outerInstance.or(MatcherWords.contain.oneElementOf(elements))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -2078,7 +2078,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def atLeastOneElementOf(elements: GenTraversable[Any]): MatcherFactory1[T, Aggregating] =
       outerInstance.or(MatcherWords.contain.atLeastOneElementOf(elements))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2087,9 +2087,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                     ^
      * </pre>
      **/
-    def only(right: Any*): MatcherFactory1[T, Aggregating] = 
+    def only(right: Any*): MatcherFactory1[T, Aggregating] =
       outerInstance.or(MatcherWords.contain.only(right.toList: _*)(prettifier, pos))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2100,7 +2100,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def inOrderOnly(firstEle: Any, secondEle: Any, remainingEles: Any*): MatcherFactory1[T, Sequencing] =
       outerInstance.or(MatcherWords.contain.inOrderOnly(firstEle, secondEle, remainingEles.toList: _*)(prettifier, pos))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2122,7 +2122,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def noElementsOf(elements: GenTraversable[Any]): MatcherFactory1[T, Containing] =
       outerInstance.or(MatcherWords.contain.noElementsOf(elements))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -2155,7 +2155,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    * </pre>
    **/
   def or(containWord: ContainWord)(implicit prettifier: Prettifier, pos: source.Position): OrContainWord = new OrContainWord(prettifier, pos)
-  
+
   /**
    * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
    * the matchers DSL.
@@ -2185,7 +2185,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def a[U](bePropertyMatcher: BePropertyMatcher[U]): Matcher[T with AnyRef with U] = or(MatcherWords.be.a(bePropertyMatcher))
-    
+
     /**
      * This method enables the following syntax, where <code>positiveNumber</code> and <code>validNumber</code> are <a href="AMatcher.html"><code>AMatcher</code></a>:
      *
@@ -2227,7 +2227,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def an[U](anMatcher: AnMatcher[U]): Matcher[T with U] = or(MatcherWords.be.an(anMatcher))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2237,7 +2237,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def theSameInstanceAs(anyRef: AnyRef): Matcher[T with AnyRef] = or(MatcherWords.be.theSameInstanceAs(anyRef))
-    
+
     /**
      * This method enables the following syntax, where <code>fraction</code> refers to a <code>PartialFunction</code>:
      *
@@ -2276,7 +2276,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def regex(regexString: String): Matcher[T with String] = or(MatcherWords.fullyMatch.regex(regexString))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2335,7 +2335,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def regex(regexWithGroups: RegexWithGroups): Matcher[T with String] = or(MatcherWords.include.regex(regexWithGroups))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2384,7 +2384,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def regex(regexWithGroups: RegexWithGroups): Matcher[T with String] = or(MatcherWords.startWith.regex(regexWithGroups))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2433,7 +2433,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def regex(regexWithGroups: RegexWithGroups): Matcher[T with String] = or(MatcherWords.endWith.regex(regexWithGroups))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2507,7 +2507,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
               Resources.rawDidNotEqualNull,
               Resources.rawMidSentenceEqualedNull,
               Resources.rawDidNotEqualNull,
-              Vector.empty, 
+              Vector.empty,
               Vector(left)
             )
           }
@@ -2548,7 +2548,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def have(resultOfSizeWordApplication: ResultOfSizeWordApplication): MatcherFactory1[T, Size] =
       outerInstance.or(MatcherWords.not.apply(MatcherWords.have.size(resultOfSizeWordApplication.expectedSize)))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -2685,7 +2685,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def be[U](resultOfAWordApplication: ResultOfAWordToAMatcherApplication[U]): Matcher[T with U] = outerInstance.or(MatcherWords.not.be(resultOfAWordApplication))
-    
+
     /**
      * This method enables the following syntax, where <code>file</code> is a <a href="BePropertyMatcher.html"><code>BePropertyMatcher</code></a>:
      *
@@ -2737,7 +2737,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def be(aType: ResultOfATypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.orNotATypeMatcher
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2747,7 +2747,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def be(anType: ResultOfAnTypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.orNotAnTypeMatcher
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2767,7 +2767,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      * </pre>
      **/
     def be[U](spread: Spread[U]): Matcher[T with U] = outerInstance.or(MatcherWords.not.be(spread))
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -2778,7 +2778,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def be[A, U <: PartialFunction[A, _]](resultOfDefinedAt: ResultOfDefinedAt[A]): Matcher[T with U] =
       outerInstance.or(MatcherWords.not.be(resultOfDefinedAt))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -2787,9 +2787,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                 ^
      * </pre>
      **/
-    def be(sortedWord: SortedWord) = 
+    def be(sortedWord: SortedWord) =
       outerInstance.or(MatcherWords.not.be(sortedWord))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -2798,9 +2798,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                 ^
      * </pre>
      **/
-    def be(readableWord: ReadableWord) = 
+    def be(readableWord: ReadableWord) =
       outerInstance.or(MatcherWords.not.be(readableWord))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -2809,9 +2809,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                 ^
      * </pre>
      **/
-    def be(emptyWord: EmptyWord) = 
+    def be(emptyWord: EmptyWord) =
       outerInstance.or(MatcherWords.not.be(emptyWord))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -2820,7 +2820,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                 ^
      * </pre>
      **/
-    def be(writableWord: WritableWord) = 
+    def be(writableWord: WritableWord) =
       outerInstance.or(MatcherWords.not.be(writableWord))
 
     /**
@@ -2831,9 +2831,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                 ^
      * </pre>
      **/
-    def be(definedWord: DefinedWord) = 
+    def be(definedWord: DefinedWord) =
       outerInstance.or(MatcherWords.not.be(definedWord))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -2943,7 +2943,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfOneElementOfApplication): MatcherFactory1[T, Containing] =
       outerInstance.or(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -2965,7 +2965,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfAtLeastOneElementOfApplication): MatcherFactory1[T, Aggregating] =
       outerInstance.or(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -2987,7 +2987,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfNoElementsOfApplication): MatcherFactory1[T, Containing] =
       outerInstance.or(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -2998,7 +2998,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfTheSameElementsAsApplication): MatcherFactory1[T, Aggregating] =
       outerInstance.or(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -3009,7 +3009,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfTheSameElementsInOrderAsApplication): MatcherFactory1[T, Sequencing] =
       outerInstance.or(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -3031,7 +3031,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfOnlyApplication): MatcherFactory1[T, Aggregating] =
       outerInstance.or(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -3053,7 +3053,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfAllElementsOfApplication): MatcherFactory1[T, Aggregating] =
       outerInstance.or(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -3075,7 +3075,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      **/
     def contain(right: ResultOfInOrderElementsOfApplication): MatcherFactory1[T, Sequencing] =
       outerInstance.or(MatcherWords.not.contain(right))
-      
+
     /**
      * This method enables the following syntax:
      *
@@ -3140,7 +3140,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    * </pre>
    **/
   def or(notWord: NotWord): OrNotWord = new OrNotWord
-  
+
   /**
    * This method enables the following syntax:
    *
@@ -3149,9 +3149,9 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    *          ^
    * </pre>
    **/
-  def or(existWord: ExistWord): MatcherFactory1[T, Existence] = 
+  def or(existWord: ExistWord): MatcherFactory1[T, Existence] =
     outerInstance.or(MatcherWords.exist.matcherFactory)
-    
+
   /**
    * This method enables the following syntax:
    *
@@ -3160,7 +3160,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    *          ^
    * </pre>
    **/
-  def or(notExist: ResultOfNotExist): MatcherFactory1[T, Existence] = 
+  def or(notExist: ResultOfNotExist): MatcherFactory1[T, Existence] =
     outerInstance.or(MatcherWords.not.exist)
 
   /**

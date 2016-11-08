@@ -26,13 +26,13 @@ class TestLocationMethodTestNGSuite extends TestNGSuite with TestLocationMethodS
   val expectedResultList = List(TestResultPair(classOf[TestSucceeded], "org.scalatest.events.TestLocationMethodTestNGSuite", "succeeds()"))
   val expectedScopeOpenedList = Nil
   val expectedScopeClosedList = Nil
-  
+
   @Test
-  def succeeds(): Unit = { 
-      
+  def succeeds(): Unit = {
+
   }
-  @Test(enabled=false) 
+  @Test(enabled=false)
   def ignore(): Unit = {
-    
+
   }
 }

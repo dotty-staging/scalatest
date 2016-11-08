@@ -105,7 +105,7 @@ class PropertyCheckConfigParamSuite extends FunSuite with Matchers {
     SizeRange(2).value.value should be (2)
     SizeRange(5678).value.value should be (5678)
   }
-  
+
   test("workers should not compile if less than 1") {
     "Workers(0)" shouldNot compile
     "Workers(-1)" shouldNot compile

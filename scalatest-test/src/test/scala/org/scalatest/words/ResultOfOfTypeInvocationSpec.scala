@@ -19,14 +19,14 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfOfTypeInvocationSpec extends FunSpec {
-  
+
   describe("ResultOfOfTypeInvocation ") {
-    
+
     it("should have pretty toString") {
       val result = of[Exception]
       result.toString should be ("of [java.lang.Exception]")
     }
-    
+
   }
-  
+
 }

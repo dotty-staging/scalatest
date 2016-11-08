@@ -31,7 +31,7 @@ import scala.collection.GenTraversable
  * can be any type for which the concept of being sorted makes sense, such as sequences. ScalaTest provides
  * implicit implementations for several types. You can enable the <code>be</code> <code>sorted</code> matcher syntax on your own
  * type <code>U</code> by defining a <code>Sortable[U]</code> for the type and making it available implicitly.
- * 
+ *
  * <p>
  * ScalaTest provides an implicit <code>Sortable</code> instance for types out of the box
  * in the <a href="Sortable$.html"><code>Sortable</code> companion object</a>:
@@ -94,7 +94,7 @@ object Sortable {
    * @tparam E type of elements in the <code>Array</code>
    * @return <code>Sortable[Array[E]]</code> that supports <code>Array</code> in <code>be</code> <code>sortable</code> syntax
    */
-  implicit def sortableNatureOfArray[E](implicit ordering: Ordering[E]): Sortable[Array[E]] = 
+  implicit def sortableNatureOfArray[E](implicit ordering: Ordering[E]): Sortable[Array[E]] =
     new Sortable[Array[E]] {
       def isSorted(o: Array[E]): Boolean =
         if (o.length > 1)
@@ -109,7 +109,7 @@ object Sortable {
    * @param ordering <code>scala.math.Ordering</code></a> of type <code>Char</code>
    * @return <code>Sortable[String]</code> that supports <code>String</code> in <code>be</code> <code>sortable</code> syntax
    */
-  implicit def sortableNatureOfString(implicit ordering: Ordering[Char]): Sortable[String] = 
+  implicit def sortableNatureOfString(implicit ordering: Ordering[Char]): Sortable[String] =
     new Sortable[String] {
       def isSorted(o: String): Boolean =
         if (o.length > 1)
@@ -126,7 +126,7 @@ object Sortable {
    * @tparam JLIST any subtype of <code>java.util.List</code>
    * @return <code>Sortable[JLIST[E]]</code> that supports <code>java.util.List</code> in <code>be</code> <code>sortable</code> syntax
    */
-  implicit def sortableNatureOfJavaList[E, JLIST[e] <: java.util.List[e]](implicit ordering: Ordering[E]): Sortable[JLIST[E]] = 
+  implicit def sortableNatureOfJavaList[E, JLIST[e] <: java.util.List[e]](implicit ordering: Ordering[E]): Sortable[JLIST[E]] =
     new Sortable[JLIST[E]] {
       def isSorted(o: JLIST[E]): Boolean =
         if (o.size > 1)

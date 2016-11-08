@@ -24,7 +24,7 @@ package org.scalatest.words
 final class LengthWord {
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * "hi" should not have length (3)
@@ -32,7 +32,7 @@ final class LengthWord {
    * </pre>
    */
   def apply(expectedLength: Long): ResultOfLengthWordApplication = new ResultOfLengthWordApplication(expectedLength)
-  
+
   /**
    * Overrides toString to return "length"
    */

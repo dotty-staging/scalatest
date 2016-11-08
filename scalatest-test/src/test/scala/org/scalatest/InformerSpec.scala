@@ -30,7 +30,7 @@ class InformerSpec extends FlatSpec {
     assert(infoProvidedEvents(0).message === "info message")
     assert(infoProvidedEvents(0).payload === None)
   }
-  
+
   it should "fire InfoProvided event with correct message and payload when using apply(message, payload)" in {
     class MySuite extends FunSuite {
       info("info message", Some("a payload"))

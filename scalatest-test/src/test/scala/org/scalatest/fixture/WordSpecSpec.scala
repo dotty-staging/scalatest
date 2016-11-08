@@ -1523,7 +1523,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
         ensureTestFailedEventReceived(spec, "should blow up")
       }
     }
-    
+
     it("should contains correct formatter for TestStarting, TestSucceeded, TestFailed, TestPending, TestCanceled and TestIgnored") {
       class TestSpec extends WordSpec with StringFixture {
         "a feature" should {
@@ -1543,7 +1543,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
       assert(testStartingList(1).formatter === Some(MotionToSuppress), "Expected testStartingList(1).formatter to be Some(MotionToSuppress), but got: " + testStartingList(1).formatter.getClass.getName)
       assert(testStartingList(2).formatter === Some(MotionToSuppress), "Expected testStartingList(2).formatter to be Some(MotionToSuppress), but got: " + testStartingList(2).formatter.getClass.getName)
       assert(testStartingList(3).formatter === Some(MotionToSuppress), "Expected testStartingList(3).formatter to be Some(MotionToSuppress), but got: " + testStartingList(3).formatter.getClass.getName)
-      
+
       val testSucceededList = rep.testSucceededEventsReceived
       assert(testSucceededList.size === 1)
       assert(testSucceededList(0).formatter.isDefined, "Expected testSucceededList(0).formatter to be defined, but it is not.")
@@ -1551,7 +1551,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
       val testSucceededFormatter = testSucceededList(0).formatter.get.asInstanceOf[IndentedText]
       assert(testSucceededFormatter.formattedText === "- should succeeded here")
       assert(testSucceededFormatter.rawText === "should succeeded here")
-      
+
       val testFailedList = rep.testFailedEventsReceived
       assert(testFailedList.size === 1)
       assert(testFailedList(0).formatter.isDefined, "Expected testFailedList(0).formatter to be defined, but it is not.")
@@ -1559,7 +1559,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
       val testFailedFormatter = testFailedList(0).formatter.get.asInstanceOf[IndentedText]
       assert(testFailedFormatter.formattedText === "- should failed here")
       assert(testFailedFormatter.rawText === "should failed here")
-      
+
       val testPendingList = rep.testPendingEventsReceived
       assert(testPendingList.size === 1)
       assert(testPendingList(0).formatter.isDefined, "Expected testPendingList(0).formatter to be defined, but it is not.")
@@ -1567,7 +1567,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
       val testPendingFormatter = testPendingList(0).formatter.get.asInstanceOf[IndentedText]
       assert(testPendingFormatter.formattedText === "- should pending here")
       assert(testPendingFormatter.rawText === "should pending here")
-      
+
       val testCanceledList = rep.testCanceledEventsReceived
       assert(testCanceledList.size === 1)
       assert(testCanceledList(0).formatter.isDefined, "Expected testCanceledList(0).formatter to be defined, but it is not.")
@@ -1575,7 +1575,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
       val testCanceledFormatter = testCanceledList(0).formatter.get.asInstanceOf[IndentedText]
       assert(testCanceledFormatter.formattedText === "- should cancel here")
       assert(testCanceledFormatter.rawText === "should cancel here")
-      
+
       val testIgnoredList = rep.testIgnoredEventsReceived
       assert(testIgnoredList.size === 1)
       assert(testIgnoredList(0).formatter.isDefined, "Expected testIgnoredList(0).formatter to be defined, but it is not.")
@@ -1721,9 +1721,9 @@ class WordSpecSpec extends org.scalatest.FunSpec {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 11)
     }
   }
-  
+
   describe("when failure happens") {
-    
+
     it("should fire TestFailed event with correct stack depth info when test failed") {
       class TestSpec extends WordSpec {
         type FixtureParam = String
@@ -1741,7 +1741,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
       assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "WordSpecSpec.scala")
       assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 9)
     }
-    
+
     it("should generate TestRegistrationClosedException with correct stack depth info when has an in nested inside an in") {
       class TestSpec extends WordSpec {
         type FixtureParam = String
@@ -1756,7 +1756,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
         def withFixture(test: OneArgTest): Outcome = {
           val outcome = test.apply("hi")
           outcome match {
-            case Exceptional(ex: TestRegistrationClosedException) => 
+            case Exceptional(ex: TestRegistrationClosedException) =>
               registrationClosedThrown = true
             case _ =>
           }
@@ -1810,44 +1810,44 @@ class WordSpecSpec extends org.scalatest.FunSpec {
       assert(trce.message == Some("An ignore clause may not appear inside an in clause."))
     }
   }
-  
+
   describe("shorthand syntax") {
-    
+
     describe("'it'") {
-      
+
       describe("under top level") {
-        
+
         it("should work with subject") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
-              } 
-            } 
+              }
+            }
 
-            it should { 
+            it should {
               "do something interesting 1" in { fixture => /* ASSERTION_SUCCEED */ }
             }
-        
+
             it can {
               "do something interesting 2" in { fixture => /* ASSERTION_SUCCEED */ }
             }
-        
+
             it must {
               "do something interesting 3" in { fixture => /* ASSERTION_SUCCEED */ }
             }
-        
+
             it when {
               "do something interesting 4" in { fixture => /* ASSERTION_SUCCEED */ }
             }
           }
-      
+
           val rep = new EventRecordingReporter
           val s = new TestSpec
           s.run(None, Args(rep))
-      
+
           val testStartingList = rep.testStartingEventsReceived
           assert(testStartingList.size === 5)
           assert(testStartingList(0).testName === "A Stack when empty should be empty")
@@ -1855,7 +1855,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(testStartingList(2).testName === "A Stack can do something interesting 2")
           assert(testStartingList(3).testName === "A Stack must do something interesting 3")
           assert(testStartingList(4).testName === "A Stack when do something interesting 4")
-      
+
           val testSucceededList = rep.testSucceededEventsReceived
           assert(testSucceededList.size === 5)
           assert(testSucceededList(0).testName === "A Stack when empty should be empty")
@@ -1864,9 +1864,9 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(testSucceededList(3).testName === "A Stack must do something interesting 3")
           assert(testSucceededList(4).testName === "A Stack when do something interesting 4")
         }
-    
+
         it("should throw NotAllowedException with correct stack depth and message when 'it should' is called without subject") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
             it should {
@@ -1880,9 +1880,9 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it can' is called without subject") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
             it can {
@@ -1896,9 +1896,9 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it must' is called without subject") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
             it must {
@@ -1912,9 +1912,9 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it when' is called without subject") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
             it when {
@@ -1928,19 +1928,19 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it should' is called after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
-              } 
+              }
             }
-            
+
             "Other do something special" in { fixture => /* ASSERTION_SUCCEED */ }
-            
+
             it should {
               "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
             }
@@ -1952,19 +1952,19 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it can' is called after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
-              } 
+              }
             }
-            
+
             "Other do something special" in { fixture => /* ASSERTION_SUCCEED */ }
-            
+
             it can {
               "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
             }
@@ -1976,19 +1976,19 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it must' is called after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
-              } 
+              }
             }
-            
+
             "Other do something special" in { fixture => /* ASSERTION_SUCCEED */ }
-            
+
             it must {
               "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
             }
@@ -2000,19 +2000,19 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it when' is called after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
-              } 
+              }
             }
-            
+
             "Other do something special" in { fixture => /* ASSERTION_SUCCEED */ }
-            
+
             it when {
               "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
             }
@@ -2025,15 +2025,15 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
       }
-      
+
       describe("under inner level") {
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it should' is called with inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               it should {
@@ -2048,13 +2048,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it can' is called with inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               it can {
@@ -2069,13 +2069,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it must' is called with inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               it must {
@@ -2090,13 +2090,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it when' is called with inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               it when {
@@ -2111,12 +2111,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it should' is called without inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
+            "A Stack" when {
               it should {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }
@@ -2129,12 +2129,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it can' is called without inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
+            "A Stack" when {
               it can {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }
@@ -2147,12 +2147,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it must' is called without inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
+            "A Stack" when {
               it must {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }
@@ -2165,12 +2165,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it when' is called without inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
+            "A Stack" when {
               it when {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }
@@ -2183,13 +2183,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it should' is called with inner branch but after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               "do something" in { fixture => /* ASSERTION_SUCCEED */ }
@@ -2205,13 +2205,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it can' is called with inner branch but after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               "do something" in { fixture => /* ASSERTION_SUCCEED */ }
@@ -2227,13 +2227,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it must' is called with inner branch but after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               "do something" in { fixture => /* ASSERTION_SUCCEED */ }
@@ -2249,13 +2249,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it when' is called with inner branch but after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               "do something" in { fixture => /* ASSERTION_SUCCEED */ }
@@ -2272,14 +2272,14 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
       }
-      
+
       describe("under 'in' clause") {
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it should' is called") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             var notAllowedThrown = false
-            "Something special" in { fixture => 
+            "Something special" in { fixture =>
               it should {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }; /* ASSERTION_SUCCEED */
@@ -2287,7 +2287,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
             def withFixture(test: OneArgTest): Outcome = {
               val outcome = test.apply("hi")
               outcome match {
-                case Exceptional(ex: exceptions.NotAllowedException) => 
+                case Exceptional(ex: exceptions.NotAllowedException) =>
                   notAllowedThrown = true
                 case _ =>
               }
@@ -2306,12 +2306,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(trce.failedCodeLineNumber.get === thisLineNumber - 23)
           assert(trce.getMessage === "An it clause must only appear after a top level subject clause.")
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it can' is called") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             var notAllowedThrown = false
-            "Something special" in { fixture => 
+            "Something special" in { fixture =>
               it can {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }; /* ASSERTION_SUCCEED */
@@ -2319,7 +2319,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
             def withFixture(test: OneArgTest): Outcome = {
               val outcome = test.apply("hi")
               outcome match {
-                case Exceptional(ex: exceptions.NotAllowedException) => 
+                case Exceptional(ex: exceptions.NotAllowedException) =>
                   notAllowedThrown = true
                 case _ =>
               }
@@ -2338,12 +2338,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(trce.failedCodeLineNumber.get === thisLineNumber - 23)
           assert(trce.getMessage === "An it clause must only appear after a top level subject clause.")
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it must' is called") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             var notAllowedThrown = false
-            "Something special" in { fixture => 
+            "Something special" in { fixture =>
               it must {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }; /* ASSERTION_SUCCEED */
@@ -2351,7 +2351,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
             def withFixture(test: OneArgTest): Outcome = {
               val outcome = test.apply("hi")
               outcome match {
-                case Exceptional(ex: exceptions.NotAllowedException) => 
+                case Exceptional(ex: exceptions.NotAllowedException) =>
                   notAllowedThrown = true
                 case _ =>
               }
@@ -2370,12 +2370,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(trce.failedCodeLineNumber.get === thisLineNumber - 23)
           assert(trce.getMessage === "An it clause must only appear after a top level subject clause.")
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'it when' is called") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             var notAllowedThrown = false
-            "Something special" in { fixture => 
+            "Something special" in { fixture =>
               it when {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }; /* ASSERTION_SUCCEED */
@@ -2383,7 +2383,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
             def withFixture(test: OneArgTest): Outcome = {
               val outcome = test.apply("hi")
               outcome match {
-                case Exceptional(ex: exceptions.NotAllowedException) => 
+                case Exceptional(ex: exceptions.NotAllowedException) =>
                   notAllowedThrown = true
                 case _ =>
               }
@@ -2402,45 +2402,45 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(trce.failedCodeLineNumber.get === thisLineNumber - 23)
           assert(trce.getMessage === "An it clause must only appear after a top level subject clause.")
         }
-        
+
       }
     }
-    
+
     describe("'they'") {
-      
+
       describe("under top level") {
-        
+
         it("should work with subject") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
-              } 
-            } 
+              }
+            }
 
-            they should { 
+            they should {
               "do something interesting 1" in { fixture => /* ASSERTION_SUCCEED */ }
             }
-        
+
             they can {
               "do something interesting 2" in { fixture => /* ASSERTION_SUCCEED */ }
             }
-        
+
             they must {
               "do something interesting 3" in { fixture => /* ASSERTION_SUCCEED */ }
             }
-        
+
             they when {
               "do something interesting 4" in { fixture => /* ASSERTION_SUCCEED */ }
             }
           }
-      
+
           val rep = new EventRecordingReporter
           val s = new TestSpec
           s.run(None, Args(rep))
-      
+
           val testStartingList = rep.testStartingEventsReceived
           assert(testStartingList.size === 5)
           assert(testStartingList(0).testName === "A Stack when empty should be empty")
@@ -2448,7 +2448,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(testStartingList(2).testName === "A Stack can do something interesting 2")
           assert(testStartingList(3).testName === "A Stack must do something interesting 3")
           assert(testStartingList(4).testName === "A Stack when do something interesting 4")
-      
+
           val testSucceededList = rep.testSucceededEventsReceived
           assert(testSucceededList.size === 5)
           assert(testSucceededList(0).testName === "A Stack when empty should be empty")
@@ -2457,9 +2457,9 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(testSucceededList(3).testName === "A Stack must do something interesting 3")
           assert(testSucceededList(4).testName === "A Stack when do something interesting 4")
         }
-    
+
         it("should throw NotAllowedException with correct stack depth and message when 'they should' is called without subject") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
             they should {
@@ -2473,9 +2473,9 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they can' is called without subject") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
             they can {
@@ -2489,9 +2489,9 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they must' is called without subject") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
             they must {
@@ -2505,9 +2505,9 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they when' is called without subject") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
             they when {
@@ -2521,19 +2521,19 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they should' is called after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
-              } 
+              }
             }
-            
+
             "Other do something special" in { fixture => /* ASSERTION_SUCCEED */ }
-            
+
             they should {
               "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
             }
@@ -2545,19 +2545,19 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they can' is called after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
-              } 
+              }
             }
-            
+
             "Other do something special" in { fixture => /* ASSERTION_SUCCEED */ }
-            
+
             they can {
               "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
             }
@@ -2569,19 +2569,19 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they must' is called after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
-              } 
+              }
             }
-            
+
             "Other do something special" in { fixture => /* ASSERTION_SUCCEED */ }
-            
+
             they must {
               "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
             }
@@ -2593,19 +2593,19 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they when' is called after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
-              } 
+              }
             }
-            
+
             "Other do something special" in { fixture => /* ASSERTION_SUCCEED */ }
-            
+
             they when {
               "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
             }
@@ -2618,15 +2618,15 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 9))
         }
       }
-      
+
       describe("under inner level") {
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they should' is called with inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               they should {
@@ -2641,13 +2641,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they can' is called with inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               they can {
@@ -2662,13 +2662,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they must' is called with inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               they must {
@@ -2683,13 +2683,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they when' is called with inner branch") {
           class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               they when {
@@ -2704,12 +2704,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they should' is called without inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
+            "A Stack" when {
               they should {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }
@@ -2722,12 +2722,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they can' is called without inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
+            "A Stack" when {
               they can {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }
@@ -2740,12 +2740,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they must' is called without inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
+            "A Stack" when {
               they must {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }
@@ -2758,12 +2758,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they when' is called without inner branch") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
+            "A Stack" when {
               they when {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }
@@ -2776,13 +2776,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they should' is called with inner branch but after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               "do something" in { fixture => /* ASSERTION_SUCCEED */ }
@@ -2798,13 +2798,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they can' is called with inner branch but after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               "do something" in { fixture => /* ASSERTION_SUCCEED */ }
@@ -2820,13 +2820,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they must' is called with inner branch but after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               "do something" in { fixture => /* ASSERTION_SUCCEED */ }
@@ -2842,13 +2842,13 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeFileName === Some("WordSpecSpec.scala"))
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they when' is called with inner branch but after an 'in' clause") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             def withFixture(test: OneArgTest): Outcome = { test("hi") }
-            "A Stack" when { 
-              "empty" should { 
+            "A Stack" when {
+              "empty" should {
                 "be empty" in { fixture => /* ASSERTION_SUCCEED */ }
               }
               "do something" in { fixture => /* ASSERTION_SUCCEED */ }
@@ -2865,14 +2865,14 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.failedCodeLineNumber === Some(thisLineNumber - 10))
         }
       }
-      
+
       describe("under 'in' clause") {
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they should' is called") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             var notAllowedThrown = false
-            "Something special" in { fixture => 
+            "Something special" in { fixture =>
               they should {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }; /* ASSERTION_SUCCEED */
@@ -2880,7 +2880,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
             def withFixture(test: OneArgTest): Outcome = {
               val outcome = test.apply("hi")
               outcome match {
-                case Exceptional(ex: exceptions.NotAllowedException) => 
+                case Exceptional(ex: exceptions.NotAllowedException) =>
                   notAllowedThrown = true
                 case _ =>
               }
@@ -2899,12 +2899,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(trce.failedCodeLineNumber.get === thisLineNumber - 23)
           assert(trce.getMessage === "A they clause must only appear after a top level subject clause.")
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they can' is called") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             var notAllowedThrown = false
-            "Something special" in { fixture => 
+            "Something special" in { fixture =>
               they can {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }; /* ASSERTION_SUCCEED */
@@ -2912,7 +2912,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
             def withFixture(test: OneArgTest): Outcome = {
               val outcome = test.apply("hi")
               outcome match {
-                case Exceptional(ex: exceptions.NotAllowedException) => 
+                case Exceptional(ex: exceptions.NotAllowedException) =>
                   notAllowedThrown = true
                 case _ =>
               }
@@ -2931,12 +2931,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(trce.failedCodeLineNumber.get === thisLineNumber - 23)
           assert(trce.getMessage === "A they clause must only appear after a top level subject clause.")
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they must' is called") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             var notAllowedThrown = false
-            "Something special" in { fixture => 
+            "Something special" in { fixture =>
               they must {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }; /* ASSERTION_SUCCEED */
@@ -2944,7 +2944,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
             def withFixture(test: OneArgTest): Outcome = {
               val outcome = test.apply("hi")
               outcome match {
-                case Exceptional(ex: exceptions.NotAllowedException) => 
+                case Exceptional(ex: exceptions.NotAllowedException) =>
                   notAllowedThrown = true
                 case _ =>
               }
@@ -2963,12 +2963,12 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(trce.failedCodeLineNumber.get === thisLineNumber - 23)
           assert(trce.getMessage === "A they clause must only appear after a top level subject clause.")
         }
-        
+
         it("should throw NotAllowedException with correct stack depth and message when 'they when' is called") {
-          class TestSpec extends WordSpec { 
+          class TestSpec extends WordSpec {
             type FixtureParam = String
             var notAllowedThrown = false
-            "Something special" in { fixture => 
+            "Something special" in { fixture =>
               they when {
                 "do something interesting" in { fixture => /* ASSERTION_SUCCEED */ }
               }; /* ASSERTION_SUCCEED */
@@ -2976,7 +2976,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
             def withFixture(test: OneArgTest): Outcome = {
               val outcome = test.apply("hi")
               outcome match {
-                case Exceptional(ex: exceptions.NotAllowedException) => 
+                case Exceptional(ex: exceptions.NotAllowedException) =>
                   notAllowedThrown = true
                 case _ =>
               }
@@ -4211,7 +4211,7 @@ class WordSpecSpec extends org.scalatest.FunSpec {
           assert(e.getMessage == "on purpose")
         }*/
         // SKIP-SCALATESTJS-END
-        
+
       }
     }
 

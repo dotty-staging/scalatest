@@ -12,7 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
-	
+
   <groupId>org.scalactic</groupId>
   <artifactId>scalactic_@DEPLOY_SCALA_VERSION@</artifactId>
   <version>@RELEASE@</version>
@@ -51,7 +51,7 @@
   </developers>
 
   <inceptionYear>2012</inceptionYear>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.scala-lang</groupId>

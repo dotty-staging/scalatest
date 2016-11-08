@@ -101,7 +101,7 @@ class TwoSlowAndOneWeakTestExamples extends SuiteExamples {
       it("first test", mytags.SlowAsMolasses, mytags.WeakAsAKitten) { s => }
       it("second test", mytags.SlowAsMolasses) { s => }
   }
-  
+
   class NestedFixtureFunSpecExample extends StringFixtureFunSpec with NestedTestNames {
     describe("A subject") {
       it("should first test", mytags.SlowAsMolasses, mytags.WeakAsAKitten) { s => }
@@ -481,7 +481,7 @@ class TwoSlowAndOneWeakTestExamples extends SuiteExamples {
   lazy val deeplyNestedWordSpecWithMust = new DeeplyNestedWordSpecWithMustExample
   lazy val nestedFixtureWordSpecWithMust = new NestedFixtureWordSpecWithMustExample
   lazy val deeplyNestedFixtureWordSpecWithMust = new DeeplyNestedFixtureWordSpecWithMustExample
-  
+
   lazy val nestedWordSpecWithCan = new NestedWordSpecWithCanExample
   lazy val deeplyNestedWordSpecWithCan = new DeeplyNestedWordSpecWithCanExample
   lazy val nestedFixtureWordSpecWithCan = new NestedFixtureWordSpecWithCanExample

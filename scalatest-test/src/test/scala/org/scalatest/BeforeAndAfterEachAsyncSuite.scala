@@ -38,7 +38,7 @@ class BeforeAndAfterEachAsyncSuite extends AsyncFunSuite {
       super.run(testName, args)
     }
   }
-  
+
   class MySuite extends TheSuper with BeforeAndAfterEach {
     @volatile var beforeEachCalledBeforeRunTest = false
     @volatile var afterEachCalledAfterRunTest = false
@@ -62,7 +62,7 @@ class BeforeAndAfterEachAsyncSuite extends AsyncFunSuite {
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
     assert(a.runTestWasCalled)
   }
-  
+
   test("super's run must be called") {
     val a = new MySuite
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
@@ -74,7 +74,7 @@ class BeforeAndAfterEachAsyncSuite extends AsyncFunSuite {
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
     assert(a.beforeEachCalledBeforeRunTest)
   }
-  
+
   test("afterEach gets called after runTest") {
     val a = new MySuite
     val status = a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
@@ -88,9 +88,9 @@ class BeforeAndAfterEachAsyncSuite extends AsyncFunSuite {
   // test exceptions with runTest
   test("If any invocation of beforeEach completes abruptly with an exception, runTest " +
     "will complete abruptly with the same exception.") {
-    
+
     class MySuite extends Suite with BeforeAndAfterEach {
-      override def beforeEach(): Unit = { throw new NumberFormatException } 
+      override def beforeEach(): Unit = { throw new NumberFormatException }
     }
     assertThrows[NumberFormatException] {
       val a = new MySuite
@@ -117,8 +117,8 @@ class BeforeAndAfterEachAsyncSuite extends AsyncFunSuite {
     }
     assert(a.afterEachCalled)
   }
-  
-  test("If both super.runTest and afterEach complete abruptly with an exception, runTest " + 
+
+  test("If both super.runTest and afterEach complete abruptly with an exception, runTest " +
     "will complete abruptly with the exception thrown by super.runTest.") {
     trait FunkySuite extends Suite {
       protected override def runTest(testName: String, args: Args): Status = {
@@ -138,10 +138,10 @@ class BeforeAndAfterEachAsyncSuite extends AsyncFunSuite {
     }
     assert(a.afterEachCalled)
   }
-  
+
   test("If super.runTest returns normally, but afterEach completes abruptly with an " +
     "exception, the status returned by runTest will contain that exception as its unreportedException.") {
-       
+
     class MySuite extends AsyncFunSuite with BeforeAndAfterEach {
 
       override def afterEach(): Unit = { throw new NumberFormatException }
@@ -156,7 +156,7 @@ class BeforeAndAfterEachAsyncSuite extends AsyncFunSuite {
       assert(unrepEx.value.isInstanceOf[NumberFormatException])
     }
   }
- 
+
   // SKIP-SCALATESTJS-START
   test("Should propagate and not run afterEach if super.runTest throw java.lang.annotation.AnnotationFormatError") {
 

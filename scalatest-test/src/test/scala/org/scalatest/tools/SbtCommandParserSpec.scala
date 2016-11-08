@@ -27,7 +27,7 @@ class SbtCommandParserSpec extends FunSpec with Matchers {
       val result = parser.parseResult(s)
       result match {
         case ns: parser.NoSuccess => fail(ns.toString)
-        case _ => 
+        case _ =>
       }
   }
 

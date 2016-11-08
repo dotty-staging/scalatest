@@ -19,21 +19,21 @@ import org.scalatest._
 import Matchers._
 
 class MatcherWordsSpec extends FunSpec with MatcherWords {
-  
+
   describe("MatcherWords ") {
-    
+
     describe("equal(Any) method returns MatcherFactory1") {
-      
+
       val mtf = equal ("tommy")
       val mt = mtf.matcher[String]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("equal (\"tommy\")")
         mt.toString should be ("equal (\"tommy\")")
       }
-      
+
       val mr = mt("tomy")
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "\"tom[]y\" did not equal \"tom[m]y\""
@@ -50,9 +50,9 @@ class MatcherWordsSpec extends FunSpec with MatcherWords {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector("tomy", "tommy")
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "\"tomy\" equaled \"tommy\""
@@ -69,8 +69,8 @@ class MatcherWordsSpec extends FunSpec with MatcherWords {
         nmr.midSentenceNegatedFailureMessageArgs shouldBe Vector("tom[]y", "tom[m]y")
 
       }
-      
+
     }
   }
-  
+
 }

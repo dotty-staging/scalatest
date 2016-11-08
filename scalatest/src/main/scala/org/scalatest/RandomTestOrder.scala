@@ -26,7 +26,7 @@ import scala.util.{Success, Failure}
  *
  * <p>
  * Although the tests are run in pseudo-random order, events will be fired in the &ldquo;normal&rdquo; order for the <code>Suite</code>
- * that mixes in this trait, as determined by <code>runTests</code>. 
+ * that mixes in this trait, as determined by <code>runTests</code>.
  * </p>
  *
  * <p>
@@ -189,7 +189,7 @@ trait RandomTestOrder extends OneInstancePerTest { this: Suite =>
         // Random shuffle the deferred suite list, before executing them.
         Random.shuffle(suiteRunQueue.asScala.toList).map { case DeferredSuiteRun(suite, testName, statefulStatus) =>
           val status = suite.run(Some(testName), newArgs.copy(runTestInNewInstance = true))
-          status.whenCompleted { tri => 
+          status.whenCompleted { tri =>
             tri match {
               case Success(result) =>
                 if (!result)

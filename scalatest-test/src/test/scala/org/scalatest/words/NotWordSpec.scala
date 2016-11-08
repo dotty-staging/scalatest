@@ -18,14 +18,14 @@ package org.scalatest.words
 import org.scalatest._
 import Matchers._
 import SharedHelpers.createTempDirectory
-import matchers.{BePropertyMatcher, 
-                 BePropertyMatchResult, 
-                 AMatcher, 
-                 AnMatcher, 
-                 BeMatcher, 
+import matchers.{BePropertyMatcher,
+                 BePropertyMatchResult,
+                 AMatcher,
+                 AnMatcher,
+                 BeMatcher,
                  MatchResult}
-import matchers.{NegatedFailureMessage, 
-                 MidSentenceFailureMessage, 
+import matchers.{NegatedFailureMessage,
+                 MidSentenceFailureMessage,
                  MidSentenceNegatedFailureMessage}
 
 // SKIP-SCALATESTJS-START
@@ -41,23 +41,23 @@ import org.scalatest.FailureMessages
 class NotWordSpec extends FunSpec with FileMocks {
 
   private val prettifier = Prettifier.default
-  
+
   describe("NotWord ") {
-    
+
     it("should have pretty toString") {
       not.toString should be ("not")
     }
-    
+
     describe("apply(Matcher) method returns Matcher") {
-      
+
       val mt = not (be < 3)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not (be < 3)")
       }
-      
+
       val mr = mt(0)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "0 was less than 3"
@@ -74,9 +74,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(0, 3)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "0 was not less than 3"
@@ -94,18 +94,18 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("apply(MatcherFactory1) method returns MatcherFactory1") {
-      
+
       val mtf = not (equal (3))
       val mt = mtf.matcher[Int]
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not (equal (3))")
       }
-      
+
       val mr = mt(3)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "3 equaled 3"
@@ -122,9 +122,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(3, 3)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "3 did not equal 3"
@@ -142,9 +142,9 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("apply(MatcherFactory2) method returns MatcherFactory2") {
-      
+
       val mtf1 = equal (3)
       val mt1 = mtf1.matcher[Int]
       val mtf2 = not equal ("3")
@@ -152,13 +152,13 @@ class NotWordSpec extends FunSpec with FileMocks {
       val matcherFactory2 = mtf1 and mtf2
       val mtf = not (matcherFactory2)
       val mt = mtf.matcher[Int]
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not (" + matcherFactory2 + ")")
       }
-      
+
       val mr = mt(3)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "3 equaled 3, and 3 did not equal \"3\""
@@ -175,9 +175,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(MidSentenceNegatedFailureMessage(mt1(3)), MidSentenceFailureMessage(mt2(3)))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "3 equaled 3, but 3 equaled \"3\""
@@ -195,28 +195,28 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("apply(BeMatcher) method returns Matcher") {
       class OddMatcher extends BeMatcher[Int] {
         def apply(left: Int): MatchResult = {
           MatchResult(
             left % 2 == 1,
             left.toString + " was even",
-            left.toString + " was odd", 
+            left.toString + " was odd",
             Vector(left)
           )
         }
       }
       val odd = new OddMatcher
-      
+
       val mt = not (odd)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not (" + odd + ")")
       }
-      
+
       val mr = mt(1)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "1 was odd"
@@ -233,9 +233,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(1)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "1 was even"
@@ -253,18 +253,18 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("equal(Any) method returns MatcherFactory1") {
-      
+
       val mtf = not equal (3)
       val mt = mtf.matcher[Int]
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not (equal (3))")
       }
-      
+
       val mr = mt(3)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "3 equaled 3"
@@ -281,9 +281,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(3, 3)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "3 did not equal 3"
@@ -301,17 +301,17 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("equal(Spread) method returns MatcherFactory1") {
-      
+
       val mt = not equal (3 +- 1)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not equal 3 +- 1")
       }
-      
+
       val mr = mt(3)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "3 equaled 3 plus or minus 1"
@@ -328,9 +328,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(3, 3, 1)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "3 did not equal 3 plus or minus 1"
@@ -351,19 +351,19 @@ class NotWordSpec extends FunSpec with FileMocks {
 
     // SKIP-SCALATESTJS-START
     describe("val exists of type MatcherFactory1") {
-      
+
       val tempDir = createTempDirectory()
       val lhs = File.createTempFile("delete", "me", tempDir)
-      
+
       val existVal = not.exist
       val mt = existVal.matcher[File]
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not exist")
       }
-      
+
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe lhs + " exists"
@@ -380,9 +380,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe lhs + " does not exist"
@@ -401,17 +401,17 @@ class NotWordSpec extends FunSpec with FileMocks {
       }
     }
     // SKIP-SCALATESTJS-END
-    
+
     describe("equal(null) method returns MatcherFactory1") {
-      
+
       val mt = not equal (null)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not equal null")
       }
-      
+
       val mr = mt("Bob")
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe "The reference equaled null"
@@ -428,9 +428,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector("Bob")
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe "\"Bob\" did not equal null"
@@ -448,28 +448,28 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(BeMatcher) method returns Matcher") {
       class OddMatcher extends BeMatcher[Int] {
         def apply(left: Int): MatchResult = {
           MatchResult(
             left % 2 == 1,
             left.toString + " was even",
-            left.toString + " was odd", 
+            left.toString + " was odd",
             Vector(left)
           )
         }
       }
       val odd = new OddMatcher
-      
+
       val mt = not be (odd)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be " + odd)
       }
-      
+
       val mr = mt(1)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "1 was odd"
@@ -486,9 +486,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(1)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "1 was even"
@@ -506,17 +506,17 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(null) method returns MatcherFactory1") {
-      
+
       val mt = not be (null)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be null")
       }
-      
+
       val mr = mt("Bob")
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe "The reference was null"
@@ -533,9 +533,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector("Bob")
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe "\"Bob\" was not null"
@@ -553,17 +553,17 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(ResultOfLessThanComparison) method returns Matcher") {
-      
+
       val mt = not be < (3)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be < (3)")
       }
-      
+
       val mr = mt(0)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "0 was less than 3"
@@ -580,9 +580,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(0, 3)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "0 was not less than 3"
@@ -600,17 +600,17 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(ResultOfGreaterThanComparison) method returns Matcher") {
-      
+
       val mt = not be > (3)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be > (3)")
       }
-      
+
       val mr = mt(0)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe "0 was greater than 3"
@@ -627,9 +627,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(0, 3)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe "0 was not greater than 3"
@@ -644,20 +644,20 @@ class NotWordSpec extends FunSpec with FileMocks {
         nmr.negatedFailureMessageArgs shouldBe Vector(0, 3)
         nmr.midSentenceFailureMessageArgs shouldBe Vector(0, 3)
         nmr.midSentenceNegatedFailureMessageArgs shouldBe Vector(0, 3)
-        
+
       }
     }
-    
+
     describe("be(ResultOfLessThanOrEqualToComparison) method returns Matcher") {
-      
+
       val mt = not be <= (3)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be <= (3)")
       }
-      
+
       val mr = mt(0)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "0 was less than or equal to 3"
@@ -674,9 +674,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(0, 3)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "0 was not less than or equal to 3"
@@ -694,17 +694,17 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(ResultOfGreaterThanOrEqualToComparison) method returns Matcher") {
-      
+
       val mt = not be >= (3)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be >= (3)")
       }
-      
+
       val mr = mt(0)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe "0 was greater than or equal to 3"
@@ -721,9 +721,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(0, 3)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe "0 was not greater than or equal to 3"
@@ -741,7 +741,7 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(TripleEqualsInvocation) method fails") {
       intercept[NotAllowedException] { val mt = be === "cheese" }
     }
@@ -749,13 +749,13 @@ class NotWordSpec extends FunSpec with FileMocks {
     // SKIP-SCALATESTJS-START
     describe("be(Symbol) method returns Matcher") {
       val mt = not be ('file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be 'file")
       }
-      
+
       val mr = mt(fileMock)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe fileMock + " was file"
@@ -772,9 +772,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(fileMock, UnquotedString("file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe fileMock + " was not file"
@@ -793,9 +793,9 @@ class NotWordSpec extends FunSpec with FileMocks {
       }
     }
     // SKIP-SCALATESTJS-END
-    
+
     describe("be(BePropertyMatcher) method returns Matcher") {
-      
+
       case class MyFile(
         val name: String,
         val file: Boolean,
@@ -807,18 +807,18 @@ class NotWordSpec extends FunSpec with FileMocks {
           new BePropertyMatchResult(file.file, "file")
         }
       }
-      
+
       val myFile = MyFile("test", true, false)
       val file = new FileBePropertyMatcher
-      
+
       val mt = not be (file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be " + file)
       }
-      
+
       val mr = mt(myFile)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe myFile + " was file"
@@ -835,9 +835,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFile, UnquotedString("file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe myFile + " was not file"
@@ -859,13 +859,13 @@ class NotWordSpec extends FunSpec with FileMocks {
     // SKIP-SCALATESTJS-START
     describe("apply(ResultOfAWordToSymbolApplication) method returns Matcher") {
       val mt = not be a ('file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be a ('file)")
       }
-      
+
       val mr = mt(fileMock)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe fileMock + " was a file"
@@ -882,9 +882,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(fileMock, UnquotedString("file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe fileMock + " was not a file"
@@ -903,9 +903,9 @@ class NotWordSpec extends FunSpec with FileMocks {
       }
     }
     // SKIP-SCALATESTJS-END
-    
+
     describe("be(ResultOfAWordToBePropertyMatcherApplication) method returns Matcher") {
-      
+
       case class MyFile(
         val name: String,
         val file: Boolean,
@@ -917,18 +917,18 @@ class NotWordSpec extends FunSpec with FileMocks {
           new BePropertyMatchResult(file.file, "file")
         }
       }
-      
+
       val myFile = MyFile("test", true, false)
       val file = new FileBePropertyMatcher
-      
+
       val mt = not be a (file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be a " + file)
       }
-      
+
       val mr = mt(myFile)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe myFile + " was a file"
@@ -945,9 +945,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFile, UnquotedString("file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe myFile + " was not a file"
@@ -965,25 +965,25 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(ResultOfAWordToAMatcherApplication) method returns Matcher") {
       case class MyFile(
         val name: String,
         val file: Boolean,
         val isDirectory: Boolean
       )
-      
+
       val file = AMatcher[MyFile]("file") { _.file  }
       val myFile = MyFile("test", true, false)
-      
+
       val mt = not be a (file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be a (AMatcher[" + classOf[MyFile].getName + "](\"file\", " + classOf[MyFile].getName + " => Boolean))")
       }
-      
+
       val mr = mt(myFile)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe myFile + " was a file"
@@ -1000,9 +1000,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFile, UnquotedString("file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe myFile + " was not a file"
@@ -1024,13 +1024,13 @@ class NotWordSpec extends FunSpec with FileMocks {
     // SKIP-SCALATESTJS-START
     describe("be(ResultOfAnWordToSymbolApplication) method returns Matcher") {
       val mt = not be an ('file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be an ('file)")
       }
-      
+
       val mr = mt(fileMock)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe fileMock + " was an file"
@@ -1047,9 +1047,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(fileMock, UnquotedString("file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe fileMock + " was not an file"
@@ -1068,9 +1068,9 @@ class NotWordSpec extends FunSpec with FileMocks {
       }
     }
     // SKIP-SCALATESTJS-END
-    
+
     describe("be(ResultOfAnWordToBePropertyMatcherApplication) method returns Matcher") {
-      
+
       case class MyFile(
         val name: String,
         val file: Boolean,
@@ -1082,18 +1082,18 @@ class NotWordSpec extends FunSpec with FileMocks {
           new BePropertyMatchResult(file.file, "file")
         }
       }
-      
+
       val myFile = MyFile("test", true, false)
       val file = new FileBePropertyMatcher
-      
+
       val mt = not be an (file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be an (" + file + ")")
       }
-      
+
       val mr = mt(myFile)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe myFile + " was an file"
@@ -1110,9 +1110,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFile, UnquotedString("file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe myFile + " was not an file"
@@ -1130,25 +1130,25 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(ResultOfAnWordToAnMatcherApplication) method returns Matcher") {
       case class MyFile(
         val name: String,
         val file: Boolean,
         val isDirectory: Boolean
       )
-      
+
       val file = AnMatcher[MyFile]("file") { _.file  }
       val myFile = MyFile("test", true, false)
-      
+
       val mt = not be an (file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be an (AnMatcher[" + classOf[MyFile].getName + "](\"file\", " + classOf[MyFile].getName + " => Boolean))")
       }
-      
+
       val mr = mt(myFile)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe myFile + " was an file"
@@ -1165,9 +1165,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFile, UnquotedString("file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe myFile + " was not an file"
@@ -1185,25 +1185,25 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(ResultOfTheSameInstanceAsApplication) method returns Matcher") {
       case class MyFile(
         val name: String,
         val file: Boolean,
         val isDirectory: Boolean
       )
-      
+
       val myFileLeft = MyFile("left", true, false)
       val myFileRight = MyFile("right", true, false)
-      
+
       val mt = not be theSameInstanceAs (myFileRight)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be theSameInstanceAs (" + myFileRight + ")")
       }
-      
+
       val mr = mt(myFileLeft)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe myFileLeft + " was the same instance as " + myFileRight
@@ -1220,9 +1220,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFileLeft, myFileRight)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe myFileLeft + " was not the same instance as " + myFileRight
@@ -1240,17 +1240,17 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(Spread) method returns Matcher") {
       val spread = 7.1 +- 0.2
       val mt = not be (spread)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be 7.1 +- 0.2")
       }
-      
+
       val mr = mt(7.0)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe 7.0 + " was 7.1 plus or minus 0.2"
@@ -1267,9 +1267,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(7.0, 7.1, 0.2)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe 7.0 + " was not 7.1 plus or minus 0.2"
@@ -1287,22 +1287,22 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(ResultOfDefinedAt) method returns Matcher") {
-      
+
       val fraction = new PartialFunction[Int, Int] {
         def apply(d: Int) = 42 / d
         def isDefinedAt(d: Int) = d != 0
       }
-      
+
       val mt = not be definedAt (8)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be definedAt (8)")
       }
-      
+
       val mr = mt(fraction)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe fraction + " was defined at 8"
@@ -1319,9 +1319,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(fraction, 8)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe fraction + " was not defined at 8"
@@ -1339,9 +1339,9 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(Any) method returns Matcher") {
-      
+
       case class MyFile(
         val name: String,
         val file: Boolean,
@@ -1349,18 +1349,18 @@ class NotWordSpec extends FunSpec with FileMocks {
       )
 
       val myFileRight = MyFile("test right", true, false)
-      
+
       val mt = not be (myFileRight)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be " + myFileRight)
       }
-      
+
       describe("when left is not null") {
-      
+
         val myFileLeft = MyFile("test left", true, false)
         val mr = mt(myFileLeft)
-      
+
         it("should have correct MatcherResult") {
           mr.matches shouldBe true
           mr.failureMessage shouldBe myFileLeft + " was equal to " + myFileRight
@@ -1377,9 +1377,9 @@ class NotWordSpec extends FunSpec with FileMocks {
           mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFileLeft, myFileRight)
 
         }
-      
+
         val nmr = mr.negated
-      
+
         it("should have correct negated MatcherResult") {
           nmr.matches shouldBe false
           nmr.failureMessage shouldBe myFileLeft + " was not equal to " + myFileRight
@@ -1397,12 +1397,12 @@ class NotWordSpec extends FunSpec with FileMocks {
 
         }
       }
-      
+
       describe("when left is null") {
-      
+
         val myFileLeft: MyFile = null
         val mr = mt(myFileLeft)
-      
+
         it("should have correct MatcherResult") {
           mr.matches shouldBe true
           mr.failureMessage shouldBe "The reference was null"
@@ -1419,9 +1419,9 @@ class NotWordSpec extends FunSpec with FileMocks {
           mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFileRight)
 
         }
-      
+
         val nmr = mr.negated
-      
+
         it("should have correct negated MatcherResult") {
           nmr.matches shouldBe false
           nmr.failureMessage shouldBe myFileRight + " was not null"
@@ -1440,20 +1440,20 @@ class NotWordSpec extends FunSpec with FileMocks {
         }
       }
     }
-    
+
     describe("be(SortedWord) method returns MatcherFactory") {
-      
+
       val mtf = not be (sorted)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not (be (sorted))")
         mt.toString should be ("not (be (sorted))")
       }
-      
+
       val leftList = List(1, 2, 3)
       val mr = mt(leftList)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe leftList + " was sorted"
@@ -1470,9 +1470,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(leftList)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe leftList + " was not sorted"
@@ -1490,24 +1490,24 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(ReadableWord) method returns MatcherFactory") {
-      
+
       class MyFile {
         def isReadable: Boolean = true
       }
-      
+
       val mtf = not be (readable)
       val mt = mtf.matcher[MyFile]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not (be (readable))")
         mt.toString should be ("not (be (readable))")
       }
-      
+
       val myFile = new MyFile
       val mr = mt(myFile)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe myFile + " was readable"
@@ -1524,9 +1524,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFile)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe myFile + " was not readable"
@@ -1544,24 +1544,24 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(WritableWord) method returns MatcherFactory") {
-      
+
       class MyFile {
         def isWritable: Boolean = true
       }
-      
+
       val mtf = not be (writable)
       val mt = mtf.matcher[MyFile]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not (be (writable))")
         mt.toString should be ("not (be (writable))")
       }
-      
+
       val myFile = new MyFile
       val mr = mt(myFile)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe myFile + " was writable"
@@ -1578,9 +1578,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFile)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe myFile + " was not writable"
@@ -1598,20 +1598,20 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(EmptyWord) method returns MatcherFactory") {
-      
+
       val mtf = not be (empty)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not (be (empty))")
         mt.toString should be ("not (be (empty))")
       }
-      
+
       val leftList = List.empty[Int]
       val mr = mt(leftList)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe leftList + " was empty"
@@ -1628,9 +1628,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(leftList)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe leftList + " was not empty"
@@ -1648,20 +1648,20 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(DefinedWord) method returns MatcherFactory") {
-      
+
       val mtf = not be (defined)
       val mt = mtf.matcher[Option[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not (be (defined))")
         mt.toString should be ("not (be (defined))")
       }
-      
+
       val leftOption = Some(1)
       val mr = mt(leftOption)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe leftOption + " was defined"
@@ -1678,9 +1678,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(leftOption)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe leftOption + " was not defined"
@@ -1698,28 +1698,28 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(ResultOfATypeInvocation) method returns Matcher") {
-      
+
       case class MyFile(
         val name: String,
         val file: Boolean,
         val isDirectory: Boolean
       )
-      
+
       val clazz = classOf[MyFile]
       val resultOfAType = new ResultOfATypeInvocation(clazz)
-      
+
       val mt = not be (resultOfAType)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be a [" + clazz.getName + "]")
       }
-      
+
       val myFile = new MyFile("test", true, false)
-      
+
       val mr = mt(myFile)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe myFile + " was an instance of " + clazz.getName
@@ -1736,9 +1736,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFile, UnquotedString(clazz.getName), UnquotedString(myFile.getClass.getName))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe myFile + " was not an instance of " + clazz.getName + ", but an instance of " + myFile.getClass.getName
@@ -1756,28 +1756,28 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("be(ResultOfAnTypeInvocation) method returns Matcher") {
-      
+
       case class MyFile(
         val name: String,
         val file: Boolean,
         val isDirectory: Boolean
       )
-      
+
       val clazz = classOf[MyFile]
       val resultOfAnType = new ResultOfAnTypeInvocation(clazz)
-      
+
       val mt = not be (resultOfAnType)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not be an [" + clazz.getName + "]")
       }
-      
+
       val myFile = new MyFile("test", true, false)
-      
+
       val mr = mt(myFile)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe myFile + " was an instance of " + clazz.getName
@@ -1794,9 +1794,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(myFile, UnquotedString(clazz.getName), UnquotedString(myFile.getClass.getName))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe myFile + " was not an instance of " + clazz.getName + ", but an instance of " + myFile.getClass.getName
@@ -1814,18 +1814,18 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("fullyMatch(ResultOfRegexWordApplication) method returns Matcher") {
-      
+
       val decimal = """(-)?(\d+)(\.\d*)?"""
       val mt = not fullyMatch regex (decimal)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not fullyMatch regex (\"" + decimal + "\")")
       }
-      
+
       val mr = mt("2.7")
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "\"2.7\" fully matched the regular expression " + decimal
@@ -1842,9 +1842,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector("2.7", UnquotedString(decimal))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "\"2.7\" did not fully match the regular expression " + decimal
@@ -1861,20 +1861,20 @@ class NotWordSpec extends FunSpec with FileMocks {
         nmr.midSentenceNegatedFailureMessageArgs shouldBe Vector("2.7", UnquotedString(decimal))
 
       }
-      
+
     }
-    
+
     describe("include(ResultOfRegexWordApplication) method returns Matcher") {
-      
+
       val decimal = """(-)?(\d+)(\.\d*)?"""
       val mt = not include regex (decimal)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not include regex (\"" + decimal + "\")")
       }
-      
+
       val mr = mt("b2.7")
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "\"b2.7\" included substring that matched regex " + decimal
@@ -1891,9 +1891,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector("b2.7", UnquotedString(decimal))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "\"b2.7\" did not include substring that matched regex " + decimal
@@ -1911,18 +1911,18 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("include(String) method returns Matcher") {
-      
+
       val decimal = "2.7"
       val mt = not include (decimal)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not include \"2.7\"")
       }
-      
+
       val mr = mt("b2.7")
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "\"b2.7\" included substring \"2.7\""
@@ -1939,9 +1939,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector("b2.7", "2.7")
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "\"b2.7\" did not include substring \"2.7\""
@@ -1959,18 +1959,18 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("startWith(ResultOfRegexWordApplication) method returns Matcher") {
-      
+
       val decimal = """(-)?(\d+)(\.\d*)?"""
       val mt = not startWith regex (decimal)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not startWith regex (\"" + decimal + "\")")
       }
-      
+
       val mr = mt("2.7b")
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "\"2.7b\" started with a substring that matched the regular expression " + decimal
@@ -1987,9 +1987,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector("2.7b", UnquotedString(decimal))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "\"2.7b\" did not start with a substring that matched the regular expression " + decimal
@@ -2007,17 +2007,17 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("startWith(String) method returns Matcher") {
-      
+
       val mt = not startWith ("2.7")
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not startWith \"2.7\"")
       }
-      
+
       val mr = mt("2.7b")
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "\"2.7b\" started with substring \"2.7\""
@@ -2034,9 +2034,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector("2.7b", "2.7")
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "\"2.7b\" did not start with substring \"2.7\""
@@ -2054,18 +2054,18 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("endWith(ResultOfRegexWordApplication) method returns Matcher") {
-      
+
       val decimal = """(-)?(\d+)(\.\d*)?"""
       val mt = not endWith regex (decimal)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not endWith regex (\"" + decimal + "\")")
       }
-      
+
       val mr = mt("b2.7")
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "\"b2.7\" ended with a substring that matched the regular expression " + decimal
@@ -2082,9 +2082,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector("b2.7", UnquotedString(decimal))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "\"b2.7\" did not end with a substring that matched the regular expression " + decimal
@@ -2102,17 +2102,17 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("endWith(String) method returns Matcher") {
-      
+
       val mt = not endWith ("2.7")
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not endWith \"2.7\"")
       }
-      
+
       val mr = mt("b2.7")
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "\"b2.7\" ended with substring \"2.7\""
@@ -2129,9 +2129,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector("b2.7", "2.7")
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "\"b2.7\" did not end with substring \"2.7\""
@@ -2149,20 +2149,20 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(T) method returns MatcherFactory1") {
-      
+
       val mtf = not contain (2)
       val mt = mtf.matcher[Array[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not contain 2")
         mt.toString should be ("not contain 2")
       }
-      
+
       val lhs = Array(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe "Array(1, 2, 3) contained element 2"
@@ -2179,9 +2179,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, 2)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe "Array(1, 2, 3) did not contain element 2"
@@ -2199,20 +2199,20 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfOneOfApplication) method returns MatcherFactory1") {
-      
+
       val mtf = not contain oneOf (2, 8)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not contain oneOf (2, 8)")
         mt.toString should be ("not contain oneOf (2, 8)")
       }
-      
+
       val lhs = List(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe FailureMessages.containedOneOfElements(prettifier, lhs, UnquotedString("2, 8"))
@@ -2229,9 +2229,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("2, 8"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe FailureMessages.didNotContainOneOfElements(prettifier, lhs, UnquotedString("2, 8"))
@@ -2249,20 +2249,20 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfAtLeastOneOfApplication) method returns MatcherFactory1") {
-      
+
       val mtf = not contain atLeastOneOf (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not contain atLeastOneOf (1, 2)")
         mt.toString should be ("not contain atLeastOneOf (1, 2)")
       }
-      
+
       val lhs = List(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe lhs + " contained at least one of (1, 2)"
@@ -2279,9 +2279,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe lhs + " did not contain at least one of (1, 2)"
@@ -2299,20 +2299,20 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfNoneOfApplication) method returns MatcherFactory1") {
-      
+
       val mtf = not contain noneOf (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not contain noneOf (1, 2)")
         mt.toString should be ("not contain noneOf (1, 2)")
       }
-      
+
       val lhs = List(7, 8, 9)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe FailureMessages.didNotContainAtLeastOneOf(prettifier, lhs, UnquotedString("1, 2"))
@@ -2329,9 +2329,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe FailureMessages.containedAtLeastOneOf(prettifier, lhs, UnquotedString("1, 2"))
@@ -2349,21 +2349,21 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfTheSameElementsAsApplication) method returns MatcherFactory1") {
-      
+
       val rhs = List(1, 2, 3)
       val mtf = not contain theSameElementsAs (rhs)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not contain theSameElementsAs (List(1, 2, 3))")
         mt.toString should be ("not contain theSameElementsAs (List(1, 2, 3))")
       }
-      
+
       val lhs = List(3, 2, 1)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe lhs + " contained the same elements as " + rhs
@@ -2380,9 +2380,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, rhs)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe lhs + " did not contain the same elements as " + rhs
@@ -2400,21 +2400,21 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfTheSameElementsInOrderAsApplication) method returns MatcherFactory1") {
-      
+
       val rhs = List(1, 2, 3)
       val mtf = not contain theSameElementsInOrderAs (rhs)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not contain theSameElementsInOrderAs (List(1, 2, 3))")
         mt.toString should be ("not contain theSameElementsInOrderAs (List(1, 2, 3))")
       }
-      
+
       val lhs = List(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe lhs + " contained the same elements in the same (iterated) order as " + rhs
@@ -2431,9 +2431,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, rhs)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe lhs + " did not contain the same elements in the same (iterated) order as " + rhs
@@ -2451,20 +2451,20 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfOnlyApplication) method returns MatcherFactory1") {
-      
+
       val mtf = not contain only (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not contain only (1, 2)")
         mt.toString should be ("not contain only (1, 2)")
       }
-      
+
       val lhs = List(2, 1)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe lhs + " contained only (1, 2)"
@@ -2481,9 +2481,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe lhs + " did not contain only (1, 2)"
@@ -2501,20 +2501,20 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfInOrderOnlyApplication) method returns MatcherFactory1") {
-      
+
       val mtf = not contain inOrderOnly (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not contain inOrderOnly (1, 2)")
         mt.toString should be ("not contain inOrderOnly (1, 2)")
       }
-      
+
       val lhs = List(1, 2)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe lhs + " contained only (1, 2) in order"
@@ -2531,9 +2531,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe lhs + " did not contain only (1, 2) in order"
@@ -2551,20 +2551,20 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfAllOfApplication) method returns MatcherFactory1") {
-      
+
       val mtf = not contain allOf (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not contain allOf (1, 2)")
         mt.toString should be ("not contain allOf (1, 2)")
       }
-      
+
       val lhs = List(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe lhs + " contained all of (1, 2)"
@@ -2581,9 +2581,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe lhs + " did not contain all of (1, 2)"
@@ -2601,20 +2601,20 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfInOrderApplication) method returns MatcherFactory1") {
-      
+
       val mtf = not contain inOrder (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not contain inOrder (1, 2)")
         mt.toString should be ("not contain inOrder (1, 2)")
       }
-      
+
       val lhs = List(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe lhs + " contained all of (1, 2) in order"
@@ -2631,9 +2631,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe lhs + " did not contain all of (1, 2) in order"
@@ -2651,20 +2651,20 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfAtMostOneOfApplication) method returns MatcherFactory1") {
-      
+
       val mtf = not contain atMostOneOf (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("not contain atMostOneOf (1, 2)")
         mt.toString should be ("not contain atMostOneOf (1, 2)")
       }
-      
+
       val lhs = List(1, 6, 8)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe lhs + " contained at most one of (1, 2)"
@@ -2681,9 +2681,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe lhs + " did not contain at most one of (1, 2)"
@@ -2701,19 +2701,19 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfKeyWordApplication) method returns MatcherFactory1") {
-      
+
       val mtf = not contain key ("2")
       val mt = mtf.matcher[Map[String, String]]
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not contain key (\"2\")")
       }
-      
+
       val lhs = Map("1" -> "one", "2" -> "two", "3" -> "three")
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe decorateToStringValue(prettifier, lhs) + " contained key \"2\""
@@ -2730,9 +2730,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, "2")
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe decorateToStringValue(prettifier, lhs) + " did not contain key \"2\""
@@ -2750,19 +2750,19 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfValueWordApplication) method returns MatcherFactory1") {
-      
+
       val mtf = not contain value ("two")
       val mt = mtf.matcher[Map[String, String]]
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not contain value (\"two\")")
       }
-      
+
       val lhs = Map("1" -> "one", "2" -> "two", "3" -> "three")
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe decorateToStringValue(prettifier, lhs) + " contained value \"two\""
@@ -2779,9 +2779,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, "two")
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe decorateToStringValue(prettifier, lhs) + " did not contain value \"two\""
@@ -2799,26 +2799,26 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfAWordToAMatcherApplication) method returns Matcher") {
       case class MyFile(
         val name: String,
         val file: Boolean,
         val isDirectory: Boolean
       )
-      
+
       val file = AMatcher[MyFile]("file") { _.file  }
       val myFile = MyFile("test", true, false)
-      
+
       val mt = not contain a (file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not contain a (AMatcher[" + classOf[MyFile].getName + "](\"file\", " + classOf[MyFile].getName + " => Boolean))")
       }
-      
+
       val leftList = List(myFile)
       val mr = mt(leftList)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe leftList + " contained a file: " + myFile + " was a file"
@@ -2835,9 +2835,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(leftList, UnquotedString("file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe leftList + " did not contain a file"
@@ -2855,26 +2855,26 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
     describe("contain(ResultOfAnWordToAnMatcherApplication) method returns Matcher") {
       case class MyFile(
         val name: String,
         val file: Boolean,
         val isDirectory: Boolean
       )
-      
+
       val file = AnMatcher[MyFile]("file") { _.file  }
       val myFile = MyFile("test", true, false)
-      
+
       val mt = not contain an (file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("not contain an (AnMatcher[" + classOf[MyFile].getName + "](\"file\", " + classOf[MyFile].getName + " => Boolean))")
       }
-      
+
       val leftList = List(myFile)
       val mr = mt(leftList)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe false
         mr.failureMessage shouldBe leftList + " contained an file: " + myFile + " was an file"
@@ -2891,9 +2891,9 @@ class NotWordSpec extends FunSpec with FileMocks {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(leftList, UnquotedString("file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe true
         nmr.failureMessage shouldBe leftList + " did not contain an file"
@@ -2911,7 +2911,7 @@ class NotWordSpec extends FunSpec with FileMocks {
 
       }
     }
-    
+
   }
-  
+
 }

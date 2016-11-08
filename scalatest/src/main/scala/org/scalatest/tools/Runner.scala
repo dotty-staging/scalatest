@@ -46,7 +46,7 @@ Command line args:
 a - archive count for dashboard reporter     --archive
 A - select previously failed and/or canceled tests to rerun --again
 b - run a testNG test (b for Beust)          --testng
-B - 
+B -
 c - parallel execution (--parallel)          --parallel (deprecated, will be custom reporter)
 C - custom reporter (temporarily)
 d - dashboard reporter                       --dashboard
@@ -62,7 +62,7 @@ H -
 i - this one is used for the Suite ID        --suiteId
 I -
 j - currently JUnit directly (can drop and use WrapWith)   --junit
-J - 
+J -
 k - socket reporter XML
 K - socket reporter binary
 l - tags to exclude                          --exclude
@@ -114,7 +114,7 @@ N - drop TestStarting events
 O - drop InfoProvided events
 P - drop ScopeOpened events
 Q - drop ScopeClosed events
-R - drop ScopePending events 
+R - drop ScopePending events
 S - show short stack traces
 *T - reminder with short stack traces
 U - unformatted mode
@@ -279,7 +279,7 @@ private[tools] case class SlowpokeConfig(delayInMillis: Long, periodInMillis: Lo
  * instantiated.
  * Each reporter class specified with a <b>-C</b> option must be public, implement
  * <code>org.scalatest.Reporter</code>, and have a public no-arg constructor.
- * Reporter classes must be specified with fully qualified names. 
+ * Reporter classes must be specified with fully qualified names.
  * The specified reporter classes may be
  * deployed on the classpath. If a runpath is specified with the
  * <code>-R</code> option, the specified reporter classes may also be loaded from the runpath.
@@ -348,7 +348,7 @@ private[tools] case class SlowpokeConfig(delayInMillis: Long, periodInMillis: Lo
  *
  * <p>
  * The following three reporter configuration parameters may additionally be used on standard output (-o), standard error (-e),
- * and file (-f) reporters: 
+ * and file (-f) reporters:
  * </p>
  *
  * <ul>
@@ -381,7 +381,7 @@ private[tools] case class SlowpokeConfig(delayInMillis: Long, periodInMillis: Lo
  * mode, these reporters will only show full stack traces when other exceptions are thrown, such as an exception thrown
  * by production code. When a <code>TestFailedException</code> is thrown in default mode, only the source filename and
  * line number of the line of test code that caused the test to fail are printed along with the error message, not the full stack
- * trace. 
+ * trace.
  * </p>
  *
  * <p>
@@ -486,7 +486,7 @@ private[tools] case class SlowpokeConfig(delayInMillis: Long, periodInMillis: Lo
  * <p>
  * Specifying suffixes can speed up the discovery process because class files with names not ending the specified suffixes
  * can be immediately disqualified, without needing to load and inspect them to see if they either extend <code>Suite</code>
- * and declare a public, no-arg constructor, or are annotated with <code>WrapWith</code>. 
+ * and declare a public, no-arg constructor, or are annotated with <code>WrapWith</code>.
  * </p>
  *
  * <a name="executingSuitesInParallel"></a>
@@ -522,7 +522,7 @@ private[tools] case class SlowpokeConfig(delayInMillis: Long, periodInMillis: Lo
  * <p>
  * Each specified suite class must be public, a subclass of
  * <code>org.scalatest.Suite</code>, and contain a public no-arg constructor.
- * <code>Suite</code> classes must be specified with fully qualified names. 
+ * <code>Suite</code> classes must be specified with fully qualified names.
  * The specified <code>Suite</code> classes may be
  * loaded from the classpath. If a runpath is specified with the
  * <code>-R</code> option, specified <code>Suite</code> classes may also be loaded from the runpath.
@@ -675,7 +675,7 @@ private[tools] case class SlowpokeConfig(delayInMillis: Long, periodInMillis: Lo
  * passing in a <code>List</code> of the specified paths. When executed, the <code>TestNGWrapperSuite</code> will create one <code>TestNG</code> instance
  * and pass each specified file path to it for running. If you include <code>-b</code> arguments, you must include TestNG's jar file on the class path or runpath.
  * The <code>-b</code> argument will enable you to run existing <code>TestNG</code> tests, including tests written in Java, as part of a ScalaTest run.
- * You need not use <code>-b</code> to run suites written in Scala that extend <code>TestNGSuite</code>. You can simply run such suites with 
+ * You need not use <code>-b</code> to run suites written in Scala that extend <code>TestNGSuite</code>. You can simply run such suites with
  * <code>-s</code>, <code>-m</code>, or </code>-w</code> parameters.
  * </p>
  *
@@ -717,13 +717,13 @@ private[tools] case class SlowpokeConfig(delayInMillis: Long, periodInMillis: Lo
  * You specify the period between slowpoke notifications in seconds with the second integer after <code>-W</code>, the <em>period</em>. Thus to receive
  * notifications very minute of tests that have been running longer than two minutes, you'd use:
  * </p>
- * 
+ *
  * <pre class="stGray">
  * <code>-W 120 60</code>
  * </pre>
  *
  * <p>
- * Slowpoke notifications will be sent via <a href="../events/AlertProvided.html"><code>AlertProvided</code></a> events. The standard out reporter, for example, 
+ * Slowpoke notifications will be sent via <a href="../events/AlertProvided.html"><code>AlertProvided</code></a> events. The standard out reporter, for example,
  * will report such notifications like:
  * </p>
  *
@@ -740,11 +740,11 @@ object Runner {
 
   private val RUNNER_JFRAME_START_X: Int = 150
   private val RUNNER_JFRAME_START_Y: Int = 100
-  
+
   @volatile private[scalatest] var spanScaleFactor: Double = 1.0
 
   private final val DefaultNumFilesToArchive = 2
-  
+
   //                     TO
   // We always include a PassFailReporter on runs in order to determine
   // whether or not all tests passed.
@@ -791,7 +791,7 @@ object Runner {
 
         case _: RunStopped =>
           failedAbortedOrStopped = true
-          runDoneSemaphore.release() 
+          runDoneSemaphore.release()
 
         case _: RunCompleted =>
           runDoneSemaphore.release()
@@ -816,7 +816,7 @@ object Runner {
   def main(args: Array[String]): Unit = {
     // println("FOR DEBUGGING, THESE ARE THE ARGS PASSED TO main(): " + args.mkString(" "))
     Thread.currentThread.setName("ScalaTest-main")
-    val result = 
+    val result =
       if (args.contains("-v") || args.contains("--version")) {
         val version = org.scalatest.ScalaTestVersions.ScalaTestVersion
         val scalaVersion = org.scalatest.ScalaTestVersions.BuiltForScalaVersion
@@ -875,9 +875,9 @@ object Runner {
       membersOnlyArgs,
       wildcardArgs,
       testNGArgs,
-      suffixes, 
-      chosenStyles, 
-      spanScaleFactors, 
+      suffixes,
+      chosenStyles,
+      spanScaleFactors,
       testSortingReporterTimeouts,
       slowpokeArgs
     ) = parseArgs(args)
@@ -925,8 +925,8 @@ object Runner {
             fullReporterConfigurations.standardOutReporterConfiguration,
             fullReporterConfigurations.standardErrReporterConfiguration,
             fullReporterConfigurations.htmlReporterConfigurationList,
-            fullReporterConfigurations.customReporterConfigurationList, 
-            fullReporterConfigurations.xmlSocketReporterConfigurationList, 
+            fullReporterConfigurations.customReporterConfigurationList,
+            fullReporterConfigurations.xmlSocketReporterConfigurationList,
             fullReporterConfigurations.socketReporterConfigurationList
           )
         }
@@ -936,7 +936,7 @@ object Runner {
 
     if (propertiesMap.isDefinedAt(CHOSEN_STYLES))
       throw new IllegalArgumentException("Property name '" + CHOSEN_STYLES + "' is used by ScalaTest, please choose other property name.")
-    val configMap: ConfigMap = 
+    val configMap: ConfigMap =
       if (chosenStyleSet.isEmpty)
         propertiesMap
       else
@@ -959,7 +959,7 @@ object Runner {
           (if (configSet.contains(FilterScopePending)) {_ != PresentScopePending} else etp => true) filter
           (if (configSet.contains(FilterSuiteStarting)) {_ != PresentSuiteStarting} else etp => true) filter
           (if (configSet.contains(FilterSuiteCompleted)) {_ != PresentSuiteCompleted} else etp => true) filter
-          (if (configSet.contains(FilterInfoProvided)) {_ != PresentInfoProvided} else etp => true) filter 
+          (if (configSet.contains(FilterInfoProvided)) {_ != PresentInfoProvided} else etp => true) filter
           (if (configSet.contains(FilterMarkupProvided)) {_ != PresentMarkupProvided} else etp => true)
 
         val abq = new ArrayBlockingQueue[RunnerJFrame](1)
@@ -1033,7 +1033,7 @@ object Runner {
         }
       }
     }
-    
+
     passFailReporter match {
       case Some(pfr) => pfr.allTestsPassed
       case None => false
@@ -1069,7 +1069,7 @@ object Runner {
       println("PresentRunAborted")
   }
 */
-  
+
   // We number our named threads so that people can keep track
   // of it as it goes through different suites. But in case the
   // multiple doRunRunRunDaDoRunRun's get called, we want to
@@ -1083,8 +1083,8 @@ object Runner {
     testSpecs: List[TestSpec],
     junitsList: List[String],
     stopper: Stopper,
-    tagsToIncludeSet: Set[String], 
-    tagsToExcludeSet: Set[String], 
+    tagsToIncludeSet: Set[String],
+    tagsToExcludeSet: Set[String],
     configMap: ConfigMap,
     concurrent: Boolean,
     membersOnlyList: List[String],
@@ -1168,26 +1168,26 @@ object Runner {
             val membersOnlyInstances =
               for (membersOnlyName <- membersOnlyList)
                 yield SuiteConfig(new DiscoverySuite(membersOnlyName, accessibleSuites, false, loader), emptyDynaTags, false, false)
-  
+
             val wildcardInstances =
               for (wildcardName <- wildcardList)
                 yield SuiteConfig(new DiscoverySuite(wildcardName, accessibleSuites, true, loader), emptyDynaTags, false, false)
-  
+
             val testSpecSuiteParams =
               SuiteDiscoveryHelper.discoverTests(
                 testSpecs, accessibleSuites, loader)
-  
-            val testSpecInstances = 
+
+            val testSpecInstances =
               for (suiteParam <- testSpecSuiteParams)
                 yield genSuiteConfig(suiteParam, loader)
-  
+
             val deglobbedSuiteParams: List[SuiteParam] =
               deglobSuiteParams(globSuites, accessibleSuites)
-  
-            val globInstances = 
+
+            val globInstances =
               for (suiteParam <- deglobbedSuiteParams)
                 yield genSuiteConfig(suiteParam, loader)
-  
+
             membersOnlyInstances ::: wildcardInstances ::: testSpecInstances ::: globInstances
           }
 
@@ -1204,11 +1204,11 @@ object Runner {
     val specificSuites = nonGlobSuites ::: againSuites
 
     val runStartTime = System.currentTimeMillis
-    
+
     try {
       val loadProblemsExist =
         try {
-          val unrunnableList = specificSuites.filter{ suiteParam => 
+          val unrunnableList = specificSuites.filter{ suiteParam =>
             val className = suiteParam.className
             loader.loadClass(className) // Check if the class exist, so if not we get the nice cannot load suite error message.
             !isAccessibleSuite(className, loader) && !isRunnable(className, loader)
@@ -1234,7 +1234,7 @@ object Runner {
           val namedSuiteInstances: List[SuiteConfig] =
             for (suiteParam <- specificSuites)
               yield genSuiteConfig(suiteParam, loader)
-          
+
           val emptyDynaTags = DynaTags(Map.empty[String, Set[String]], Map.empty[String, Map[String, Set[String]]])
 
           val junitSuiteInstances: List[SuiteConfig] =
@@ -1253,12 +1253,12 @@ object Runner {
 
           val testCountList =
             for (suiteConfig <- suiteInstances)
-              yield { 
+              yield {
               val tagsToInclude = if (suiteConfig.requireSelectedTag) tagsToIncludeSet ++ Set(SELECTED_TAG) else tagsToIncludeSet
               val filter = Filter(if (tagsToInclude.isEmpty) None else Some(tagsToInclude), tagsToExcludeSet, suiteConfig.excludeNestedSuites, suiteConfig.dynaTags)
               suiteConfig.suite.expectedTestCount(filter)
             }
-  
+
           def sumInts(list: List[Int]): Int =
             list match {
               case Nil => 0
@@ -1268,7 +1268,7 @@ object Runner {
           val expectedTestCount = sumInts(testCountList)
 
           dispatch(RunStarting(tracker.nextOrdinal(), expectedTestCount, configMap))
-          
+
           if (concurrent) {
 
             // Because some tests may do IO, will create a pool of 2 times the number of processors reported
@@ -1277,18 +1277,18 @@ object Runner {
               if (concurrentConfig.numThreads > 0) concurrentConfig.numThreads
               else Runtime.getRuntime.availableProcessors * 2
 
-            val distributedSuiteSorter = 
+            val distributedSuiteSorter =
               if (concurrentConfig.enableSuiteSortingReporter)
                 Some(new SuiteSortingReporter(dispatch, Span(testSortingReporterTimeout.millisPart + 1000, Millis), System.err))
               else
                 None
-              
-            val concurrentDispatch = 
+
+            val concurrentDispatch =
               distributedSuiteSorter match {
                 case Some(dss) => dss
                 case None => dispatch
               }
-                
+
             val threadFactory =
               new ThreadFactory {
                 val defaultThreadFactory = Executors.defaultThreadFactory
@@ -1417,34 +1417,34 @@ object Runner {
     val suiteClassName = suiteParam.className
     val clazz = loader.loadClass(suiteClassName)
     val wrapWithAnnotation = clazz.getAnnotation(classOf[WrapWith])
-    val suiteInstance = 
-      if (wrapWithAnnotation == null) 
+    val suiteInstance =
+      if (wrapWithAnnotation == null)
         clazz.newInstance.asInstanceOf[Suite]
       else {
         val suiteClazz = wrapWithAnnotation.value
         val constructorList = suiteClazz.getDeclaredConstructors()
-        val constructor = constructorList.find { c => 
+        val constructor = constructorList.find { c =>
           val types = c.getParameterTypes
           types.length == 1 && types(0) == classOf[java.lang.Class[_]]
         }
         constructor.get.newInstance(clazz).asInstanceOf[Suite]
       }
-    
+
     if (suiteParam.testNames.length == 0 && suiteParam.wildcardTestNames.length == 0 && suiteParam.nestedSuites.length == 0)
       SuiteConfig(suiteInstance, new DynaTags(Map.empty, Map.empty), false, false) // -s suiteClass, no dynamic tagging required.
     else {
       val nestedSuites = suiteParam.nestedSuites
-      
+
       val (selectSuiteList, selectTestList) = nestedSuites.partition(ns => ns.testNames.length == 0 || ns.wildcardTestNames.length == 0)
       val suiteDynaTags: Map[String, Set[String]] = Map() ++ selectSuiteList.map(ns => (ns.suiteId -> Set(SELECTED_TAG)))
-      
-      val suiteExactTestDynaTags: Map[String, Map[String, Set[String]]] = 
-        if (suiteParam.testNames.length > 0) 
+
+      val suiteExactTestDynaTags: Map[String, Map[String, Set[String]]] =
+        if (suiteParam.testNames.length > 0)
           Map(suiteInstance.suiteId -> (Map() ++ suiteParam.testNames.map(tn => (tn -> Set(SELECTED_TAG)))))
-        else 
+        else
           Map.empty
-      
-      val suiteWildcardTestDynaTags: Map[String, Map[String, Set[String]]] = 
+
+      val suiteWildcardTestDynaTags: Map[String, Map[String, Set[String]]] =
         if (suiteParam.wildcardTestNames.length > 0) {
           val wildcardTestNames = suiteParam.wildcardTestNames
           val allTestNames = suiteInstance.testNames
@@ -1454,7 +1454,7 @@ object Runner {
         }
         else
           Map.empty
-          
+
       def getNestedSuiteSelectedTestNames(nestedSuite: NestedSuiteParam): Array[String] = {
         if (nestedSuite.wildcardTestNames.length == 0)
           nestedSuite.testNames
@@ -1464,11 +1464,11 @@ object Runner {
           nestedSuite.testNames ++ allTestNames.filter(tn => wildcardTestNames.find(wc => tn.contains(wc)).isDefined)
         }
       }
-      
-      val nestedSuitesTestDynaTags: Map[String, Map[String, Set[String]]] 
+
+      val nestedSuitesTestDynaTags: Map[String, Map[String, Set[String]]]
         = Map() ++ selectTestList.map(ns => (ns.suiteId -> (Map() ++ getNestedSuiteSelectedTestNames(ns).map(tn => (tn, Set(SELECTED_TAG))))))
-        
-      val testDynaTags = mergeMap[String, Map[String, Set[String]]](List(suiteExactTestDynaTags, suiteWildcardTestDynaTags, nestedSuitesTestDynaTags)) { (suiteTestMap1, suiteTestMap2) => 
+
+      val testDynaTags = mergeMap[String, Map[String, Set[String]]](List(suiteExactTestDynaTags, suiteWildcardTestDynaTags, nestedSuitesTestDynaTags)) { (suiteTestMap1, suiteTestMap2) =>
                            mergeMap[String, Set[String]](List(suiteTestMap1, suiteTestMap2)) { (tagSet1, tagSet2) =>
                              tagSet1 ++ tagSet2
                            }
@@ -1531,17 +1531,17 @@ object Runner {
           }
           catch {
             case murle: MalformedURLException => {
-  
+
               // Assume they tried to just pass in a file name
               val file: File = new File(raw)
-  
+
               // file.toURL may throw MalformedURLException too, but for now
               // just let that propagate up.
               file.toURI.toURL // If a dir, comes back terminated by a slash
             }
           }
         }
-  
+
       // Here is where the Jini preferred class loader stuff went.
 
       // Tell the URLConnections to not use caching, so that repeated runs and reruns actually work

@@ -31,41 +31,41 @@ import FailureMessages.decorateToStringValue
 class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChecks {
 
   private val prettifier = Prettifier.default
-  
+
   def examples =
     Table[Set[Int] => GenTraversable[Int]](
-      ("Fun"), 
-      ((set: Set[Int]) => set), 
-      ((set: Set[Int]) => set.toList), 
-      ((set: Set[Int]) => set.toSeq), 
-      ((set: Set[Int]) => set.toArray), 
-      ((set: Set[Int]) => set.toIndexedSeq), 
+      ("Fun"),
+      ((set: Set[Int]) => set),
+      ((set: Set[Int]) => set.toList),
+      ((set: Set[Int]) => set.toSeq),
+      ((set: Set[Int]) => set.toArray),
+      ((set: Set[Int]) => set.toIndexedSeq),
       ((set: Set[Int]) => Vector.empty ++ set),
       // SKIP-SCALATESTJS-START
-      ((set: Set[Int]) => set.par), 
-      ((set: Set[Int]) => set.toList.par), 
-      ((set: Set[Int]) => set.toSeq.par), 
+      ((set: Set[Int]) => set.par),
+      ((set: Set[Int]) => set.toList.par),
+      ((set: Set[Int]) => set.toSeq.par),
       ((set: Set[Int]) => set.toIndexedSeq.par),
       ((set: Set[Int]) => (mutable.Set.empty ++ set).par),
       ((set: Set[Int]) => (new mutable.ListBuffer() ++ set).par),
       ((set: Set[Int]) => (mutable.Seq.empty ++ set).par),
       ((set: Set[Int]) => (mutable.IndexedSeq.empty ++ set).par),
       // SKIP-SCALATESTJS-END
-      ((set: Set[Int]) => mutable.Set.empty ++ set), 
-      ((set: Set[Int]) => new mutable.ListBuffer() ++ set), 
-      ((set: Set[Int]) => mutable.Seq.empty ++ set), 
+      ((set: Set[Int]) => mutable.Set.empty ++ set),
+      ((set: Set[Int]) => new mutable.ListBuffer() ++ set),
+      ((set: Set[Int]) => mutable.Seq.empty ++ set),
       ((set: Set[Int]) => mutable.IndexedSeq.empty ++ set)
-    )  
-  
+    )
+
   describe("forAll") {
-    
+
     it("should pass when all elements passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         forAll(col) { e => e should be < 4 }
       }
     }
-    
+
     ignore("should, when passed a Fact, convert that Fact to an Assertion") { // Unignore after we uncomment the expectation implicits in RegistrationPolicy
       import Expectations._
 
@@ -77,13 +77,13 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
       tfe.failedCodeFileName should be (Some("InspectorsSpec.scala"))
       tfe.failedCodeLineNumber should be (Some( thisLineNumber - 3))
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when at least one element failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forAll(col) { e => 
-            e should not equal 2 
+          forAll(col) { e =>
+            e should not equal 2
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -101,13 +101,13 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when more than one element failed") {
-      forAll(examples) { colFun => 
+      forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e2 = intercept[exceptions.TestFailedException] {
-          forAll(col) { e => 
-            e should be < 2 
+          forAll(col) { e =>
+            e should be < 2
           }
         }
         e2.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -126,7 +126,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate TestPendingException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -135,13 +135,13 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate TestCanceledException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         assertThrows[exceptions.TestCanceledException] {
           forAll(col) { e => cancel }
-        }  
+        }
       }
     }
 
@@ -154,7 +154,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.nio.charset.CoderMalfunctionError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -163,7 +163,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.parsers.FactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -172,7 +172,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.LinkageError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -181,7 +181,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.ThreadDeath thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -190,7 +190,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.transform.TransformerFactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -199,7 +199,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.VirtualMachineError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -322,9 +322,9 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
     }
     // SKIP-SCALATESTJS-END
   }
-  
+
   describe("forAtLeast ") {
-    
+
     it("should throw IllegalArgumentException when 0 is passed in as min") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -334,7 +334,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getMessage should be ("'min' argument must be more than 0")
       }
     }
-    
+
     it("should throw IllegalArgumentException when -1 is passed in as min") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -344,20 +344,20 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getMessage should be ("'min' argument must be more than 0")
       }
     }
-    
+
     it("should pass when minimum count of elements passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         forAtLeast(1, col) { e => e should be (2) }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when less than minimum count of elements passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forAtLeast(2, col) { e => 
-            e should be (2) 
+          forAtLeast(2, col) { e =>
+            e should be (2)
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -374,13 +374,13 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should use 'no element' in error message when no element satisfied the assertion block") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forAtLeast(2, col) { e => 
-            e should be (5) 
+          forAtLeast(2, col) { e =>
+            e should be (5)
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -397,12 +397,12 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should use 'element' in error message when exactly 1 element satisfied the assertion block") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forAtLeast(2, col) { e => 
+          forAtLeast(2, col) { e =>
             e should be (2)
           }
         }
@@ -420,13 +420,13 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should use 'elements' in error message when > 1 element satisfied the assertion block") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forAtLeast(3, col) { e => 
-            e should be < 3 
+          forAtLeast(3, col) { e =>
+            e should be < 3
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -438,20 +438,20 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should pass when more than minimum count of elements passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         forAtLeast(1, col) { e => e should be < 3 }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when none of the elements passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forAtLeast(1, col) { e => 
-            e should be > 5 
+          forAtLeast(1, col) { e =>
+            e should be > 5
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -468,14 +468,14 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should pass when all of the elements passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         forAtLeast(1, col) { e => e should be < 5 }
       }
     }
-    
+
     it("should propagate TestPendingException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -484,7 +484,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate TestCanceledException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -503,7 +503,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.nio.charset.CoderMalfunctionError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -512,7 +512,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.parsers.FactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -521,7 +521,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.LinkageError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -530,7 +530,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.ThreadDeath thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -539,7 +539,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.transform.TransformerFactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -548,7 +548,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.VirtualMachineError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -561,7 +561,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
   }
 
   describe("forAtMost ") {
-    
+
     it("should throw IllegalArgumentException when 0 is passed in as max") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -571,7 +571,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getMessage should be ("'max' argument must be more than 0")
       }
     }
-    
+
     it("should throw IllegalArgumentException when -1 is passed in as max") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -581,27 +581,27 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getMessage should be ("'max' argument must be more than 0")
       }
     }
-    
+
     it("should pass when number of elements passed is less than maximum allowed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         forAtMost(2, col) { e => e should be (2) }
       }
     }
-    
+
     it("should pass when number of elements passed equal to maximum allowed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         forAtMost(2, col) { e => e should be < 3 }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when number of element passed is more than maximum allowed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
         val e = intercept[exceptions.TestFailedException] {
-          forAtMost(2, col) { e => 
-            e should be < 4 
+          forAtMost(2, col) { e =>
+            e should be < 4
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -616,14 +616,14 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.message should be (Some("forAtMost(2) failed, because 3 elements satisfied the assertion block at index " + firstIndex + ", " + secondIndex + " and " + thirdIndex + " in " + decorateToStringValue(prettifier, col)))
       }
     }
-    
+
     it("should pass when none of the elements passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         forAtMost(2, col) { e => e should be > 5 }
       }
     }
-    
+
     it("should propagate TestPendingException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -632,7 +632,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate TestCanceledException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -651,7 +651,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.nio.charset.CoderMalfunctionError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -660,7 +660,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.parsers.FactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -669,7 +669,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.LinkageError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -678,7 +678,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.ThreadDeath thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -687,7 +687,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.transform.TransformerFactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -696,7 +696,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.VirtualMachineError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -707,9 +707,9 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
     }
     // SKIP-SCALATESTJS-END
   }
-  
+
   describe("forExactly ") {
-    
+
     it("should throw IllegalArgumentException when 0 is passed in as max") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -719,7 +719,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getMessage should be ("'succeededCount' argument must be more than 0")
       }
     }
-    
+
     it("should throw IllegalArgumentException when -1 is passed in as max") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -729,20 +729,20 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getMessage should be ("'succeededCount' argument must be more than 0")
       }
     }
-    
+
     it("should pass when number of element passes is equal to specified succeeded count") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         forExactly(2, col) { e => e should be < 3 }
       }
     }
-    
+
     it("should use 'no element' in error message when no element satisfied the assertion block") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forExactly(2, col) { e => 
-            e should be (5) 
+          forExactly(2, col) { e =>
+            e should be (5)
           }
         }
         val itr = col.toIterator
@@ -759,12 +759,12 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should use 'element' in error message when exactly 1 element satisfied the assertion block, when passed count is less than the expected count") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forExactly(2, col) { e => 
+          forExactly(2, col) { e =>
             e should be (2)
           }
         }
@@ -783,12 +783,12 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should use 'element' in error message when exactly 1 element satisfied the assertion block, when passed count is more than the expected count") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forExactly(2, col) { e => 
+          forExactly(2, col) { e =>
             e should be < 5
           }
         }
@@ -798,13 +798,13 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should use 'elements' in error message when > 1 element satisfied the assertion block, when passed count is less than the expected count") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forExactly(3, col) { e => 
-            e should be < 3 
+          forExactly(3, col) { e =>
+            e should be < 3
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -821,13 +821,13 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should use 'elements' in error message when > 1 element satisfied the assertion block, when passed count is more than the expected count") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forExactly(1, col) { e => 
-            e should be < 3 
+          forExactly(1, col) { e =>
+            e should be < 3
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -841,13 +841,13 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when number of element passed is less than specified succeeded count") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forExactly(2, col) { e => 
-            e should equal (2) 
+          forExactly(2, col) { e =>
+            e should equal (2)
           }
         }
         val index = getIndex(col, 2)
@@ -864,7 +864,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
                                   "in " + decorateToStringValue(prettifier, col)))
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and messsage when number of element passed is more than specified succeeded count") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -876,7 +876,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.message should be (Some("forExactly(2) failed, because 3 elements satisfied the assertion block at index 0, 1 and 2 in " + decorateToStringValue(prettifier, col)))
       }
     }
-    
+
     it("should propagate TestPendingException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -885,7 +885,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate TestCanceledException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -904,7 +904,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.nio.charset.CoderMalfunctionError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -913,7 +913,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.parsers.FactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -922,7 +922,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.LinkageError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -931,7 +931,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.ThreadDeath thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -940,7 +940,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.transform.TransformerFactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -949,7 +949,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.VirtualMachineError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -960,16 +960,16 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
     }
     // SKIP-SCALATESTJS-END
   }
-  
+
   describe("forNo ") {
-    
+
     it("should pass when none of the element pass") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         forNo(col) { e => e should be > 5 }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 1 element passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -982,7 +982,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.message should be (Some("forNo failed, because 1 element satisfied the assertion block at index " + index + " in " + decorateToStringValue(prettifier, col)))
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 2 element passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -995,7 +995,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.message should be (Some("forNo failed, because 1 element satisfied the assertion block at index 0 in " + decorateToStringValue(prettifier, col)))
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when all elements passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1007,14 +1007,14 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.message should be (Some("forNo failed, because 1 element satisfied the assertion block at index 0 in " + decorateToStringValue(prettifier, col)))
       }
     }
-    
+
     it("should pass when empty list of element is passed in") {
       forAll(examples) { colFun =>
         val col = colFun(Set.empty[Int])
         forNo(col) { e => e should be < 5 }
       }
     }
-    
+
     it("should propagate TestPendingException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1023,7 +1023,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate TestCanceledException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1042,7 +1042,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.nio.charset.CoderMalfunctionError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1051,7 +1051,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.parsers.FactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1060,7 +1060,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.LinkageError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1069,7 +1069,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.ThreadDeath thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1078,7 +1078,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.transform.TransformerFactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1087,7 +1087,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.VirtualMachineError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1098,9 +1098,9 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
     }
     // SKIP-SCALATESTJS-END
   }
-  
+
   describe("forBetween ") {
-    
+
     it("should throw IllegalArgumentException when -1 is passed in as from") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1110,7 +1110,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getMessage should be ("'from' argument must be more than or equal 0")
       }
     }
-    
+
     it("should throw IllegalArgumentException when 0 is passed in as upTo") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1120,7 +1120,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getMessage should be ("'upTo' argument must be more than 0")
       }
     }
-    
+
     it("should throw IllegalArgumentException when -1 is passed in as upTo") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1130,7 +1130,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getMessage should be ("'upTo' argument must be more than 0")
       }
     }
-    
+
     it("should throw IllegalArgumentException when from and upTo is the same") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1140,7 +1140,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getMessage should be ("'upTo' argument must be more than 'from' argument")
       }
     }
-    
+
     it("should throw IllegalArgumentException when from is greater than upTo") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1150,34 +1150,34 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getMessage should be ("'upTo' argument must be more than 'from' argument")
       }
     }
-    
+
     it("should pass when number of element passed is within the specified range") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
         forBetween(2, 4, col) { e => e should be > 2 }
       }
     }
-    
+
     it("should pass when number of element passed is same as lower bound of the specified range") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
         forBetween(2, 4, col) { e => e should be > 3 }
       }
     }
-    
+
     it("should pass when number of element passed is same as upper bound of the specified range") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
         forBetween(2, 4, col) { e => e should be > 1 }
       }
     }
-    
+
     it("should use 'no element' in error message when no element satisfied the assertion block and 'from' is > 0 ") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forBetween(1, 2, col) { e => 
-            e should be (5) 
+          forBetween(1, 2, col) { e =>
+            e should be (5)
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -1194,12 +1194,12 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should use 'element' in error message when exactly 1 element satisfied the assertion block, when total passed is less than 'from'") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forBetween(2, 3, col) { e => 
+          forBetween(2, 3, col) { e =>
             e should be (2)
           }
         }
@@ -1218,13 +1218,13 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should use 'elements' in error message when > 1 element satisfied the assertion block, when total passed is less than 'from'") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         val e = intercept[exceptions.TestFailedException] {
-          forBetween(3, 4, col) { e => 
-            e should be < 3 
+          forBetween(3, 4, col) { e =>
+            e should be < 3
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -1239,13 +1239,13 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should use 'elements' in error message when > 1 element satisfied the assertion block, when total passed is more than 'upTo'") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
         val e = intercept[exceptions.TestFailedException] {
-          forBetween(2, 3, col) { e => 
-            e should be > 1 
+          forBetween(2, 3, col) { e =>
+            e should be > 1
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -1259,13 +1259,13 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.getCause should be (null)
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when number of element passed is less than lower bound of the specified range") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
         val e = intercept[exceptions.TestFailedException] {
-          forBetween(2, 4, col) { e => 
-            e should be > 4 
+          forBetween(2, 4, col) { e =>
+            e should be > 4
           }
         }
         e.failedCodeFileName should be (Some("InspectorsSpec.scala"))
@@ -1280,7 +1280,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         val secondIndex = getIndex(col, second)
         val thirdIndex = getIndex(col, third)
         val forthIndex = getIndex(col, forth)
-        e.message should be (Some("forBetween(2, 4) failed, because only 1 element satisfied the assertion block at index " + index + ": \n" + 
+        e.message should be (Some("forBetween(2, 4) failed, because only 1 element satisfied the assertion block at index " + index + ": \n" +
                                   "  at index " + firstIndex + ", " + first  + " was not greater than 4 (InspectorsSpec.scala:" + (thisLineNumber - 16) + "), \n" +
                                   "  at index " + secondIndex + ", " + second  + " was not greater than 4 (InspectorsSpec.scala:" + (thisLineNumber - 17) + "), \n" +
                                   "  at index " + thirdIndex + ", " + third  + " was not greater than 4 (InspectorsSpec.scala:" + (thisLineNumber - 18) + "), \n" +
@@ -1288,7 +1288,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
                                   "in " + decorateToStringValue(prettifier, col)))
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when number of element passed is more than upper bound of the specified range") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
@@ -1300,7 +1300,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         e.message should be (Some("forBetween(2, 4) failed, because 5 elements satisfied the assertion block at index 0, 1, 2, 3 and 4 in " + decorateToStringValue(prettifier, col)))
       }
     }
-    
+
     it("should propagate TestPendingException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
@@ -1309,7 +1309,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate TestCanceledException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
@@ -1328,7 +1328,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.nio.charset.CoderMalfunctionError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
@@ -1337,7 +1337,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.parsers.FactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
@@ -1346,7 +1346,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.LinkageError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
@@ -1355,7 +1355,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.ThreadDeath thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
@@ -1364,7 +1364,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.transform.TransformerFactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
@@ -1373,7 +1373,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.VirtualMachineError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3, 4, 5))
@@ -1384,16 +1384,16 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
     }
     // SKIP-SCALATESTJS-END
   }
-  
+
   describe("forEvery ") {
-    
+
     it("should pass when all elements passed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
         forEvery(col) { e => e should be < 4 }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when at least one element failed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1408,7 +1408,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
                                   "in " + decorateToStringValue(prettifier, col)))
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when more than one element failed") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1428,7 +1428,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
                                   "in " + decorateToStringValue(prettifier, col)))
       }
     }
-    
+
     it("should propagate TestPendingException thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1437,7 +1437,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate TestCanceledException thrown from assertion") {
       forAll(examples) { colFun =>
         val colFun = Set(1, 2, 3)
@@ -1456,7 +1456,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.nio.charset.CoderMalfunctionError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1465,7 +1465,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.parsers.FactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1474,7 +1474,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.LinkageError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1483,7 +1483,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.ThreadDeath thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1492,7 +1492,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate javax.xml.transform.TransformerFactoryConfigurationError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1501,7 +1501,7 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
         }
       }
     }
-    
+
     it("should propagate java.lang.VirtualMachineError thrown from assertion") {
       forAll(examples) { colFun =>
         val col = colFun(Set(1, 2, 3))
@@ -1512,30 +1512,30 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
     }
     // SKIP-SCALATESTJS-END
   }
-  
+
   describe("forAll nested") {
-    
+
     it("should have no problem nesting themselves") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 4, 6), 
+          List(2, 4, 6),
           List(8, 10, 12)
         )
-      forAll(listOfList) { l => 
+      forAll(listOfList) { l =>
         forAll(l) { _ % 2 should be (0) }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and error message when at least one element fails in nested forAll ") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 4, 6), 
+          List(2, 4, 6),
           List(8, 9, 12)
         )
       val e = intercept[exceptions.TestFailedException] {
-        forAll(listOfList) { l => 
-          forAll(l) { 
-            _ % 2 should be (0) 
+        forAll(listOfList) { l =>
+          forAll(l) {
+            _ % 2 should be (0)
           }
         }
       }
@@ -1547,14 +1547,14 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
                                 "  in List(8, 9, 12) (InspectorsSpec.scala:" + (thisLineNumber - 10) + ") \n" +
                                 "in List(List(2, 4, 6), List(8, 9, 12))"))
       e.getCause match {
-        case tfe: exceptions.TestFailedException => 
+        case tfe: exceptions.TestFailedException =>
           tfe.failedCodeFileName should be (Some("InspectorsSpec.scala"))
           tfe.failedCodeLineNumber should be (Some(thisLineNumber - 15))
           tfe.message should be (Some("forAll failed, because: \n" +
                                       "  at index 1, 1 was not equal to 0 (InspectorsSpec.scala:" + (thisLineNumber - 16) + ") \n" +
                                       "in List(8, 9, 12)"))
           tfe.getCause match {
-            case tfe: exceptions.TestFailedException => 
+            case tfe: exceptions.TestFailedException =>
               tfe.failedCodeFileName should be (Some("InspectorsSpec.scala"))
               tfe.failedCodeLineNumber should be (Some(thisLineNumber - 21))
               tfe.message should be (Some("1 was not equal to 0"))
@@ -1565,30 +1565,30 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
       }
     }
   }
-  
+
   describe("forAtLeast nested") {
-    
+
     it("should have no problem nesting themselves") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 3, 6), 
+          List(2, 3, 6),
           List(8, 11, 12)
         )
-      forAtLeast(2, listOfList) { l => 
+      forAtLeast(2, listOfList) { l =>
         forAtLeast(2, l) { _ % 2 should be (0) }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and error message when nested satisfied assertion does not satisfied the outer") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 3, 6), 
+          List(2, 3, 6),
           List(8, 11, 13)
         )
       val e = intercept[exceptions.TestFailedException] {
         forAtLeast(2, listOfList) { l =>
-          forAtLeast(2, l) { 
-            _ % 2 should be (0) 
+          forAtLeast(2, l) {
+            _ % 2 should be (0)
           }
         }
       }
@@ -1597,36 +1597,36 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
       e.message should be (Some("forAtLeast(2) failed, because only 1 element satisfied the assertion block: \n" +
                                  "  at index 1, forAtLeast(2) failed, because only 1 element satisfied the assertion block: \n" +
                                  "    at index 1, 1 was not equal to 0 (InspectorsSpec.scala:" + (thisLineNumber - 8) + "), \n" +
-                                 "    at index 2, 1 was not equal to 0 (InspectorsSpec.scala:" + (thisLineNumber - 9) + ") \n" + 
+                                 "    at index 2, 1 was not equal to 0 (InspectorsSpec.scala:" + (thisLineNumber - 9) + ") \n" +
                                  "  in List(8, 11, 13) (InspectorsSpec.scala:" + (thisLineNumber - 11) + ") \n" +
                                  "in List(List(2, 3, 6), List(8, 11, 13))"))
       e.getCause should be (null)
     }
   }
-  
+
   describe("forAtMost nested") {
-    
+
     it("should have no problem nesting themselves") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 3, 6), 
+          List(2, 3, 6),
           List(8, 10, 12)
         )
-      forAtMost(2, listOfList) { l => 
+      forAtMost(2, listOfList) { l =>
         forAtMost(2, l) { _ % 2 should be (0) }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and error message when nested satisfied assertion does not satisfied the outer") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 3, 6), 
+          List(2, 3, 6),
           List(8, 11, 13)
         )
       val e = intercept[exceptions.TestFailedException] {
         forAtMost(1, listOfList) { l =>
-          forAtMost(2, l) { 
-            _ % 2 should be (0) 
+          forAtMost(2, l) {
+            _ % 2 should be (0)
           }
         }
       }
@@ -1635,30 +1635,30 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
       e.message should be (Some("forAtMost(1) failed, because 2 elements satisfied the assertion block at index 0 and 1 in List(List(2, 3, 6), List(8, 11, 13))"))
       e.getCause should be (null)
     }
-    
+
   }
-  
+
   describe("forExactly nested ") {
-    
+
     it("should have no problem nesting themselves") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 3, 6), 
+          List(2, 3, 6),
           List(8, 10, 12)
         )
-      forExactly(1, listOfList) { l => 
+      forExactly(1, listOfList) { l =>
         forExactly(3, l) { _ % 2 should be (0) }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and error message when nested assertion does not satisfied the outer") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 4, 6), 
+          List(2, 4, 6),
           List(8, 10, 12)
         )
       val e = intercept[exceptions.TestFailedException] {
-        forExactly(1, listOfList) { l => 
+        forExactly(1, listOfList) { l =>
           forExactly(3, l) { _ % 2 should be (0) }
         }
       }
@@ -1667,30 +1667,30 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
       e.message should be (Some("forExactly(1) failed, because 2 elements satisfied the assertion block at index 0 and 1 in List(List(2, 4, 6), List(8, 10, 12))"))
       e.getCause should be (null)
     }
-    
+
   }
-  
+
   describe("forNo nested") {
-    
+
     it("should have no problem nesting themselves") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 3, 6), 
+          List(2, 3, 6),
           List(8, 9, 12)
         )
-      forNo(listOfList) { l => 
+      forNo(listOfList) { l =>
         forNo(l) { _ % 2 should be (0) }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and error message when nested assertion does not satisfied the outer") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(1, 8, 10), 
+          List(1, 8, 10),
           List(7, 9, 11)
         )
       val e = intercept[exceptions.TestFailedException] {
-        forNo(listOfList) { l => 
+        forNo(listOfList) { l =>
           forNo(l) { _ % 2 should be (0) }
         }
       }
@@ -1700,38 +1700,38 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
       e.getCause should be (null)
     }
   }
-  
+
   describe("forBetween nested") {
-    
+
     it("should have no problem nesting themselves") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 4, 6, 8, 12), 
-          List(11, 14, 16, 18, 21), 
-          List(22, 24, 26, 28, 30), 
-          List(31, 34, 36, 39, 40), 
+          List(2, 4, 6, 8, 12),
+          List(11, 14, 16, 18, 21),
+          List(22, 24, 26, 28, 30),
+          List(31, 34, 36, 39, 40),
           List(41, 45, 46, 48, 50)
         )
-      forBetween(2, 4, listOfList) { l => 
-        forBetween(2, 4, l) { 
-          _ % 2 should be (0) 
+      forBetween(2, 4, listOfList) { l =>
+        forBetween(2, 4, l) {
+          _ % 2 should be (0)
         }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and error message when nested assertion does not satisfied the outer") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(3, 5, 6, 8, 12), 
-          List(11, 14, 16, 18, 21), 
-          List(22, 25, 26, 29, 30), 
-          List(31, 34, 36, 39, 40), 
+          List(3, 5, 6, 8, 12),
+          List(11, 14, 16, 18, 21),
+          List(22, 25, 26, 29, 30),
+          List(31, 34, 36, 39, 40),
           List(41, 45, 46, 48, 50)
         )
       val e = intercept[exceptions.TestFailedException] {
-        forBetween(2, 4, listOfList) { l => 
-          forBetween(2, 4, l) { 
-            _ % 2 should be (0) 
+        forBetween(2, 4, listOfList) { l =>
+          forBetween(2, 4, l) {
+            _ % 2 should be (0)
           }
         }
       }
@@ -1743,31 +1743,31 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
       e.getCause should be (null)
     }
   }
-  
+
   describe("forEvery nested") {
-    
+
     it("should have no problem nesting themselves") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 4, 6), 
+          List(2, 4, 6),
           List(8, 10, 12)
         )
-      forEvery(listOfList) { l => 
+      forEvery(listOfList) { l =>
         forEvery(l) { _ % 2 should be (0) }
       }
     }
-    
+
     it("should throw TestFailedException with correct stack depth and error message when at least one element fails in nested forAll ") {
-      val listOfList = 
+      val listOfList =
         List(
-          List(2, 4, 6), 
-          List(8, 9, 12), 
+          List(2, 4, 6),
+          List(8, 9, 12),
           List(11, 16, 19)
         )
       val e = intercept[exceptions.TestFailedException] {
-        forEvery(listOfList) { l => 
-          forEvery(l) { 
-            _ % 2 should be (0) 
+        forEvery(listOfList) { l =>
+          forEvery(l) {
+            _ % 2 should be (0)
           }
         }
       }
@@ -1777,14 +1777,14 @@ class InspectorsSpec extends FunSpec with Inspectors with TableDrivenPropertyChe
                                 "  at index 1, forEvery failed, because: \n" +
                                 "    at index 1, 1 was not equal to 0 (InspectorsSpec.scala:" + (thisLineNumber - 8) + ") \n" +
                                 "  in List(8, 9, 12) (InspectorsSpec.scala:" + (thisLineNumber - 10) + "), \n" +
-                                "  at index 2, forEvery failed, because: \n" + 
+                                "  at index 2, forEvery failed, because: \n" +
                                 "    at index 0, 1 was not equal to 0 (InspectorsSpec.scala:" + (thisLineNumber - 11) + "), \n" +
-                                "    at index 2, 1 was not equal to 0 (InspectorsSpec.scala:" + (thisLineNumber - 12) + ") \n" + 
+                                "    at index 2, 1 was not equal to 0 (InspectorsSpec.scala:" + (thisLineNumber - 12) + ") \n" +
                                 "  in List(11, 16, 19) (InspectorsSpec.scala:" + (thisLineNumber - 14) + ") \n" +
                                 "in List(List(2, 4, 6), List(8, 9, 12), List(11, 16, 19))"))
       e.getCause should be (null)
     }
-    
+
   }
 
 }

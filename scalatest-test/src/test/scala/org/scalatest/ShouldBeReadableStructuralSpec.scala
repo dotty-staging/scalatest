@@ -23,30 +23,30 @@ import org.scalactic.Prettifier
 class ShouldBeReadableStructuralSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   val fileName: String = "ShouldBeReadableStructuralSpec.scala"
-    
-  def wasNotReadable(left: Any): String = 
+
+  def wasNotReadable(left: Any): String =
     FailureMessages.wasNotReadable(prettifier, left)
-    
-  def wasReadable(left: Any): String = 
+
+  def wasReadable(left: Any): String =
     FailureMessages.wasReadable(prettifier, left)
-  
+
   describe("readable matcher") {
-    
+
     describe("when work with arbitrary object with isReadable() method") {
-      
+
       class MyReadability(value: Boolean) {
         def isReadable(): Boolean = value
         override def toString = "readability"
       }
       val objTrue = new MyReadability(true)
       val objFalse = new MyReadability(false)
-      
+
       it("should do nothing for 'objTrue should be (readable)'") {
         objTrue should be (readable)
       }
-      
+
       it("should throw TFE with correct stack depth for 'objFalse should be (readable)'") {
         val caught1 = intercept[TestFailedException] {
           objFalse should be (readable)
@@ -55,11 +55,11 @@ class ShouldBeReadableStructuralSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should do nothing if for 'objFalse should not be readable'") {
         objFalse should not be readable
       }
-      
+
       it("should throw TFE with correct stack depth for 'objTrue should not be readable'") {
         val caught1 = intercept[TestFailedException] {
           objTrue should not be readable
@@ -69,20 +69,20 @@ class ShouldBeReadableStructuralSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with arbitrary object with isReadable method") {
-      
+
       class MyReadability(value: Boolean) {
         def isReadable: Boolean = value
         override def toString = "readability"
       }
       val objTrue = new MyReadability(true)
       val objFalse = new MyReadability(false)
-      
+
       it("should do nothing for 'objTrue should be (readable)'") {
         objTrue should be (readable)
       }
-      
+
       it("should throw TFE with correct stack depth for 'objFalse should be (readable)'") {
         val caught1 = intercept[TestFailedException] {
           objFalse should be (readable)
@@ -91,11 +91,11 @@ class ShouldBeReadableStructuralSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should do nothing if for 'objFalse should not be readable'") {
         objFalse should not be readable
       }
-      
+
       it("should throw TFE with correct stack depth for 'objTrue should not be readable'") {
         val caught1 = intercept[TestFailedException] {
           objTrue should not be readable
@@ -105,6 +105,6 @@ class ShouldBeReadableStructuralSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
   }
 }

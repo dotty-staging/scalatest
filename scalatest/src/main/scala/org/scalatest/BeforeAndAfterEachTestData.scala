@@ -26,7 +26,7 @@ package org.scalatest
  * <em>Note: For more insight into where <code>BeforeAndAfterEachTestData</code> fits into the big picture, see the </em>
  * <a href="FlatSpec.html#sharedFixtures">Shared fixtures</a> section in the documentation for your chosen style trait.</em>
  * </td></tr></table>
- * 
+ *
  * <p>
  * A test <em>fixture</em> is composed of the objects and other artifacts (files, sockets, database
  * connections, <em>etc.</em>) tests use to do their work.
@@ -44,19 +44,19 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.composingbeforeandaftereachtestdata
- * 
+ *
  * import org.scalatest._
  * import collection.mutable.ListBuffer
- * 
+ *
  * trait Builder extends BeforeAndAfterEachTestData { this: Suite =&gt;
- * 
+ *
  *   val builder = new StringBuilder
- * 
+ *
  *   override def beforeEach(td: TestData) {
  *     builder.append(td.name)
  *     super.beforeEach(td) // To be stackable, must call super.beforeEach(TestData)
  *   }
- * 
+ *
  *   override def afterEach(td: TestData) {
  *     try {
  *       super.afterEach(td) // To be stackable, must call super.afterEach(TestData)
@@ -66,11 +66,11 @@ package org.scalatest
  *     }
  *   }
  * }
- * 
+ *
  * trait Buffer extends BeforeAndAfterEachTestData { this: Suite =&gt;
- * 
+ *
  *   val buffer = new ListBuffer[String]
- * 
+ *
  *   override def afterEach(td: TestData) {
  *     try {
  *       super.afterEach(td) // To be stackable, must call super.afterEach(TestData)
@@ -80,16 +80,16 @@ package org.scalatest
  *     }
  *   }
  * }
- * 
+ *
  * class ExampleSpec extends FlatSpec with Builder with Buffer {
- * 
+ *
  *   "Testing" should "be easy" in {
  *     builder.append("!")
  *     assert(builder.toString === "Testing should be easy!")
  *     assert(buffer.isEmpty)
  *     buffer += "sweet"
  *   }
- * 
+ *
  *   it should "be fun" in {
  *     builder.append("!")
  *     assert(builder.toString === "Testing should be fun!")
@@ -168,7 +168,7 @@ trait BeforeAndAfterEachTestData extends SuiteMixin {
    * after running each test. It runs each test by invoking <code>super.runTest</code>, passing along
    * the two parameters passed to it.
    * </p>
-   * 
+   *
    * <p>
    * If any invocation of <code>beforeEach(TestData)</code> completes abruptly with an exception, this
    * method will complete abruptly with the same exception. If any call to
@@ -206,7 +206,7 @@ trait BeforeAndAfterEachTestData extends SuiteMixin {
             try {
               afterEach(testDataFor(testName, args.configMap))
             }
-            catch { 
+            catch {
               case e: Throwable if !Suite.anExceptionThatShouldCauseAnAbort(e) && thrownException.isDefined =>
                 // We will swallow the exception thrown from afterEach if it is not test-aborting and exception was already thrown by beforeEach or test itself.
             }

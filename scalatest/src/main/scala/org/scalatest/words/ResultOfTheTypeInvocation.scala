@@ -26,9 +26,9 @@ import org.scalatest.MatchersHelper.checkExpectedException
  * @author Bill Venners
  */
 final class ResultOfTheTypeInvocation[T](clazz: Class[T], pos: source.Position) {
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * val e = the [FileNotFoundException] thrownBy { ... }
@@ -38,6 +38,6 @@ final class ResultOfTheTypeInvocation[T](clazz: Class[T], pos: source.Position) 
   def thrownBy(fun: => Any): T = {
     checkExpectedException(fun, clazz, Resources.wrongException _, Resources.exceptionExpected _, pos)
   }
-  
+
   override def toString: String = "the [" + clazz.getName + "]"
 }

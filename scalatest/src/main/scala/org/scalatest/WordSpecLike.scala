@@ -27,7 +27,7 @@ import words.{CanVerb, ResultOfAfterWordApplication, ShouldVerb, BehaveWord,
 /**
  * Implementation trait for class <code>WordSpec</code>, which facilitates a &ldquo;behavior-driven&rdquo; style of development (BDD), in which tests
  * are combined with text that specifies the behavior the tests verify.
- * 
+ *
  * <p>
  * <a href="WordSpec.html"><code>WordSpec</code></a> is a class, not a trait, to minimize compile time given there is a slight compiler overhead to
  * mixing in traits compared to extending classes. If you need to mix the behavior of <code>WordSpec</code>
@@ -198,7 +198,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
       case other: Throwable => throw other
     }
   }
-  
+
   private def registerShorthandBranch(childPrefix: Option[String], notAllowMessage: => String, methodName:String, stackDepth: Int, adjustment: Int, pos: source.Position, fun: () => Unit): Unit = {
 
     // Shorthand syntax only allow at top level, and only after "..." when, "..." should/can/must, or it should/can/must
@@ -206,7 +206,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
       val currentBranch = engine.atomic.get.currentBranch
       // headOption because subNodes are in reverse order
       currentBranch.subNodes.headOption match {
-        case Some(last) => 
+        case Some(last) =>
           last match {
             case DescriptionBranch(_, descriptionText, _, _) =>
 
@@ -232,10 +232,10 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
                 case other: Throwable => throw other
               }
 
-            case _ => 
+            case _ =>
               throw new NotAllowedException(notAllowMessage, None, pos)
           }
-        case None => 
+        case None =>
           throw new NotAllowedException(notAllowMessage, None, pos)
       }
     }
@@ -247,7 +247,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * Class that supports the registration of tagged tests.
    *
    * <p>
-   * Instances of this class are returned by the <code>taggedAs</code> method of 
+   * Instances of this class are returned by the <code>taggedAs</code> method of
    * class <code>WordSpecStringWrapper</code>.
    * </p>
    *
@@ -314,7 +314,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     def ignore(testFun: => Any /* Assertion */)(implicit pos: source.Position): Unit = {
       registerTestToIgnore(specText, tags, "ignore", testFun _, pos)
     }
-  }       
+  }
 
   /**
    * A class that via an implicit conversion (named <code>convertToWordSpecStringWrapper</code>) enables
@@ -326,7 +326,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * the verb methods (<code>should</code>, <code>must</code>, and <code>can</code>) to <code>String</code>.
    * Instead, these are added via the <code>ShouldVerb</code>, <code>MustVerb</code>, and <code>CanVerb</code>
    * traits, which <code>WordSpec</code> mixes in, to avoid a conflict with implicit conversions provided
-   * in <code>Matchers</code> and <code>MustMatchers</code>. 
+   * in <code>Matchers</code> and <code>MustMatchers</code>.
    * </p>
    *
    * @author Bill Venners
@@ -529,7 +529,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     def that(resultOfAfterWordApplication: ResultOfAfterWordApplication)(implicit pos: source.Position): Unit = {
       registerBranch(string.trim + " that " + resultOfAfterWordApplication.text.trim, None, "that", "that", 4, -2, pos, resultOfAfterWordApplication.f)
     }
-    
+
     /**
      * Registers a <code>which</code> clause that is followed by an <em>after word</em>.
      *
@@ -569,13 +569,13 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    *
    * <pre class="stHighlight">
    * import org.scalatest.WordSpec
-   * 
+   *
    * class ScalaTestGUISpec extends WordSpec {
-   * 
+   *
    *   def theUser = afterWord("the user")
    *   def display = afterWord("display")
    *   def is = afterWord("is")
-   * 
+   *
    *   "The ScalaTest GUI" when theUser {
    *     "clicks on an event report in the list box" should display {
    *       "a blue background in the clicked-on row in the list box" in {}
@@ -595,7 +595,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    *
    * <pre class="stREPL">
    * scala> (new ScalaTestGUISpec).execute()
-   * <span class="stGreen">The ScalaTest GUI (when the user clicks on an event report in the list box) 
+   * <span class="stGreen">The ScalaTest GUI (when the user clicks on an event report in the list box)
    * - should display a blue background in the clicked-on row in the list box
    * - should display the details for the event in the details area
    * - should display a rerun button that is enabled if the clicked-on event is rerunnable
@@ -632,13 +632,13 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    *
    * <pre class="stHighlight">
    * import org.scalatest.WordSpec
-   * 
+   *
    * class ScalaTestGUISpec extends WordSpec {
-   * 
+   *
    *   def theUser = afterWord("the user")
    *   def display = afterWord("display")
    *   def is = afterWord("is")
-   * 
+   *
    *   "The ScalaTest GUI" when theUser {
    *     "clicks on an event report in the list box" should display {
    *       "a blue background in the clicked-on row in the list box" in {}
@@ -658,7 +658,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    *
    * <pre class="stREPL">
    * scala> (new ScalaTestGUISpec).execute()
-   * <span class="stGreen">The ScalaTest GUI (when the user clicks on an event report in the list box) 
+   * <span class="stGreen">The ScalaTest GUI (when the user clicks on an event report in the list box)
    * - should display a blue background in the clicked-on row in the list box
    * - should display the details for the event in the details area
    * - should display a rerun button that is enabled if the clicked-on event is rerunnable
@@ -671,7 +671,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
   private[scalatest] val stackDepth = 3
   // SKIP-SCALATESTJS-END
   //SCALATESTJS-ONLY private[scalatest] val stackDepth: Int = 10
-  
+
   /**
    * Class that supports shorthand scope registration via the instance referenced from <code>WordSpecLike</code>'s <code>it</code> field.
    *
@@ -681,18 +681,18 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    *
    * <pre class="stHighlight">
    * "A Stack" when { ... }
-   * 
+   *
    * it should { ... }
    * ^
    * </pre>
    *
    * <p>
-   * For more information and examples of the use of the <code>it</code> field, see the main documentation 
+   * For more information and examples of the use of the <code>it</code> field, see the main documentation
    * for <code>WordSpec</code>.
    * </p>
    */
   protected final class ItWord {
-    
+
     /**
      * Supports the registration of scope with <code>should</code> in a <code>WordSpecLike</code>.
      *
@@ -702,7 +702,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *
      * <pre class="stHighlight">
      * "A Stack" when { ... }
-     * 
+     *
      * it should { ... }
      *    ^
      * </pre>
@@ -715,7 +715,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     def should(right: => Unit)(implicit pos: source.Position): Unit = {
       registerShorthandBranch(Some("should"), Resources.itMustAppearAfterTopLevelSubject, "should", stackDepth, -2, pos, right _)
     }
-    
+
     /**
      * Supports the registration of scope with <code>must</code> in a <code>WordSpecLike</code>.
      *
@@ -725,7 +725,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *
      * <pre class="stHighlight">
      * "A Stack" when { ... }
-     * 
+     *
      * it must { ... }
      *    ^
      * </pre>
@@ -738,7 +738,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     def must(right: => Unit)(implicit pos: source.Position): Unit = {
       registerShorthandBranch(Some("must"), Resources.itMustAppearAfterTopLevelSubject, "must", stackDepth, -2, pos, right _)
     }
-    
+
     /**
      * Supports the registration of scope with <code>can</code> in a <code>WordSpecLike</code>.
      *
@@ -748,7 +748,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *
      * <pre class="stHighlight">
      * "A Stack" when { ... }
-     * 
+     *
      * it can { ... }
      *    ^
      * </pre>
@@ -761,7 +761,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     def can(right: => Unit)(implicit pos: source.Position): Unit = {
       registerShorthandBranch(Some("can"), Resources.itMustAppearAfterTopLevelSubject, "can", stackDepth, -2, pos, right _)
     }
-    
+
     /**
      * Supports the registration of scope with <code>when</code> in a <code>WordSpecLike</code>.
      *
@@ -771,7 +771,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *
      * <pre class="stHighlight">
      * "A Stack" should { ... }
-     * 
+     *
      * it when { ... }
      *    ^
      * </pre>
@@ -785,7 +785,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
       registerShorthandBranch(Some("when"), Resources.itMustAppearAfterTopLevelSubject, "when", stackDepth, -2, pos, right _)
     }
   }
-  
+
   /**
    * Supports shorthand scope registration in <code>WordSpecLike</code>s.
    *
@@ -795,18 +795,18 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    *
    * <pre class="stHighlight">
    * "A Stack" when { ... }
-   * 
+   *
    * it should { ... }
    * ^
    * </pre>
    *
    * <p>
-   * For more information and examples of the use of the <code>it</code> field, see the main documentation 
+   * For more information and examples of the use of the <code>it</code> field, see the main documentation
    * for <code>WordSpec</code>.
    * </p>
    */
   protected val it = new ItWord
-  
+
   /**
    * Class that supports shorthand scope registration via the instance referenced from <code>WordSpecLike</code>'s <code>they</code> field.
    *
@@ -816,18 +816,18 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    *
    * <pre class="stHighlight">
    * "Basketball players" when { ... }
-   * 
+   *
    * they should { ... }
    * ^
    * </pre>
    *
    * <p>
-   * For more information and examples of the use of the <code>they</code> field, see the main documentation 
+   * For more information and examples of the use of the <code>they</code> field, see the main documentation
    * for <code>WordSpec</code>.
    * </p>
    */
   protected final class TheyWord {
-    
+
     /**
      * Supports the registration of scope with <code>should</code> in a <code>WordSpecLike</code>.
      *
@@ -837,7 +837,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *
      * <pre class="stHighlight">
      * "Basketball players" when { ... }
-     * 
+     *
      * they should { ... }
      *      ^
      * </pre>
@@ -850,7 +850,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     def should(right: => Unit)(implicit pos: source.Position): Unit = {
       registerShorthandBranch(Some("should"), Resources.theyMustAppearAfterTopLevelSubject, "should", stackDepth, -2, pos, right _)
     }
-    
+
     /**
      * Supports the registration of scope with <code>must</code> in a <code>WordSpecLike</code>.
      *
@@ -860,7 +860,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *
      * <pre class="stHighlight">
      * "Basketball players" when { ... }
-     * 
+     *
      * they must { ... }
      *      ^
      * </pre>
@@ -873,7 +873,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     def must(right: => Unit)(implicit pos: source.Position): Unit = {
       registerShorthandBranch(Some("must"), Resources.theyMustAppearAfterTopLevelSubject, "must", stackDepth, -2, pos, right _)
     }
-    
+
     /**
      * Supports the registration of scope with <code>can</code> in a <code>WordSpecLike</code>.
      *
@@ -883,7 +883,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *
      * <pre class="stHighlight">
      * "Basketball players" when { ... }
-     * 
+     *
      * they can { ... }
      *      ^
      * </pre>
@@ -896,7 +896,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     def can(right: => Unit)(implicit pos: source.Position): Unit = {
       registerShorthandBranch(Some("can"), Resources.theyMustAppearAfterTopLevelSubject, "can", stackDepth, -2, pos, right _)
     }
-    
+
     /**
      * Supports the registration of scope with <code>when</code> in a <code>WordSpecLike</code>.
      *
@@ -906,7 +906,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *
      * <pre class="stHighlight">
      * "Basketball players" should { ... }
-     * 
+     *
      * they when { ... }
      *      ^
      * </pre>
@@ -920,7 +920,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
       registerShorthandBranch(Some("when"), Resources.theyMustAppearAfterTopLevelSubject, "when", stackDepth, -2, pos, right _)
     }
   }
-  
+
   /**
    * Supports shorthand scope registration in <code>WordSpecLike</code>s.
    *
@@ -930,13 +930,13 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    *
    * <pre class="stHighlight">
    * "A Stack" when { ... }
-   * 
+   *
    * they should { ... }
    * ^
    * </pre>
    *
    * <p>
-   * For more information and examples of the use of the <code>they</code> field, see the main documentation 
+   * For more information and examples of the use of the <code>they</code> field, see the main documentation
    * for <code>WordSpec</code>.
    * </p>
    */
@@ -969,7 +969,7 @@ delme.scala:6: error: no implicit argument matching parameter type (String, Stri
   "bla bla bla" should {
                 ^
 one error found
-  
+
    */
   /**
    * Supports the registration of subjects.
@@ -1042,12 +1042,12 @@ one error found
    * the <code>Set</code> of tags for the test. If this <code>WordSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
    * <p>
-   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to 
-   * <code>taggedAs</code>. 
+   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to
+   * <code>taggedAs</code>.
    * </p>
-   * 
+   *
    * <p>
-   * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
+   * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate <code>@Ignore</code> at the class level, all test methods in the class will be auto-annotated with
    * <code>org.scalatest.Ignore</code>.
    * </p>
@@ -1210,11 +1210,11 @@ one error found
    * </p>
    */
   protected val behave = new BehaveWord
-  
+
   /**
    * Suite style name.
    */
   final override val styleName: String = "org.scalatest.WordSpec"
-    
+
   override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = createTestDataFor(testName, theConfigMap, this)
 }

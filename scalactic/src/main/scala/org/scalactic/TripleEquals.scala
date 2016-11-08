@@ -19,8 +19,8 @@ import TripleEqualsSupport._
 
 /**
  * Provides <code>===</code> and <code>!==</code> operators that return <code>Boolean</code>, delegate the equality determination
- * to an <code>Equality</code> type class, and require no relationship between the types of the two values compared. 
- * 
+ * to an <code>Equality</code> type class, and require no relationship between the types of the two values compared.
+ *
  * <table><tr><td class="usage">
  * <strong>Recommended Usage</strong>:
  * Trait <code>TripleEquals</code> is useful (in both production and test code) when you need determine equality for a type of object differently than its
@@ -36,7 +36,7 @@ import TripleEqualsSupport._
  * and can therefore be used to temporarily turn of type checking in a limited scope. Here's an example, in which <code>TypeCheckedTripleEquals</code> will
  * cause a compiler error:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * import org.scalactic._
  * import TypeCheckedTripleEquals._
@@ -70,20 +70,20 @@ import TripleEqualsSupport._
  *           ^
  * one error found
  * </pre>
- * 
+ *
  * <p>
  * You can &ldquo;turn off&rdquo; the type checking locally by importing the members of <code>TripleEquals</code> in
  * a limited scope:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * package org.scalactic.examples.tripleequals
- * 
+ *
  * import org.scalactic._
  * import TypeCheckedTripleEquals._
- * 
+ *
  * object Example {
- * 
+ *
  *   def cmp(a: Int, b: Long): Int = {
  *     import TripleEquals._
  *     if (a === b) 0
@@ -104,7 +104,7 @@ import TripleEqualsSupport._
  * takes an <code>Int</code> and a <code>Long</code>. <code>TypeCheckedTripleEquals</code> is still enforcing its type constraint, for example, for the <code>s === t</code>
  * expression in the other overloaded <code>cmp</code> method that takes strings.
  * </p>
- * 
+ *
  * <p>
  * Because the methods in <code>TripleEquals</code> (and its siblings)<em>override</em> all the methods defined in
  * supertype <a href="TripleEqualsSupport.html"><code>TripleEqualsSupport</code></a>, you can achieve the same
@@ -142,7 +142,7 @@ trait TripleEquals extends TripleEqualsSupport {
 }
 
 /**
- * Companion object to trait <code>TripleEquals</code> that facilitates the importing of <code>TripleEquals</code> members as 
+ * Companion object to trait <code>TripleEquals</code> that facilitates the importing of <code>TripleEquals</code> members as
  * an alternative to mixing it in. One use case is to import <code>TripleEquals</code> members so you can use
  * them in the Scala interpreter:
  *

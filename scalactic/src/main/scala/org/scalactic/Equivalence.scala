@@ -24,7 +24,7 @@ package org.scalactic
  * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a>
  * traits. These traits can be used to perform equality comparisons with type constraints enforced at
  * compile time using ScalaUtil's <code>===</code> and <code>!==</code> syntax
- * and ScalaTest's <code>should</code> <code>===</code> syntax of <code>Matchers</code> trait. 
+ * and ScalaTest's <code>should</code> <code>===</code> syntax of <code>Matchers</code> trait.
  * </p>
  *
  * <p>
@@ -40,18 +40,18 @@ package org.scalactic
  * <p>
  * For example, say you have a case class that includes a <code>Double</code> value:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; case class Person(name: String, age: Double)
  * defined class Person
  * </pre>
- * 
+ *
  * <p>
  * Imagine you are calculating the <code>age</code> values in such as way that occasionally tests
- * are failing because of rounding differences that you actually don't care about. For example, you 
+ * are failing because of rounding differences that you actually don't care about. For example, you
  * expect an age of 29.0, but you're sometimes seeing 29.0001:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
  * import org.scalactic._
@@ -69,13 +69,13 @@ package org.scalactic
  * one is a supertype of the other. In this case, both sides are <code>Person</code> (which is considered a supertype of
  * itself), so the compiler will look for an <code>Equivalence[Person]</code>.
  * Because you didn't specifically provide an implicit <code>Equivalence[Person]</code>, <code>===</code> will fall back on
- * <a href="Equality.html#defaultEquality">default equality</a>, because an <code>Equality[Person]</code> <em>is-an</em> 
+ * <a href="Equality.html#defaultEquality">default equality</a>, because an <code>Equality[Person]</code> <em>is-an</em>
  * <code>Equivalence[Person]</code>. The default <code>Equality[Person]</code> will call <code>Person</code>'s
  * <code>equals</code> method. That <code>equals</code> method, provided by the Scala compiler
  * because <code>Person</code> is a case class, will declare these two objects unequal because 29.001 does not
  * exactly equal 29.0.
  * </p>
- * 
+ *
  * <p>
  * To make the equality check more forgiving, you could define an implicit <code>Equivalence[Person]</code> that compares
  * the <code>age</code> <code>Double</code>s with a tolerance, like this:
@@ -84,8 +84,8 @@ package org.scalactic
  * <pre class="stREPL">
  * scala&gt; import Tolerance._
  * import Tolerance._
- * 
- * scala&gt; implicit val personEq = 
+ *
+ * scala&gt; implicit val personEq =
  *      |   new Equivalence[Person] {
  *      |     def areEquivalent(a: Person, b: Person): Boolean =
  *      |       a.name == b.name &amp;&amp; a.age === b.age +- 0.0002
@@ -122,12 +122,12 @@ trait Equivalence[T] {
    * @return true if the passed objects are "equal," as defined by this <code>Equivalence</code> instance
    */
   def areEquivalent(a: T, b: T): Boolean
-} 
+}
 
 /**
- * Companion object for trait <code>Equivalence</code> that provides a factory method for producing 
+ * Companion object for trait <code>Equivalence</code> that provides a factory method for producing
  * default <code>Equivalence</code> instances.
- */ 
+ */
 object Equivalence {
 
   /**

@@ -70,7 +70,7 @@ class PosZIntSpec extends FunSpec with Matchers with GeneratorDrivenPropertyChec
         PosZInt.from(-1) shouldBe None
         PosZInt.from(-99) shouldBe None
       }
-    } 
+    }
 
     it("should offer MaxValue and MinValue factory methods") {
       PosZInt.MaxValue shouldEqual PosZInt.from(Int.MaxValue).get
@@ -82,7 +82,7 @@ class PosZIntSpec extends FunSpec with Matchers with GeneratorDrivenPropertyChec
     }
     it("should return the same type from its unary_+ method") {
       +PosZInt(3) shouldEqual PosZInt(3)
-    } 
+    }
     it("should be automatically widened to compatible AnyVal targets") {
       (PosZInt(3): Int) shouldEqual 3
       (PosZInt(3): Long) shouldEqual 3L

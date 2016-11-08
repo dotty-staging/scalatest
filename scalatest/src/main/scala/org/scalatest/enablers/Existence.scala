@@ -24,7 +24,7 @@ package org.scalatest.enablers
  * can be any type for which the concept of existence makes sense, such as <code>java.io.File</code>. ScalaTest provides
  * implicit implementations for <code>java.io.File</code>. You can enable the <code>exist</code> matcher syntax on your own
  * type <code>U</code> by defining a <code>Existence[U]</code> for the type and making it available implicitly.
- * 
+ *
  * <p>
  * ScalaTest provides an implicit <code>Existence</code> instance for <code>java.io.File</code>
  * in the <code>Existence</code> companion object.
@@ -56,5 +56,5 @@ object Existence {
     new Existence[FILE] {
       def exists(file: FILE): Boolean = file.exists
     }
-  
+
 }

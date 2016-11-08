@@ -25,24 +25,24 @@ import org.scalactic.Prettifier
 class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookPropertyMatchers {
 
   private val prettifier = Prettifier.default
-  
-  def errorMessage(index: Int, message: String, lineNumber: Int, left: Any): String = 
+
+  def errorMessage(index: Int, message: String, lineNumber: Int, left: Any): String =
     "'all' inspection failed, because: \n" +
     "  at index " + index + ", " + message + " (ShouldNotShorthandForAllSpec.scala:" + lineNumber + ") \n" +
     "in " + decorateToStringValue(prettifier, left)
-  
+
   describe("The shouldNot syntax") {
 
     // SKIP-SCALATESTJS-START
     it("should work with theSameInstanceAs") {
-      
+
       val string = "Hi"
       val obj: AnyRef = string
       val otherString = new String("Hi")
-      
+
       all(List(otherString)) shouldNot { be theSameInstanceAs (string) }
       all(List(otherString)) shouldNot be theSameInstanceAs (string)
-      
+
       val list1 = List(obj)
       val caught1 = intercept[TestFailedException] {
         all(list1) shouldNot { be theSameInstanceAs (string) }
@@ -50,7 +50,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught1.message === Some(errorMessage(0, "\"Hi\" was the same instance as \"Hi\"", thisLineNumber - 2, list1)))
       assert(caught1.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       val list2 = List(obj)
       val caught2 = intercept[TestFailedException] {
         all(list2) shouldNot be theSameInstanceAs string
@@ -60,12 +60,12 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
     // SKIP-SCALATESTJS-END
-    
+
     it("should work with any") {
       all(List(1)) shouldNot { be (2) }
       all(List(1)) shouldNot be (2)
       all(List("hi")) shouldNot be (null)
-      
+
       val list1 = List(1)
       val caught1 = intercept[TestFailedException] {
         all(list1) shouldNot { be (1) }
@@ -73,7 +73,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught1.message === Some(errorMessage(0, "1 was equal to 1", thisLineNumber - 2, list1)))
       assert(caught1.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       val list2 = List(1)
       val caught2 = intercept[TestFailedException] {
         all(list1) shouldNot be (1)
@@ -81,7 +81,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught2.message === Some(errorMessage(0, "1 was equal to 1", thisLineNumber - 2, list2)))
       assert(caught2.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       val list3 = List[String](null)
       val caught3 = intercept[TestFailedException] {
         all(list3) shouldNot be (null)
@@ -89,7 +89,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught3.message === Some(errorMessage(0, "The reference was null", thisLineNumber - 2, list3)))
       assert(caught3.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       val list4 = List(1)
       val caught4 = intercept[TestFailedException] {
         all(list4) shouldNot be (1)
@@ -97,7 +97,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught4.message === Some(errorMessage(0, "1 was equal to 1", thisLineNumber - 2, list4)))
       assert(caught4.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       val list5 = List(1)
       val caught5 = intercept[TestFailedException] {
         all(list5) shouldNot (not (not be (1)))
@@ -105,7 +105,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught5.message === Some(errorMessage(0, "1 was equal to 1", thisLineNumber - 2, list5)))
       assert(caught5.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught5.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(6)) shouldNot be > 7
       val list6 = List(8)
       val caught6 = intercept[TestFailedException] {
@@ -114,7 +114,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught6.message === Some(errorMessage(0, "8 was greater than 7", thisLineNumber - 2, list6)))
       assert(caught6.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught6.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(8)) shouldNot be < 7
       val list7 = List(5)
       val caught7 = intercept[TestFailedException] {
@@ -123,7 +123,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught7.message === Some(errorMessage(0, "5 was less than 7", thisLineNumber - 2, list7)))
       assert(caught7.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught7.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(3)) shouldNot be >= 7
       val list8 = List(8)
       val caught8 = intercept[TestFailedException] {
@@ -132,7 +132,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught8.message === Some(errorMessage(0, "8 was greater than or equal to 7", thisLineNumber - 2, list8)))
       assert(caught8.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught8.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(8)) shouldNot be <= 7
       val list9 = List(3)
       val caught9 = intercept[TestFailedException] {
@@ -141,7 +141,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught9.message === Some(errorMessage(0, "3 was less than or equal to 7", thisLineNumber - 2, list9)))
       assert(caught9.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught9.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(true)) shouldNot be (false)
       val list10 = List(true)
       val caught10 = intercept[TestFailedException] {
@@ -151,9 +151,9 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught10.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught10.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
-    
+
     it("should work with BeMatcher") {
-      
+
       class OddMatcher extends BeMatcher[Int] {
         def apply(left: Int): MatchResult = {
           MatchResult(
@@ -165,12 +165,12 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       }
       val odd = new OddMatcher
       val even = not (odd)
-      
+
       all(List(2)) shouldNot be (odd)
       all(List(1)) shouldNot be (even)
       all(List(22)) shouldNot (not (be (even)))
       all(List(1)) shouldNot (not (be (odd)))
-      
+
       val list1 = List(3)
       val caught1 = intercept[TestFailedException] {
         all(list1) shouldNot be (odd)
@@ -178,7 +178,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught1.message === Some(errorMessage(0, "3 was odd", thisLineNumber - 2, list1)))
       assert(caught1.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       val list2 = List(6)
       val caught2 = intercept[TestFailedException] {
         all(list2) shouldNot be (even)
@@ -186,7 +186,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught2.message === Some(errorMessage(0, "6 was even", thisLineNumber - 2, list2)))
       assert(caught2.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       val list3 = List(6)
       val caught3 = intercept[TestFailedException] {
         all(list3) shouldNot (not (be (odd)))
@@ -198,12 +198,12 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
 
     // SKIP-SCALATESTJS-START
     it("should work with symbol") {
-      
+
       all(List(notEmptyMock)) shouldNot { be ('empty) }
       all(List(notEmptyMock)) shouldNot be ('empty)
       all(List(isNotEmptyMock)) shouldNot { be ('empty) }
       all(List(isNotEmptyMock)) shouldNot be ('empty)
-      
+
       val list1 = List(noPredicateMock)
       val ex1 = intercept[TestFailedException] {
         all(list1) shouldNot { be ('empty) }
@@ -237,9 +237,9 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(ex4.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
     // SKIP-SCALATESTJS-END
-    
+
     it("should work with BePropertyMatcher") {
-      
+
       case class MyFile(
                          val name: String,
                          val file: Boolean,
@@ -265,11 +265,11 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
 
       val book = new Book("A Tale of Two Cities", "Dickens", 1859, 45, true)
       val badBook = new Book("A Tale of Two Cities", "Dickens", 1859, 45, false)
-      
+
       all(List(badBook)) shouldNot be (goodRead)
       all(List(badBook)) shouldNot be a goodRead
       all(List(badBook)) shouldNot be an goodRead
-      
+
       val list1 = List(book)
       val caught1 = intercept[TestFailedException] {
         all(list1) shouldNot be (goodRead)
@@ -277,7 +277,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught1.message === Some(errorMessage(0, "Book(A Tale of Two Cities,Dickens,1859,45,true) was goodRead", thisLineNumber - 2, list1)))
       assert(caught1.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       val list2 = List(book)
       val caught2 = intercept[TestFailedException] {
         all(list2) shouldNot be a goodRead
@@ -318,9 +318,9 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught6.failedCodeFileName === Some("ShouldNotShorthandForAllSpec.scala"))
       assert(caught6.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
-    
+
     it("should with +-") {
-      
+
       val sevenDotOh = 7.0
       val minusSevenDotOh = -7.0
       val sevenDotOhFloat = 7.0f
@@ -333,7 +333,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       val minusSevenShort: Short = -7
       val sevenByte: Byte = 7
       val minusSevenByte: Byte = -7
-      
+
       // Double +- Double
       all(List(sevenDotOh)) shouldNot { be (7.5 +- 0.2) }
       all(List(sevenDotOh)) shouldNot be (7.5 +- 0.2)
@@ -341,7 +341,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       all(List(minusSevenDotOh)) shouldNot { be (-7.5 +- 0.2) }
       all(List(minusSevenDotOh)) shouldNot be (-7.5 +- 0.2)
       all(List(minusSevenDotOh)) shouldNot be (-6.5 +- 0.2)
-      
+
       // Double +- Float
       all(List(sevenDotOh)) shouldNot { be (7.5 +- 0.2f) }
       all(List(sevenDotOh)) shouldNot be (7.5 +- 0.2f)
@@ -501,7 +501,7 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       all(List(minusSevenByte)) shouldNot { be ((-10).toByte +- 2.toByte) }
       all(List(minusSevenByte)) shouldNot be ((-4).toByte +- 2.toByte)
       all(List(minusSevenByte)) shouldNot be ((-10).toByte +- 2.toByte)
-      
+
       // Double +- Double
       val list1 = List(sevenDotOh)
       val caught1 = intercept[TestFailedException] {
@@ -725,5 +725,5 @@ class ShouldNotShorthandForAllSpec extends FunSpec with EmptyMocks with BookProp
       assert(caught21.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
   }
-  
+
 }

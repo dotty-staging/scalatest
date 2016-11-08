@@ -18,19 +18,19 @@ package org.scalatest.events
 import org.scalatest.Assertions._
 
 trait TestLocationFunctionServices {
-  
+
   private[events] case class TestStartingPair(testName: String, fileName: String, lineNumber: Int, var checked: Boolean = false)
   import scala.language.existentials
   private[events] case class TestResultPair(clazz: Class[_], fileName: String, lineNumber: Int, var checked: Boolean = false)
   private[events] case class ScopeOpenedPair(testName: String, fileName: String, lineNumber: Int, var checked: Boolean = false)
   private[events] case class ScopeClosedPair(testName: String, fileName: String, lineNumber: Int, var checked: Boolean = false)
-  
+
   val suiteTypeName: String
   val expectedStartingList: List[TestStartingPair]
   val expectedResultList: List[TestResultPair]
   val expectedScopeOpenedList: List[ScopeOpenedPair]
   val expectedScopeClosedList: List[ScopeClosedPair]
-  
+
   def checkFileNameLineNumber(suiteName:String, expectedFileName: String, expectedLineNumber: Int, event: Event):Boolean = {
     event.location match {
       case Some(evt) =>
@@ -38,14 +38,14 @@ trait TestLocationFunctionServices {
         assert(expectedFileName == lineInFile.fileName, "Suite " + suiteName + " - " + event + " expected LocationFunctionSuiteProp.scala, got " + lineInFile.fileName)
         assert(expectedLineNumber == lineInFile.lineNumber, "Suite " + suiteName + " - " + event + " expected " + expectedLineNumber + ", got " + lineInFile.lineNumber)
         true
-      case None => 
+      case None =>
         fail("Suite " + suiteName + " - Event " + event.getClass.getName + " does not have location.")
     }
   }
-  
+
   def checkFun(event: Event): Unit = {
     event match {
-      case testStarting: TestStarting => 
+      case testStarting: TestStarting =>
         val expectedStartingPairOpt = expectedStartingList.find { pair => pair.testName == testStarting.testName }
         expectedStartingPairOpt match {
           case Some(expectedStartingPair) => expectedStartingPair.checked = checkFileNameLineNumber(suiteTypeName, expectedStartingPair.fileName,  expectedStartingPair.lineNumber, event)

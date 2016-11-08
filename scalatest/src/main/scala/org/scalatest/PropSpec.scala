@@ -24,18 +24,18 @@ package org.scalatest
  * Class <code>PropSpec</code> is a good fit for teams that want to write tests exclusively in terms of property checks, and is also a good choice
  * for writing the occasional <a href="#testMatrix">test matrix</a> when a different style trait is chosen as the main unit testing style.
  * </td></tr></table>
- * 
+ *
  * Here's an example <code>PropSpec</code>:
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.propspec
- * 
+ *
  * import org.scalatest._
  * import prop._
  * import scala.collection.immutable._
- * 
+ *
  * class SetSpec extends PropSpec with TableDrivenPropertyChecks with Matchers {
- * 
+ *
  *   val examples =
  *     Table(
  *       "set",
@@ -43,13 +43,13 @@ package org.scalatest
  *       HashSet.empty[Int],
  *       TreeSet.empty[Int]
  *     )
- *   
+ *
  *   property("an empty Set should have size 0") {
  *     forAll(examples) { set =&gt;
  *       set.size should be (0)
  *     }
  *   }
- * 
+ *
  *   property("invoking head on an empty set should produce NoSuchElementException") {
  *     forAll(examples) { set =&gt;
  *       a [NoSuchElementException] should be thrownBy { set.head }
@@ -137,13 +137,13 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.suite.ignore
- * 
+ *
  * import org.scalatest._
  * import prop._
  * import scala.collection.immutable._
- * 
+ *
  * class SetSpec extends PropSpec with TableDrivenPropertyChecks with Matchers {
- * 
+ *
  *   val examples =
  *     Table(
  *       "set",
@@ -151,13 +151,13 @@ package org.scalatest
  *       HashSet.empty[Int],
  *       TreeSet.empty[Int]
  *     )
- * 
+ *
  *   ignore("an empty Set should have size 0") {
  *     forAll(examples) { set =>
  *       set.size should be (0)
  *     }
  *   }
- * 
+ *
  *   property("invoking head on an empty set should produce NoSuchElementException") {
  *     forAll(examples) { set =>
  *       a [NoSuchElementException] should be thrownBy { set.head }
@@ -189,7 +189,7 @@ package org.scalatest
  * <p>
  * One of the parameters to <code>PropSpec</code>'s <code>run</code> method is a <a href="Reporter.html"><code>Reporter</code></a>, which
  * will collect and report information about the running suite of tests.
- * Information about suites and tests that were run, whether tests succeeded or failed, 
+ * Information about suites and tests that were run, whether tests succeeded or failed,
  * and tests that were ignored will be passed to the <code>Reporter</code> as the suite runs.
  * Most often the reporting done by default by <code>PropSpec</code>'s methods will be sufficient, but
  * occasionally you may wish to provide custom information to the <code>Reporter</code> from a test.
@@ -203,13 +203,13 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.propspec.info
- * 
+ *
  * import org.scalatest._
  * import prop._
  * import collection.mutable
- * 
+ *
  * class SetSpec extends PropSpec with TableDrivenPropertyChecks with GivenWhenThen {
- * 
+ *
  *   val examples =
  *     Table(
  *       "set",
@@ -217,22 +217,22 @@ package org.scalatest
  *       mutable.HashSet.empty[Int],
  *       mutable.LinkedHashSet.empty[Int]
  *     )
- * 
+ *
  *   property("an element can be added to an empty mutable Set") {
- * 
+ *
  *     forAll(examples) { set =&gt;
- * 
+ *
  *       info("----------------")
- * 
+ *
  *       Given("an empty mutable " + set.getClass.getSimpleName)
  *       assert(set.isEmpty)
- * 
+ *
  *       When("an element is added")
  *       set += 99
- * 
+ *
  *       Then("the Set should have size 1")
  *       assert(set.size === 1)
- * 
+ *
  *       And("the Set should contain the added element")
  *       assert(set.contains(99))
  *     }
@@ -247,20 +247,20 @@ package org.scalatest
  * scala&gt; org.scalatest.run(new SetSpec)
  * <span class="stGreen">SetSpec:
  * - an element can be added to an empty mutable Set
- *   + ---------------- 
- *   + Given an empty mutable BitSet 
- *   + When an element is added 
- *   + Then the Set should have size 1 
- *   + And the Set should contain the added element 
- *   + ---------------- 
- *   + Given an empty mutable HashSet 
- *   + When an element is added 
- *   + Then the Set should have size 1 
- *   + And the Set should contain the added element 
- *   + ---------------- 
- *   + Given an empty mutable LinkedHashSet 
- *   + When an element is added 
- *   + Then the Set should have size 1 
+ *   + ----------------
+ *   + Given an empty mutable BitSet
+ *   + When an element is added
+ *   + Then the Set should have size 1
+ *   + And the Set should contain the added element
+ *   + ----------------
+ *   + Given an empty mutable HashSet
+ *   + When an element is added
+ *   + Then the Set should have size 1
+ *   + And the Set should contain the added element
+ *   + ----------------
+ *   + Given an empty mutable LinkedHashSet
+ *   + When an element is added
+ *   + Then the Set should have size 1
  *   + And the Set should contain the added element</span>
  * </pre>
  *
@@ -421,7 +421,7 @@ package org.scalatest
  *
  * <p>
  * Another example is <a href="tools/Runner$.html#slowpokeNotifications">slowpoke notifications</a>.
- * If you find a test is taking a long time to complete, but you're not sure which test, you can enable 
+ * If you find a test is taking a long time to complete, but you're not sure which test, you can enable
  * slowpoke notifications. ScalaTest will use an <code>Alerter</code> to fire an event whenever a test has been running
  * longer than a specified amount of time.
  * </p>
@@ -452,7 +452,7 @@ package org.scalatest
  *
  * <p>
  * Because tests in ScalaTest can be designated as pending with <code>TestPendingException</code>, both the test name and any information
- * sent to the reporter when running the test can appear in the report of a test run. 
+ * sent to the reporter when running the test can appear in the report of a test run.
  * (The code of a pending test is executed just like any other test.) However, because the test completes abruptly
  * with <code>TestPendingException</code>, the test will be reported as pending, to indicate
  * the actual test, and possibly the functionality, has not yet been implemented.
@@ -466,9 +466,9 @@ package org.scalatest
  * import org.scalatest._
  * import prop._
  * import scala.collection.immutable._
- * 
+ *
  * class SetSpec extends PropSpec with TableDrivenPropertyChecks with Matchers {
- * 
+ *
  *   val examples =
  *     Table(
  *       "set",
@@ -476,9 +476,9 @@ package org.scalatest
  *       HashSet.empty[Int],
  *       TreeSet.empty[Int]
  *     )
- * 
+ *
  *   property("an empty Set should have size 0") (pending)
- * 
+ *
  *   property("invoking head on an empty set should produce NoSuchElementException") {
  *     forAll(examples) { set =&gt;
  *       a [NoSuchElementException] should be thrownBy { set.head }
@@ -506,7 +506,7 @@ package org.scalatest
  * <span class="stYellow">- An empty Set should have size 0 (pending)</span>
  * <span class="stGreen">- Invoking head on an empty Set should produce NoSuchElementException</span>
  * </pre>
- * 
+ *
  * <p>
  * One difference between an ignored test and a pending one is that an ignored test is intended to be used during a
  * significant refactorings of the code under test, when tests break and you don't want to spend the time to fix
@@ -539,7 +539,7 @@ package org.scalatest
  * you pass objects that extend class <code>org.scalatest.Tag</code> to methods
  * that register tests. Class <code>Tag</code> takes one parameter, a string name.  If you have
  * created tag annotation interfaces as described in the <a href="Tag.html"><code>Tag</code> documentation</a>, then you
- * will probably want to use tag names on your test functions that match. To do so, simply 
+ * will probably want to use tag names on your test functions that match. To do so, simply
  * pass the fully qualified names of the tag interfaces to the <code>Tag</code> constructor. For example, if you've
  * defined a tag annotation interface with fully qualified names,
  * <code>com.mycompany.tags.DbTest</code>, then you could
@@ -563,9 +563,9 @@ package org.scalatest
  * import prop._
  * import tagobjects.Slow
  * import scala.collection.immutable._
- * 
+ *
  * class SetSpec extends PropSpec with TableDrivenPropertyChecks with Matchers {
- * 
+ *
  *   val examples =
  *     Table(
  *       "set",
@@ -573,16 +573,16 @@ package org.scalatest
  *       HashSet.empty[Int],
  *       TreeSet.empty[Int]
  *     )
- * 
+ *
  *   property("an empty Set should have size 0", Slow) {
  *     forAll(examples) { set =&gt;
  *       set.size should be (0)
  *     }
  *   }
- * 
+ *
  *   property("invoking head on an empty set should produce NoSuchElementException",
  *       Slow, DbTest) {
- * 
+ *
  *     forAll(examples) { set =&gt;
  *       a [NoSuchElementException] should be thrownBy { set.head }
  *     }
@@ -591,7 +591,7 @@ package org.scalatest
  * </pre>
  *
  * <p>
- * This code marks both tests with the <code>org.scalatest.tags.Slow</code> tag, 
+ * This code marks both tests with the <code>org.scalatest.tags.Slow</code> tag,
  * and the second test with the <code>com.mycompany.tags.DbTest</code> tag.
  * </p>
  *
@@ -689,7 +689,7 @@ package org.scalatest
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
  *     <p>
  *     The recommended default approach when most or all tests need the same fixture treatment. This general technique
- *     allows you, for example, to perform side effects at the beginning and end of all or most tests, 
+ *     allows you, for example, to perform side effects at the beginning and end of all or most tests,
  *     transform the outcome of tests, retry tests, make decisions based on test names, tags, or other test data.
  *     Use this technique unless:
  *     </p>
@@ -744,7 +744,7 @@ package org.scalatest
  * <p>
  * Using fixture-context objects in a <code>PropSpec</code> is a good way to implement a test matrix.
  * What is the matrix? A test matrix is a series of tests that you need to run on a series of subjects. For example, The Scala API contains
- * many implementations of trait <code>Set</code>. Every implementation must obey the contract of <code>Set</code>. 
+ * many implementations of trait <code>Set</code>. Every implementation must obey the contract of <code>Set</code>.
  * One property of any <code>Set</code> is that an empty <code>Set</code> should have size 0, another is that
  * invoking head on an empty <code>Set</code> should give you a <code>NoSuchElementException</code>, and so on. Already you have a matrix,
  * where rows are the properties and the columns are the set implementations:
@@ -766,7 +766,7 @@ package org.scalatest
  * trait SetExamples extends Tables {
  *
  *   def examples = Table("set", bitSet, hashSet, treeSet)
- * 
+ *
  *   def bitSet: BitSet
  *   def hashSet: HashSet[Int]
  *   def treeSet: TreeSet[Int]
@@ -785,7 +785,7 @@ package org.scalatest
  *   def treeSet = TreeSet.empty[Int]
  * }
  * </pre>
- * 
+ *
  * <p>
  * And here's how you might provide set examples with one item each:
  * </p>
@@ -797,7 +797,7 @@ package org.scalatest
  *   def treeSet = TreeSet(1)
  * }
  * </pre>
- * 
+ *
  * <p>
  * Armed with these example classes, you can define checks of properties that require
  * empty or non-empty set fixtures by using instances of these classes as fixture-context
@@ -812,28 +812,28 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.propspec.matrix
- * 
+ *
  * import org.scalatest._
  * import org.scalatest.prop._
  * import scala.collection.immutable._
- * 
+ *
  * trait SetExamples extends Tables {
  *
  *   def examples = Table("set", bitSet, hashSet, treeSet)
- * 
+ *
  *   def bitSet: BitSet
  *   def hashSet: HashSet[Int]
  *   def treeSet: TreeSet[Int]
  * }
- * 
+ *
  * class EmptySetExamples extends SetExamples {
  *   def bitSet = BitSet.empty
  *   def hashSet = HashSet.empty[Int]
  *   def treeSet = TreeSet.empty[Int]
  * }
- * 
+ *
  * class SetSpec extends PropSpec with TableDrivenPropertyChecks with Matchers {
- * 
+ *
  *   property("an empty Set should have size 0") {
  *     new EmptySetExamples {
  *       forAll(examples) { set =&gt;
@@ -841,7 +841,7 @@ package org.scalatest
  *       }
  *     }
  *   }
- * 
+ *
  *   property("invoking head on an empty set should produce NoSuchElementException") {
  *     new EmptySetExamples {
  *       forAll(examples) { set =&gt;
@@ -851,7 +851,7 @@ package org.scalatest
  *   }
  * }
  * </pre>
- * 
+ *
  * <p>
  * One benefit of this approach is that the compiler will help you when you need to add either a new row
  * or column to the matrix. In either case, you'll need to ensure all cells are checked to get your code to compile.
@@ -863,7 +863,7 @@ package org.scalatest
  * Sometimes you may want to run the same test code on different fixture objects. That is to say, you may want to write tests that are "shared"
  * by different fixture objects.
  * You accomplish this in a <code>PropSpec</code> in the same way you would do it in a <code>FunSuite</code>, except instead of <code>test</code>
- * you say <code>property</code>, and instead of <code>testsFor</code> you say <code>propertiesFor</code>. 
+ * you say <code>property</code>, and instead of <code>testsFor</code> you say <code>propertiesFor</code>.
  * For more information, see the <a href="FunSuite.html#sharedTests">Shared tests</a> section of <code>FunSuite</code>'s
  * documentation.
  * </p>

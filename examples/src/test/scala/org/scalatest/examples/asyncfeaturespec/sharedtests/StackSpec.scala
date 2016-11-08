@@ -49,21 +49,21 @@ class StackActor[T](Max: Int, name: String) {
   def ?(op: StackOp)(implicit c: ExecutionContext): Future[StackInfo[T]] =
     synchronized {
       op match {
-        case Pop => 
+        case Pop =>
           Future {
             if (buf.size != 0)
               StackInfo(Some(buf.remove(0)), buf.size, Max)
             else
               throw new IllegalStateException("can't pop an empty stack")
           }
-        case Peek => 
+        case Peek =>
           Future {
             if (buf.size != 0)
               StackInfo(Some(buf(0)), buf.size, Max)
             else
               throw new IllegalStateException("can't peek an empty stack")
           }
-        case Size => 
+        case Size =>
           Future { StackInfo(None, buf.size, Max) }
       }
     }
@@ -88,7 +88,7 @@ trait AsyncFeatureSpecStackBehaviors { this: AsyncFeatureSpec =>
 
     scenario("Peek is fired at non-empty stack actor: " + name) {
       val stackActor = createNonEmptyStackActor
-      val futurePair: Future[(StackInfo[Int], StackInfo[Int])] = 
+      val futurePair: Future[(StackInfo[Int], StackInfo[Int])] =
         for {
           beforePeek <- stackActor ? Size
           afterPeek <- stackActor ? Peek
@@ -101,7 +101,7 @@ trait AsyncFeatureSpecStackBehaviors { this: AsyncFeatureSpec =>
 
     scenario("Pop is fired at non-empty stack actor: " + name) {
       val stackActor = createNonEmptyStackActor
-      val futurePair: Future[(StackInfo[Int], StackInfo[Int])] = 
+      val futurePair: Future[(StackInfo[Int], StackInfo[Int])] =
         for {
           beforePop <- stackActor ? Size
           afterPop <- stackActor ? Pop
@@ -125,7 +125,7 @@ trait AsyncFeatureSpecStackBehaviors { this: AsyncFeatureSpec =>
 
     scenario("Push is fired at non-full stack actor: " + name) {
       val stackActor = createNonFullStackActor
-      val futurePair: Future[(StackInfo[Int], StackInfo[Int])] = 
+      val futurePair: Future[(StackInfo[Int], StackInfo[Int])] =
         for {
           beforePush <- stackActor ? Size
           afterPush <- { stackActor ! Push(7); stackActor ? Peek }

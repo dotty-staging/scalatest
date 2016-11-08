@@ -173,12 +173,12 @@ trait SuiteMixin { this: Suite =>
    * @param filter a <code>Filter</code> with which to filter tests to count based on their tags
    */
   def expectedTestCount(filter: Filter): Int
-  
+
   /**
    * The fully qualified name of the class that can be used to rerun this suite.
    */
   def rerunner: Option[String]
-  
+
   /**
    * This suite's style name.
    *

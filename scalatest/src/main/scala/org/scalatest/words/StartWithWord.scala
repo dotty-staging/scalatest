@@ -60,18 +60,18 @@ final class StartWithWord {
    * </pre>
    */
   def regex[T <: String](right: T): Matcher[T] = regex(right.r)
-  
+
   /**
    * This method enables the following syntax:
    *
    * <pre class="stHighlight">
-   * string should not { startWith regex ("a(b*)c" withGroup "bb") } 
+   * string should not { startWith regex ("a(b*)c" withGroup "bb") }
    *                               ^
    * </pre>
-   */	
-  def regex(regexWithGroups: RegexWithGroups) = 
+   */
+  def regex(regexWithGroups: RegexWithGroups) =
     new Matcher[String] {
-      def apply(left: String): MatchResult = 
+      def apply(left: String): MatchResult =
         startWithRegexWithGroups(left, regexWithGroups.regex, regexWithGroups.groups)
       override def toString: String = "startWith regex " + Prettifier.default(regexWithGroups)
     }
@@ -96,7 +96,7 @@ final class StartWithWord {
         )
       override def toString: String = "startWith regex " + Prettifier.default(rightRegex)
     }
-  
+
   /**
    * Overrides toString to return "startWith"
    */

@@ -45,27 +45,27 @@ object ParallelTestExecutionInfoExamples extends Tables {
   def infoFixturePropSpec = new ExampleParallelTestExecutionInfoFixturePropSpec()
   def infoWordSpec = new ExampleParallelTestExecutionInfoWordSpec()
   def infoFixtureWordSpec = new ExampleParallelTestExecutionInfoFixtureWordSpec()
-  
+
   def infoExamples =
     Table(
       "suite1",
       // SKIP-SCALATESTJS-START
-      infoSpec, 
+      infoSpec,
       infoFixtureSpec,
       // SKIP-SCALATESTJS-END
-      infoFunSuite, 
-      infoFixtureFunSuite, 
-      infoFunSpec, 
-      infoFixtureFunSpec, 
-      infoFeatureSpec, 
-      infoFixtureFeatureSpec, 
-      infoFlatSpec, 
-      infoFixtureFlatSpec, 
-      infoFreeSpec, 
+      infoFunSuite,
+      infoFixtureFunSuite,
+      infoFunSpec,
+      infoFixtureFunSpec,
+      infoFeatureSpec,
+      infoFixtureFeatureSpec,
+      infoFlatSpec,
+      infoFixtureFlatSpec,
+      infoFreeSpec,
       infoFixtureFreeSpec,
-      infoPropSpec, 
-      infoFixturePropSpec, 
-      infoWordSpec, 
+      infoPropSpec,
+      infoFixturePropSpec,
+      infoWordSpec,
       infoFixtureWordSpec
     )
 }
@@ -78,7 +78,7 @@ protected[scalatest] class ExampleParallelTestExecutionInfoSpec extends RefSpec 
   def `test 2`: Unit = {}
   def `test 3`: Unit = {}
   after {} // how to fire info here?
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 6)
     checkTestStarting(events(0), "test 1")
@@ -97,7 +97,7 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFixtureSpec extends f
   def `test 2`(fixture: String): Unit = {}
   def `test 3`(fixture: String): Unit = {}
   after {} // how to fire info here?
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 6)
     checkTestStarting(events(0), "test 1")
@@ -117,7 +117,7 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFunSuite extends FunS
   test("Test 1") {}
   test("Test 2") {}
   test("Test 3") {}
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 12)
     checkInfoProvided(events(0), "In Before")
@@ -143,7 +143,7 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFixtureFunSuite exten
   test("Test 1") { fixture => }
   test("Test 2") { fixture => }
   test("Test 3") { fixture => }
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 12)
     checkInfoProvided(events(0), "In Before")
@@ -174,7 +174,7 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFunSpec extends FunSp
     it("Test 3") {}
     it("Test 4") {}
   }
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 20)
     checkScopeOpened(events(0), "Scope 1")
@@ -213,7 +213,7 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFixtureFunSpec extend
     it("Test 3") { fixture => }
     it("Test 4") { fixture =>}
   }
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 20)
     checkScopeOpened(events(0), "Scope 1")
@@ -252,7 +252,7 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFeatureSpec extends F
     scenario("Test 3") {}
     scenario("Test 4") {}
   }
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 20)
     checkScopeOpened(events(0), "Feature: Scope 1")
@@ -291,7 +291,7 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFixtureFeatureSpec ex
     scenario("Test 3") { fixture => }
     scenario("Test 4") { fixture =>}
   }
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 20)
     checkScopeOpened(events(0), "Feature: Scope 1")
@@ -325,11 +325,11 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFlatSpec extends Flat
   behavior of "Scope 1"
   it should "Test 1" in {}
   it should "Test 2" in {}
-  
+
   behavior of "Scope 2"
   it should "Test 3" in {}
   it should "Test 4" in {}
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 20)
     checkScopeOpened(events(0), "Scope 1")
@@ -363,11 +363,11 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFixtureFlatSpec exten
   behavior of "Scope 1"
   it should "Test 1" in { fixture => }
   it should "Test 2" in { fixture => }
-  
+
   behavior of "Scope 2"
   it should "Test 3" in { fixture => }
   it should "Test 4" in { fixture => }
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 20)
     checkScopeOpened(events(0), "Scope 1")
@@ -402,12 +402,12 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFreeSpec extends Free
     "Test 1" in {}
     "Test 2" in {}
   }
-  
+
   "Scope 2" - {
     "Test 3" in {}
     "Test 4" in {}
   }
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 20)
     checkScopeOpened(events(0), "Scope 1")
@@ -442,12 +442,12 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFixtureFreeSpec exten
     "Test 1" in { fixture => }
     "Test 2" in { fixture => }
   }
-  
+
   "Scope 2" - {
     "Test 3" in { fixture => }
     "Test 4" in { fixture => }
   }
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 20)
     checkScopeOpened(events(0), "Scope 1")
@@ -481,7 +481,7 @@ protected[scalatest] class ExampleParallelTestExecutionInfoPropSpec extends Prop
   property("Test 1") {}
   property("Test 2") {}
   property("Test 3") {}
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 12)
     checkInfoProvided(events(0), "In Before")
@@ -507,7 +507,7 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFixturePropSpec exten
   property("Test 1") { fixture => }
   property("Test 2") { fixture => }
   property("Test 3") { fixture => }
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 12)
     checkInfoProvided(events(0), "In Before")
@@ -534,12 +534,12 @@ protected[scalatest] class ExampleParallelTestExecutionInfoWordSpec extends Word
     "Test 1" in {}
     "Test 2" in {}
   }
-  
+
   "Scope 2" should {
     "Test 3" in {}
     "Test 4" in {}
   }
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 20)
     checkScopeOpened(events(0), "Scope 1")
@@ -573,12 +573,12 @@ protected[scalatest] class ExampleParallelTestExecutionInfoFixtureWordSpec exten
     "Test 1" in { fixture => }
     "Test 2" in { fixture => }
   }
-  
+
   "Scope 2" should {
     "Test 3" in { fixture => }
     "Test 4" in { fixture => }
   }
-  
+
   def assertBeforeAfterInfo(events: List[Event]): Unit = {
     assert(events.size === 20)
     checkScopeOpened(events(0), "Scope 1")

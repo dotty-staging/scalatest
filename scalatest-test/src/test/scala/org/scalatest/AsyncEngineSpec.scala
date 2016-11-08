@@ -86,11 +86,11 @@ class AsyncEngineSpec extends FlatSpec with Matchers {
     import scala.collection.mutable.ListBuffer
     val engine = new AsyncEngine("concurrentFunSuiteBundleMod", "FunSuite")
     engine.registerNestedBranch("Given an empty list", None, {
-      val list = ListBuffer[Int]() 
+      val list = ListBuffer[Int]()
       engine.registerNestedBranch("when 1 is inserted", None, {
-        list += 1 
+        list += 1
         engine.registerAsyncTest("then the list has only 1 in it", () => {
-          list should be (ListBuffer(1)) 
+          list should be (ListBuffer(1))
           list.clear()
           PastOutcome(Succeeded)
         }, "Anything", None, None, source.Position.here)
@@ -107,14 +107,14 @@ class AsyncEngineSpec extends FlatSpec with Matchers {
     }, "Anything", None, source.Position.here)
     engine
   }
-  
+
   "Engine.getPathForTest" should "throw IAE for not existing task" in {
     val engine = pathEngine
-    intercept[IllegalArgumentException] { 
-      engine.testPath("Invalid test name") 
-    } 
+    intercept[IllegalArgumentException] {
+      engine.testPath("Invalid test name")
+    }
   }
-  
+
   "Engine.getPathForTest" should "return correct path for test" in {
     val engine = pathEngine
     engine.testPath("Given an empty list when 1 is inserted then the list has only 1 in it") should be (List(0, 0, 0))
@@ -136,12 +136,12 @@ class AsyncEngineSpec extends FlatSpec with Matchers {
     myReporter.suiteCompletedEventsReceived should have size 0
     eventually { status.unreportedException shouldBe defined }
   // SKIP-SCALATESTJS-END
-    
+
 /*
     // THings like OutOfMemoryError in a test didn't cause a suite abort, it killed the thread all the
     // way back up. Suite aborts were caused by before or after code that died. Now we have a new problem
     // in async of what do we do when a test dies with OutOfMemoryError. Can't just propagate it back.
-    // Unless there's someplace we can throw it, maybe have to report SuiteAborted. 
+    // Unless there's someplace we can throw it, maybe have to report SuiteAborted.
     class SuiteThatAborts extends AsyncFunSuite {
       // SKIP-SCALATESTJS-START
       implicit def executionContext = scala.concurrent.ExecutionContext.Implicits.global

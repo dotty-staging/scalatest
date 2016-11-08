@@ -101,7 +101,7 @@ class TwoTestsIgnoredExamples extends SuiteExamples {
       ignore("first test") { s => }
       ignore("second test") { s => }
   }
-  
+
   class NestedFixtureFunSpecExample extends StringFixtureFunSpec with NestedTestNames {
     describe("A subject") {
       ignore("should first test") { s => }
@@ -481,7 +481,7 @@ class TwoTestsIgnoredExamples extends SuiteExamples {
   lazy val deeplyNestedWordSpecWithMust = new DeeplyNestedWordSpecWithMustExample
   lazy val nestedFixtureWordSpecWithMust = new NestedFixtureWordSpecWithMustExample
   lazy val deeplyNestedFixtureWordSpecWithMust = new DeeplyNestedFixtureWordSpecWithMustExample
-  
+
   lazy val nestedWordSpecWithCan = new NestedWordSpecWithCanExample
   lazy val deeplyNestedWordSpecWithCan = new DeeplyNestedWordSpecWithCanExample
   lazy val nestedFixtureWordSpecWithCan = new NestedFixtureWordSpecWithCanExample
@@ -523,7 +523,7 @@ class TwoTestsIgnoredExamples extends SuiteExamples {
   lazy val nestedFixtureFeatureSpec = new NestedFixtureFeatureSpecExample
   lazy val propSpec = new PropSpecExample
   lazy val fixturePropSpec = new FixturePropSpecExample
-   
+
   // Two ways to ignore in a flat spec, so add two more examples
   override def examples = super.examples ++
     List(
@@ -546,7 +546,7 @@ class TwoTestsIgnoredExamples extends SuiteExamples {
     ignore should "second test" in { s => }
     override val theTestNames = Vector("should first test", "should second test")
   }
-  
+
   class FlatSpecWithMustExample2 extends FlatSpec with Services {
     ignore must "first test" in {}
     ignore must "second test" in {}
@@ -558,7 +558,7 @@ class TwoTestsIgnoredExamples extends SuiteExamples {
     ignore must "second test" in { s => }
     override val theTestNames = Vector("must first test", "must second test")
   }
-  
+
   class FlatSpecWithCanExample2 extends FlatSpec with Services {
     ignore can "first test" in {}
     ignore can "second test" in {}

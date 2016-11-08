@@ -23,52 +23,52 @@ import org.scalactic.Prettifier
 class ShouldBeReadableLogicalAndSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   val fileName: String = "ShouldBeReadableLogicalAndSpec.scala"
 
   trait File {
     def isReadable: Boolean
   }
-  
-  def wasEqualTo(left: Any, right: Any): String = 
+
+  def wasEqualTo(left: Any, right: Any): String =
     FailureMessages.wasEqualTo(prettifier, left, right)
-    
-  def wasNotEqualTo(left: Any, right: Any): String = 
+
+  def wasNotEqualTo(left: Any, right: Any): String =
     FailureMessages.wasNotEqualTo(prettifier, left, right)
-    
-  def equaled(left: Any, right: Any): String = 
+
+  def equaled(left: Any, right: Any): String =
     FailureMessages.equaled(prettifier, left, right)
-    
+
   def didNotEqual(left: Any, right: Any): String =
     FailureMessages.didNotEqual(prettifier, left, right)
-  
-  def wasNotReadable(left: Any): String = 
+
+  def wasNotReadable(left: Any): String =
     FailureMessages.wasNotReadable(prettifier, left)
-    
-  def wasReadable(left: Any): String = 
+
+  def wasReadable(left: Any): String =
     FailureMessages.wasReadable(prettifier, left)
-    
+
   def allError(message: String, lineNumber: Int, left: Any): String = {
     val messageWithIndex = UnquotedString("  " + FailureMessages.forAssertionsGenTraversableMessageWithStackDepth(prettifier, 0, UnquotedString(message), UnquotedString(fileName + ":" + lineNumber)))
     FailureMessages.allShorthandFailed(prettifier, messageWithIndex, left)
   }
 
   val readableFile = new File { val isReadable = true }
-  
+
   val secretFile = new File { val isReadable = false }
-  
+
   describe("Readability matcher") {
-    
+
     describe("when work with 'file should be (readable)'") {
-      
+
       it("should do nothing when file is readable") {
         readableFile should (equal (readableFile) and be (readable))
         readableFile should (be (readable) and equal (readableFile))
-        
+
         readableFile should (be (readableFile) and be (readable))
         readableFile should (be (readable) and be (readableFile))
       }
-      
+
       it("should throw TestFailedException with correct stack depth when file is not readable") {
         val caught1 = intercept[TestFailedException] {
           secretFile should (equal (secretFile) and be (readable))
@@ -76,21 +76,21 @@ class ShouldBeReadableLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(equaled(secretFile, secretFile) + ", but " + wasNotReadable(secretFile)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           secretFile should (be (readable) and equal (secretFile))
         }
         assert(caught2.message === Some(wasNotReadable(secretFile)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           secretFile should (be (secretFile) and be (readable))
         }
         assert(caught3.message === Some(wasEqualTo(secretFile, secretFile) + ", but " + wasNotReadable(secretFile)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           secretFile should (be (readable) and be (secretFile))
         }
@@ -99,17 +99,17 @@ class ShouldBeReadableLogicalAndSpec extends FunSpec {
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'file should not be sorted'") {
-      
+
       it("should do nothing when file is not readable") {
         secretFile should (not equal readableFile and not be readable)
         secretFile should (not be readable and not equal readableFile)
-        
+
         secretFile should (not be readableFile and not be readable)
         secretFile should (not be readable and not be readableFile)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when xs is not sorted") {
         val caught1 = intercept[TestFailedException] {
           readableFile should (not equal secretFile and not be readable)
@@ -117,21 +117,21 @@ class ShouldBeReadableLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(didNotEqual(readableFile, secretFile) + ", but " + wasReadable(readableFile)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           readableFile should (not be readable and not equal secretFile)
         }
         assert(caught2.message === Some(wasReadable(readableFile)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           readableFile should (not be secretFile and not be readable)
         }
         assert(caught3.message === Some(wasNotEqualTo(readableFile, secretFile) + ", but " + wasReadable(readableFile)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           readableFile should (not be readable and not be secretFile)
         }
@@ -140,17 +140,17 @@ class ShouldBeReadableLogicalAndSpec extends FunSpec {
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'all(xs) should be (readable)'") {
-      
+
       it("should do nothing when all(xs) is readable") {
         all(List(readableFile)) should (be (readableFile) and be (readable))
         all(List(readableFile)) should (be (readable) and be (readableFile))
-        
+
         all(List(readableFile)) should (equal (readableFile) and be (readable))
         all(List(readableFile)) should (be (readable) and equal (readableFile))
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is not readable") {
         val left1 = List(secretFile)
         val caught1 = intercept[TestFailedException] {
@@ -159,7 +159,7 @@ class ShouldBeReadableLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(allError(wasEqualTo(secretFile, secretFile) + ", but " + wasNotReadable(secretFile), thisLineNumber - 2, left1)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left2 = List(secretFile)
         val caught2 = intercept[TestFailedException] {
           all(left2) should (be (readable) and be (secretFile))
@@ -167,7 +167,7 @@ class ShouldBeReadableLogicalAndSpec extends FunSpec {
         assert(caught2.message === Some(allError(wasNotReadable(secretFile), thisLineNumber - 2, left2)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left3 = List(secretFile)
         val caught3 = intercept[TestFailedException] {
           all(left3) should (equal (secretFile) and be (readable))
@@ -175,7 +175,7 @@ class ShouldBeReadableLogicalAndSpec extends FunSpec {
         assert(caught3.message === Some(allError(equaled(secretFile, secretFile) + ", but " + wasNotReadable(secretFile), thisLineNumber - 2, left3)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left4 = List(secretFile)
         val caught4 = intercept[TestFailedException] {
           all(left4) should (be (readable) and equal (secretFile))
@@ -185,16 +185,16 @@ class ShouldBeReadableLogicalAndSpec extends FunSpec {
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'all(xs) should not be readable'") {
       it("should do nothing when all(xs) is not readable") {
         all(List(secretFile)) should (not be readable and not be readableFile)
         all(List(secretFile)) should (not be readableFile and not be readable)
-        
+
         all(List(secretFile)) should (not be readable and not equal readableFile)
         all(List(secretFile)) should (not equal readableFile and not be readable)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is readable") {
         val left1 = List(readableFile)
         val caught1 = intercept[TestFailedException] {
@@ -203,7 +203,7 @@ class ShouldBeReadableLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(allError(wasNotEqualTo(readableFile, secretFile) + ", but " + wasReadable(readableFile), thisLineNumber - 2, left1)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left2 = List(readableFile)
         val caught2 = intercept[TestFailedException] {
           all(left2) should (not be readable and not be secretFile)
@@ -211,7 +211,7 @@ class ShouldBeReadableLogicalAndSpec extends FunSpec {
         assert(caught2.message === Some(allError(wasReadable(readableFile), thisLineNumber - 2, left2)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left3 = List(readableFile)
         val caught3 = intercept[TestFailedException] {
           all(left3) should (not equal secretFile and not be readable)
@@ -219,7 +219,7 @@ class ShouldBeReadableLogicalAndSpec extends FunSpec {
         assert(caught3.message === Some(allError(didNotEqual(readableFile, secretFile) + ", but " + wasReadable(readableFile), thisLineNumber - 2, left3)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left4 = List(readableFile)
         val caught4 = intercept[TestFailedException] {
           all(left4) should (not be readable and not equal secretFile)

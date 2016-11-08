@@ -52,21 +52,21 @@ private[scalatest] object SuiteDiscoveryHelper {
     if (!testSpecs.isEmpty) {
       val names: Set[String] =
         testSpecs.filter(_.isSubstring == false).map(_.spec).toSet
-  
+
       val substrings: Set[String] =
         testSpecs.filter(_.isSubstring == true).map(_.spec).toSet
-  
+
       for (suiteName <- accessibleSuites) {
         val suiteInstance: Suite =
           DiscoverySuite.getSuiteInstance(suiteName, loader)
-  
+
         val nameMatches: Set[String] =
           names.intersect(suiteInstance.testNames)
-  
+
         val substringMatches: Set[String] =
           substrings.filter(substring =>
             suiteInstance.testNames.exists(_.contains(substring)))
-  
+
         if ((nameMatches.size > 0) || (substringMatches.size > 0))
           buf += SuiteParam(suiteName,
                             nameMatches.toList.sortWith(_<_).toArray,
@@ -108,7 +108,7 @@ private[scalatest] object SuiteDiscoveryHelper {
       }
     }
 
-    val listOfSets: List[Set[String]] = 
+    val listOfSets: List[Set[String]] =
       for (path <- runpath)
         yield {
           val urlOption =
@@ -118,16 +118,16 @@ private[scalatest] object SuiteDiscoveryHelper {
             catch {
               case e: MalformedURLException => None
             }
-    
+
           val endsWithDotJar = path.endsWith(".jar")
-    
+
           if (endsWithDotJar) {
             val jarFileOption =
               urlOption match {
                 case Some(url) => getJarFileFromURL(url)
                 case None => getJarFileFromFileSystem(path)
               }
-    
+
             jarFileOption match {
               case Some(jf) => processFileNames(getFileNamesIteratorFromJar(jf), '/', loader, suffixes)
               case None => Set[String]()
@@ -154,7 +154,7 @@ private[scalatest] object SuiteDiscoveryHelper {
   // (Typically we compose file names using ':' instead of '/', but
   // that's probably just a mistake where path.separator got used instead
   // of file.separator and doesn't affect how things turn out.)
-  // 
+  //
   private def transformToClassName(fileName: String, fileSeparator: Char): Option[String] = {
 
     // If the fileName starts with a file separator char, lop that off
@@ -174,7 +174,7 @@ private[scalatest] object SuiteDiscoveryHelper {
 
   private[scalatest] def isAccessibleSuite(clazz: java.lang.Class[_]): Boolean = {
       try {
-        classOf[Suite].isAssignableFrom(clazz) && 
+        classOf[Suite].isAssignableFrom(clazz) &&
           Modifier.isPublic(clazz.getModifiers) &&
           !Modifier.isAbstract(clazz.getModifiers) &&
           Modifier.isPublic(clazz.getConstructor(emptyClassArray: _*).getModifiers)
@@ -187,18 +187,18 @@ private[scalatest] object SuiteDiscoveryHelper {
 
   private[scalatest] def isAccessibleSuite(className: String, loader: ClassLoader): Boolean = {
     try {
-      isAccessibleSuite(loader.loadClass(className)) 
+      isAccessibleSuite(loader.loadClass(className))
     }
     catch {
       case e: ClassNotFoundException => false
       case e: NoClassDefFoundError => false
     }
   }
-  
+
   private[scalatest] def isDiscoverableSuite(clazz: java.lang.Class[_]): Boolean = {
     !clazz.isAnnotationPresent(classOf[DoNotDiscover])
   }
-  
+
   private def isDiscoverableSuite(className: String, loader: ClassLoader): Boolean = {
     try {
       isDiscoverableSuite(loader.loadClass(className))
@@ -208,13 +208,13 @@ private[scalatest] object SuiteDiscoveryHelper {
       case e: NoClassDefFoundError => false
     }
   }
-  
+
   private[scalatest] def isRunnable(clazz: java.lang.Class[_]): Boolean = {
     val wrapWithAnnotation = clazz.getAnnotation(classOf[WrapWith])
     if (wrapWithAnnotation != null) {
       val wrapperSuiteClazz = wrapWithAnnotation.value
       val constructorList = wrapperSuiteClazz.getDeclaredConstructors()
-      constructorList.exists { c => 
+      constructorList.exists { c =>
         val types = c.getParameterTypes
         types.length == 1 && types(0) == classOf[java.lang.Class[_]]
       }
@@ -222,10 +222,10 @@ private[scalatest] object SuiteDiscoveryHelper {
     else
       false
   }
-  
+
   private[scalatest] def isRunnable(className: String, loader: ClassLoader): Boolean = {
     try {
-      isRunnable(loader.loadClass(className)) 
+      isRunnable(loader.loadClass(className))
     }
     catch {
       case e: ClassNotFoundException => false
@@ -241,11 +241,11 @@ private[scalatest] object SuiteDiscoveryHelper {
   private def processClassName(className: String, loader: ClassLoader, suffixes: Option[Pattern]): Option[String] = {
 
     if (classNameSuffixOkay(className, suffixes) && isDiscoverableSuite(className, loader)
-        && 
-        (isAccessibleSuite(className, loader) || isRunnable(className, loader))) 
+        &&
+        (isAccessibleSuite(className, loader) || isRunnable(className, loader)))
       Some(className)
-    else 
-      None 
+    else
+      None
   }
 
   //
@@ -278,7 +278,7 @@ private[scalatest] object SuiteDiscoveryHelper {
       for (className <- extractClassNames(fileNames, fileSeparator))
         yield processClassName(className, loader, suffixes)
 
-    val classNames = 
+    val classNames =
       for (Some(className) <- classNameOptions)
         yield className
 
@@ -295,8 +295,8 @@ private[scalatest] object SuiteDiscoveryHelper {
         throw new IllegalArgumentException
 
       val subDirs = for (entry <- dir.listFiles.toList; if entry.isDirectory) yield entry
-      val fileLists: List[List[String]] = 
-        for (subDir <- subDirs) 
+      val fileLists: List[List[String]] =
+        for (subDir <- subDirs)
           yield listFilesInDir(subDir, prependPrevName(prevName, subDir.getName))
 
       val files: List[String] =

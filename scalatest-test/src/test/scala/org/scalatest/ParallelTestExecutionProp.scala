@@ -65,19 +65,19 @@ class ParallelTestExecutionProp extends FunSuite {
       throw new UnsupportedOperationException("Hey, we're not supposed to be calling this anymore!")
     }
   }
-  
+
   class TestHoldingControlledOrderDistributor extends Distributor {
     val buf = ListBuffer.empty[(DistributedTestRunnerSuite, Args, ScalaTestStatefulStatus)]
     def apply(suite: Suite, args: Args): Status = {
       suite match {
-        case dtrs: DistributedTestRunnerSuite => 
+        case dtrs: DistributedTestRunnerSuite =>
           val status = new ScalaTestStatefulStatus
           buf += ((dtrs, args, status))
           status
-        case _ => 
+        case _ =>
           throw new UnsupportedOperationException("TestHoldingControlledOrderDistributor takes only DistributedTestRunnerSuite!")
       }
-      
+
     }
     def executeInOrder(): Unit = {
       for ((suite, args, status) <- buf) {
@@ -96,19 +96,19 @@ class ParallelTestExecutionProp extends FunSuite {
     def fireHoldEvent(): Unit = {
       for ((suite, args, status) <- buf) {
         suite.suite match {
-          case tter: TestTimeoutExpectedResults => 
+          case tter: TestTimeoutExpectedResults =>
             tter.holdingReporter.fireHoldEvent()
-          case other => 
+          case other =>
             throw new UnsupportedOperationException("Expected TestTimeoutExpectedResults type, but we got: " + other.getClass.getName)
         }
-        
+
       }
     }
     def apply(suite: Suite, tracker: Tracker): Unit = {
       throw new UnsupportedOperationException("Hey, we're not supposed to be calling this anymore!")
     }
   }
-  
+
   def withDistributor(suite: Suite, fun: ControlledOrderDistributor => Unit) = {
     val recordingReporter = new EventRecordingReporter
     val outOfOrderDistributor = new ControlledOrderDistributor
@@ -124,8 +124,8 @@ class ParallelTestExecutionProp extends FunSuite {
     val distributor = new TestHoldingControlledOrderDistributor
     suite.run(None, Args(recordingReporter, distributor = Some(distributor)))
     fun(distributor)
-    eventually(timeout(suite.sortingTimeout.scaledBy(3.0))) { 
-      assert(recordingReporter.eventsReceived.size === suite.holdUntilEventCount) 
+    eventually(timeout(suite.sortingTimeout.scaledBy(3.0))) {
+      assert(recordingReporter.eventsReceived.size === suite.holdUntilEventCount)
     }
     distributor.fireHoldEvent()
     recordingReporter.eventsReceived
@@ -153,7 +153,7 @@ class ParallelTestExecutionProp extends FunSuite {
     recordingReporter.eventsReceived
   }
   // SKIP-SCALATESTJS-END
-  
+
   def withSuiteDistributor(suite1: Suite, suite2: Suite, fun: ControlledOrderDistributor => Unit) = {
     val recordingReporter = new EventRecordingReporter
     val suiteSortingReporter = new SuiteSortingReporter(recordingReporter, Span(Suite.testSortingReporterTimeout.millisPart + 1000, Millis), System.err)
@@ -178,7 +178,7 @@ class ParallelTestExecutionProp extends FunSuite {
       example.assertOrderTest(reverseOrderEvents)
     }
   }
-  
+
   test("ParallelTestExecution should have InfoProvided fired from before and after block in correct order when tests are executed in parallel") {
     import ParallelTestExecutionInfoExamples._
     forAll(infoExamples) { example =>
@@ -200,7 +200,7 @@ class ParallelTestExecutionProp extends FunSuite {
     }
   }
   // SKIP-SCALATESTJS-END
-  
+
   test("ParallelTestExecution should have the events reported in correct order when multiple suite's tests are executed in parallel") {
     import ParallelTestExecutionParallelSuiteExamples._
     forAll(parallelExamples) { example =>

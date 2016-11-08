@@ -20,4 +20,4 @@ import org.scalatest.Tag
 /**
  * Tag object that indicates a Selenium test uses the Safari browser.
  */
-object SafariBrowser extends Tag("org.scalatest.tags.SafariBrowser") 
+object SafariBrowser extends Tag("org.scalatest.tags.SafariBrowser")

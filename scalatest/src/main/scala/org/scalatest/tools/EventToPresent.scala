@@ -69,7 +69,7 @@ private[tools] object EventToPresent {
       PresentNoteProvided,
       PresentScopeOpened,
       PresentScopeClosed,
-      PresentScopePending, 
+      PresentScopePending,
       PresentMarkupProvided,
       PresentRunStopped,
       PresentRunCompleted,

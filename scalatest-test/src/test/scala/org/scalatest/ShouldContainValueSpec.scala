@@ -267,7 +267,7 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw TestFailedException if map does not contain the specified value") {
-        val map = mutable.Map("one" -> 1, "two" -> 2) 
+        val map = mutable.Map("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map should contain value (3)
         }
@@ -275,19 +275,19 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw TestFailedException if contains the specified value when used with not") {
-        val map1 = mutable.Map("one" -> 1, "two" -> 2) 
+        val map1 = mutable.Map("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map1 should (not contain value (2))
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " contained value 2")
-        
-        val map2 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.Map("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should not (contain value (2))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " contained value 2")
-        
-        val map3 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.Map("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should not contain value (2)
         }
@@ -295,19 +295,19 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw an TestFailedException when map doesn't contain specified value and used in a logical-and expression") {
-        val map1 = mutable.Map("one" -> 1, "two" -> 2) 
+        val map1 = mutable.Map("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map1 should { contain value (5) and (contain value (2)) }
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " did not contain value 5")
-        
-        val map2 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.Map("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should ((contain value (5)) and (contain value (2)))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " did not contain value 5")
-        
-        val map3 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.Map("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should (contain value (5) and contain value (2))
         }
@@ -315,20 +315,20 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw an TestFailedException when map doesn't contain specified value and used in a logical-or expression") {
-        
-        val map1 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map1 = mutable.Map("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map1 should { contain value (55) or (contain value (22)) }
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " did not contain value 55, and " + decorateToStringValue(prettifier, map1) + " did not contain value 22")
-        
-        val map2 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.Map("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should ((contain value (55)) or (contain value (22)))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " did not contain value 55, and " + decorateToStringValue(prettifier, map2) + " did not contain value 22")
-        
-        val map3 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.Map("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should (contain value (55) or contain value (22))
         }
@@ -336,19 +336,19 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw an TestFailedException when map contains specified value and used in a logical-and expression with not") {
-        val map1 = mutable.Map("one" -> 1, "two" -> 2) 
+        val map1 = mutable.Map("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map1 should { not { contain value (3) } and not { contain value (2) }}
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " did not contain value 3, but " + decorateToStringValue(prettifier, map1) + " contained value 2")
-        
-        val map2 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.Map("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should ((not contain value (3)) and (not contain value (2)))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " did not contain value 3, but " + decorateToStringValue(prettifier, map2) + " contained value 2")
-        
-        val map3 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.Map("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should (not contain value (3) and not contain value (2))
         }
@@ -356,19 +356,19 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw an TestFailedException when map contains specified value and used in a logical-or expression with not") {
-        val map1 = mutable.Map("one" -> 1, "two" -> 2) 
+        val map1 = mutable.Map("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map1 should { not { contain value (2) } or not { contain value (2) }}
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " contained value 2, and " + decorateToStringValue(prettifier, map1) + " contained value 2")
-        
-        val map2 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.Map("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should ((not contain value (2)) or (not contain value (2)))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " contained value 2, and " + decorateToStringValue(prettifier, map2) + " contained value 2")
-        
-        val map3 = mutable.Map("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.Map("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should (not contain value (2) or not contain value (2))
         }
@@ -723,7 +723,7 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw TestFailedException if map does not contain the specified value") {
-        val map = mutable.HashMap("one" -> 1, "two" -> 2) 
+        val map = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map should contain value (3)
         }
@@ -731,19 +731,19 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw TestFailedException if contains the specified value when used with not") {
-        val map1 = mutable.HashMap("one" -> 1, "two" -> 2) 
+        val map1 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map1 should (not contain value (2))
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " contained value 2")
-        
-        val map2 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should not (contain value (2))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " contained value 2")
-        
-        val map3 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should not contain value (2)
         }
@@ -751,19 +751,19 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw an TestFailedException when map doesn't contain specified value and used in a logical-and expression") {
-        val map1 = mutable.HashMap("one" -> 1, "two" -> 2) 
+        val map1 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map1 should { contain value (5) and (contain value (2)) }
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " did not contain value 5")
-        
-        val map2 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should ((contain value (5)) and (contain value (2)))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " did not contain value 5")
-        
-        val map3 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should (contain value (5) and contain value (2))
         }
@@ -771,19 +771,19 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw an TestFailedException when map doesn't contain specified value and used in a logical-or expression") {
-        val map1 = mutable.HashMap("one" -> 1, "two" -> 2) 
+        val map1 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map1 should { contain value (55) or (contain value (22)) }
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " did not contain value 55, and " + decorateToStringValue(prettifier, map1) + " did not contain value 22")
-        
-        val map2 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should ((contain value (55)) or (contain value (22)))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " did not contain value 55, and " + decorateToStringValue(prettifier, map2) + " did not contain value 22")
-        
-        val map3 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should (contain value (55) or contain value (22))
         }
@@ -791,20 +791,20 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw an TestFailedException when map contains specified value and used in a logical-and expression with not") {
-        
-        val map1 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map1 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map1 should { not { contain value (3) } and not { contain value (2) }}
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " did not contain value 3, but " + decorateToStringValue(prettifier, map1) + " contained value 2")
-        
-        val map2 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should ((not contain value (3)) and (not contain value (2)))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " did not contain value 3, but " + decorateToStringValue(prettifier, map2) + " contained value 2")
-        
-        val map3 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should (not contain value (3) and not contain value (2))
         }
@@ -812,19 +812,19 @@ class ShouldContainValueSpec extends FunSpec with Checkers with ReturnsNormallyT
       }
 
       it("should throw an TestFailedException when map contains specified value and used in a logical-or expression with not") {
-        val map1 = mutable.HashMap("one" -> 1, "two" -> 2) 
+        val map1 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught1 = intercept[TestFailedException] {
           map1 should { not { contain value (2) } or not { contain value (2) }}
         }
         assert(caught1.getMessage === decorateToStringValue(prettifier, map1) + " contained value 2, and " + decorateToStringValue(prettifier, map1) + " contained value 2")
-        
-        val map2 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map2 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught2 = intercept[TestFailedException] {
           map2 should ((not contain value (2)) or (not contain value (2)))
         }
         assert(caught2.getMessage === decorateToStringValue(prettifier, map2) + " contained value 2, and " + decorateToStringValue(prettifier, map2) + " contained value 2")
-        
-        val map3 = mutable.HashMap("one" -> 1, "two" -> 2) 
+
+        val map3 = mutable.HashMap("one" -> 1, "two" -> 2)
         val caught3 = intercept[TestFailedException] {
           map3 should (not contain value (2) or not contain value (2))
         }

@@ -20,7 +20,7 @@ import org.scalatest.prop.Tables
 trait FunctionSuiteExamples extends Tables {
 
   type FixtureServices
-  
+
   def funSuite: FunSuite with FixtureServices
   def fixtureFunSuite: fixture.FunSuite with FixtureServices
   def funSpec: FunSpec with FixtureServices
@@ -37,7 +37,7 @@ trait FunctionSuiteExamples extends Tables {
   def fixtureWordSpec: fixture.WordSpec with FixtureServices
   def pathFreeSpec: path.FreeSpec with FixtureServices
   def pathFunSpec: path.FunSpec with FixtureServices
-  
+
   def examples =
     Table[Suite with FixtureServices](
       "suite",
@@ -54,9 +54,9 @@ trait FunctionSuiteExamples extends Tables {
       propSpec,
       fixturePropSpec,
       wordSpec,
-      fixtureWordSpec, 
-      pathFreeSpec, 
+      fixtureWordSpec,
+      pathFreeSpec,
       pathFunSpec
     )
-  
+
 }

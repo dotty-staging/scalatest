@@ -46,11 +46,11 @@ class SuiteHoldingReporter(dispatch: Reporter, holdingSuiteId: String, holdingTe
   private val holdEvents = new ListBuffer[Event]()
   override protected def doApply(event: Event): Unit = {
     event match {
-      case testStarting: TestStarting if testStarting.suiteId == holdingSuiteId && testStarting.testName == holdingTestName => 
+      case testStarting: TestStarting if testStarting.suiteId == holdingSuiteId && testStarting.testName == holdingTestName =>
         holdEvents += testStarting
       case testSucceeded: TestSucceeded if testSucceeded.suiteId == holdingSuiteId && testSucceeded.testName == holdingTestName =>
         holdEvents += testSucceeded
-      case scopeClosed: ScopeClosed if holdingScopeClosedName.isDefined && scopeClosed.message == holdingScopeClosedName.get => 
+      case scopeClosed: ScopeClosed if holdingScopeClosedName.isDefined && scopeClosed.message == holdingScopeClosedName.get =>
         holdEvents += scopeClosed
       case _ => dispatch(event)
     }
@@ -62,15 +62,15 @@ class SuiteHoldingReporter(dispatch: Reporter, holdingSuiteId: String, holdingTe
 }
 
 object ParallelTestExecutionSuiteTimeoutExamples extends Tables {
-  
-  def suiteTimeoutExamples = 
+
+  def suiteTimeoutExamples =
     Table(
       "pair",
       // SKIP-SCALATESTJS-START
       new ExampleParallelTestExecutionSuiteTimeoutSpecPair,
       // SKIP-SCALATESTJS-END
-      new ExampleParallelTestExecutionSuiteTimeoutFunSuitePair, 
-      new ExampleParallelTestExecutionSuiteTimeoutFunSpecPair, 
+      new ExampleParallelTestExecutionSuiteTimeoutFunSuitePair,
+      new ExampleParallelTestExecutionSuiteTimeoutFunSpecPair,
       new ExampleParallelTestExecutionSuiteTimeoutFeatureSpecPair,
       new ExampleParallelTestExecutionSuiteTimeoutFlatSpecPair,
       new ExampleParallelTestExecutionSuiteTimeoutFreeSpecPair,
@@ -89,13 +89,13 @@ class ExampleParallelTestExecutionSuiteTimeoutSpecPair extends SuiteTimeoutSuite
   val holdUntilEventCount = 13
   def assertSuiteTimeoutTest(events: List[Event]): Unit = {
     assert(events.size === 16)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkTestStarting(events(1), "test 1")
     checkTestSucceeded(events(2), "test 1")
     checkTestStarting(events(3), "test 2")
     checkTestSucceeded(events(4), "test 2")
-    
+
     checkSuiteStarting(events(5), suite2.suiteId)
     checkTestStarting(events(6), "test 1")
     checkTestSucceeded(events(7), "test 1")
@@ -104,7 +104,7 @@ class ExampleParallelTestExecutionSuiteTimeoutSpecPair extends SuiteTimeoutSuite
     checkTestStarting(events(10), "test 3")
     checkTestSucceeded(events(11), "test 3")
     checkSuiteCompleted(events(12), suite2.suiteId)
-    
+
     checkTestStarting(events(13), "test 3")
     checkTestSucceeded(events(14), "test 3")
     checkSuiteCompleted(events(15), suite1.suiteId)
@@ -135,13 +135,13 @@ class ExampleParallelTestExecutionSuiteTimeoutFunSuitePair extends SuiteTimeoutS
   val holdUntilEventCount = 13
   def assertSuiteTimeoutTest(events: List[Event]): Unit = {
     assert(events.size === 16)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkTestStarting(events(1), "Test 1")
     checkTestSucceeded(events(2), "Test 1")
     checkTestStarting(events(3), "Test 2")
     checkTestSucceeded(events(4), "Test 2")
-    
+
     checkSuiteStarting(events(5), suite2.suiteId)
     checkTestStarting(events(6), "Fixture Test 1")
     checkTestSucceeded(events(7), "Fixture Test 1")
@@ -150,7 +150,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFunSuitePair extends SuiteTimeoutS
     checkTestStarting(events(10), "Fixture Test 3")
     checkTestSucceeded(events(11), "Fixture Test 3")
     checkSuiteCompleted(events(12), suite2.suiteId)
-    
+
     checkTestStarting(events(13), "Test 3")
     checkTestSucceeded(events(14), "Test 3")
     checkSuiteCompleted(events(15), suite1.suiteId)
@@ -182,7 +182,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFunSpecPair extends SuiteTimeoutSu
   val holdUntilEventCount = 24
   def assertSuiteTimeoutTest(events: List[Event]): Unit = {
     assert(events.size === 28)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkScopeOpened(events(1), "Scope 1")
     checkTestStarting(events(2), "Scope 1 Test 1")
@@ -193,7 +193,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFunSpecPair extends SuiteTimeoutSu
     checkScopeOpened(events(7), "Scope 2")
     checkTestStarting(events(8), "Scope 2 Test 3")
     checkTestSucceeded(events(9), "Scope 2 Test 3")
-    
+
     checkSuiteStarting(events(10), suite2.suiteId)
     checkScopeOpened(events(11), "Fixture Scope 1")
     checkTestStarting(events(12), "Fixture Scope 1 Fixture Test 1")
@@ -208,7 +208,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFunSpecPair extends SuiteTimeoutSu
     checkTestSucceeded(events(21), "Fixture Scope 2 Fixture Test 4")
     checkScopeClosed(events(22), "Fixture Scope 2")
     checkSuiteCompleted(events(23), suite2.suiteId)
-    
+
     checkTestStarting(events(24), "Scope 2 Test 4")
     checkTestSucceeded(events(25), "Scope 2 Test 4")
     checkScopeClosed(events(26), "Scope 2")
@@ -251,7 +251,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFeatureSpecPair extends SuiteTimeo
   val holdUntilEventCount = 24
   def assertSuiteTimeoutTest(events: List[Event]): Unit = {
     assert(events.size === 28)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkScopeOpened(events(1), "Feature: Scope 1")
     checkTestStarting(events(2), "Feature: Scope 1 Scenario: Test 1")
@@ -262,7 +262,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFeatureSpecPair extends SuiteTimeo
     checkScopeOpened(events(7), "Feature: Scope 2")
     checkTestStarting(events(8), "Feature: Scope 2 Scenario: Test 3")
     checkTestSucceeded(events(9), "Feature: Scope 2 Scenario: Test 3")
-    
+
     checkSuiteStarting(events(10), suite2.suiteId)
     checkScopeOpened(events(11), "Feature: Fixture Scope 1")
     checkTestStarting(events(12), "Feature: Fixture Scope 1 Scenario: Fixture Test 1")
@@ -277,7 +277,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFeatureSpecPair extends SuiteTimeo
     checkTestSucceeded(events(21), "Feature: Fixture Scope 2 Scenario: Fixture Test 4")
     checkScopeClosed(events(22), "Feature: Fixture Scope 2")
     checkSuiteCompleted(events(23), suite2.suiteId)
-    
+
     checkTestStarting(events(24), "Feature: Scope 2 Scenario: Test 4")
     checkTestSucceeded(events(25), "Feature: Scope 2 Scenario: Test 4")
     checkScopeClosed(events(26), "Feature: Scope 2")
@@ -320,7 +320,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFlatSpecPair extends SuiteTimeoutS
   val holdUntilEventCount = 24
   def assertSuiteTimeoutTest(events: List[Event]): Unit = {
     assert(events.size === 28)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkScopeOpened(events(1), "Scope 1")
     checkTestStarting(events(2), "Scope 1 should Test 1")
@@ -330,8 +330,8 @@ class ExampleParallelTestExecutionSuiteTimeoutFlatSpecPair extends SuiteTimeoutS
     checkScopeClosed(events(6), "Scope 1")
     checkScopeOpened(events(7), "Scope 2")
     checkTestStarting(events(8), "Scope 2 should Test 3")
-    checkTestSucceeded(events(9), "Scope 2 should Test 3")    
-    
+    checkTestSucceeded(events(9), "Scope 2 should Test 3")
+
     checkSuiteStarting(events(10), suite2.suiteId)
     checkScopeOpened(events(11), "Fixture Scope 1")
     checkTestStarting(events(12), "Fixture Scope 1 should Fixture Test 1")
@@ -346,7 +346,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFlatSpecPair extends SuiteTimeoutS
     checkTestSucceeded(events(21), "Fixture Scope 2 should Fixture Test 4")
     checkScopeClosed(events(22), "Fixture Scope 2")
     checkSuiteCompleted(events(23), suite2.suiteId)
-    
+
     checkTestStarting(events(24), "Scope 2 should Test 4")
     checkTestSucceeded(events(25), "Scope 2 should Test 4")
     checkScopeClosed(events(26), "Scope 2")
@@ -359,7 +359,7 @@ protected[scalatest] class ExampleParallelTestExecutionSuiteTimeoutFlatSpec exte
   behavior of "Scope 1"
   it should "Test 1" in {}
   it should "Test 2" in {}
-  
+
   behavior of "Scope 2"
   it should "Test 3" in {}
   it should "Test 4" in {}
@@ -371,7 +371,7 @@ protected[scalatest] class ExampleParallelTestExecutionSuiteTimeoutFixtureFlatSp
   behavior of "Fixture Scope 1"
   it should "Fixture Test 1" in { fixture => }
   it should "Fixture Test 2" in { fixture => }
-  
+
   behavior of "Fixture Scope 2"
   it should "Fixture Test 3" in { fixture => }
   it should "Fixture Test 4" in { fixture => }
@@ -387,7 +387,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFreeSpecPair extends SuiteTimeoutS
   val holdUntilEventCount = 24
   def assertSuiteTimeoutTest(events: List[Event]): Unit = {
     assert(events.size === 28)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkScopeOpened(events(1), "Scope 1")
     checkTestStarting(events(2), "Scope 1 Test 1")
@@ -398,7 +398,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFreeSpecPair extends SuiteTimeoutS
     checkScopeOpened(events(7), "Scope 2")
     checkTestStarting(events(8), "Scope 2 Test 3")
     checkTestSucceeded(events(9), "Scope 2 Test 3")
-    
+
     checkSuiteStarting(events(10), suite2.suiteId)
     checkScopeOpened(events(11), "Fixture Scope 1")
     checkTestStarting(events(12), "Fixture Scope 1 Fixture Test 1")
@@ -413,7 +413,7 @@ class ExampleParallelTestExecutionSuiteTimeoutFreeSpecPair extends SuiteTimeoutS
     checkTestSucceeded(events(21), "Fixture Scope 2 Fixture Test 4")
     checkScopeClosed(events(22), "Fixture Scope 2")
     checkSuiteCompleted(events(23), suite2.suiteId)
-    
+
     checkTestStarting(events(24), "Scope 2 Test 4")
     checkTestSucceeded(events(25), "Scope 2 Test 4")
     checkScopeClosed(events(26), "Scope 2")
@@ -427,7 +427,7 @@ protected[scalatest] class ExampleParallelTestExecutionSuiteTimeoutFreeSpec exte
     "Test 1" in {}
     "Test 2" in {}
   }
-  
+
   "Scope 2" - {
     "Test 3" in {}
     "Test 4" in {}
@@ -441,7 +441,7 @@ protected[scalatest] class ExampleParallelTestExecutionSuiteTimeoutFixtureFreeSp
     "Fixture Test 1" in { fixture => }
     "Fixture Test 2" in { fixture => }
   }
-  
+
   "Fixture Scope 2" - {
     "Fixture Test 3" in { fixture => }
     "Fixture Test 4" in { fixture => }
@@ -458,13 +458,13 @@ class ExampleParallelTestExecutionSuiteTimeoutPropSpecPair extends SuiteTimeoutS
   val holdUntilEventCount = 13
   def assertSuiteTimeoutTest(events: List[Event]): Unit = {
     assert(events.size === 16)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkTestStarting(events(1), "Test 1")
     checkTestSucceeded(events(2), "Test 1")
     checkTestStarting(events(3), "Test 2")
     checkTestSucceeded(events(4), "Test 2")
-    
+
     checkSuiteStarting(events(5), suite2.suiteId)
     checkTestStarting(events(6), "Fixture Test 1")
     checkTestSucceeded(events(7), "Fixture Test 1")
@@ -473,7 +473,7 @@ class ExampleParallelTestExecutionSuiteTimeoutPropSpecPair extends SuiteTimeoutS
     checkTestStarting(events(10), "Fixture Test 3")
     checkTestSucceeded(events(11), "Fixture Test 3")
     checkSuiteCompleted(events(12), suite2.suiteId)
-    
+
     checkTestStarting(events(13), "Test 3")
     checkTestSucceeded(events(14), "Test 3")
     checkSuiteCompleted(events(15), suite1.suiteId)
@@ -505,7 +505,7 @@ class ExampleParallelTestExecutionSuiteTimeoutWordSpecPair extends SuiteTimeoutS
   val holdUntilEventCount = 24
   def assertSuiteTimeoutTest(events: List[Event]): Unit = {
     assert(events.size === 28)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkScopeOpened(events(1), "Scope 1")
     checkTestStarting(events(2), "Scope 1 should Test 1")
@@ -516,7 +516,7 @@ class ExampleParallelTestExecutionSuiteTimeoutWordSpecPair extends SuiteTimeoutS
     checkScopeOpened(events(7), "Scope 2")
     checkTestStarting(events(8), "Scope 2 should Test 3")
     checkTestSucceeded(events(9), "Scope 2 should Test 3")
-    
+
     checkSuiteStarting(events(10), suite2.suiteId)
     checkScopeOpened(events(11), "Fixture Scope 1")
     checkTestStarting(events(12), "Fixture Scope 1 should Fixture Test 1")
@@ -531,7 +531,7 @@ class ExampleParallelTestExecutionSuiteTimeoutWordSpecPair extends SuiteTimeoutS
     checkTestSucceeded(events(21), "Fixture Scope 2 should Fixture Test 4")
     checkScopeClosed(events(22), "Fixture Scope 2")
     checkSuiteCompleted(events(23), suite2.suiteId)
-    
+
     checkTestStarting(events(24), "Scope 2 should Test 4")
     checkTestSucceeded(events(25), "Scope 2 should Test 4")
     checkScopeClosed(events(26), "Scope 2")
@@ -545,7 +545,7 @@ protected[scalatest] class ExampleParallelTestExecutionSuiteTimeoutWordSpec exte
     "Test 1" in {}
     "Test 2" in {}
   }
-  
+
   "Scope 2" should {
     "Test 3" in {}
     "Test 4" in {}
@@ -559,7 +559,7 @@ protected[scalatest] class ExampleParallelTestExecutionSuiteTimeoutFixtureWordSp
     "Fixture Test 1" in { fixture => }
     "Fixture Test 2" in { fixture => }
   }
-  
+
   "Fixture Scope 2" should {
     "Fixture Test 3" in { fixture => }
     "Fixture Test 4" in { fixture => }

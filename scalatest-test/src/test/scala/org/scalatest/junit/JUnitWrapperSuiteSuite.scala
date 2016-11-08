@@ -32,7 +32,7 @@ package org.scalatest.junit {
             testSucceededEvents += event
           case event: TestFailed =>
             testFailedEvent = Some(event)
-          case _ => 
+          case _ =>
         }
       }
 

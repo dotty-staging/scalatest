@@ -22,11 +22,11 @@ package org.scalatest
  * <table><tr><td class="usage">
  * <strong>Recommended Usage</strong>:
  * <code>AsyncFeatureSpec</code> is intended to enable users of <a href="FeatureSpec.html"><code>FeatureSpec</code></a>
- * to write non-blocking asynchronous tests that are consistent with their traditional <code>FeatureSpec</code> tests. 
+ * to write non-blocking asynchronous tests that are consistent with their traditional <code>FeatureSpec</code> tests.
  * <em>Note: <code>AsyncFeatureSpec</code> is intended for use in special situations where non-blocking asynchronous
  * testing is needed, with class <code>FeatureSpec</code> used for general needs.</em>
  * </td></tr></table>
- * 
+ *
  * <p>
  * Given a <code>Future</code> returned by the code you are testing,
  * you need not block until the <code>Future</code> completes before
@@ -45,15 +45,15 @@ package org.scalatest
  * <a name="initialExample"></a>
  * <pre class="stHighlight">
  * package org.scalatest.examples.asyncfeaturespec
- * 
+ *
  * import org.scalatest._
  * import scala.concurrent.Future
  * import scala.concurrent.ExecutionContext
- * 
+ *
  * // Defining actor messages
  * case object IsOn
  * case object PressPowerButton
- * 
+ *
  * class TVSetActor { // Simulating an actor
  *   private var on: Boolean = false
  *   def !(msg: PressPowerButton.type): Unit =
@@ -65,40 +65,40 @@ package org.scalatest
  *       synchronized { on }
  *     }
  * }
- * 
+ *
  * class TVSetActorSpec extends AsyncFeatureSpec with GivenWhenThen {
- * 
+ *
  *   implicit override def executionContext =
  *     scala.concurrent.ExecutionContext.Implicits.global
- * 
+ *
  *   info("As a TV set owner")
  *   info("I want to be able to turn the TV on and off")
  *   info("So I can watch TV when I want")
  *   info("And save energy when I'm not watching TV")
- * 
+ *
  *   feature("TV power button") {
  *     scenario("User presses power button when TV is off") {
- * 
+ *
  *       Given("a TV set that is switched off")
  *       val tvSetActor = new TVSetActor
- * 
+ *
  *       When("the power button is pressed")
  *       tvSetActor ! PressPowerButton
- * 
+ *
  *       Then("the TV should switch on")
  *       val futureBoolean = tvSetActor ? IsOn
  *       futureBoolean map { isOn =&gt; assert(isOn) }
  *     }
- * 
+ *
  *     scenario("User presses power button when TV is on") {
- * 
+ *
  *       Given("a TV set that is switched on")
  *       val tvSetActor = new TVSetActor
  *       tvSetActor ! PressPowerButton
- * 
+ *
  *       When("the power button is pressed")
  *       tvSetActor ! PressPowerButton
- * 
+ *
  *       Then("the TV should switch off")
  *       val futureBoolean = tvSetActor ? IsOn
  *       futureBoolean map { isOn =&gt; assert(!isOn) }
@@ -108,7 +108,7 @@ package org.scalatest
  * </pre>
  *
  * <p>
- * Note: for more information on the calls to <code>Given</code>, <code>When</code>, and <code>Then</code>, see the documentation 
+ * Note: for more information on the calls to <code>Given</code>, <code>When</code>, and <code>Then</code>, see the documentation
  * for trait <a href="GivenWhenThen.html"><code>GivenWhenThen</code></a> and the <a href="#informers"><code>Informers</code> section</a> below.
  * </p>
  *
@@ -117,10 +117,10 @@ package org.scalatest
  * with <code>feature</code>, and a scenario with <code>scenario</code>. Both
  * <code>feature</code> and <code>scenario</code> are methods, defined in
  * <code>AsyncFeatureSpec</code>, which will be invoked
- * by the primary constructor of <code>TVSetActorSpec</code>. 
+ * by the primary constructor of <code>TVSetActorSpec</code>.
  * A feature clause describes a feature of the <em>subject</em> (class or other entity) you are specifying
- * and testing. In the previous example, 
- * the subject under specification and test is a TV set. The feature being specified and tested is 
+ * and testing. In the previous example,
+ * the subject under specification and test is a TV set. The feature being specified and tested is
  * the behavior of a TV set when its power button is pressed. With each scenario you provide a
  * string (the <em>spec text</em>) that specifies the behavior of the subject for
  * one scenario in which the feature may be used, and a block of code that tests that behavior.
@@ -191,18 +191,18 @@ package org.scalatest
  *
  * <pre class="stREPL">
  * <span class="stGreen">TVSetActorSpec:
- * As a TV set owner 
- * I want to be able to turn the TV on and off 
- * So I can watch TV when I want 
- * And save energy when I'm not watching TV 
+ * As a TV set owner
+ * I want to be able to turn the TV on and off
+ * So I can watch TV when I want
+ * And save energy when I'm not watching TV
  * Feature: TV power button
  *   Scenario: User presses power button when TV is off
- *     Given a TV set that is switched off 
- *     When the power button is pressed 
- *     Then the TV should switch on 
+ *     Given a TV set that is switched off
+ *     When the power button is pressed
+ *     Then the TV should switch on
  *   Scenario: User presses power button when TV is on
- *     Given a TV set that is switched on 
- *     When the power button is pressed 
+ *     Given a TV set that is switched on
+ *     When the power button is pressed
  *     Then the TV should switch off</span>
  * </pre>
  *
@@ -214,14 +214,14 @@ package org.scalatest
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new TVSetActorSpec, "TV is on")
  * <span class="stGreen">TVSetActorSpec:
- * As a TV set owner 
- * I want to be able to turn the TV on and off 
- * So I can watch TV when I want 
- * And save energy when I'm not watching TV 
+ * As a TV set owner
+ * I want to be able to turn the TV on and off
+ * So I can watch TV when I want
+ * And save energy when I'm not watching TV
  * Feature: TV power button
  *   Scenario: User presses power button when TV is on
- *     Given a TV set that is switched on 
- *     When the power button is pressed 
+ *     Given a TV set that is switched on
+ *     When the power button is pressed
  *     Then the TV should switch off</span>
  * </pre>
  *
@@ -231,22 +231,22 @@ package org.scalatest
  * <code>AsyncFeatureSpec</code> extends <a href="AsyncTestSuite.html"><code>AsyncTestSuite</code></a>, which provides an
  * implicit <code>scala.concurrent.ExecutionContext</code>
  * named <code>executionContext</code>. This
- * execution context is used by <code>AsyncFeatureSpec</code> to 
+ * execution context is used by <code>AsyncFeatureSpec</code> to
  * transform the <code>Future[Assertion]</code>s returned by each test
  * into the <a href="FutureOutcome.html"><code>FutureOutcome</code></a> returned by the <code>test</code> function
  * passed to <code>withFixture</code>.
  * This <code>ExecutionContext</code> is also intended to be used in the tests,
  * including when you map assertions onto futures.
  * </p>
- * 
+ *
  * <p>
  * On both the JVM and Scala.js, the default execution context provided by ScalaTest's asynchronous
  * testing styles confines execution to a single thread per test. On JavaScript, where single-threaded
  * execution is the only possibility, the default execution context is
- * <code>scala.scalajs.concurrent.JSExecutionContext.Implicits.queue</code>. On the JVM, 
+ * <code>scala.scalajs.concurrent.JSExecutionContext.Implicits.queue</code>. On the JVM,
  * the default execution context is a <em>serial execution context</em> provided by ScalaTest itself.
  * </p>
- * 
+ *
  * <p>
  * When ScalaTest's serial execution context is called upon to execute a task, that task is recorded
  * in a queue for later execution. For example, one task that will be placed in this queue is the
@@ -285,7 +285,7 @@ package org.scalatest
  * concurrently execute tests you have competing for threads from the same limited thread pool, the more likely it
  * will be that tests will intermitently fail due to timeouts.
  * </p>
- * 
+ *
  * <p>
  * Using ScalaTest's serial execution context on the JVM will ensure the same thread that produced the <code>Future[Assertion]</code>
  * returned from a test body is also used to execute any tasks given to the execution context while executing the test
@@ -301,8 +301,8 @@ package org.scalatest
  * This thread confinement strategy does mean, however, that when you are using the default execution context on the JVM, you
  * must be sure to <em>never block</em> in the test body waiting for a task to be completed by the
  * execution context. If you block, your test will never complete. This kind of problem will be obvious, because the test will
- * consistently hang every time you run it. (If a test is hanging, and you're not sure which one it is, 
- * enable <a href="Runner.scala#slowpokeNotifications">slowpoke notifications</a>.) If you really do 
+ * consistently hang every time you run it. (If a test is hanging, and you're not sure which one it is,
+ * enable <a href="Runner.scala#slowpokeNotifications">slowpoke notifications</a>.) If you really do
  * want to block in your tests, you may wish to just use a
  * traditional <a href="FeatureSpec.html"><code>FeatureSpec</code></a> with
  * <a href="concurrent/ScalaFutures.html"><code>ScalaFutures</code></a> instead. Alternatively, you could override
@@ -348,15 +348,15 @@ package org.scalatest
  * <p>
  * If you want the tests of an <code>AsyncFeatureSpec</code> to be executed in parallel, you
  * must mix in <code>ParallelTestExecution</code> and enable parallel execution of tests in your build.
- * You enable parallel execution in <a href="tools/Runner$.html"><code>Runner</code></a> with the <code>-P</code> command line flag. 
+ * You enable parallel execution in <a href="tools/Runner$.html"><code>Runner</code></a> with the <code>-P</code> command line flag.
  * In the ScalaTest Maven Plugin, set <code>parallel</code> to <code>true</code>.
  * In <code>sbt</code>, parallel execution is the default, but to be explicit you can write:
- * 
+ *
  * <pre>
  * parallelExecution in Test := true // the default in sbt
  * </pre>
- * 
- * On the JVM, if both <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in and 
+ *
+ * On the JVM, if both <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in and
  * parallel execution is enabled in the build, tests in an async-style suite will be started in parallel, using threads from
  * the <a href="Distributor"><code>Distributor</code></a>, and allowed to complete in parallel, using threads from the
  * <code>executionContext</code>. If you are using ScalaTest's serial execution context, the JVM default, asynchronous tests will
@@ -368,7 +368,7 @@ package org.scalatest
  * you need not worry about synchronizing access to shared mutable state accessed by transformations and callbacks of <code>Future</code>s
  * inside the test.
  * </p>
- * 
+ *
  * <p>
  * If <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in but
  * parallel execution of suites is <em>not</em> enabled, asynchronous tests on the JVM will be started sequentially, by the single thread
@@ -380,11 +380,11 @@ package org.scalatest
  * however, even though tests will be started sequentially by one thread, they will be allowed to run concurrently using threads from the
  * execution context's thread pool.
  * </p>
- * 
+ *
  * <p>
  * The latter behavior is essentially what you'll see on Scala.js when you execute a suite that mixes in <code>ParallelTestExecution</code>.
  * Because only one thread exists when running under JavaScript, you can't "enable parallel execution of suites." However, it may
- * still be useful to run tests in parallel on Scala.js, because tests can invoke API calls that are truly asynchronous by calling into 
+ * still be useful to run tests in parallel on Scala.js, because tests can invoke API calls that are truly asynchronous by calling into
  * external APIs that take advantage of non-JavaScript threads. Thus on Scala.js, <code>ParallelTestExecution</code> allows asynchronous
  * tests to run in parallel, even though they must be started sequentially. This may give you better performance when you are using API
  * calls in your Scala.js tests that are truly asynchronous.
@@ -633,7 +633,7 @@ package org.scalatest
  * <p>
  * One of the parameters to <code>AsyncFeatureSpec</code>'s <code>run</code> method is a <code>Reporter</code>, which
  * will collect and report information about the running suite of tests.
- * Information about suites and tests that were run, whether tests succeeded or failed, 
+ * Information about suites and tests that were run, whether tests succeeded or failed,
  * and tests that were ignored will be passed to the <a href="Reporter.html"><code>Reporter</code></a> as the suite runs.
  * Most often the default reporting done by <code>AsyncFeatureSpec</code>'s methods will be sufficient, but
  * occasionally you may wish to provide custom information to the <code>Reporter</code> from a test.
@@ -642,7 +642,7 @@ package org.scalatest
  * You can pass the extra information to the <code>Informer</code> via its <code>apply</code> method.
  * The <code>Informer</code> will then pass the information to the <code>Reporter</code> via an <a href="events/InfoProvided.html"><code>InfoProvided</code></a> event.
  * </p>
- * 
+ *
  * <p>
  * One use case for the <code>Informer</code> is to pass more information about a scenario to the reporter. For example,
  * the <code>GivenWhenThen</code> trait provides methods that use the implicit <code>info</code> provided by <code>AsyncFeatureSpec</code>
@@ -785,7 +785,7 @@ package org.scalatest
  *
  * <p>
  * Another example is <a href="tools/Runner$.html#slowpokeNotifications">slowpoke notifications</a>.
- * If you find a test is taking a long time to complete, but you're not sure which test, you can enable 
+ * If you find a test is taking a long time to complete, but you're not sure which test, you can enable
  * slowpoke notifications. ScalaTest will use an <code>Alerter</code> to fire an event whenever a test has been running
  * longer than a specified amount of time.
  * </p>

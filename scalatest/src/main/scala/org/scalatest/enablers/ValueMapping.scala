@@ -73,7 +73,7 @@ object ValueMapping {
    * @tparam MAP any subtype of <code>scala.collection.GenMap</code>
    * @return <code>ValueMapping[MAP[K, V]]</code> that supports <code>scala.collection.GenMap</code> in <code>contain value</code> syntax
    */
-  implicit def valueMappingNatureOfGenMap[K, V, MAP[k, v] <: scala.collection.GenMap[k, v]](implicit equality: Equality[V]): ValueMapping[MAP[K, V]] = 
+  implicit def valueMappingNatureOfGenMap[K, V, MAP[k, v] <: scala.collection.GenMap[k, v]](implicit equality: Equality[V]): ValueMapping[MAP[K, V]] =
     new ValueMapping[MAP[K, V]] {
       def containsValue(map: MAP[K, V], value: Any): Boolean = {
         // map.values.exists((v: V) => equality.areEqual(v, value)) go back to this once I'm off 2.9
@@ -101,7 +101,7 @@ object ValueMapping {
    * @tparam MAP any subtype of <code>scala.collection.GenMap</code>
    * @return <code>ValueMapping</code> of type <code>MAP[K, V]</code>
    */
-  implicit def convertEqualityToGenMapValueMapping[K, V, MAP[k, v] <: scala.collection.GenMap[k, v]](equality: Equality[V]): ValueMapping[MAP[K, V]] = 
+  implicit def convertEqualityToGenMapValueMapping[K, V, MAP[k, v] <: scala.collection.GenMap[k, v]](equality: Equality[V]): ValueMapping[MAP[K, V]] =
     valueMappingNatureOfGenMap(equality)
 
   /**
@@ -113,7 +113,7 @@ object ValueMapping {
    * @tparam JMAP any subtype of <code>java.util.Map</code>
    * @return <code>ValueMapping[JMAP[K, V]]</code> that supports <code>java.util.Map</code> in <code>contain</code> <code>value</code> syntax
    */
-  implicit def valueMappingNatureOfJavaMap[K, V, JMAP[k, v] <: java.util.Map[k, v]](implicit equality: Equality[V]): ValueMapping[JMAP[K, V]] = 
+  implicit def valueMappingNatureOfJavaMap[K, V, JMAP[k, v] <: java.util.Map[k, v]](implicit equality: Equality[V]): ValueMapping[JMAP[K, V]] =
     new ValueMapping[JMAP[K, V]] {
       def containsValue(jMap: JMAP[K, V], value: Any): Boolean = {
         jMap.asScala.values.exists((v: V) => equality.areEqual(v, value))
@@ -140,6 +140,6 @@ object ValueMapping {
    * @tparam JMAP any subtype of <code>java.util.Map</code>
    * @return <code>ValueMapping</code> of type <code>JMAP[K, V]</code>
    */
-  implicit def convertEqualityToJavaMapValueMapping[K, V, JMAP[k, v] <: java.util.Map[k, v]](equality: Equality[V]): ValueMapping[JMAP[K, V]] = 
+  implicit def convertEqualityToJavaMapValueMapping[K, V, JMAP[k, v] <: java.util.Map[k, v]](equality: Equality[V]): ValueMapping[JMAP[K, V]] =
     valueMappingNatureOfJavaMap(equality)
 }

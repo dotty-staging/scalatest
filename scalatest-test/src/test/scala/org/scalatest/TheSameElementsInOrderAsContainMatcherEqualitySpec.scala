@@ -26,18 +26,18 @@ class TheSameElementsInOrderAsContainMatcherEqualitySpec extends FunSpec with Ex
   private val prettifier = Prettifier.default
 
   class TrimEquality extends Equality[String] {
-    def areEqual(left: String, right: Any) = 
+    def areEqual(left: String, right: Any) =
       left.trim == (right match {
         case s: String => s.trim
         case other => other
       })
   }
-  
+
   class MapTrimEquality extends Equality[(Int, String)] {
-    def areEqual(left: (Int, String), right: Any) = 
+    def areEqual(left: (Int, String), right: Any) =
       right match {
-        case t2: Tuple2[_, _] =>  
-          left._1 == t2._1 && 
+        case t2: Tuple2[_, _] =>
+          left._1 == t2._1 &&
           left._2.trim == (t2._2 match {
             case s: String => s.trim
             case other => other
@@ -45,17 +45,17 @@ class TheSameElementsInOrderAsContainMatcherEqualitySpec extends FunSpec with Ex
         case right => left == right
       }
   }
-  
+
   class FalseEquality extends Equality[Int] {
     def areEqual(left: Int, right: Any): Boolean = false
   }
-  
+
   class MapFalseEquality extends Equality[(Int, String)] {
     def areEqual(left: (Int, String), right: Any): Boolean = false
   }
-  
+
   describe("theSameElementsInOrderAs ") {
-    
+
     def checkShouldContainStackDepth(e: exceptions.StackDepthException, left: Any, right: Any, lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       val rightText = FailureMessages.decorateToStringValue(prettifier, right)
@@ -63,7 +63,7 @@ class TheSameElementsInOrderAsContainMatcherEqualitySpec extends FunSpec with Ex
       e.failedCodeFileName should be (Some("TheSameElementsInOrderAsContainMatcherEqualitySpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-      
+
     def checkShouldNotContainStackDepth(e: exceptions.StackDepthException, left: Any, right: Any, lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       val rightText = FailureMessages.decorateToStringValue(prettifier, right)
@@ -71,7 +71,7 @@ class TheSameElementsInOrderAsContainMatcherEqualitySpec extends FunSpec with Ex
       e.failedCodeFileName should be (Some("TheSameElementsInOrderAsContainMatcherEqualitySpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should take custom implicit equality in scope when 'should contain' is used") {
       implicit val equality = new TrimEquality
       List("1 ", " 2", "3 ") should contain theSameElementsInOrderAs List(" 1", "2 ", " 3")
@@ -80,7 +80,7 @@ class TheSameElementsInOrderAsContainMatcherEqualitySpec extends FunSpec with Ex
       javaList("1 ", " 2", "3 ") should contain theSameElementsInOrderAs List(" 1", "2 ", " 3")
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take custom implicit equality in scope when 'should not contain' is used") {
       implicit val equality = new FalseEquality
       List(1, 2, 3) should not contain theSameElementsInOrderAs (List(1, 2, 3))
@@ -89,17 +89,17 @@ class TheSameElementsInOrderAsContainMatcherEqualitySpec extends FunSpec with Ex
       javaList(1, 2, 3) should not contain theSameElementsInOrderAs (List(1, 2, 3))
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should contain custom matcher' failed with custom implicit equality in scope") {
       implicit val equality = new FalseEquality
-      
+
       val left1 = List(1, 2, 3)
       val right1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
         left1 should contain theSameElementsInOrderAs right1
       }
       checkShouldContainStackDepth(e1, left1, right1, thisLineNumber - 2)
-        
+
       val left2 = Array(1, 2, 3)
       val right2 = List(1, 2, 3)
       val e2 = intercept[exceptions.TestFailedException] {
@@ -116,17 +116,17 @@ class TheSameElementsInOrderAsContainMatcherEqualitySpec extends FunSpec with Ex
       checkShouldContainStackDepth(e3, left3, right3, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should not contain custom matcher' failed with custom implicit equality in scope") {
       implicit val equality = new TrimEquality
-        
+
       val left1 = List("1 ", " 2", "3 ")
       val right1 = List(" 1", "2 ", " 3")
       val e1 = intercept[exceptions.TestFailedException] {
         left1 should not contain theSameElementsInOrderAs (right1)
       }
       checkShouldNotContainStackDepth(e1, left1, right1, thisLineNumber - 2)
-        
+
       val left2 = Array("1 ", " 2", "3 ")
       val right2 = List(" 1", "2 ", " 3")
       val e2 = intercept[exceptions.TestFailedException] {
@@ -143,7 +143,7 @@ class TheSameElementsInOrderAsContainMatcherEqualitySpec extends FunSpec with Ex
       checkShouldNotContainStackDepth(e3, left3, right3, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take passed in custom explicit equality when 'should contain' is used") {
       implicit val equality = new TrimEquality
       (List("1 ", " 2", "3 ") should contain theSameElementsInOrderAs List(" 1", "2 ", " 3")) (equality)
@@ -152,7 +152,7 @@ class TheSameElementsInOrderAsContainMatcherEqualitySpec extends FunSpec with Ex
       (javaList("1 ", " 2", "3 ") should contain theSameElementsInOrderAs List(" 1", "2 ", " 3")) (equality)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take passed in custom explicit equality when 'should not contain' is used") {
       implicit val equality = new FalseEquality
       (List(1, 2, 3) should not contain theSameElementsInOrderAs (List(1, 2, 3))) (equality)
@@ -161,17 +161,17 @@ class TheSameElementsInOrderAsContainMatcherEqualitySpec extends FunSpec with Ex
       (javaList(1, 2, 3) should not contain theSameElementsInOrderAs (List(1, 2, 3))) (equality)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should contain custom matcher' failed with custom explicit equality") {
       implicit val equality = new FalseEquality
-        
+
       val left1 = List(1, 2, 3)
       val right1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should contain theSameElementsInOrderAs right1) (equality)
       }
       checkShouldContainStackDepth(e1, left1, right1, thisLineNumber - 2)
-        
+
       val left2 = Array(1, 2, 3)
       val right2 = List(1, 2, 3)
       val e2 = intercept[exceptions.TestFailedException] {
@@ -188,17 +188,17 @@ class TheSameElementsInOrderAsContainMatcherEqualitySpec extends FunSpec with Ex
       checkShouldContainStackDepth(e3, left3, right3, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should not contain custom matcher' failed with custom explicit equality") {
       implicit val equality = new TrimEquality
-        
+
       val left1 = List("1 ", " 2", "3 ")
       val right1 = List("1", "2 ", " 3")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should not contain theSameElementsInOrderAs (right1)) (equality)
       }
       checkShouldNotContainStackDepth(e1, left1, right1, thisLineNumber - 2)
-        
+
       val left2 = Array("1 ", " 2", "3 ")
       val right2 = List("1", "2 ", " 3")
       val e2 = intercept[exceptions.TestFailedException] {

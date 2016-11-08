@@ -25,7 +25,7 @@ import collection.mutable.ListBuffer
 
 /**
  * Trait that causes the nested suites of any suite it is mixed into to be run sequentially even if
- * a <a href="Distributor.html"><code>Distributor</code></a> is passed to <code>runNestedSuites</code>. This trait overrides the 
+ * a <a href="Distributor.html"><code>Distributor</code></a> is passed to <code>runNestedSuites</code>. This trait overrides the
  * <code>runNestedSuites</code> method and fowards every parameter passed to it to a superclass invocation
  * of <code>runNestedSuites</code>, except it always passes <code>None</code> for the <code>Distributor</code>.
  * Mix in this trait into any suite whose nested suites need to be run sequentially even with the rest of the
@@ -71,10 +71,10 @@ trait StepwiseNestedSuiteExecution extends SuiteMixin { thisSuite: Suite =>
           report(SuiteCompleted(tracker.nextOrdinal(), nestedSuite.suiteName, nestedSuite.suiteId, Some(nestedSuite.getClass.getName), Some(duration), formatter, Some(TopOfClass(nestedSuite.getClass.getName)), nestedSuite.rerunner))
           SucceededStatus
         }
-        catch {       
+        catch {
           case e: RuntimeException => {
             val eMessage = e.getMessage
-            val rawString = 
+            val rawString =
               if (eMessage != null && eMessage.length > 0)
                 Resources.executeExceptionWithMessage(eMessage)
               else
@@ -90,7 +90,7 @@ trait StepwiseNestedSuiteExecution extends SuiteMixin { thisSuite: Suite =>
       else
         FailedStatus
     }
-    
+
     val statusBuffer = new ListBuffer[Status]()
     if (!filter.excludeNestedSuites) {
       for (nestedSuite <- nestedSuites) {

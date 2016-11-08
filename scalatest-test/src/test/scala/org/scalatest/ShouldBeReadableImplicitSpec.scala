@@ -24,50 +24,50 @@ import org.scalactic.Prettifier
 class ShouldBeReadableImplicitSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   trait Thing {
     def canRead: Boolean
   }
-  
+
   val book = new Thing {
     val canRead = true
   }
-  
+
   val stone = new Thing {
     val canRead = false
   }
-  
+
   implicit def readabilityOfThing[T <: Thing]: Readability[T] =
     new Readability[T] {
       def isReadable(thing: T): Boolean = thing.canRead
     }
-  
+
   val fileName: String = "ShouldBeReadableImplicitSpec.scala"
-    
-  def wasNotReadable(left: Any): String = 
+
+  def wasNotReadable(left: Any): String =
     FailureMessages.wasNotReadable(prettifier, left)
-    
-  def wasReadable(left: Any): String = 
+
+  def wasReadable(left: Any): String =
     FailureMessages.wasReadable(prettifier, left)
-  
+
   it("book should be readable, stone should not be readable") {
     assert(book.canRead === true)
     assert(stone.canRead === false)
   }
-  
+
   def allError(left: Any, message: String, lineNumber: Int): String = {
     val messageWithIndex = UnquotedString("  " + FailureMessages.forAssertionsGenTraversableMessageWithStackDepth(prettifier, 0, UnquotedString(message), UnquotedString(fileName + ":" + lineNumber)))
     FailureMessages.allShorthandFailed(prettifier, messageWithIndex, left)
   }
-  
+
   describe("Readable matcher") {
-    
+
     describe("when work with 'file should be (readable)'") {
-      
+
       it("should do nothing when file is readable") {
         book should be (readable)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when file is not readable") {
         val caught1 = intercept[TestFailedException] {
           stone should be (readable)
@@ -76,15 +76,15 @@ class ShouldBeReadableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'file should not be readable'") {
-      
+
       it("should do nothing when file is not readable") {
         stone should not be readable
       }
-      
+
       it("should throw TestFailedException with correct stack depth when file is readable") {
         val caught1 = intercept[TestFailedException] {
           book should not be readable
@@ -94,13 +94,13 @@ class ShouldBeReadableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'file shouldBe readable'") {
-      
+
       it("should do nothing when file is readable") {
         book shouldBe readable
       }
-      
+
       it("should throw TestFailedException with correct stack depth when file is not readable") {
         val caught1 = intercept[TestFailedException] {
           stone shouldBe readable
@@ -109,15 +109,15 @@ class ShouldBeReadableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'file shouldNot be (readable)'") {
-      
+
       it("should do nothing when file is not readable") {
         stone shouldNot be (readable)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when file is readable") {
         val caught1 = intercept[TestFailedException] {
           book shouldNot be (readable)
@@ -126,15 +126,15 @@ class ShouldBeReadableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) should be (readable)'") {
-      
+
       it("should do nothing when all(xs) is readable") {
         all(List(book)) should be (readable)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is not readable") {
         val left1 = List(stone)
         val caught1 = intercept[TestFailedException] {
@@ -144,15 +144,15 @@ class ShouldBeReadableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) should not be readable'") {
-      
+
       it("should do nothing when all(xs) is not readable") {
         all(List(stone)) should not be readable
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is readable") {
         val left1 = List(book)
         val caught1 = intercept[TestFailedException] {
@@ -162,15 +162,15 @@ class ShouldBeReadableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) shouldBe readable'") {
-      
+
       it("should do nothing when all(xs) is readable") {
         all(List(book)) shouldBe readable
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is not readable") {
         val left1 = List(stone)
         val caught1 = intercept[TestFailedException] {
@@ -181,13 +181,13 @@ class ShouldBeReadableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'all(xs) shouldNot be (readable)'") {
-      
+
       it("should do nothing when all(xs) is not readable") {
         all(List(stone)) shouldNot be (readable)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is readable") {
         val left1 = List(book)
         val caught1 = intercept[TestFailedException] {
@@ -197,8 +197,8 @@ class ShouldBeReadableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
   }
-  
+
 }

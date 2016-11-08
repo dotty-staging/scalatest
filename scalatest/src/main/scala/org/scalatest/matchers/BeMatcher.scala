@@ -32,7 +32,7 @@ import scala.reflect.ClassTag
  * <p>
  * As an example, you could create <code>BeMatcher[Int]</code>
  * called <code>odd</code> that would match any odd <code>Int</code>, and one called <code>even</code> that would match
- * any even <code>Int</code>. 
+ * any even <code>Int</code>.
  * Given this pair of <code>BeMatcher</code>s, you could check whether an <code>Int</code> was odd or even with expressions like:
  * </p>
  *
@@ -44,7 +44,7 @@ import scala.reflect.ClassTag
  * <p>
  * Here's is how you might define the odd and even <code>BeMatchers</code>:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * trait CustomMatchers {
  *
@@ -74,7 +74,7 @@ import scala.reflect.ClassTag
  * </p>
  *
  * <p>
- * Here's an rather contrived example of how you might use <code>odd</code> and <code>even</code>: 
+ * Here's an rather contrived example of how you might use <code>odd</code> and <code>even</code>:
  * </p>
  *
  * <pre class="stHighlight">
@@ -167,7 +167,7 @@ trait BeMatcher[-T] extends Function1[T, MatchResult] { thisBeMatcher =>
    * </pre>
    *
    * <p>
-   * If for some odd reason, you wanted a <code>BeMatcher[String]</code> that 
+   * If for some odd reason, you wanted a <code>BeMatcher[String]</code> that
    * checked whether a string, when converted to an <code>Int</code>,
    * was odd, you could make one by composing <code>odd</code> with
    * a function that converts a string to an <code>Int</code>, like this:

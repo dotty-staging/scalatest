@@ -43,7 +43,7 @@ final class ResultOfSizeWordApplication(val expectedSize: Long) {
       }
     }
   }
-  
+
   /**
    * Overrides toString to return "size (X)", where X is expectedSize
    */

@@ -31,7 +31,7 @@ class ExampleSpec extends AsyncFlatSpec {
   }
 
   def addSoon(addends: Int*): Future[Int] = Future { addends.sum }
-    
+
   "This test" should "succeed" in {
     addSoon(1, 1) map { sum => assert(sum == 2) }
   }

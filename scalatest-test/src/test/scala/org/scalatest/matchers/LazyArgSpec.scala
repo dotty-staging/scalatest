@@ -28,4 +28,4 @@ class LazyArgSpec extends FunSpec with Matchers {
     }
   }
 }
- 
+

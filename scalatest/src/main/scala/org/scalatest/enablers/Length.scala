@@ -76,7 +76,7 @@ package org.scalatest.enablers
  * <pre class="stREPL">
  * scala&gt; bridge should have length 2000
  * res4: org.scalatest.Assertion = Succeeded
- * 
+ *
  * scala&gt; bridge should have length 2001
  * org.scalatest.exceptions.TestFailedException: Bridge(2000) had length 2000 instead of expected length 2001
  *   at org.scalatest.MatchersHelper$.newTestFailedException(MatchersHelper.scala:148)
@@ -124,7 +124,7 @@ object Length {
    * @tparam JLIST any subtype of <code>java.util.List</code>
    * @return <code>Length[JLIST]</code> that supports <code>java.util.List</code> in <code>have length</code> syntax
    */
-  implicit def lengthOfJavaList[JLIST <: java.util.List[_]]: Length[JLIST] = 
+  implicit def lengthOfJavaList[JLIST <: java.util.List[_]]: Length[JLIST] =
     new Length[JLIST] {
       def lengthOf(javaList: JLIST): Long = javaList.size
     }
@@ -135,7 +135,7 @@ object Length {
    * @tparam SEQ any subtype of <code>scala.collection.GenSeq</code>
    * @return <code>Length[SEQ]</code> that supports <code>scala.collection.GenSeq</code> in <code>have length</code> syntax
    */
-  implicit def lengthOfGenSeq[SEQ <: scala.collection.GenSeq[_]]: Length[SEQ] = 
+  implicit def lengthOfGenSeq[SEQ <: scala.collection.GenSeq[_]]: Length[SEQ] =
     new Length[SEQ] {
       def lengthOf(seq: SEQ): Long = seq.length
     }
@@ -146,7 +146,7 @@ object Length {
    * @tparam E the type of the element in the <code>Array</code>
    * @return <code>Length[Array[E]]</code> that supports <code>Array</code> in <code>have length</code> syntax
    */
-  implicit def lengthOfArray[E]: Length[Array[E]] = 
+  implicit def lengthOfArray[E]: Length[Array[E]] =
     new Length[Array[E]] {
       def lengthOf(arr: Array[E]): Long = arr.length
     }
@@ -156,7 +156,7 @@ object Length {
    *
    * @return <code>Length[String]</code> that supports <code>String</code> in <code>have length</code> syntax
    */
-  implicit val lengthOfString: Length[String] = 
+  implicit val lengthOfString: Length[String] =
     new Length[String] {
       def lengthOf(str: String): Long = str.length
     }
@@ -169,7 +169,7 @@ object Length {
    * @tparam T any type with <code>length()</code> method that returns <code>Int</code>
    * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
    */
-  implicit def lengthOfAnyRefWithLengthMethodForInt[T <: AnyRef { def length(): Int}]: Length[T] = 
+  implicit def lengthOfAnyRefWithLengthMethodForInt[T <: AnyRef { def length(): Int}]: Length[T] =
     new Length[T] {
       def lengthOf(obj: T): Long = obj.length
     }
@@ -180,7 +180,7 @@ object Length {
    * @tparam T any type with parameterless <code>length</code> method that returns <code>Int</code>
    * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
    */
-  implicit def lengthOfAnyRefWithParameterlessLengthMethodForInt[T <: AnyRef { def length: Int}]: Length[T] = 
+  implicit def lengthOfAnyRefWithParameterlessLengthMethodForInt[T <: AnyRef { def length: Int}]: Length[T] =
     new Length[T] {
       def lengthOf(obj: T): Long = obj.length
     }
@@ -191,7 +191,7 @@ object Length {
    * @tparam T any type with <code>getLength()</code> method that returns <code>Int</code>
    * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
    */
-  implicit def lengthOfAnyRefWithGetLengthMethodForInt[T <: AnyRef { def getLength(): Int}]: Length[T] = 
+  implicit def lengthOfAnyRefWithGetLengthMethodForInt[T <: AnyRef { def getLength(): Int}]: Length[T] =
     new Length[T] {
       def lengthOf(obj: T): Long = obj.getLength
     }
@@ -202,7 +202,7 @@ object Length {
    * @tparam T any type with parameterless <code>getLength</code> method that returns <code>Int</code>
    * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
    */
-  implicit def lengthOfAnyRefWithParameterlessGetLengthMethodForInt[T <: AnyRef { def getLength: Int}]: Length[T] = 
+  implicit def lengthOfAnyRefWithParameterlessGetLengthMethodForInt[T <: AnyRef { def getLength: Int}]: Length[T] =
     new Length[T] {
       def lengthOf(obj: T): Long = obj.getLength
     }
@@ -213,7 +213,7 @@ object Length {
    * @tparam T any type with <code>length()</code> method that returns <code>Long</code>
    * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
    */
-  implicit def lengthOfAnyRefWithLengthMethodForLong[T <: AnyRef { def length(): Long}]: Length[T] = 
+  implicit def lengthOfAnyRefWithLengthMethodForLong[T <: AnyRef { def length(): Long}]: Length[T] =
     new Length[T] {
       def lengthOf(obj: T): Long = obj.length
     }
@@ -224,7 +224,7 @@ object Length {
    * @tparam T any type with parameterless <code>length</code> method that returns <code>Long</code>
    * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
    */
-  implicit def lengthOfAnyRefWithParameterlessLengthMethodForLong[T <: AnyRef { def length: Long}]: Length[T] = 
+  implicit def lengthOfAnyRefWithParameterlessLengthMethodForLong[T <: AnyRef { def length: Long}]: Length[T] =
     new Length[T] {
       def lengthOf(obj: T): Long = obj.length
     }
@@ -235,7 +235,7 @@ object Length {
    * @tparam T any type with <code>getLength()</code> method that returns <code>Long</code>
    * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
    */
-  implicit def lengthOfAnyRefWithGetLengthMethodForLong[T <: AnyRef { def getLength(): Long}]: Length[T] = 
+  implicit def lengthOfAnyRefWithGetLengthMethodForLong[T <: AnyRef { def getLength(): Long}]: Length[T] =
     new Length[T] {
       def lengthOf(obj: T): Long = obj.getLength
     }
@@ -246,7 +246,7 @@ object Length {
    * @tparam T any type with parameterless <code>getLength</code> method that returns <code>Long</code>
    * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
    */
-  implicit def lengthOfAnyRefWithParameterlessGetLengthMethodForLong[T <: AnyRef { def getLength: Long}]: Length[T] = 
+  implicit def lengthOfAnyRefWithParameterlessGetLengthMethodForLong[T <: AnyRef { def getLength: Long}]: Length[T] =
     new Length[T] {
       def lengthOf(obj: T): Long = obj.getLength
     }

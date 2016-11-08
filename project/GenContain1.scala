@@ -19,13 +19,13 @@ import io.Source
 import java.io.{File, FileWriter, BufferedWriter}
 
 object GenContain1 extends GenContainBase {
-  
+
   def genTest(targetBaseDir: File, version: String, scalaVersion: String) {
-    
+
     val sourceBaseDir = new File("scalatest-test/src/test/scala/org/scalatest")
     val containDir = new File(targetBaseDir, "containTests")
     containDir.mkdirs()
-    
+
     def generateFile(sourceFileName: String, typeName: String, mapping: (String, String)*) {
       val generatedFileName = sourceFileName.replaceAll("List", typeName)
       val generatedFile = new File(containDir, generatedFileName)
@@ -43,7 +43,7 @@ object GenContain1 extends GenContainBase {
         println("Generated " + generatedFile.getAbsolutePath)
       }
     }
-    
+
     // Generate tests for atLeastOneOf
     generateFile("ListShouldContainAtLeastOneOfSpec.scala", "Array", arrayMapping: _*)
     generateFile("ListShouldContainAtLeastOneOfLogicalAndSpec.scala", "Array", arrayMapping: _*)
@@ -151,7 +151,7 @@ object GenContain1 extends GenContainBase {
     generateFile("ListShouldContainNoElementsOfSpec.scala", "String", stringMapping: _*)
     generateFile("ListShouldContainNoElementsOfLogicalAndSpec.scala", "String", stringMapping: _*)
     generateFile("ListShouldContainNoElementsOfLogicalOrSpec.scala", "String", stringMapping: _*)*/
-    
+
     // Generate tests for theSameElementsAs
     generateFile("ListShouldContainTheSameElementsAsSpec.scala", "Array", arrayMapping: _*)
     generateFile("ListShouldContainTheSameElementsAsLogicalAndSpec.scala", "Array", arrayMapping: _*)
@@ -169,7 +169,7 @@ object GenContain1 extends GenContainBase {
     generateFile("ListShouldContainTheSameElementsAsLogicalAndSpec.scala", "String", stringMapping: _*)
     generateFile("ListShouldContainTheSameElementsAsLogicalOrSpec.scala", "String", stringMapping: _*)
   }
-  
+
   def main(args: Array[String]) {
     val targetDir = args(0)
     val version = args(1)

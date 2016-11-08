@@ -22,11 +22,11 @@ package org.scalatest
  * <table><tr><td class="usage">
  * <strong>Recommended Usage</strong>:
  * <code>AsyncFunSuite</code> is intended to enable users of <a href="FunSuite.html"><code>FunSuite</code></a>
- * to write non-blocking asynchronous tests that are consistent with their traditional <code>FunSuite</code> tests. 
+ * to write non-blocking asynchronous tests that are consistent with their traditional <code>FunSuite</code> tests.
  * <em>Note: <code>AsyncFunSuite</code> is intended for use in special situations where non-blocking asynchronous
  * testing is needed, with class <code>FunSuite</code> used for general needs.</em>
  * </td></tr></table>
- * 
+ *
  * <p>
  * Given a <code>Future</code> returned by the code you are testing,
  * you need not block until the <code>Future</code> completes before
@@ -35,7 +35,7 @@ package org.scalatest
  * <code>Future[Assertion]</code> to ScalaTest. The test will complete
  * asynchronously, when the <code>Future[Assertion]</code> completes.
  * </p>
- * 
+ *
  * <p>
  * Here's an example <code>AsyncFunSuite</code>:
  * </p>
@@ -55,7 +55,7 @@ package org.scalatest
  *     // You can map assertions onto a Future, then return
  *     // the resulting Future[Assertion] to ScalaTest:
  *     futureSum map { sum =&gt; assert(sum == 3) }
- *   } 
+ *   }
  *
  *   def addNow(addends: Int*): Int = addends.sum
  *
@@ -74,7 +74,7 @@ package org.scalatest
  * a string between the parentheses, and the test code itself between curly braces.
  * The test code is a function passed as a by-name parameter to <code>test</code>, which registers
  * it for later execution. The result type of the by-name in an <code>AsyncFunSuite</code> must
- * be <code>Future[Assertion]</code>. 
+ * be <code>Future[Assertion]</code>.
  * </p>
  *
  * <p>
@@ -112,7 +112,7 @@ package org.scalatest
  * <p>
  * The second test has result type <code>Assertion</code>:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; def addNow(addends: Int*): Int = addends.sum
  * addNow: (addends: Int*)Int
@@ -123,7 +123,7 @@ package org.scalatest
  * scala&gt; assert(sum == 3)
  * res1: org.scalatest.Assertion = Succeeded
  * </pre>
- * 
+ *
  * <p>
  * When <code>AddSuite</code> is constructed, the second test will be implicitly converted to
  * <code>Future[Assertion]</code> and registered. The implicit conversion is from <code>Assertion</code>
@@ -173,22 +173,22 @@ package org.scalatest
  * <code>AsyncFunSuite</code> extends <a href="AsyncTestSuite.html"><code>AsyncTestSuite</code></a>, which provides an
  * implicit <code>scala.concurrent.ExecutionContext</code>
  * named <code>executionContext</code>. This
- * execution context is used by <code>AsyncFunSuite</code> to 
+ * execution context is used by <code>AsyncFunSuite</code> to
  * transform the <code>Future[Assertion]</code>s returned by each test
  * into the <a href="FutureOutcome.html"><code>FutureOutcome</code></a> returned by the <code>test</code> function
  * passed to <code>withFixture</code>.
  * This <code>ExecutionContext</code> is also intended to be used in the tests,
  * including when you map assertions onto futures.
  * </p>
- * 
+ *
  * <p>
  * On both the JVM and Scala.js, the default execution context provided by ScalaTest's asynchronous
  * testing styles confines execution to a single thread per test. On JavaScript, where single-threaded
  * execution is the only possibility, the default execution context is
- * <code>scala.scalajs.concurrent.JSExecutionContext.Implicits.queue</code>. On the JVM, 
+ * <code>scala.scalajs.concurrent.JSExecutionContext.Implicits.queue</code>. On the JVM,
  * the default execution context is a <em>serial execution context</em> provided by ScalaTest itself.
  * </p>
- * 
+ *
  * <p>
  * When ScalaTest's serial execution context is called upon to execute a task, that task is recorded
  * in a queue for later execution. For example, one task that will be placed in this queue is the
@@ -227,7 +227,7 @@ package org.scalatest
  * concurrently execute tests you have competing for threads from the same limited thread pool, the more likely it
  * will be that tests will intermitently fail due to timeouts.
  * </p>
- * 
+ *
  * <p>
  * Using ScalaTest's serial execution context on the JVM will ensure the same thread that produced the <code>Future[Assertion]</code>
  * returned from a test body is also used to execute any tasks given to the execution context while executing the test
@@ -243,8 +243,8 @@ package org.scalatest
  * This thread confinement strategy does mean, however, that when you are using the default execution context on the JVM, you
  * must be sure to <em>never block</em> in the test body waiting for a task to be completed by the
  * execution context. If you block, your test will never complete. This kind of problem will be obvious, because the test will
- * consistently hang every time you run it. (If a test is hanging, and you're not sure which one it is, 
- * enable <a href="Runner.scala#slowpokeNotifications">slowpoke notifications</a>.) If you really do 
+ * consistently hang every time you run it. (If a test is hanging, and you're not sure which one it is,
+ * enable <a href="Runner.scala#slowpokeNotifications">slowpoke notifications</a>.) If you really do
  * want to block in your tests, you may wish to just use a
  * traditional <a href="FunSuite.html"><code>FunSuite</code></a> with
  * <a href="concurrent/ScalaFutures.html"><code>ScalaFutures</code></a> instead. Alternatively, you could override
@@ -290,15 +290,15 @@ package org.scalatest
  * <p>
  * If you want the tests of an <code>AsyncFunSuite</code> to be executed in parallel, you
  * must mix in <code>ParallelTestExecution</code> and enable parallel execution of tests in your build.
- * You enable parallel execution in <a href="tools/Runner$.html"><code>Runner</code></a> with the <code>-P</code> command line flag. 
+ * You enable parallel execution in <a href="tools/Runner$.html"><code>Runner</code></a> with the <code>-P</code> command line flag.
  * In the ScalaTest Maven Plugin, set <code>parallel</code> to <code>true</code>.
  * In <code>sbt</code>, parallel execution is the default, but to be explicit you can write:
- * 
+ *
  * <pre>
  * parallelExecution in Test := true // the default in sbt
  * </pre>
- * 
- * On the JVM, if both <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in and 
+ *
+ * On the JVM, if both <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in and
  * parallel execution is enabled in the build, tests in an async-style suite will be started in parallel, using threads from
  * the <a href="Distributor"><code>Distributor</code></a>, and allowed to complete in parallel, using threads from the
  * <code>executionContext</code>. If you are using ScalaTest's serial execution context, the JVM default, asynchronous tests will
@@ -310,7 +310,7 @@ package org.scalatest
  * you need not worry about synchronizing access to shared mutable state accessed by transformations and callbacks of <code>Future</code>s
  * inside the test.
  * </p>
- * 
+ *
  * <p>
  * If <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in but
  * parallel execution of suites is <em>not</em> enabled, asynchronous tests on the JVM will be started sequentially, by the single thread
@@ -322,11 +322,11 @@ package org.scalatest
  * however, even though tests will be started sequentially by one thread, they will be allowed to run concurrently using threads from the
  * execution context's thread pool.
  * </p>
- * 
+ *
  * <p>
  * The latter behavior is essentially what you'll see on Scala.js when you execute a suite that mixes in <code>ParallelTestExecution</code>.
  * Because only one thread exists when running under JavaScript, you can't "enable parallel execution of suites." However, it may
- * still be useful to run tests in parallel on Scala.js, because tests can invoke API calls that are truly asynchronous by calling into 
+ * still be useful to run tests in parallel on Scala.js, because tests can invoke API calls that are truly asynchronous by calling into
  * external APIs that take advantage of non-JavaScript threads. Thus on Scala.js, <code>ParallelTestExecution</code> allows asynchronous
  * tests to run in parallel, even though they must be started sequentially. This may give you better performance when you are using API
  * calls in your Scala.js tests that are truly asynchronous.
@@ -364,22 +364,22 @@ package org.scalatest
  * <pre class="stREPL">
  * scala&gt; import org.scalatest.RecoverMethods._
  * import org.scalatest.RecoverMethods._
- * 
+ *
  * scala&gt; import scala.concurrent.Future
  * import scala.concurrent.Future
- * 
+ *
  * scala&gt; import scala.concurrent.ExecutionContext.Implicits.global
  * import scala.concurrent.ExecutionContext.Implicits.global
- * 
+ *
  * scala&gt; recoverToSucceededIf[IllegalStateException] {
  *      |   Future { throw new IllegalStateException }
  *      | }
  * res0: scala.concurrent.Future[org.scalatest.Assertion] = ...
- * 
+ *
  * scala&gt; res0.value
  * res1: Option[scala.util.Try[org.scalatest.Assertion]] = Some(Success(Succeeded))
  * </pre>
- * 
+ *
  * <p>
  * Otherwise it fails with an error message similar to those given by <code>assertThrows</code>:
  * </p>
@@ -389,18 +389,18 @@ package org.scalatest
  *      |   Future { throw new RuntimeException }
  *      | }
  * res2: scala.concurrent.Future[org.scalatest.Assertion] = ...
- * 
+ *
  * scala&gt; res2.value
  * res3: Option[scala.util.Try[org.scalatest.Assertion]] =
  *     Some(Failure(org.scalatest.exceptions.TestFailedException: Expected exception
  *       java.lang.IllegalStateException to be thrown, but java.lang.RuntimeException
  *       was thrown))
- * 
+ *
  * scala&gt; recoverToSucceededIf[IllegalStateException] {
  *      |   Future { 42 }
  *      | }
  * res4: scala.concurrent.Future[org.scalatest.Assertion] = ...
- * 
+ *
  * scala&gt; res4.value
  * res5: Option[scala.util.Try[org.scalatest.Assertion]] =
  *     Some(Failure(org.scalatest.exceptions.TestFailedException: Expected exception
@@ -434,14 +434,14 @@ package org.scalatest
  *      |     Future { throw new IllegalStateException("hello") }
  *      |   }
  * futureEx: scala.concurrent.Future[IllegalStateException] = ...
- * 
+ *
  * scala&gt; futureEx.value
  * res6: Option[scala.util.Try[IllegalStateException]] =
  *     Some(Success(java.lang.IllegalStateException: hello))
- * 
+ *
  * scala&gt; futureEx map { ex =&gt; assert(ex.getMessage == "world") }
  * res7: scala.concurrent.Future[org.scalatest.Assertion] = ...
- * 
+ *
  * scala&gt; res7.value
  * res8: Option[scala.util.Try[org.scalatest.Assertion]] =
  *     Some(Failure(org.scalatest.exceptions.TestFailedException: "[hello]" did not equal "[world]"))
@@ -569,7 +569,7 @@ package org.scalatest
  * <p>
  * One of the parameters to <code>AsyncFunSuite</code>'s <code>run</code> method is a <code>Reporter</code>, which
  * will collect and report information about the running suite of tests.
- * Information about suites and tests that were run, whether tests succeeded or failed, 
+ * Information about suites and tests that were run, whether tests succeeded or failed,
  * and tests that were ignored will be passed to the <code>Reporter</code> as the suite runs.
  * Most often the reporting done by default by <code>AsyncFunSuite</code>'s methods will be sufficient, but
  * occasionally you may wish to provide custom information to the <code>Reporter</code> from a test.
@@ -586,7 +586,7 @@ package org.scalatest
  *
  * import collection.mutable
  * import org.scalatest._
- * 
+ *
  * class SetSuite extends AsyncFunSuite with GivenWhenThen {
  *
  *   test("An element can be added to an empty mutable Set") {
@@ -616,10 +616,10 @@ package org.scalatest
  * scala&gt; org.scalatest.run(new SetSuite)
  * <span class="stGreen">SetSuite:
  * - an element can be added to an empty mutable Set
- *   + Given an empty mutable Set 
- *   + When an element is added 
- *   + Then the Set should have size 1 
- *   + And the Set should contain the added element 
+ *   + Given an empty mutable Set
+ *   + When an element is added
+ *   + Then the Set should have size 1
+ *   + And the Set should contain the added element
  *   + That's all folks!</span>
  * </pre>
  *
@@ -755,7 +755,7 @@ package org.scalatest
  *
  * <p>
  * Another example is <a href="tools/Runner$.html#slowpokeNotifications">slowpoke notifications</a>.
- * If you find a test is taking a long time to complete, but you're not sure which test, you can enable 
+ * If you find a test is taking a long time to complete, but you're not sure which test, you can enable
  * slowpoke notifications. ScalaTest will use an <code>Alerter</code> to fire an event whenever a test has been running
  * longer than a specified amount of time.
  * </p>
@@ -834,7 +834,7 @@ package org.scalatest
  * <span class="stYellow">- addSoon will eventually compute a sum of passed Ints (pending)</span>
  * <span class="stGreen">- addNow will immediately compute a sum of passed Ints</span>
  * </pre>
- * 
+ *
  * <p>
  * One difference between an ignored test and a pending one is that an ignored test is intended to be used during
  * significant refactorings of the code under test, when tests break and you don't want to spend the time to fix
@@ -864,7 +864,7 @@ package org.scalatest
  * you pass objects that extend class <code>org.scalatest.Tag</code> to methods
  * that register tests. Class <code>Tag</code> takes one parameter, a string name.  If you have
  * created tag annotation interfaces as described in the <a href="Tag.html"><code>Tag</code> documentation</a>, then you
- * will probably want to use tag names on your test functions that match. To do so, simply 
+ * will probably want to use tag names on your test functions that match. To do so, simply
  * pass the fully qualified names of the tag interfaces to the <code>Tag</code> constructor. For example, if you've
  * defined a tag annotation interface with fully qualified name,
  * <code>com.mycompany.tags.DbTest</code>, then you could
@@ -913,7 +913,7 @@ package org.scalatest
  * </pre>
  *
  * <p>
- * This code marks both tests with the <code>org.scalatest.tags.Slow</code> tag, 
+ * This code marks both tests with the <code>org.scalatest.tags.Slow</code> tag,
  * and the second test with the <code>com.mycompany.tags.DbTest</code> tag.
  * </p>
  *
@@ -1007,7 +1007,7 @@ package org.scalatest
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
  *     <p>
  *     The recommended default approach when most or all tests need the same fixture treatment. This general technique
- *     allows you, for example, to perform side effects at the beginning and end of all or most tests, 
+ *     allows you, for example, to perform side effects at the beginning and end of all or most tests,
  *     transform the outcome of tests, retry tests, make decisions based on test names, tags, or other test data.
  *     Use this technique unless:
  *     </p>
@@ -1145,7 +1145,7 @@ package org.scalatest
  * override def withFixture(test: NoArgAsyncTest) = {
  *
  *   // Perform setup here
- * 
+ *
  *   complete {
  *     super.withFixture(test) // Invoke the test function
  *   } lastly {
@@ -1169,17 +1169,17 @@ package org.scalatest
  * </pre>
  *
  * <p>
- * If you want to perform an action only for certain outcomes, you'll need to 
+ * If you want to perform an action only for certain outcomes, you'll need to
  * register code performing that action as a callback on the <code>Future</code> using
  * one of <code>Future</code>'s registration methods: <code>onComplete</code>, <code>onSuccess</code>,
  * or <code>onFailure</code>. Note that if a test fails, that will be treated as a
- * <code>scala.util.Success(org.scalatest.Failed)</code>. So if you want to perform an 
+ * <code>scala.util.Success(org.scalatest.Failed)</code>. So if you want to perform an
  * action if a test fails, for example, you'd register the callback using <code>onSuccess</code>.
  * </p>
  *
  * <p>
  * Here's an example in which <code>withFixture(NoArgAsyncTest)</code> is used to take a
- * snapshot of the working directory if a test fails, and 
+ * snapshot of the working directory if a test fails, and
  * send that information to the standard output stream:
  * </p>
  *
@@ -1238,7 +1238,7 @@ package org.scalatest
  * Lastly, if you want to transform the outcome in some way in <code>withFixture</code>, you'll need to use either the
  * <code>map</code> or <code>transform</code> methods of <code>Future</code>, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * // Your implementation
  * override def withFixture(test: NoArgAsyncTest) = {
@@ -1252,7 +1252,7 @@ package org.scalatest
  *   }
  * }
  * </pre>
- * 
+ *
  * <p>
  * Note that a <code>NoArgAsyncTest</code>'s <code>apply</code> method will return a <code>scala.util.Failure</code> only if
  * the test completes abruptly with a "test-fatal" exception (such as <code>OutOfMemoryError</code>) that should
@@ -1261,7 +1261,7 @@ package org.scalatest
  * unchanged. The suite will abort asynchronously with any exception returned from <code>NoArgAsyncTest</code>'s
  * apply method in a <code>scala.util.Failure</code>.
  * </p>
- * 
+ *
  * <a name="loanFixtureMethods"></a>
  * <h4>Calling loan-fixture methods</h4>
  *
@@ -1331,7 +1331,7 @@ package org.scalatest
  *     complete {
  *       val futurePopulatedDb =
  *         futureDb map { db =&gt;
- *           db.append("ScalaTest is ") // perform setup 
+ *           db.append("ScalaTest is ") // perform setup
  *         }
  *       testCode(futurePopulatedDb) // "loan" the fixture to the test code
  *     } lastly {
@@ -1432,18 +1432,18 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.asyncfunsuite.oneargasynctest
- * 
+ *
  * import org.scalatest._
  * import java.io._
  * import scala.concurrent.Future
  * import scala.concurrent.ExecutionContext
- * 
+ *
  * // Defining actor messages
  * sealed abstract class StringOp
  * case object Clear extends StringOp
  * case class Append(value: String) extends StringOp
  * case object GetValue
- * 
+ *
  * class StringActor { // Simulating an actor
  *   private final val sb = new StringBuilder
  *   def !(op: StringOp): Unit =
@@ -1458,13 +1458,13 @@ package org.scalatest
  *       synchronized { sb.toString }
  *     }
  * }
- * 
+ *
  * class ExampleSuite extends fixture.AsyncFunSuite {
- * 
+ *
  *   type FixtureParam = StringActor
- * 
+ *
  *   def withFixture(test: OneArgAsyncTest): FutureOutcome = {
- * 
+ *
  *     val actor = new StringActor
  *     complete {
  *       actor ! Append("ScalaTest is ") // set up the fixture
@@ -1473,7 +1473,7 @@ package org.scalatest
  *       actor ! Clear // ensure the fixture will be cleaned up
  *     }
  *   }
- * 
+ *
  *   test("Testing should be easy") { actor =&gt;
  *     actor ! Append("easy!")
  *     val futureString = actor ? GetValue
@@ -1481,7 +1481,7 @@ package org.scalatest
  *       assert(s === "ScalaTest is easy!")
  *     }
  *   }
- * 
+ *
  *   test("Testing should be fun") { actor =&gt;
  *     actor ! Append("fun!")
  *     val futureString = actor ? GetValue
@@ -1513,19 +1513,19 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.asyncfunsuite.beforeandafter
- * 
+ *
  * import org.scalatest.AsyncFunSuite
  * import org.scalatest.BeforeAndAfter
  * import collection.mutable.ListBuffer
  * import scala.concurrent.Future
  * import scala.concurrent.ExecutionContext
- * 
+ *
  * // Defining actor messages
  * sealed abstract class StringOp
  * case object Clear extends StringOp
  * case class Append(value: String) extends StringOp
  * case object GetValue
- * 
+ *
  * class StringActor { // Simulating an actor
  *   private final val sb = new StringBuilder
  *   def !(op: StringOp): Unit =
@@ -1540,19 +1540,19 @@ package org.scalatest
  *       synchronized { sb.toString }
  *     }
  * }
- * 
+ *
  * class ExampleSuite extends AsyncFunSuite with BeforeAndAfter {
- * 
+ *
  *   final val actor = new StringActor
- * 
+ *
  *   before {
  *     actor ! Append("ScalaTest is ") // set up the fixture
  *   }
- * 
+ *
  *   after {
  *     actor ! Clear // clean up the fixture
  *   }
- * 
+ *
  *   test("testing should be easy") {
  *     actor ! Append("easy!")
  *     val futureString = actor ? GetValue
@@ -1560,7 +1560,7 @@ package org.scalatest
  *       assert(s === "ScalaTest is easy!")
  *     }
  *   }
- * 
+ *
  *   test("testing should be fun") {
  *     actor ! Append("fun!")
  *     val futureString = actor ? GetValue
@@ -1595,7 +1595,7 @@ package org.scalatest
  *
  * <p>
  * Although <code>BeforeAndAfter</code> provides a minimal-boilerplate way to execute code before and after tests, it isn't designed to enable stackable
- * traits, because the order of execution would be non-obvious.  If you want to factor out before and after code that is common to multiple test suites, you 
+ * traits, because the order of execution would be non-obvious.  If you want to factor out before and after code that is common to multiple test suites, you
  * should use trait <code>BeforeAndAfterEach</code> instead, as shown later in the next section,
  * <a href="#composingFixtures.html">composing fixtures by stacking traits</a>.
  * </p>
@@ -1613,19 +1613,19 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.asyncfunsuite.composingwithasyncfixture
- * 
+ *
  * import org.scalatest._
  * import org.scalatest.SuiteMixin
  * import collection.mutable.ListBuffer
  * import scala.concurrent.Future
  * import scala.concurrent.ExecutionContext
- * 
+ *
  * // Defining actor messages
  * sealed abstract class StringOp
  * case object Clear extends StringOp
  * case class Append(value: String) extends StringOp
  * case object GetValue
- * 
+ *
  * class StringBuilderActor { // Simulating an actor
  *   private final val sb = new StringBuilder
  *   def !(op: StringOp): Unit =
@@ -1640,7 +1640,7 @@ package org.scalatest
  *       synchronized { sb.toString }
  *     }
  * }
- * 
+ *
  * class StringBufferActor {
  *   private final val buf = ListBuffer.empty[String]
  *   def !(op: StringOp): Unit =
@@ -1655,11 +1655,11 @@ package org.scalatest
  *       synchronized { buf.toList }
  *     }
  * }
- * 
+ *
  * trait Builder extends AsyncTestSuiteMixin { this: AsyncTestSuite =&gt;
- * 
+ *
  *   final val builderActor = new StringBuilderActor
- * 
+ *
  *   abstract override def withFixture(test: NoArgAsyncTest) = {
  *     builderActor ! Append("ScalaTest is ")
  *     complete {
@@ -1669,11 +1669,11 @@ package org.scalatest
  *     }
  *   }
  * }
- * 
+ *
  * trait Buffer extends AsyncTestSuiteMixin { this: AsyncTestSuite =&gt;
- * 
+ *
  *   final val bufferActor = new StringBufferActor
- * 
+ *
  *   abstract override def withFixture(test: NoArgAsyncTest) = {
  *     complete {
  *       super.withFixture(test) // To be stackable, must call super.withFixture
@@ -1682,9 +1682,9 @@ package org.scalatest
  *     }
  *   }
  * }
- * 
+ *
  * class ExampleSuite extends AsyncFunSuite with Builder with Buffer {
- * 
+ *
  *   test("Testing should be easy") {
  *     builderActor ! Append("easy!")
  *     val futureString = builderActor ? GetValue
@@ -1697,7 +1697,7 @@ package org.scalatest
  *       succeed
  *     }
  *   }
- * 
+ *
  *   test("Testing should be fun") {
  *     builderActor ! Append("fun!")
  *     val futureString = builderActor ? GetValue
@@ -1717,7 +1717,7 @@ package org.scalatest
  * By mixing in both the <code>Builder</code> and <code>Buffer</code> traits, <code>ExampleSuite</code> gets both fixtures, which will be
  * initialized before each test and cleaned up after. The order the traits are mixed together determines the order of execution.
  * In this case, <code>Builder</code> is &ldquo;super&rdquo; to <code>Buffer</code>. If you wanted <code>Buffer</code> to be &ldquo;super&rdquo;
- * to <code>Builder</code>, you need only switch the order you mix them together, like this: 
+ * to <code>Builder</code>, you need only switch the order you mix them together, like this:
  * </p>
  *
  * <pre class="stHighlight">
@@ -1744,19 +1744,19 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.asyncfunsuite.composingbeforeandaftereach
- * 
+ *
  * import org.scalatest._
  * import org.scalatest.BeforeAndAfterEach
  * import collection.mutable.ListBuffer
  * import scala.concurrent.Future
  * import scala.concurrent.ExecutionContext
- * 
+ *
  * // Defining actor messages
  * sealed abstract class StringOp
  * case object Clear extends StringOp
  * case class Append(value: String) extends StringOp
  * case object GetValue
- * 
+ *
  * class StringBuilderActor { // Simulating an actor
  *   private final val sb = new StringBuilder
  *   def !(op: StringOp): Unit =
@@ -1771,7 +1771,7 @@ package org.scalatest
  *       synchronized { sb.toString }
  *     }
  * }
- * 
+ *
  * class StringBufferActor {
  *   private final val buf = ListBuffer.empty[String]
  *   def !(op: StringOp): Unit =
@@ -1786,34 +1786,34 @@ package org.scalatest
  *       synchronized { buf.toList }
  *     }
  * }
- * 
+ *
  * trait Builder extends BeforeAndAfterEach { this: Suite =&gt;
- * 
+ *
  *   final val builderActor = new StringBuilderActor
- * 
+ *
  *   override def beforeEach() {
  *     builderActor ! Append("ScalaTest is ")
  *     super.beforeEach() // To be stackable, must call super.beforeEach
  *   }
- * 
+ *
  *   override def afterEach() {
  *     try super.afterEach() // To be stackable, must call super.afterEach
  *     finally builderActor ! Clear
  *   }
  * }
- * 
+ *
  * trait Buffer extends BeforeAndAfterEach { this: Suite =&gt;
- * 
+ *
  *   final val bufferActor = new StringBufferActor
- * 
+ *
  *   override def afterEach() {
  *     try super.afterEach() // To be stackable, must call super.afterEach
  *     finally bufferActor ! Clear
  *   }
  * }
- * 
+ *
  * class ExampleSuite extends AsyncFunSuite with Builder with Buffer {
- * 
+ *
  *   test("Testing should be easy") {
  *     builderActor ! Append("easy!")
  *     val futureString = builderActor ? GetValue
@@ -1826,7 +1826,7 @@ package org.scalatest
  *       succeed
  *     }
  *   }
- * 
+ *
  *   test("Testing should be fun") {
  *     builderActor ! Append("fun!")
  *     val futureString = builderActor ? GetValue
@@ -1854,10 +1854,10 @@ package org.scalatest
  * The difference between stacking traits that extend <code>BeforeAndAfterEach</code> versus traits that implement <code>withFixture</code> is
  * that setup and cleanup code happens before and after the test in <code>BeforeAndAfterEach</code>, but at the beginning and
  * end of the test in <code>withFixture</code>. Thus if a <code>withFixture</code> method completes abruptly with an exception, it is
- * considered a failed test. By contrast, if any of the <code>beforeEach</code> or <code>afterEach</code> methods of <code>BeforeAndAfterEach</code> 
+ * considered a failed test. By contrast, if any of the <code>beforeEach</code> or <code>afterEach</code> methods of <code>BeforeAndAfterEach</code>
  * complete abruptly, it is considered an aborted suite, which will result in a <a href="events/SuiteAborted.html"><code>SuiteAborted</code></a> event.
  * </p>
- * 
+ *
  * <a name="sharedTests"></a><h2>Shared tests</h2>
  *
  * <p>
@@ -1872,18 +1872,18 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.asyncfunsuite.sharedtests
- * 
+ *
  * import scala.collection.mutable.ListBuffer
  * import scala.concurrent.Future
  * import scala.concurrent.ExecutionContext
- * 
+ *
  * // Stack operations
  * case class Push[T](value: T)
  * sealed abstract class StackOp
  * case object Pop extends StackOp
  * case object Peek extends StackOp
  * case object Size extends StackOp
- * 
+ *
  * // Stack info
  * case class StackInfo[T](top: Option[T], size: Int, max: Int) {
  *   require(size &gt;= 0, "size was less than zero")
@@ -1891,11 +1891,11 @@ package org.scalatest
  *   val isFull: Boolean = size == max
  *   val isEmpty: Boolean = size == 0
  * }
- * 
+ *
  * class StackActor[T](Max: Int, name: String) {
- * 
+ *
  *   private final val buf = new ListBuffer[T]
- * 
+ *
  *   def !(push: Push[T]): Unit =
  *     synchronized {
  *       if (buf.size != Max)
@@ -1903,25 +1903,25 @@ package org.scalatest
  *       else
  *         throw new IllegalStateException("can't push onto a full stack")
  *     }
- * 
+ *
  *   def ?(op: StackOp)(implicit c: ExecutionContext): Future[StackInfo[T]] =
  *     synchronized {
  *       op match {
- *         case Pop =&gt; 
+ *         case Pop =&gt;
  *           if (buf.size != 0)
  *             Future { StackInfo(Some(buf.remove(0)), buf.size, Max) }
  *           else
  *             throw new IllegalStateException("can't pop an empty stack")
- *         case Peek =&gt; 
+ *         case Peek =&gt;
  *           if (buf.size != 0)
  *             Future { StackInfo(Some(buf(0)), buf.size, Max) }
  *           else
  *             throw new IllegalStateException("can't peek an empty stack")
- *         case Size =&gt; 
+ *         case Size =&gt;
  *           Future { StackInfo(None, buf.size, Max) }
  *       }
  *     }
- * 
+ *
  *   override def toString: String = name
  * }
  * </pre>
@@ -1943,15 +1943,15 @@ package org.scalatest
  * behavior <em>method</em>) is defined in a trait along with another
  * method containing shared tests for non-full stacks:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * import org.scalatest.AsyncFunSuite
- * 
+ *
  * trait AsyncFunSuiteStackBehaviors { this: AsyncFunSuite =&gt;
- * 
+ *
  *   def nonEmptyStackActor(createNonEmptyStackActor: =&gt; StackActor[Int],
  *         lastItemAdded: Int, name: String): Unit = {
- * 
+ *
  *     test("Size is fired at non-empty stack actor: " + name) {
  *       val stackActor = createNonEmptyStackActor
  *       val futureStackInfo = stackActor ? Size
@@ -1959,10 +1959,10 @@ package org.scalatest
  *         assert(!stackInfo.isEmpty)
  *       }
  *     }
- * 
+ *
  *     test("Peek is fired at non-empty stack actor: " + name) {
  *       val stackActor = createNonEmptyStackActor
- *       val futurePair: Future[(StackInfo[Int], StackInfo[Int])] = 
+ *       val futurePair: Future[(StackInfo[Int], StackInfo[Int])] =
  *         for {
  *           beforePeek &lt;- stackActor ? Size
  *           afterPeek &lt;- stackActor ? Peek
@@ -1972,10 +1972,10 @@ package org.scalatest
  *         assert(afterPeek.size === beforePeek.size)
  *       }
  *     }
- * 
+ *
  *     test("Pop is fired at non-empty stack actor: " + name) {
  *       val stackActor = createNonEmptyStackActor
- *       val futurePair: Future[(StackInfo[Int], StackInfo[Int])] = 
+ *       val futurePair: Future[(StackInfo[Int], StackInfo[Int])] =
  *         for {
  *           beforePop &lt;- stackActor ? Size
  *           afterPop &lt;- stackActor ? Pop
@@ -1986,9 +1986,9 @@ package org.scalatest
  *       }
  *     }
  *   }
- * 
+ *
  *   def nonFullStackActor(createNonFullStackActor: =&gt; StackActor[Int], name: String): Unit = {
- * 
+ *
  *     test("non-full stack actor is not full: " + name) {
  *       val stackActor = createNonFullStackActor
  *       val futureStackInfo = stackActor ? Size
@@ -1996,10 +1996,10 @@ package org.scalatest
  *         assert(!stackInfo.isFull)
  *       }
  *     }
- * 
+ *
  *     test("Push is fired at non-full stack actor: " + name) {
  *       val stackActor = createNonFullStackActor
- *       val futurePair: Future[(StackInfo[Int], StackInfo[Int])] = 
+ *       val futurePair: Future[(StackInfo[Int], StackInfo[Int])] =
  *         for {
  *           beforePush &lt;- stackActor ? Size
  *           afterPush &lt;- { stackActor ! Push(7); stackActor ? Peek }
@@ -2029,14 +2029,14 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * class StackSuite extends AsyncFunSuite with AsyncFunSuiteStackBehaviors {
- * 
+ *
  *   val Max = 10
  *   val LastValuePushed = Max - 1
- * 
+ *
  *   // Stack fixture creation methods
  *   val emptyStackActorName = "empty stack actor"
  *   def emptyStackActor = new StackActor[Int](Max, emptyStackActorName )
- * 
+ *
  *   val fullStackActorName = "full stack actor"
  *   def fullStackActor = {
  *     val stackActor = new StackActor[Int](Max, fullStackActorName )
@@ -2044,14 +2044,14 @@ package org.scalatest
  *       stackActor ! Push(i)
  *     stackActor
  *   }
- * 
+ *
  *   val almostEmptyStackActorName = "almost empty stack actor"
  *   def almostEmptyStackActor = {
  *     val stackActor = new StackActor[Int](Max, almostEmptyStackActorName )
  *     stackActor ! Push(LastValuePushed)
  *     stackActor
  *   }
- * 
+ *
  *   val almostFullStackActorName = "almost full stack actor"
  *   def almostFullStackActor = {
  *     val stackActor = new StackActor[Int](Max, almostFullStackActorName)
@@ -2059,7 +2059,7 @@ package org.scalatest
  *       stackActor ! Push(i)
  *     stackActor
  *   }
- * 
+ *
  *   test("an empty stack actor is empty") {
  *     val stackActor = emptyStackActor
  *     val futureStackInfo = stackActor ? Size
@@ -2067,25 +2067,25 @@ package org.scalatest
  *       assert(stackInfo.isEmpty)
  *     }
  *   }
- * 
+ *
  *   test("Peek is fired at an empty stack actor") {
  *     recoverToSucceededIf[IllegalStateException] {
  *       emptyStackActor ? Peek
  *     }
  *   }
- * 
+ *
  *   test("Pop is fired at an empty stack actor") {
  *     recoverToSucceededIf[IllegalStateException] {
  *       emptyStackActor ? Pop
  *     }
  *   }
- * 
+ *
  *   testsFor(nonEmptyStackActor(almostEmptyStackActor, LastValuePushed, almostEmptyStackActorName))
  *   testsFor(nonFullStackActor(almostEmptyStackActor, almostEmptyStackActorName))
- * 
+ *
  *   testsFor(nonEmptyStackActor(almostFullStackActor, LastValuePushed, almostFullStackActorName))
  *   testsFor(nonFullStackActor(almostFullStackActor, almostFullStackActorName))
- * 
+ *
  *   test("a full stack actor is full") {
  *     val stackActor = fullStackActor
  *     val futureStackInfo = stackActor ? Size
@@ -2093,9 +2093,9 @@ package org.scalatest
  *       assert(stackInfo.isFull)
  *     }
  *   }
- * 
+ *
  *   testsFor(nonEmptyStackActor(fullStackActor, LastValuePushed, fullStackActorName))
- * 
+ *
  *   test("Push is fired at a full stack actor") {
  *     val stackActor = fullStackActor
  *     assertThrows[IllegalStateException] {
@@ -2133,7 +2133,7 @@ package org.scalatest
  * - Pop is fired at non-empty stack actor: full stack actor
  * - Push is fired at a full stack actor</span>
  * </pre>
- * 
+ *
  * <p>
  * One thing to keep in mind when using shared tests is that in ScalaTest, each test in a suite must have a unique name.
  * If you register the same tests repeatedly in the same suite, one problem you may encounter is an exception at runtime
@@ -2215,7 +2215,7 @@ an execution context. Synchronous styles are designed so that you need not worry
 about synchronizing access to mutable state shared between tests, because only
 one thread executes each test. Even if you ix in PTE, you need not synchronize access
 to instance variables because each test is executed in its own instance of the test
-class, so each test has its own copy of the instance variables. 
+class, so each test has its own copy of the instance variables.
 
 On Scala.js, you can't block, so using Await or ScalaFutures will not work if you
 Futures are truly asynchronous (involve calling APIs that work outside of the JS thread)
@@ -2223,7 +2223,7 @@ On Scala.js, therefore, you must use async style tests to test asynchrounous cod
 but you need not worry about synchronoization. ON the JVM, you can block,
 so you have the option to use synchronous style tests to test asynchronous code.
 
-If you choose to write async-style tests on the JVM, you must ensure that the objects you 
+If you choose to write async-style tests on the JVM, you must ensure that the objects you
 manipulate through Futures are thread-safe (and the easiest way to do that is make them
 immutable).
 */

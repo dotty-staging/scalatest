@@ -59,7 +59,7 @@ import java.util.Arrays
  * function passed to a <code>Suite</code>'s <code>execute</code> method. The first <code>Ordinal</code> for a run
  * can be produced by passing a run stamp to <code>Ordinal</code>'s lone public constructor:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * val firstOrdinal = new Ordinal(99)
  * </pre>
@@ -78,22 +78,22 @@ import java.util.Arrays
  * <p>
  * You can convert an <code>Ordinal</code> to a <code>List</code> by invoking <code>toList</code> on it. The resulting <code>List</code> will contain
  * the run stamp as its first element, and the contents of its stamps sequence as the subsequent elements. The stamps
- * sequence will initially be composed of a single element with the value 0. Thus, <code>toList</code> invoked on the <code>firstOrdinal</code> shown above will 
+ * sequence will initially be composed of a single element with the value 0. Thus, <code>toList</code> invoked on the <code>firstOrdinal</code> shown above will
  * result in:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * firstOrdinal.toList // results in: List(99, 0)
  * </pre>
  *
  * <p>
- * Each time <code>next</code> is invoked, the rightmost integer returned by <code>toList</code> will increment: 
+ * Each time <code>next</code> is invoked, the rightmost integer returned by <code>toList</code> will increment:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * val secondOrdinal = firstOrdinal.next
  * secondOrdinal.toList // results in: List(99, 1)
- * 
+ *
  * val thirdOrdinal = secondOrdinal.next
  * thirdOrdinal.toList  // result is : List(99, 2)
  * </pre>
@@ -119,7 +119,7 @@ import java.util.Arrays
  * <pre class="stHighlight">
  * val newSuiteOrdinal2 = nextForNewSuite.next
  * newSuiteOrdinal2.toList // results in: List(99, 2, 1)
- * 
+ *
  * val newSuiteOrdinal3 = newSuiteOrdinal2.next
  * newSuiteOrdinal3.toList  // result is : List(99, 2, 2)
  * </pre>
@@ -132,7 +132,7 @@ import java.util.Arrays
  * a run stamp of 99. If the run stamps are equal, the next number in the list is inspected. As with the run stamps, an  <code>Ordinal</code> with a lower
  * number is ordered before an <code>Ordinal</code> with a higher number. If two corresponding elements are equal, the next pair of elements will be inspected.
  * This will continue no down the length of the <code>List</code>s until a position is found where the element values are not equal, or the end of one or both of
- * the <code>List</code>s are reached. If the two <code>List</code>s are identical all the way to the end, and both <code>List</code>s have the same lengths, 
+ * the <code>List</code>s are reached. If the two <code>List</code>s are identical all the way to the end, and both <code>List</code>s have the same lengths,
  * then the <code>Ordinal</code>s are equal. (Equal <code>Ordinal</code>s will not happen if correctly used by creating a new <code>Ordinal</code> for
  * each fired event and each new <code>Suite</code>.). If the two <code>List</code>s are identical all the way to the end of one, but the other <code>List</code>
  * is longer (has more elements), then the shorter list is ordered before the longer one.
@@ -235,7 +235,7 @@ final class Ordinal private (val runStamp: Int, private val stamps: Array[Int]) 
    * the passed object, <code>compare</code> will return a negative integer. If this class is "greater than" (ordered after)
    * the passed object, <code>compare</code> will return a positive integer. Otherwise, this <code>Ordinal</code> is equal to
    * the passed object, and <code>compare</code> will return 0.
-   * 
+   *
    * @return a negative integer, 0, or positive integer indicating this <code>Ordinal</code> is less than, equal to, or greater than the passed <code>Ordinal</code>.
    */
   def compare(that: Ordinal) = {

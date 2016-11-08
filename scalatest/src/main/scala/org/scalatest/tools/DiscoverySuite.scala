@@ -32,7 +32,7 @@ private[scalatest] class DiscoverySuite(path: String, accessibleSuites: Set[Stri
   requireNonNull(path, accessibleSuites, runpathClassLoader)
 
   override val suiteId = getClass.getName + "-" + UUID.randomUUID.toString
-    
+
   override val nestedSuites: collection.immutable.IndexedSeq[Suite] =
     for (suiteClassName <- DiscoverySuite.nestedSuiteNames(path, accessibleSuites, wildcard))
       yield DiscoverySuite.getSuiteInstance(suiteClassName, runpathClassLoader)
@@ -67,7 +67,7 @@ private[scalatest] object DiscoverySuite {
       else {
         val suiteClazz = wrapWithAnnotation.value
         val constructorList = suiteClazz.getDeclaredConstructors()
-        val constructor = constructorList.find { c => 
+        val constructor = constructorList.find { c =>
           val types = c.getParameterTypes
           types.length == 1 && types(0) == classOf[java.lang.Class[_]]
         }

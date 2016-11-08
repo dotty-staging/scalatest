@@ -21,7 +21,7 @@ import org.scalactic.Requirements._
 
 // Wrote this class by looking at the Javadoc of java.util.Random.
 // And by testing its behavior against that of java.util.Random.
-// Maybe this should be a trait, so that people can, hmm. Could 
+// Maybe this should be a trait, so that people can, hmm. Could
 // make subclasses with extra methods, like nextSmallInt or something,
 // and in a pattern match narrow the type and call that method.
 private[prop] class Randomizer(seed: Long, edges: Edges) { thisRandomizer =>
@@ -35,11 +35,11 @@ private[prop] class Randomizer(seed: Long, edges: Edges) { thisRandomizer =>
     (newInt, new Randomizer(newSeed, edges))
   }
   def nextByte: (Byte, Randomizer) = {
-    val (i, r) = next(8) 
+    val (i, r) = next(8)
     (i.toByte, r)
   }
   def nextShort: (Short, Randomizer) = {
-    val (i, r) = next(16) 
+    val (i, r) = next(16)
     (i.toShort, r)
   }
   // When an invalid Unicode char between 0xD800 and 0xDFFF is generated, just
@@ -47,11 +47,11 @@ private[prop] class Randomizer(seed: Long, edges: Edges) { thisRandomizer =>
   // common in practice anyway. So this generator does favor slightly
   // the first code block.
   def nextChar: (Char, Randomizer) = {
-    val (i, r) = nextRandomizer.next(16) 
+    val (i, r) = nextRandomizer.next(16)
     if (i >= 0xD800 && i <= 0xDFFF) (((i - 0xD800) & 0xFF).toChar, r)
     else (i.toChar, r)
   }
-  def nextInt: (Int, Randomizer) = next(32) 
+  def nextInt: (Int, Randomizer) = next(32)
   def nextLong: (Long, Randomizer) = {
     val (ia, ra) = thisRandomizer.next(32)
     val (ib, rb) = ra.next(32)
@@ -303,7 +303,7 @@ private[prop] object Randomizer {
   private val posDoubleEdges = List(PosDouble(1.0), PosDouble.MaxValue)
   private val posZDoubleEdges = List(PosZDouble(0.0), PosZDouble(1.0), PosZDouble.MaxValue)
   private val longEdges = List(Long.MinValue, -1, 0, 1, Long.MaxValue)
-  private val standardEdges = 
+  private val standardEdges =
     Edges(
       byteEdges,
       shortEdges,
@@ -342,7 +342,7 @@ private[prop] object Randomizer {
         scala.util.Random.shuffle(posZDoubleEdges)
       )
     )
-  // Note, this method where you pass the seed in will produce edges in always the same order, so it 
+  // Note, this method where you pass the seed in will produce edges in always the same order, so it
   // is completely predictable. Maybe I should offer a way to let people customize edges too I suppose.
   def apply(seed: Long): Randomizer = new Randomizer((seed ^ 0x5DEECE66DL) & ((1L << 48) - 1), standardEdges)
 }

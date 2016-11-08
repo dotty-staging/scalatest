@@ -40,7 +40,7 @@ import org.scalactic._
  * assertion methods declared in <code>junit.framework.Assert</code> (such as <code>assertEquals</code>,
  * <code>assertTrue</code>, and <code>fail</code>) is, therefore, <code>AssertionFailedError</code>.
  * </p>
- * 
+ *
  * <p>
  * In JUnit 4, <code>AssertionFailedError</code> was made to extend <code>java.lang.AssertionError</code>,
  * and the distinction between failures and errors was essentially dropped. However, some tools that integrate
@@ -99,7 +99,7 @@ trait AssertionsForJUnit extends Assertions {
   private[scalatest] override def newAssertionFailedException(optionalMessage: Option[String], optionalCause: Option[Throwable], pos: source.Position): Throwable = {
     new JUnitTestFailedError(optionalMessage, optionalCause, pos, None)
   }
-  
+
  /*
   private[scalatest] override def newAssertionFailedException(optionalMessage: Option[Any], optionalCause: Option[Throwable], stackDepth: Int): Throwable = {
 
@@ -111,18 +111,18 @@ trait AssertionsForJUnit extends Assertions {
 
     for (cause <- optionalCause)
       assertionFailedError.initCause(cause)
-      
+
     assertionFailedError
   }  */
 }
 
 /**
- * Companion object that facilitates the importing of <code>AssertionsForJUnit</code> members as 
+ * Companion object that facilitates the importing of <code>AssertionsForJUnit</code> members as
  * an alternative to mixing it in. One use case is to import <code>AssertionsForJUnit</code> members so you can use
  * them in the Scala interpreter:
  *
  * <pre>
- * $ scala -cp junit3.8.2/junit.jar:../target/jar_contents 
+ * $ scala -cp junit3.8.2/junit.jar:../target/jar_contents
  * Welcome to Scala version 2.7.5.final (Java HotSpot(TM) Client VM, Java 1.5.0_16).
  * Type in expressions to have them evaluated.
  * Type :help for more information.

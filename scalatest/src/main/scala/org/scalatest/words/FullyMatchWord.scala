@@ -55,13 +55,13 @@ final class FullyMatchWord {
    * This method enables the following syntax:
    *
    * <pre class="stHighlight">
-   * string should not { fullyMatch regex ("a(b*)c" withGroup "bb") } 
+   * string should not { fullyMatch regex ("a(b*)c" withGroup "bb") }
    *                          ^
    * </pre>
-   */	
-  def regex(regexWithGroups: RegexWithGroups) = 
+   */
+  def regex(regexWithGroups: RegexWithGroups) =
     new Matcher[String] {
-      def apply(left: String): MatchResult = 
+      def apply(left: String): MatchResult =
         fullyMatchRegexWithGroups(left, regexWithGroups.regex, regexWithGroups.groups)
       override def toString: String = "fullyMatch regex " + Prettifier.default(regexWithGroups)
     }
@@ -86,7 +86,7 @@ final class FullyMatchWord {
         )
       override def toString: String = "fullyMatch regex \"" + Prettifier.default(rightRegex) + "\""
     }
-  
+
   /**
    * Overrides toString to return "fullyMatch"
    */

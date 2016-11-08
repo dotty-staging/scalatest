@@ -35,17 +35,17 @@ class DigitCharSpec extends FunSpec with Matchers/* with StrictCheckedEquality*/
         DigitChar.from(0) shouldBe None
         DigitChar.from(-1.toChar) shouldBe None
       }
-    } 
+    }
     it("should define min and max values") {
       DigitChar.MinValue shouldBe '0'
       DigitChar.MaxValue shouldBe '9'
-    } 
+    }
     it("should define min and max methods") {
       DigitChar('0') min DigitChar('1') shouldBe DigitChar('0')
       DigitChar('0') max DigitChar('1') shouldBe DigitChar('1')
       DigitChar('8') min DigitChar('9') shouldBe DigitChar('8')
       DigitChar('8') max DigitChar('9') shouldBe DigitChar('9')
-    } 
+    }
     it("should define methods to convert to the numeric value the character represents") {
       DigitChar('0').asDigit shouldBe 0
       DigitChar('9').asDigit shouldBe 9
@@ -53,14 +53,14 @@ class DigitCharSpec extends FunSpec with Matchers/* with StrictCheckedEquality*/
       DigitChar('9').asDigitPosInt shouldBe PosInt(9)
       DigitChar('0').asDigitPosZInt shouldBe PosZInt(0)
       DigitChar('9').asDigitPosZInt shouldBe PosZInt(9)
-    } 
+    }
     it("should have a pretty toString") {
       DigitChar.from('0').value.toString shouldBe "DigitChar(0)"
       DigitChar.from('9').value.toString shouldBe "DigitChar(9)"
     }
     it("should return the same type from its unary_+ method") {
       +DigitChar('3') shouldEqual DigitChar('3')
-    } 
+    }
     it("should be automatically widened to compatible AnyVal targets") {
       (DigitChar('3'): Int) shouldEqual '3'.toInt
       (DigitChar('3'): Long) shouldEqual '3'.toLong

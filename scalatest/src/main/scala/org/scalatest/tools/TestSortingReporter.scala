@@ -28,19 +28,19 @@ import org.scalactic.Requirements._
 private[scalatest] class TestSortingReporter(suiteId: String, dispatch: Reporter, sortingTimeout: Span, testCount: Int, suiteSorter: Option[DistributedSuiteSorter], val out: PrintStream) extends CatchReporter with DistributedTestSorter {
 
   suiteSorter match {
-    case Some(suiteSorter) => 
+    case Some(suiteSorter) =>
       suiteSorter.distributingTests(suiteId)
     case None =>
   }
-  
+
   // Chee Seng: What's the UUID for?
   // Each test gets one slot, but other events such as an info from an after an also get a slot i think.
   case class Slot(uuid: UUID, eventList: ListBuffer[Event], completed: Boolean, completedEvent: Boolean, ready: Boolean)
-  
+
   private val waitingBuffer = new ListBuffer[Slot]()
   private val slotMap = new collection.mutable.HashMap[String, Slot]()  // testName -> Slot
   @volatile private var completedTestCount = 0 // Called within synchronized. Don't need volatile and it wouldn't work anyway.
-  
+
   checkCompletedTests()   // In case the suite does not comtain any test.
 
   // Passed slot will always be the head of waitingBuffer
@@ -49,7 +49,7 @@ private[scalatest] class TestSortingReporter(suiteId: String, dispatch: Reporter
       timeout()
     }
   }
-  
+
   private val timer = new Timer
   private var timeoutTask: Option[TimeoutTask] = None
 
@@ -67,9 +67,9 @@ private[scalatest] class TestSortingReporter(suiteId: String, dispatch: Reporter
       val slot = Slot(UUID.randomUUID, new ListBuffer[Event](), false, false, false)
       slotMap.put(testName, slot)
       waitingBuffer += slot
-      // if it is the head, we should start the timer, because it is possible that this slot has no event coming later and it keeps blocking 
+      // if it is the head, we should start the timer, because it is possible that this slot has no event coming later and it keeps blocking
       // without the timer.
-      if (waitingBuffer.size == 1) 
+      if (waitingBuffer.size == 1)
         scheduleTimeoutTask()
     }
   }
@@ -108,15 +108,15 @@ private[scalatest] class TestSortingReporter(suiteId: String, dispatch: Reporter
       slotMap.put(testName, newSlot)
       completedTestCount += 1
       fireReadyEvents()
-      
+
       checkCompletedTests()
     }
   }
-  
+
   private def checkCompletedTests(): Unit = {
     if (completedTestCount == testCount) {
       suiteSorter match {
-        case Some(suiteSorter) => 
+        case Some(suiteSorter) =>
           suiteSorter.completedTests(suiteId)
         case None =>
       }
@@ -126,37 +126,37 @@ private[scalatest] class TestSortingReporter(suiteId: String, dispatch: Reporter
   def doApply(event: Event): Unit = {
     synchronized {
       event match {
-        case testStarting: TestStarting => 
+        case testStarting: TestStarting =>
           slotMap.get(testStarting.testName) match {
             case Some(slot) =>
               val slotIdx = waitingBuffer.indexOf(slot)
-              if (slotIdx >= 0) 
+              if (slotIdx >= 0)
                 slot.eventList += testStarting // Normally, insert the TestStarting in the eventList for that test
               else // slot not in waiting buffer. what case is this? Probably an err condition
                 dispatch(testStarting) // calling dispatch inside a synchronized, so could be slow
-            case None => 
+            case None =>
               dispatch(testStarting) // a test that wasn't announced
           }
         case testIgnored: TestIgnored => // Is there a test for an ignored test?
           slotMap.get(testIgnored.testName) match {
-            case Some(slot) => 
+            case Some(slot) =>
               val slotIdx = waitingBuffer.indexOf(slot)
-              if (slotIdx >= 0) 
+              if (slotIdx >= 0)
                 slot.eventList += testIgnored // Similar to above, normrally, insert the TestIgnored in the event list
               else
                 dispatch(testIgnored)
-            case None => 
+            case None =>
               dispatch(testIgnored)
           }
 
         // "test completed events"
-        case testSucceeded: TestSucceeded => 
+        case testSucceeded: TestSucceeded =>
           handleTestCompleted(testSucceeded, testSucceeded.testName)
-        case testFailed: TestFailed => 
+        case testFailed: TestFailed =>
           handleTestCompleted(testFailed, testFailed.testName)
-        case testPending: TestPending => 
+        case testPending: TestPending =>
           handleTestCompleted(testPending, testPending.testName)
-        case testCanceled: TestCanceled => 
+        case testCanceled: TestCanceled =>
           handleTestCompleted(testCanceled, testCanceled.testName)
 
         // "suite events"
@@ -164,7 +164,7 @@ private[scalatest] class TestSortingReporter(suiteId: String, dispatch: Reporter
           handleSuiteEvent(scopeOpened)
         case scopeClosed: ScopeClosed =>
           handleSuiteEvent(scopeClosed)
-        case scopePending: ScopePending => 
+        case scopePending: ScopePending =>
           handleSuiteEvent(scopePending)
         case infoProvided: InfoProvided =>
           handleSuiteEvent(infoProvided)
@@ -176,7 +176,7 @@ private[scalatest] class TestSortingReporter(suiteId: String, dispatch: Reporter
           handleSuiteEvent(markupProvided)
 
         // unexpected things like RunStarting, etc.
-        case _ => 
+        case _ =>
           dispatch(event)
       }
       fireReadyEvents() // Always call fire ready events
@@ -207,11 +207,11 @@ private[scalatest] class TestSortingReporter(suiteId: String, dispatch: Reporter
         }
         else // could happen when timeout, just fire the test completed event.
           dispatch(event) // Yup. Might be not there anymore.
-      case None => 
+      case None =>
         dispatch(event)
     }
   }
-  
+
   @tailrec
   private def fireSlotEvents(slot: Slot): Unit = {
     if (slot.eventList.length > 1) {
@@ -259,28 +259,28 @@ private[scalatest] class TestSortingReporter(suiteId: String, dispatch: Reporter
   private def scheduleTimeoutTask(): Unit = {
     val head = waitingBuffer.head  // Assumes waitingBuffer is non-empty. Put a require there to make that obvious.
     timeoutTask match {
-        case Some(task) => 
+        case Some(task) =>
           if (head.uuid != task.slot.uuid) {
             task.cancel()
             timeoutTask = Some(new TimeoutTask(head)) // Replace the old with the new
             timer.schedule(timeoutTask.get, sortingTimeout.millisPart)
           }
-        case None => 
+        case None =>
           timeoutTask = Some(new TimeoutTask(head)) // Just create a new one
           timer.schedule(timeoutTask.get, sortingTimeout.millisPart)
       }
   }
-  
+
   // Also happening inside synchronized block
   private def cancelTimeoutTask(): Unit = {
     timeoutTask match { // Waiting buffer is zero, so no timeout needed
-      case Some(task) => 
+      case Some(task) =>
         task.cancel()
         timeoutTask = None
       case None =>
     }
   }
-  
+
   private def timeout(): Unit = {
     synchronized {
       if (waitingBuffer.size > 0) {
@@ -293,7 +293,7 @@ private[scalatest] class TestSortingReporter(suiteId: String, dispatch: Reporter
       }
     }
   }
-  
+
   def doDispose(): Unit = {
     fireReadyEvents()
     propagateDispose(dispatch)

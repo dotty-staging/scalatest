@@ -29,7 +29,7 @@ class SetSpec extends PropSpec with TableDrivenPropertyChecks with Matchers {
       HashSet.empty[Int],
       TreeSet.empty[Int]
     )
-  
+
   property("an empty Set should have size 0") {
     forAll(examples) { set =>
       set.size should be (0)

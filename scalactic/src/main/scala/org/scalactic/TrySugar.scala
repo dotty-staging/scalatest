@@ -97,7 +97,7 @@ import exceptions.ValidationFailedException
  * </pre>
  *
  * <p>
- * The <code>validating</code> method accepts one or more validation functions. If you 
+ * The <code>validating</code> method accepts one or more validation functions. If you
  * pass more than one, they will be tried in order up until the first failure, whose
  * error message will appear in the <code>ValidationFailedException</code>. In other words,
  * <code>validating</code> will short circuit at the first error and return that. It
@@ -175,7 +175,7 @@ trait TrySugar {
       }
     }
   }
-} 
+}
 
 /**
  * Companion object for <code>TrySugar</code> enabling its members to be
@@ -186,7 +186,7 @@ object TrySugar extends TrySugar {
   private[scalactic] def passOrFirstFail[T, E](o: T, fs: List[T => Validation[E]]): Validation[E] = {
     fs match {
       case Nil => Pass
-      case head :: tail => 
+      case head :: tail =>
         head(o) match {
           case Pass => passOrFirstFail(o, tail)
           case firstFail => firstFail

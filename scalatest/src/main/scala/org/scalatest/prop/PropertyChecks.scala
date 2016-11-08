@@ -98,7 +98,7 @@ package prop
 trait PropertyChecks extends TableDrivenPropertyChecks with GeneratorDrivenPropertyChecks
 
 /**
- * Companion object that facilitates the importing of <code>PropertyChecks</code> members as 
+ * Companion object that facilitates the importing of <code>PropertyChecks</code> members as
  * an alternative to mixing it in. One use case is to import <code>PropertyChecks</code> members so you can use
  * them in the Scala interpreter.
  *

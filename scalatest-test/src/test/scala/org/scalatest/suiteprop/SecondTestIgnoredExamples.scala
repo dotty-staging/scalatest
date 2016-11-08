@@ -101,7 +101,7 @@ class SecondTestIgnoredExamples extends SuiteExamples {
       it("first test") { s => }
       ignore("second test") { s => }
   }
-  
+
   class NestedFixtureFunSpecExample extends StringFixtureFunSpec with NestedTestNames {
     describe("A subject") {
       it("should first test") { s => }
@@ -481,7 +481,7 @@ class SecondTestIgnoredExamples extends SuiteExamples {
   lazy val deeplyNestedWordSpecWithMust = new DeeplyNestedWordSpecWithMustExample
   lazy val nestedFixtureWordSpecWithMust = new NestedFixtureWordSpecWithMustExample
   lazy val deeplyNestedFixtureWordSpecWithMust = new DeeplyNestedFixtureWordSpecWithMustExample
-  
+
   lazy val nestedWordSpecWithCan = new NestedWordSpecWithCanExample
   lazy val deeplyNestedWordSpecWithCan = new DeeplyNestedWordSpecWithCanExample
   lazy val nestedFixtureWordSpecWithCan = new NestedFixtureWordSpecWithCanExample
@@ -523,7 +523,7 @@ class SecondTestIgnoredExamples extends SuiteExamples {
   lazy val nestedFixtureFeatureSpec = new NestedFixtureFeatureSpecExample
   lazy val propSpec = new PropSpecExample
   lazy val fixturePropSpec = new FixturePropSpecExample
-   
+
   // Two ways to ignore in a flat spec, so add two more examples
   override def examples = super.examples ++
     List(

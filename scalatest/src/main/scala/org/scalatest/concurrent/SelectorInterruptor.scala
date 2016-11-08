@@ -27,7 +27,7 @@ import java.nio.channels.Selector
  */
 @deprecated("Please use org.scalatest.concurrent.Signaler instead.")
 class SelectorInterruptor(selector: Selector) extends Interruptor {
-  
+
   /**
    * Invokes <code>wakeup</code> on the <code>java.nio.channels.Selector</code> passed to this class's constructor.
    *

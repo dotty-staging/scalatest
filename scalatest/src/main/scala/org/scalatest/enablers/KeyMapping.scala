@@ -32,7 +32,7 @@ import scala.collection.GenTraversable
  * for <code>scala.collection.GenMap</code> and <code>java.util.Map</code>. You can enable the <code>contain key</code>
  * matcher syntax on your own type <code>U</code> by defining a <code>KeyMapping[U]</code> for the type and making it
  * available implicitly.
- * 
+ *
  * <p>
  * ScalaTest provides implicit <code>KeyMapping</code> instances for <code>scala.collection.GenMap</code>,
  * and <code>java.util.Map</code> in the <code>KeyMapping</code> companion object.
@@ -66,7 +66,7 @@ object KeyMapping {
    * @tparam MAP any subtype of <code>scala.collection.GenMap</code>
    * @return <code>KeyMapping[MAP[K, V]]</code> that supports <code>scala.collection.GenMap</code> in <code>contain key</code> syntax
    */
-  implicit def keyMappingNatureOfGenMap[K, V, MAP[k, v] <: scala.collection.GenMap[k, v]](implicit equality: Equality[K]): KeyMapping[MAP[K, V]] = 
+  implicit def keyMappingNatureOfGenMap[K, V, MAP[k, v] <: scala.collection.GenMap[k, v]](implicit equality: Equality[K]): KeyMapping[MAP[K, V]] =
     new KeyMapping[MAP[K, V]] {
       def containsKey(map: MAP[K, V], key: Any): Boolean = {
         requireNonNull(map)
@@ -94,7 +94,7 @@ object KeyMapping {
    * @tparam MAP any subtype of <code>scala.collection.GenMap</code>
    * @return <code>KeyMapping</code> of type <code>MAP[K, V]</code>
    */
-  implicit def convertEqualityToGenMapKeyMapping[K, V, MAP[k, v] <: scala.collection.GenMap[k, v]](equality: Equality[K]): KeyMapping[MAP[K, V]] = 
+  implicit def convertEqualityToGenMapKeyMapping[K, V, MAP[k, v] <: scala.collection.GenMap[k, v]](equality: Equality[K]): KeyMapping[MAP[K, V]] =
     keyMappingNatureOfGenMap(equality)
 
   /**
@@ -106,7 +106,7 @@ object KeyMapping {
    * @tparam JMAP any subtype of <code>java.util.Map</code>
    * @return <code>KeyMapping[JMAP[K, V]]</code> that supports <code>java.util.Map</code> in <code>contain</code> <code>key</code> syntax
    */
-  implicit def keyMappingNatureOfJavaMap[K, V, JMAP[k, v] <: java.util.Map[k, v]](implicit equality: Equality[K]): KeyMapping[JMAP[K, V]] = 
+  implicit def keyMappingNatureOfJavaMap[K, V, JMAP[k, v] <: java.util.Map[k, v]](implicit equality: Equality[K]): KeyMapping[JMAP[K, V]] =
     new KeyMapping[JMAP[K, V]] {
       def containsKey(jMap: JMAP[K, V], key: Any): Boolean = {
         jMap.asScala.keySet.exists((k: K) => equality.areEqual(k, key))
@@ -133,6 +133,6 @@ object KeyMapping {
    * @tparam JMAP any subtype of <code>java.util.Map</code>
    * @return <code>KeyMapping</code> of type <code>JMAP[K, V]</code>
    */
-  implicit def convertEqualityToJavaMapKeyMapping[K, V, JMAP[k, v] <: java.util.Map[k, v]](equality: Equality[K]): KeyMapping[JMAP[K, V]] = 
+  implicit def convertEqualityToJavaMapKeyMapping[K, V, JMAP[k, v] <: java.util.Map[k, v]](equality: Equality[K]): KeyMapping[JMAP[K, V]] =
     keyMappingNatureOfJavaMap(equality)
 }

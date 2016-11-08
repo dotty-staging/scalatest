@@ -35,14 +35,14 @@ private[scalatest] class SuiteSortingReporter(dispatch: Reporter, sortingTimeout
 
   def registerReporter(suiteId: String, reporter: Reporter): Unit =
     suiteReporterMap += (suiteId -> reporter)
-  
+
   // Passed slot will always be the head of waitingBuffer
   class TimeoutTask(val slot: Slot) extends TimerTask {
     override def run(): Unit = {
       timeout()
     }
   }
-  
+
   private val timer = new Timer
   private var timeoutTask: Option[TimeoutTask] = None
 
@@ -53,15 +53,15 @@ private[scalatest] class SuiteSortingReporter(dispatch: Reporter, sortingTimeout
           // if distributingTests is called (in case of the suite is ParallelTestExecution), the slot is already exists
           val slot = slotMap.get(suiteStarting.suiteId) match {
             case Some(s) => s
-            case None => 
+            case None =>
               val newSlot = Slot(suiteStarting.suiteId, None, false, false, false)
               slotMap.put(suiteStarting.suiteId, newSlot)
               newSlot
           }
           slotListBuf += slot
-          // if it is the head, we should start the timer, because it is possible that this slot has no event coming later and it keeps blocking 
+          // if it is the head, we should start the timer, because it is possible that this slot has no event coming later and it keeps blocking
           // without the timer.
-          if (slotListBuf.size == 1) 
+          if (slotListBuf.size == 1)
             scheduleTimeoutTask()
           handleTestEvents(suiteStarting.suiteId, suiteStarting)
 
@@ -92,7 +92,7 @@ private[scalatest] class SuiteSortingReporter(dispatch: Reporter, sortingTimeout
           alertProvided.nameInfo match {
             case Some(nameInfo) =>
               handleTestEvents(nameInfo.suiteId, alertProvided)
-            case None => 
+            case None =>
               dispatch(alertProvided)
           }
         case noteProvided: NoteProvided =>
@@ -113,7 +113,7 @@ private[scalatest] class SuiteSortingReporter(dispatch: Reporter, sortingTimeout
           handleTestEvents(scopeOpened.nameInfo.suiteId, scopeOpened)
         case scopeClosed: ScopeClosed =>
           handleTestEvents(scopeClosed.nameInfo.suiteId, scopeClosed)
-        case scopePending: ScopePending => 
+        case scopePending: ScopePending =>
           handleTestEvents(scopePending.nameInfo.suiteId, scopePending)
         case _ =>
           dispatch(event)  // Just dispatch it if got unexpected event.
@@ -172,7 +172,7 @@ private[scalatest] class SuiteSortingReporter(dispatch: Reporter, sortingTimeout
           dispatchToRegisteredSuiteReporter(head.suiteId, doneEvent)
         }
         slotListBuf = fireReadySuiteEvents(slotListBuf.tail)
-        if (slotListBuf.size > 0) 
+        if (slotListBuf.size > 0)
           scheduleTimeoutTask()
       }
     }
@@ -212,7 +212,7 @@ private[scalatest] class SuiteSortingReporter(dispatch: Reporter, sortingTimeout
     }
     undone
   }
-  
+
   def completedTests(suiteId: String): Unit = {
     synchronized {
       val slot = slotMap(suiteId)
@@ -232,7 +232,7 @@ private[scalatest] class SuiteSortingReporter(dispatch: Reporter, sortingTimeout
   def distributingTests(suiteId: String): Unit = {
     synchronized {
       slotMap.get(suiteId) match {
-        case Some(slot) => 
+        case Some(slot) =>
           val newSlot = slot.copy(includesDistributedTests = true)
           slotMap.put(suiteId, newSlot)
            val slotIdx = slotListBuf.indexOf(slot)
@@ -247,23 +247,23 @@ private[scalatest] class SuiteSortingReporter(dispatch: Reporter, sortingTimeout
   override def doDispose(): Unit = {
     fireReadyEvents()
   }
-  
+
   // Also happening inside synchronized block
   private def scheduleTimeoutTask(): Unit = {
     val head = slotListBuf.head  // Assumes waitingBuffer is non-empty. Put a require there to make that obvious.
     timeoutTask match {
-        case Some(task) => 
+        case Some(task) =>
           if (head.suiteId != task.slot.suiteId) {
             task.cancel()
             timeoutTask = Some(new TimeoutTask(head)) // Replace the old with the new
             timer.schedule(timeoutTask.get, sortingTimeout.millisPart)
           }
-        case None => 
+        case None =>
           timeoutTask = Some(new TimeoutTask(head)) // Just create a new one
           timer.schedule(timeoutTask.get, sortingTimeout.millisPart)
       }
   }
-  
+
   private def timeout(): Unit = {
     synchronized {
       if (slotListBuf.size > 0) {

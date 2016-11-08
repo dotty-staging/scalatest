@@ -26,7 +26,7 @@ package org.scalactic
  * <pre class="stHighlight">
  * import org.scalactic._
  *
- * val truncated = 
+ * val truncated =
  *   new Normalization[Double] {
  *    def normalized(d: Double) = d.floor
  *  }
@@ -40,7 +40,7 @@ package org.scalactic
  * import org.scalatest._
  * import Matchers._
  * import TypeCheckedTripleEquals._
- * 
+ *
  * (2.1 should === (2.0)) (after being truncated)
  * </pre>
  *
@@ -63,7 +63,7 @@ package org.scalactic
  * val d = 2.1
  * d.norm // returns 2.0
  * </pre>
- * 
+ *
  * @tparam A the type whose normalization is being defined
  */
 trait Normalization[A] { thisNormalization =>

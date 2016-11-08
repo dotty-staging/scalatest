@@ -23,7 +23,7 @@ import org.scalatest.events._
 import org.scalatest.exceptions._
 import org.scalactic.Prettifier
 import org.scalatest.{ PrivateMethodTester, Matchers, BeforeAndAfterEach, BeforeAndAfterAll,
-                        Filter, Args, Stopper, Tracker, Ignore, SlowAsMolasses, FastAsLight, WeakAsAKitten, 
+                        Filter, Args, Stopper, Tracker, Ignore, SlowAsMolasses, FastAsLight, WeakAsAKitten,
                         Reporter, Distributor, OptionValues, Resources, DoNotDiscover, WrapWith, Suites,
                         ConfigMapWrapperSuite, StringFixture, Status, SucceededStatus, ConfigMap, Outcome, FailureMessages,
                         UnquotedString }
@@ -111,7 +111,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       }
     }
 */
-    
+
     it("should return the test names in alphabetical order from testNames") {
       val a = new Spec {
         type FixtureParam = String
@@ -141,7 +141,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
         c.testNames.iterator.toList
       }
     }
-    
+
     it("should return test names nested in scope in alpahbetical order from testNames") {
       val a = new Spec {
         type FixtureParam = String
@@ -175,7 +175,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
         b.testNames.iterator.toList
       }
     }
-    
+
     it("test names should properly nest scopes in test names") {
       class MySpec extends Spec with Matchers {
         type FixtureParam = String
@@ -194,7 +194,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(a.testNames.iterator.toList(0) === "A Stack (when not empty) must allow me to pop")
       assert(a.testNames.iterator.toList(1) === "A Stack (when not full) must allow me to push")
     }
-    
+
     it("should be able to mix in BeforeAndAfterEach with BeforeAndAfterAll without any problems") {
       class MySpec extends Spec with Matchers with BeforeAndAfterEach with BeforeAndAfterAll {
         type FixtureParam = String
@@ -211,7 +211,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       val a = new MySpec
       a.execute()
     }
-    
+
     it("should register scopes and tests lazily after spec instance variables are created when testNames is invoked") {
       val a = new Spec with StringFixture {
         val name = "ScalaTest"
@@ -265,14 +265,14 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(info.message === "ScalaTest")
     }
 */
- 
+
     class TestWasCalledSpec extends Spec with StringFixture {
       var theTestThisCalled = false
       var theTestThatCalled = false
       def `test: this`(fixture: String): Unit = { theTestThisCalled = true }
       def `test: that`(fixture: String): Unit = { theTestThatCalled = true }
     }
-    
+
     it("should execute all tests when run is called with testName None") {
 
       val b = new TestWasCalledSpec
@@ -280,7 +280,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(b.theTestThisCalled)
       assert(b.theTestThatCalled)
     }
-    
+
     it("should execute one test when run is called with a defined testName") {
 
       val a = new TestWasCalledSpec
@@ -288,7 +288,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(a.theTestThisCalled)
       assert(!a.theTestThatCalled)
     }
-    
+
     it("should report as ignored, and not run, tests marked ignored") {
 
       val a = new Spec with StringFixture {
@@ -355,7 +355,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(!d.theTestThisCalled)
       assert(!d.theTestThatCalled)
     }
-    
+
     it("should ignore a test marked as ignored if run is invoked with that testName") {
 
       val e = new Spec with StringFixture {
@@ -374,7 +374,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(!e.theTestThisCalled)
       assert(!e.theTestThatCalled)
     }
-    
+
     it("should exclude a test with a tag included in the tagsToExclude set even if run is invoked with that testName") {
 
       val e = new Spec with StringFixture {
@@ -393,7 +393,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(!e.theTestThisCalled)
       assert(!e.theTestThatCalled)
     }
-    
+
     it("should run only those tests selected by the tags to include and exclude sets") {
 
       // Nothing is excluded
@@ -601,7 +601,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(!k.theTestThatCalled)
       assert(!k.theTestTheOtherCalled)
     }
-    
+
     it("should return a correct tags map from the tags method") {
 
       val a = new Spec with StringFixture {
@@ -687,7 +687,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
         g.tags
       }
     }
-    
+
     it("should throw IllegalArgumentException if run is passed a testName that does not exist") {
       val spec = new Spec with StringFixture {
         var theTestThisCalled = false
@@ -701,7 +701,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
         spec.run(Some(encode("test: misspelled")), Args(SilentReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker, Set.empty))
       }
     }
-    
+
     it("should return the correct test count from its expectedTestCount method") {
 
       val a = new Spec with StringFixture {
@@ -755,7 +755,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       val f = new Suites(a, b, c, d, e)
       assert(f.expectedTestCount(Filter()) === 10)
     }
-    
+
     it("should send an InfoProvided event for an info") {
       class MySuite extends Spec with StringFixture {
         info(
@@ -771,7 +771,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(infoList.size === 1)
       assert(infoList(0).message === "hi there")
     }
-    
+
     it("should generate a TestPending message when the test body is (pending)") {
       val a = new Spec with StringFixture {
 
@@ -791,7 +791,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       val tp = rep.testPendingEventsReceived
       assert(tp.size === 2)
     }
-    
+
     it("should generate a TestCanceled message when the test body includes a cancel call") {
       val a = new Spec with StringFixture {
 
@@ -811,7 +811,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       val tp = rep.testCanceledEventsReceived
       assert(tp.size === 2)
     }
-    
+
     it("should generate a TestCanceled message when the test body includes a failed assume call") {
       val a = new Spec with StringFixture {
 
@@ -831,7 +831,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       val tp = rep.testCanceledEventsReceived
       assert(tp.size === 2)
     }
-    
+
     it("should generate a test failure if a Throwable, or an Error other than direct Error subtypes " +
             "known in JDK 1.5, excluding AssertionError") {
       val a = new Spec with StringFixture {
@@ -844,7 +844,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       val tf = rep.testFailedEventsReceived
       assert(tf.size === 3)
     }
-    
+
     it("should propagate out Errors that are direct subtypes of Error in JDK 1.5, other than " +
             "AssertionError, causing Suites and Runs to abort.") {
       val a = new Spec with StringFixture {
@@ -854,7 +854,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
         a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker(), Set.empty))
       }
     }
-    
+
     it("should invoke withFixture from runTest for no-arg test method") {
       val a = new Spec with StringFixture {
         var withFixtureWasInvoked = false
@@ -874,7 +874,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(a.withFixtureWasInvoked)
       assert(a.theTestWasInvoked)
     }
-    
+
     it("should pass the correct test name in the OneArgTest passed to withFixture") {
       val a = new Spec with StringFixture {
         var correctTestNameWasPassed = false
@@ -906,7 +906,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> 7), None, new Tracker(), Set.empty))
       assert(a.correctConfigMapWasPassed)
     }
-    
+
     it("should, when a test method writes to the Informer, report the info in test completion event") {
       val msg = "hi there dude"
       class MySpec extends Spec {
@@ -926,7 +926,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       val ip: InfoProvided = testSucceeded(0).recordedEvents(0).asInstanceOf[InfoProvided]
       assert(msg === ip.message)
     }
-    
+
     it("Top-level plain-old specifiers should yield good strings in a TestSucceeded report") {
       var reportHadCorrectTestName = false
       var reportHadCorrectSpecText = false
@@ -958,7 +958,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(reportHadCorrectSpecText)
       assert(reportHadCorrectFormattedSpecText)
     }
-    
+
     it("Top-level plain-old specifiers should yield good strings in a testSucceeded report") {
       var reportHadCorrectTestName = false
       var reportHadCorrectSpecText = false
@@ -990,7 +990,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(reportHadCorrectSpecText)
       assert(reportHadCorrectFormattedSpecText)
     }
-    
+
     it("Top-level plain-old specifiers should yield good strings in a testFailed report") {
       var reportHadCorrectTestName = false
       var reportHadCorrectSpecText = false
@@ -1022,7 +1022,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(reportHadCorrectSpecText)
       assert(reportHadCorrectFormattedSpecText)
     }
-    
+
     // Tests for good strings in report for nested-one-level examples
     it("Nested-one-level plain-old specifiers should yield good strings in a TestSucceeded report") {
       var infoReportHadCorrectTestName = false
@@ -1082,7 +1082,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(infoReportHadCorrectSpecText)
       assert(infoReportHadCorrectFormattedSpecText)
     }
-    
+
     it("Nested-one-level plain-old specifiers should yield good strings in a testSucceeded report") {
       var infoReportHadCorrectTestName = false
       var infoReportHadCorrectSpecText = false
@@ -1141,7 +1141,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(infoReportHadCorrectSpecText)
       assert(infoReportHadCorrectFormattedSpecText)
     }
-    
+
     it("Nested-one-level plain-old specifiers should yield good strings in a TestFailed report") {
       var infoReportHadCorrectTestName = false
       var infoReportHadCorrectSpecText = false
@@ -1200,7 +1200,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(infoReportHadCorrectSpecText)
       assert(infoReportHadCorrectFormattedSpecText)
     }
-    
+
     // Tests for good strings in report for nested-two-levels examples
     it("Nested-two-levels plain-old specifiers should yield good strings in a TestSucceeded report") { //ZZZ
       var infoReportHadCorrectTestName = false
@@ -1218,7 +1218,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
             case ScopeOpened(ordinal, message, nameInfo, formatter, location, payload, threadName, timeStamp) =>
               // scopeOpened should be invoked before the other method
               assert(!theOtherMethodHasBeenInvoked)
-              if (!scopeOpenedHasBeenInvokedOnce) { 
+              if (!scopeOpenedHasBeenInvokedOnce) {
                 scopeOpenedHasBeenInvokedOnce = true
                 if (message.indexOf("My Spec") >= 0)
                   infoReportHadCorrectTestName = true
@@ -1278,7 +1278,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(infoReportHadCorrectSpecText)
       assert(infoReportHadCorrectFormattedSpecText)
     }
-    
+
     it("Nested-two-levels plain-old specifiers should yield good strings in a TestFailed report") { //YYY
       var infoReportHadCorrectTestName = false
       var infoReportHadCorrectSpecText = false
@@ -1295,7 +1295,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
             case ScopeOpened(ordinal, message, nameInfo, formatter, location, payload, threadName, timeStamp) =>
               // scopeOpened should be invoked before the other method
               assert(!theOtherMethodHasBeenInvoked)
-              if (!scopeOpenedHasBeenInvokedOnce) { 
+              if (!scopeOpenedHasBeenInvokedOnce) {
                 scopeOpenedHasBeenInvokedOnce = true
                 if (message.indexOf("My Spec") >= 0)
                   infoReportHadCorrectTestName = true
@@ -1355,7 +1355,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(infoReportHadCorrectSpecText)
       assert(infoReportHadCorrectFormattedSpecText)
     }
-    
+
     // Testing strings sent in reports
     it("In a TestSucceeded report, the test name should be verbatim if it is top level test") {
       var testSucceededReportHadCorrectTestName = false
@@ -1365,7 +1365,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
             case TestSucceeded(ordinal, suiteName, suiteId, suiteClassName, testName, testText, testEvents, duration, formatter, location, rerunnable, payload, threadName, timeStamp) =>
               if (testName.indexOf("this thing must start with proper words") != -1) {
                 testSucceededReportHadCorrectTestName = true
-              }  
+              }
             case _ =>
           }
         }
@@ -1377,7 +1377,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       a.run(None, Args(new MyReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker, Set.empty))
       assert(testSucceededReportHadCorrectTestName)
     }
-    
+
     it("In a TestFailed report, the test name should be verbatim if it is top level test") {
       var testFailedReportHadCorrectTestName = false
       class MyReporter extends Reporter {
@@ -1397,7 +1397,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       a.run(None, Args(new MyReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker, Set.empty))
       assert(testFailedReportHadCorrectTestName)
     }
-    
+
     it("In a TestStarting report, the test name should start with '<scope> ' if nested one level " +
         "inside a object clause and registered with it") {
       var testSucceededReportHadCorrectTestName = false
@@ -1408,7 +1408,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
               if (testName == "A Stack needs to push and pop properly") {
                 testSucceededReportHadCorrectTestName = true
               }
-            case _ => 
+            case _ =>
           }
         }
       }
@@ -1421,7 +1421,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       a.run(None, Args(new MyReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker, Set.empty))
       assert(testSucceededReportHadCorrectTestName)
     }
-    
+
     it("Spec should send defined formatters") {
       class MyReporter extends Reporter {
 
@@ -1464,7 +1464,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       a.run(None, Args(myRep, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker, Set.empty))
       assert(!myRep.gotAnUndefinedFormatter, myRep.lastEventWithUndefinedFormatter.toString)
     }
-    
+
     it("SpecText should come through correctly in a SpecReport when registering with def") {
       var testSucceededReportHadCorrectSpecText = false
       var lastSpecText: Option[String] = None
@@ -1491,7 +1491,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       a.run(None, Args(new MyReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker, Set.empty))
       assert(testSucceededReportHadCorrectSpecText, lastSpecText match { case Some(s) => s; case None => "No report"})
     }
-    
+
     it("Spec text should come through correctly in a SpecReport when registering with def when nested in one object") {
       var testSucceededReportHadCorrectSpecText = false
       var lastSpecText: Option[String] = None
@@ -1520,7 +1520,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       a.run(None, Args(new MyReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker, Set.empty))
       assert(testSucceededReportHadCorrectSpecText, lastSpecText match { case Some(s) => s; case None => "No report"})
     }
-    
+
     it("Spec text should come through correctly in a SpecReport when registering with def when nested in two objects") {
       var testSucceededReportHadCorrectSpecText = false
       var lastSpecText: Option[String] = None
@@ -1551,7 +1551,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       a.run(None, Args(new MyReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker, Set.empty))
       assert(testSucceededReportHadCorrectSpecText, lastSpecText match { case Some(s) => s; case None => "No report"})
     }
-    
+
     it("Should get ScopedOpened with description if one and only one object clause") {
 
       val expectedSpecText = "A Stack"
@@ -1587,8 +1587,8 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(myRep.scopeOpenedCalled)
       assert(myRep.expectedMessageReceived)
     }
-    
-    it("should be able to send info to the reporter") { 
+
+    it("should be able to send info to the reporter") {
 
       val expectedMessage = "this is the expected message"
 
@@ -1598,7 +1598,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
 
         def apply(event: Event): Unit = {
           event match {
-            case testSucceeded: TestSucceeded if testSucceeded.testName == "A Stack (when not empty) should allow me to pop" => 
+            case testSucceeded: TestSucceeded if testSucceeded.testName == "A Stack (when not empty) should allow me to pop" =>
               val recordedEvents = testSucceeded.recordedEvents
               recordedEvents(0) match {
                 case event: InfoProvided =>
@@ -1632,7 +1632,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(myRep.infoProvidedCalled)
       assert(myRep.expectedMessageReceived)
     }
-    
+
     it("test durations are included in TestFailed and TestSucceeded events fired from Spec") {
 
       class MySpec extends Spec with StringFixture {
@@ -1646,7 +1646,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(myReporter.testSucceededWasFiredAndHadADuration)
       assert(myReporter.testFailedWasFiredAndHadADuration)
     }
-    
+
     it("suite durations are included in SuiteCompleted events fired from Spec") {
 
       class MySpec extends Spec with StringFixture {
@@ -1658,7 +1658,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       mySuite.run(None, Args(myReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker(new Ordinal(99)), Set.empty))
       assert(myReporter.suiteCompletedWasFiredAndHadADuration)
     }
-    
+
     it("suite durations are included in SuiteAborted events fired from Spec") {
 
       class SuiteThatAborts extends TestSuite with StringFixture {
@@ -1676,7 +1676,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       mySuite.run(None, Args(myReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker(new Ordinal(99)), Set.empty))
       assert(myReporter.suiteAbortedWasFiredAndHadADuration)
     }
-    
+
     it("pending in a Spec should cause TestPending to be fired") {
 
       class MySpec extends Spec with StringFixture {
@@ -1688,9 +1688,9 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       mySuite.run(None, Args(myReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker(new Ordinal(99)), Set.empty))
       assert(myReporter.testPendingWasFired)
     }
-    
+
     it("should unwrap InvocationTargetException thrown from scope evaluation") {
-      
+
       class ExampleSpec extends Spec with StringFixture {
         object `A Scope` {
           throw new AnnotationFormatError("boom!")
@@ -1699,15 +1699,15 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
           def `Test 3`: Unit = {}
         }
       }
-      
+
       val s = new ExampleSpec
       intercept[AnnotationFormatError] {
         s.run(None, Args(reporter = SilentReporter))
       }
     }
-    
+
     describe("the stopper") {
-      
+
       it("should stop nested suites from being executed") {
         class SpecA extends Spec with StringFixture {
           var executed = false;
@@ -1760,7 +1760,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
             super.run(testName, args)
           }
         }
-        
+
         class IgnoreStopRequestStopper extends Stopper {
           def stopRequested: Boolean = false
           def requestStop(): Unit = {}
@@ -1805,7 +1805,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
         assert(!m.executed)
         assert(!n.executed)
       }
-      
+
       it("should stop tests from being executed") {
 
         class MySpec extends Spec with StringFixture {
@@ -1846,7 +1846,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
         assert(y.testsExecutedCount === 4)
       }
     }
-    
+
     describe("(with info calls)") {
       class InfoInsideTestSpec extends Spec {
         val msg = "hi there, dude"
@@ -1913,7 +1913,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
         val spec = new MySpec
         val myRep = new EventRecordingReporter
         spec.run(None, Args(myRep, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker, Set.empty))
-        spec.callInfo() // TODO: Actually test that This prints to stdout 
+        spec.callInfo() // TODO: Actually test that This prints to stdout
       }
       it("should send an InfoProvided with an IndentedText formatter with level 0 when called outside a test") {
         val spec = new InfoBeforeTestSpec
@@ -1948,8 +1948,8 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
           println("EXECUTED THE TEST")
           assert(1 + 1 === 2)
         }
-      } 
-        
+      }
+
       val s = new MySpec
       s.run(None, Args(SilentReporter))
       assert(s.aNoArgTestWasPassed)
@@ -1957,19 +1957,19 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
     }
     it("should allow primitive type fixtures") {
       val a = new Spec {
-      
+
         type FixtureParam = Int
         def withFixture(test: OneArgTest): Outcome = {
           test(99)
         }
-      
+
         var takesNoArgsInvoked = false
         def `test takes no args`(): Unit = { takesNoArgsInvoked = true }
-      
+
         var takesAFixtureInvoked = false
         def `test takes a fixture`(i: Int): Unit = { takesAFixtureInvoked = true }
-      } 
-      
+      }
+
       import scala.language.reflectiveCalls
 
       a.run(None, Args(SilentReporter))
@@ -2000,7 +2000,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(a.takesAFixtureInvoked)
     }
   }
-  
+
   describe("A Suite's execute method") {
     it("should throw NAE if passed null for configMap") {
       class MySpec extends Spec with StringFixture
@@ -2028,15 +2028,15 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
     assert(tnResult.size === 1)
     assert(gResult.keySet.size === 0)
   }
-  
+
   it("should not return tests with no tags in the tags map") {
-    
+
     val a = new Spec with StringFixture {
       def `test: not tagged`(fixture: String): Unit = ()
     }
     assert(a.tags.keySet.size === 0)
   }
-  
+
   it("should discover methods that return non-Unit") {
     val a = new Spec with StringFixture {
       def `test: this`(fixture: String): Int = 1
@@ -2046,7 +2046,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
     assert(a.testNames.size === 2)
     assert(a.tags.keySet.size === 0)
   }
-  
+
   it("should not discover $$outer method generated by scala compiler as test") {
     class SetSpec extends Spec with StringFixture {
       object `A Set` {
@@ -2054,7 +2054,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
           def `should have size 0`(fixture: String): Unit = {
             assert(Set.empty.size === 0)
           }
-    
+
           def `should produce NoSuchElementException when head is invoked`(fixture: String): Unit = {
             intercept[NoSuchElementException] {
               Set.empty.head
@@ -2063,11 +2063,11 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
         }
       }
     }
-    
+
     val a = new SetSpec
     assert(a.testNames.size === 2)
   }
-  
+
   it("should send defined durations") {
 
     class MySpec extends Spec with StringFixture {
@@ -2081,7 +2081,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
     assert(myReporter.testSucceededWasFiredAndHadADuration)
     assert(myReporter.testFailedWasFiredAndHadADuration)
   }
-  
+
   class SpecThatAborts extends Spec with StringFixture {
     override def run(testName: Option[String], args: Args): Status = {
       throw new RuntimeException("Aborting for testing purposes")
@@ -2154,7 +2154,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
     def `test that`(fixture: String): Unit = { theTestThatCalled = true }
     def `test the other`(fixture: String): Unit = { theTestTheOtherCalled = true }
   }
-  
+
   describe("when its execute method is invoked") {
 
     it("should run all tests, passing an empty config map, if no arguments are passed") {
@@ -2224,7 +2224,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
     }
   }
   describe("when its execute method is invoked and a wildcard is passed for the selected test names") {
-  
+
 
 /* Remove if indeed don't need
     class TestWasCalledSpec extends Spec {
@@ -2355,10 +2355,10 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
     assert(tagSet.size === 1)
     assert(tagSet.toList(0) === classOf[SlowAsMolasses].getName)
   }
-  
+
   describe("when annotations are applied at the class level") {
     it("should propate those annotations to all tests in the class") {
-    
+
       class NoTagSpec extends Spec with StringFixture
       @Ignore
       class IgnoreSpec extends Spec with StringFixture {
@@ -2370,14 +2370,14 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       class SlowAsMolassesSpec extends Spec with StringFixture
       @FastAsLight
       class FastAsLightSpec extends Spec with StringFixture
-    
+
       class MasterSpec extends Spec with StringFixture {
         override def nestedSuites = Vector(new NoTagSpec(), new IgnoreSpec(), new SlowAsMolassesSpec(), new FastAsLightSpec())
         override def runNestedSuites(args: Args): Status = {
           super.runNestedSuites(args)
         }
       }
-    
+
       class CounterDistributor extends Distributor {
         var count = 0
         def apply(suite: org.scalatest.Suite, args: Args): Status = {
@@ -2404,12 +2404,12 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       val includeFilter = Filter(Some(Set("org.scalatest.FastAsLight")), Set.empty)
       val includeReporter = new EventRecordingReporter
       masterSpec.runNestedSuites(Args(includeReporter, Stopper.default, includeFilter, ConfigMap.empty, None, new Tracker(new Ordinal(99)), Set.empty))
-      assert(includeReporter.suiteStartingEventsReceived.size === 4) 
-      assert(includeReporter.testIgnoredEventsReceived.size === 0) 
+      assert(includeReporter.suiteStartingEventsReceived.size === 4)
+      assert(includeReporter.testIgnoredEventsReceived.size === 0)
       val includeReporterDist = new EventRecordingReporter
       val includeDistributor = new CounterDistributor
       masterSpec.runNestedSuites(Args(includeReporterDist, Stopper.default, includeFilter, ConfigMap.empty, Some(includeDistributor), new Tracker(new Ordinal(99)), Set.empty))
-      assert(includeDistributor.count === 4) 
+      assert(includeDistributor.count === 4)
 
       val excludeFilter = Filter(None, Set("org.scalatest.SlowAsMolasses"))
       val excludeReporter = new EventRecordingReporter
@@ -2422,7 +2422,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(excludeDistributor.count === 4)
     }
   }
-  
+
   describe("when its expectedTestCount method is invoked") {
     it("should return a count that takes into 'account' the passed filter") {
       class NoTagSpec extends Spec with StringFixture {
@@ -2448,14 +2448,14 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
         def `test method 2`(fixture: String): Unit = {}
         def `test method 3`(fixture: String): Unit = {}
       }
-    
+
       class MasterSpec extends Spec with StringFixture {
         override def nestedSuites = Vector(new NoTagSpec(), new IgnoreSpec(), new SlowAsMolassesSpec(), new FastAsLightSpec())
         override def runNestedSuites(args: Args): Status = {
           super.runNestedSuites(args)
         }
       }
-    
+
       val masterSpec = new MasterSpec()
       assert(masterSpec.expectedTestCount(Filter(None, Set.empty)) === 9)
       assert(masterSpec.expectedTestCount(Filter(Some(Set("org.scalatest.FastAsLight")), Set.empty)) === 3)
@@ -2464,7 +2464,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(masterSpec.expectedTestCount(Filter(None, Set("org.scalatest.SlowAsMolasses"))) === 6)
     }
   }
-  
+
   describe("when its rerunner method is invoked") {
     it("should provide the fully qualified name of a class that could be used to rerun the suite, wrapped in a Some, or None, if can't be rerun") {
       assert(new NormalSpec().rerunner.get === classOf[NormalSpec].getName)
@@ -2472,7 +2472,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(new NotAccessibleSpec("test").rerunner === None)
     }
   }
-  
+
   it("should run only chosen styles, if specified, and throw an exception from run if a non-chosen style is attempted to be run") {
 
     class SimpleSpec extends Spec with StringFixture {
@@ -2480,7 +2480,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       def `test method 2`(fixture: String): Unit = {}
       def `test method 3`(fixture: String): Unit = {}
     }
-    
+
     val simpleSpec = new SimpleSpec()
     simpleSpec.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker, Set.empty))
     simpleSpec.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap(CHOSEN_STYLES -> Set("org.scalatest.fixture.Spec")), None, new Tracker, Set.empty))
@@ -2501,7 +2501,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       }
     assert(caught3.message.value === Resources.notOneOfTheChosenStyles("org.scalatest.fixture.Spec", makeListForHumans(Vector("org.scalatest.fixture.FunSpec", "org.scalatest.fixture.FreeSpec", "org.scalatest.fixture.FlatSpec"))))
   }
-  
+
   describe("when a test fails") {
     it("should send proper stack depth information") {
       class TestSpec extends Spec with StringFixture {
@@ -2516,7 +2516,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "SpecSpec.scala")
       assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 8)
     }
-    
+
     it("should fire TestFailed event with correct stack depth info when test failed") {
       class TestSpec extends Spec with StringFixture {
         def `it should fail`(fixture: String): Unit = {
@@ -2533,12 +2533,12 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       s1.run(None, Args(rep, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker, Set.empty))
       assert(rep.testFailedEventsReceived.size === 2)
       // The 'A scenario should fail' will be execute first because tests are executed in alphanumerical order.
-      assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "SpecSpec.scala") 
+      assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "SpecSpec.scala")
       assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 10)
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "SpecSpec.scala")
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 16)
     }
-    
+
     it("should throw DuplicateTestNameException when overload test method with and without fixture is defined") {
       class TestSpec extends Spec with StringFixture {
         def `test 1`: Unit = { }
@@ -2551,7 +2551,7 @@ class SpecSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       assert(e.failedCodeLineNumber === (Some(thisLineNumber - 2)))
       assert(e.failedCodeFileName === Some("SpecSpec.scala"))
     }
-    
+
     it("should throw DuplicateTestNameException when overload test method with and without fixture is defined in scope") {
       class TestSpec extends Spec with StringFixture {
         object `scope 1` {
@@ -2807,7 +2807,7 @@ class `My Spec` extends Spec with StringFixture {}
 @DoNotDiscover
 class NormalSpec extends Spec with StringFixture
 @DoNotDiscover
-@WrapWith(classOf[ConfigMapWrapperSuite]) 
+@WrapWith(classOf[ConfigMapWrapperSuite])
 class WrappedSpec(configMap: Map[_, _]) extends Spec with StringFixture
 @DoNotDiscover
 class NotAccessibleSpec(name: String) extends Spec with StringFixture

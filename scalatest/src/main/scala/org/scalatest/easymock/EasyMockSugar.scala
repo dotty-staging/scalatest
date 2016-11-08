@@ -380,7 +380,7 @@ trait EasyMockSugar {
    * <p>
    * This method enables you to use the following, more declarative syntax instead:
    * </p>
-   * 
+   *
    * <pre class="stHighlight">
    * whenExecuting(mockCollaborator) {
    *   classUnderTest.addDocument("Document", new Array[Byte](0))
@@ -414,14 +414,14 @@ trait EasyMockSugar {
    */
   def whenExecuting(mocks: AnyRef*)(fun: => Unit): Unit = {
 
-    require(mocks.length > 0, "Must pass at least one mock to whenExecuting, but mocks.length was 0.") 
+    require(mocks.length > 0, "Must pass at least one mock to whenExecuting, but mocks.length was 0.")
 
     for (m <- mocks)
       EasyMock.replay(m)
 
     fun
 
-    // Don't put this in a try block, so that if fun throws an exception 
+    // Don't put this in a try block, so that if fun throws an exception
     // it propagates out immediately and shows up as the cause of the failed test
     for (m <- mocks)
       EasyMock.verify(m)
@@ -435,7 +435,7 @@ trait EasyMockSugar {
    * @throws IllegalArgumentException if no mocks are passed
    */
   case class MockObjects(mocks: AnyRef*) {
-    require(mocks.length > 0, "Must pass at least one mock to MockObjects constructor, but mocks.length was 0.") 
+    require(mocks.length > 0, "Must pass at least one mock to MockObjects constructor, but mocks.length was 0.")
   }
 
   /**
@@ -463,7 +463,7 @@ trait EasyMockSugar {
    * <p>
    * This method enables you to use the following, more declarative syntax instead:
    * </p>
-   * 
+   *
    * <pre class="stHighlight">
    * implicit val mocks = MockObjects(mockCollaborator)
    *
@@ -498,7 +498,7 @@ trait EasyMockSugar {
 }
 
 /**
- * Companion object that facilitates the importing of <code>EasyMockSugar</code> members as 
+ * Companion object that facilitates the importing of <code>EasyMockSugar</code> members as
  * an alternative to mixing it in. One use case is to import <code>EasyMockSugar</code> members so you can use
  * them in the Scala interpreter.
  */

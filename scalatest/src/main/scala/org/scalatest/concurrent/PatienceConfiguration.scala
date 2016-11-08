@@ -111,7 +111,7 @@ object PatienceConfiguration {
 
   /**
    * Abstract class defining a family of configuration parameters for traits <code>Eventually</code> and <code>Waiters</code>.
-   * 
+   *
    * <p>
    * The subclasses of this abstract class are used to pass configuration information to
    * the <code>eventually</code> methods of trait <code>Eventually</code> and the <code>await</code> methods of trait <code>Waiters</code>.
@@ -124,7 +124,7 @@ object PatienceConfiguration {
 
   /**
    * A <code>PatienceConfigParam</code> that specifies the maximum amount of time to wait for an asynchronous operation to
-   * complete. 
+   * complete.
    *
    * @param value the maximum amount of time to retry before giving up and throwing
    *   <code>TestFailedException</code>.

@@ -121,7 +121,7 @@ object run {
   }
 
   /**
-   * Run the passed suite, optionally passing in a test name and config map. 
+   * Run the passed suite, optionally passing in a test name and config map.
    *
    * <p>
    * This method will invoke <code>execute</code> on the passed <code>suite</code>, passing in

@@ -37,7 +37,7 @@ import org.scalatest.events.TestSucceeded
 import scala.collection.mutable.HashSet
 
 /**
- * A <code>Suite</code> that is also a <code>junit.framework.TestCase</code>. 
+ * A <code>Suite</code> that is also a <code>junit.framework.TestCase</code>.
  *
  * <p>
  * A <code>JUnit3Suite</code> may be run by either JUnit 3 (such as JUnit 3.8) or ScalaTest's runner. You write it the way
@@ -74,7 +74,7 @@ import scala.collection.mutable.HashSet
  *   }
  * }
  * </pre>
- * 
+ *
  * <p>
  * You can use either JUnit's assertions, inherited from <code>TestCase</code>, or ScalaTest's, inherited from <code>AssertionsForJUnit</code>.
  * </p>
@@ -83,7 +83,7 @@ import scala.collection.mutable.HashSet
  * When writing JUnit 3 tests in Scala, you should keep in mind that JUnit 3 will not run tests that have a return type other than
  * <code>Unit</code>. Thus it is best to explicitly state the <code>Unit</code> result type, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * def testGoodIdea(): Unit = { // result type will be Unit
  *   // ...
@@ -259,21 +259,21 @@ class JUnit3Suite extends TestCase with Suite with AssertionsForJUnit { thisSuit
           run(testResult)
       }
     }
-    
+
     status.setCompleted()
     status
   }
-  
+
   /**
    * Suite style name.
    *
    * @return <code>JUnit3Suite</code>
    */
   final override val styleName: String = "JUnit3Suite"
-    
-  final override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = 
+
+  final override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData =
     new TestData {
-      val configMap = theConfigMap 
+      val configMap = theConfigMap
       val name = testName
       val scopes = Vector.empty
       val text = testName
@@ -311,18 +311,18 @@ private[scalatest] class MyTestListener(report: Reporter, tracker: Tracker, stat
     val suiteName = getSuiteNameForTestCase(testCase)
     report(TestStarting(tracker.nextOrdinal(), suiteName, testCase.getClass.getName, Some(testCase.getClass.getName), testCase.toString, testCase.toString, Some(MotionToSuppress), getTopOfMethod(testCase.getClass.getName, testCase.asInstanceOf[TestCase].getName)))
   }
-  
+
   def addError(testCase: Test, throwable: Throwable): Unit = {
 
     requireNonNull(testCase, throwable)
 
     val formatter = getIndentedTextForTest(testCase.toString, 1, true)
     val suiteName = getSuiteNameForTestCase(testCase)
-    val payload = 
+    val payload =
       throwable match {
-        case optPayload: PayloadField => 
+        case optPayload: PayloadField =>
           optPayload.payload
-        case _ => 
+        case _ =>
           None
       }
     report(TestFailed(tracker.nextOrdinal(), getMessageGivenThrowable(throwable, false), suiteName, testCase.getClass.getName, Some(testCase.getClass.getName), testCase.toString, testCase.toString, Vector.empty, Some(throwable), None, Some(formatter), Some(SeeStackDepthException), None, payload))
@@ -352,7 +352,7 @@ private[scalatest] class MyTestListener(report: Reporter, tracker: Tracker, stat
       report(TestSucceeded(tracker.nextOrdinal(), suiteName, testCase.getClass.getName, Some(testCase.getClass.getName), testCase.toString, testCase.toString, Vector.empty, None, Some(formatter), getTopOfMethod(testCase.getClass.getName, testCase.asInstanceOf[TestCase].getName)))
     }
     else {
-      failedTestsSet -= testCase  
+      failedTestsSet -= testCase
       status.setFailed()
     }
   }

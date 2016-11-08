@@ -19,15 +19,15 @@ import org.scalatest._
 import Matchers._
 
 class BehaveWordSpec extends FunSpec {
-  
+
   describe("BehaveWord ") {
-    
+
     val behave = new BehaveWord
-    
+
     it("should have pretty toString") {
       behave.toString should be ("behave")
     }
-    
+
   }
-  
+
 }

@@ -28,7 +28,7 @@ class ShouldBehaveLikeSpec extends FunSpec {
   describe("The 'should behave like' syntax should throw an exception inside an it clause") {
     it("the code in here should fail with an exception") {
       intercept[TestRegistrationClosedException] {
-        it should behave like myFirstBehavior(1) 
+        it should behave like myFirstBehavior(1)
       }
     }
   }
@@ -37,11 +37,11 @@ class ShouldBehaveLikeSpec extends FunSpec {
 /*
   describe("The 'should behave like' syntax should work in a describe") {
 
-    it should behave like nonEmptyStack(lastValuePushed)(stackWithOneItem) 
+    it should behave like nonEmptyStack(lastValuePushed)(stackWithOneItem)
 
     describe(", and in a nested describe") {
 
-      it should behave like nonEmptyStack(lastValuePushed)(stackWithOneItem) 
+      it should behave like nonEmptyStack(lastValuePushed)(stackWithOneItem)
     }
   }
 */
@@ -49,7 +49,7 @@ class ShouldBehaveLikeSpec extends FunSpec {
   def myBehavior(i: Int): Unit = {
     it("This one is solo") {}
   }
-  it should behave like myBehavior(1) 
+  it should behave like myBehavior(1)
 
   // TODO: Make these into real tests. I looked at it and heck they work. So I can indeed put describe clauses in
   // the shared behaviors. Cool.
@@ -59,14 +59,14 @@ class ShouldBehaveLikeSpec extends FunSpec {
     }
   }
 
-  it should behave like myNestedBehavior(1) 
+  it should behave like myNestedBehavior(1)
   describe("And outer describe...") {
-    it should behave like myNestedBehavior(1) 
+    it should behave like myNestedBehavior(1)
   }
 
 /* Correct, none of these compiled
   describe("'should not behave like' should not compile") {
-    
+
     stackWithOneItem should not behave like (nonEmptyStack(lastValuePushed))
   }
   describe("The 'should behave like' syntax in an and or or clause, with or without not, should not compile") {

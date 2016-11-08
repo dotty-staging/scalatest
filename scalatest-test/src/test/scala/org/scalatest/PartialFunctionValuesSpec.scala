@@ -36,7 +36,7 @@ class PartialFunctionValuesSpec extends FunSpec {
     }
 
     it("should throw TestFailedException when is not defined") {
-      val caught = 
+      val caught =
         the [TestFailedException] thrownBy {
           pf.valueAt(5) should === (25)
         }

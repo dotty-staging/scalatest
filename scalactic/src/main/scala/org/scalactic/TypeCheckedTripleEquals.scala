@@ -34,14 +34,14 @@ import TripleEqualsSupport._
  * <p>
  * By default under <code>TripleEquals</code>, any use of <code>===</code> will compile, just like the <code>==</code> operator:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
  * import org.scalactic._
- * 
+ *
  * scala&gt; import TripleEquals._
  * import TripleEquals._
- * 
+ *
  * scala&gt; 1L === 1 // A Long can equal an Int
  * res0: Boolean = true
  *
@@ -54,13 +54,13 @@ import TripleEqualsSupport._
  *
  * <p>
  * With <a href="http://www.scalactic.org/supersafe">SuperSafe Community Edition</a> installed, the first two expressions
- * above will be allowed to compile, but the third (which represents a likely bug) will not: 
+ * above will be allowed to compile, but the third (which represents a likely bug) will not:
  * </p>
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
  * import org.scalactic._
- * 
+ *
  * scala&gt; import TripleEquals._
  * import TripleEquals._
  *
@@ -128,7 +128,7 @@ import TripleEqualsSupport._
  * <p>
  * Nevertheless, a better (and the recommended) way to deal with this situation is to use a <em>widening type ascription</em>.
  * A type ascription is simply a colon and a type placed next to a variable, usually surrounded by parentheses.
- * For example, because <code>AnyVal</code> is a common supertype of <code>Int</code> and <code>Long</code>, 
+ * For example, because <code>AnyVal</code> is a common supertype of <code>Int</code> and <code>Long</code>,
  * you could solve the type error by widening the type of one side or the other to <code>AnyVal</code>.
  * Because <code>AnyVal</code> is a supertype of both <code>Int</code> and <code>Long</code>, the
  * type constraint will be satisfied:
@@ -137,17 +137,17 @@ import TripleEqualsSupport._
  * <pre class="stREPL">
  * scala&gt; 1 === (1L: AnyVal)
  * res2: Boolean = true
- * 
+ *
  * scala&gt; (1: AnyVal) === 1L
  * res3: Boolean = true
  * </pre>
- * 
+ *
  * <p>
  * Similarly, since <code>Seq[Int]</code> is a common supertype of both
  * <code>Vector[Int]</code> and <code>List[Int]</code>, the type constraint can be
  * satisfied by widening either to their common supertype, <code>Seq[Int]</code>:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; List(1, 2, 3) === (Vector(1, 2, 3): Seq[Int])
  * res4: Boolean = true
@@ -159,7 +159,7 @@ import TripleEqualsSupport._
  * <p>
  * The primary intended use case for <code>TypeCheckedTripleEquals</code> is to enable tests to be very strict
  * about which types can compared for equality, but it can also be used with production code where this level of
- * strictness is desired. 
+ * strictness is desired.
  * </p>
  *
  * <h2>Forcing implicit conversions before equality checks</h2>
@@ -199,16 +199,16 @@ import TripleEqualsSupport._
  * scala&gt; mutable.Set.empty[String] === (new java.util.HashSet[String]: mutable.Set[String])
  * res0: Boolean = true
  * </pre>
- * 
+ *
  * <h2>Scoping equality policies</h2>
  *
  * <p>
- * This trait will override or hide implicit methods defined by 
- * <a href="TripleEquals.html"><code>TripleEquals</code></a> 
+ * This trait will override or hide implicit methods defined by
+ * <a href="TripleEquals.html"><code>TripleEquals</code></a>
  * and can therefore be used to temporarily turn on or off type checking in a limited scope. Here's an example, in which <code>TypeCheckedTripleEquals</code> will
  * cause a compiler error:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * import org.scalactic._
  * import TypeCheckedTripleEquals._
@@ -242,20 +242,20 @@ import TripleEqualsSupport._
  *               ^
  * one error found
  * </pre>
- * 
+ *
  * <p>
  * You can &ldquo;relax&rdquo; the type checking locally by importing
  * the members of <code>TripleEquals</code> in a limited scope:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * package org.scalactic.examples.conversioncheckedtripleequals
- * 
+ *
  * import org.scalactic._
  * import TypeCheckedTripleEquals._
- * 
+ *
  * object Example {
- * 
+ *
  *   def cmp(a: Int, b: Long): Int = {
  *     import TripleEquals._
  *     if (a === b) 0
@@ -276,7 +276,7 @@ import TripleEqualsSupport._
  * takes an <code>Int</code> and a <code>Long</code>. <code>TypeCheckedTripleEquals</code> is still enforcing its type constraint, for example, for the <code>s === t</code>
  * expression in the other overloaded <code>cmp</code> method that takes strings.
  * </p>
- * 
+ *
  * <p>
  * Because the methods <code>TripleEquals</code> and <code>TypeCheckedTripleEquals</code>
  * <em>override</em> all the methods defined in supertype <a href="TripleEqualsSupport.html"><code>TripleEqualsSupport</code></a>, you can achieve the same
@@ -312,7 +312,7 @@ trait TypeCheckedTripleEquals extends LowPriorityTypeCheckedConstraint {
 }
 
 /**
- * Companion object to trait <code>TypeCheckedTripleEquals</code> that facilitates the importing of <code>TypeCheckedTripleEquals</code> members as 
+ * Companion object to trait <code>TypeCheckedTripleEquals</code> that facilitates the importing of <code>TypeCheckedTripleEquals</code> members as
  * an alternative to mixing it in. One use case is to import <code>TypeCheckedTripleEquals</code> members so you can use
  * them in the Scala interpreter:
  *

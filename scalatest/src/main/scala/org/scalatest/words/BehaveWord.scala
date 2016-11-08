@@ -18,7 +18,7 @@ package org.scalatest.words
 
 /**
  * Class that supports shared test registration via instances referenced from the <code>behave</code> field of <code>FunSpec</code>s,
- * <code>FlatSpec</code>s, and <code>WordSpec</code>s as well as instance of their sister traits, 
+ * <code>FlatSpec</code>s, and <code>WordSpec</code>s as well as instance of their sister traits,
  * <code>fixture.FunSpec</code>, <code>fixture.FlatSpec</code>, and <code>fixture.WordSpec</code>.
  *
  * <p>
@@ -81,7 +81,7 @@ final class BehaveWord {
    * </p>
    */
   def like(unit: Unit): Unit = ()
-  
+
   /**
    * Overrides toString to return "behave"
    */

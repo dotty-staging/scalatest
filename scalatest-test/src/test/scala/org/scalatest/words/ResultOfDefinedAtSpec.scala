@@ -19,13 +19,13 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfDefinedAtSpec extends FunSpec {
-  
+
   describe("ResultOfDefinedAt ") {
-    
+
     it("should have pretty toString") {
       val result = new ResultOfDefinedAt("Bob")
       result.toString should be ("definedAt (\"Bob\")")
     }
   }
-  
+
 }

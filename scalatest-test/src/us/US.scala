@@ -106,7 +106,7 @@ trait StateSuite extends Suite {
       location, suiteRerunner))
   }
 
- private def reportTestFailed(theSuite: Suite, report: Reporter, throwable: Throwable, testName: String, testText: String, 
+ private def reportTestFailed(theSuite: Suite, report: Reporter, throwable: Throwable, testName: String, testText: String,
       suiteRerunner: Option[String], tracker: Tracker, duration: Long, level: Int, includeIcon: Boolean, location: Option[Location]) {
 
     val message = getMessageForException(throwable)
@@ -160,7 +160,7 @@ trait StateSuite extends Suite {
 
   }
 
-  private def handleFailedTest(throwable: Throwable, testName: String, 
+  private def handleFailedTest(throwable: Throwable, testName: String,
       report: Reporter, tracker: Tracker, duration: Long, location: Option[Location]) {
 
     val message = getMessageForException(throwable)
@@ -207,7 +207,7 @@ trait StateSuite extends Suite {
         val e = intercept[TestFailedException] { fail("1 + 1 did not equal 3, even for very large values of 1") }
         handleFailedTest(e, testName, args.reporter, args.tracker, duration, None)
         org.scalatest.FailedStatus
-      case Succeeded(duration) => 
+      case Succeeded(duration) =>
         reportTestSucceeded(this, args.reporter, args.tracker, testName, testName, duration, formatter, None, None)
         org.scalatest.SucceededStatus
     }
@@ -332,7 +332,7 @@ object StateSuite {
       "Wisconsin" -> mutable.Map.empty[String, Status],
       "Wyoming" -> mutable.Map.empty[String, Status]
     )
-    
+
   val allTestNames =
     Vector(
       "When in the Course of human events",

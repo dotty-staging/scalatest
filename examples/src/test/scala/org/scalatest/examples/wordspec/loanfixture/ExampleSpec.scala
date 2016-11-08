@@ -65,7 +65,7 @@ class ExampleSpec extends WordSpec {
       assert(file.length === 24)
     }
   }
-  
+
   "Test code" should {
     // This test needs the database fixture
     "be readable" in withDatabase { db =>

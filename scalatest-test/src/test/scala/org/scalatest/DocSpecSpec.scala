@@ -22,7 +22,7 @@ import prop.TableDrivenPropertyChecks._
 import org.scalatest.SharedHelpers.EventRecordingReporter
 
 class DocSpecSpec extends FunSpec {
-  
+
   describe("A DocSpec") {
     describe("with no suites inside") {
 
@@ -44,7 +44,7 @@ This is a paragraph later...
           val doc = markup"""
             This is a Title
             ===============
-            
+
             This is a paragraph later...
           """
         }
@@ -64,7 +64,7 @@ This is a paragraph later...
           val doc = markup"""
             This is a Title
             ===============
-   
+
             This is a paragraph later...
           """
         }
@@ -72,10 +72,10 @@ This is a paragraph later...
       val blankLineFirst =
         new DocSpec {
           val doc = markup"""
-            
+
             This is a Title
             ===============
-            
+
             This is a paragraph later...
           """
         }
@@ -87,7 +87,7 @@ This is a paragraph later...
 
             This is a Title
             ===============
-            
+
             This is a paragraph later...
           """
         }
@@ -96,10 +96,10 @@ This is a paragraph later...
       val shortLineFirst =
         new DocSpec {
           val doc = markup"""
-   
+
             This is a Title
             ===============
-            
+
             This is a paragraph later...
           """
         }
@@ -146,7 +146,7 @@ This is a paragraph later...
           wasRun = true
         }
       }
-        
+
       it("should run the nested suite as well as outputing the markup text") {
 
         val nestedSpec = new NestedSpec
@@ -157,7 +157,7 @@ This is a paragraph later...
 
               This is a Title
               ===============
-              
+
               This is a nested suite: ${
                 nestedSpec
               }
@@ -176,7 +176,7 @@ This is a paragraph later...
             |This is a Title
             |===============
             |
-            |This is a nested suite: 
+            |This is a nested suite:
           """.stripMargin)
         assert(mp(0).text === expectedTop)
 

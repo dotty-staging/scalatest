@@ -24,30 +24,30 @@ import org.scalactic.Prettifier
 class ShorthandShouldNotBeThrownBySpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   val fileName: String = "ShorthandShouldNotBeThrownBySpec.scala"
-    
-  def exceptionNotExpected(clz: Class[_]): String = 
+
+  def exceptionNotExpected(clz: Class[_]): String =
     Resources.exceptionNotExpected(clz.getName)
-    
-  def exceptionExpected(clz: Class[_]): String = 
+
+  def exceptionExpected(clz: Class[_]): String =
     Resources.exceptionExpected(clz.getName)
-    
-  def hadExpectedMessage(left: Throwable, expectedMessage: String): String = 
+
+  def hadExpectedMessage(left: Throwable, expectedMessage: String): String =
     FailureMessages.hadExpectedMessage(prettifier, left, expectedMessage)
 
   class TestException(message: String) extends Exception(message)
-  
+
   describe("the [Exception] 'should not have message' syntax should") {
-    
+
     it("do nothing when 'should have message' exception's message not equal expected") {
       the [TestException] thrownBy {
         throw new TestException("purposely")
       } shouldNot have message ("accidentally")
     }
-    
+
     it("throw new TestFailedException with correct message and stack depth when used with 'should not have message' and provided code produced exception that has message equal to expected") {
-      val fnfe = 
+      val fnfe =
         the [TestException] thrownBy {
           throw new TestException("purposely")
         }
@@ -58,7 +58,7 @@ class ShorthandShouldNotBeThrownBySpec extends FunSpec {
       assert(e.failedCodeFileName === Some(fileName))
       assert(e.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
-    
+
     it("throw new TestFailedException with correct message and stack depth when used with 'should not have message' and provided code does not produce any exception") {
       val e = intercept[TestFailedException] {
         the [RuntimeException] thrownBy {

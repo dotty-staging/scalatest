@@ -26,7 +26,7 @@ import org.scalactic._
 /**
  * Trait that contains several &ldquo;check&rdquo; methods that perform ScalaCheck property checks.
  * If ScalaCheck finds a test case for which a property doesn't hold, the problem will be reported as a ScalaTest test failure.
- * 
+ *
  * <p>
  * To use ScalaCheck, you specify properties and, in some cases, generators that generate test data. You need not always
  * create generators, because ScalaCheck provides many default generators for you that can be used in many situations.
@@ -51,7 +51,7 @@ import org.scalactic._
  * The <code>check</code> method, defined in <code>Checkers</code>, makes it easy to write property-based tests inside
  * ScalaTest, JUnit, and TestNG test suites. This example specifies a property that <code>List</code>'s <code>:::</code> method
  * should obey. ScalaCheck properties are expressed as function values that take the required
- * test data as parameters. ScalaCheck will generate test data using generators and 
+ * test data as parameters. ScalaCheck will generate test data using generators and
 repeatedly pass generated data to the function. In this case, the test data is composed of integer lists named <code>a</code> and <code>b</code>.
  * Inside the body of the function, you see:
  * </p>
@@ -390,7 +390,7 @@ object Checkers extends Checkers
    * an exception.
    *
    * <p>
-   * This method enables ScalaTest assertions and matcher expressions to be used 
+   * This method enables ScalaTest assertions and matcher expressions to be used
    * in property checks. Here's an example:
    * </p>
    *
@@ -416,7 +416,7 @@ object Checkers extends Checkers
    * </pre>
    *
    * <p>
-   * One use case for using matcher expressions in your properties is to 
+   * One use case for using matcher expressions in your properties is to
    * get helpful error messages without using ScalaCheck labels. For example,
    * instead of:
    * </p>
@@ -429,7 +429,7 @@ object Checkers extends Checkers
    *   (res < m + n) :| "result not sum"
    * }
    * </pre>
-   * 
+   *
    * <p>
    * You could write:
    * </p>

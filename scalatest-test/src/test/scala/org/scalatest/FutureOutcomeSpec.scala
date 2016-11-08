@@ -45,7 +45,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
         val fo = FutureOutcome(promise.future)
         assert(!fo.isCompleted)
         assert(fo.value == None)
-        val fo2 = 
+        val fo2 =
           fo onCompletedThen { outcomeOrThrowable =>
             paramPassedToOnCompletedThen = Some(outcomeOrThrowable)
           } onSucceededThen {
@@ -102,7 +102,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
         val fo = FutureOutcome(promise.future)
         assert(!fo.isCompleted)
         assert(fo.value == None)
-        val fo2 = 
+        val fo2 =
           fo onCompletedThen { outcomeOrThrowable =>
             paramPassedToOnCompletedThen = Some(outcomeOrThrowable)
           } onSucceededThen {
@@ -160,7 +160,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
         val fo = FutureOutcome(promise.future)
         assert(!fo.isCompleted)
         assert(fo.value == None)
-        val fo2 = 
+        val fo2 =
           fo onCompletedThen { outcomeOrThrowable =>
             paramPassedToOnCompletedThen = Some(outcomeOrThrowable)
           } onSucceededThen {
@@ -218,7 +218,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
         val fo = FutureOutcome(promise.future)
         assert(!fo.isCompleted)
         assert(fo.value == None)
-        val fo2 = 
+        val fo2 =
           fo onCompletedThen { outcomeOrThrowable =>
             paramPassedToOnCompletedThen = Some(outcomeOrThrowable)
           } onSucceededThen {
@@ -275,7 +275,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
         val fo = FutureOutcome(promise.future)
         assert(!fo.isCompleted)
         assert(fo.value == None)
-        val fo2 = 
+        val fo2 =
           fo onCompletedThen { outcomeOrThrowable =>
             paramPassedToOnCompletedThen = Some(outcomeOrThrowable)
           } onSucceededThen {
@@ -331,7 +331,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onSucceededThen {
               fail("I meant to do that!")
             }
@@ -355,7 +355,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onSucceededThen {
               throw new IllegalArgumentException("I meant to do that!")
             }
@@ -379,7 +379,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onSucceededThen {
               cancel("I meant to do that!")
             }
@@ -403,7 +403,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onSucceededThen {
               pending
             }
@@ -428,7 +428,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onSucceededThen {
               throw new MyError
             }
@@ -438,7 +438,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           fo2.underlying.failed map { ex =>
             assert(fo2.isCompleted)
             ex match {
-              case ee: ExecutionException => 
+              case ee: ExecutionException =>
                 assert(ex.getCause.isInstanceOf[MyError])
                 assert(ex.getCause.getMessage == "I meant to do that!")
               case ex => fail("Was not an ExecutionException: " + ex)
@@ -455,7 +455,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onFailedThen { ex =>
               fail("I meant to do that!")
             }
@@ -479,7 +479,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onFailedThen { ex =>
               throw new IllegalArgumentException("I meant to do that!")
             }
@@ -503,7 +503,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onFailedThen { ex =>
               cancel("I meant to do that!")
             }
@@ -527,7 +527,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onFailedThen { ex =>
               pending
             }
@@ -551,7 +551,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onFailedThen { ex =>
               throw new MyError
             }
@@ -561,7 +561,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           fo2.underlying.failed map { ex =>
             assert(fo2.isCompleted)
             ex match {
-              case ee: ExecutionException => 
+              case ee: ExecutionException =>
                 assert(ex.getCause.isInstanceOf[MyError])
                 assert(ex.getCause.getMessage == "I meant to do that!")
               case ex => fail("Was not an ExecutionException: " + ex)
@@ -578,7 +578,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onCanceledThen { ex =>
               fail("I meant to do that!")
             }
@@ -602,7 +602,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onCanceledThen { ex =>
               throw new IllegalArgumentException("I meant to do that!")
             }
@@ -626,7 +626,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onCanceledThen { ex =>
               cancel("I meant to do that!")
             }
@@ -650,7 +650,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onCanceledThen { ex =>
               pending
             }
@@ -674,7 +674,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onCanceledThen { ex =>
               throw new MyError
             }
@@ -684,7 +684,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           fo2.underlying.failed map { ex =>
             assert(fo2.isCompleted)
             ex match {
-              case ee: ExecutionException => 
+              case ee: ExecutionException =>
                 assert(ex.getCause.isInstanceOf[MyError])
                 assert(ex.getCause.getMessage == "I meant to do that!")
               case ex => fail("Was not an ExecutionException: " + ex)
@@ -701,7 +701,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onPendingThen {
               fail("I meant to do that!")
             }
@@ -725,7 +725,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onPendingThen {
               throw new IllegalArgumentException("I meant to do that!")
             }
@@ -749,7 +749,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onPendingThen {
               cancel("I meant to do that!")
             }
@@ -773,7 +773,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onPendingThen {
               pending
             }
@@ -797,7 +797,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onPendingThen {
               throw new MyError
             }
@@ -807,7 +807,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           fo2.underlying.failed map { ex =>
             assert(fo2.isCompleted)
             ex match {
-              case ee: ExecutionException => 
+              case ee: ExecutionException =>
                 assert(ex.getCause.isInstanceOf[MyError])
                 assert(ex.getCause.getMessage == "I meant to do that!")
               case ex => fail("Was not an ExecutionException: " + ex)
@@ -825,7 +825,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onAbortedThen { ex =>
               fail("I meant to do that!")
             }
@@ -850,7 +850,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onAbortedThen { ex =>
               throw new IllegalArgumentException("I meant to do that!")
             }
@@ -875,7 +875,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onAbortedThen { ex =>
               cancel("I meant to do that!")
             }
@@ -900,7 +900,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onAbortedThen { ex =>
               pending
             }
@@ -924,7 +924,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           val fo = FutureOutcome(promise.future)
           assert(!fo.isCompleted)
           assert(fo.value == None)
-          val fo2 = 
+          val fo2 =
             fo onAbortedThen { ex =>
               throw new MyError("I meant to do that!")
             }
@@ -934,7 +934,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
           fo2.underlying.failed map { ex =>
             assert(fo2.isCompleted)
             ex match {
-              case ee: ExecutionException => 
+              case ee: ExecutionException =>
                 assert(ex.getCause.isInstanceOf[MyError])
                 assert(ex.getCause.getMessage == "I meant to do that!")
               case ex => fail("Was not an ExecutionException: " + ex)
@@ -962,7 +962,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo onOutcomeThen { outcome =>
                   fail("I meant to do that!")
                 }
@@ -1003,7 +1003,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo onOutcomeThen { outcome =>
                   throw new IllegalArgumentException("I meant to do that!")
                 }
@@ -1044,7 +1044,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo onOutcomeThen { outcome =>
                   cancel("I meant to do that!")
                 }
@@ -1085,7 +1085,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo onOutcomeThen { outcome =>
                   pending
                 }
@@ -1126,7 +1126,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo onOutcomeThen { outcome =>
                   throw new MyError("I meant to do that!")
                 }
@@ -1136,7 +1136,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               fo2.underlying.failed map { ex =>
                 assert(fo2.isCompleted)
                 ex match {
-                  case ee: ExecutionException => 
+                  case ee: ExecutionException =>
                     assert(ex.getCause.isInstanceOf[MyError])
                     assert(ex.getCause.getMessage == "I meant to do that!")
                   case ex => fail("Was not an ExecutionException: " + ex)
@@ -1170,7 +1170,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo change { outcome =>
                   fail("I meant to do that!")
                 }
@@ -1211,7 +1211,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo change { outcome =>
                   throw new IllegalArgumentException("I meant to do that!")
                 }
@@ -1252,7 +1252,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo change { outcome =>
                   cancel("I meant to do that!")
                 }
@@ -1293,7 +1293,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo change { outcome =>
                   pending
                   Succeeded // Won't get here, but pending isn't type Nothing.
@@ -1335,7 +1335,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo change { outcome =>
                   throw new MyError("I meant to do that!")
                 }
@@ -1345,7 +1345,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               fo2.underlying.failed map { ex =>
                 assert(fo2.isCompleted)
                 ex match {
-                  case ee: ExecutionException => 
+                  case ee: ExecutionException =>
                     assert(ex.getCause.isInstanceOf[MyError])
                     assert(ex.getCause.getMessage == "I meant to do that!")
                   case ex => fail("Was not an ExecutionException: " + ex)
@@ -1381,7 +1381,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo onCompletedThen { or =>
                   fail("I meant to do that!")
                 }
@@ -1427,7 +1427,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo onCompletedThen { or =>
                   throw new IllegalArgumentException("I meant to do that!")
                 }
@@ -1473,7 +1473,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo onCompletedThen { or =>
                   cancel("I meant to do that!")
                 }
@@ -1519,7 +1519,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo onCompletedThen { or =>
                   pending
                   Succeeded // Won't get here, but pending isn't type Nothing
@@ -1565,7 +1565,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               val fo = FutureOutcome(promise.future)
               assert(!fo.isCompleted)
               assert(fo.value == None)
-              val fo2 = 
+              val fo2 =
                 fo onCompletedThen { or =>
                   throw new MyError("I meant to do that!")
                 }
@@ -1578,7 +1578,7 @@ class FutureOutcomeSpec extends AsyncFreeSpec with DiagrammedAssertions {
               fo2.underlying.failed map { ex =>
                 assert(fo2.isCompleted)
                 ex match {
-                  case ee: ExecutionException => 
+                  case ee: ExecutionException =>
                     assert(ex.getCause.isInstanceOf[MyError])
                     assert(ex.getCause.getMessage == "I meant to do that!")
                   case ex => fail("Was not an ExecutionException: " + ex)

@@ -31,10 +31,10 @@ import org.scalactic.source
  * Here's an example of using an <code>Documenter</code> in a <code>Suite</code>
  * subclass:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * import org.scalatest._
- * 
+ *
  * class MySuite extends Suite {
  *   def testAddition(markup: Documenter) {
  *     assert(1 + 1 === 2)
@@ -44,7 +44,7 @@ import org.scalactic.source
  * </pre>
  *
  * <p>
- * As of 2.0, the only built-in reporter that presents markup text is the HTML reporter. 
+ * As of 2.0, the only built-in reporter that presents markup text is the HTML reporter.
  * If you run this <code>Suite</code> and specify the HTML reporter, you will see the message
  * included in the HTML report:
  * </p>
@@ -56,12 +56,12 @@ import org.scalactic.source
  * </pre>
  *
  * <p>
- * Traits <code>FunSuite</code>, <code>Spec</code>, <code>FlatSpec</code>, <code>WordSpec</code>, <code>FeatureSpec</code>, and 
+ * Traits <code>FunSuite</code>, <code>Spec</code>, <code>FlatSpec</code>, <code>WordSpec</code>, <code>FeatureSpec</code>, and
  * their sister traits in <code>org.scalatest.fixture</code> package declare an implicit <code>markup</code> method that returns
  * an <code>Documenter</code>.
  * Here's an example of a <code>Spec</code> that uses <code>markup</code>:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * import org.scalatest.refspec.RefSpec
  * import scala.collection.mutable.Stack
@@ -78,7 +78,7 @@ import org.scalactic.source
  *     cousin) are not commonly used in Scala, because a &#96;List&#96; gives you
  *     the same basic functionality. Pushing an object onto a &#96;Stack&#96; maps to consing
  *     a new element onto the front of a &#96;List&#96;. Peaking at the top of the &#96;Stack&#96; maps to
- *     to a &#96;head&#96;. Popping an object off of a &#96;Stack&#96; maps to a &#96;head&#96; followed by a &#96;tail&#96;. 
+ *     to a &#96;head&#96;. Popping an object off of a &#96;Stack&#96; maps to a &#96;head&#96; followed by a &#96;tail&#96;.
  *     Nevertheless, using a &#96;Stack&#96; instead of a &#96;List&#96; can clarify your intent
  *     to readers of your code.
  *
@@ -110,27 +110,27 @@ import org.scalactic.source
  *
  * <pre class="stREPL">
  * scala> (new ArithmeticFeatureSpec).run()
- * <span class="stGreen">Feature: Integer arithmetic 
+ * <span class="stGreen">Feature: Integer arithmetic
  *   Scenario: addition
- *     Given two integers 
- *     When they are added 
- *     Then the result is the sum of the two numbers 
+ *     Given two integers
+ *     When they are added
+ *     Then the result is the sum of the two numbers
  *   Scenario: subtraction
- *     Given two integers 
- *     When one is subtracted from the other 
- *     Then the result is the difference of the two numbers</span> 
+ *     Given two integers
+ *     When one is subtracted from the other
+ *     Then the result is the difference of the two numbers</span>
  * </pre>
- * 
+ *
  * @author Bill Venners
  */
 /**
  * Trait to which markup text tests can be reported.
- * 
+ *
  * <p>
  * Note: <code>Documenter</code> will be described in more detail in a future 2.0 milestone release. As of this release
  * you can't see its effects yet.
  * </p>
- * 
+ *
  * @author Bill Venners
  */
 trait Documenter {

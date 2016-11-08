@@ -30,10 +30,10 @@ import Inside._
 @RunWith(classOf[JUnitRunner])
 // SKIP-SCALATESTJS-END
 class LocationSpec extends FunSpec with Checkers {
-  
+
   class TestLocationFunSuite extends FunSuite {
     test("succeed") {
-      
+
     }
     test("fail") {
       fail
@@ -42,19 +42,19 @@ class LocationSpec extends FunSpec with Checkers {
       pending
     }
     ignore("ignore") {
-      
+
     }
   }
-  
+
   describe("FunSuite's events") {
     it("should have LineInFile and SeeStackDepthException location with correct line number and source file name") {
       val testLocationSuite = new TestLocationFunSuite
       val testLocationReporter = new EventRecordingReporter
       testLocationSuite.run(None, Args(testLocationReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker(new Ordinal(99)), Set.empty))
       val testLocationEventList = testLocationReporter.eventsReceived
-      testLocationEventList.foreach {event => 
+      testLocationEventList.foreach {event =>
         event match {
-          case testSucceed:TestSucceeded => 
+          case testSucceed:TestSucceeded =>
             assertResult(thisLineNumber - 23) { testSucceed.location.get.asInstanceOf[LineInFile].lineNumber }
             assertResult("LocationSpec.scala") { testSucceed.location.get.asInstanceOf[LineInFile].fileName }
             val sep = System.getProperty("file.separator") // Not using File.separator because it is not scala-js friendly
@@ -67,10 +67,10 @@ class LocationSpec extends FunSpec with Checkers {
             }
           case testFail:TestFailed =>
             assertResult(SeeStackDepthException.getClass) { testFail.location.get.getClass }
-          case testPending:TestPending => 
+          case testPending:TestPending =>
             assertResult(thisLineNumber - 30) { testPending.location.get.asInstanceOf[LineInFile].lineNumber }
             assertResult("LocationSpec.scala") { testPending.location.get.asInstanceOf[LineInFile].fileName }
-          case testIgnore:TestIgnored => 
+          case testIgnore:TestIgnored =>
             assertResult(thisLineNumber - 30) { testIgnore.location.get.asInstanceOf[LineInFile].lineNumber }
             assertResult("LocationSpec.scala") { testIgnore.location.get.asInstanceOf[LineInFile].fileName }
           case _ =>
@@ -96,16 +96,16 @@ class LocationSpec extends FunSpec with Checkers {
     def `test ignore`: Unit = {
     }
   }
-  
+
   describe("Suite's events") {
     it("should have TopOfMethod and SeeStackDepthException location with correct line number and source file name") {
       val testLocationSuite = new TestLocationSpec
       val testLocationReporter = new EventRecordingReporter
       testLocationSuite.run(None, Args(testLocationReporter, Stopper.default, Filter(), ConfigMap.empty, None, new Tracker(new Ordinal(99)), Set.empty))
       val testLocationEventList = testLocationReporter.eventsReceived
-      testLocationEventList.foreach {event => 
+      testLocationEventList.foreach {event =>
         event match {
-          case testSucceed:TestSucceeded => 
+          case testSucceed:TestSucceeded =>
             assertResult("org.scalatest.events.LocationSpec$TestLocationSpec$") { testSucceed.location.get.asInstanceOf[TopOfMethod].className }
             assertResult("public void org.scalatest.events.LocationSpec$TestLocationSpec.test$u0020succeed()") { testSucceed.location.get.asInstanceOf[TopOfMethod].methodId }
           case testFail:TestFailed =>

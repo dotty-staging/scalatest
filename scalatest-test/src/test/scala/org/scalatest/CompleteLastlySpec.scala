@@ -42,7 +42,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
       it("should perform the side effect and rethrow the same exception") {
         var sideEffectWasExecuted = false
         val ex = new RuntimeException("oops")
-        val thrown = 
+        val thrown =
           intercept[RuntimeException] {
             complete {
               (throw ex): FutureOutcome
@@ -58,7 +58,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
           var sideEffectWasExecuted = false
           val firstEx = new RuntimeException("first")
           val secondEx = new RuntimeException("second")
-          val thrown = 
+          val thrown =
             intercept[RuntimeException] {
               complete {
                 (throw firstEx): FutureOutcome
@@ -77,7 +77,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
         it("should return a future that on completion of the original future performs the side effect then complete the returned future") {
           var sideEffectWasExecuted = false
           val promise = Promise[Outcome]()
-          val fut: FutureOutcome = 
+          val fut: FutureOutcome =
             complete {
               FutureOutcome { promise.future }
             } lastly {
@@ -95,7 +95,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
         it("should return a future that on completion of the original future performs the side effect then complete the returned future") {
           var sideEffectWasExecuted = false
           val promise = Promise[Outcome]()
-          val fut: FutureOutcome = 
+          val fut: FutureOutcome =
             complete {
               FutureOutcome { promise.future }
             } lastly {
@@ -103,7 +103,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
             }
           assert(!sideEffectWasExecuted)
           promise.success(Pending)
-          fut.underlying.map { res => 
+          fut.underlying.map { res =>
             assert(sideEffectWasExecuted)
             assert(res == Pending)
           }
@@ -114,7 +114,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
           var sideEffectWasExecuted = false
           val promise = Promise[Outcome]()
           val canceled = outcomeOf { cancel("nevermind") }
-          val fut: FutureOutcome = 
+          val fut: FutureOutcome =
             complete {
               FutureOutcome { promise.future }
             } lastly {
@@ -122,7 +122,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
             }
           assert(!sideEffectWasExecuted)
           promise.success(canceled)
-          fut.underlying.map { res => 
+          fut.underlying.map { res =>
             assert(sideEffectWasExecuted)
             assert(res == canceled)
           }
@@ -133,7 +133,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
           var sideEffectWasExecuted = false
           val promise = Promise[Outcome]()
           val failed = outcomeOf { fail("oops") }
-          val fut: FutureOutcome = 
+          val fut: FutureOutcome =
             complete {
               FutureOutcome { promise.future }
             } lastly {
@@ -141,7 +141,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
             }
           assert(!sideEffectWasExecuted)
           promise.success(failed)
-          fut.underlying.map { res => 
+          fut.underlying.map { res =>
             assert(sideEffectWasExecuted)
             assert(res == failed)
           }
@@ -152,7 +152,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
           var sideEffectWasExecuted = false
           val promise = Promise[Outcome]()
           val ex = new RuntimeException("I meant to do that!")
-          val fut: FutureOutcome = 
+          val fut: FutureOutcome =
             complete {
               FutureOutcome { promise.future }
             } lastly {
@@ -160,7 +160,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
             }
           assert(!sideEffectWasExecuted)
           promise.failure(ex)
-          fut.underlying.failed.map { actualEx => 
+          fut.underlying.failed.map { actualEx =>
             assert(sideEffectWasExecuted)
             assert(actualEx eq ex)
           }
@@ -171,7 +171,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
             val promise = Promise[Outcome]()
             val firstEx = new RuntimeException("first")
             val secondEx = new RuntimeException("second")
-            val fut: FutureOutcome = 
+            val fut: FutureOutcome =
               complete {
                 FutureOutcome { promise.future }
               } lastly {
@@ -180,7 +180,7 @@ class CompleteLastlySpec extends AsyncFunSpec {
               }
             assert(!sideEffectWasExecuted)
             promise.failure(firstEx)
-            fut.underlying.map { res => 
+            fut.underlying.map { res =>
               assert(sideEffectWasExecuted)
               assert(res == Failed(secondEx))
             }

@@ -204,28 +204,28 @@ class AppendedCluesSpec extends FlatSpec with Matchers with SeveredStackTraces {
       }
     }
   }
-  
+
   it should "infer the type of the result of the passed in function" in {
     val result: Int = { 22 } withClue ("hi")
     assert(result === 22)
   }
-  
+
   it should "be able to accept by-name payload" in {
     val result: String = { "hello" } withClue (() => 128)
     assert(result === "hello")
   }
-  
+
   it should "work when used in withFixture" in {
-    forAll(examples) { e => 
-      val a = 
+    forAll(examples) { e =>
+      val a =
         new org.scalatest.fixture.FunSpec {
           type FixtureParam = String
-        
+
           override def withFixture(test: OneArgTest) = {
             test("something") withClue("a clue")
           }
-        
-          it("should do something") { p => 
+
+          it("should do something") { p =>
             throw e
           }
         }
@@ -235,7 +235,7 @@ class AppendedCluesSpec extends FlatSpec with Matchers with SeveredStackTraces {
       rep.testFailedEventsReceived(0).message should be ("message a clue")
     }
   }
-  
+
   it should "return Failed that contains TestFailedException and with appended clue" in {
     val failed = Failed(new TestFailedException((_: StackDepthException) => Some("message"), None, source.Position.here))
     val result = { failed } withClue("a clue")
@@ -243,14 +243,14 @@ class AppendedCluesSpec extends FlatSpec with Matchers with SeveredStackTraces {
     result.exception shouldBe a [TestFailedException]
     result.exception.getMessage shouldBe "message a clue"
   }
-  
+
   it should "return original Failed that contains the RuntimeException and without appended clue" in {
     val failed = Failed(new RuntimeException("message"))
-    val result = { failed } withClue("a clue") 
+    val result = { failed } withClue("a clue")
     result should be theSameInstanceAs failed
     result.exception.getMessage shouldBe "message"
   }
-  
+
   it should "return Canceled that contains TestCanceledException and with appended clue" in {
     val canceled = Canceled(new TestCanceledException("message", 3))
     val result = { canceled } withClue("a clue")
@@ -258,7 +258,7 @@ class AppendedCluesSpec extends FlatSpec with Matchers with SeveredStackTraces {
     result.exception shouldBe a [TestCanceledException]
     result.exception.getMessage shouldBe "message a clue"
   }
-  
+
   it should "return original Canceled that contains the RuntimeException and without appended clue" in {
     val re = new RuntimeException("message")
     val canceled = Canceled(re)
@@ -272,7 +272,7 @@ class AppendedCluesSpec extends FlatSpec with Matchers with SeveredStackTraces {
     val result = { pending } withClue("a clue")
     result should be theSameInstanceAs pending
   }
-  
+
   it should "return original Succeeded" in {
     val succeeded = Succeeded
     val result = { succeeded } withClue("a clue")

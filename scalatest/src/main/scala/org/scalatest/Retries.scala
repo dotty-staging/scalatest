@@ -46,12 +46,12 @@ import time.Span
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.tagobjects.retryable
- * 
+ *
  * import org.scalatest._
  * import tagobjects.Retryable
- * 
+ *
  * class SetSpec extends FlatSpec with Retries {
- * 
+ *
  *   override def withFixture(test: NoArgTest) = {
  *     if (isRetryable(test))
  *       withRetry { super.withFixture(test) }
@@ -199,7 +199,7 @@ trait Retries {
    * </td>
    * </tr>
    * </table>
-   * 
+   *
    * @param blk the block to execute and potentially retry
    */
   def withRetry(blk: => Outcome): Outcome = withRetry(Span.Zero)(blk)
@@ -337,7 +337,7 @@ trait Retries {
    * </td>
    * </tr>
    * </table>
-   * 
+   *
    * @param delay the amount of time to sleep before retrying
    * @param blk the block to execute and potentially retry
    */
@@ -456,7 +456,7 @@ trait Retries {
    * </td>
    * </tr>
    * </table>
-   * 
+   *
    * @param blk the block to execute and potentially retry
    */
   def withRetryOnFailure(blk: => Outcome): Outcome = withRetryOnFailure(Span.Zero)(blk)
@@ -558,7 +558,7 @@ trait Retries {
    * </td>
    * </tr>
    * </table>
-   * 
+   *
    * @param delay the amount of time to sleep before retrying
    * @param blk the block to execute and potentially retry
    */
@@ -672,7 +672,7 @@ trait Retries {
    * </td>
    * </tr>
    * </table>
-   * 
+   *
    * @param blk the block to execute and potentially retry
    */
   def withRetryOnCancel(blk: => Outcome): Outcome = withRetryOnCancel(Span.Zero)(blk)
@@ -773,7 +773,7 @@ trait Retries {
    * </td>
    * </tr>
    * </table>
-   * 
+   *
    * @param delay the amount of time to sleep before retrying
    * @param blk the block to execute and potentially retry
    */
@@ -817,7 +817,7 @@ trait Retries {
 }
 
 /**
- * Companion object to trait <code>Retries</code> that enables its members to be imported as an 
+ * Companion object to trait <code>Retries</code> that enables its members to be imported as an
  * alternative to mixing them in.
  */
 object Retries extends Retries

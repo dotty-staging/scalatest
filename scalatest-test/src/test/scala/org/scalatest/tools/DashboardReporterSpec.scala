@@ -22,7 +22,7 @@ import events._
 class DashboardReporterSpec extends FunSpec {
 
   describe("DashboardReporter ") {
-    
+
     it("should work with error message that contains '<' and '>' symbol") {
       val tempDir = createTempDirectory()
       val ordinal = new Ordinal(123)
@@ -35,7 +35,7 @@ class DashboardReporterSpec extends FunSpec {
       rep(SuiteCompleted(ordinal.next, "TestSuite", "com.test.TestSuite", Some("com.test.TestSuite")))
       rep(RunCompleted(ordinal.next))
     }
-    
+
   }
-  
+
 }

@@ -115,7 +115,7 @@ import exceptions.ValidationFailedException
  * </pre>
  *
  * <p>
- * The <code>validating</code> method accepts one or more validation functions. If you 
+ * The <code>validating</code> method accepts one or more validation functions. If you
  * pass more than one, they will be tried in order up until the first failure, whose
  * error message will appear in the <code>ValidationFailedException</code>. In other words,
  * <code>validating</code> will short circuit at the first error and return that. It

@@ -20,7 +20,7 @@ import Stream.empty
 
 // Wrote this class by looking at the Javadoc of java.util.Random.
 // And by testing its behavior against that of java.util.Random.
-// Maybe this should be a trait, so that people can, hmm. Could 
+// Maybe this should be a trait, so that people can, hmm. Could
 // make subclasses with extra methods, like nextSmallInt or something,
 // and in a pattern match narrow the type and call that method.
 private[prop] trait Shrinker[T] {

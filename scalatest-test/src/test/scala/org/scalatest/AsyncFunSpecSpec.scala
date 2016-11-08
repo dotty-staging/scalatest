@@ -96,7 +96,7 @@ class AsyncFunSpecSpec extends FunSpec {
       assert(rep.testSucceededEventsReceived(0).testName == "test 1")
       assert(rep.testSucceededEventsReceived(1).testName == "test 6")
       assert(rep.testFailedEventsReceived.length == 2)
-      assert { 
+      assert {
         val zero = rep.testFailedEventsReceived(0).testName
         val one = rep.testFailedEventsReceived(1).testName
         (zero == "test 2" && one == "test 7") || (zero == "test 7" && one == "test 2")
@@ -162,7 +162,7 @@ class AsyncFunSpecSpec extends FunSpec {
       assert(rep.testSucceededEventsReceived(0).testName == "test 1")
       assert(rep.testSucceededEventsReceived(1).testName == "test 6")
       assert(rep.testFailedEventsReceived.length == 2)
-      assert { 
+      assert {
         val zero = rep.testFailedEventsReceived(0).testName
         val one = rep.testFailedEventsReceived(1).testName
         (zero == "test 2" && one == "test 7") || (zero == "test 7" && one == "test 2")

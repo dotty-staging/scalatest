@@ -19,14 +19,14 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfMessageWordApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfMessageWordApplication ") {
-    
+
     it("should have pretty toString") {
       val result = new ResultOfMessageWordApplication("Message from Mars!")
       result.toString should be ("message (\"Message from Mars!\")")
     }
-    
+
   }
-  
+
 }

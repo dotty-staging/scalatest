@@ -40,44 +40,44 @@ package org.scalatest
  * suites--<code>OneSpec</code>, <code>TwoSpec</code>, <code>RedSpec</code>,
  * and <code>BlueSpec</code>--tests that the file exists. After all of the nested suites
  * have executed, <code>afterAll</code> is invoked, which
- * deletes the file. 
+ * deletes the file.
  * (Note: if you're unfamiliar with the <code>withFixture(OneArgTest)</code> approach to shared fixtures, check out
  * the documentation for trait <a href="fixture/FlatSpec.html"><code>fixture.FlatSpec</code></a>.)
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * package org.scalatest.examples.beforeandafterall
  *
  * import org.scalatest._
  * import java.io._
- * 
+ *
  * trait TempFileExistsSpec extends fixture.FlatSpecLike {
- * 
+ *
  *   protected val tempFileName = "tmp.txt"
- * 
+ *
  *   type FixtureParam = File
  *   override def withFixture(test: OneArgTest) = {
  *     val file = new File(tempFileName)
  *     withFixture(test.toNoArgTest(file)) // loan the fixture to the test
  *   }
- * 
+ *
  *   "The temp file" should ("exist in " + suiteName) in { file =&gt;
  *     assert(file.exists)
  *   }
  * }
- * 
+ *
  * class OneSpec extends TempFileExistsSpec
  * class TwoSpec extends TempFileExistsSpec
  * class RedSpec extends TempFileExistsSpec
  * class BlueSpec extends TempFileExistsSpec
- * 
+ *
  * class ExampleSpec extends Suites(
  *   new OneSpec,
  *   new TwoSpec,
  *   new RedSpec,
  *   new BlueSpec
  * ) with TempFileExistsSpec with BeforeAndAfterAll {
- * 
+ *
  *   // Set up the temp file needed by the test, taking
  *   // a file name from the config map
  *   override def beforeAll() {
@@ -85,7 +85,7 @@ package org.scalatest
  *     try writer.write("Hello, suite of tests!")
  *     finally writer.close()
  *   }
- * 
+ *
  *   // Delete the temp file
  *   override def afterAll() {
  *     val file = new File(tempFileName)
@@ -138,7 +138,7 @@ trait BeforeAndAfterAll extends SuiteMixin { this: Suite =>
    * Flag to indicate whether to invoke beforeAll and afterAll even when there are no tests expected.
    *
    * <p>
-   * The default value is <code>false</code>, which means beforeAll and afterAll will not be invoked 
+   * The default value is <code>false</code>, which means beforeAll and afterAll will not be invoked
    * if there are no tests expected. Whether tests are expected is determined by invoking <code>expectedTestCount</code> passing in
    * the passed filter. Because this count does not include tests excluded based on tags, such as ignored tests, this prevents
    * any side effects in <code>beforeAll</code> or <code>afterAll</code> if no tests will ultimately be executed anyway.
@@ -195,7 +195,7 @@ trait BeforeAndAfterAll extends SuiteMixin { this: Suite =>
    * This method does not invoke either <code>beforeAll</code> or <code>afterAll</code> if <code>runTestsInNewInstance</code> is true so
    * that any side effects only happen once per test if <code>OneInstancePerTest</code> is being used. In addition, if no tests
    * are expected, then <code>beforeAll</code> and <code>afterAll</code> will be invoked only if the
-   * <code>invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected</code> flag is true. By default, this flag is false, so that if 
+   * <code>invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected</code> flag is true. By default, this flag is false, so that if
    * all tests are excluded (such as if the entire suite class has been marked with <code>@Ignore</code>), then side effects
    * would happen only if at least one test will ultimately be executed in this suite or its nested suites.
    * </p>

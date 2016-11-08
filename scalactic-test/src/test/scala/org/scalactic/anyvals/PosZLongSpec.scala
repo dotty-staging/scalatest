@@ -82,7 +82,7 @@ class PosZLongSpec extends FunSpec with Matchers with GeneratorDrivenPropertyChe
     }
     it("should return the same type from its unary_+ method") {
       +PosZLong(3L) shouldEqual PosZLong(3L)
-    } 
+    }
     it("should be automatically widened to compatible AnyVal targets") {
       "(PosZLong(3L): Int)" shouldNot typeCheck
       (PosZLong(3L): Long) shouldEqual 3L

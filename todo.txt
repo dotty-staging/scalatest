@@ -240,7 +240,7 @@ tests is an info, then it was not printing anything out. May need to be more tri
 but probably not. describe, info, info, describe, etc. (45 min)
 
         if (desc.subNodes.isEmpty)
-          sendInfoProvidedMessage() 
+          sendInfoProvidedMessage()
         else
           desc.subNodes.reverse.head match {
             case _: DescriptionBranch =>  // Do nothing in this case (should never happen)
@@ -302,13 +302,13 @@ Do an XML reporter and an HTML reporter
 Make everything private in ScalaTestTask that can be private. I see a few things that are public I think unnecessarily.
 
 The enter-after-be issue:
-love the scala-test BDD-DSL (only weird thing was a false possitive 
-when I added an enter after a "be" 
-be 
-( 
-instead of 
-be ( 
-The first case always passes :/ It would be better if it always failed. 
+love the scala-test BDD-DSL (only weird thing was a false possitive
+when I added an enter after a "be"
+be
+(
+instead of
+be (
+The first case always passes :/ It would be better if it always failed.
 
 
 Ask folks about run versus execute
@@ -469,7 +469,7 @@ From the SharedTests trait:
  *
  * <pre>
  * import scala.collection.mutable.ListBuffer
- * 
+ *
  * class Stack[T] {
  *
  *   val MAX = 10
@@ -519,39 +519,39 @@ From the SharedTests trait:
  * <a name="StackBehaviors">For</a> example, here the <code>nonEmptyStack</code> behavior function (here a behavior <em>method</em>) is defined in a trait along with another
  * method containing shared tests for non-full stacks:
  * </p>
- * 
+ *
  * <pre>
  * trait StackBehaviors { this: Spec =>
- * 
+ *
  *   def nonEmptyStack(lastItemAdded: Int)(stack: Stack[Int]) {
- * 
+ *
  *     it("should be non-empty") {
  *       assert(!stack.empty)
- *     }  
- * 
+ *     }
+ *
  *     it("should return the top item on peek") {
  *       assert(stack.peek === lastItemAdded)
  *     }
- *   
+ *
  *     it("should not remove the top item on peek") {
  *       val size = stack.size
  *       assert(stack.peek === lastItemAdded)
  *       assert(stack.size === size)
  *     }
- *   
+ *
  *     it("should remove the top item on pop") {
  *       val size = stack.size
  *       assert(stack.pop === lastItemAdded)
  *       assert(stack.size === size - 1)
  *     }
  *   }
- *   
+ *
  *   def nonFullStack(stack: Stack[Int]) {
- *       
+ *
  *     it("should not be full") {
  *       assert(!stack.full)
  *     }
- *       
+ *
  *     it("should add to the top on push") {
  *       val size = stack.size
  *       stack.push(7)
@@ -612,71 +612,71 @@ From the SharedTests trait:
  *
  * <pre>
  * class SharedTestExampleSpec extends RefSpec with SharedTests with StackBehaviors {
- * 
+ *
  *   // Stack fixture creation methods
  *   def emptyStack = new Stack[Int]
- * 
+ *
  *   def fullStack = {
  *     val stack = new Stack[Int]
  *     for (i <- 0 until stack.MAX)
  *       stack.push(i)
  *     stack
  *   }
- * 
+ *
  *   def stackWithOneItem = {
  *     val stack = new Stack[Int]
  *     stack.push(9)
  *     stack
  *   }
- * 
+ *
  *   def stackWithOneItemLessThanCapacity = {
  *     val stack = new Stack[Int]
  *     for (i <- 1 to 9)
  *       stack.push(i)
  *     stack
  *   }
- * 
+ *
  *   val lastValuePushed = 9
- * 
+ *
  *   describe("A Stack") {
- * 
+ *
  *     describe("(when empty)") {
- *       
+ *
  *       it("should be empty") {
  *         assert(emptyStack.empty)
  *       }
- * 
+ *
  *       it("should complain on peek") {
  *         intercept[IllegalStateException] {
  *           emptyStack.peek
  *         }
  *       }
- * 
+ *
  *       it("should complain on pop") {
  *         intercept[IllegalStateException] {
  *           emptyStack.pop
  *         }
  *       }
  *     }
- * 
+ *
  *     describe("(with one item)") {
  *       ensure (stackWithOneItem) behaves like (nonEmptyStack(lastValuePushed))
  *       ensure (stackWithOneItem) behaves like (nonFullStack)
  *     }
- *     
+ *
  *     describe("(with one item less than capacity)") {
  *       ensure (stackWithOneItemLessThanCapacity) behaves like (nonEmptyStack(lastValuePushed))
  *       ensure (stackWithOneItemLessThanCapacity) behaves like (nonFullStack)
  *     }
- * 
+ *
  *     describe("(full)") {
- *       
+ *
  *       it("should be full") {
  *         assert(fullStack.full)
  *       }
- * 
+ *
  *       nonEmptyStack(lastValuePushed)(fullStack)
- * 
+ *
  *       it("should complain on a push") {
  *         intercept[IllegalStateException] {
  *           fullStack.push(10)
@@ -694,25 +694,25 @@ From the SharedTests trait:
  *
  * <pre>
  * scala> (new StackSpec).execute()
- * A Stack (when empty) 
+ * A Stack (when empty)
  * - should be empty
  * - should complain on peek
  * - should complain on pop
- * A Stack (with one item) 
+ * A Stack (with one item)
  * - should be non-empty
  * - should return the top item on peek
  * - should not remove the top item on peek
  * - should remove the top item on pop
  * - should not be full
  * - should add to the top on push
- * A Stack (with one item less than capacity) 
+ * A Stack (with one item less than capacity)
  * - should be non-empty
  * - should return the top item on peek
  * - should not remove the top item on peek
  * - should remove the top item on pop
  * - should not be full
  * - should add to the top on push
- * A Stack (full) 
+ * A Stack (full)
  * - should be full
  * - should be non-empty
  * - should return the top item on peek
@@ -720,7 +720,7 @@ From the SharedTests trait:
  * - should remove the top item on pop
  * - should complain on a push
  * </pre>
- * 
+ *
  * <p>
  * <strong>Obtaining unique test names</strong>
  * </p>
@@ -735,9 +735,9 @@ From the SharedTests trait:
  *
  * <pre>
  *   describe("A Stack") {
- * 
+ *
  *     describe("(when empty)") {
- *       
+ *
  *       it("should be empty") {
  *         assert(emptyStack.empty)
  *       }
@@ -755,30 +755,30 @@ From the SharedTests trait:
  *
  * <pre>
  * trait StackBehaviors { this: FunSuite =>
- * 
+ *
  *   def nonEmptyStack(lastItemAdded: Int)(stack: Stack[Int]) {
- * 
+ *
  *     test(stack.toString + " should be non-empty") {
  *       assert(!stack.empty)
- *     }  
- * 
+ *     }
+ *
  *     test(stack.toString + " should return the top item on peek") {
  *       assert(stack.peek === lastItemAdded)
  *     }
- *   
+ *
  *     test(stack.toString + " should not remove the top item on peek") {
  *       val size = stack.size
  *       assert(stack.peek === lastItemAdded)
  *       assert(stack.size === size)
  *     }
- *   
+ *
  *     test(stack.toString + " should remove the top item on pop") {
  *       val size = stack.size
  *       assert(stack.pop === lastItemAdded)
  *       assert(stack.size === size - 1)
  *     }
  *   }
- *   
+ *
  *   // ...
  * }
  * </pre>
@@ -871,7 +871,7 @@ From the SharedTests trait:
 Thoughts on OutputManager. I would replace System.err and System.out with PrintStreams that are connected
 to the OutputManager, which I pass in a Some to run. You can register a listener with the OutputManager and
 unregister it. While registered, it will receive one "event" per call to the PrintStream methods. So I'd
-do the loan pattern to basically say capture the thing. 
+do the loan pattern to basically say capture the thing.
 
 val myListener = new OutputListener
 outMan.addListener(myListener)
@@ -896,7 +896,7 @@ Then in all my runTest methods, whew, I would have a:
 
 outputManager match {
 case None =>
-case Some 
+case Some
 
 yuck. Basically probably out an OutputManager, which does nothing with the listener if it is not listening
 
@@ -1057,7 +1057,7 @@ class WhenWord {
 
 (i: Int) => whenever (1 > 0) { i should be > 1 }
 
-In that case of using whenever in properties, simply mixing in given when then is enough to 
+In that case of using whenever in properties, simply mixing in given when then is enough to
 get this, since "given that", "when executing", and "then expect that" all take => Unit.
 
 Possibly have MockitoSugar extend GivenWhenThen, or just let people decide. They may prefer comments or nothing.
@@ -1089,7 +1089,7 @@ The stuff I deleted which was a ScalaTest specs comparison.
  *
  * <pre>
  * Copyright (c) 2008 Twitter, Inc.
- *  
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -1098,10 +1098,10 @@ The stuff I deleted which was a ScalaTest specs comparison.
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- *  
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -1110,31 +1110,31 @@ The stuff I deleted which was a ScalaTest specs comparison.
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- * 
+ *
  * import org.specs.Specification
- * 
+ *
  * object CopyExchangeSpec extends RefSpecification {
- * 
+ *
  *   "CopyExchange" should {
- *    
+ *
  *       "while performing the request" >> {
- *    
+ *
  *         doBefore{
  *           // code deleted ...
  *         }
- *    
+ *
  *         "onResponseHeader" >> {
  *           "copies the header to the response" >> {
  *             // code deleted ...
  *           }
  *         }
- *    
+ *
  *         "onResponseContent" >> {
  *           "copies the content to the response" >> {
  *             // code deleted ...
  *           }
  *         }
- *    
+ *
  *         "onResponseStatus" >> {
  *           "copies the status to the response" >> {
  *             // code deleted ...
@@ -1145,7 +1145,7 @@ The stuff I deleted which was a ScalaTest specs comparison.
  *   }
  * }
  * </pre>
- * 
+ *
  * <p>
  * Running this <code>Specification</code> with Specs will produce the following output:
  * </p>
@@ -1163,7 +1163,7 @@ The stuff I deleted which was a ScalaTest specs comparison.
  *     o onResponseStatus
  *       o copies the status to the response
  *         PENDING: not yet implemented (ConsoleReporter.scala:204)
- * 
+ *
  * Total for specification "CopyExchangeSpec":
  * Finished in 0 second, 60 ms
  * 3 examples (9 skipped), 0 expectation, 0 failure, 0 error
@@ -1176,28 +1176,28 @@ The stuff I deleted which was a ScalaTest specs comparison.
  *
  * <pre>
  * import org.scalatest.WordSpec
- * 
+ *
  * class CopyExchangeSpec extends WordSpec with BeforeAndAfterEach {
- * 
+ *
  *   val copy = afterWord("copy")
  *   val performing = afterWord("performing")
  *
  *   def beforeEach() {
  *     // code deleted ...
  *   }
- *    
+ *
  *   "CopyExchange" when performing {
  *
  *     "a request" should copy {
- *    
+ *
  *       "the header to the response if onResponseHeader is invoked" in {
  *         // code deleted ...
  *       }
- *    
+ *
  *       "the content to the response if onResponseContent is invoked" in {
  *         // code deleted ...
  *       }
- *    
+ *
  *       "the status to the response if onResponseStatus is invoked" in {
  *         // code deleted ...
  *       }
@@ -1205,14 +1205,14 @@ The stuff I deleted which was a ScalaTest specs comparison.
  *   }
  * }
  * </pre>
- * 
+ *
  * <p>
  * Running this <code>WordSpec</code> in the interpretter will yield the following output:
  * </p>
- * 
+ *
  * <pre>
  * scala> (new CopyExchangeSpec).run()
- * CopyExchange (when performing a request) 
+ * CopyExchange (when performing a request)
  * - should copy the header to the response if onResponseHeader is invoked
  * - should copy the content to the response if onResponseContent is invoked
  * - should copy the status to the response if onResponseStatus is invoked
@@ -1244,21 +1244,21 @@ The stuff I deleted which was a ScalaTest specs comparison.
  * methods of the original JUnit. Another distinction in this area is that in Specs, multiple <code>doBefore</code> blocks can be registered to run the
  * context of a single test. For example, a different <code>doBefore</code> may be placed in each nested test block that leads up to a leaf test. By constrast, in
  * ScalaTest (if you mix in <code>BeforeAndAfterEach</code>) you get just one <code>beforeEach</code> method per <code>WordSpec</code>. Although nesting
- * <code>doBefore</code> blocks can model certain scenarios that a single <code>beforeEach</code> method cannot, 
+ * <code>doBefore</code> blocks can model certain scenarios that a single <code>beforeEach</code> method cannot,
  * the execution model of a single <code>beforeEach</code> is likely simpler for readers of test code to understand. Although registering multiple "before" blocks
  * is possible in ScalaTest, since users can override <code>run</code> and implement that if they wish, the simpler conceptual model for
  * readers of test code is why ScalaTest provides enables only one before and after block in each <code>WordSpec</code> via the <code>BeforeAndAfterEach</code> trait.
  * </p>
  *
  * <p>
- * One other significant difference is that ScalaTest defines far fewer operators than Specs. Instead of the <code>&gt;&gt;</code> operator that Specs provides, for example, 
+ * One other significant difference is that ScalaTest defines far fewer operators than Specs. Instead of the <code>&gt;&gt;</code> operator that Specs provides, for example,
  * ScalaTest provides words like <code>when</code> and <code>that</code>, which Specs does not provide. In addition, the verb in Specs can only be <code>should</code> or
  * <code>can</code>, whereas in ScalaTest you can use <code>should</code>, <code>can</code>, or <code>must</code>. (Similarly, in Specs matchers you can only use
  * <code>must</code>, but ScalaTest matchers lets you use either <code>should</code> or <code>must</code>.) Although Specs allows you to place what is essentially
  * an "after word" after the verb with its <code>addToSusVerb</code> method, it has no syntax corresponding to placing words after <code>when</code> or
  * <code>that</code> in a <code>WordSpec</code>.
  * </p>
- * 
+ *
  * <p>
  * Many other differences between ScalaTest and Specs exist, but these are the main differences between a Specs <code>Specification</code> and
  * a ScalaTest <code>WordSpec</code>.

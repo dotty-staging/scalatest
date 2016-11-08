@@ -34,7 +34,7 @@ trait StackDepth { this: Throwable =>
    * An optional detail message for this <code>StackDepth</code> exception.
    */
   val message: Option[String]
- 
+
   /**
    * An optional cause, the <code>Throwable</code> that caused this <code>StackDepth</code> exception to be thrown.
    */
@@ -145,7 +145,7 @@ trait StackDepth { this: Throwable =>
   }
 
   /**
-   * Returns an exception of the same class with <code>failedExceptionStackDepth</code> set to 0 and 
+   * Returns an exception of the same class with <code>failedExceptionStackDepth</code> set to 0 and
    * all frames above this stack depth severed off. This can be useful when working with tools (such as IDEs) that do not
    * directly support ScalaTest. (Tools that directly support ScalaTest can use the stack depth information delivered
    * in the StackDepth exceptions.)

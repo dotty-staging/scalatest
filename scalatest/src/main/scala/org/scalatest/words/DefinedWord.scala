@@ -23,10 +23,10 @@ package org.scalatest.words
  * @author Chee Seng
  */
 final class DefinedWord {
-  
+
   /**
    * Overrides toString to return "defined"
    */
   override def toString: String = "defined"
-  
+
 }

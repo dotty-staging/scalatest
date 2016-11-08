@@ -29,7 +29,7 @@ class SetSpec extends WordSpec {
       "have size 0" taggedAs(Slow) in {
         assert(Set.empty.size === 0)
       }
-      
+
       "produce NoSuchElementException when head is invoked" taggedAs(Slow, DbTest) in {
         assertThrows[NoSuchElementException] {
           Set.empty.head

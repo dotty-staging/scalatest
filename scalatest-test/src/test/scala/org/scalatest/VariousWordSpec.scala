@@ -27,7 +27,7 @@ class AmpersandWordSpec extends WordSpec with Matchers {
       "returns false for false && false" in { false && false should be (false) }
     }
   }
-  
+
   /**
    * The following test should be removed once the 'that' word is removed.
    */
@@ -81,7 +81,7 @@ class LoginUiWordSpec extends WordSpec {
       "attempt to log the user in" is (pending)
     }
   }
-  
+
   /**
    * The 'that' test should be removed once the 'that' word is removed.
    */

@@ -1538,18 +1538,18 @@ class FreeSpecSpec extends org.scalatest.FunSpec {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 11)
     }
   }
-  
+
   describe("when failure happens") {
-    
+
     it("should fire TestFailed event with correct stack depth info when test failed") {
       class TestSpec extends FreeSpec {
         type FixtureParam = String
         def withFixture(test: OneArgTest): Outcome = { test("hi") }
-        "fail scenario" in { fixture => 
+        "fail scenario" in { fixture =>
           assert(1 === 2)
         }
         "a feature" - {
-          "nested fail scenario" in { fixture => 
+          "nested fail scenario" in { fixture =>
             assert(1 === 2)
           }
         }
@@ -1563,13 +1563,13 @@ class FreeSpecSpec extends org.scalatest.FunSpec {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "FreeSpecSpec.scala")
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 11)
     }
-    
+
     it("should generate TestRegistrationClosedException with correct stack depth info when has an in nested inside an in") {
       class TestSpec extends FreeSpec {
         type FixtureParam = String
         var registrationClosedThrown = false
         "a feature" - {
-          "a scenario" in { fixture => 
+          "a scenario" in { fixture =>
             "nested scenario" in { fixture =>
               /* ASSERTION_SUCCEED */
             }; /* ASSERTION_SUCCEED */
@@ -1578,7 +1578,7 @@ class FreeSpecSpec extends org.scalatest.FunSpec {
         override def withFixture(test: OneArgTest): Outcome = {
           val outcome = test.apply("hi")
           outcome match {
-            case Exceptional(ex: TestRegistrationClosedException) => 
+            case Exceptional(ex: TestRegistrationClosedException) =>
               registrationClosedThrown = true
             case _ =>
           }

@@ -70,7 +70,7 @@ class PosLongSpec extends FunSpec with Matchers with GeneratorDrivenPropertyChec
         PosLong.from(-1L) shouldBe None
         PosLong.from(-99L) shouldBe None
       }
-    } 
+    }
     it("should offer MaxValue and MinValue factory methods") {
       PosLong.MaxValue shouldEqual PosLong.from(Long.MaxValue).get
       PosLong.MinValue shouldEqual PosLong(1L)
@@ -80,7 +80,7 @@ class PosLongSpec extends FunSpec with Matchers with GeneratorDrivenPropertyChec
     }
     it("should return the same type from its unary_+ method") {
       +PosLong(3L) shouldEqual PosLong(3L)
-    } 
+    }
     it("should be automatically widened to compatible AnyVal targets") {
       "PosLong(3L): Int" shouldNot typeCheck
       (PosLong(3L): Long) shouldEqual 3L

@@ -19,7 +19,7 @@ private[scalatest] object SuiteHelpers {
   /* This method is used in Suite.run to modify the thread name to make it easier to figure
      what test is hanging when looking at thread dumps. */
   def augmentedThreadName(currentName: String, suiteName: String): String = {
-    val prefix = 
+    val prefix =
       if (currentName.indexOf("ScalaTest-") == -1) currentName + "-ScalaTest"   // "pool-96-thread-1" => "pool-96-thread-1-ScalaTest-running-<suiteName>"
       else {                                                   // "ScalaTest-3-running-OldSpec" => "ScalaTest-3-running-<suiteName>"
         val regex = """(.*?)-running-.*""".r                   // "ScalaTest-3" => "ScalaTest-3-running-<suiteName"

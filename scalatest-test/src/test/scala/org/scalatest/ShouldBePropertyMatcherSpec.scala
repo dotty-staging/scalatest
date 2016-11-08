@@ -57,7 +57,7 @@ class ShouldBePropertyMatcherSpec extends FunSpec with Checkers with ReturnsNorm
       book should be (goodRead)
       book should be a (goodRead)
       book should be an (goodRead)
-      
+
       // book shouldBe goodRead
       // book shouldBe a (goodRead)
       // book shouldBe an (goodRead)
@@ -79,7 +79,7 @@ class ShouldBePropertyMatcherSpec extends FunSpec with Checkers with ReturnsNorm
         badBook should be an (goodRead)
       }
       assert(caught3.getMessage === "Book(A Tale of Two Cities,Dickens,1859,45,false) was not an goodRead")
-      
+
 /*
       val caught4 = intercept[TestFailedException] {
         badBook shouldBe goodRead
@@ -675,7 +675,7 @@ class ShouldBePropertyMatcherSpec extends FunSpec with Checkers with ReturnsNorm
       val filledWithGoodReads = goodRead compose { (lib: Library) => lib.books.head }
       goodLibrary should be (filledWithGoodReads)
       badLibrary should not be (filledWithGoodReads)
-      
+
       // goodLibrary shouldBe filledWithGoodReads
     }
   }
@@ -688,7 +688,7 @@ class ShouldBePropertyMatcherSpec extends FunSpec with Checkers with ReturnsNorm
       "xx" should not be (empty)
       "xxx" should not be (empty)
       "xxxx" should not be (empty)
-      
+
       // "" shouldBe empty
     }
   }

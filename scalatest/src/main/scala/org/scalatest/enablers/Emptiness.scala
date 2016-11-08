@@ -27,13 +27,13 @@ import scala.collection.GenTraversable
  * <p>
  * An <code>Emptiness[T]</code> provides access to the "emptiness" of type <code>T</code> in such
  * a way that <code>be empty</code> matcher syntax can be used with type <code>T</code>. A <code>T</code>
- * can be any type that in some way can be empty. ScalaTest provides implicit implementations for several types. 
+ * can be any type that in some way can be empty. ScalaTest provides implicit implementations for several types.
  * You can enable the <code>be empty</code> matcher syntax on your own type <code>U</code> by defining an <code>Emptiness[U]</code>
  * for the type and making it available implicitly.
- * 
+ *
  * <p>
  * ScalaTest provides implicit <code>Emptiness</code> instances for <code>scala.collection.GenTraversable</code>,
- * <code>java.util.Collection</code>, <code>java.util.Map</code>, <code>String</code>, <code>Array</code>, 
+ * <code>java.util.Collection</code>, <code>java.util.Map</code>, <code>String</code>, <code>Array</code>,
  * and <code>scala.Option</code> in the <code>Emptiness</code> companion object.
  * </p>
  */
@@ -77,7 +77,7 @@ object Emptiness {
     new Emptiness[TRAV[E]] {
       def isEmpty(trav: TRAV[E]): Boolean = trav.isEmpty
     }
-  
+
   /**
    * Enable <code>Emptiness</code> implementation for <code>Array</code>
    *
@@ -88,7 +88,7 @@ object Emptiness {
     new Emptiness[Array[E]] {
       def isEmpty(arr: Array[E]): Boolean = arr.length == 0
     }
-  
+
   /**
    * Enable <code>Emptiness</code> implementation for <code>String</code>
    *
@@ -98,7 +98,7 @@ object Emptiness {
     new Emptiness[String] {
       def isEmpty(str: String): Boolean = str.isEmpty
     }
-  
+
   /**
    * Enable <code>Emptiness</code> implementation for <code>scala.Option</code>
    *
@@ -110,7 +110,7 @@ object Emptiness {
     new Emptiness[OPT[E]] {
       def isEmpty(opt: OPT[E]): Boolean = opt.isEmpty
     }
-  
+
   /**
    * Enable <code>Emptiness</code> implementation for <code>java.util.Collection</code>
    *
@@ -137,25 +137,25 @@ object Emptiness {
     }
 
   import scala.language.reflectiveCalls
-  
+
   /**
    * Enable <code>Emptiness</code> implementation for any arbitrary object with a <code>isEmpty()</code> method that returns <code>Boolean</code>
    *
    * @tparam T any type that has a <code>isEmpty()</code> method that returns <code>Boolean</code>
    * @return <code>Emptiness[T]</code> that supports <code>T</code> in <code>be empty</code> syntax
    */
-  implicit def emptinessOfAnyRefWithIsEmptyMethod[T <: AnyRef { def isEmpty(): Boolean}]: Emptiness[T] = 
+  implicit def emptinessOfAnyRefWithIsEmptyMethod[T <: AnyRef { def isEmpty(): Boolean}]: Emptiness[T] =
     new Emptiness[T] {
       def isEmpty(obj: T): Boolean = obj.isEmpty
     }
-  
+
   /**
    * Enable <code>Emptiness</code> implementation for any arbitrary object with a <code>isEmpty</code> method that returns <code>Boolean</code>
    *
    * @tparam T any type that has a parameterless <code>isEmpty</code> method that returns <code>Boolean</code>
    * @return <code>Emptiness[T]</code> that supports <code>T</code> in <code>be empty</code> syntax
    */
-  implicit def emptinessOfAnyRefWithParameterlessIsEmptyMethod[T <: AnyRef { def isEmpty: Boolean}]: Emptiness[T] = 
+  implicit def emptinessOfAnyRefWithParameterlessIsEmptyMethod[T <: AnyRef { def isEmpty: Boolean}]: Emptiness[T] =
     new Emptiness[T] {
       def isEmpty(obj: T): Boolean = obj.isEmpty
     }

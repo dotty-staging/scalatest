@@ -102,7 +102,7 @@ private[scalatest] class JUnitXmlReporter(directory: String) extends Reporter {
     require(endEvent.isInstanceOf[SuiteCompleted] ||
             endEvent.isInstanceOf[SuiteAborted])
 
-    val orderedEvents = events.toList.filter { e => 
+    val orderedEvents = events.toList.filter { e =>
       e match {
         case e: TestStarting   => e.suiteId == suiteId
         case e: TestSucceeded  => e.suiteId == suiteId
@@ -110,27 +110,27 @@ private[scalatest] class JUnitXmlReporter(directory: String) extends Reporter {
         case e: TestFailed     => e.suiteId == suiteId
         case e: TestPending    => e.suiteId == suiteId
         case e: TestCanceled   => e.suiteId == suiteId
-        case e: InfoProvided   => 
+        case e: InfoProvided   =>
           e.nameInfo match {
-            case Some(nameInfo) => 
+            case Some(nameInfo) =>
               nameInfo.suiteId == suiteId
             case None => false
           }
-        case e: AlertProvided   => 
+        case e: AlertProvided   =>
           e.nameInfo match {
-            case Some(nameInfo) => 
+            case Some(nameInfo) =>
               nameInfo.suiteId == suiteId
             case None => false
           }
-        case e: NoteProvided   => 
+        case e: NoteProvided   =>
           e.nameInfo match {
-            case Some(nameInfo) => 
+            case Some(nameInfo) =>
               nameInfo.suiteId == suiteId
             case None => false
           }
-        case e: MarkupProvided => 
+        case e: MarkupProvided =>
           e.nameInfo match {
-            case Some(nameInfo) => 
+            case Some(nameInfo) =>
               nameInfo.suiteId == suiteId
             case None => false
           }
@@ -271,7 +271,7 @@ private[scalatest] class JUnitXmlReporter(directory: String) extends Reporter {
 
   private def idxAdjustmentForRecordedEvents(recordedEvents: collection.immutable.IndexedSeq[RecordableEvent]) =
     recordedEvents.filter(e => e.isInstanceOf[InfoProvided] || e.isInstanceOf[MarkupProvided]).size
-  
+
   //
   // Constructs a Testcase object from events in orderedEvents array.
   //
@@ -420,7 +420,7 @@ private[scalatest] class JUnitXmlReporter(directory: String) extends Reporter {
               val throwableText = getStackTrace(throwable)
               (throwableType, throwableText)
           }
-        
+
         <failure message = { failure.message.replaceAll("\n", "&#010;") }
                  type    = { throwableType   } >
           { throwableText }

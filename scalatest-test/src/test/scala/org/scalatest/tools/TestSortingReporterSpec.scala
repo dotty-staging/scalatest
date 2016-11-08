@@ -37,7 +37,7 @@ import org.scalactic.exceptions.NullArgumentException
 class TestSortingReporterSpec extends FunSpec with Matchers {
 
   describe("TestSortingReporter") {
-    
+
     val tracker = new Tracker()
     val scope1Opened = ScopeOpened(tracker.nextOrdinal, "Scope 1", NameInfo("aSuite", "aSuite", Some("a.b.aSuite"), None))
     val scope2Opened = ScopeOpened(tracker.nextOrdinal, "Scope 2", NameInfo("aSuite", "aSuite", Some("a.b.aSuite"), None))
@@ -49,7 +49,7 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
     val s1s2t3Succeeded = TestSucceeded(tracker.nextOrdinal, "aSuite", "aSuite", Some("a.b.aSuite"), "Scope 1 Scope 2 Test 3", "Test 3", Vector.empty)
     val scope2Closed = ScopeClosed(tracker.nextOrdinal, "Scope 2", NameInfo("aSuite", "aSuite", Some("a.b.aSuite"), None))
     val scope1Closed = ScopeClosed(tracker.nextOrdinal, "Scope 1", NameInfo("aSuite", "aSuite", Some("a.b.aSuite"), None))
-    
+
     val scope3Opened = ScopeOpened(tracker.nextOrdinal, "Scope 3", NameInfo("aSuite", "aSuite", Some("a.b.aSuite"), None))
     val s3t1Starting = TestStarting(tracker.nextOrdinal, "aSuite", "aSuite", Some("a.b.aSuite"), "Scope 3 Test 1", "Test 1")
     val s3t1Succeeded = TestSucceeded(tracker.nextOrdinal, "aSuite", "aSuite", Some("a.b.aSuite"), "Scope 3 Test 1", "Test 1", Vector.empty)
@@ -58,11 +58,11 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
     val s3t3Starting = TestStarting(tracker.nextOrdinal, "aSuite", "aSuite", Some("a.b.aSuite"), "Scope 3 Test 3", "Test 3")
     val s3t3Succeeded = TestSucceeded(tracker.nextOrdinal, "aSuite", "aSuite", Some("a.b.aSuite"), "Scope 3 Test 3", "Test 3", Vector.empty)
     val scope3Closed = ScopeClosed(tracker.nextOrdinal, "Scope 3", NameInfo("aSuite", "aSuite", Some("a.b.aSuite"), None))
-    
+
     it("should fire event passed to it in the order they arrive if distributingTest, apply and completedTest is not called.") {
       val recordingReporter = new EventRecordingReporter()
       val dispatch = new TestSortingReporter("aSuite", recordingReporter, Span(15, Seconds), 7, None, new PrintStream(new ByteArrayOutputStream))
-      
+
       dispatch(scope1Opened)
       dispatch(scope2Opened)
       dispatch(s1s2t1Starting)
@@ -73,7 +73,7 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
       dispatch(s1s2t3Succeeded)
       dispatch(scope2Closed)
       dispatch(scope1Closed)
-      
+
       dispatch(scope3Opened)
       dispatch(s3t1Starting)
       dispatch(s3t1Succeeded)
@@ -82,7 +82,7 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
       dispatch(s3t3Starting)
       dispatch(s3t3Succeeded)
       dispatch(scope3Closed)
-      
+
       val recordedEvents = recordingReporter.eventsReceived
       recordedEvents(0) should be (scope1Opened)
       recordedEvents(1) should be (scope2Opened)
@@ -102,11 +102,11 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
       recordedEvents(15) should be (s3t3Starting)
       recordedEvents(16) should be (s3t3Succeeded)
     }
-    
+
     it("should wait and fire event based on the order of distributingTest, apply and completedTest is called.") {
       val recordingReporter = new EventRecordingReporter()
       val dispatch = new TestSortingReporter("aSuite", recordingReporter, Span(15, Seconds), 7, None, new PrintStream(new ByteArrayOutputStream))
-      
+
       dispatch(scope1Opened)
       dispatch(scope2Opened)
       dispatch.distributingTest(s1s2t1Starting.testName)
@@ -123,7 +123,7 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
       dispatch.completedTest("Scope 1 Scope 2 Test 2")
       dispatch(scope2Closed)
       dispatch(scope1Closed)
-      
+
       dispatch(scope3Opened)
       dispatch.distributingTest(s3t1Starting.testName)
       dispatch("Scope 3 Test 1", s3t1Starting)
@@ -138,7 +138,7 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
       dispatch("Scope 3 Test 2", s3t2Succeeded)
       dispatch.completedTest("Scope 3 Test 2")
       dispatch(scope3Closed)
-      
+
       val recordedEvents = recordingReporter.eventsReceived
       recordedEvents(0) should be (scope1Opened)
       recordedEvents(1) should be (scope2Opened)
@@ -161,10 +161,10 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
 
     // SKIP-SCALATESTJS-START
     it("should wait and fire blocking event when timeout, and just fire the missing event directly without waiting when received later.") {
-    
+
       val recordingReporter = new EventRecordingReporter()
       val dispatch = new TestSortingReporter("aSuite", recordingReporter, Span(3, Seconds), 7, None, new PrintStream(new ByteArrayOutputStream))
-      
+
       dispatch(scope1Opened)
       dispatch(scope2Opened)
       dispatch.distributingTest(s1s2t1Starting.testName)
@@ -177,16 +177,16 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
       dispatch.completedTest("Scope 1 Scope 2 Test 3")
       dispatch("Scope 1 Scope 2 Test 2", s1s2t2Succeeded)
       dispatch.completedTest("Scope 1 Scope 2 Test 2")
-      
+
       Thread.sleep(4000)
       dispatch("Scope 1 Scope 2 Test 1", s1s2t1Succeeded)
       dispatch.completedTest("Scope 1 Scope 2 Test 1")
-      
+
       dispatch(scope2Closed)
       dispatch(scope1Closed)
-      
-      
-      
+
+
+
       val recordedEvents = recordingReporter.eventsReceived
       recordedEvents(0) should be (scope1Opened)
       recordedEvents(1) should be (scope2Opened)
@@ -281,7 +281,7 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
     it("should timeout if a test with no event fired is blocking") {
       val recordingReporter = new EventRecordingReporter()
       val dispatch = new TestSortingReporter("aSuite", recordingReporter, Span(3, Seconds), 7, None, new PrintStream(new ByteArrayOutputStream))
-      
+
       dispatch(scope1Opened)
       dispatch(scope2Opened)
       dispatch.distributingTest(s1s2t1Starting.testName)
@@ -294,14 +294,14 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
       dispatch.completedTest("Scope 1 Scope 2 Test 3")
       dispatch("Scope 1 Scope 2 Test 2", s1s2t2Succeeded)
       dispatch.completedTest("Scope 1 Scope 2 Test 2")
-      
+
       dispatch("Scope 1 Scope 2 Test 1", s1s2t1Starting)
       dispatch("Scope 1 Scope 2 Test 1", s1s2t1Succeeded)
       dispatch.completedTest("Scope 1 Scope 2 Test 1")
-      
+
       dispatch(scope2Closed)
       dispatch(scope1Closed)
-      
+
       val recordedEvents = recordingReporter.eventsReceived
       recordedEvents(0) should be (scope1Opened)
       recordedEvents(1) should be (scope2Opened)
@@ -315,11 +315,11 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
       recordedEvents(9) should be (scope1Closed)
     }
     // SKIP-SCALATESTJS-END
-    
+
     class RecordingDistributedSuiteSorter extends DistributedSuiteSorter {
       val distributingTestsList = new ListBuffer[String]()
       val completedTestsList = new ListBuffer[String]()
-      
+
       def distributingTests(suiteId: String): Unit = {
         distributingTestsList += suiteId
       }
@@ -327,11 +327,11 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
         completedTestsList += suiteId
       }
     }
-    
+
     it("should call passed in DistributedSuiteSorter's completedTests when suite contains test.") {
       val suiteSorter = new RecordingDistributedSuiteSorter
       val dispatch = new TestSortingReporter("aSuite", SilentReporter, Span(3, Seconds), 1, Some(suiteSorter), new PrintStream(new ByteArrayOutputStream))
-      
+
       dispatch(scope1Opened)
       dispatch(scope2Opened)
       dispatch.distributingTest(s1s2t1Starting.testName)
@@ -340,22 +340,22 @@ class TestSortingReporterSpec extends FunSpec with Matchers {
       dispatch.completedTest("Scope 1 Scope 2 Test 1")
       dispatch(scope2Closed)
       dispatch(scope1Closed)
-      
+
       suiteSorter.distributingTestsList.toList should be (List("aSuite"))
       suiteSorter.completedTestsList.toList should be (List("aSuite"))
     }
-    
+
     it("should call passed in DistributedSuiteSorter's completedTests when suite does not contain test.") {
       val suiteSorter = new RecordingDistributedSuiteSorter
       val dispatch = new TestSortingReporter("aSuite", SilentReporter, Span(3, Seconds), 0, Some(suiteSorter), new PrintStream(new ByteArrayOutputStream))
-      
+
       dispatch(scope1Opened)
       dispatch(scope2Opened)
       dispatch.distributingTest(s1s2t1Starting.testName)
       dispatch.completedTest("Scope 1 Scope 2 Test 1")
       dispatch(scope2Closed)
       dispatch(scope1Closed)
-      
+
       suiteSorter.distributingTestsList.toList should be (List("aSuite"))
       suiteSorter.completedTestsList.toList should be (List("aSuite"))
     }

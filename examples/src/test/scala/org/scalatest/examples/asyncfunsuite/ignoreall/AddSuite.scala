@@ -29,7 +29,7 @@ class AddSuite extends AsyncFunSuite {
     // You can map assertions onto a Future, then return
     // the resulting Future[Assertion] to ScalaTest:
     futureSum map { sum => assert(sum == 3) }
-  } 
+  }
 
   def addNow(addends: Int*): Int = addends.sum
 

@@ -46,7 +46,7 @@ private[scalatest] class ProgressBarPanel() extends JPanel {
 
   //
   // This prevents resizing of the panel when switching between
-  // the color bar and the discovery message panel.  
+  // the color bar and the discovery message panel.
   //
   setPreferredSize(
     new Dimension(

@@ -23,11 +23,11 @@ import java.util.concurrent.atomic.AtomicReference
 import words.BehaveWord
 
 /**
- * Implementation trait for class <code>FreeSpec</code>, which 
+ * Implementation trait for class <code>FreeSpec</code>, which
  * facilitates a &ldquo;behavior-driven&rdquo; style of development (BDD),
  * in which tests are nested inside text clauses denoted with the dash
  * operator (<code>-</code>).
- * 
+ *
  * <p>
  * <a href="FreeSpec.html"><code>FreeSpec</code></a> is a class, not a trait,
  * to minimize compile time given there is a slight compiler overhead to
@@ -171,7 +171,7 @@ trait FreeSpecLike extends TestSuite with TestRegistration with Informing with N
    * Class that supports the registration of tagged tests.
    *
    * <p>
-   * Instances of this class are returned by the <code>taggedAs</code> method of 
+   * Instances of this class are returned by the <code>taggedAs</code> method of
    * class <code>FreeSpecStringWrapper</code>.
    * </p>
    *
@@ -238,7 +238,7 @@ trait FreeSpecLike extends TestSuite with TestRegistration with Informing with N
     def ignore(testFun: => Any /* Assertion */): Unit = {
       registerTestToIgnore(specText, tags, "ignore", testFun _, pos)
     }
-  }       
+  }
 
   /**
    * A class that via an implicit conversion (named <code>convertToFreeSpecStringWrapper</code>) enables
@@ -371,12 +371,12 @@ trait FreeSpecLike extends TestSuite with TestRegistration with Informing with N
    * the <code>Set</code> of tags for the test. If this <code>FreeSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
    * <p>
-   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to 
-   * <code>taggedAs</code>. 
+   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to
+   * <code>taggedAs</code>.
    * </p>
-   * 
+   *
    * <p>
-   * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
+   * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate <code>@Ignore</code> at the class level, all test methods in the class will be auto-annotated with
    * <code>org.scalatest.Ignore</code>.
    * </p>
@@ -538,11 +538,11 @@ trait FreeSpecLike extends TestSuite with TestRegistration with Informing with N
    * </p>
    */
   protected val behave = new BehaveWord
-  
+
   /**
    * Suite style name.
    */
   final override val styleName: String = "org.scalatest.FreeSpec"
-    
+
   override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = createTestDataFor(testName, theConfigMap, this)
 }

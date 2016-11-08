@@ -77,7 +77,7 @@ class FlatSpecSpec extends FunSpec with GivenWhenThen {
     }
 
     it("should throw DuplicateTestNameException if a duplicate test name registration is attempted") {
-      
+
       intercept[DuplicateTestNameException] {
         new FlatSpec {
           it should "test this" in {/* ASSERTION_SUCCEED */}
@@ -1380,7 +1380,7 @@ class FlatSpecSpec extends FunSpec with GivenWhenThen {
           override def withFixture(test: NoArgTest): Outcome = {
             val outcome = test.apply()
             outcome match {
-              case Exceptional(ex: TestRegistrationClosedException) => 
+              case Exceptional(ex: TestRegistrationClosedException) =>
                 registrationClosedThrown = true
               case _ =>
             }
@@ -1459,9 +1459,9 @@ class FlatSpecSpec extends FunSpec with GivenWhenThen {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 10)
     }
   }
-  
+
   describe("when failure happens") {
-    
+
     it("should fire TestFailed event with correct stack depth info when test failed") {
       class TestSpec extends FlatSpec {
         it should "fail"  in {
@@ -1481,7 +1481,7 @@ class FlatSpecSpec extends FunSpec with GivenWhenThen {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "FlatSpecSpec.scala")
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 10)
     }
-    
+
     it("should generate TestRegistrationClosedException with correct stack depth info when has an in nested inside a in") {
       class TestSpec extends FlatSpec {
         var registrationClosedThrown = false
@@ -1494,7 +1494,7 @@ class FlatSpecSpec extends FunSpec with GivenWhenThen {
         override def withFixture(test: NoArgTest): Outcome = {
           val outcome = test.apply()
           outcome match {
-            case Exceptional(ex: TestRegistrationClosedException) => 
+            case Exceptional(ex: TestRegistrationClosedException) =>
               registrationClosedThrown = true
             case _ =>
           }

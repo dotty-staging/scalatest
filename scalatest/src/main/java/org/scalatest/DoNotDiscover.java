@@ -15,7 +15,7 @@
  */
 package org.scalatest;
 
-import java.lang.annotation.*; 
+import java.lang.annotation.*;
 
 /**
  * Annotation used to indicate that an otherwise discoverable test class should not be discovered.
@@ -33,14 +33,14 @@ import java.lang.annotation.*;
  *
  * <pre class="stHighlight">
  * import org.scalatest._
- * 
+ *
  * @DoNotDiscover
  * class SetSpec extends FlatSpec {
- * 
+ *
  *   "An empty Set" should "have size 0" in {
  *     assert(Set.empty.size === 0)
  *   }
- * 
+ *
  *   it should "produce NoSuchElementException when head is invoked" in {
  *     intercept[NoSuchElementException] {
  *       Set.empty.head
@@ -48,11 +48,11 @@ import java.lang.annotation.*;
  *   }
  * }
  * </pre>
- * 
+ *
  * <p>
- * ScalaTest will run classes annotated with <code>DoNotDiscover</code> if asked to explicitly, it just won't discover them. 
+ * ScalaTest will run classes annotated with <code>DoNotDiscover</code> if asked to explicitly, it just won't discover them.
  * </p>
- * 
+ *
  * <p>
  * Note that because reflection is not supported on Scala.js, this annotation will only work on the JVM, not on Scala.js.
  * </p>

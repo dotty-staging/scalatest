@@ -38,7 +38,7 @@ class BeforeAndAfterEachTestDataAsyncSuite extends AsyncFunSuite {
       super.run(testName, args)
     }
   }
-  
+
   class MySuite extends TheSuper with BeforeAndAfterEachTestData with BeforeAndAfterAllConfigMap {
     @volatile var beforeEachTestDataCalledBeforeRunTest = false
     @volatile var afterEachTestDataCalledAfterRunTest = false
@@ -87,7 +87,7 @@ class BeforeAndAfterEachTestDataAsyncSuite extends AsyncFunSuite {
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
     assert(a.runTestWasCalled)
   }
-  
+
   test("super's run must be called") {
     val a = new MySuite
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
@@ -115,7 +115,7 @@ class BeforeAndAfterEachTestDataAsyncSuite extends AsyncFunSuite {
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
     assert(a.beforeAllConfigCalledBeforeExecute)
   }
-  
+
   test("afterAll gets called after run") {
     val a = new MySuite
     val status = a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
@@ -125,7 +125,7 @@ class BeforeAndAfterEachTestDataAsyncSuite extends AsyncFunSuite {
       assert(mySuite.afterAllConfigCalledAfterExecute)
     }
   }
-  
+
   test("beforeEach(config) gets the config passed to run") {
     val a = new MySuite
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
@@ -161,16 +161,16 @@ class BeforeAndAfterEachTestDataAsyncSuite extends AsyncFunSuite {
   // test exceptions with runTest
   test("If any invocation of beforeEach completes abruptly with an exception, runTest " +
     "will complete abruptly with the same exception.") {
-    
+
     class MySuite extends Suite with BeforeAndAfterEachTestData with BeforeAndAfterAllConfigMap {
-      override def beforeEach(td: TestData): Unit = { throw new NumberFormatException } 
+      override def beforeEach(td: TestData): Unit = { throw new NumberFormatException }
     }
     assertThrows[NumberFormatException] {
       val a = new MySuite
       a.run(Some("july"), Args(StubReporter))
     }
   }
-  
+
   test("If any call to super.runTest completes abruptly with an exception, runTest " +
     "will complete abruptly with the same exception, however, before doing so, it will invoke afterEach") {
     trait FunkySuite extends Suite {
@@ -190,8 +190,8 @@ class BeforeAndAfterEachTestDataAsyncSuite extends AsyncFunSuite {
     }
     assert(a.afterEachCalled)
   }
-  
-  test("If both super.runTest and afterEach complete abruptly with an exception, runTest " + 
+
+  test("If both super.runTest and afterEach complete abruptly with an exception, runTest " +
     "will complete abruptly with the exception thrown by super.runTest.") {
     trait FunkySuite extends Suite {
       protected override def runTest(testName: String, args: Args): Status = {
@@ -211,10 +211,10 @@ class BeforeAndAfterEachTestDataAsyncSuite extends AsyncFunSuite {
     }
     assert(a.afterEachCalled)
   }
-  
+
   test("If super.runTest returns normally, but afterEach completes abruptly with an " +
     "exception, the status returned by runTest will contain that exception as its unreportedException.") {
-       
+
     class MySuite extends AsyncFunSuite with BeforeAndAfterEachTestData {
 
       override def afterEach(td: TestData): Unit = { throw new NumberFormatException }
@@ -229,11 +229,11 @@ class BeforeAndAfterEachTestDataAsyncSuite extends AsyncFunSuite {
       assert(unrepEx.value.isInstanceOf[NumberFormatException] )
     }
   }
- 
+
   // test exceptions with run
   test("If any invocation of beforeAll completes abruptly with an exception, run " +
     "will complete abruptly with the same exception.") {
-    
+
     class MySuite extends FunSuite with BeforeAndAfterEachTestData with BeforeAndAfterAllConfigMap {
       override def beforeAll(cm: ConfigMap): Unit = { throw new NumberFormatException }
       test("test July") {}
@@ -243,7 +243,7 @@ class BeforeAndAfterEachTestDataAsyncSuite extends AsyncFunSuite {
       a.run(None, Args(StubReporter))
     }
   }
- 
+
   test("If any call to super.run completes abruptly with an exception, run " +
     "will complete abruptly with the same exception, however, before doing so, it will invoke afterAll") {
     trait FunkySuite extends FunSuite {
@@ -266,8 +266,8 @@ class BeforeAndAfterEachTestDataAsyncSuite extends AsyncFunSuite {
     }
     assert(a.afterAllCalled)
   }
-   
-  test("If both super.run and afterAll complete abruptly with an exception, run " + 
+
+  test("If both super.run and afterAll complete abruptly with an exception, run " +
     "will complete abruptly with the exception thrown by super.run.") {
     trait FunkySuite extends FunSuite {
       override def run(testName: Option[String], args: Args): Status = {
@@ -290,7 +290,7 @@ class BeforeAndAfterEachTestDataAsyncSuite extends AsyncFunSuite {
     }
     assert(a.afterAllCalled)
   }
-  
+
   test("If super.run returns normally, but afterAll completes abruptly with an " +
     "exception, runTest will return a status that contains that exception as an unreportedException (using BeforeAndAfterAllConfigMap).") {
     class MySuite extends FunSuite with BeforeAndAfterEachTestData with BeforeAndAfterAllConfigMap {

@@ -25,15 +25,15 @@ trait ParallelSuites extends EventHelpers {
 }
 
 object ParallelTestExecutionParallelSuiteExamples extends Tables {
-  
-  def parallelExamples = 
+
+  def parallelExamples =
     Table(
       "pair",
       // SKIP-SCALATESTJS-START
       new ExampleParallelTestExecutionParallelSpecPair,
       // SKIP-SCALATESTJS-END
-      new ExampleParallelTestExecutionParallelFunSuitePair, 
-      new ExampleParallelTestExecutionParallelFunSpecPair, 
+      new ExampleParallelTestExecutionParallelFunSuitePair,
+      new ExampleParallelTestExecutionParallelFunSpecPair,
       new ExampleParallelTestExecutionParallelFeatureSpecPair,
       new ExampleParallelTestExecutionParallelFlatSpecPair,
       new ExampleParallelTestExecutionParallelFreeSpecPair,
@@ -46,10 +46,10 @@ object ParallelTestExecutionParallelSuiteExamples extends Tables {
 class ExampleParallelTestExecutionParallelSpecPair extends ParallelSuites {
   def suite1 = new ExampleParallelTestExecutionOrderSpec
   def suite2 = new ExampleParallelTestExecutionOrderFixtureSpec
-  
+
   def assertParallelSuites(events: List[Event]): Unit = {
     assert(events.size === 16)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkTestStarting(events(1), "test 1")
     checkTestSucceeded(events(2), "test 1")
@@ -58,7 +58,7 @@ class ExampleParallelTestExecutionParallelSpecPair extends ParallelSuites {
     checkTestStarting(events(5), "test 3")
     checkTestSucceeded(events(6), "test 3")
     checkSuiteCompleted(events(7), suite1.suiteId)
-    
+
     checkSuiteStarting(events(8), suite2.suiteId)
     checkTestStarting(events(9), "test 1")
     checkTestSucceeded(events(10), "test 1")
@@ -74,10 +74,10 @@ class ExampleParallelTestExecutionParallelSpecPair extends ParallelSuites {
 class ExampleParallelTestExecutionParallelFunSuitePair extends ParallelSuites {
   def suite1 = new ExampleParallelTestExecutionOrderFunSuite
   def suite2 = new ExampleParallelTestExecutionOrderFixtureFunSuite
-  
+
   def assertParallelSuites(events: List[Event]): Unit = {
     assert(events.size === 16)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkTestStarting(events(1), "Test 1")
     checkTestSucceeded(events(2), "Test 1")
@@ -86,7 +86,7 @@ class ExampleParallelTestExecutionParallelFunSuitePair extends ParallelSuites {
     checkTestStarting(events(5), "Test 3")
     checkTestSucceeded(events(6), "Test 3")
     checkSuiteCompleted(events(7), suite1.suiteId)
-    
+
     checkSuiteStarting(events(8), suite2.suiteId)
     checkTestStarting(events(9), "Fixture Test 1")
     checkTestSucceeded(events(10), "Fixture Test 1")
@@ -101,10 +101,10 @@ class ExampleParallelTestExecutionParallelFunSuitePair extends ParallelSuites {
 class ExampleParallelTestExecutionParallelFunSpecPair extends ParallelSuites {
   def suite1 = new ExampleParallelTestExecutionOrderFunSpec
   def suite2 = new ExampleParallelTestExecutionOrderFixtureFunSpec
-  
+
   def assertParallelSuites(events: List[Event]): Unit = {
     assert(events.size === 28)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkScopeOpened(events(1), "Scope 1")
     checkTestStarting(events(2), "Scope 1 Test 1")
@@ -119,7 +119,7 @@ class ExampleParallelTestExecutionParallelFunSpecPair extends ParallelSuites {
     checkTestSucceeded(events(11), "Scope 2 Test 4")
     checkScopeClosed(events(12), "Scope 2")
     checkSuiteCompleted(events(13), suite1.suiteId)
-    
+
     checkSuiteStarting(events(14), suite2.suiteId)
     checkScopeOpened(events(15), "Fixture Scope 1")
     checkTestStarting(events(16), "Fixture Scope 1 Fixture Test 1")
@@ -140,10 +140,10 @@ class ExampleParallelTestExecutionParallelFunSpecPair extends ParallelSuites {
 class ExampleParallelTestExecutionParallelFeatureSpecPair extends ParallelSuites {
   def suite1 = new ExampleParallelTestExecutionOrderFeatureSpec
   def suite2 = new ExampleParallelTestExecutionOrderFixtureFeatureSpec
-  
+
   def assertParallelSuites(events: List[Event]): Unit = {
     assert(events.size === 28)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkScopeOpened(events(1), "Feature: Scope 1")
     checkTestStarting(events(2), "Feature: Scope 1 Scenario: Test 1")
@@ -158,7 +158,7 @@ class ExampleParallelTestExecutionParallelFeatureSpecPair extends ParallelSuites
     checkTestSucceeded(events(11), "Feature: Scope 2 Scenario: Test 4")
     checkScopeClosed(events(12), "Feature: Scope 2")
     checkSuiteCompleted(events(13), suite1.suiteId)
-    
+
     checkSuiteStarting(events(14), suite2.suiteId)
     checkScopeOpened(events(15), "Feature: Fixture Scope 1")
     checkTestStarting(events(16), "Feature: Fixture Scope 1 Scenario: Fixture Test 1")
@@ -179,10 +179,10 @@ class ExampleParallelTestExecutionParallelFeatureSpecPair extends ParallelSuites
 class ExampleParallelTestExecutionParallelFlatSpecPair extends ParallelSuites {
   def suite1 = new ExampleParallelTestExecutionOrderFlatSpec
   def suite2 = new ExampleParallelTestExecutionOrderFixtureFlatSpec
-  
+
   def assertParallelSuites(events: List[Event]): Unit = {
     assert(events.size === 28)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkScopeOpened(events(1), "Scope 1")
     checkTestStarting(events(2), "Scope 1 should Test 1")
@@ -197,7 +197,7 @@ class ExampleParallelTestExecutionParallelFlatSpecPair extends ParallelSuites {
     checkTestSucceeded(events(11), "Scope 2 should Test 4")
     checkScopeClosed(events(12), "Scope 2")
     checkSuiteCompleted(events(13), suite1.suiteId)
-    
+
     checkSuiteStarting(events(14), suite2.suiteId)
     checkScopeOpened(events(15), "Fixture Scope 1")
     checkTestStarting(events(16), "Fixture Scope 1 should Fixture Test 1")
@@ -218,10 +218,10 @@ class ExampleParallelTestExecutionParallelFlatSpecPair extends ParallelSuites {
 class ExampleParallelTestExecutionParallelFreeSpecPair extends ParallelSuites {
   def suite1 = new ExampleParallelTestExecutionOrderFreeSpec
   def suite2 = new ExampleParallelTestExecutionOrderFixtureFreeSpec
-  
+
   def assertParallelSuites(events: List[Event]): Unit = {
     assert(events.size === 28)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkScopeOpened(events(1), "Scope 1")
     checkTestStarting(events(2), "Scope 1 Test 1")
@@ -236,7 +236,7 @@ class ExampleParallelTestExecutionParallelFreeSpecPair extends ParallelSuites {
     checkTestSucceeded(events(11), "Scope 2 Test 4")
     checkScopeClosed(events(12), "Scope 2")
     checkSuiteCompleted(events(13), suite1.suiteId)
-    
+
     checkSuiteStarting(events(14), suite2.suiteId)
     checkScopeOpened(events(15), "Fixture Scope 1")
     checkTestStarting(events(16), "Fixture Scope 1 Fixture Test 1")
@@ -257,10 +257,10 @@ class ExampleParallelTestExecutionParallelFreeSpecPair extends ParallelSuites {
 class ExampleParallelTestExecutionParallelPropSpecPair extends ParallelSuites {
   def suite1 = new ExampleParallelTestExecutionOrderPropSpec
   def suite2 = new ExampleParallelTestExecutionOrderFixturePropSpec
-  
+
   def assertParallelSuites(events: List[Event]): Unit = {
     assert(events.size === 16)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkTestStarting(events(1), "Test 1")
     checkTestSucceeded(events(2), "Test 1")
@@ -269,7 +269,7 @@ class ExampleParallelTestExecutionParallelPropSpecPair extends ParallelSuites {
     checkTestStarting(events(5), "Test 3")
     checkTestSucceeded(events(6), "Test 3")
     checkSuiteCompleted(events(7), suite1.suiteId)
-    
+
     checkSuiteStarting(events(8), suite2.suiteId)
     checkTestStarting(events(9), "Fixture Test 1")
     checkTestSucceeded(events(10), "Fixture Test 1")
@@ -284,10 +284,10 @@ class ExampleParallelTestExecutionParallelPropSpecPair extends ParallelSuites {
 class ExampleParallelTestExecutionParallelWordSpecPair extends ParallelSuites {
   def suite1 = new ExampleParallelTestExecutionOrderWordSpec
   def suite2 = new ExampleParallelTestExecutionOrderFixtureWordSpec
-  
+
   def assertParallelSuites(events: List[Event]): Unit = {
     assert(events.size === 28)
-    
+
     checkSuiteStarting(events(0), suite1.suiteId)
     checkScopeOpened(events(1), "Scope 1")
     checkTestStarting(events(2), "Scope 1 should Test 1")
@@ -302,7 +302,7 @@ class ExampleParallelTestExecutionParallelWordSpecPair extends ParallelSuites {
     checkTestSucceeded(events(11), "Scope 2 should Test 4")
     checkScopeClosed(events(12), "Scope 2")
     checkSuiteCompleted(events(13), suite1.suiteId)
-    
+
     checkSuiteStarting(events(14), suite2.suiteId)
     checkScopeOpened(events(15), "Fixture Scope 1")
     checkTestStarting(events(16), "Fixture Scope 1 should Fixture Test 1")

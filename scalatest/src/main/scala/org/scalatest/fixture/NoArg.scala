@@ -89,10 +89,10 @@ package org.scalatest.fixture
  *         with Matchers
  *         with UnitFixture
  *         with ParallelTestExecution {
- * 
+ *
  *   def makeActor(): ActorRef =
  *     system.actorOf(Props[MyActor], "MyActor")
- * 
+ *
  *   "My Actor" should {
  *     "throw when made with the wrong name" in new ActorSys {
  *       an [Exception] should be thrownBy {
@@ -128,7 +128,7 @@ package org.scalatest.fixture
  * </blockquote>
  *
  * <p>
- * Since <code>FixtureParam</code> is unused in this use case, it could 
+ * Since <code>FixtureParam</code> is unused in this use case, it could
  * be anything. Making it <code>Unit</code> will hopefully help readers more easily recognize that it is not being used.
  * </p>
  *
@@ -180,13 +180,13 @@ package org.scalatest.fixture
  *         with Matchers
  *         with UnitFixture
  *         with ParallelTestExecution {
- * 
+ *
  *   def makeActor(): ActorRef =
  *     system.actorOf(Props[MyActor], "MyActor")
- * 
+ *
  *   "My Actor" should {
  *     "throw when made with the wrong name" in new ActorSys {
- *       def body() = 
+ *       def body() =
  *         an [Exception] should be thrownBy {
  *           // use a generated name
  *           val a = system.actorOf(Props[MyActor])
@@ -227,7 +227,7 @@ trait NoArg extends DelayedInit with (() => Unit) {
   def apply(): Unit = synchronized { if (theBody != null) theBody() }
 
   /**
-   * This method exists to cause a compile-time type error if someone accidentally 
+   * This method exists to cause a compile-time type error if someone accidentally
    * tries to mix this trait into a <code>Suite</code>.
    *
    * <p>

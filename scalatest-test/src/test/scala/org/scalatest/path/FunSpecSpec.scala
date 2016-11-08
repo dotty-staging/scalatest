@@ -100,7 +100,7 @@ class FunSpecSpec extends org.scalatest.FreeSpec with GivenWhenThen {
     }
 
     "should throw DuplicateTestNameException if a duplicate test name registration is attempted" in {
-      
+
       intercept[DuplicateTestNameException] {
         class AFunSpec extends PathFunSpec {
           it("should test this") {}
@@ -393,7 +393,7 @@ class FunSpecSpec extends org.scalatest.FreeSpec with GivenWhenThen {
       }
     }
     case class TestWasCalledCounts(var theTestThisCalled: Boolean, var theTestThatCalled: Boolean)
-    
+
     class TestWasCalledSuite(val counts: TestWasCalledCounts) extends PathFunSpec {
       def this() { this(TestWasCalledCounts(false, false)) }
       it("should run this") { counts.theTestThisCalled = true }
@@ -418,7 +418,7 @@ class FunSpecSpec extends org.scalatest.FreeSpec with GivenWhenThen {
       assert(a.counts.theTestThatCalled) // In a path trait, this gets executed, but not reported
       val tse = rep.testSucceededEventsReceived
       assert(tse.size == 1)
-      assert(tse(0).testName === "should run this") 
+      assert(tse(0).testName === "should run this")
       val tfe = rep.testFailedEventsReceived
       assert(tfe.size === 0)
       val tste = rep.testStartingEventsReceived
@@ -743,7 +743,7 @@ class FunSpecSpec extends org.scalatest.FreeSpec with GivenWhenThen {
       val f = new Suites(a, b, c, d, e)
       assert(f.expectedTestCount(Filter()) === 10)
     }
-    
+
     "should generate a TestPending message when the test body is (pending)" in {
 
       class AFunSpec extends PathFunSpec {
@@ -753,7 +753,7 @@ class FunSpecSpec extends org.scalatest.FreeSpec with GivenWhenThen {
         it("should do that") {
           assert(2 + 2 === 4)
         }
-        
+
         it("should do something else") {
           assert(2 + 2 === 4)
           pending
@@ -762,7 +762,7 @@ class FunSpecSpec extends org.scalatest.FreeSpec with GivenWhenThen {
         override def newInstance = new AFunSpec
       }
       val a = new AFunSpec
-      
+
       val rep = new EventRecordingReporter
       a.run(None, Args(rep))
       val tp = rep.testPendingEventsReceived
@@ -865,7 +865,7 @@ class FunSpecSpec extends org.scalatest.FreeSpec with GivenWhenThen {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 12)
     }
   }
-  
+
   "when failure happens" - {
     "should fire TestFailed event with correct stack depth info when test failed" in {
       class TestSpec extends FunSpec {
@@ -888,7 +888,7 @@ class FunSpecSpec extends org.scalatest.FreeSpec with GivenWhenThen {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "FunSpecSpec.scala")
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 12)
     }
-    
+
     "should generate TestRegistrationClosedException with correct stack depth info when has a it nested inside a it" in {
       class TestSpec extends FunSpec {
         describe("a feature") {

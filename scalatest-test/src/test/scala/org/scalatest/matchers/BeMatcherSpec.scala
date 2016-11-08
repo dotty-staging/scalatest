@@ -19,21 +19,21 @@ import org.scalatest._
 import Matchers._
 
 class BeMatcherSpec extends FunSpec {
-  
+
   describe("BeMatcher ") {
-    
+
     describe("instance created by BeMatcher apply method") {
-      
+
       val beMatcher = BeMatcher[List[Int]] { list =>
         MatchResult(true, "test", "test")
       }
-      
+
       it("should have pretty toString") {
         beMatcher.toString should be ("BeMatcher[scala.collection.immutable.List](scala.collection.immutable.List => MatchResult)")
       }
-      
+
     }
-    
+
   }
-  
+
 }

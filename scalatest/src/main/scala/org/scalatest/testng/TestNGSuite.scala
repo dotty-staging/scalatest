@@ -27,18 +27,18 @@ package org.scalatest.testng
  * import org.testng.annotations.Test
  * import org.testng.annotations.Configuration
  * import scala.collection.mutable.ListBuffer
- * 
+ *
  * class MySuite extends TestNGSuite {
- * 
+ *
  *   var sb: StringBuilder = _
  *   var lb: ListBuffer[String] = _
- * 
+ *
  *   @Configuration(beforeTestMethod = true)
  *   def setUpFixture() {
  *     sb = new StringBuilder("ScalaTest is ")
  *     lb = new ListBuffer[String]
  *   }
- * 
+ *
  *   @Test(invocationCount = 3)
  *   def easyTest() {
  *     sb.append("easy!")
@@ -46,7 +46,7 @@ package org.scalatest.testng
  *     assert(lb.isEmpty)
  *     lb += "sweet"
  *   }
- * 
+ *
  *   @Test(groups = Array("com.mycompany.groups.SlowTest"))
  *   def funTest() {
  *     sb.append("fun!")

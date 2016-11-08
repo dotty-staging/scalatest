@@ -65,7 +65,7 @@ class ExampleSpec extends FreeSpec {
       assert(file.length === 24)
     }
   }
-  
+
   "Test code" - {
     // This test needs the database fixture
     "should be readable" in withDatabase { db =>

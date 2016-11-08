@@ -24,7 +24,7 @@ class ExampleSpec extends FunSpec {
     val builder = new StringBuilder("ScalaTest is ")
     val buffer = new ListBuffer[String]
   }
-  
+
   def fixture = new Fixture
 
   describe("Testing") {
@@ -35,7 +35,7 @@ class ExampleSpec extends FunSpec {
       assert(f.buffer.isEmpty)
       f.buffer += "sweet"
     }
-  
+
     it("should be fun") {
       val f = fixture
       f.builder.append("fun!")

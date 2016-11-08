@@ -19,13 +19,13 @@ import org.scalatest._
 import Matchers._
 
 class WritableWordSpec extends FunSpec {
-  
+
   describe("WritableWord ") {
-    
+
     it("should have pretty toString") {
       val result = new WritableWord
       result.toString should be ("writable")
     }
   }
-  
+
 }

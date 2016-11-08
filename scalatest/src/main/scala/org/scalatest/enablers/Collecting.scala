@@ -32,7 +32,7 @@ import scala.language.higherKinds
  * ScalaTest provides implicit implementations for several types. You can enable the <code>contain</code> matcher syntax
  * on your own type <code>U</code> by defining an <code>Collecting[E, U]</code> for the type and making it available implicitly.
  * </p>
- * 
+ *
  * <p>
  * ScalaTest provides implicit <code>Collecting</code> instances for <code>scala.collection.GenTraversable</code>,
  * <code>Array</code>, <code>java.util.Collection</code> and <code>java.util.Map</code> in the
@@ -45,7 +45,7 @@ trait Collecting[E, C] {
    * Implements the <code>loneElement</code> syntax of trait <code>LoneElement</code>.
    *
    * <p>
-   * Returns the lone element contained in a collection, wrapped in a <code>Some</code>, or <code>None</code>  
+   * Returns the lone element contained in a collection, wrapped in a <code>Some</code>, or <code>None</code>
    * if the collection contains either no elements or more than one element.
    * </p>
    *
@@ -91,7 +91,7 @@ object Collecting {
    * @tparam TRAV any subtype of <code>GenTraversable</code>
    * @return <code>Collecting[E, TRAV[E]]</code> that supports <code>GenTraversable</code> in <code>loneElement</code> syntax
    */
-  implicit def collectingNatureOfGenTraversable[E, TRAV[e] <: scala.collection.GenTraversable[e]]: Collecting[E, TRAV[E]] = 
+  implicit def collectingNatureOfGenTraversable[E, TRAV[e] <: scala.collection.GenTraversable[e]]: Collecting[E, TRAV[E]] =
     new Collecting[E, TRAV[E]] {
       def loneElementOf(trav: TRAV[E]): Option[E] = {
         if (trav.size == 1) Some(trav.head) else None
@@ -106,7 +106,7 @@ object Collecting {
    * @tparam E the type of the element in the <code>Array</code>
    * @return <code>Collecting[E, Array[E]]</code> that supports <code>Array</code> in <code>loneElement</code> syntax
    */
-  implicit def collectingNatureOfArray[E]: Collecting[E, Array[E]] = 
+  implicit def collectingNatureOfArray[E]: Collecting[E, Array[E]] =
     new Collecting[E, Array[E]] {
       def loneElementOf(array: Array[E]): Option[E] = {
         if (array.size == 1) Some(array.head) else None
@@ -120,7 +120,7 @@ object Collecting {
    *
    * @return <code>Collecting[Char, String]</code> that supports <code>String</code> in <code>loneElement</code> syntax
    */
-  implicit def collectingNatureOfString: Collecting[Char, String] = 
+  implicit def collectingNatureOfString: Collecting[Char, String] =
     new Collecting[Char, String] {
       def loneElementOf(string: String): Option[Char] = {
         if (string.size == 1) Some(string.head) else None
@@ -136,7 +136,7 @@ object Collecting {
    * @tparam JCOL any subtype of <code>java.util.Collection</code>
    * @return <code>Collecting[E, JCOL[E]]</code> that supports <code>java.util.Collection</code> in <code>loneElement</code> syntax
    */
-  implicit def collectingNatureOfJavaCollection[E, JCOL[e] <: java.util.Collection[e]]: Collecting[E, JCOL[E]] = 
+  implicit def collectingNatureOfJavaCollection[E, JCOL[e] <: java.util.Collection[e]]: Collecting[E, JCOL[E]] =
     new Collecting[E, JCOL[E]] {
       def loneElementOf(coll: JCOL[E]): Option[E] = {
         if (coll.size == 1) Some(coll.iterator.next) else None
@@ -166,7 +166,7 @@ object Collecting {
    * @tparam JMAP any subtype of <code>java.util.Map</code>
    * @return <code>Collecting[org.scalatest.Entry[K, V], JMAP[K, V]]</code> that supports <code>java.util.Map</code> in <code>loneElement</code> syntax
    */
-  implicit def collectingNatureOfJavaMap[K, V, JMAP[k, v] <: java.util.Map[k, v]]: Collecting[org.scalatest.Entry[K, V], JMAP[K, V]] = 
+  implicit def collectingNatureOfJavaMap[K, V, JMAP[k, v] <: java.util.Map[k, v]]: Collecting[org.scalatest.Entry[K, V], JMAP[K, V]] =
     new Collecting[org.scalatest.Entry[K, V], JMAP[K, V]] {
       def loneElementOf(jmap: JMAP[K, V]): Option[org.scalatest.Entry[K, V]] = {
         if (jmap.size == 1) {

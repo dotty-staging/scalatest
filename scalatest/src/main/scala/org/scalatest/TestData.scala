@@ -36,17 +36,17 @@ import org.scalactic._
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.freespec
- * 
+ *
  * import org.scalatest.FreeSpec
- * 
+ *
  * class SetSpec extends FreeSpec {
- * 
+ *
  *   "A Set" - {
  *     "when empty" - {
  *       "should have size 0" in {
  *         assert(Set.empty.size === 0)
  *       }
- *       
+ *
  *       "should produce NoSuchElementException when head is invoked" in {
  *         assertThrows[NoSuchElementException] {
  *           Set.empty.head
@@ -96,7 +96,7 @@ trait TestData {
    * A <code>ConfigMap</code> containing objects that can be used
    * to configure the fixture and test.
    */
-  val configMap: ConfigMap 
+  val configMap: ConfigMap
 
   /**
    * The name of this test.
@@ -128,7 +128,7 @@ trait TestData {
    * </p>
    */
   val text: String
-  
+
   /**
    * Tag names for this test.
    */

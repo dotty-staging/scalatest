@@ -51,7 +51,7 @@ class ScopePendingProp extends AllSuiteProp {
   def fixtureWordSpec = new ExampleScopePendingFixtureWordSpec
   def pathFreeSpec = new ExampleScopePendingPathFreeSpec
   def pathFunSpec = new ExampleScopePendingPathFunSpec
-  
+
   test("suites should fire ScopePending event when pending is called at scope level") {
     try {
       forAll(examples.filter(_.supportScope)) { suite =>
@@ -60,7 +60,7 @@ class ScopePendingProp extends AllSuiteProp {
           suite.run(None, Args(reporter = rep))
         }
         catch {
-          case e: exceptions.TestPendingException => 
+          case e: exceptions.TestPendingException =>
             fail("TestPendingException should not be thrown here.")
         }
         rep.scopePendingEventsReceived.length should be (1)
@@ -69,11 +69,11 @@ class ScopePendingProp extends AllSuiteProp {
       }
     }
     catch {
-      case e: exceptions.TestPendingException => 
+      case e: exceptions.TestPendingException =>
         fail("TestPendingException should not be thrown here.")
     }
   }
-  
+
 }
 
 trait ScopePendingFixtureServices {
@@ -99,16 +99,16 @@ class ExampleScopePendingSpec extends RefSpec with ScopePendingFixtureServices {
     def `test 2`: Unit = {}
     def `test 3`: Unit = {}
   }
-  
+
   object `scope 2` {
     def `test 1`: Unit = {}
     pending
     def `test 2`: Unit = {}
     def `test 3`: Unit = {}
   }
-  
-  override val expectedTestNames: Set[String] = Set("scope 1 test 1", 
-                                                     "scope 1 test 2", 
+
+  override val expectedTestNames: Set[String] = Set("scope 1 test 1",
+                                                     "scope 1 test 2",
                                                      "scope 1 test 3")
 }
 
@@ -119,16 +119,16 @@ class ExampleScopePendingFixtureSpec extends fixture.Spec with ScopePendingFixtu
     def `test 2`(fixture: String): Unit = {}
     def `test 3`(fixture: String): Unit = {}
   }
-  
+
   object `scope 2` {
     def `test 1`(fixture: String): Unit = {}
     pending
     def `test 2`(fixture: String): Unit = {}
     def `test 3`(fixture: String): Unit = {}
   }
-  
-  override val expectedTestNames: Set[String] = Set("scope 1 test 1", 
-                                                     "scope 1 test 2", 
+
+  override val expectedTestNames: Set[String] = Set("scope 1 test 1",
+                                                     "scope 1 test 2",
                                                      "scope 1 test 3")
 }
 
@@ -171,10 +171,10 @@ protected[events] class ExampleScopePendingFunSpec extends FunSpec with ScopePen
     it("test 2") {}
     it("test 3") {}
   }
-  
-  override val expectedTestNames: Set[String] = Set("scope 1 test 1", 
-                                                     "scope 1 test 2", 
-                                                     "scope 1 test 3", 
+
+  override val expectedTestNames: Set[String] = Set("scope 1 test 1",
+                                                     "scope 1 test 2",
+                                                     "scope 1 test 3",
                                                      "scope 2 test 1")
 }
 
@@ -191,10 +191,10 @@ protected[events] class ExampleScopePendingFixtureFunSpec extends fixture.FunSpe
     it("test 2") {s =>}
     it("test 3") {s =>}
   }
-  
-  override val expectedTestNames: Set[String] = Set("scope 1 test 1", 
-                                                     "scope 1 test 2", 
-                                                     "scope 1 test 3", 
+
+  override val expectedTestNames: Set[String] = Set("scope 1 test 1",
+                                                     "scope 1 test 2",
+                                                     "scope 1 test 3",
                                                      "scope 2 test 1")
 }
 
@@ -211,10 +211,10 @@ protected[events] class ExampleScopePendingFeatureSpec extends FeatureSpec with 
     scenario("test 2") {}
     scenario("test 3") {}
   }
-  
-  override val expectedTestNames: Set[String] = Set("Feature: scope 1 Scenario: test 1", 
-                                                     "Feature: scope 1 Scenario: test 2", 
-                                                     "Feature: scope 1 Scenario: test 3", 
+
+  override val expectedTestNames: Set[String] = Set("Feature: scope 1 Scenario: test 1",
+                                                     "Feature: scope 1 Scenario: test 2",
+                                                     "Feature: scope 1 Scenario: test 3",
                                                      "Feature: scope 2 Scenario: test 1")
 }
 
@@ -231,17 +231,17 @@ protected[events] class ExampleScopePendingFixtureFeatureSpec extends fixture.Fe
     scenario("test 2") {s =>}
     scenario("test 3") {s =>}
   }
-  
-  override val expectedTestNames: Set[String] = Set("Feature: scope 1 Scenario: test 1", 
-                                                     "Feature: scope 1 Scenario: test 2", 
-                                                     "Feature: scope 1 Scenario: test 3", 
+
+  override val expectedTestNames: Set[String] = Set("Feature: scope 1 Scenario: test 1",
+                                                     "Feature: scope 1 Scenario: test 2",
+                                                     "Feature: scope 1 Scenario: test 3",
                                                      "Feature: scope 2 Scenario: test 1")
 }
 
 @DoNotDiscover
 protected[events] class ExampleScopePendingFlatSpec extends FlatSpec with ScopePendingFixtureServices {
   override val supportScope = false
-} 
+}
 
 @DoNotDiscover
 protected[events] class ExampleScopePendingFixtureFlatSpec extends fixture.FlatSpec with ScopePendingFixtureServices with StringFixture {
@@ -261,10 +261,10 @@ protected[events] class ExampleScopePendingFreeSpec extends FreeSpec with ScopeP
     "test 2" in {}
     "test 3" in {}
   }
-  
-  override val expectedTestNames: Set[String] = Set("scope 1 test 1", 
-                                                     "scope 1 test 2", 
-                                                     "scope 1 test 3", 
+
+  override val expectedTestNames: Set[String] = Set("scope 1 test 1",
+                                                     "scope 1 test 2",
+                                                     "scope 1 test 3",
                                                      "scope 2 test 1")
 }
 
@@ -281,10 +281,10 @@ protected[events] class ExampleScopePendingFixtureFreeSpec extends fixture.FreeS
     "test 2" in {s =>}
     "test 3" in {s =>}
   }
-  
-  override val expectedTestNames: Set[String] = Set("scope 1 test 1", 
-                                                     "scope 1 test 2", 
-                                                     "scope 1 test 3", 
+
+  override val expectedTestNames: Set[String] = Set("scope 1 test 1",
+                                                     "scope 1 test 2",
+                                                     "scope 1 test 3",
                                                      "scope 2 test 1")
 }
 
@@ -296,7 +296,7 @@ protected[events] class ExampleScopePendingPropSpec extends PropSpec with ScopeP
 @DoNotDiscover
 protected[events] class ExampleScopePendingFixturePropSpec extends fixture.PropSpec with ScopePendingFixtureServices with StringFixture {
   override val supportScope = false
-} 
+}
 
 @DoNotDiscover
 protected[events] class ExampleScopePendingWordSpec extends WordSpec with ScopePendingFixtureServices {
@@ -311,10 +311,10 @@ protected[events] class ExampleScopePendingWordSpec extends WordSpec with ScopeP
     "test 2" in {}
     "test 3" in {}
   }
-  
-  override val expectedTestNames: Set[String] = Set("scope 1 should test 1", 
-                                                     "scope 1 should test 2", 
-                                                     "scope 1 should test 3", 
+
+  override val expectedTestNames: Set[String] = Set("scope 1 should test 1",
+                                                     "scope 1 should test 2",
+                                                     "scope 1 should test 3",
                                                      "scope 2 should test 1")
 }
 
@@ -331,10 +331,10 @@ protected[events] class ExampleScopePendingFixtureWordSpec extends fixture.WordS
     "test 2" in {s =>}
     "test 3" in {s =>}
   }
-  
-  override val expectedTestNames: Set[String] = Set("scope 1 should test 1", 
-                                                     "scope 1 should test 2", 
-                                                     "scope 1 should test 3", 
+
+  override val expectedTestNames: Set[String] = Set("scope 1 should test 1",
+                                                     "scope 1 should test 2",
+                                                     "scope 1 should test 3",
                                                      "scope 2 should test 1")
 }
 
@@ -352,10 +352,10 @@ protected[events] class ExampleScopePendingPathFreeSpec extends path.FreeSpec wi
     "test 2" in {}
     "test 3" in {}
   }
-  
-  override val expectedTestNames: Set[String] = Set("scope 1 test 1", 
-                                                     "scope 1 test 2", 
-                                                     "scope 1 test 3", 
+
+  override val expectedTestNames: Set[String] = Set("scope 1 test 1",
+                                                     "scope 1 test 2",
+                                                     "scope 1 test 3",
                                                      "scope 2 test 1")
 }
 
@@ -373,9 +373,9 @@ protected[events] class ExampleScopePendingPathFunSpec extends path.FunSpec with
     it("test 2") {}
     it("test 3") {}
   }
-  
-  override val expectedTestNames: Set[String] = Set("scope 1 test 1", 
-                                                     "scope 1 test 2", 
-                                                     "scope 1 test 3", 
+
+  override val expectedTestNames: Set[String] = Set("scope 1 test 1",
+                                                     "scope 1 test 2",
+                                                     "scope 1 test 3",
                                                      "scope 2 test 1")
 }

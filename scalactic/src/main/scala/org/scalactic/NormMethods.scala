@@ -73,7 +73,7 @@ trait NormMethods {
    * @return a <a href="Normalizer.html"><code>Normalizer</code></a> that enables a <code>norm</code> method to be invoked on the passed object
    */
   implicit def convertToNormalizer[T](o: T)(implicit normalization: Normalization[T]): Normalizer[T] = new Normalizer[T](o)
-} 
+}
 
 /**
  * Companion object for <code>NormMethods</code> enabling its members to be imported as an alternative to mixing them in.

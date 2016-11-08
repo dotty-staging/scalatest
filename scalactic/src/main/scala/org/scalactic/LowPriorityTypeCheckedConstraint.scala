@@ -26,7 +26,7 @@ import TripleEqualsSupport._
  * will be allowed if subtype relationship exists in either direction. For example, in the following expression, the left hand
  * side is a subtype of the right hand side:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * List(1, 2, 3) === Seq(1, 2, 3)
  * </pre>
@@ -34,7 +34,7 @@ import TripleEqualsSupport._
  * <p>
  * But in the next expression, it the right hand side is a subtype of the left hand side
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * Seq(1, 2, 3) === List(1, 2, 3)
  * </pre>

@@ -27,7 +27,7 @@ import org.scalatest._
  * that must be cleaned up afterwards. <em>Note: <code>fixture.FeatureSpec</code> is intended for use in special situations, with class <code>FeatureSpec</code> used for general needs. For
  * more insight into where <code>fixture.FeatureSpec</code> fits in the big picture, see the <a href="../FeatureSpec.html#withFixtureOneArgTest"><code>withFixture(OneArgTest)</code></a> subsection of the <a href="../FeatureSpec.html#sharedFixtures">Shared fixtures</a> section in the documentation for class <code>FeatureSpec</code>.</em>
  * </td></tr></table>
- * 
+ *
  * <p>
  * Class <code>fixture.FeatureSpec</code> behaves similarly to class <code>org.scalatest.FeatureSpec</code>, except that tests may have a
  * fixture parameter. The type of the
@@ -40,11 +40,11 @@ import org.scalatest._
  * in the test code to run via the <code>OneArgTest</code> argument. The <code>withFixture(OneArgTest)</code> method (abstract in this class) is responsible
  * for creating the fixture argument and passing it to the test function.
  * </p>
- * 
+ *
  * <p>
  * Subclasses of this class must, therefore, do three things differently from a plain old <code>org.scalatest.FeatureSpec</code>:
  * </p>
- * 
+ *
  * <ol>
  * <li>define the type of the fixture parameter by specifying type <code>FixtureParam</code></li>
  * <li>define the <code>withFixture(OneArgTest)</code> method</li>
@@ -81,41 +81,41 @@ import org.scalatest._
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.featurespec.oneargtest
- * 
+ *
  * import org.scalatest.fixture
  * import java.io._
- * 
+ *
  * class ExampleSpec extends fixture.FeatureSpec {
- * 
+ *
  *   case class FixtureParam(file: File, writer: FileWriter)
- * 
+ *
  *   def withFixture(test: OneArgTest) = {
- * 
+ *
  *     // create the fixture
  *     val file = File.createTempFile("hello", "world")
  *     val writer = new FileWriter(file)
  *     val theFixture = FixtureParam(file, writer)
- * 
+ *
  *     try {
  *       writer.write("ScalaTest is designed to be ") // set up the fixture
  *       withFixture(test.toNoArgTest(theFixture)) // "loan" the fixture to the test
  *     }
  *     finally writer.close() // clean up the fixture
  *   }
- * 
+ *
  *   feature("Simplicity") {
  *     scenario("User needs to read test code written by others") { f =&gt;
  *       f.writer.write("encourage clear code!")
  *       f.writer.flush()
  *       assert(f.file.length === 49)
  *     }
- * 
+ *
  *     scenario("User needs to understand what the tests are doing") { f =&gt;
  *       f.writer.write("be easy to reason about!")
  *       f.writer.flush()
  *       assert(f.file.length === 52)
  *     }
- *   } 
+ *   }
  * }
  * </pre>
  *
@@ -133,15 +133,15 @@ import org.scalatest._
  * use that database, you will likely have many test classes that need a database fixture. You can create a "database fixture" trait that creates a
  * database with a unique name, passes the connector into the test, then removes the database once the test completes. This is shown in the following example:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * package org.scalatest.examples.fixture.featurespec.sharing
- * 
+ *
  * import java.util.concurrent.ConcurrentHashMap
  * import org.scalatest.fixture
  * import DbServer._
  * import java.util.UUID.randomUUID
- * 
+ *
  * object DbServer { // Simulating a database server
  *   type Db = StringBuffer
  *   private val databases = new ConcurrentHashMap[String, Db]
@@ -154,15 +154,15 @@ import org.scalatest._
  *     databases.remove(name)
  *   }
  * }
- * 
+ *
  * trait DbFixture { this: fixture.Suite =&gt;
- * 
+ *
  *   type FixtureParam = Db
- * 
+ *
  *   // Allow clients to populate the database after
  *   // it is created
  *   def populateDb(db: Db) {}
- * 
+ *
  *   def withFixture(test: OneArgTest) {
  *     val dbName = randomUUID.toString
  *     val db = createDb(dbName) // create the fixture
@@ -173,25 +173,25 @@ import org.scalatest._
  *     finally removeDb(dbName) // clean up the fixture
  *   }
  * }
- * 
+ *
  * class ExampleSpec extends fixture.FeatureSpec with DbFixture {
- * 
+ *
  *   override def populateDb(db: Db) { // setup the fixture
  *     db.append("ScalaTest is designed to ")
  *   }
- * 
+ *
  *   feature("Simplicity") {
- * 
+ *
  *     scenario("User needs to read test code written by others") { db =&gt;
  *       db.append("encourage clear code!")
  *       assert(db.toString === "ScalaTest is designed to encourage clear code!")
  *     }
- *     
+ *
  *     scenario("User needs to understand what the tests are doing") { db =&gt;
  *       db.append("be easy to reason about!")
  *       assert(db.toString === "ScalaTest is designed to be easy to reason about!")
  *     }
- * 
+ *
  *     scenario("User needs to write tests") { () =&gt;
  *       val buf = new StringBuffer
  *       buf.append("ScalaTest is designed to be ")

@@ -70,7 +70,7 @@ private[scalatest] class ConcurrentMessageSender(fire: ConcurrentMessageFiringFu
     fire(message, None, isConstructingThread, getLineInFile(Thread.currentThread.getStackTrace, 2)) // Fire the info provided event using the passed function
   }
 */
-  
+
   def apply(message: String, payload: Option[Any] = None) {
     requireNonNull(message, payload)
     fire(message, payload, isConstructingThread, getLineInFile(Thread.currentThread.getStackTrace, 2))
@@ -188,14 +188,14 @@ private[scalatest] object MessageRecorder {
   // Three params of function are the string message, a boolean indicating this was from the current
   // thread, two booleans that indicate the message is about a pending or canceled
   // test (in which case it would be printed out in yellow) and an optional location.
-  type RecordedMessageEventFun = (String, Option[Any], Boolean, Boolean, Boolean, Option[Location]) => RecordableEvent 
+  type RecordedMessageEventFun = (String, Option[Any], Boolean, Boolean, Boolean, Option[Location]) => RecordableEvent
 
-  // First two params of function are the string message and a boolean indicating this was from the current thread, 
+  // First two params of function are the string message and a boolean indicating this was from the current thread,
   // and an optional location.
   type ConcurrentMessageFiringFun = (String, Option[Any], Boolean, Option[Location]) => Unit
 }
 
-// For path traits, need a message recording informer that only later gets 
+// For path traits, need a message recording informer that only later gets
 // (theSuite: Suite, report: Reporter, tracker: Tracker, testName: String, theTest: TestLeaf, includeIcon: Boolean. thread: Thread)
 private[scalatest] class PathMessageRecordingInformer(eventFun: (String, Option[Any], Boolean, Boolean, Suite, Reporter, Tracker, String, Int, Boolean, Thread) => RecordableEvent) extends ThreadAwareness with Informer {
 

@@ -27,7 +27,7 @@ private[prop] trait Generator[T] { thisGeneratorOfT =>
         (f(nextT), nextRandomizer)
       }
     }
-  def flatMap[U](f: T => Generator[U]): Generator[U] = 
+  def flatMap[U](f: T => Generator[U]): Generator[U] =
     new Generator[U] { thisInnerGenerator =>
       def next(size: Int, rnd: Randomizer): (U, Randomizer) = {
         val (nextT, nextRandomizer) = thisGeneratorOfT.next(size, rnd)

@@ -45,7 +45,7 @@ It is also good idea to override methods `foreach` and
 `size` for efficiency.
 
   """ }
-  
+
   "A mutable Set" - {
     "should allow an element to be added" in {
       Given("an empty mutable Set")

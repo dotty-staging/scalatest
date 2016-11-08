@@ -61,7 +61,7 @@ class ShouldEqualExplicitlySpec extends FunSpec with Explicitly {
     it("should do nothing when equal and used in a logical-and expression") {
       intercept[TestFailedException] { 1 should (equal (1) and equal (2 - 1)) }
       1 should (equal (1) and equal (2 - 1)) (decided by defaultEquality)
-      1 should (equal (1) (decided by defaultEquality) and equal (2 - 1) (decided by defaultEquality)) 
+      1 should (equal (1) (decided by defaultEquality) and equal (2 - 1) (decided by defaultEquality))
     }
 
     it("should do nothing when equal and used in multi-part logical expressions") {
@@ -221,22 +221,22 @@ class ShouldEqualExplicitlySpec extends FunSpec with Explicitly {
       }
       assert(caught3.getMessage === "1 equaled 1, and 1 equaled 1")
     }
-    
+
     it("should put string differences in square bracket") {
       val caught1 = intercept[TestFailedException] { "dummy" should equal ("dunny") }
       caught1.getMessage should equal ("\"du[mm]y\" did not equal \"du[nn]y\"")
-      
+
       val caught2 = intercept[TestFailedException] { "dummy" should be ("dunny") }
       caught2.getMessage should be ("\"du[mm]y\" was not equal to \"du[nn]y\"")
-      
+
       val caught3 = intercept[TestFailedException] { "hi there mom" should be ===  ("high there mom") }
       caught3.getMessage should be ("\"hi[] there mom\" was not equal to \"hi[gh] there mom\"")
     }
-    
+
     it("should not put string differences in square bracket") {
       val caught1 = intercept[TestFailedException] { "dummy" should not equal "dummy" }
       caught1.getMessage should equal ("\"dummy\" equaled \"dummy\"")
-      
+
       val caught2 = intercept[TestFailedException] { "dummy" should not be "dummy" }
       caught2.getMessage should equal ("\"dummy\" was equal to \"dummy\"")
     }

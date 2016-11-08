@@ -26,7 +26,7 @@ import SharedHelpers._
 import org.scalatest.refspec.RefSpec
 
 class StatusProp extends AllSuiteProp {
-  
+
   type FixtureServices = StatusFixtureServices
 
   def spec = new ExampleStatusSpec
@@ -50,10 +50,10 @@ class StatusProp extends AllSuiteProp {
   def fixtureWordSpec = new ExampleStatusFixtureWordSpec
   def pathFreeSpec = new ExampleStatusPathFreeSpec
   def pathFunSpec = new ExampleStatusPathFunSpec
-  
+
   class DelayExecutionDistributor extends Distributor {
     val buf = ListBuffer.empty[SuiteRunner]
-    
+
     def apply(suite: Suite, tracker: Tracker): Unit = {
       throw new UnsupportedOperationException("Hey, we're not supposed to be calling this anymore!")
     }
@@ -63,9 +63,9 @@ class StatusProp extends AllSuiteProp {
       buf += new SuiteRunner(suite, args, status)
       status
     }
-    
+
     def execute(): Int = {
-      buf.count { suite => 
+      buf.count { suite =>
         try {
           suite.run()
           false
@@ -77,9 +77,9 @@ class StatusProp extends AllSuiteProp {
       }
     }
   }
-  
+
   test("Status returned from run should return false in succeeds method when run completes abruptly") {
-    forAll(examples) { suite => 
+    forAll(examples) { suite =>
       if (suite.isSupported) {
         val distributor = new DelayExecutionDistributor
         val recordingReporter = new EventRecordingReporter
@@ -93,9 +93,9 @@ class StatusProp extends AllSuiteProp {
       else Succeeded
     }
   }
-  
+
   test("Status returned from runTests should return false in succeeds method when runTests completes abruptly") {
-    forAll(examples) { suite => 
+    forAll(examples) { suite =>
       if (suite.isSupported) {
         val distributor = new DelayExecutionDistributor
         val recordingReporter = new EventRecordingReporter
@@ -109,9 +109,9 @@ class StatusProp extends AllSuiteProp {
       else Succeeded
     }
   }
-  
+
   test("Status returned from runTest should return false in succeeds method when runTest completes abruptly") {
-    forAll(examples) { suite => 
+    forAll(examples) { suite =>
       if (suite.isSupported) {
         val distributor = new DelayExecutionDistributor
         val recordingReporter = new EventRecordingReporter
@@ -131,7 +131,7 @@ trait StatusFixtureServices { suite: Suite =>
   val isSupported = true
   def testRunTests(testName: Option[String], args: Args): Status = suite.runTests(testName, args)
   val testNameToRun: String
-  def testRunTest(args: Args): Status = 
+  def testRunTest(args: Args): Status =
     suite.runTest(testNameToRun, args)
 }
 
@@ -164,9 +164,9 @@ class ExampleStatusJUnit3Suite extends JUnit3Suite with StatusFixtureServices {
 class ExampleStatusJUnitSuite extends JUnitSuite with StatusFixtureServices {
   @Test
   def testMethod1(): Unit = {}
-  @Test 
+  @Test
   def testMethod2(): Unit = { throw new VirtualMachineError {} }
-  @Test 
+  @Test
   def testMethod3(): Unit = {}
   override val isSupported = false
   val testNameToRun = "testMethod2"

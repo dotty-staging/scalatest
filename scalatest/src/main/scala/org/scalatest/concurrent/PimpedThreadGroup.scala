@@ -69,7 +69,7 @@ private[concurrent] class PimpedThreadGroup(threadGroup: ThreadGroup) {
    * recalling enumerate with a larger array until this array is not full.
    *
    * @returns A list of Threads in this ThreadGroup (and possibly child ThreadGroups)
-   *          The list will never contain null values, only Threads. 
+   *          The list will never contain null values, only Threads.
    */
   def getThreads(recursive: Boolean): List[Thread] = {
     def getThreads(sizeEstimate: Int): Seq[Thread] = {

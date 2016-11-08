@@ -67,7 +67,7 @@ class ExampleSpec extends RefSpec {
       }
     }
   }
-  
+
   object `Test code` {
     // This test needs the database fixture
     def `should be readable` {

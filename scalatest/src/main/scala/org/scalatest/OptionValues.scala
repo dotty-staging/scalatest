@@ -43,7 +43,7 @@ import org.scalatest.exceptions.TestFailedException
  * </pre>
  *
  * <p>
- * Were you to simply invoke <code>get</code> on the <code>Option</code>, 
+ * Were you to simply invoke <code>get</code> on the <code>Option</code>,
  * if the option wasn't defined, it would throw a <code>NoSuchElementException</code>:
  * </p>
  *
@@ -110,7 +110,7 @@ trait OptionValues {
         opt.get
       }
       catch {
-        case cause: NoSuchElementException => 
+        case cause: NoSuchElementException =>
           throw new TestFailedException((_: StackDepthException) => Some(Resources.optionValueNotDefined), Some(cause), pos)
       }
     }
@@ -118,7 +118,7 @@ trait OptionValues {
 }
 
 /**
- * Companion object that facilitates the importing of <code>OptionValues</code> members as 
+ * Companion object that facilitates the importing of <code>OptionValues</code> members as
  * an alternative to mixing it in. One use case is to import <code>OptionValues</code>'s members so you can use
  * <code>value</code> on option in the Scala interpreter:
  *
@@ -139,12 +139,12 @@ trait OptionValues {
  *
  * scala&gt; val opt1: Option[Int] = Some(1)
  * opt1: Option[Int] = Some(1)
- * 
+ *
  * scala&gt; val opt2: Option[Int] = None
  * opt2: Option[Int] = None
- * 
+ *
  * scala&gt; opt1.value should be &lt; 10
- * 
+ *
  * scala&gt; opt2.value should be &lt; 10
  * org.scalatest.TestFailedException: The Option on which value was invoked was not defined.
  *   at org.scalatest.OptionValues$Valuable.value(OptionValues.scala:68)

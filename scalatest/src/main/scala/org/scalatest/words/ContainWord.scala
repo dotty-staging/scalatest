@@ -73,7 +73,7 @@ final class ContainWord {
    **/
   def apply(expectedElement: Any): MatcherFactory1[Any, Containing] =
     new MatcherFactory1[Any, Containing] {
-      def matcher[U <: Any : Containing]: Matcher[U] = 
+      def matcher[U <: Any : Containing]: Matcher[U] =
         new Matcher[U] {
           def apply(left: U): MatchResult = {
             val containing = implicitly[Containing[U]]
@@ -88,7 +88,7 @@ final class ContainWord {
         }
       override def toString: String = "contain (" + Prettifier.default(expectedElement) + ")"
     }
-  
+
   //
   // This key method is called when "contain" is used in a logical expression, such as:
   // map should { contain key 1 and equal (Map(1 -> "Howdy")) }. It results in a matcher
@@ -118,7 +118,7 @@ final class ContainWord {
    */
   def key[K](expectedKey: Any): MatcherFactory1[Any, KeyMapping] =
     new MatcherFactory1[Any, KeyMapping] {
-      def matcher[U <: Any : KeyMapping]: Matcher[U] = 
+      def matcher[U <: Any : KeyMapping]: Matcher[U] =
         new Matcher[U] {
           def apply(left: U): MatchResult = {
             val keyMapping = implicitly[KeyMapping[U]]
@@ -154,7 +154,7 @@ final class ContainWord {
    * an expression like <code>(contain value (5))</code>. The matcher returned
    * by this method matches <code>scala.collection.Map</code>s with the inferred value type and the existential key
    * type <code>[K] forSome { type K }</code>. Even though <code>Matcher</code> is contravariant in its type parameter, because
-   * <code>Map</code> is nonvariant in its key type, 
+   * <code>Map</code> is nonvariant in its key type,
    * a <code>Matcher[Map[Any, Int]]</code>, for example, is <em>not</em> a subtype of <code>Matcher[Map[String, Int]]</code>,
    * so the key type parameter of the <code>Map</code> returned by this method cannot be <code>Any</code>. By making it
    * an existential type, the Scala compiler will not infer it to anything more specific.
@@ -164,7 +164,7 @@ final class ContainWord {
    */
   def value[K](expectedValue: Any): MatcherFactory1[Any, ValueMapping] =
     new MatcherFactory1[Any, ValueMapping] {
-      def matcher[U <: Any : ValueMapping]: Matcher[U] = 
+      def matcher[U <: Any : ValueMapping]: Matcher[U] =
         new Matcher[U] {
           def apply(left: U): MatchResult = {
             val valueMapping = implicitly[ValueMapping[U]]
@@ -179,7 +179,7 @@ final class ContainWord {
         }
       override def toString: String = "contain value " + Prettifier.default(expectedValue)
     }
-  
+
   /**
    * This method enables the following syntax, where <code>positiveNumber</code> and <code>validNumber</code> are, for example, of type <code>AMatcher</code>:
    *
@@ -193,16 +193,16 @@ final class ContainWord {
       def apply(left: GenTraversable[T]): MatchResult = {
         val matched = left.find(aMatcher(_).matches)
         MatchResult(
-          matched.isDefined, 
+          matched.isDefined,
           Resources.rawDidNotContainA,
           Resources.rawContainedA,
-          Vector(left, UnquotedString(aMatcher.nounName)), 
+          Vector(left, UnquotedString(aMatcher.nounName)),
           Vector(left, UnquotedString(aMatcher.nounName), UnquotedString(if (matched.isDefined) aMatcher(matched.get).negatedFailureMessage(Prettifier.default) else "-"))
         )
       }
       override def toString: String = "contain a " + Prettifier.default(aMatcher)
     }
-  
+
   /**
    * This method enables the following syntax, where <code>oddNumber</code> and <code>invalidNumber</code> are, for example, of type <code>AnMatcher</code>:
    *
@@ -216,10 +216,10 @@ final class ContainWord {
       def apply(left: GenTraversable[T]): MatchResult = {
         val matched = left.find(anMatcher(_).matches)
         MatchResult(
-          matched.isDefined, 
+          matched.isDefined,
           Resources.rawDidNotContainAn,
           Resources.rawContainedAn,
-          Vector(left, UnquotedString(anMatcher.nounName)), 
+          Vector(left, UnquotedString(anMatcher.nounName)),
           Vector(left, UnquotedString(anMatcher.nounName), UnquotedString(if (matched.isDefined) anMatcher(matched.get).negatedFailureMessage(Prettifier.default) else "-"))
         )
       }
@@ -309,7 +309,7 @@ final class ContainWord {
       override def toString: String = "contain atLeastOneElementOf " + Prettifier.default(right)
     }
   }
-  
+
   def noneOf(firstEle: Any, secondEle: Any, remainingEles: Any*)(implicit prettifier: Prettifier, pos: source.Position): MatcherFactory1[Any, Containing] = {
     val right = firstEle :: secondEle :: remainingEles.toList
     if (right.distinct.size != right.size)
@@ -351,7 +351,7 @@ final class ContainWord {
       override def toString: String = "contain noElementsOf (" + Prettifier.default(right) + ")"
     }
   }
-  
+
   def theSameElementsAs(right: GenTraversable[Any]): MatcherFactory1[Any, Aggregating] = {
     new MatcherFactory1[Any, Aggregating] {
       def matcher[T](implicit aggregating: Aggregating[T]): Matcher[T] = {
@@ -370,7 +370,7 @@ final class ContainWord {
       override def toString: String = "contain theSameElementsAs " + Prettifier.default(right)
     }
   }
-  
+
   def theSameElementsInOrderAs(right: GenTraversable[Any]): MatcherFactory1[Any, Sequencing] = {
     new MatcherFactory1[Any, Sequencing] {
       def matcher[T](implicit sequencing: Sequencing[T]): Matcher[T] = {
@@ -389,7 +389,7 @@ final class ContainWord {
       override def toString: String = "contain theSameElementsInOrderAs " + Prettifier.default(right)
     }
   }
-  
+
   def only(right: Any*)(implicit prettifier: Prettifier, pos: source.Position): MatcherFactory1[Any, Aggregating] = {
     if (right.isEmpty)
       throw new NotAllowedException(FailureMessages.onlyEmpty, pos)
@@ -435,7 +435,7 @@ final class ContainWord {
       override def toString: String = "contain inOrderOnly (" + right.map(Prettifier.default(_)).mkString(", ") + ")"
     }
   }
-  
+
   def allOf(firstEle: Any, secondEle: Any, remainingEles: Any*)(implicit prettifier: Prettifier, pos: source.Position): MatcherFactory1[Any, Aggregating] = {
     val right = firstEle :: secondEle :: remainingEles.toList
     if (right.distinct.size != right.size)
@@ -477,7 +477,7 @@ final class ContainWord {
       override def toString: String = "contain allElementsOf " + Prettifier.default(right)
     }
   }
-  
+
   def inOrder(firstEle: Any, secondEle: Any, remainingEles: Any*)(implicit prettifier: Prettifier, pos: source.Position): MatcherFactory1[Any, Sequencing] = {
     val right = firstEle :: secondEle :: remainingEles.toList
     if (right.distinct.size != right.size)
@@ -519,7 +519,7 @@ final class ContainWord {
       override def toString: String = "contain inOrderElementsOf (" + Prettifier.default(right) + ")"
     }
   }
-  
+
   def atMostOneOf(firstEle: Any, secondEle: Any, remainingEles: Any*)(implicit prettifier: Prettifier, pos: source.Position): MatcherFactory1[Any, Aggregating] = {
     val right = firstEle :: secondEle :: remainingEles.toList
     if (right.distinct.size != right.size)
@@ -561,7 +561,7 @@ final class ContainWord {
       override def toString: String = "contain atMostOneElementOf (" + Prettifier.default(right) + ")"
     }
   }
-  
+
   /**
    * Overrides toString to return "contain"
    */

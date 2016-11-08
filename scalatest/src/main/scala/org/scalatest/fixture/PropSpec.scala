@@ -30,7 +30,7 @@ import org.scalatest._
  * the <a href="../PropSpec.html#withFixtureOneArgTest"><code>withFixture(OneArgTest)</code></a> subsection of
  * the <a href="../PropSpec.html#sharedFixtures">Shared fixtures</a> section in the documentation for class <code>PropSpec</code>.</em>
  * </td></tr></table>
- * 
+ *
  * <p>
  * Class <code>fixture.PropSpec</code> behaves similarly to class <code>org.scalatest.PropSpec</code>, except that tests may have a
  * fixture parameter. The type of the
@@ -43,11 +43,11 @@ import org.scalatest._
  * in the test code to run via the <code>OneArgTest</code> argument. The <code>withFixture</code> method (abstract in this class) is responsible
  * for creating the fixture argument and passing it to the test function.
  * </p>
- * 
+ *
  * <p>
  * Subclasses of this class must, therefore, do three things differently from a plain old <code>org.scalatest.PropSpec</code>:
  * </p>
- * 
+ *
  * <ol>
  * <li>define the type of the fixture parameter by specifying type <code>FixtureParam</code></li>
  * <li>define the <code>withFixture(OneArgTest)</code> method</li>
@@ -61,21 +61,21 @@ import org.scalatest._
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.fixture.propspec
- * 
+ *
  * import org.scalatest._
  * import prop.PropertyChecks
  * import java.io._
- * 
+ *
  * class ExampleSpec extends fixture.PropSpec with PropertyChecks with Matchers {
- * 
+ *
  *   // 1. define type FixtureParam
  *   type FixtureParam = FileReader
- * 
+ *
  *   // 2. define the withFixture method
  *   def withFixture(test: OneArgTest) = {
- * 
+ *
  *     val FileName = "TempFile.txt"
- * 
+ *
  *     // Set up the temp file needed by the test
  *     val writer = new FileWriter(FileName)
  *     try {
@@ -84,10 +84,10 @@ import org.scalatest._
  *     finally {
  *       writer.close()
  *     }
- * 
+ *
  *     // Create the reader needed by the test
  *     val reader = new FileReader(FileName)
- * 
+ *
  *     try {
  *       // Run the test using the temp file
  *       test(reader)
@@ -99,7 +99,7 @@ import org.scalatest._
  *       file.delete()
  *     }
  *   }
- * 
+ *
  *   // 3. write property-based tests that take a fixture parameter
  *   // (Hopefully less contrived than the examples shown here.)
  *   property("can read from a temp file") { reader =&gt;
@@ -116,7 +116,7 @@ import org.scalatest._
  *       }
  *     }
  *   }
- * 
+ *
  *   property("can read the first char of the temp file") { reader =&gt;
  *     val firstChar = reader.read()
  *     forAll { (c: Char) =&gt;
@@ -125,7 +125,7 @@ import org.scalatest._
  *       }
  *     }
  *   }
- * 
+ *
  *   // (You can also write tests that don't take a fixture parameter.)
  *   property("can write tests that don't take the fixture") { () =&gt;
  *     forAll { (i: Int) => i + i should equal (2 * i) }
@@ -193,26 +193,26 @@ import org.scalatest._
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.fixture.propspec.multi
- * 
+ *
  * import org.scalatest._
  * import prop.PropertyChecks
  * import scala.collection.mutable.ListBuffer
- * 
+ *
  * class ExampleSpec extends fixture.PropSpec with PropertyChecks with Matchers {
- * 
+ *
  *   case class FixtureParam(builder: StringBuilder, buffer: ListBuffer[String])
- * 
+ *
  *   def withFixture(test: OneArgTest) = {
- * 
+ *
  *     // Create needed mutable objects
  *     val stringBuilder = new StringBuilder("ScalaTest is ")
  *     val listBuffer = new ListBuffer[String]
  *     val theFixture = FixtureParam(stringBuilder, listBuffer)
- * 
+ *
  *     // Invoke the test function, passing in the mutable objects
  *     withFixture(test.toNoArgTest(theFixture))
  *   }
- * 
+ *
  *   property("testing should be easy") { f =&gt;
  *     f.builder.append("easy!")
  *     assert(f.builder.toString === "ScalaTest is easy!")
@@ -225,7 +225,7 @@ import org.scalatest._
  *     }
  *     f.buffer += "sweet"
  *   }
- * 
+ *
  *   property("testing should be fun") { f =&gt;
  *     f.builder.append("fun!")
  *     assert(f.builder.toString === "ScalaTest is fun!")

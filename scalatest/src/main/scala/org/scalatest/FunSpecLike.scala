@@ -20,11 +20,11 @@ import Suite.autoTagClassAnnotations
 import words.BehaveWord
 
 /**
- * Implementation trait for class <code>FunSpec</code>, which 
+ * Implementation trait for class <code>FunSpec</code>, which
  * facilitates a &ldquo;behavior-driven&rdquo; style of development (BDD),
  * in which tests are combined with text that specifies the behavior the tests
  * verify.
- * 
+ *
  * <p>
  * <a href="FunSpec.html"><code>FunSpec</code></a> is a class, not a trait,
  * to minimize compile time given there is a slight compiler overhead to
@@ -226,7 +226,7 @@ trait FunSpecLike extends TestSuite with TestRegistration with Informing with No
    * </p>
    */
   protected val it = new ItWord
-  
+
   /**
    * Class that, via an instance referenced from the <code>they</code> field,
    * supports test (and shared test) registration in <code>FunSpec</code>s.
@@ -469,12 +469,12 @@ trait FunSpecLike extends TestSuite with TestRegistration with Informing with No
    * the <code>Set</code> of tags for the test. If this <code>FunSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
    * <p>
-   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to 
-   * methods <code>it</code> and <code>ignore</code>. 
+   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to
+   * methods <code>it</code> and <code>ignore</code>.
    * </p>
-   * 
+   *
    * <p>
-   * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
+   * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate <code>@Ignore</code> at the class level, all test methods in the class will be auto-annotated with
    * <code>org.scalatest.Ignore</code>.
    * </p>
@@ -519,11 +519,11 @@ trait FunSpecLike extends TestSuite with TestRegistration with Informing with No
    * </p>
    */
   protected val behave = new BehaveWord
-  
+
   /**
    * Suite style name.
    */
   final override val styleName: String = "org.scalatest.FunSpec"
-    
+
   override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = createTestDataFor(testName, theConfigMap, this)
 }

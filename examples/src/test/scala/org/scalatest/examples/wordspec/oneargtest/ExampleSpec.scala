@@ -48,5 +48,5 @@ class ExampleSpec extends fixture.WordSpec {
       f.writer.flush()
       assert(f.file.length === 17)
     }
-  } 
+  }
 }

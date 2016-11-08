@@ -61,7 +61,7 @@ import org.scalactic._
  * <pre>
  * cp.reportAll()
  * </pre>
- * 
+ *
  * <p>
  * This <code>reportAll</code> invocation will complete abruptly with a <code>TestFailedException</code> whose message
  * includes the message, source file, and line number of each of the checkpointed assertions that previously failed. For example:
@@ -95,7 +95,7 @@ trait Checkpoints {
   /**
    * Class that allows multiple assertions to be performed within a test, with any
    * failures accumulated and reported together at the end of the test.
-   * 
+   *
    * <p>
    * See the main documentation for trait <code>Checkpoints</code> for more information and an example.
    * </p>
@@ -118,7 +118,7 @@ trait Checkpoints {
      * Executes the passed block of code and catches and records for later reporting (via <code>reportAll</code>) any exceptions that mix in <code>StackDepth</code>
      * except for <code>TestCanceledException</code>, <code>TestRegistrationClosedException </code>, <code>NotAllowedException </code>,
      * and <code>DuplicateTestNameException </code>.
-     * 
+     *
      * <p>
      * If the block of code completes abruptly with any of the <code>StackDepth</code> exceptions in the
      * previous list, or any non-<code>StackDepth</code> exception, that invocation of this <code>apply</code> method will complete abruptly
@@ -162,7 +162,7 @@ trait Checkpoints {
 }
 
 /**
- * Companion object that facilitates the importing the members of trait <code>Checkpoints</code> as 
+ * Companion object that facilitates the importing the members of trait <code>Checkpoints</code> as
  * an alternative to mixing it in. One use case is to import <code>Checkpoints</code> so you can use
  * it in the Scala interpreter.
  *

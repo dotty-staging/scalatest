@@ -20,4 +20,4 @@ import org.scalatest.Tag
 /**
  * Tag that indicates a Selenium test uses the Internet Explorer browser.
  */
-object InternetExplorerBrowser extends Tag("org.scalatest.tags.InternetExplorerBrowser") 
+object InternetExplorerBrowser extends Tag("org.scalatest.tags.InternetExplorerBrowser")

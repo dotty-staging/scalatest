@@ -77,7 +77,7 @@ private[scalatest] class SuiteRerunner(suiteClassName: String) extends Rerunner 
       catch {
         case e: RuntimeException => {
           val eMessage = e.getMessage
-          val rawString3 = 
+          val rawString3 =
             if (eMessage != null && eMessage.length > 0)
               Resources.executeExceptionWithMessage(eMessage)
             else

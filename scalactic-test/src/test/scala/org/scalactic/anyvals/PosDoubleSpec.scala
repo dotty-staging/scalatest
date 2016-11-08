@@ -57,7 +57,7 @@ class PosDoubleSpec extends FunSpec with Matchers with GeneratorDrivenPropertyCh
         PosDouble.from(-0.00001) shouldBe None
         PosDouble.from(-99.9) shouldBe None
       }
-    } 
+    }
     it("should offer MaxValue and MinValue factory methods") {
       PosDouble.MaxValue shouldEqual PosDouble.from(Double.MaxValue).get
       PosDouble.MinValue shouldEqual
@@ -71,7 +71,7 @@ class PosDoubleSpec extends FunSpec with Matchers with GeneratorDrivenPropertyCh
     }
     it("should return the same type from its unary_+ method") {
       +PosDouble(3.0) shouldEqual PosDouble(3.0)
-    } 
+    }
     it("should be automatically widened to compatible AnyVal targets") {
       "PosDouble(3.0): Int" shouldNot typeCheck
       "PosDouble(3.0): Long" shouldNot typeCheck

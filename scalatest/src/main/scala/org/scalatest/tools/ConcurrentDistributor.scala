@@ -33,7 +33,7 @@ private[scalatest] class ConcurrentDistributor(args: Args, execSvc: ExecutorServ
   def apply(suite: Suite, tracker: Tracker): Unit = {
     apply(suite, args.copy(tracker = tracker))
   }
- 
+
   def apply(suite: Suite, args: Args): Status = {
     requireNonNull(suite, args)
     val status = new ScalaTestStatefulStatus

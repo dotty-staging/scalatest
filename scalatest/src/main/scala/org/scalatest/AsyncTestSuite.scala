@@ -54,12 +54,12 @@ import enablers.Futuristic
  */
 
 /**
- * The base trait of ScalaTest's <em>asynchronous testing styles</em>, which defines a 
+ * The base trait of ScalaTest's <em>asynchronous testing styles</em>, which defines a
  * <code>withFixture</code> lifecycle method that accepts as its parameter a test function
  * that returns a <a href="FutureOutcome.html"><code>FutureOutcome</code></a>.
  *
  * <p>
- * The <code>withFixture</code> method add by this trait has the 
+ * The <code>withFixture</code> method add by this trait has the
  * following signature and implementation:
  * </p>
  *
@@ -71,7 +71,7 @@ import enablers.Futuristic
  *
  * <p>
  * This trait enables testing of asynchronous code without blocking.  Instead of returning
- * <code>Outcome</code> like <a href="TestSuite.html"><code>TestSuite</code></a>'s 
+ * <code>Outcome</code> like <a href="TestSuite.html"><code>TestSuite</code></a>'s
  * <code>withFixture</code>, this trait's <code>withFixture</code> method returns a
  * <code>FutureOutcome</code>. Similarly, the <code>apply</code> method of test function interface,
  * <code>NoArgAsyncTest</code>, returns <code>FutureOutcome</code>:
@@ -142,9 +142,9 @@ import enablers.Futuristic
  * the <code>FutureOutcome</code> and any transformation or callback registered on the
  * <code>FutureOutcome</code> in <code>withFixture</code>.
  * </p>
- * 
+ *
  * <p>
- * If you want to perform an action only for certain outcomes, you'll need to 
+ * If you want to perform an action only for certain outcomes, you'll need to
  * register code performing that action on the <code>FutureOutcome</code> using
  * one of <code>FutureOutcome</code>'s callback registration methods:
  * </p>
@@ -196,7 +196,7 @@ import enablers.Futuristic
  * Lastly, if you want to change the outcome in some way in <code>withFixture</code>, you'll need to use
  * the <code>change</code> method of <code>FutureOutcome</code>, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * // Your implementation
  * override def withFixture(test: NoArgAsyncTest) = {
@@ -253,7 +253,7 @@ trait AsyncTestSuite extends Suite with RecoverMethods with CompleteLastly { thi
    *
    * <p>
    * This implicit conversion is used to allow synchronous tests to be included along with
-   * asynchronous tests in an <code>AsyncTestSuite</code>. It will be 
+   * asynchronous tests in an <code>AsyncTestSuite</code>. It will be
    * </p>
    *
    * @param assertion the <code>Assertion</code> to convert
@@ -265,7 +265,7 @@ trait AsyncTestSuite extends Suite with RecoverMethods with CompleteLastly { thi
   protected[scalatest] def parallelAsyncTestExecution: Boolean = thisAsyncTestSuite.isInstanceOf[org.scalatest.ParallelTestExecution] ||
       thisAsyncTestSuite.isInstanceOf[org.scalatest.RandomTestOrder]
 
-  // TODO: Document how exceptions are treated. I.e., that TestConceledException becomes Success(Canceled), 
+  // TODO: Document how exceptions are treated. I.e., that TestConceledException becomes Success(Canceled),
   // TestPendingException becomes Success(Pending), non-test-fatal exceptions become Success(Failed), and
   // test-fatal exceptions become Failure(ex)
   /**
@@ -317,7 +317,7 @@ trait AsyncTestSuite extends Suite with RecoverMethods with CompleteLastly { thi
    * OLD SCALADOC FOR WITHCLEANUP
    *
    * Ensures a cleanup function is executed whether a future-producing function that produces a
-   * valid future or completes abruptly with an exception. 
+   * valid future or completes abruptly with an exception.
    *
    * <p>
    * If the by-name passed as the first parameter, <code>future</code>, completes abruptly with an exception
@@ -343,7 +343,7 @@ trait AsyncTestSuite extends Suite with RecoverMethods with CompleteLastly { thi
    * </p>
    *
    * <p>
-   * This trait's implementation of this method simply returns <code>SucceededStatus</code> 
+   * This trait's implementation of this method simply returns <code>SucceededStatus</code>
    * and has no other effect.
    * </p>
    *

@@ -32,17 +32,17 @@ import org.scalatest.TagAnnotation;
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.cpuall
- * 
+ *
  * import org.scalatest._
  * import tags.CPU
- * 
+ *
  * @CPU
  * class SetSpec extends FlatSpec {
- * 
+ *
  *   "An empty Set" should "have size 0" in {
  *     assert(Set.empty.size === 0)
  *   }
- * 
+ *
  *   it should "produce NoSuchElementException when head is invoked" in {
  *     intercept[NoSuchElementException] {
  *       Set.empty.head
@@ -86,7 +86,7 @@ import org.scalatest.TagAnnotation;
  * The main use case of annotating a test or suite of tests is to select or deselect them during runs by supplying tags to include and/or exclude. For more information,
  * see the relevant section in the documentation of object <a href="../tools/Runner$.html#specifyingTagsToIncludeAndExclude"><code>Runner</code></a>.
  * </p>
- * 
+ *
  * <p>
  * Note that because reflection is not supported on Scala.js, this annotation will only work on the JVM, not on Scala.js.
  * </p>

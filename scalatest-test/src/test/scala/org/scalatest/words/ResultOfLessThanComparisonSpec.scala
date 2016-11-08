@@ -19,13 +19,13 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfLessThanComparisonSpec extends FunSpec {
-  
+
   describe("ResultOfLessThanComparison ") {
-    
+
     it("should have pretty toString") {
       val result = new ResultOfLessThanComparison(8)
       result.toString should be ("< (8)")
     }
   }
-  
+
 }

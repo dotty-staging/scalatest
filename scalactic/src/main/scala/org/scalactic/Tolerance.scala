@@ -36,7 +36,7 @@ trait Tolerance {
 
   /**
    * Wrapper class with a <code>+-</code> method that, given a <code>Numeric</code> argument, returns a <code>Spread</code>.
-   * 
+   *
    * @param tolerance the tolerance with which to create (and return) a <code>Spread</code>
    *
    * @author Bill Venners
@@ -68,7 +68,7 @@ trait Tolerance {
 }
 
 /**
- * Companion object to trait <code>Tolerance</code> that facilitates the importing of <code>Tolerance</code> members as 
+ * Companion object to trait <code>Tolerance</code> that facilitates the importing of <code>Tolerance</code> members as
  * an alternative to mixing it in. One use case is to import <code>Tolerance</code> members so you can use
  * them in the Scala interpreter:
  *

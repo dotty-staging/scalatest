@@ -37,7 +37,7 @@ class BeforeAndAfterConfigSuite extends FunSuite {
       super.run(testName, args)
     }
   }
-  
+
   class MySuite extends TheSuper with BeforeAndAfterEach with BeforeAndAfterAll {
     var beforeEachCalledBeforeRunTest = false
     var afterEachCalledAfterRunTest = false
@@ -110,7 +110,7 @@ class BeforeAndAfterConfigSuite extends FunSuite {
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
     assert(a.runTestWasCalled)
   }
-  
+
   test("super's run must be called") {
     val a = new MySuite
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
@@ -123,7 +123,7 @@ class BeforeAndAfterConfigSuite extends FunSuite {
     assert(a.beforeEachCalledBeforeRunTest)
     assert(a.beforeEachConfigCalledBeforeRunTest)
   }
-  
+
   test("afterEach gets called after runTest") {
     val a = new MySuite
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
@@ -137,14 +137,14 @@ class BeforeAndAfterConfigSuite extends FunSuite {
     assert(a.beforeAllCalledBeforeExecute)
     assert(a.beforeAllConfigCalledBeforeExecute)
   }
-  
+
   test("afterAll gets called after run") {
     val a = new MySuite
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
     assert(a.afterAllCalledAfterExecute)
     assert(a.afterAllConfigCalledAfterExecute)
   }
-  
+
   test("beforeEach(config) gets the config passed to run") {
     val a = new MySuite
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> "there"), None, new Tracker, Set.empty))
@@ -172,16 +172,16 @@ class BeforeAndAfterConfigSuite extends FunSuite {
   // test exceptions with runTest
   test("If any invocation of beforeEach completes abruptly with an exception, runTest " +
     "will complete abruptly with the same exception.") {
-    
+
     class MySuite extends Suite with BeforeAndAfterEach with BeforeAndAfterAll {
-      override def beforeEach() { throw new NumberFormatException } 
+      override def beforeEach() { throw new NumberFormatException }
     }
     intercept[NumberFormatException] {
       val a = new MySuite
       a.run(Some("july"), Args(StubReporter))
     }
   }
-  
+
   test("If any call to super.runTest completes abruptly with an exception, runTest " +
     "will complete abruptly with the same exception, however, before doing so, it will invoke afterEach") {
     trait FunkySuite extends Suite {
@@ -201,8 +201,8 @@ class BeforeAndAfterConfigSuite extends FunSuite {
     }
     assert(a.afterEachCalled)
   }
-  
-  test("If both super.runTest and afterEach complete abruptly with an exception, runTest " + 
+
+  test("If both super.runTest and afterEach complete abruptly with an exception, runTest " +
     "will complete abruptly with the exception thrown by super.runTest.") {
     trait FunkySuite extends Suite {
       protected override def runTest(testName: String, args: Args): Status = {
@@ -222,10 +222,10 @@ class BeforeAndAfterConfigSuite extends FunSuite {
     }
     assert(a.afterEachCalled)
   }
-  
+
   test("If super.runTest returns normally, but afterEach completes abruptly with an " +
     "exception, runTest will complete abruptly with the same exception.") {
-       
+
     class MySuite extends Suite with BeforeAndAfterEach with BeforeAndAfterAll {
       override def afterEach() { throw new NumberFormatException }
       def testJuly() = ()
@@ -235,11 +235,11 @@ class BeforeAndAfterConfigSuite extends FunSuite {
       a.run(Some("testJuly"), Args(StubReporter))
     }
   }
- 
+
   // test exceptions with run
   test("If any invocation of beforeAll completes abruptly with an exception, run " +
     "will complete abruptly with the same exception.") {
-    
+
     class MySuite extends Suite with BeforeAndAfterEach with BeforeAndAfterAll {
       override def beforeAll() { throw new NumberFormatException }
       def testJuly() = ()
@@ -249,7 +249,7 @@ class BeforeAndAfterConfigSuite extends FunSuite {
       a.run(None, Args(StubReporter))
     }
   }
- 
+
   test("If any call to super.run completes abruptly with an exception, run " +
     "will complete abruptly with the same exception, however, before doing so, it will invoke afterAll") {
     trait FunkySuite extends Suite {
@@ -272,8 +272,8 @@ class BeforeAndAfterConfigSuite extends FunSuite {
     }
     assert(a.afterAllCalled)
   }
-   
-  test("If both super.run and afterAll complete abruptly with an exception, run " + 
+
+  test("If both super.run and afterAll complete abruptly with an exception, run " +
     "will complete abruptly with the exception thrown by super.run.") {
     trait FunkySuite extends Suite {
       override def run(testName: Option[String], args: Args): Status = {
@@ -296,10 +296,10 @@ class BeforeAndAfterConfigSuite extends FunSuite {
     }
     assert(a.afterAllCalled)
   }
-  
+
   test("If super.run returns normally, but afterAll completes abruptly with an " +
     "exception, run will complete abruptly with the same exception.") {
-       
+
     class MySuite extends Suite with BeforeAndAfterEach with BeforeAndAfterAll {
       override def afterAll() { throw new NumberFormatException }
       def testJuly() = ()
@@ -357,32 +357,32 @@ class BeforeAndAfterExtendingFunSuite extends FunSuite with BeforeAndAfterEach w
     assert(sb.toString === "ScalaTest is fun!")
     assert(lb.isEmpty)
   }
-  
+
   // This now fails to compile, as I want
   // class IWantThisToFailToCompile extends Examples with BeforeAndAfter
 }
 
 class BeforeAndAfterInfoSuite extends FunSuite {
-  
+
   test("InfoProvided in the before should be fired") {
     class ExampleSpec extends FunSuite with BeforeAndAfter {
       before {
         info("In Before")
       }
-  
+
       test("test 1") {
         info("info 1")
       }
     }
-    
+
     val exampleSpec = new ExampleSpec()
     val rep = new EventRecordingReporter
     exampleSpec.run(None, Args(rep))
-  
+
     assert(rep.infoProvidedEventsReceived.size === 1)
     val infoProvided = rep.infoProvidedEventsReceived(0)
     assert(infoProvided.message === "In Before")
-    
+
     assert(rep.testSucceededEventsReceived.size === 1)
     val testSucceeded = rep.testSucceededEventsReceived(0)
     assert(testSucceeded.testName === "test 1")
@@ -390,7 +390,7 @@ class BeforeAndAfterInfoSuite extends FunSuite {
     val testInfoProvided = testSucceeded.recordedEvents(0).asInstanceOf[InfoProvided]
     assert(testInfoProvided.message === "info 1")
   }
-  
+
   test("InfoProvided in the after should be fired") {
     class ExampleSpec extends FunSuite with BeforeAndAfter {
       test("test 1") {
@@ -400,15 +400,15 @@ class BeforeAndAfterInfoSuite extends FunSuite {
         info("In After")
       }
     }
-    
+
     val exampleSpec = new ExampleSpec()
     val rep = new EventRecordingReporter
     exampleSpec.run(None, Args(rep))
-  
+
     assert(rep.infoProvidedEventsReceived.size === 1)
     val infoProvided = rep.infoProvidedEventsReceived(0)
     assert(infoProvided.message === "In After")
-    
+
     assert(rep.testSucceededEventsReceived.size === 1)
     val testSucceeded = rep.testSucceededEventsReceived(0)
     assert(testSucceeded.testName === "test 1")

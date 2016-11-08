@@ -27,7 +27,7 @@ package org.scalatest.enablers
  * implicit implementations for several types out of the box in the
  * <a href="Aggregating$.html"><code>Aggregating</code> companion object</a>:
  * </p>
- * 
+ *
  * <ul>
  * <li><code>scala.collection.GenTraversable</code></li>
  * <li><code>String</code></li>
@@ -35,11 +35,11 @@ package org.scalatest.enablers
  * <li><code>java.util.Collection</code></li>
  * <li><code>java.util.Map</code></li>
  * </ul>
- * 
+ *
  * <p>
  * The <code>contain</code> syntax enabled by this trait is:
  * <p>
- * 
+ *
  * <ul>
  * <li><code>result</code> <code>should</code> <code>contain</code> <code>atLeastOneOf</code> <code>(1, 2, 3)</code></li>
  * <li><code>result</code> <code>should</code> <code>contain</code> <code>atMostOneOf</code> <code>(1, 2, 3)</code></li>
@@ -47,7 +47,7 @@ package org.scalatest.enablers
  * <li><code>result</code> <code>should</code> <code>contain</code> <code>allOf</code> <code>(1, 2, 3)</code></li>
  * <li><code>result</code> <code>should</code> <code>contain</code> <code>theSameElementsAs</code> <code>(List(1, 2, 3))</code></li>
  * </ul>
- * 
+ *
  * <p>
  * You can enable the <code>contain</code> matcher syntax enabled by <code>Aggregating</code> on your own
  * type <code>U</code> by defining an <code>Aggregating[U]</code> for the type and making it available implicitly.
@@ -61,7 +61,7 @@ package org.scalatest.enablers
  */
 private[scalatest] trait Slicing[-A] {
 
-// TODO: Write tests that a NotAllowedException is thrown when no elements are passed, maybe if only one element is passed, and 
+// TODO: Write tests that a NotAllowedException is thrown when no elements are passed, maybe if only one element is passed, and
 // likely if an object is repeated in the list.
   /**
    * Implements <code>contain</code> <code>atLeastOneOf</code> syntax for aggregations of type <code>A</code>.
@@ -110,7 +110,7 @@ private[scalatest] object Slicing {
    * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of <code>Char</code> in the <code>String</code>
    * @return <code>Aggregating[String]</code> that supports <code>String</code> in relevant <code>contain</code> syntax
    */
-  implicit def slicingNatureOfString: Slicing[String] = 
+  implicit def slicingNatureOfString: Slicing[String] =
     new Slicing[String] {
       def includes(string: String, subString: String): Boolean = string.indexOf(subString) >= 0
       def startsWith(string: String, prefix: String): Boolean = string.startsWith(prefix)

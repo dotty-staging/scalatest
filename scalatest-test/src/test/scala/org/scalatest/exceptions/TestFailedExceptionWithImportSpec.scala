@@ -261,7 +261,7 @@ class TestFailedExceptionWithImportSpec extends FunSpec {
       catch {
         case e: TestFailedException =>
           e.failedCodeFileNameAndLineNumberString match {
-            case Some(s) => 
+            case Some(s) =>
             if (s != ("TestFailedExceptionWithImportSpec.scala:" + (thisLineNumber - 6))) {
                 fail("s was: " + s, e)
               }
@@ -288,4 +288,4 @@ class TestFailedExceptionWithImportSpec extends FunSpec {
     }
   }
 }
- 
+

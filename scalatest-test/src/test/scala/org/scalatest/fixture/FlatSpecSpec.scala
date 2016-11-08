@@ -1161,7 +1161,7 @@ class FlatSpecSpec extends org.scalatest.FunSpec {
         it should "do that" in { fixture =>
           assert(fixture === hello)
         }
-        
+
         it should "do something else" in { fixture =>
           assert(fixture === hello)
           pending
@@ -1620,7 +1620,7 @@ class FlatSpecSpec extends org.scalatest.FunSpec {
     }
 
     describe("when using 'they should' in place of 'it should'") {
-      
+
       it("A fixture.Spec should return the test names in order of registration from testNames") {
         val a = new FlatSpec {
           type FixtureParam = String
@@ -1661,7 +1661,7 @@ class FlatSpecSpec extends org.scalatest.FunSpec {
           c.testNames.iterator.toList
         }
       }
-      
+
       it("should throw DuplicateTestNameException if a duplicate test name registration is attempted") {
 
         intercept[DuplicateTestNameException] {
@@ -1771,9 +1771,9 @@ class FlatSpecSpec extends org.scalatest.FunSpec {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 10)
     }
   }
-  
+
   describe("when failure happens") {
-    
+
     it("should fire TestFailed event with correct stack depth info when test failed") {
       class TestSpec extends FlatSpec {
         type FixtureParam = String
@@ -1795,21 +1795,21 @@ class FlatSpecSpec extends org.scalatest.FunSpec {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "FlatSpecSpec.scala")
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 10)
     }
-    
+
     it("should generate TestRegistrationClosedException with correct stack depth info when has an in nested inside an in") {
       class TestSpec extends FlatSpec {
         var registrationClosedThrown = false
         type FixtureParam = String
         behavior of "a feature"
-        it should "fail" in { fixture => 
-          it should "fail" in { fixture => 
+        it should "fail" in { fixture =>
+          it should "fail" in { fixture =>
             assert(1 === 2)
           }; /* ASSERTION_SUCCEED */
         }
         override def withFixture(test: OneArgTest): Outcome = {
           val outcome = test.apply("hi")
           outcome match {
-            case Exceptional(ex: TestRegistrationClosedException) => 
+            case Exceptional(ex: TestRegistrationClosedException) =>
               registrationClosedThrown = true
             case _ =>
           }

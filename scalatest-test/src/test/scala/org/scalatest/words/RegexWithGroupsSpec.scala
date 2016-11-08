@@ -19,23 +19,23 @@ import org.scalatest._
 import Matchers._
 
 class RegexWithGroupsSpec extends FunSpec {
-  
+
   describe("RegexWithGroups ") {
-    
+
     it("should have pretty toString when no group is specified") {
       val result = new RegexWithGroups("a(b*)c".r, Vector.empty)
       result.toString should be ("\"a(b*)c\"")
     }
-    
+
     it("should have pretty toString when 1 group is specified") {
       val result = new RegexWithGroups("a(b*)c".r, Vector("bb"))
       result.toString should be ("\"a(b*)c\" withGroup (\"bb\")")
     }
-    
+
     it("should have pretty toString when > 1 group is specified") {
       val result = new RegexWithGroups("a(b*)(c*)".r, Vector("bb", "cc"))
       result.toString should be ("\"a(b*)(c*)\" withGroups (\"bb\", \"cc\")")
     }
   }
-  
+
 }

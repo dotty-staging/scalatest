@@ -27,7 +27,7 @@ import org.scalatest._
  * that must be cleaned up afterwards. <em>Note: <code>fixture.FunSuite</code> is intended for use in special situations, with class <code>FunSuite</code> used for general needs. For
  * more insight into where <code>fixture.FunSuite</code> fits in the big picture, see the <a href="../FunSuite.html#withFixtureOneArgTest"><code>withFixture(OneArgTest)</code></a> subsection of the <a href="../FunSuite.html#sharedFixtures">Shared fixtures</a> section in the documentation for class <code>FunSuite</code>.</em>
  * </td></tr></table>
- * 
+ *
  * <p>
  * Class <code>fixture.FunSuite</code> behaves similarly to class <code>org.scalatest.FunSuite</code>, except that tests may have a
  * fixture parameter. The type of the
@@ -40,11 +40,11 @@ import org.scalatest._
  * in the test code to run via the <code>OneArgTest</code> argument. The <code>withFixture(OneArgTest)</code> method (abstract in this class) is responsible
  * for creating the fixture argument and passing it to the test function.
  * </p>
- * 
+ *
  * <p>
  * Subclasses of this class must, therefore, do three things differently from a plain old <code>org.scalatest.FunSuite</code>:
  * </p>
- * 
+ *
  * <ol>
  * <li>define the type of the fixture parameter by specifying type <code>FixtureParam</code></li>
  * <li>define the <code>withFixture(OneArgTest)</code> method</li>
@@ -81,34 +81,34 @@ import org.scalatest._
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funsuite.oneargtest
- * 
+ *
  * import org.scalatest.fixture
  * import java.io._
- * 
+ *
  * class ExampleSuite extends fixture.FunSuite {
- * 
+ *
  *   case class FixtureParam(file: File, writer: FileWriter)
- * 
+ *
  *   def withFixture(test: OneArgTest) = {
- * 
+ *
  *     // create the fixture
  *     val file = File.createTempFile("hello", "world")
  *     val writer = new FileWriter(file)
  *     val theFixture = FixtureParam(file, writer)
- * 
+ *
  *     try {
  *       writer.write("ScalaTest is ") // set up the fixture
  *       withFixture(test.toNoArgTest(theFixture)) // "loan" the fixture to the test
  *     }
  *     finally writer.close() // clean up the fixture
  *   }
- * 
+ *
  *   test("testing should be easy") { f =&gt;
  *     f.writer.write("easy!")
  *     f.writer.flush()
  *     assert(f.file.length === 18)
  *   }
- * 
+ *
  *   test("testing should be fun") { f =&gt;
  *     f.writer.write("fun!")
  *     f.writer.flush()
@@ -131,15 +131,15 @@ import org.scalatest._
  * use that database, you will likely have many test classes that need a database fixture. You can create a "database fixture" trait that creates a
  * database with a unique name, passes the connector into the test, then removes the database once the test completes. This is shown in the following example:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * package org.scalatest.examples.fixture.funsuite.sharing
- * 
+ *
  * import java.util.concurrent.ConcurrentHashMap
  * import org.scalatest.fixture
  * import DbServer._
  * import java.util.UUID.randomUUID
- * 
+ *
  * object DbServer { // Simulating a database server
  *   type Db = StringBuffer
  *   private val databases = new ConcurrentHashMap[String, Db]
@@ -152,15 +152,15 @@ import org.scalatest._
  *     databases.remove(name)
  *   }
  * }
- * 
+ *
  * trait DbFixture { this: fixture.Suite =&gt;
- * 
+ *
  *   type FixtureParam = Db
- * 
+ *
  *   // Allow clients to populate the database after
  *   // it is created
  *   def populateDb(db: Db) {}
- * 
+ *
  *   def withFixture(test: OneArgTest) = {
  *     val dbName = randomUUID.toString
  *     val db = createDb(dbName) // create the fixture
@@ -171,23 +171,23 @@ import org.scalatest._
  *     finally removeDb(dbName) // clean up the fixture
  *   }
  * }
- * 
+ *
  * class ExampleSuite extends fixture.FunSuite with DbFixture {
- * 
+ *
  *   override def populateDb(db: Db) { // setup the fixture
  *     db.append("ScalaTest is ")
  *   }
- * 
+ *
  *   test("testing should be easy") { db =&gt;
  *     db.append("easy!")
  *     assert(db.toString === "ScalaTest is easy!")
  *   }
- * 
+ *
  *   test("testing should be fun") { db =&gt;
  *     db.append("fun!")
  *     assert(db.toString === "ScalaTest is fun!")
  *   }
- * 
+ *
  *   // This test doesn't need a Db
  *   test("test code should be clear") { () =&gt;
  *     val buf = new StringBuffer

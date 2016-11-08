@@ -77,7 +77,7 @@ import org.scalatest.exceptions.StackDepthException
  *
  * <p>
  * The <code>eventually</code> methods of this trait can be flexibly configured.
- * The two configuration parameters for <code>eventually</code> along with their 
+ * The two configuration parameters for <code>eventually</code> along with their
  * default values and meanings are described in the following table:
  * </p>
  *
@@ -130,7 +130,7 @@ import org.scalatest.exceptions.StackDepthException
  * are called "patience" because they determine how <em>patient</em> tests will be with asynchronous operations: how long
  * they will tolerate failures before giving up and how long they will wait before checking again after a failure.) Trait
  * <code>Eventually</code> provides an implicit <code>val</code> named <code>patienceConfig</code> with each
- * configuration parameter set to its default value. 
+ * configuration parameter set to its default value.
  * If you want to set one or more configuration parameters to a different value for all invocations of
  * <code>eventually</code> in a suite you can override this
  * val (or hide it, for example, if you are importing the members of the <code>Eventually</code> companion object rather
@@ -153,7 +153,7 @@ import org.scalatest.exceptions.StackDepthException
  * </pre>
  *
  * <p>
- * Passing your new default values to <code>scaled</code> is optional, but a good idea because it allows them to 
+ * Passing your new default values to <code>scaled</code> is optional, but a good idea because it allows them to
  * be easily scaled if run on a slower or faster system.
  * </p>
  *
@@ -174,7 +174,7 @@ import org.scalatest.exceptions.StackDepthException
  * implicitly passed <code>PatienceConfig</code> object for the <code>interval</code> configuration parameter.
  * If you want to set both configuration parameters in this way, just list them separated by commas:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * eventually (timeout(Span(5, Seconds)), interval(Span(5, Millis))) { it.next should be (110) }
  * </pre>
@@ -234,9 +234,9 @@ import org.scalatest.exceptions.StackDepthException
  *</p>
  *
  * <p>
- * Note that if the initial attempt takes longer than the configured interval to complete, <code>eventually</code> will never sleep for 
+ * Note that if the initial attempt takes longer than the configured interval to complete, <code>eventually</code> will never sleep for
  * a 1/10 interval. You can observe this behavior in the <a href="#secondExample">second example</a> above in which the first statement in the block of code passed to <code>eventually</code>
- * was <code>Thread.sleep(50)</code>. 
+ * was <code>Thread.sleep(50)</code>.
  * </p>
  *
  * <a name="patienceConfig"></a><h2>Usage note: <code>Eventually</code> intended primarily for integration testing</h2>
@@ -248,9 +248,9 @@ import org.scalatest.exceptions.StackDepthException
  * the focused bits of behavior they are designed to test.
  *
  * <p>
- * Nevertheless, because sometimes it will make sense to use <code>Eventually</code> in unit tests (and 
+ * Nevertheless, because sometimes it will make sense to use <code>Eventually</code> in unit tests (and
  * because it is destined to happen anyway even when it isn't the best choice), <code>Eventually</code> by default uses
- * timeouts tuned for unit tests: Calls to <code>eventually</code> are more likely to succeed on fast development machines, and if a call does time out, 
+ * timeouts tuned for unit tests: Calls to <code>eventually</code> are more likely to succeed on fast development machines, and if a call does time out,
  * it will do so quickly so the unit tests can move on.
  * </p>
  *
@@ -408,10 +408,10 @@ trait Eventually extends PatienceConfiguration {
       val interval = config.interval
       makeAValiantAttempt() match {
         case Right(result) => result
-        case Left(e) => 
+        case Left(e) =>
           val duration = System.nanoTime - startNanos
           if (duration < timeout.totalNanos) {
-            if (duration < interval.totalNanos) // For first interval, we wake up every 1/10 of the interval.  This is mainly for optimization purpose. 
+            if (duration < interval.totalNanos) // For first interval, we wake up every 1/10 of the interval.  This is mainly for optimization purpose.
               Thread.sleep(initialInterval.millisPart, initialInterval.nanosPart)
             else
               Thread.sleep(interval.millisPart, interval.nanosPart)
@@ -441,7 +441,7 @@ trait Eventually extends PatienceConfiguration {
 }
 
 /**
- * Companion object that facilitates the importing of <code>Eventually</code> members as 
+ * Companion object that facilitates the importing of <code>Eventually</code> members as
  * an alternative to mixing in the trait. One use case is to import <code>Eventually</code>'s members so you can use
  * them in the Scala interpreter:
  *
@@ -462,7 +462,7 @@ trait Eventually extends PatienceConfiguration {
  *
  * scala&gt; val xs = 1 to 125
  * xs: scala.collection.immutable.Range.Inclusive = Range(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ..., 125)
- * 
+ *
  * scala&gt; val it = xs.iterator
  * it: Iterator[Int] = non-empty iterator
  *

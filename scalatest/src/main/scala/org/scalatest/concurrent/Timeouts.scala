@@ -38,7 +38,7 @@ import org.scalactic._
  * <code>TimeLimits</code> differs from <code>Timeouts</code> in two ways. First, its behavior is driven by a <a href=""><code>Timed</code></a>
  * typeclass, so that it can treat <code>Future</code>s (and <a href="FutureOutcome.html"><code>FutureOutcome</code></a>s) differently than
  * non-<code>Future</code>s. Second, where <code>Timeouts</code> <code>failAfter</code> and <code>cancelAfter</code> take an implicit
- * <code>Interruptor</code> strategy, the corresponding methods in <code>TimeLimits</code> take an implicit  <code>Signaler</code> strategy. 
+ * <code>Interruptor</code> strategy, the corresponding methods in <code>TimeLimits</code> take an implicit  <code>Signaler</code> strategy.
  * Although the <code>Signaler</code> hierarchy corresponds exactly to the <code>Interruptor</code> hierarchy, the default is different.
  * For <code>Timeouts</code>, the default is <code>ThreadInterruptor</code>; For <code>Signaler</code>, the default is
  * <code>DoNotSignal</code>.
@@ -135,7 +135,7 @@ import org.scalactic._
  * </pre>
  *
  * <p>
- * As with the default <code>Interruptor</code>, the above code will eventually produce a 
+ * As with the default <code>Interruptor</code>, the above code will eventually produce a
  * <code>TestFailedDueToTimeoutException</code> with a message that indicates a timeout expired. However, instead
  * of throwing the exception after approximately 100 milliseconds, it will throw it after approximately 500 milliseconds.
  * </p>
@@ -146,7 +146,7 @@ import org.scalactic._
  * if the code passed as the by-name parameter takes longer than the specified timeout to execute, even if it
  * is allowed to run to completion beyond the specified timeout and returns normally.
  * </p>
- * 
+ *
  * <p>
  * ScalaTest provides the following <code>Interruptor</code> implementations:
  * </p>
@@ -207,7 +207,7 @@ import org.scalactic._
  * a loop and can check a volatile flag each pass through the loop. You could in that case write an <code>Interruptor</code> that
  * sets that flag so that the next time around, the loop would exit.
  * </p>
- * 
+ *
  * @author Chua Chee Seng
  * @author Bill Venners
  */
@@ -226,7 +226,7 @@ trait Timeouts {
 
   /**
    * Executes the passed function, enforcing the passed time limit by attempting to interrupt the function if the
-   * time limit is exceeded, and throwing <code>TestFailedDueToTimeoutException</code> if the time limit has been 
+   * time limit is exceeded, and throwing <code>TestFailedDueToTimeoutException</code> if the time limit has been
    * exceeded after the function completes.
    *
    * <p>
@@ -323,7 +323,7 @@ trait Timeouts {
       result
     }
     catch {
-      case t: Throwable => 
+      case t: Throwable =>
         timer.cancel() // Duplicate code could be factored out I think. Maybe into a finally? Oh, not that doesn't work. So a method.
         if(task.timedOut) {
           if (task.needToResetInterruptedStatus)
@@ -334,7 +334,7 @@ trait Timeouts {
           throw t
     }
   }*/
-  
+
   private def timeoutAfter[T](timeout: Span, f: => T, interruptor: Interruptor, exceptionFun: Option[Throwable] => StackDepthException): T = {
     val timer = new Timer
     val task = new TimeoutTask(Thread.currentThread(), interruptor)
@@ -344,8 +344,8 @@ trait Timeouts {
       timer.cancel()
       result match {
         case Exceptional(ex) => throw ex  // If the result is Exceptional, the exception is already wrapped, just re-throw it to get the old behavior.
-        case _ => 
-          if (task.timedOut) { 
+        case _ =>
+          if (task.timedOut) {
             if (task.needToResetInterruptedStatus)
               Thread.interrupted() // To reset the flag probably. He only does this if it was not set before and was set after, I think.
             throw exceptionFun(None)
@@ -354,7 +354,7 @@ trait Timeouts {
       result
     }
     catch {
-      case t: Throwable => 
+      case t: Throwable =>
         timer.cancel() // Duplicate code could be factored out I think. Maybe into a finally? Oh, not that doesn't work. So a method.
         if(task.timedOut) {
           if (task.needToResetInterruptedStatus)
@@ -368,7 +368,7 @@ trait Timeouts {
 }
 
 /**
- * Companion object that facilitates the importing of <code>Timeouts</code> members as 
+ * Companion object that facilitates the importing of <code>Timeouts</code> members as
  * an alternative to mixing in the trait. One use case is to import <code>Timeouts</code>'s members so you can use
  * them in the Scala interpreter.
  */

@@ -20,13 +20,13 @@ import org.scalatest.Resources
 
 /**
  * The result of a match operation, such as one performed by a <a href="Matcher.html"><code>Matcher</code></a> or
- * <a href="BeMatcher.html"><code>BeMatcher</code></a>, which 
+ * <a href="BeMatcher.html"><code>BeMatcher</code></a>, which
  * contains one field that indicates whether the match succeeded, four fields that provide
  * raw failure messages to report under different circumstances, four fields providing
  * arguments used to construct the final failure messages using raw failure messages
  * and a <a href="../../Prettifier.html"><code>Prettifier</code></a>.  Using the default constructor,
  * failure messages will be constructed lazily (when required).
- * 
+ *
  * <p>
  * A <code>MatchResult</code>'s <code>matches</code> field indicates whether a match succeeded. If it succeeded,
  * <code>matches</code> will be <code>true</code>.
@@ -277,8 +277,8 @@ final case class MatchResult(
 object MatchResult {
 
   /**
-   * Factory method that constructs a new <code>MatchResult</code> with passed <code>matches</code>, <code>failureMessage</code>, 
-   * <code>negativeFailureMessage</code>, <code>midSentenceFailureMessage</code>, 
+   * Factory method that constructs a new <code>MatchResult</code> with passed <code>matches</code>, <code>failureMessage</code>,
+   * <code>negativeFailureMessage</code>, <code>midSentenceFailureMessage</code>,
    * <code>midSentenceNegatedFailureMessage</code>, <code>failureMessageArgs</code>, and <code>negatedFailureMessageArgs</code> fields.
    * <code>failureMessageArgs</code>, and <code>negatedFailureMessageArgs</code> will be used in place of <code>midSentenceFailureMessageArgs</code>
    * and <code>midSentenceNegatedFailureMessageArgs</code>.

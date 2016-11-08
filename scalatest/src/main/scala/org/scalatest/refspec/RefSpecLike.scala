@@ -30,7 +30,7 @@ import org.scalactic.{source, Prettifier}
 /**
  * Implementation trait for class <code>RefSpec</code>, which facilitates a &ldquo;behavior-driven&rdquo; style of development (BDD), in which tests
  * are methods, optionally nested inside singleton objects defining textual scopes.
- * 
+ *
  * <p>
  * <a href="RefSpec.html"><code>RefSpec</code></a> is a class, not a trait, to minimize compile time given there is a slight compiler overhead to
  * mixing in traits compared to extending classes. If you need to mix the behavior of <code>RefSpec</code>
@@ -50,58 +50,58 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
   import engine._
   // Sychronized on thisSuite, only accessed from ensureScopesAndTestsRegistered
   private var scopesRegistered = false
-  
+
   private def ensureScopesAndTestsRegistered(): Unit = {
-    
+
     thisSuite.synchronized {
       if (!scopesRegistered) {
         scopesRegistered = true
-        def getMethod(o: AnyRef, methodName: String) = { 
+        def getMethod(o: AnyRef, methodName: String) = {
           o.getClass.getMethod(
             simpleNameForTest(methodName),
             new Array[Class[_]](0): _*
           )
         }
-        
+
         def getMethodTags(o: AnyRef, methodName: String) =
           for {
             a <- getMethod(o, methodName).getDeclaredAnnotations
             annotationClass = a.annotationType
             if annotationClass.isAnnotationPresent(classOf[TagAnnotation])
           } yield annotationClass.getName
-        
+
         def getScopeClassName(o: AnyRef): String = {
           val className = o.getClass.getName
           if (className.endsWith("$"))
-            className 
+            className
           else
             className + "$"
         }
-          
+
         def isScopeMethod(o: AnyRef, m: Method): Boolean = {
           val scopeMethodName = getScopeClassName(o)+ m.getName + "$"
 
           val returnTypeName = m.getReturnType.getName
-          
+
           equalIfRequiredCompactify(scopeMethodName, returnTypeName)
         }
-        
+
         def getScopeDesc(m: Method): String = {
           val objName = m.getReturnType.getName
           val objClassName = decode(objName.substring(0, objName.length - 1))
           objClassName.substring(objClassName.lastIndexOf("$") + 1)
         }
-        
+
         val testTags = tags
         object MethodNameEncodedOrdering extends Ordering[Method] {
           def compare(x: Method, y: Method): Int = {
             decode(x.getName) compareTo decode(y.getName)
           }
         }
-        
+
         def register(o: AnyRef): Unit = {
           val testMethods = o.getClass.getMethods.filter(isTestMethod(_)).sorted(MethodNameEncodedOrdering)
-          
+
           testMethods.foreach { m =>
             val scope = isScopeMethod(o, m)
             if (scope) {
@@ -135,15 +135,15 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
               val methodName = m.getName
               val testName = decode(methodName)
               val methodTags = getMethodTags(o, methodName)
-              val testFun: () => Unit = () => { 
+              val testFun: () => Unit = () => {
                 val argsArray: Array[Object] = Array.empty
                 try m.invoke(o, argsArray: _*)
                 catch {
-                  case ite: InvocationTargetException => 
+                  case ite: InvocationTargetException =>
                     throw ite.getTargetException
                 }
               }
-          
+
               val testLocation = TopOfMethod(getScopeClassName(o), m.toGenericString)
               val isIgnore = testTags.get(methodName) match {
                 case Some(tagSet) => tagSet.contains(Suite.IgnoreTagName) || methodTags.contains(Suite.IgnoreTagName)
@@ -157,7 +157,7 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
             }
           }
         }
-     
+
         register(thisSuite)
       }
     }
@@ -207,7 +207,7 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
    * This method can be called safely by any thread.
    */
   protected def markup: Documenter = atomicDocumenter.get
-  
+
   /**
    * An immutable <code>Set</code> of test names. If this <code>RefSpec</code> contains no tests, this method returns an
    * empty <code>Set</code>.
@@ -248,7 +248,7 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
     ensureScopesAndTestsRegistered()
     InsertionOrderSet(atomic.get.testNamesList)
   }
-  
+
   /**
    * Run a test. This trait's implementation runs the test registered with the name specified by
    * <code>testName</code>. Each test's name is a concatenation of the text of all describers surrounding a test,
@@ -285,7 +285,7 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
 
     runTestImpl(thisSuite, testName, args, true, invokeWithFixture)
   }
-  
+
 
   final override def expectedTestCount(filter: Filter): Int = {
     ensureScopesAndTestsRegistered()
@@ -303,9 +303,9 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
    * implementation of this method, therefore, places one key/value pair into to the
    * <code>Map</code> for each test for which a tag annotation is discovered through reflection.
    * </p>
-   * 
+   *
    * <p>
-   * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
+   * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate <code>@Ignore</code> at the class level, all test methods in the class will be auto-annotated with
    * <code>org.scalatest.Ignore</code>.
    * </p>
@@ -314,7 +314,7 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
     ensureScopesAndTestsRegistered()
     autoTagClassAnnotations(atomic.get.tagsMap, this)
   }
-  
+
   /**
    * Run zero to many of this <code>RefSpec</code>'s tests.
    *
@@ -336,12 +336,12 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
     ensureScopesAndTestsRegistered()
     runImpl(thisSuite, testName, args, super.run)
   }
-  
+
   /**
    * Suite style name.
    */
   final override val styleName: String = "org.scalatest.refspec.RefSpec"
-    
+
   override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = createTestDataFor(testName, theConfigMap, this)
 }
 

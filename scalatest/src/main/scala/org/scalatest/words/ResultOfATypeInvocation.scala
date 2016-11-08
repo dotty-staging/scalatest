@@ -30,7 +30,7 @@ import org.scalactic._
 final class ResultOfATypeInvocation[T](val clazz: Class[T]) {
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * a [RuntimeException] should be thrownBy { ... }
@@ -52,9 +52,9 @@ final class ResultOfATypeInvocation[T](val clazz: Class[T]) {
    */
   def should(notWord: NotWord): PleaseUseNoExceptionShouldSyntaxInstead =
     new PleaseUseNoExceptionShouldSyntaxInstead
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * a [RuntimeException] shouldBe thrownBy { ... }
@@ -184,6 +184,6 @@ final class ResultOfATypeInvocation[T](val clazz: Class[T]) {
       else indicateSuccess(Resources.exceptionThrown(clazz.getClass.getName))
     }
   }
-  
+
   override def toString: String = "a [" + clazz.getName + "]"
 }

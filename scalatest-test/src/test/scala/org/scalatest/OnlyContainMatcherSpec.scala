@@ -26,14 +26,14 @@ class OnlyContainMatcherSpec extends FunSpec {
   private val prettifier = Prettifier.default
 
   describe("only ") {
-    
+
     def checkStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       e.message should be (Some(leftText + " did not contain only (" + right.mkString(", ") + ")"))
       e.failedCodeFileName should be (Some("OnlyContainMatcherSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should succeed when left List contains elements available in right List") {
       List(1, 2, 2, 3, 3, 3) should contain only (1, 2, 3)
       Array(1, 2, 2, 3, 3, 3) should contain only (1, 2, 3)
@@ -46,26 +46,26 @@ class OnlyContainMatcherSpec extends FunSpec {
       javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three")) should contain only (Entry(1, "one"), Entry(2, "two"), Entry(3, "three"))
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left list contains part of right list") {
       val left1 = List(1, 2, 2, 3, 3, 3)
       val e1 = intercept[TestFailedException] {
         left1 should contain only (1, 2, 3, 4, 5)
       }
       checkStackDepth(e1, left1, Array(1, 2, 3, 4, 5).deep, thisLineNumber - 2)
-      
+
       val left2 = Array(1, 2, 2, 3, 3, 3)
       val e2 = intercept[TestFailedException] {
         left2 should contain only (1, 2, 3, 4, 5)
       }
       checkStackDepth(e2, left2, Array(1, 2, 3, 4, 5).deep, thisLineNumber - 2)
-      
+
       val left3 = Set(1, 2, 2, 3, 3, 3)
       val e3 = intercept[TestFailedException] {
         left3 should contain only (1, 2, 3, 4, 5)
       }
       checkStackDepth(e3, left3, Array(1, 2, 3, 4, 5).deep, thisLineNumber - 2)
-      
+
       val left4 = Map(1 -> "one", 2 -> "two", 3 -> "three")
       val e4 = intercept[TestFailedException] {
         left4 should contain only (1 -> "one", 2 -> "two", 3 -> "three", 4 -> "four", 5 -> "five")
@@ -92,24 +92,24 @@ class OnlyContainMatcherSpec extends FunSpec {
       checkStackDepth(e7, left7, Array(Entry(1, "one"), Entry(2, "two"), Entry(3, "three"), Entry(4, "four"), Entry(5, "five")).deep, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw NotAllowedException when only contains duplicate element") {
       val e1 = intercept[exceptions.NotAllowedException] {
         List(1, 2, 3) should contain only (1, 2, 1)
       }
       e1.getMessage() should be (FailureMessages.onlyDuplicate)
-      
+
       val e2 = intercept[exceptions.NotAllowedException] {
         Set(1, 2, 3) should contain only (1, 2, 1)
       }
       e2.getMessage() should be (FailureMessages.onlyDuplicate)
-      
+
       val e3 = intercept[exceptions.NotAllowedException] {
         Array(1, 2, 3) should contain only (1, 2, 1)
       }
       e3.getMessage() should be (FailureMessages.onlyDuplicate)
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left List contains element not in right List") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
@@ -144,16 +144,16 @@ class OnlyContainMatcherSpec extends FunSpec {
       // SKIP-SCALATESTJS-END
     }
   }
-  
+
   describe("not only ") {
-    
+
     def checkStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       e.message should be (Some(leftText + " contained only (" + right.mkString(", ") + ")"))
       e.failedCodeFileName should be (Some("OnlyContainMatcherSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should succeed when left List contains element not in right List") {
       List(1, 2, 3) should not contain only (1, 2)
       Array(1, 2, 3) should not contain only (1, 2)
@@ -166,7 +166,7 @@ class OnlyContainMatcherSpec extends FunSpec {
       javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three")) should not contain only (Entry(1, "one"), Entry(2, "two"))
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left List contains only element in right List in same order") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
@@ -179,7 +179,7 @@ class OnlyContainMatcherSpec extends FunSpec {
         left2 should not contain only (1, 2, 3)
       }
       checkStackDepth(e2, left2, Array(1, 2, 3).deep, thisLineNumber - 2)
-      
+
       val left3 = Map(1 -> "one", 2 -> "two", 3 -> "three")
       val e3 = intercept[exceptions.TestFailedException] {
         left3 should not contain only (1 -> "one", 2 -> "two", 3 -> "three")
@@ -200,7 +200,7 @@ class OnlyContainMatcherSpec extends FunSpec {
       checkStackDepth(e5, left5, Array(Entry(1, "one"), Entry(2, "two"), Entry(3, "three")), thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left List contains only element in right List in different order") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {

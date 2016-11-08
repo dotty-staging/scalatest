@@ -2054,7 +2054,7 @@ import resultOfStringPassedToVerb.verb
    */
   protected implicit val shorthandSharedTestRegistrationFunction: StringVerbBehaveLikeInvocation =
     new StringVerbBehaveLikeInvocation {
-      def apply(subject: String, pos: source.Position): BehaveWord = { 
+      def apply(subject: String, pos: source.Position): BehaveWord = {
         registerFlatBranch(subject, Resources.shouldCannotAppearInsideAnIn, sourceFileName, "apply", 5, 0, Some(pos))
         new BehaveWord
       }

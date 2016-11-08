@@ -23,31 +23,31 @@ import org.scalactic.Prettifier
 class ShouldBeDefinedSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   val something = Some("Something")
   val nothing = None
-  
+
   val fileName: String = "ShouldBeDefinedSpec.scala"
-    
-  def wasNotDefined(left: Any): String = 
+
+  def wasNotDefined(left: Any): String =
     FailureMessages.wasNotDefined(prettifier, left)
-    
-  def wasDefined(left: Any): String = 
+
+  def wasDefined(left: Any): String =
     FailureMessages.wasDefined(prettifier, left)
-  
+
   def allError(left: Any, message: String, lineNumber: Int): String = {
     val messageWithIndex = UnquotedString("  " + FailureMessages.forAssertionsGenTraversableMessageWithStackDepth(prettifier, 0, UnquotedString(message), UnquotedString(fileName + ":" + lineNumber)))
     FailureMessages.allShorthandFailed(prettifier, messageWithIndex, left)
   }
-  
+
   describe("defined matcher") {
-    
+
     describe("when work with 'opt should be (defined)'") {
-      
+
       it("should do nothing when opt is defined") {
         something should be (defined)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when opt is not defined") {
         val caught1 = intercept[TestFailedException] {
           nothing should be (defined)
@@ -56,15 +56,15 @@ class ShouldBeDefinedSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'opt should not be defined'") {
-      
+
       it("should do nothing when opt is not defined") {
         nothing should not be defined
       }
-      
+
       it("should throw TestFailedException with correct stack depth when opt is defined") {
         val caught1 = intercept[TestFailedException] {
           something should not be defined
@@ -74,13 +74,13 @@ class ShouldBeDefinedSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'opt shouldBe defined'") {
-      
+
       it("should do nothing when opt is defined") {
         something shouldBe defined
       }
-      
+
       it("should throw TestFailedException with correct stack depth when opt is not defined") {
         val caught1 = intercept[TestFailedException] {
           nothing shouldBe defined
@@ -89,15 +89,15 @@ class ShouldBeDefinedSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'opt shouldNot be (defined)'") {
-      
+
       it("should do nothing when opt is not defined") {
         nothing shouldNot be (defined)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when opt is defined") {
         val caught1 = intercept[TestFailedException] {
           something shouldNot be (defined)
@@ -106,15 +106,15 @@ class ShouldBeDefinedSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) should be (defined)'") {
-      
+
       it("should do nothing when all(xs) is defined") {
         all(List(something)) should be (defined)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is not defined") {
         val left1 = List(nothing)
         val caught1 = intercept[TestFailedException] {
@@ -124,15 +124,15 @@ class ShouldBeDefinedSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) should not be defined'") {
-      
+
       it("should do nothing when all(xs) is not defined") {
         all(List(nothing)) should not be defined
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is defined") {
         val left1 = List(something)
         val caught1 = intercept[TestFailedException] {
@@ -142,15 +142,15 @@ class ShouldBeDefinedSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) shouldBe defined'") {
-      
+
       it("should do nothing when all(xs) is defined") {
         all(List(something)) shouldBe defined
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is not defined") {
         val left1 = List(nothing)
         val caught1 = intercept[TestFailedException] {
@@ -161,13 +161,13 @@ class ShouldBeDefinedSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'all(xs) shouldNot be (defined)'") {
-      
+
       it("should do nothing when all(xs) is not defined") {
         all(List(nothing)) shouldNot be (defined)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is defined") {
         val left1 = List(something)
         val caught1 = intercept[TestFailedException] {
@@ -177,8 +177,8 @@ class ShouldBeDefinedSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
   }
-  
+
 }

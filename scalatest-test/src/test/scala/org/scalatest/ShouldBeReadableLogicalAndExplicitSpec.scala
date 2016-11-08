@@ -24,49 +24,49 @@ import org.scalactic.Prettifier
 class ShouldBeReadableLogicalAndExplicitSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   val fileName: String = "ShouldBeReadableLogicalAndExplicitSpec.scala"
-  
-  def wasEqualTo(left: Any, right: Any): String = 
+
+  def wasEqualTo(left: Any, right: Any): String =
     FailureMessages.wasEqualTo(prettifier, left, right)
-    
-  def wasNotEqualTo(left: Any, right: Any): String = 
+
+  def wasNotEqualTo(left: Any, right: Any): String =
     FailureMessages.wasNotEqualTo(prettifier, left, right)
-    
-  def equaled(left: Any, right: Any): String = 
+
+  def equaled(left: Any, right: Any): String =
     FailureMessages.equaled(prettifier, left, right)
-    
+
   def didNotEqual(left: Any, right: Any): String =
     FailureMessages.didNotEqual(prettifier, left, right)
-  
-  def wasNotReadable(left: Any): String = 
+
+  def wasNotReadable(left: Any): String =
     FailureMessages.wasNotReadable(prettifier, left)
-    
-  def wasReadable(left: Any): String = 
+
+  def wasReadable(left: Any): String =
     FailureMessages.wasReadable(prettifier, left)
-    
+
   def allError(message: String, lineNumber: Int, left: Any): String = {
     val messageWithIndex = UnquotedString("  " + FailureMessages.forAssertionsGenTraversableMessageWithStackDepth(prettifier, 0, UnquotedString(message), UnquotedString(fileName + ":" + lineNumber)))
     FailureMessages.allShorthandFailed(prettifier, messageWithIndex, left)
   }
-    
+
   trait Thing {
     def canRead: Boolean
   }
-  
+
   val book = new Thing {
     val canRead = true
   }
-  
+
   val stone = new Thing {
     val canRead = false
   }
-  
-  val readability = 
+
+  val readability =
     new Readability[Thing] {
       def isReadable(thing: Thing): Boolean = thing.canRead
     }
-  
+
   describe("Readability matcher") {
 
     describe("when work with 'file should be (readable)'") {
@@ -213,7 +213,7 @@ class ShouldBeReadableLogicalAndExplicitSpec extends FunSpec {
         assert(caught1.message === Some(allError(wasNotEqualTo(book, stone) + ", but " + wasReadable(book), thisLineNumber - 2, left1)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left2 = List(book)
         val caught2 = intercept[TestFailedException] {
           (all(left2) should (not be readable and not be stone)) (readability)
@@ -221,7 +221,7 @@ class ShouldBeReadableLogicalAndExplicitSpec extends FunSpec {
         assert(caught2.message === Some(allError(wasReadable(book), thisLineNumber - 2, left2)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left3 = List(book)
         val caught3 = intercept[TestFailedException] {
           (all(left3) should (not equal stone and not be readable)) (defaultEquality, readability)
@@ -229,7 +229,7 @@ class ShouldBeReadableLogicalAndExplicitSpec extends FunSpec {
         assert(caught3.message === Some(allError(didNotEqual(book, stone) + ", but " + wasReadable(book), thisLineNumber - 2, left3)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left4 = List(book)
         val caught4 = intercept[TestFailedException] {
           (all(left4) should (not be readable and not equal stone)) (readability, defaultEquality)

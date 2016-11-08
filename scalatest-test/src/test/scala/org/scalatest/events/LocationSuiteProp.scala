@@ -32,21 +32,21 @@ class LocationSuiteProp extends SuiteProp
       suite.allChecked
     }
   }
-  
+
   type FixtureServices = TestLocationServices
 
   // SKIP-SCALATESTJS-START
   def junit3Suite = new TestLocationJUnit3Suite
-  
+
   def junitSuite = new TestLocationJUnitSuite
-  
+
   def testngSuite = new TestLocationTestNGSuite
   // SKIP-SCALATESTJS-END
-  
+
   def funSuite = new TestLocationFunSuite
   class TestLocationFunSuite extends FunSuite with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationFunSuite"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -55,7 +55,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("info", "LocationSuiteProp.scala", thisLineNumber + 5))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 4))
-    
+
     class NestedSuite extends FunSuite {
       test("info") {
         info("test info")
@@ -71,11 +71,11 @@ class LocationSuiteProp extends SuiteProp
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def fixtureFunSuite = new TestLocationFixtureFunSuite
   class TestLocationFixtureFunSuite extends StringFixtureFunSuite with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationFixtureFunSuite"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -84,7 +84,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("info", "LocationSuiteProp.scala", thisLineNumber + 5))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 4))
-    
+
     class NestedSuite extends StringFixtureFunSuite {
       test("info") { param =>
         info("test info")
@@ -99,12 +99,12 @@ class LocationSuiteProp extends SuiteProp
       test("fail") { () => fail }
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
-  } 
-  
+  }
+
   def funSpec = new LocationTestSpec
   class LocationTestSpec extends FunSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$LocationTestSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -113,7 +113,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("info", "LocationSuiteProp.scala", thisLineNumber + 5))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 4))
-    
+
     class NestedSuite extends FunSpec {
       it("info") {
         info("test info")
@@ -129,11 +129,11 @@ class LocationSuiteProp extends SuiteProp
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def fixtureFunSpec = new TestLocationFixtureFunSpec
   class TestLocationFixtureFunSpec extends StringFixtureFunSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationFixtureFunSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -142,7 +142,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("info", "LocationSuiteProp.scala", thisLineNumber + 5))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 4))
-    
+
     class NestedSuite extends StringFixtureFunSpec {
       it("info") { param =>
         info("test info")
@@ -158,11 +158,11 @@ class LocationSuiteProp extends SuiteProp
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def featureSpec = new TestLocationFeatureSpec
   class TestLocationFeatureSpec extends FeatureSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationFeatureSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -171,7 +171,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("Feature: feature Scenario: info", "LocationSuiteProp.scala", thisLineNumber + 6))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("Feature: feature Scenario: fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 5))
-    
+
     class NestedSuite extends FeatureSpec {
       feature("feature") {
         scenario("info") {
@@ -185,7 +185,7 @@ class LocationSuiteProp extends SuiteProp
       }
     }
     class FailNestedSuite extends FeatureSpec {
-      feature("feature") { 
+      feature("feature") {
         scenario("fail") {
           fail
         }
@@ -193,12 +193,12 @@ class LocationSuiteProp extends SuiteProp
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def fixtureFeatureSpec = new TestLocationFixtureFeatureSpec
   class StringFixtureFeatureSpec extends fixture.FeatureSpec with StringFixture
-  class TestLocationFixtureFeatureSpec extends StringFixtureFeatureSpec with FixtureServices { 
+  class TestLocationFixtureFeatureSpec extends StringFixtureFeatureSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationFixtureFeatureSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -207,9 +207,9 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("Feature: feature Scenario: info", "LocationSuiteProp.scala", thisLineNumber + 6))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("Feature: feature Scenario: fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 5))
-    
+
     class NestedSuite extends StringFixtureFeatureSpec {
-      feature("feature") { 
+      feature("feature") {
         scenario("info") { param =>
           info("test info")
         }
@@ -221,7 +221,7 @@ class LocationSuiteProp extends SuiteProp
       }
     }
     class FailNestedSuite extends StringFixtureFeatureSpec {
-      feature("feature") { 
+      feature("feature") {
         scenario("fail") {
           () => fail
         }
@@ -229,11 +229,11 @@ class LocationSuiteProp extends SuiteProp
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def flatSpec = new TestLocationFlatSpec
   class TestLocationFlatSpec extends FlatSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationFlatSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -242,7 +242,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("Test should info", "LocationSuiteProp.scala", thisLineNumber + 5))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("Test should fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 4))
-    
+
     class NestedSuite extends FlatSpec {
       "Test" should "info" in {
         info("test info")
@@ -260,12 +260,12 @@ class LocationSuiteProp extends SuiteProp
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def fixtureFlatSpec = new TestLocationFixtureFlatSpec
   class StringFixtureFlatSpec extends fixture.FlatSpec with StringFixture
   class TestLocationFixtureFlatSpec extends StringFixtureFlatSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationFixtureFlatSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -274,7 +274,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("Test should info", "LocationSuiteProp.scala", thisLineNumber + 5))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("Test should fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 4))
-    
+
     class NestedSuite extends StringFixtureFlatSpec {
       "Test" should "info" in { param =>
         info("test info")
@@ -285,18 +285,18 @@ class LocationSuiteProp extends SuiteProp
         throw new RuntimeException
       }
     }
-    class FailNestedSuite extends StringFixtureFlatSpec { 
+    class FailNestedSuite extends StringFixtureFlatSpec {
       "Test" should "fail" in { param =>
         fail
       }
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def freeSpec = new TestLocationFreeSpec
   class TestLocationFreeSpec extends FreeSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationFreeSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -305,7 +305,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("Test should info", "LocationSuiteProp.scala", thisLineNumber + 6))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("Test should fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 5))
-    
+
     class NestedSuite extends FreeSpec {
       "Test" - {
         "should info" in {
@@ -318,7 +318,7 @@ class LocationSuiteProp extends SuiteProp
         throw new RuntimeException
       }
     }
-    class FailNestedSuite extends FreeSpec { 
+    class FailNestedSuite extends FreeSpec {
       "Test" - {
         "should fail" in {
           fail
@@ -327,12 +327,12 @@ class LocationSuiteProp extends SuiteProp
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def fixtureFreeSpec = new TestLocationFixtureFreeSpec
   class StringFixtureFreeSpec extends fixture.FreeSpec with StringFixture
   class TestLocationFixtureFreeSpec extends StringFixtureFreeSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationFixtureFreeSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -341,7 +341,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("Test should info", "LocationSuiteProp.scala", thisLineNumber + 6))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("Test should fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 5))
-    
+
     class NestedSuite extends StringFixtureFreeSpec {
       "Test" - {
         "should info" in { param =>
@@ -354,7 +354,7 @@ class LocationSuiteProp extends SuiteProp
         throw new RuntimeException
       }
     }
-    class FailNestedSuite extends StringFixtureFreeSpec { 
+    class FailNestedSuite extends StringFixtureFreeSpec {
       "Test" - {
         "should fail" in { param =>
           fail
@@ -363,11 +363,11 @@ class LocationSuiteProp extends SuiteProp
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def propSpec = new TestLocationPropSpec
   class TestLocationPropSpec extends PropSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationPropSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -376,7 +376,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("Test should info", "LocationSuiteProp.scala", thisLineNumber + 5))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("Test should fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 4))
-    
+
     class NestedSuite extends PropSpec {
       property("Test should info") {
         info("test info")
@@ -387,19 +387,19 @@ class LocationSuiteProp extends SuiteProp
         throw new RuntimeException
       }
     }
-    class FailNestedSuite extends PropSpec { 
+    class FailNestedSuite extends PropSpec {
       property("Test should fail") {
         fail
       }
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def fixturePropSpec = new TestLocationFixturePropSpec
   class StringFixturePropSpec extends fixture.PropSpec with StringFixture
   class TestLocationFixturePropSpec extends StringFixturePropSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationFixturePropSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -408,7 +408,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("Test should info", "LocationSuiteProp.scala", thisLineNumber + 5))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("Test should fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 4))
-    
+
     class NestedSuite extends StringFixturePropSpec {
       property("Test should info") { param =>
         info("test info")
@@ -419,18 +419,18 @@ class LocationSuiteProp extends SuiteProp
         throw new RuntimeException
       }
     }
-    class FailNestedSuite extends StringFixturePropSpec { 
+    class FailNestedSuite extends StringFixturePropSpec {
       property("Test should fail") { param =>
         fail
       }
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def wordSpec = new TestLocationWordSpec
   class TestLocationWordSpec extends WordSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationWordSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -439,7 +439,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("Test should info", "LocationSuiteProp.scala", thisLineNumber + 6))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("Test should fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 5))
-    
+
     class NestedSuite extends WordSpec {
       "Test" should {
         "info" in {
@@ -452,7 +452,7 @@ class LocationSuiteProp extends SuiteProp
         throw new RuntimeException
       }
     }
-    class FailNestedSuite extends WordSpec { 
+    class FailNestedSuite extends WordSpec {
       "Test" should {
         "fail" in {
           fail
@@ -461,12 +461,12 @@ class LocationSuiteProp extends SuiteProp
     }
     override def nestedSuites = Vector(new NestedSuite, new AbortNestedSuite, new FailNestedSuite)
   }
-  
+
   def fixtureWordSpec = new TestLocationFixtureWordSpec
   class StringFixtureWordSpec extends fixture.WordSpec with StringFixture
   class TestLocationFixtureWordSpec extends StringFixtureWordSpec with FixtureServices {
     val suiteTypeName = "org.scalatest.events.LocationSuiteProp$TestLocationFixtureWordSpec"
-    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"), 
+    val expectedSuiteStartingList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$AbortNestedSuite"),
                                          TopOfClassPair(suiteTypeName + "$FailNestedSuite"))
     val expectedSuiteCompletedList = List(TopOfClassPair(suiteTypeName + "$NestedSuite"),
@@ -475,7 +475,7 @@ class LocationSuiteProp extends SuiteProp
     val expectedTestSucceededList = List(LineInFilePair("Test should info", "LocationSuiteProp.scala", thisLineNumber + 6))
     val expectedTestFailedList = List(SeeStackDepthExceptionPair("Test should fail"))
     val expectedInfoProvidedList = List(LineInFilePair("test info", "LocationSuiteProp.scala", thisLineNumber + 5))
-    
+
     class NestedSuite extends StringFixtureWordSpec {
       "Test" should {
         "info" in { param =>
@@ -488,7 +488,7 @@ class LocationSuiteProp extends SuiteProp
         throw new RuntimeException
       }
     }
-    class FailNestedSuite extends StringFixtureWordSpec { 
+    class FailNestedSuite extends StringFixtureWordSpec {
       "Test" should {
         "fail" in { param =>
           fail

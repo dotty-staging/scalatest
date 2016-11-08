@@ -26,9 +26,9 @@ import org.scalactic._
  * @author Bill Venners
  */
 final class ResultOfBeWordForNoException(pos: source.Position) {
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * noException should be thrownBy { ... }

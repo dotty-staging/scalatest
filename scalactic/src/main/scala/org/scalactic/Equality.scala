@@ -20,24 +20,24 @@ package org.scalactic
  *
  * <p>
  * <code>Equality</code> enables you to define alternate notions of equality for types that can be used
- * with ScalaUtil's <code>===</code> and <code>!==</code> syntax and ScalaTest's matcher syntax. 
+ * with ScalaUtil's <code>===</code> and <code>!==</code> syntax and ScalaTest's matcher syntax.
  * </p>
  *
  * <p>
  * For example, say you have a case class that includes a <code>Double</code> value:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; case class Person(name: String, age: Double)
  * defined class Person
  * </pre>
- * 
+ *
  * <p>
  * Imagine you are calculating the <code>age</code> values in such as way that occasionally tests
- * are failing because of rounding differences that you actually don't care about. For example, you 
+ * are failing because of rounding differences that you actually don't care about. For example, you
  * expect an age of 29.0, but you're sometimes seeing 29.0001:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
  * import org.scalactic._
@@ -55,7 +55,7 @@ package org.scalactic
  * <a href="#defaultEquality">default equality</a>, which will call <code>Person</code>'s <code>equals</code> method. That <code>equals</code> method, provided by the Scala compiler
  * because <code>Person</code> is a case class, will declare these two objects unequal because 29.001 does not exactly equal 29.0.
  * </p>
- * 
+ *
  * <p>
  * To make the equality check more forgiving, you could define an implicit <code>Equality[Person]</code> that compares
  * the <code>age</code> <code>Double</code>s with a tolerance, like this:
@@ -64,8 +64,8 @@ package org.scalactic
  * <pre class="stREPL">
  * scala&gt; import Tolerance._
  * import Tolerance._
- * 
- * scala&gt; implicit val personEq = 
+ *
+ * scala&gt; implicit val personEq =
  *      |   new Equality[Person] {
  *      |     def areEqual(a: Person, b: Any): Boolean =
  *      |       b match {
@@ -115,7 +115,7 @@ package org.scalactic
  * </p>
  *
  * <pre class="stHighlight">
- * override def equals(other: Any): Boolean = 
+ * override def equals(other: Any): Boolean =
  *   other match {
  *     case p: Person =&gt; name = p.name &amp;&amp; age = p.age
  *     case _ =&gt; false
@@ -140,7 +140,7 @@ package org.scalactic
  * <code>Equality</code> is used by <a href="TripleEquals.html"><code>TripleEquals</code></a>, which enforces no type constraint between the left and right values, and the
  * <code>equal</code>, <code>be</code>, and <code>contain</code> syntax of ScalaTest Matchers.
  * </p>
- * 
+ *
  * <p>
  * By contrast, <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a>
  * and <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a> use an <a href="Equivalence.html"><code>Equivalence</code></a>.
@@ -164,7 +164,7 @@ package org.scalactic
  * Scalactic provides both <code>Equality</code> and <code>Equivalence</code> because the <code>Any</code> in
  * <code>Equality</code> can sometimes make things painful. For example, in trait
  * <a href="TolerantNumerics.html"><code>TolerantNumerics</code></a>,
- * a single generic factory method can produce <code>Equivalence</code>s for any <code>Numeric</code> type, 
+ * a single generic factory method can produce <code>Equivalence</code>s for any <code>Numeric</code> type,
  * but because of the <code>Any</code>, a separate factory method must be defined to produce an <code>Equality</code>
  * for each <code>Numeric</code> type.
  * </p>
@@ -178,7 +178,7 @@ package org.scalactic
  * </p>
  *
  * <p>
- * <em>Note: The <code>Equality</code> type class was inspired in part by the <code>Equal</code> type class of the 
+ * <em>Note: The <code>Equality</code> type class was inspired in part by the <code>Equal</code> type class of the
  * <a href="http://github.com/scalaz/scalaz" target="_blank"><code>scalaz</code></a> project.</em>
  * </p>
  *
@@ -191,7 +191,7 @@ trait Equality[A] extends Equivalence[A] {
  * The <code>equals</code> method of <code>java.lang.Object</code> and <code>areEqual</code> method of trait <code>Equality</code> have a similar
  * signatures and behavior, and you write them in a similar way.
  * When using <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a> or
- * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a>, however, 
+ * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a>, however,
  * </p>
  *
 */
@@ -209,7 +209,7 @@ trait Equality[A] extends Equivalence[A] {
    * <code>a</code> and <code>b</code> to <code>areEqual</code> and returns the result.
    *
    * <p>
-   * This method enables any <code>Equality</code> to be used where an <code>Equivalence</code> is needed, such 
+   * This method enables any <code>Equality</code> to be used where an <code>Equivalence</code> is needed, such
    * as the implicit enabling methods of <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a>
    * and <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a>.
    * </p>
@@ -220,12 +220,12 @@ trait Equality[A] extends Equivalence[A] {
    *     <code>Equality</code> instance
    */
   final def areEquivalent(a: A, b: A): Boolean = areEqual(a, b)
-} 
+}
 
 /**
  * Companion object for trait <code>Equality</code> that provides factory methods for producing <code>Equality</code>
  * instances.
- */ 
+ */
 object Equality {
 
   /**

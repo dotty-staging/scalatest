@@ -45,7 +45,7 @@ object ParallelTestExecutionOrderExamples extends Tables {
   def orderFixturePropSpec = new ExampleParallelTestExecutionOrderFixturePropSpec
   def orderWordSpec = new ExampleParallelTestExecutionOrderWordSpec
   def orderFixtureWordSpec = new ExampleParallelTestExecutionOrderFixtureWordSpec
-  
+
   def orderExamples =
     Table(
       "suite1",
@@ -53,19 +53,19 @@ object ParallelTestExecutionOrderExamples extends Tables {
       orderSpec,
       orderFixtureSpec,
       // SKIP-SCALATESTJS-END
-      orderFunSuite, 
-      orderFixtureFunSuite, 
-      orderFunSpec, 
-      orderFixtureFunSpec, 
-      orderFeatureSpec, 
-      orderFixtureFeatureSpec, 
-      orderFlatSpec, 
-      orderFixtureFlatSpec, 
-      orderFreeSpec, 
+      orderFunSuite,
+      orderFixtureFunSuite,
+      orderFunSpec,
+      orderFixtureFunSpec,
+      orderFeatureSpec,
+      orderFixtureFeatureSpec,
+      orderFlatSpec,
+      orderFixtureFlatSpec,
+      orderFreeSpec,
       orderFixtureFreeSpec,
-      orderPropSpec, 
-      orderFixturePropSpec, 
-      orderWordSpec, 
+      orderPropSpec,
+      orderFixturePropSpec,
+      orderWordSpec,
       orderFixtureWordSpec
     )
 }
@@ -76,7 +76,7 @@ protected[scalatest] class ExampleParallelTestExecutionOrderSpec extends RefSpec
   def `test 1`: Unit = {}
   def `test 2`: Unit = {}
   def `test 3`: Unit = {}
-  
+
   def assertOrderTest(events: List[Event]): Unit = {
     assert(events.size === 6)
     checkTestStarting(events(0), "test 1")
@@ -93,7 +93,7 @@ protected[scalatest] class ExampleParallelTestExecutionOrderFixtureSpec extends 
   def `test 1`(fixture: String): Unit = {}
   def `test 2`(fixture: String): Unit = {}
   def `test 3`(fixture: String): Unit = {}
-  
+
   def assertOrderTest(events: List[Event]): Unit = {
     assert(events.size === 6)
     checkTestStarting(events(0), "test 1")
@@ -257,11 +257,11 @@ protected[scalatest] class ExampleParallelTestExecutionOrderFlatSpec extends Fla
   behavior of "Scope 1"
   it should "Test 1" in {}
   it should "Test 2" in {}
-  
+
   behavior of "Scope 2"
   it should "Test 3" in {}
   it should "Test 4" in {}
-  
+
   def assertOrderTest(events: List[Event]): Unit = {
     assert(events.size === 12)
     checkScopeOpened(events(0), "Scope 1")
@@ -285,11 +285,11 @@ protected[scalatest] class ExampleParallelTestExecutionOrderFixtureFlatSpec exte
   behavior of "Fixture Scope 1"
   it should "Fixture Test 1" in { fixture => }
   it should "Fixture Test 2" in { fixture => }
-  
+
   behavior of "Fixture Scope 2"
   it should "Fixture Test 3" in { fixture => }
   it should "Fixture Test 4" in { fixture => }
-  
+
   def assertOrderTest(events: List[Event]): Unit = {
     assert(events.size === 12)
     checkScopeOpened(events(0), "Fixture Scope 1")
@@ -314,12 +314,12 @@ protected[scalatest] class ExampleParallelTestExecutionOrderFreeSpec extends Fre
     "Test 1" in {}
     "Test 2" in {}
   }
-  
+
   "Scope 2" - {
     "Test 3" in {}
     "Test 4" in {}
   }
-  
+
   def assertOrderTest(events: List[Event]): Unit = {
     assert(events.size === 12)
     checkScopeOpened(events(0), "Scope 1")
@@ -344,12 +344,12 @@ protected[scalatest] class ExampleParallelTestExecutionOrderFixtureFreeSpec exte
     "Fixture Test 1" in { fixture => }
     "Fixture Test 2" in { fixture => }
   }
-  
+
   "Fixture Scope 2" - {
     "Fixture Test 3" in { fixture => }
     "Fixture Test 4" in { fixture => }
   }
-  
+
   def assertOrderTest(events: List[Event]): Unit = {
     assert(events.size === 12)
     checkScopeOpened(events(0), "Fixture Scope 1")
@@ -373,7 +373,7 @@ protected[scalatest] class ExampleParallelTestExecutionOrderPropSpec extends Pro
   property("Test 1") {}
   property("Test 2") {}
   property("Test 3") {}
-  
+
   def assertOrderTest(events: List[Event]): Unit = {
     assert(events.size === 6)
     checkTestStarting(events(0), "Test 1")
@@ -391,7 +391,7 @@ protected[scalatest] class ExampleParallelTestExecutionOrderFixturePropSpec exte
   property("Fixture Test 1") { fixture => }
   property("Fixture Test 2") { fixture => }
   property("Fixture Test 3") { fixture => }
-  
+
   def assertOrderTest(events: List[Event]): Unit = {
     assert(events.size === 6)
     checkTestStarting(events(0), "Fixture Test 1")
@@ -410,12 +410,12 @@ protected[scalatest] class ExampleParallelTestExecutionOrderWordSpec extends Wor
     "Test 1" in {}
     "Test 2" in {}
   }
-  
+
   "Scope 2" should {
     "Test 3" in {}
     "Test 4" in {}
   }
-  
+
   def assertOrderTest(events: List[Event]): Unit = {
     assert(events.size === 12)
     checkScopeOpened(events(0), "Scope 1")
@@ -440,12 +440,12 @@ protected[scalatest] class ExampleParallelTestExecutionOrderFixtureWordSpec exte
     "Fixture Test 1" in { fixture => }
     "Fixture Test 2" in { fixture => }
   }
-  
+
   "Fixture Scope 2" should {
     "Fixture Test 3" in { fixture => }
     "Fixture Test 4" in { fixture => }
   }
-  
+
   def assertOrderTest(events: List[Event]): Unit = {
     assert(events.size === 12)
     checkScopeOpened(events(0), "Fixture Scope 1")

@@ -16,9 +16,9 @@
 package org.scalactic
 
 /**
- * An <code>Equality[A]</code> implementation that determines the equality of two objects by normalizing 
+ * An <code>Equality[A]</code> implementation that determines the equality of two objects by normalizing
  * one or both objects, then comparing the results using an &ldquo;after normalization&rdquo; equality referenced from
- * the <code>afterNormalizationEquality</code>  member. By default, the <code>afterNormalizationEquality</code> is 
+ * the <code>afterNormalizationEquality</code>  member. By default, the <code>afterNormalizationEquality</code> is
  * an instance of <a href="Equality$.html"><code>Equality.default[A]</code></a>.
  * </p>
  *
@@ -28,7 +28,7 @@ package org.scalactic
  * of <code>Uniformity</code> passed to <code>being</code>. Here's an example:
  * </p>
  *
- * <pre class="stREPL"> 
+ * <pre class="stREPL">
  * scala&gt; import org.scalactic._
  * import org.scalactic._
  *
@@ -110,7 +110,7 @@ trait NormalizingEquality[A] extends Equality[A] { thisNormEq =>
    *
    * <p>
    * The <code>normalized</code> and <code>normalizedOrSame</code> methods
-   * of the <code>NormalizingEquality</code>'s returned by this method return a result 
+   * of the <code>NormalizingEquality</code>'s returned by this method return a result
    * obtained by forwarding the passed value first to this <code>NormalizingEquality</code>'s implementation of the method,
    * then passing that result to the passed <code>Uniformity</code>'s implementation of the method, respectively.
    * Essentially, the body of the composed <code>normalized</code> method is:
@@ -129,7 +129,7 @@ trait NormalizingEquality[A] extends Equality[A] { thisNormEq =>
    * </pre>
    *
    * <p>
-   * The <code>normalizeCanHandle</code> method of the <code>NormalizingEquality</code> returned by this method returns a result 
+   * The <code>normalizeCanHandle</code> method of the <code>NormalizingEquality</code> returned by this method returns a result
    * obtained by anding the result of forwarding the passed value to this <code>NormalizingEquality</code>'s implementation of the method
    * with the result of forwarding it to the passed <code>Uniformity</code>'s implementation.
    * Essentially, the body of the composed <code>normalizeCanHandle</code> method is:
@@ -151,7 +151,7 @@ trait NormalizingEquality[A] extends Equality[A] { thisNormEq =>
   /**
    * Converts this <code>NormalizingEquality</code> to a <code>Uniformity</code>.
    *
-   * @return a <code>Uniformity</code> whose <code>normalized</code>, <code>normalizedCanHandle</code>, and <code>normalizedOrSame</code> methods 
+   * @return a <code>Uniformity</code> whose <code>normalized</code>, <code>normalizedCanHandle</code>, and <code>normalizedOrSame</code> methods
    *     are implemented by the corresponding methods of this <code>NormalizingEquality</code>.
    */
   final def toUniformity: Uniformity[A] =

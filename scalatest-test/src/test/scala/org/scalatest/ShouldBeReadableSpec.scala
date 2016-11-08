@@ -31,7 +31,7 @@ class ShouldBeReadableSpec extends FunSpec with Matchers {
   val tempDir = createTempDirectory()
   val readableFile = File.createTempFile("delete", "me", tempDir)
   readableFile.setReadable(true)
-  
+
   val secretFile = new File(tempDir, "imaginary")
   secretFile.setReadable(false)
   // SKIP-SCALATESTJS-END
@@ -39,15 +39,15 @@ class ShouldBeReadableSpec extends FunSpec with Matchers {
   //SCALATESTJS-ONLY trait File { def isReadable: Boolean }
   //SCALATESTJS-ONLY val readableFile = new File { val isReadable = true }
   //SCALATESTJS-ONLY val secretFile = new File { val isReadable = false }
-  
+
   val fileName: String = "ShouldBeReadableSpec.scala"
-    
-  def wasNotReadable(left: Any): String = 
+
+  def wasNotReadable(left: Any): String =
     FailureMessages.wasNotReadable(prettifier, left)
-    
-  def wasReadable(left: Any): String = 
+
+  def wasReadable(left: Any): String =
     FailureMessages.wasReadable(prettifier, left)
-  
+
   it("readableFile should be readable, secretFile should not be readable") {
     // SKIP-SCALATESTJS-START
     assert(readableFile.canRead === true)
@@ -199,8 +199,8 @@ class ShouldBeReadableSpec extends FunSpec with Matchers {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
   }
-  
+
 }

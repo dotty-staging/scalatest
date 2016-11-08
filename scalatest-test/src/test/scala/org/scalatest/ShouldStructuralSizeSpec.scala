@@ -28,63 +28,63 @@ import org.scalactic.Prettifier
 class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormallyThrowsAssertion {
 
   private val prettifier = Prettifier.default
-  
-  def hadSizeInsteadOfExpectedSize(left: Any, leftSize: Long, expectedSize: Long): String = 
+
+  def hadSizeInsteadOfExpectedSize(left: Any, leftSize: Long, expectedSize: Long): String =
     FailureMessages.hadSizeInsteadOfExpectedSize(prettifier, left, leftSize, expectedSize)
-    
-  def hadSize(left: Any, expectedSize: Int): String = 
+
+  def hadSize(left: Any, expectedSize: Int): String =
     FailureMessages.hadSize(prettifier, left, expectedSize)
-    
-  def commaAnd(left: String, right: String): String = 
+
+  def commaAnd(left: String, right: String): String =
     FailureMessages.commaAnd(prettifier, UnquotedString(left), UnquotedString(right))
-  
-  def commaBut(left: String, right: String): String = 
+
+  def commaBut(left: String, right: String): String =
     FailureMessages.commaBut(prettifier, UnquotedString(left), UnquotedString(right))
-  
+
   describe("The 'have size (Int)' syntax ") {
-    
+
     describe("on an arbitrary object that has an empty-paren Int size method") {
-  
+
       class Sizey(len: Int) {
         def size(): Int = len
         override def toString = "sizey"
       }
       val obj = new Sizey(2)
-  
+
       it("should do nothing if object size matches specified size") {
         obj should have size (2)
         check((len: Int) => returnsNormally(new Sizey(len) should have size (len)))
       }
-  
+
       it("should do nothing if object size does not match and used with should not") {
         obj should not { have size (3) }
         check((len: Int, wrongLen: Int) => len != wrongLen ==> returnsNormally(new Sizey(len) should not { have size (wrongLen) }))
       }
-  
+
       it("should do nothing when object size matches and used in a logical-and expression") {
         obj should { have size (2) and (have size (3 - 1)) }
         obj should ((have size (2)) and (have size (3 - 1)))
         obj should (have size (2) and have size (3 - 1))
       }
-  
+
       it("should do nothing when object size matches and used in a logical-or expression") {
         obj should { have size (77) or (have size (3 - 1)) }
         obj should ((have size (77)) or (have size (3 - 1)))
         obj should (have size (77) or have size (3 - 1))
       }
-  
+
       it("should do nothing when object size doesn't match and used in a logical-and expression with not") {
         obj should { not { have size (5) } and not { have size (3) }}
         obj should ((not have size (5)) and (not have size (3)))
         obj should (not have size (5) and not have size (3))
       }
-  
+
       it("should do nothing when object size doesn't match and used in a logical-or expression with not") {
         obj should { not { have size (2) } or not { have size (3) }}
         obj should ((not have size (2)) or (not have size (3)))
         obj should (not have size (2) or not have size (3))
       }
-  
+
       it("should throw TestFailedException if object size does not match specified size") {
         val caught1 = intercept[TestFailedException] {
           obj should have size (3)
@@ -92,7 +92,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught1.getMessage === hadSizeInsteadOfExpectedSize(obj, obj.size, 3))
         check((len: Int) => throwsTestFailedException(new Sizey(len) should have size (len + 1)))
       }
-  
+
       it("should throw TestFailedException with normal error message if specified size is negative") {
         val caught1 = intercept[TestFailedException] {
           obj should have size (-2)
@@ -100,7 +100,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught1.getMessage === hadSizeInsteadOfExpectedSize(obj, obj.size, -2))
         check((len: Int) => throwsTestFailedException(new Sizey(len) should have size (if ((len == 0) || (len == MIN_VALUE)) -1 else -len)))
       }
-  
+
       it("should throw an assertion error when object size doesn't match and used in a logical-and expression") {
 
         val caught1 = intercept[TestFailedException] {
@@ -118,7 +118,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         }
         assert(caught3.getMessage === hadSizeInsteadOfExpectedSize(obj, obj.size, 5))
       }
-  
+
       it("should throw an assertion error when object size doesn't match and used in a logical-or expression") {
 
         val caught1 = intercept[TestFailedException] {
@@ -136,7 +136,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         }
         assert(caught3.getMessage === commaAnd(hadSizeInsteadOfExpectedSize(obj, obj.size, 55), hadSizeInsteadOfExpectedSize(obj, obj.size, 22)))
       }
-  
+
       it("should throw an assertion error when object size matches and used in a logical-and expression with not") {
 
         val caught1 = intercept[TestFailedException] {
@@ -154,7 +154,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         }
         assert(caught3.getMessage === commaBut(hadSizeInsteadOfExpectedSize(obj, obj.size, 3), hadSize(obj, 2)))
       }
-  
+
       it("should throw an assertion error when object size matches and used in a logical-or expression with not") {
 
         val caught1 = intercept[TestFailedException] {
@@ -173,7 +173,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught3.getMessage === commaAnd(hadSize(obj, 2), hadSize(obj, 2)))
       }
     }
-    
+
     describe("on an arbitrary object that has a parameterless Int size method") {
 
       class Sizey(len: Int) {
@@ -304,7 +304,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught3.getMessage === commaAnd(hadSize(obj, 2), hadSize(obj, 2)))
       }
     }
-    
+
     describe("on an arbitrary object that has a Int size field") {
 
       class Sizey(len: Int) {
@@ -435,8 +435,8 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught3.getMessage === commaAnd(hadSize(obj, 2), hadSize(obj, 2)))
       }
     }
-    
-    
+
+
     describe("on an arbitrary object that has an empty-paren Int getSize method") {
 
       class Sizey(len: Int) {
@@ -567,7 +567,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught3.getMessage === commaAnd(hadSize(obj, 2), hadSize(obj, 2)))
       }
     }
-    
+
     describe("on an arbitrary object that has a parameterless Int getSize method") {
 
       class Sizey(len: Int) {
@@ -698,7 +698,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught3.getMessage === commaAnd(hadSize(obj, 2), hadSize(obj, 2)))
       }
     }
-    
+
     describe("on an arbitrary object that has an Int getSize field") {
 
       class Sizey(len: Int) {
@@ -830,7 +830,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
       }
     }
   }
-  
+
   describe("The 'have length (Long)' syntax ") {
     describe("on an arbitrary object that has an empty-paren Long size method") {
 
@@ -968,7 +968,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught3.getMessage === commaAnd(hadSize(obj, 2), hadSize(obj, 2)))
       }
     }
-    
+
     describe("on an arbitrary object that has a parameterless Long size method") {
 
       class Sizey(len: Long) {
@@ -1103,7 +1103,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught3.getMessage === commaAnd(hadSize(obj, 2), hadSize(obj, 2)))
       }
     }
-    
+
     describe("on an arbitrary object that has a Long size field") {
 
       class Sizey(len: Long) {
@@ -1236,7 +1236,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught3.getMessage === commaAnd(hadSize(obj, 2), hadSize(obj, 2)))
       }
     }
-    
+
     describe("on an arbitrary object that has an empty-paren Long getSize method") {
 
       class Sizey(len: Long) {
@@ -1371,7 +1371,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught3.getMessage === commaAnd(hadSize(obj, 2), hadSize(obj, 2)))
       }
     }
-    
+
     describe("on an arbitrary object that has a parameterless Long getSize method") {
 
       class Sizey(len: Long) {
@@ -1506,7 +1506,7 @@ class ShouldStructuralSizeSpec extends FunSpec with Checkers with ReturnsNormall
         assert(caught3.getMessage === commaAnd(hadSize(obj, 2), hadSize(obj, 2)))
       }
     }
-    
+
     describe("on an arbitrary object that has a Long getSize field") {
 
       class Sizey(len: Long) {

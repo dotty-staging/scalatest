@@ -29,25 +29,25 @@ class ListShouldContainTheSameElementsInOrderAsSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
 
-  private def upperCase(value: Any): Any = 
+  private def upperCase(value: Any): Any =
     value match {
       case l: List[_] => l.map(upperCase(_))
       case s: String => s.toUpperCase
       case c: Char => c.toString.toUpperCase.charAt(0)
       case (s1: String, s2: String) => (s1.toUpperCase, s2.toUpperCase)
-      case e: java.util.Map.Entry[_, _] => 
+      case e: java.util.Map.Entry[_, _] =>
         (e.getKey, e.getValue) match {
           case (k: String, v: String) => Entry(k.toUpperCase, v.toUpperCase)
           case _ => value
         }
       case _ => value
     }
-  
+
   val upperCaseStringEquality =
     new Equality[String] {
       def areEqual(a: String, b: Any): Boolean = upperCase(a) == upperCase(b)
     }
-  
+
   //ADDITIONAL//
 
   describe("a List") {
@@ -175,7 +175,7 @@ class ListShouldContainTheSameElementsInOrderAsSpec extends FunSpec {
         }
       }
     }
-    
+
     describe("when used with shouldNot contain theSameElementsInOrderAs (..)") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {
@@ -411,7 +411,7 @@ class ListShouldContainTheSameElementsInOrderAsSpec extends FunSpec {
         }
       }
     }
-    
+
     describe("when used with shouldNot contain theSameElementsInOrderAs (..)") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {

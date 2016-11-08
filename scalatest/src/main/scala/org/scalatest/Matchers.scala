@@ -59,11 +59,11 @@ import exceptions.TestFailedException
  * For example, if you mix <code>Matchers</code> into
  * a suite class, you can write an equality assertion in that suite like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * result should equal (3)
  * </pre>
- * 
+ *
  * <p>
  * Here <code>result</code> is a variable, and can be of any type. If the object is an
  * <code>Int</code> with the value 3, execution will continue (<em>i.e.</em>, the expression will result
@@ -71,7 +71,7 @@ import exceptions.TestFailedException
  * will be thrown with a detail message that explains the problem, such as <code>"7 did not equal 3"</code>.
  * This <code>TestFailedException</code> will cause the test to fail.
  * </p>
- * 
+ *
  * <p>
  * Here is a table of contents for this documentation:
  * </p>
@@ -109,12 +109,12 @@ import exceptions.TestFailedException
  * <li><a href="#checkingForExpectedExceptions">Checking for expected exceptions</a></li>
  * <li><a href="#thosePeskyParens">Those pesky parens</a></li>
  * </ul>
- * 
+ *
  * <p>
  * Trait <a href="MustMatchers.html"><code>MustMatchers</code></a> is an alternative to <code>Matchers</code> that provides the exact same
  * meaning, syntax, and behavior as <code>Matchers</code>, but uses the verb <code>must</code> instead of <!-- PRESERVE --><code>should</code>.
  * The two traits differ only in the English semantics of the verb: <!-- PRESERVE --><code>should</code>
- * is informal, making the code feel like conversation between the writer and the reader; <code>must</code> is more formal, making the code feel more like 
+ * is informal, making the code feel like conversation between the writer and the reader; <code>must</code> is more formal, making the code feel more like
  * a written specification.
  * </p>
  *
@@ -141,7 +141,7 @@ import exceptions.TestFailedException
  * <code>equal</code> <code>(right)</code>"
  * statement would require an <code>Equality[Int]</code>.
  * </p>
- * 
+ *
  * <p>
  * By default, an implicit <code>Equality[T]</code> instance is available for any type <code>T</code>, in which equality is implemented
  * by simply invoking <code>==</code>  on the <code>left</code>
@@ -149,7 +149,7 @@ import exceptions.TestFailedException
  * will be invoked on it before comparing with <em>==</em>. Thus, the following expression
  * will yield false, because <code>Array</code>'s <code>equals</code> method compares object identity:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * Array(1, 2) == Array(1, 2) // yields false
  * </pre>
@@ -170,7 +170,7 @@ import exceptions.TestFailedException
  *
  * <p>
  * You can customize the meaning of equality for a type when using "<code>should</code> <code>equal</code>," "<code>should</code> <code>===</code>,"
- * or <code>shouldEqual</code> syntax by defining implicit <code>Equality</code> instances that will be used instead of default <code>Equality</code>. 
+ * or <code>shouldEqual</code> syntax by defining implicit <code>Equality</code> instances that will be used instead of default <code>Equality</code>.
  * You might do this to normalize types before comparing them with <code>==</code>, for instance, or to avoid calling the <code>==</code> method entirely,
  * such as if you want to compare <code>Double</code>s with a tolerance.
  * For an example, see the main documentation of <a href="../scalactic/Equality.html">trait <code>Equality</code></a>.
@@ -236,7 +236,7 @@ import exceptions.TestFailedException
  *
  * <a name="checkingSizeAndLength"></a>
  * <h2>Checking size and length</h2>
- * 
+ *
  * <p>
  * You can check the size or length of any type of object for which it
  * makes sense. Here's how checking for length looks:
@@ -244,21 +244,21 @@ import exceptions.TestFailedException
  * <pre class="stHighlight">
  * result should have length 3
  * </pre>
- * 
+ *
  * <p>
  * Size is similar:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * result should have size 10
  * </pre>
- * 
+ *
  * <p>
  * The <code>length</code> syntax can be used with <code>String</code>, <code>Array</code>, any <code>scala.collection.GenSeq</code>,
- * any <code>java.util.List</code>, and any type <code>T</code> for which an implicit <code>Length[T]</code> type class is 
+ * any <code>java.util.List</code>, and any type <code>T</code> for which an implicit <code>Length[T]</code> type class is
  * available in scope.
  * Similarly, the <code>size</code> syntax can be used with <code>Array</code>, any <code>scala.collection.GenTraversable</code>,
- * any <code>java.util.Collection</code>, any <code>java.util.Map</code>, and any type <code>T</code> for which an implicit <code>Size[T]</code> type class is 
+ * any <code>java.util.Collection</code>, any <code>java.util.Map</code>, and any type <code>T</code> for which an implicit <code>Size[T]</code> type class is
  * available in scope. You can enable the <code>length</code> or <code>size</code> syntax for your own arbitrary types, therefore,
  * by defining <a href="enablers/Length.html"><code>Length</code></a> or <a href="enablers/Size.html"><code>Size</code></a> type
  * classes for those types.
@@ -285,25 +285,25 @@ import exceptions.TestFailedException
  * string should endWith ("world")
  * string should include ("seven")
  * </pre>
- * 
+ *
  * <p>
  * You can check for whether a string starts with, ends with, or includes a regular expression, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * string should startWith regex "Hel*o"
  * string should endWith regex "wo.ld"
  * string should include regex "wo.ld"
  * </pre>
- * 
+ *
  * <p>
  * And you can check whether a string fully matches a regular expression, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * string should fullyMatch regex """(-)?(\d+)(\.\d*)?"""
  * </pre>
- * 
+ *
  * <p>
  * The regular expression passed following the <code>regex</code> token can be either a <code>String</code>
  * or a <code>scala.util.matching.Regex</code>.
@@ -320,7 +320,7 @@ import exceptions.TestFailedException
  * "xxxabbccxxx" should include regex ("a(b*)(c*)" withGroups ("bb", "cc"))
  * "abbcc" should fullyMatch regex ("a(b*)(c*)" withGroups ("bb", "cc"))
  * </pre>
- * 
+ *
  * <p>
  * You can check whether a string is empty with <code>empty</code>:
  * </p>
@@ -334,10 +334,10 @@ import exceptions.TestFailedException
  * treating the <code>String</code>s as collections of characters. For examples, see the
  * <a href="#stringsAndArraysAsCollections"><code>String</code>s and <code>Array</code>s as collections</a> section below.
  * </p>
- * 
+ *
  * <a name="greaterAndLessThan"></a>
  * <h2>Greater and less than</h2>
- * 
+ *
  * <p>
  * You can check whether any type for which an implicit <code>Ordering[T]</code> is available
  * is greater than, less than, greater than or equal, or less
@@ -352,7 +352,7 @@ import exceptions.TestFailedException
  *
  * <a name="checkingBooleanPropertiesWithBe"></a>
  * <h2>Checking <code>Boolean</code> properties with <code>be</code></h2>
- * 
+ *
  * <p>
  * If an object has a method that takes no parameters and returns boolean, you can check
  * it by placing a <code>Symbol</code> (after <code>be</code>) that specifies the name
@@ -361,21 +361,21 @@ import exceptions.TestFailedException
  * <code>'traversableAgain</code> results in a <code>Symbol</code> object at runtime, as does
  * <code>'completed</code> and <code>'file</code>. Here's an example:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * iter shouldBe 'traversableAgain
  * </pre>
- * 
+ *
  * Given this code, ScalaTest will use reflection to look on the object referenced from
  * <code>emptySet</code> for a method that takes no parameters and results in <code>Boolean</code>,
  * with either the name <code>empty</code> or <code>isEmpty</code>. If found, it will invoke
  * that method. If the method returns <code>true</code>, execution will continue. But if it returns
  * <code>false</code>, a <code>TestFailedException</code> will be thrown that will contain a detail message, such as:
- * 
+ *
  * <pre class="stHighlight">
  * non-empty iterator was not traversableAgain
  * </pre>
- * 
+ *
  * <p>
  * This <code>be</code> syntax can be used with any reference (<code>AnyRef</code>) type.  If the object does
  * not have an appropriately named predicate method, you'll get a <code>TestFailedException</code>
@@ -383,18 +383,18 @@ import exceptions.TestFailedException
  * (For the details on how a field or method is selected during this
  * process, see the documentation for <a href="words/BeWord.html"><code>BeWord</code></a>.)
  * </p>
- * 
+ *
  * <p>
  * If you think it reads better, you can optionally put <code>a</code> or <code>an</code> after
  * <code>be</code>. For example, <code>java.io.File</code> has two predicate methods,
  * <code>isFile</code> and <code>isDirectory</code>. Thus with a <code>File</code> object
  * named <code>temp</code>, you could write:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * temp should be a 'file
  * </pre>
- * 
+ *
  * <p>
  * Or, given <code>java.awt.event.KeyEvent</code> has a method <code>isActionKey</code> that takes
  * no arguments and returns <code>Boolean</code>, you could assert that a <code>KeyEvent</code> is
@@ -404,7 +404,7 @@ import exceptions.TestFailedException
  * <pre class="stHighlight">
  * keyEvent should be an 'actionKey
  * </pre>
- * 
+ *
  * <p>
  * If you prefer to check <code>Boolean</code> properties in a type-safe manner, you can use a <code>BePropertyMatcher</code>.
  * This would allow you to write expressions such as:
@@ -415,7 +415,7 @@ import exceptions.TestFailedException
  * temp should be a file
  * keyEvent should be an actionKey
  * </pre>
- * 
+ *
  * <p>
  * These expressions would fail to compile if <code>should</code> is used on an inappropriate type, as determined
  * by the type parameter of the <code>BePropertyMatcher</code> being used. (For example, <code>file</code> in this example
@@ -430,7 +430,7 @@ import exceptions.TestFailedException
  * If you want to create a new way of using <code>be</code>, which doesn't map to an actual property on the
  * type you care about, you can create a <code>BeMatcher</code>. You could use this, for example, to create <code>BeMatcher[Int]</code>
  * called <code>odd</code>, which would match any odd <code>Int</code>, and <code>even</code>, which would match
- * any even <code>Int</code>. 
+ * any even <code>Int</code>.
  * Given this pair of <code>BeMatcher</code>s, you could check whether an <code>Int</code> was odd or even with expressions like:
  * </p>
  *
@@ -443,28 +443,28 @@ import exceptions.TestFailedException
  *
  * <a name="checkingObjectIdentity"></a>
  * <h2>Checking object identity</h2>
- * 
+ *
  * <p>
  * If you need to check that two references refer to the exact same object, you can write:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * ref1 should be theSameInstanceAs ref2
  * </pre>
- * 
+ *
  * <a name="checkingAnObjectsClass"></a>
  * <h2>Checking an object's class</h2>
- * 
+ *
  * <p>
  * If you need to check that an object is an instance of a particular class or trait, you can supply the type to
  * &ldquo;<code>be</code> <code>a</code>&rdquo; or &ldquo;<code>be</code> <code>an</code>&rdquo;:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * result1 shouldBe a [Tiger]
  * result1 should not be an [Orangutan]
  * </pre>
- * 
+ *
  * <p>
  * Because type parameters are erased on the JVM, we recommend you insert an underscore for any type parameters
  * when using this syntax. Both of the following test only that the result is an instance of <code>List[_]</code>, because at
@@ -475,15 +475,15 @@ import exceptions.TestFailedException
  * result shouldBe a [List[_]] // recommended
  * result shouldBe a [List[Fruit]] // discouraged
  * </pre>
- * 
+ *
  * <a name="checkingNumbersAgainstARange"></a>
  * <h2>Checking numbers against a range</h2>
- * 
+ *
  * <p>
  * Often you may want to check whether a number is within a
  * range. You can do that using the <code>+-</code> operator, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * sevenDotOh should equal (6.9 +- 0.2)
  * sevenDotOh should === (6.9 +- 0.2)
@@ -491,13 +491,13 @@ import exceptions.TestFailedException
  * sevenDotOh shouldEqual 6.9 +- 0.2
  * sevenDotOh shouldBe 6.9 +- 0.2
  * </pre>
- * 
+ *
  * <p>
  * Any of these expressions will cause a <code>TestFailedException</code> to be thrown if the floating point
  * value, <code>sevenDotOh</code> is outside the range <code>6.7</code> to <code>7.1</code>.
  * You can use <code>+-</code> with any type <code>T</code> for which an implicit <code>Numeric[T]</code> exists, such as integral types:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * seven should equal (6 +- 2)
  * seven should === (6 +- 2)
@@ -505,22 +505,22 @@ import exceptions.TestFailedException
  * seven shouldEqual 6 +- 2
  * seven shouldBe 6 +- 2
  * </pre>
- * 
+ *
  * <a name="checkingForEmptiness"></a>
  * <h2>Checking for emptiness</h2>
  *
  * <p>
  * You can check whether an object is "empty", like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * traversable shouldBe empty
  * javaMap should not be empty
  * </pre>
- * 
+ *
  * <p>
  * The <code>empty</code> token can be used with any type <code>L</code> for which an implicit <code>Emptiness[L]</code> exists.
- * The <code>Emptiness</code> companion object provides implicits for <code>GenTraversable[E]</code>, <code>java.util.Collection[E]</code>, 
+ * The <code>Emptiness</code> companion object provides implicits for <code>GenTraversable[E]</code>, <code>java.util.Collection[E]</code>,
  * <code>java.util.Map[K, V]</code>, <code>String</code>, <code>Array[E]</code>, and <code>Option[E]</code>. In addition, the
  * <code>Emptiness</code> companion object provides structural implicits for types that declare an <code>isEmpty</code> method that
  * returns a <code>Boolean</code>. Here are some examples:
@@ -544,24 +544,24 @@ import exceptions.TestFailedException
  *
  * scala&gt; Array(1, 2, 3) should not be empty
  * </pre>
- * 
+ *
  * <a name="workingWithContainers"></a>
  * <h2>Working with "containers"</h2>
  *
  * <p>
  * You can check whether a collection contains a particular element like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * traversable should contain ("five")
  * </pre>
- * 
+ *
  * <p>
- * The <code>contain</code> syntax shown above can be used with any type <code>C</code> that has a "containing" nature, evidenced by 
+ * The <code>contain</code> syntax shown above can be used with any type <code>C</code> that has a "containing" nature, evidenced by
  * an implicit <code>org.scalatest.enablers.Containing[L]</code>, where <code>L</code> is left-hand type on
  * which <code>should</code> is invoked. In the <code>Containing</code>
- * companion object, implicits are provided for types <code>GenTraversable[E]</code>, <code>java.util.Collection[E]</code>, 
- * <code>java.util.Map[K, V]</code>, <code>String</code>, <code>Array[E]</code>, and <code>Option[E]</code>. 
+ * companion object, implicits are provided for types <code>GenTraversable[E]</code>, <code>java.util.Collection[E]</code>,
+ * <code>java.util.Map[K, V]</code>, <code>String</code>, <code>Array[E]</code>, and <code>Option[E]</code>.
  * Here are some examples:
  * </p>
  *
@@ -581,7 +581,7 @@ import exceptions.TestFailedException
  *
  * scala&gt; Some(2) should contain (2)
  * </pre>
- * 
+ *
  * <p>
  * ScalaTest's implicit methods that provide the <code>Containing[L]</code> type classes require an <code>Equality[E]</code>, where
  * <code>E</code> is an element type. For example, to obtain a <code>Containing[Array[Int]]</code> you must supply an <code>Equality[Int]</code>,
@@ -643,7 +643,7 @@ import exceptions.TestFailedException
  * </pre>
  *
  * <p>
- * If you really want to ensure one or more of the specified elements are contained in the containing object, 
+ * If you really want to ensure one or more of the specified elements are contained in the containing object,
  * use <code>atLeastOneOf</code>, described below, instead of <code>oneOf</code>. Keep in mind, <code>oneOf</code>
  * means "<em>exactly</em> one of."
  * </p>
@@ -652,7 +652,7 @@ import exceptions.TestFailedException
  * Note also that with any <code>contain</code> syntax, you can place custom implicit <code>Equality[E]</code> instances in scope
  * to customize how containership is determined, or use the explicitly DSL. Here's an example:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * (Array("Doe", "Ray", "Me") should contain oneOf ("X", "RAY", "BEAM")) (after being lowerCased)
  * </pre>
@@ -660,7 +660,7 @@ import exceptions.TestFailedException
  * <p>
  * If you have a collection of elements that you'd like to use in a "one of" comparison, you can use "oneElementOf," like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain oneElementOf List(5, 7, 9)
  * Some(7) should contain oneElementOf Vector(5, 7, 9)
@@ -682,7 +682,7 @@ import exceptions.TestFailedException
  * <p>
  * If you have a collection of elements that you'd like to use in a "none of" comparison, you can use "noElementsOf," like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain noElementsOf List(7, 8, 9)
  * Some(0) should contain noElementsOf Vector(7, 8, 9)
@@ -700,17 +700,17 @@ import exceptions.TestFailedException
  * The reason, essentially, is that <code>contain</code> syntax that makes sense for <code>Option</code> is enabled by
  * <code>Containing[L]</code>, whereas syntax that does <em>not</em> make sense for <code>Option</code> is enabled
  * by <code>Aggregating[L]</code>. For example, it doesn't make sense to assert that an <code>Option[Int]</code> contains all of a set of integers, as it
- * could only ever contain one of them. But this does make sense for a type such as <code>List[Int]</code> that can aggregate zero to many integers. 
+ * could only ever contain one of them. But this does make sense for a type such as <code>List[Int]</code> that can aggregate zero to many integers.
  * </p>
- * 
+ *
  * <p>
- * The <code>Aggregating</code> companion object provides implicit instances of <code>Aggregating[L]</code> 
- * for types <code>GenTraversable[E]</code>, <code>java.util.Collection[E]</code>, 
+ * The <code>Aggregating</code> companion object provides implicit instances of <code>Aggregating[L]</code>
+ * for types <code>GenTraversable[E]</code>, <code>java.util.Collection[E]</code>,
  * <code>java.util.Map[K, V]</code>, <code>String</code>, <code>Array[E]</code>. Note that these are the same types as are supported with
  * <code>Containing</code>, but with <code>Option[E]</code> missing.
  * Here are some examples:
  * </p>
- * 
+ *
  * <p>
  * The <code>contain</code> <code>atLeastOneOf</code> syntax, for example, works for any type <code>L</code> for which an <code>Aggregating[L]</code> exists. It ensures
  * that at least one of (<em>i.e.</em>, one or more of) the specified objects are contained in the containing object:
@@ -735,11 +735,11 @@ import exceptions.TestFailedException
  * <pre class="stHighlight">
  * (Vector(" A", "B ") should contain atLeastOneOf ("a ", "b", "c")) (after being lowerCased and trimmed)
  * </pre>
- * 
+ *
  * <p>
  * If you have a collection of elements that you'd like to use in an "at least one of" comparison, you can use "atLeastOneElementOf," like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * List(1, 2, 3) should contain atLeastOneElementOf List(2, 3, 4)
  * Array(1, 2, 3) should contain atLeastOneElementOf Vector(3, 4, 5)
@@ -758,7 +758,7 @@ import exceptions.TestFailedException
  * <p>
  * If you have a collection of elements that you'd like to use in a "at most one of" comparison, you can use "atMostOneElementOf," like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain atMostOneElementOf Vector(5, 6, 7)
  * </pre>
@@ -774,7 +774,7 @@ import exceptions.TestFailedException
  * <p>
  * If you have a collection of elements that you'd like to use in a "all of" comparison, you can use "allElementsOf," like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain allElementsOf Array(2, 3, 5)
  * </pre>
@@ -814,13 +814,13 @@ import exceptions.TestFailedException
  * org.scalatest.exceptions.TestFailedException: List(1, 2, 2, 3, 3, 3) did not contain the same elements as Vector(3, 2, 3, 1, 2)
  *         at ...
  * </pre>
- * 
+ *
  * <p>
  * Note that no <code>onlyElementsOf</code> matcher is provided, because it would have the same
  * behavior as <code>theSameElementsAs</code>. (<em>I.e.</em>, if you were looking for <code>onlyElementsOf</code>, please use <code>theSameElementsAs</code>
  * instead.)
  * </p>
- * 
+ *
  * </p>
  * <a name="workingWithSequences"></a>
  * <h2>Working with "sequences"</h2>
@@ -832,16 +832,16 @@ import exceptions.TestFailedException
  * The reason, essentially, is that <code>contain</code> syntax that implies an "order" of elements makes sense only for types that place elements in a sequence.
  * For example, it doesn't make sense to assert that a <code>Map[String, Int]</code> or <code>Set[Int]</code> contains all of a set of integers in a particular
  * order, as these types don't necessarily define an order for their elements. But this does make sense for a type such as <code>Seq[Int]</code> that does define
- * an order for its elements. 
+ * an order for its elements.
  * </p>
- * 
+ *
  * <p>
- * The <code>Sequencing</code> companion object provides implicit instances of <code>Sequencing[L]</code> 
- * for types <code>GenSeq[E]</code>, <code>java.util.List[E]</code>, 
- * <code>String</code>, and <code>Array[E]</code>. 
+ * The <code>Sequencing</code> companion object provides implicit instances of <code>Sequencing[L]</code>
+ * for types <code>GenSeq[E]</code>, <code>java.util.List[E]</code>,
+ * <code>String</code>, and <code>Array[E]</code>.
  * Here are some examples:
  * </p>
- * 
+ *
  * <p>
  * Similar to <code>Containing[L]</code>, the implicit methods that provide the <code>Aggregating[L]</code> instances require an <code>Equality[E]</code>, where
  * <code>E</code> is an element type. For example, to obtain a <code>Aggregating[Vector[String]]</code> you must supply an <code>Equality[String]</code>,
@@ -853,7 +853,7 @@ import exceptions.TestFailedException
  * </p>
  *
  * <p>
- * The "<code>contain</code> <code>inOrderOnly</code>" syntax lets you assert that the containing object contains <em>only</em> the specified objects, in order. 
+ * The "<code>contain</code> <code>inOrderOnly</code>" syntax lets you assert that the containing object contains <em>only</em> the specified objects, in order.
  * The specified objects may appear multiple times, but must appear in the order they appear in the right-hand list. Here's an example:
  * </p>
  *
@@ -874,7 +874,7 @@ import exceptions.TestFailedException
  * <p>
  * If you have a collection of elements that you'd like to use in a "in order" comparison, you can use "inOrderElementsOf," like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * List(0, 1, 2, 2, 99, 3, 3, 3, 5) should contain inOrderElementsOf Array(1, 2, 3)
  * </pre>
@@ -904,7 +904,7 @@ import exceptions.TestFailedException
  * behavior as <code>theSameElementsInOrderAs</code>. (<em>I.e.</em>, if you were looking for <code>inOrderOnlyElementsOf</code>, please use <code>theSameElementsInOrderAs</code>
  * instead.)
  * </p>
- * 
+ *
  * <a name="workingWithSortables"></a>
  * <h2>Working with "sortables"</h2>
  *
@@ -941,13 +941,13 @@ import exceptions.TestFailedException
  * <p>
  * Instead, you will need to convert your iterators to a sequence explicitly before using them in matcher expressions:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * scala&gt; it.toStream should contain (2)
  * </pre>
- * 
+ *
  * <p>
- * We recommend you convert (Scala or Java) iterators to <code>Stream</code>s, as shown in the previous example, so that you can 
+ * We recommend you convert (Scala or Java) iterators to <code>Stream</code>s, as shown in the previous example, so that you can
  * continue to reap any potential benefits provided by the laziness of the underlying iterator.
  * </p>
  *
@@ -958,7 +958,7 @@ import exceptions.TestFailedException
  * You can use the <a href="Inspectors.html"><code>Inspectors</code></a> syntax with matchers as well as assertions. If you have a multi-dimensional collection, such as a
  * list of lists, using <code>Inspectors</code> is your best option:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * val yss =
  *   List(
@@ -1006,7 +1006,7 @@ import exceptions.TestFailedException
  * <p>
  * Here are some examples:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest.Matchers._
  * import org.scalatest.Matchers._
@@ -1030,18 +1030,18 @@ import exceptions.TestFailedException
  *
  * scala&gt; exactly (2, xs) shouldEqual 2
  * org.scalatest.exceptions.TestFailedException: 'exactly(2)' inspection failed, because only 1 element
- *     satisfied the assertion block at index 1: 
- *   at index 0, 1 did not equal 2, 
- *   at index 2, 3 did not equal 2, 
- *   at index 3, 4 did not equal 2, 
- *   at index 4, 5 did not equal 2 
+ *     satisfied the assertion block at index 1:
+ *   at index 0, 1 did not equal 2,
+ *   at index 2, 3 did not equal 2,
+ *   at index 3, 4 did not equal 2,
+ *   at index 4, 5 did not equal 2
  * in List(1, 2, 3, 4, 5)
  *         at ...
  * </pre>
- * 
+ *
  * <p>
  * Like <a href=""><code>Inspectors</code></a>, objects used with inspector shorthands can be any type <code>T</code> for which a <code>Collecting[T, E]</code>
- * is availabe, which by default includes <code>GenTraversable</code>, 
+ * is availabe, which by default includes <code>GenTraversable</code>,
  * Java <code>Collection</code>, Java <code>Map</code>, <code>Array</code>s, and <code>String</code>s.
  * Here are some examples:
  * </p>
@@ -1049,25 +1049,25 @@ import exceptions.TestFailedException
  * <pre class="stREPL">
  * scala&gt; import org.scalatest._
  * import org.scalatest._
- * 
+ *
  * scala&gt; import Matchers._
  * import Matchers._
- * 
+ *
  * scala&gt; all (Array(1, 2, 3)) should be &lt; 5
- * 
+ *
  * scala&gt; import collection.JavaConverters._
  * import collection.JavaConverters._
- * 
+ *
  * scala&gt; val js = List(1, 2, 3).asJava
  * js: java.util.List[Int] = [1, 2, 3]
- * 
+ *
  * scala&gt; all (js) should be &lt; 5
- * 
- * scala&gt; val jmap = Map("a" -&gt; 1, "b" -&gt; 2).asJava 
+ *
+ * scala&gt; val jmap = Map("a" -&gt; 1, "b" -&gt; 2).asJava
  * jmap: java.util.Map[String,Int] = {a=1, b=2}
- * 
+ *
  * scala&gt; atLeast(1, jmap) shouldBe Entry("b", 2)
- * 
+ *
  * scala&gt; atLeast(2, "hello, world!") shouldBe 'o'
  * </pre>
  *
@@ -1100,39 +1100,39 @@ import exceptions.TestFailedException
  * For example, you can check whether a Java <code>Collection</code> or <code>Map</code> is <code>empty</code>,
  * like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * javaCollection should be ('empty)
  * javaMap should be ('empty)
  * </pre>
- * 
+ *
  * <p>
  * Even though Java's <code>List</code> type doesn't actually have a <code>length</code> or <code>getLength</code> method,
  * you can nevertheless check the length of a Java <code>List</code> (<code>java.util.List</code>) like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * javaList should have length 9
  * </pre>
- * 
+ *
  * <p>
  * You can check the size of any Java <code>Collection</code> or <code>Map</code>, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * javaMap should have size 20
  * javaSet should have size 90
  * </pre>
- * 
+ *
  * <p>
  * In addition, you can check whether a Java <code>Collection</code> contains a particular
  * element, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * javaCollection should contain ("five")
  * </pre>
- * 
+ *
  * <p>
  * One difference to note between the syntax supported on Java and Scala collections is that
  * in Java, <code>Map</code> is not a subtype of <code>Collection</code>, and does not
@@ -1144,27 +1144,27 @@ import exceptions.TestFailedException
  * and defines a convenience implementation of <code>java.util.Map.Entry</code> in
  * <a href="Entry.html"><code>org.scalatest.Entry</code></a>. Here's how you use it:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * javaMap should contain (Entry(2, 3))
  * javaMap should contain oneOf (Entry(2, 3), Entry(3, 4))
  * </pre>
- * 
+ *
  * You can you alse just check whether a Java <code>Map</code> contains a particular key, or value, like this:
- * 
+ *
  * <pre class="stHighlight">
  * javaMap should contain key 1
  * javaMap should contain value "Howdy"
  * </pre>
- * 
+ *
  * <a name="stringsAndArraysAsCollections"></a>
  * <h2><code>String</code>s and <code>Array</code>s as collections</h2>
- * 
+ *
  * <p>
  * You can also use all the syntax described above for Scala and Java collections on <code>Array</code>s and
  * <code>String</code>s. Here are some examples:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest._
  * import org.scalatest._
@@ -1187,34 +1187,34 @@ import exceptions.TestFailedException
  *
  * <a name="beAsAnEqualityComparison"></a>
  * <h2><code>be</code> as an equality comparison</h2>
- * 
+ *
  * <p>
  * All uses of <code>be</code> other than those shown previously perform an equality comparison. They work
  * the same as <code>equal</code> when it is used with default equality. This redundancy between <code>be</code> and <code>equals</code> exists in part
- * because it enables syntax that sometimes sounds more natural. For example, instead of writing: 
+ * because it enables syntax that sometimes sounds more natural. For example, instead of writing:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * result should equal (null)
  * </pre>
- * 
+ *
  * <p>
  * You can write:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * result should be (null)
  * </pre>
- * 
+ *
  * <p>
  * (Hopefully you won't write that too much given <code>null</code> is error prone, and <code>Option</code>
- * is usually a better, well, option.) 
+ * is usually a better, well, option.)
  * As mentioned <a href="#checkingEqualityWithMatchers">previously</a>, the other difference between <code>equal</code>
  * and <code>be</code> is that <code>equal</code> delegates the equality check to an <code>Equality</code> typeclass, whereas
  * <code>be</code> always uses default equality.
  * Here are some other examples of <code>be</code> used for equality comparison:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * sum should be (7.0)
  * boring should be (false)
@@ -1223,7 +1223,7 @@ import exceptions.TestFailedException
  * option should be (None)
  * option should be (Some(1))
  * </pre>
- * 
+ *
  * <p>
  * As with <code>equal</code> used with default equality, using <code>be</code> on arrays results in <code>deep</code> being called on both arrays prior to
  * calling <code>equal</code>. As a result,
@@ -1257,22 +1257,22 @@ import exceptions.TestFailedException
  *
  * <a name="beingNegative"></a>
  * <h2>Being negative</h2>
- * 
+ *
  * <p>
  * If you wish to check the opposite of some condition, you can simply insert <code>not</code> in the expression.
  * Here are a few examples:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * result should not be (null)
  * sum should not be &lt;= (10)
  * mylist should not equal (yourList)
  * string should not startWith ("Hello")
  * </pre>
- * 
+ *
  * <a name="checkingThatCodeDoesNotCompile"></a>
  * <h2>Checking that a snippet of code does not compile</h2>
- * 
+ *
  * <p>
  * Often when creating libraries you may wish to ensure that certain arrangements of code that
  * represent potential &ldquo;user errors&rdquo; do not compile, so that your library is more error resistant.
@@ -1308,35 +1308,35 @@ import exceptions.TestFailedException
  *
  * <p>
  * Although the previous three constructs are implemented with macros that determine at compile time whether
- * the snippet of code represented by the string does or does not compile, errors 
+ * the snippet of code represented by the string does or does not compile, errors
  * are reported as test failures at runtime.
  * </p>
  *
  * <a name="logicalExpressions"></a>
  * <h2>Logical expressions with <code>and</code> and <code>or</code></h2>
- * 
+ *
  * <p>
  * You can also combine matcher expressions with <code>and</code> and/or <code>or</code>, however,
- * you must place parentheses or curly braces around the <code>and</code> or <code>or</code> expression. For example, 
+ * you must place parentheses or curly braces around the <code>and</code> or <code>or</code> expression. For example,
  * this <code>and</code>-expression would not compile, because the parentheses are missing:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * map should contain key ("two") and not contain value (7) // ERROR, parentheses missing!
  * </pre>
- * 
+ *
  * <p>
  * Instead, you need to write:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * map should (contain key ("two") and not contain value (7))
  * </pre>
- * 
+ *
  * <p>
  * Here are some more examples:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * number should (be &gt; (0) and be &lt;= (10))
  * option should (equal (Some(List(1, 2, 3))) or be (None))
@@ -1347,7 +1347,7 @@ import exceptions.TestFailedException
  *   equal ("fum")
  * )
  * </pre>
- * 
+ *
  * <p>
  * Two differences exist between expressions composed of these <code>and</code> and <code>or</code> operators and the expressions you can write
  * on regular <code>Boolean</code>s using its <code>&amp;&amp;</code> and <code>||</code> operators. First, expressions with <code>and</code>
@@ -1357,7 +1357,7 @@ import exceptions.TestFailedException
  * <pre class="stHighlight">
  * "yellow" should (equal ("blue") and equal { println("hello, world!"); "green" })
  * </pre>
- * 
+ *
  * <p>
  * In other words, the entire <code>and</code> or <code>or</code> expression is always evaluated, so you'll see any side effects
  * of the right-hand side even if evaluating
@@ -1368,11 +1368,11 @@ import exceptions.TestFailedException
  * to make it easier and quicker for you to ascertain which part of the expression caused the failure. The failure message for the previous
  * expression, for example, would be:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * "yellow" did not equal "blue"
  * </pre>
- * 
+ *
  * <p>
  * Most likely this lack of short-circuiting would rarely be noticeable, because evaluating the right hand side will usually not
  * involve a side effect. One situation where it might show up, however, is if you attempt to <code>and</code> a <code>null</code> check on a variable with an expression
@@ -1382,7 +1382,7 @@ import exceptions.TestFailedException
  * <pre class="stHighlight">
  * map should (not be (null) and contain key ("ouch"))
  * </pre>
- * 
+ *
  * <p>
  * If <code>map</code> is <code>null</code>, the test will indeed fail, but with a <code>NullArgumentException</code>, not a
  * <code>TestFailedException</code>. Here, the <code>NullArgumentException</code> is the visible right-hand side effect. To get a
@@ -1393,7 +1393,7 @@ import exceptions.TestFailedException
  * map should not be (null)
  * map should contain key ("ouch")
  * </pre>
- * 
+ *
  * <p>
  * If <code>map</code> is <code>null</code> in this case, the <code>null</code> check in the first expression will fail with
  * a <code>TestFailedException</code>, and the second expression will never be executed.
@@ -1405,76 +1405,76 @@ import exceptions.TestFailedException
  * have the same precedence. Thus although the <code>Boolean</code> expression <code>(a || b &amp;&amp; c)</code> will evaluate the <code>&amp;&amp;</code> expression
  * before the <code>||</code> expression, like <code>(a || (b &amp;&amp; c))</code>, the following expression:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * traversable should (contain (7) or contain (8) and have size (9))
  * </pre>
- * 
+ *
  * <p>
  * Will evaluate left to right, as:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * traversable should ((contain (7) or contain (8)) and have size (9))
  * </pre>
- * 
+ *
  * <p>
  * If you really want the <code>and</code> part to be evaluated first, you'll need to put in parentheses, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * traversable should (contain (7) or (contain (8) and have size (9)))
  * </pre>
- * 
+ *
  * <a name="workingWithOptions"></a>
  * <h2>Working with <code>Option</code>s</h2>
- * 
+ *
  * <p>
  * You can work with options using ScalaTest's equality, <code>empty</code>,
  * <code>defined</code>, and <code>contain</code> syntax.
  * For example, if you wish to check whether an option is <code>None</code>, you can write any of:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * option shouldEqual None
  * option shouldBe None
  * option should === (None)
  * option shouldBe empty
  * </pre>
- * 
+ *
  * <p>
  * If you wish to check an option is defined, and holds a specific value, you can write any of:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * option shouldEqual Some("hi")
  * option shouldBe Some("hi")
  * option should === (Some("hi"))
  * </pre>
- * 
+ *
  * <p>
  * If you only wish to check that an option is defined, but don't care what it's value is, you can write:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * option shouldBe defined
  * </pre>
- * 
+ *
  * <p>
  * If you mix in (or import the members of) <a href="OptionValues.html"><code>OptionValues</code></a>,
  * you can write one statement that indicates you believe an option should be defined and then say something else about its value. Here's an example:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * import org.scalatest.OptionValues._
  * option.value should be &lt; 7
  * </pre>
- * 
+ *
  * <p>
  * As mentioned previously, you can use also use ScalaTest's <code>contain</code>, <code>contain oneOf</code>, and
  * <code>contain noneOf</code> syntax with options:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * Some(2) should contain (2)
  * Some(7) should contain oneOf (5, 7, 9)
@@ -1484,13 +1484,13 @@ import exceptions.TestFailedException
  *
  * <a name="checkingArbitraryProperties"></a>
  * <h2>Checking arbitrary properties with <code>have</code></h2>
- * 
+ *
  * <p>
  * Using <code>have</code>, you can check properties of any type, where a <em>property</em> is an attribute of any
  * object that can be retrieved either by a public field, method, or JavaBean-style <code>get</code>
  * or <code>is</code> method, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * book should have (
  *   'title ("Programming in Scala"),
@@ -1498,7 +1498,7 @@ import exceptions.TestFailedException
  *   'pubYear (2008)
  * )
  * </pre>
- * 
+ *
  * <p>
  * This expression will use reflection to ensure the <code>title</code>, <code>author</code>, and <code>pubYear</code> properties of object <code>book</code>
  * are equal to the specified values. For example, it will ensure that <code>book</code> has either a public Java field or method
@@ -1508,7 +1508,7 @@ import exceptions.TestFailedException
  * a <code>TestFailedException</code> will be thrown that explains the problem. (For the details on how a field or method is selected during this
  * process, see the documentation for <a href="Matchers$HavePropertyMatcherGenerator.html"><code>HavePropertyMatcherGenerator</code></a>.)
  * </p>
- * 
+ *
  * <p>
  * When you use this syntax, you must place one or more property values in parentheses after <code>have</code>, seperated by commas, where a <em>property
  * value</em> is a symbol indicating the name of the property followed by the expected value in parentheses. The only exceptions to this rule is the syntax
@@ -1520,7 +1520,7 @@ import exceptions.TestFailedException
  * array should have length (3)
  * set should have size (90)
  * </pre>
- * 
+ *
  * <p>
  * You can alternatively, write:
  * </p>
@@ -1529,7 +1529,7 @@ import exceptions.TestFailedException
  * array should have (length (3))
  * set should have (size (90))
  * </pre>
- * 
+ *
  * <p>
  * If a property has a value different from the specified expected value, a <code>TestFailedError</code> will be thrown
  * with a detailed message that explains the problem. For example, if you assert the following on
@@ -1548,7 +1548,7 @@ import exceptions.TestFailedException
  * The title property had value "Moby Dick", instead of its expected value "A Tale of Two Cities",
  * on object Book("Moby Dick", "Melville", 1851)
  * </pre>
- * 
+ *
  * <p>
  * If you prefer to check properties in a type-safe manner, you can use a <code>HavePropertyMatcher</code>.
  * This would allow you to write expressions such as:
@@ -1561,7 +1561,7 @@ import exceptions.TestFailedException
  *   pubYear (2008)
  * )
  * </pre>
- * 
+ *
  * <p>
  * These expressions would fail to compile if <code>should</code> is used on an inappropriate type, as determined
  * by the type parameter of the <code>HavePropertyMatcher</code> being used. (For example, <code>title</code> in this example
@@ -1574,7 +1574,7 @@ import exceptions.TestFailedException
  * <h2>Using <code>length</code> and <code>size</code> with <code>HavePropertyMatcher</code>s</h2>
  *
  * <p>
- * If you want to use <code>length</code> or <code>size</code> syntax with your own custom <code>HavePropertyMatcher</code>s, you 
+ * If you want to use <code>length</code> or <code>size</code> syntax with your own custom <code>HavePropertyMatcher</code>s, you
  * can do so, but you must write <code>(of [&ldquo;the type&rdquo;])</code> afterwords. For example, you could write:
  * </p>
  *
@@ -1610,7 +1610,7 @@ import exceptions.TestFailedException
  *   first should startWith ("S")
  * }
  * </pre>
- * 
+ *
  * <p>
  * You can use <code>inside</code> to just ensure a pattern is matched, without making any further assertions, but a better
  * alternative for that kind of assertion is <code>matchPattern</code>. The <code>matchPattern</code> syntax allows you
@@ -1623,7 +1623,7 @@ import exceptions.TestFailedException
  *
  * <a name="usingCustomMatchers"></a>
  * <h2>Using custom matchers</h2>
- * 
+ *
  * <p>
  * If none of the built-in matcher syntax (or options shown so far for extending the syntax) satisfy a particular need you have, you can create
  * custom <code>Matcher</code>s that allow
@@ -1631,12 +1631,12 @@ import exceptions.TestFailedException
  * indicates whether a file of a certain path and name is hidden. Because the <code>isHidden</code> method takes no parameters and returns <code>Boolean</code>,
  * you can call it using <code>be</code> with a symbol or <code>BePropertyMatcher</code>, yielding assertions like:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * file should be ('hidden)  // using a symbol
  * file should be (hidden)   // using a BePropertyMatcher
  * </pre>
- * 
+ *
  * <p>
  * If it doesn't make sense to have your custom syntax follow <code>be</code>, you might want to create a custom <code>Matcher</code>
  * instead, so your syntax can follow <code>should</code> directly. For example, you might want to be able to check whether
@@ -1647,7 +1647,7 @@ import exceptions.TestFailedException
  * // using a plain-old Matcher
  * file should endWithExtension ("txt")
  * </pre>
- * 
+ *
  * <p>
  * ScalaTest provides several mechanism to make it easy to create custom matchers, including ways to compose new matchers
  * out of existing ones complete with new error messages.  For more information about how to create custom
@@ -1664,20 +1664,20 @@ import exceptions.TestFailedException
  * </p>
  *
  * <pre class="stHighlight">
- * an [IndexOutOfBoundsException] should be thrownBy s.charAt(-1) 
+ * an [IndexOutOfBoundsException] should be thrownBy s.charAt(-1)
  * </pre>
  *
  * <p>
  * If <code>charAt</code> throws an instance of <code>StringIndexOutOfBoundsException</code>,
  * this expression will result in that exception. But if <code>charAt</code> completes normally, or throws a different
  * exception, this expression will complete abruptly with a <code>TestFailedException</code>.
- * 
+ *
  * <p>
  * If you need to further isnpect an expected exception, you can capture it using this syntax:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
- * val thrown = the [IndexOutOfBoundsException] thrownBy s.charAt(-1) 
+ * val thrown = the [IndexOutOfBoundsException] thrownBy s.charAt(-1)
  * </pre>
  *
  * <p>
@@ -1697,7 +1697,7 @@ import exceptions.TestFailedException
  * <pre class="stHighlight">
  * the [ArithmeticException] thrownBy 1 / 0 should have message "/ by zero"
  * the [IndexOutOfBoundsException] thrownBy {
- *   s.charAt(-1) 
+ *   s.charAt(-1)
  * } should have message "String index out of range: -1"
  * </pre>
  *
@@ -1708,10 +1708,10 @@ import exceptions.TestFailedException
  * <pre class="stHighlight">
  * noException should be thrownBy 0 / 1
  * </pre>
- * 
+ *
  * <a name="thosePeskyParens"></a>
  * <h2>Those pesky parens</h2>
- * 
+ *
  * <p>
  * Perhaps the most tricky part of writing assertions using ScalaTest matchers is remembering
  * when you need or don't need parentheses, but bearing in mind a few simple rules <!-- PRESERVE -->should help.
@@ -1762,12 +1762,12 @@ import exceptions.TestFailedException
  * catMap should <span class="stRed">(</span>contain key (9) and contain value ("lives")<span class="stRed">)</span>
  * number should <span class="stRed">(</span>equal (2) or equal (4) or equal (8)<span class="stRed">)</span>
  * </pre>
- * 
+ *
  * <p>
  * 4. Although you don't always need them, you may choose to always put parentheses
  * around custom <code>Matcher</code>s when they appear directly after <code>not</code>:
  * </p>
- * 
+ *
  * <pre>
  * file should exist
  * file should not <span class="stRed">(</span>exist<span class="stRed">)</span>
@@ -1797,7 +1797,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   import scala.language.implicitConversions
 
   // SKIP-SCALATESTJS-START
-  // This guy is generally done through an implicit conversion from a symbol. It takes that symbol, and 
+  // This guy is generally done through an implicit conversion from a symbol. It takes that symbol, and
   // then represents an object with an apply method. So it gives an apply method to symbols.
   // book should have ('author ("Gibson"))
   //                   ^ // Basically this 'author symbol gets converted into this class, and its apply  method takes "Gibson"
@@ -1813,17 +1813,17 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
    * </p>
    *
    * <p>
-   * Class <code>HavePropertyMatcherGenerator</code>'s primary constructor takes a <code>Symbol</code>. The 
+   * Class <code>HavePropertyMatcherGenerator</code>'s primary constructor takes a <code>Symbol</code>. The
    * <code>apply</code> method uses reflection to find and access a property that has the name specified by the
    * <code>Symbol</code> passed to the constructor, so it can determine if the property has the expected value
    * passed to <code>apply</code>.
    * If the symbol passed is <code>'title</code>, for example, the <code>apply</code> method
    * will use reflection to look for a public Java field named
-   * "title", a public method named "title", or a public method named "getTitle". 
+   * "title", a public method named "title", or a public method named "getTitle".
    * If a method, it must take no parameters. If multiple candidates are found,
    * the <code>apply</code> method will select based on the following algorithm:
    * </p>
-   * 
+   *
    * <table class="stTable">
    * <tr><th class="stHeadingCell">Field</th><th class="stHeadingCell">Method</th><th class="stHeadingCell">"get" Method</th><th class="stHeadingCell">Result</th></tr>
    * <tr><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">Throws <code>TestFailedException</code>, because no candidates found</td></tr>
@@ -1847,13 +1847,13 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      * book should have ('title ("A Tale of Two Cities"))
      *                          ^
      * </pre>
-     * 
+     *
      * <p>
      * This class has an <code>apply</code> method that will produce a <code>HavePropertyMatcher[AnyRef, Any]</code>.
-     * The implicit conversion method, <code>convertSymbolToHavePropertyMatcherGenerator</code>, will cause the 
+     * The implicit conversion method, <code>convertSymbolToHavePropertyMatcherGenerator</code>, will cause the
      * above line of code to be eventually transformed into:
      * </p>
-     * 
+     *
      * <pre class="stHighlight">
      * book should have (convertSymbolToHavePropertyMatcherGenerator('title).apply("A Tale of Two Cities"))
      * </pre>
@@ -1867,10 +1867,10 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
          * <pre class="stHighlight">
          * book should have ('title ("A Tale of Two Cities"))
          * </pre>
-         * 
+         *
          * <p>
          * This method uses reflection to discover a field or method with a name that indicates it represents
-         * the value of the property with the name contained in the <code>Symbol</code> passed to the 
+         * the value of the property with the name contained in the <code>Symbol</code> passed to the
          * <code>HavePropertyMatcherGenerator</code>'s constructor. The field or method must be public. To be a
          * candidate, a field must have the name <code>symbol.name</code>, so if <code>symbol</code> is <code>'title</code>,
          * the field name sought will be <code>"title"</code>. To be a candidate, a method must either have the name
@@ -1920,7 +1920,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
               )
           }
         }
-        
+
         /**
          * Overrides to return pretty toString.
          */
@@ -1957,7 +1957,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         indicateFailure(if (shouldBeTrue) matcherResult.failureMessage(prettifier) else matcherResult.negatedFailureMessage(prettifier), None, pos)
       } else indicateSuccess(shouldBeTrue, matcherResult.negatedFailureMessage(prettifier), matcherResult.failureMessage(prettifier))
     }
-    
+
     /**
      * This method enables the following syntax (positiveNumber is a <code>AnMatcher</code>):
      *
@@ -2067,7 +2067,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      * book should be an (excellentRead)
      *                ^
      * </pre>
-     */ 
+     */
     def an(beTrueMatcher: BePropertyMatcher[T])(implicit ev: T <:< AnyRef): Assertion = { // TODO: Try expanding this to 2.10 AnyVals
       val beTrueMatchResult = beTrueMatcher(left)
       if (beTrueMatchResult.matches != shouldBeTrue) {
@@ -2106,7 +2106,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   final class RegexWord {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * "eight" should not fullyMatch regex ("""(-)?(\d+)(\.\d*)?""".r)
@@ -2116,7 +2116,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     def apply(regexString: String): ResultOfRegexWordApplication = new ResultOfRegexWordApplication(regexString, IndexedSeq.empty)
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * "eight" should not fullyMatch regex ("""(-)?(\d+)(\.\d*)?""")
@@ -2126,16 +2126,16 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     def apply(regex: Regex): ResultOfRegexWordApplication = new ResultOfRegexWordApplication(regex, IndexedSeq.empty)
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
-     * string should not fullyMatch regex ("a(b*)c" withGroup "bb") 
+     * string should not fullyMatch regex ("a(b*)c" withGroup "bb")
      *                                    ^
      * </pre>
      */
-    def apply(regexWithGroups: RegexWithGroups) = 
+    def apply(regexWithGroups: RegexWithGroups) =
       new ResultOfRegexWordApplication(regexWithGroups.regex, regexWithGroups.groups)
-    
+
     /**
      * Overrides to return "regex"
      */
@@ -2151,7 +2151,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   final class ResultOfIncludeWordForString(left: String, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * string should include regex ("world")
@@ -2161,7 +2161,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     def regex(rightRegexString: String): Assertion = regex(rightRegexString.r)
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * string should include regex ("a(b*)c" withGroup "bb")
@@ -2176,7 +2176,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * string should include regex ("wo.ld".r)
@@ -2206,7 +2206,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   final class ResultOfStartWithWordForString(left: String, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * string should startWith regex ("Hel*o")
@@ -2216,7 +2216,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     def regex(rightRegexString: String): Assertion = regex(rightRegexString.r)
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * string should startWith regex ("a(b*)c" withGroup "bb")
@@ -2231,7 +2231,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * string should startWith regex ("Hel*o".r)
@@ -2261,7 +2261,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   final class ResultOfEndWithWordForString(left: String, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * string should endWith regex ("wor.d")
@@ -2269,9 +2269,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      * </pre>
      */
     def regex(rightRegexString: String): Assertion = regex(rightRegexString.r)
-    
+
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * string should endWith regex ("a(b*)c" withGroup "bb")
@@ -2286,7 +2286,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * string should endWith regex ("wor.d".r)
@@ -2317,7 +2317,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   final class ResultOfFullyMatchWordForString(left: String, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * string should fullMatch regex ("Hel*o world")
@@ -2327,10 +2327,10 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     def regex(rightRegexString: String): Assertion = regex(rightRegexString.r)
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
-     * string should fullMatch regex ("a(b*)c" withGroup "bb") 
+     * string should fullMatch regex ("a(b*)c" withGroup "bb")
      *                         ^
      * </pre>
      */
@@ -2342,7 +2342,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * string should fullymatch regex ("Hel*o world".r)
@@ -2362,7 +2362,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      */
     override def toString: String = "ResultOfFullyMatchWordForString(" + Prettifier.default(left) + ", " + Prettifier.default(shouldBeTrue) + ")"
   }
-  
+
   // Going back to original, legacy one to get to a good place to check in.
 /*
   def equal(right: Any): Matcher[Any] =
@@ -2408,7 +2408,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
    *               ^
    * </pre>
    */
-  def equal(o: Null): Matcher[AnyRef] = 
+  def equal(o: Null): Matcher[AnyRef] =
     new Matcher[AnyRef] {
       def apply(left: AnyRef): MatchResult = {
         MatchResult(
@@ -2417,7 +2417,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           Resources.rawEqualedNull,
           Resources.rawDidNotEqualNull,
           Resources.rawMidSentenceEqualedNull,
-          Vector(left), 
+          Vector(left),
           Vector.empty
         )
       }
@@ -2433,7 +2433,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   final class KeyWord {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * map should not contain key (10)
@@ -2451,7 +2451,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   }
 
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * map should not contain key (10)
@@ -2469,7 +2469,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   final class ValueWord {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * map should not contain key (10)
@@ -2487,7 +2487,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   }
 
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * map should not contain value (10)
@@ -2505,7 +2505,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   final class AWord {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * badBook should not be a ('goodRead)
@@ -2524,7 +2524,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      * </pre>
      */
     def apply[T](beTrueMatcher: BePropertyMatcher[T]): ResultOfAWordToBePropertyMatcherApplication[T] = new ResultOfAWordToBePropertyMatcherApplication(beTrueMatcher)
-    
+
     /**
      * This method enables the following syntax, where, <code>positiveNumber</code> is an <code>AMatcher[Book]</code>:
      *
@@ -2544,7 +2544,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   }
 
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * badBook should not be a ('goodRead)
@@ -2581,7 +2581,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      * </pre>
      */
     def apply[T](beTrueMatcher: BePropertyMatcher[T]): ResultOfAnWordToBePropertyMatcherApplication[T] = new ResultOfAnWordToBePropertyMatcherApplication(beTrueMatcher)
-    
+
     /**
      * This method enables the following syntax, where, <code>positiveNumber</code> is an <code>AnMatcher[Book]</code>:
      *
@@ -2601,7 +2601,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   }
 
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * badBook should not be an (excellentRead)
@@ -2637,7 +2637,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   }
 
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * oneString should not be theSameInstanceAs (anotherString)
@@ -2647,7 +2647,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   val theSameInstanceAs: TheSameInstanceAsPhrase = new TheSameInstanceAsPhrase
 
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * "eight" should not fullyMatch regex ("""(-)?(\d+)(\.\d*)?""".r)
@@ -2732,7 +2732,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * num should (not be &lt; (10) and not be &gt; (17))
@@ -2743,7 +2743,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     new ResultOfLessThanComparison(right)
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * num should (not be &gt; (10) and not be &lt; (7))
@@ -2754,7 +2754,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     new ResultOfGreaterThanComparison(right)
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * num should (not be &lt;= (10) and not be &gt; (17))
@@ -2765,7 +2765,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     new ResultOfLessThanOrEqualToComparison(right)
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * num should (not be &gt;= (10) and not be < (7))
@@ -2776,18 +2776,18 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     new ResultOfGreaterThanOrEqualToComparison(right)
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * list should (not be definedAt (7) and not be definedAt (9))
    *                     ^
    * </pre>
    */
-  def definedAt[T](right: T): ResultOfDefinedAt[T] = 
+  def definedAt[T](right: T): ResultOfDefinedAt[T] =
     new ResultOfDefinedAt(right)
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * List(1, 2, 3) should contain (oneOf(1, 2))
@@ -2815,7 +2815,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * List(1, 2, 3) should contain (atLeastOneOf(1, 2))
@@ -2843,7 +2843,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * List(1, 2, 3) should contain (noneOf(1, 2))
@@ -2871,7 +2871,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * List(1, 2, 3) should contain (theSameElementsAs(List(1, 2, 3)))
@@ -2879,9 +2879,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
    * </pre>
    */
   def theSameElementsAs(xs: GenTraversable[_]) = new ResultOfTheSameElementsAsApplication(xs)
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * List(1, 2, 3) should contain (theSameElementsInOrderAs(List(1, 2)))
@@ -2891,7 +2891,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   def theSameElementsInOrderAs(xs: GenTraversable[_]) = new ResultOfTheSameElementsInOrderAsApplication(xs)
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * List(1, 2, 3) should contain (only(1, 2))
@@ -2905,9 +2905,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
       throw new NotAllowedException(FailureMessages.onlyDuplicate, pos)
     new ResultOfOnlyApplication(xs)
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * List(1, 2, 3) should contain (inOrderOnly(1, 2))
@@ -2920,9 +2920,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
       throw new NotAllowedException(FailureMessages.inOrderOnlyDuplicate, pos)
     new ResultOfInOrderOnlyApplication(xs)
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * List(1, 2, 3) should contain (allOf(1, 2))
@@ -2948,9 +2948,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     val xs = elements.toList
     new ResultOfAllElementsOfApplication(xs)
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * List(1, 2, 3) should contain (inOrder(1, 2))
@@ -2976,9 +2976,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     val xs = elements.toList
     new ResultOfInOrderElementsOfApplication(xs)
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * List(1, 2, 3) should contain (atMostOneOf(1, 2))
@@ -3004,9 +3004,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     val xs = elements.toList
     new ResultOfAtMostOneElementOfApplication(xs)
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * a [RuntimeException] should be thrownBy {...}
@@ -3016,7 +3016,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   def thrownBy(fun: => Any) = new ResultOfThrownByApplication(fun)
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * exception should not have message ("file not found")
@@ -3024,7 +3024,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
    * </pre>
    */
   def message(expectedMessage: String) = new ResultOfMessageWordApplication(expectedMessage)
-  
+
 /*
   // For safe keeping
   private implicit def nodeToCanonical(node: scala.xml.Node) = new Canonicalizer(node)
@@ -3071,7 +3071,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   private case class AtMostCollected(num: Int) extends Collected
   private case object NoCollected extends Collected
   private case class ExactlyCollected(num: Int) extends Collected
-  
+
   private[scalatest] def doCollected[T](collected: Collected, xs: scala.collection.GenTraversable[T], original: Any, prettifier: Prettifier, pos: source.Position)(fun: T => Assertion): Assertion = {
 
     val asserting = InspectorAsserting.assertingNatureOfAssertion
@@ -3117,7 +3117,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
    */
   final class ResultOfNotWordForCollectedAny[T](collected: Collected, xs: scala.collection.GenTraversable[T], original: Any, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
-     
+
     /**
      * This method enables the following syntax:
      *
@@ -3220,11 +3220,11 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
 
     /**
      * <strong>
-     * The deprecation period for the "be ===" syntax has expired, and the syntax 
+     * The deprecation period for the "be ===" syntax has expired, and the syntax
      * will now throw <code>NotAllowedException</code>.  Please use should equal, should ===, shouldEqual,
      * should be, or shouldBe instead.
      * </strong>
-     * 
+     *
      * <p>
      * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
      * cases still compile, but silently wouldn't work.
@@ -3253,7 +3253,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         else indicateSuccess(shouldBeTrue, result.negatedFailureMessage(prettifier), result.failureMessage(prettifier))
       }
     }
-    
+
     /**
      * This method enables the following syntax, where <code>stack</code> is, for example, of type <code>Stack</code> and
      * <code>empty</code> refers to a <code>BePropertyMatcher[Stack]</code>:
@@ -3272,7 +3272,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         else indicateSuccess(shouldBeTrue, FailureMessages.was(prettifier, e, UnquotedString(result.propertyName)), FailureMessages.wasNot(prettifier, e, UnquotedString(result.propertyName)))
       }
     }
-    
+
     /**
      * This method enables the following syntax, where <code>notFileMock</code> is, for example, of type <code>File</code> and
      * <code>file</code> refers to a <code>BePropertyMatcher[File]</code>:
@@ -3291,7 +3291,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         else indicateSuccess(shouldBeTrue, FailureMessages.wasA(prettifier, e, UnquotedString(result.propertyName)), FailureMessages.wasNotA(prettifier, e, UnquotedString(result.propertyName)))
       }
     }
-    
+
     /**
      * This method enables the following syntax, where <code>keyEvent</code> is, for example, of type <code>KeyEvent</code> and
      * <code>actionKey</code> refers to a <code>BePropertyMatcher[KeyEvent]</code>:
@@ -3310,7 +3310,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         else indicateSuccess(shouldBeTrue, FailureMessages.wasAn(prettifier, e, UnquotedString(result.propertyName)), FailureMessages.wasNotAn(prettifier, e, UnquotedString(result.propertyName)))
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -3327,14 +3327,14 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
               indicateFailure(if (shouldBeTrue) FailureMessages.wasNotSameInstanceAs(prettifier, e, resultOfSameInstanceAsApplication.right) else FailureMessages.wasSameInstanceAs(prettifier, e, resultOfSameInstanceAsApplication.right), None, pos)
             }
             else indicateSuccess(shouldBeTrue, FailureMessages.wasSameInstanceAs(prettifier, e, resultOfSameInstanceAsApplication.right), FailureMessages.wasNotSameInstanceAs(prettifier, e, resultOfSameInstanceAsApplication.right))
-          case _ => 
+          case _ =>
             throw new IllegalArgumentException("theSameInstanceAs should only be used for AnyRef")
         }
       }
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(xs) should not be definedAt ("apple")
@@ -3405,7 +3405,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      */
     def have[U >: T](firstPropertyMatcher: HavePropertyMatcher[U, _], propertyMatchers: HavePropertyMatcher[U, _]*): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
-      
+
         val results =
           for (propertyVerifier <- firstPropertyMatcher :: propertyMatchers.toList) yield
             propertyVerifier(e)
@@ -3429,7 +3429,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
                   firstFailure.expectedValue,
                   firstFailure.actualValue,
                   e
-                ), 
+                ),
                 None,
                 pos
               )
@@ -3448,7 +3448,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
                 else FailureMessages.allPropertiesHadExpectedValues(prettifier, e)
 
               indicateFailure(failureMessage, None, pos)
-          } 
+          }
         }
         else {
           if (shouldBeTrue)
@@ -3518,7 +3518,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         else indicateSuccess(shouldBeTrue, matcherResult.negatedFailureMessage(prettifier), matcherResult.failureMessage(prettifier))
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -3536,7 +3536,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         else indicateSuccess(shouldBeTrue, matcherResult.negatedFailureMessage(prettifier), matcherResult.failureMessage(prettifier))
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -3572,7 +3572,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         else indicateSuccess(shouldBeTrue, FailureMessages.wasSorted(prettifier, e), FailureMessages.wasNotSorted(prettifier, e))
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -3589,7 +3589,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         else indicateSuccess(shouldBeTrue, FailureMessages.wasReadable(prettifier, e), FailureMessages.wasNotReadable(prettifier, e))
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -3606,7 +3606,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         else indicateSuccess(shouldBeTrue, FailureMessages.wasWritable(prettifier, e), FailureMessages.wasNotWritable(prettifier, e))
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -3623,7 +3623,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         else indicateSuccess(shouldBeTrue, FailureMessages.wasEmpty(prettifier, e), FailureMessages.wasNotEmpty(prettifier, e))
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -3840,7 +3840,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         else indicateSuccess(shouldBeTrue, FailureMessages.containedSameElements(prettifier, e, right), FailureMessages.didNotContainSameElements(prettifier, e, right))
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -3927,7 +3927,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
         )
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -3989,7 +3989,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -4051,7 +4051,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -4175,7 +4175,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should not startWith ("1.7")
@@ -4201,9 +4201,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should not startWith regex ("Hel*o")
@@ -4235,9 +4235,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should not endWith ("1.7")
@@ -4263,9 +4263,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should not endWith regex ("wor.d")
@@ -4292,9 +4292,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should not include regex ("wo.ld")
@@ -4326,9 +4326,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should not include ("world")
@@ -4354,9 +4354,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should not fullyMatch regex ("""(-)?(\d+)(\.\d*)?""")
@@ -4407,7 +4407,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
   final class ResultOfContainWordForCollectedAny[T](collected: Collected, xs: scala.collection.GenTraversable[T], original: Any, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * option should contain oneOf (1, 2)
@@ -4467,7 +4467,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * option should contain atLeastOneOf (1, 2)
@@ -4527,7 +4527,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * option should contain noneOf (1, 2)
@@ -4587,7 +4587,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * option should contain theSameElementsAs (1, 2)
@@ -4613,9 +4613,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * option should contain theSameElementsInOrderAs (1, 2)
@@ -4643,7 +4643,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * option should contain only (1, 2)
@@ -4683,7 +4683,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * option should contain inOrderOnly (1, 2)
@@ -4712,9 +4712,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * option should contain allOf (1, 2)
@@ -4772,9 +4772,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * option should contain inOrder (1, 2)
@@ -4834,7 +4834,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(xs) should contain atMostOneOf (1, 2)
@@ -5025,7 +5025,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
           )
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -5056,7 +5056,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
       }
     }
     // SKIP-SCALATESTJS-END
-    
+
     /**
      * This method enables the following syntax, where <code>badBook</code> is, for example, of type <code>Book</code> and
      * <code>goodRead</code> refers to a <code>BePropertyMatcher[Book]</code>:
@@ -5165,7 +5165,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
    */
   final class ResultOfBeWordForCollectedArray[T](collected: Collected, xs: scala.collection.GenTraversable[Array[T]], original: Any, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position)
     extends ResultOfBeWordForCollectedAny(collected, xs, original, shouldBeTrue, prettifier, pos) {
-  
+
     /**
      * This method enables the following syntax:
      *
@@ -5187,7 +5187,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
     override def toString: String = "ResultOfBeWordForCollectedArray(" + Prettifier.default(collected) + ", " + Prettifier.default(xs) + ", " + Prettifier.default(shouldBeTrue) + ")"
   }
   // SKIP-SCALATESTJS-END
-  
+
   /**
    * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="InspectorsMatchers.html"><code>InspectorsMatchers</code></a> for an overview of
    * the matchers DSL.
@@ -5197,7 +5197,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
    */
   final class ResultOfCollectedAny[T](collected: Collected, xs: scala.collection.GenTraversable[T], original: Any, prettifier: Prettifier, pos: source.Position) {
 
-// TODO: shouldBe null works, b ut should be (null) does not when type is Any: 
+// TODO: shouldBe null works, b ut should be (null) does not when type is Any:
 /*
 scala> val ys = List(null, null, 1)
 ys: List[Any] = List(null, null, 1)
@@ -5288,7 +5288,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
         else indicateSuccess(FailureMessages.wasSorted(prettifier, e))
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -5304,7 +5304,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
         else indicateSuccess(FailureMessages.wasReadable(prettifier, e))
       }
     }
- 
+
     /**
      * This method enables the following syntax:
      *
@@ -5336,7 +5336,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
         else indicateSuccess(FailureMessages.wasEmpty(prettifier, e))
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -5393,7 +5393,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldEqual(right: Null)(implicit ev: T <:< AnyRef): Assertion = { 
+    def shouldEqual(right: Null)(implicit ev: T <:< AnyRef): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
         if (e != null) {
           indicateFailure(FailureMessages.didNotEqualNull(prettifier, e), None, pos)
@@ -5461,7 +5461,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *         ^
      * </pre>
      */
-    def should(notWord: NotWord): ResultOfNotWordForCollectedAny[T] = 
+    def should(notWord: NotWord): ResultOfNotWordForCollectedAny[T] =
       new ResultOfNotWordForCollectedAny(collected, xs, original, false, prettifier, pos)
 
     /**
@@ -5499,9 +5499,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * This method enables syntax such as the following:
      *
      * <pre class="stHighlight">
-     * all(4, 5, 6) shouldBe &lt; (7) 
+     * all(4, 5, 6) shouldBe &lt; (7)
      *              ^
-     * </pre> 
+     * </pre>
      */
     def shouldBe(comparison: ResultOfLessThanComparison[T]): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
@@ -5510,10 +5510,10 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
             FailureMessages.wasNotLessThan(prettifier,
               e,
               comparison.right
-            ), 
+            ),
             None,
             pos
-          ) 
+          )
         }
         else indicateSuccess(FailureMessages.wasLessThan(prettifier, e, comparison.right))
       }
@@ -5523,9 +5523,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * This method enables syntax such as the following:
      *
      * <pre class="stHighlight">
-     * all(4, 5, 6) shouldBe &lt;= (7) 
+     * all(4, 5, 6) shouldBe &lt;= (7)
      *              ^
-     * </pre> 
+     * </pre>
      */
     def shouldBe(comparison: ResultOfLessThanOrEqualToComparison[T]): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
@@ -5534,10 +5534,10 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
             FailureMessages.wasNotLessThanOrEqualTo(prettifier,
               e,
               comparison.right
-            ), 
+            ),
             None,
             pos
-          ) 
+          )
         }
         else indicateSuccess(FailureMessages.wasLessThanOrEqualTo(prettifier, e, comparison.right))
       }
@@ -5547,9 +5547,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * This method enables syntax such as the following:
      *
      * <pre class="stHighlight">
-     * all(8, 9, 10) shouldBe &gt; (7) 
+     * all(8, 9, 10) shouldBe &gt; (7)
      *               ^
-     * </pre> 
+     * </pre>
      */
     def shouldBe(comparison: ResultOfGreaterThanComparison[T]): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
@@ -5558,10 +5558,10 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
             FailureMessages.wasNotGreaterThan(prettifier,
               e,
               comparison.right
-            ), 
+            ),
             None,
             pos
-          ) 
+          )
         }
         else indicateSuccess(FailureMessages.wasGreaterThan(prettifier, e, comparison.right))
       }
@@ -5571,9 +5571,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * This method enables syntax such as the following:
      *
      * <pre class="stHighlight">
-     * all(8, 9, 10) shouldBe &gt;= (7) 
+     * all(8, 9, 10) shouldBe &gt;= (7)
      *               ^
-     * </pre> 
+     * </pre>
      */
     def shouldBe(comparison: ResultOfGreaterThanOrEqualToComparison[T]): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
@@ -5582,10 +5582,10 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
             FailureMessages.wasNotGreaterThanOrEqualTo(prettifier,
               e,
               comparison.right
-            ), 
+            ),
             None,
             pos
-          ) 
+          )
         }
         else indicateSuccess(FailureMessages.wasGreaterThanOrEqualTo(prettifier, e, comparison.right))
       }
@@ -5659,12 +5659,12 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     def shouldBe(symbol: Symbol)(implicit toAnyRef: T <:< AnyRef): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
         val matcherResult = matchSymbolToPredicateMethod(toAnyRef(e), symbol, false, true, prettifier, pos)
-        if (!matcherResult.matches) 
+        if (!matcherResult.matches)
           indicateFailure(matcherResult.failureMessage(prettifier), None, pos)
         else indicateSuccess(matcherResult.negatedFailureMessage(prettifier))
       }
     }
-    
+
     /**
      * This method enables the following syntax:
      *
@@ -5729,7 +5729,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     def shouldBe[U <: T](bePropertyMatcher: BePropertyMatcher[U])(implicit ev: T <:< AnyRef): Assertion = { // TODO: Try supporting this with 2.10 AnyVals
       doCollected(collected, xs, original, prettifier, pos) { e =>
         val result = bePropertyMatcher(e.asInstanceOf[U])
-        if (!result.matches) 
+        if (!result.matches)
           indicateFailure(FailureMessages.wasNot(prettifier, e, UnquotedString(result.propertyName)), None, pos)
         else indicateSuccess(FailureMessages.was(prettifier, e, UnquotedString(result.propertyName)))
       }
@@ -5880,7 +5880,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     def should(containWord: ContainWord): ResultOfContainWordForCollectedAny[T] = {
       new ResultOfContainWordForCollectedAny(collected, xs, original, true, prettifier, pos)
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -5892,7 +5892,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     def shouldNot(containWord: ContainWord): ResultOfContainWordForCollectedAny[T] = {
       new ResultOfContainWordForCollectedAny(collected, xs, original, false, prettifier, pos)
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -5912,7 +5912,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
         else indicateSuccess(FailureMessages.exists(prettifier, e))
       }
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -5932,7 +5932,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
         else indicateSuccess(FailureMessages.doesNotExist(prettifier, e))
       }
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -5961,9 +5961,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *             ^
      * </pre>
      */
-    def should(startWithWord: StartWithWord)(implicit ev: T <:< String): ResultOfStartWithWordForCollectedString = 
+    def should(startWithWord: StartWithWord)(implicit ev: T <:< String): ResultOfStartWithWordForCollectedString =
       new ResultOfStartWithWordForCollectedString(collected, xs.asInstanceOf[GenTraversable[String]], original, true, prettifier, pos)
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -5972,9 +5972,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *             ^
      * </pre>
      */
-    def should(endWithWord: EndWithWord)(implicit ev: T <:< String): ResultOfEndWithWordForCollectedString = 
+    def should(endWithWord: EndWithWord)(implicit ev: T <:< String): ResultOfEndWithWordForCollectedString =
       new ResultOfEndWithWordForCollectedString(collected, xs.asInstanceOf[GenTraversable[String]], original, true, prettifier, pos)
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -5983,9 +5983,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *             ^
      * </pre>
      */
-    def should(includeWord: IncludeWord)(implicit ev: T <:< String): ResultOfIncludeWordForCollectedString = 
+    def should(includeWord: IncludeWord)(implicit ev: T <:< String): ResultOfIncludeWordForCollectedString =
       new ResultOfIncludeWordForCollectedString(collected, xs.asInstanceOf[GenTraversable[String]], original, true, prettifier, pos)
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -5994,7 +5994,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *             ^
      * </pre>
      */
-    def should(fullyMatchWord: FullyMatchWord)(implicit ev: T <:< String): ResultOfFullyMatchWordForCollectedString = 
+    def should(fullyMatchWord: FullyMatchWord)(implicit ev: T <:< String): ResultOfFullyMatchWordForCollectedString =
       new ResultOfFullyMatchWordForCollectedString(collected, xs.asInstanceOf[GenTraversable[String]], original, true, prettifier, pos)
 
     /**
@@ -6005,7 +6005,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *             ^
      * </pre>
      */
-    def shouldNot(fullyMatchWord: FullyMatchWord)(implicit ev: T <:< String): ResultOfFullyMatchWordForCollectedString = 
+    def shouldNot(fullyMatchWord: FullyMatchWord)(implicit ev: T <:< String): ResultOfFullyMatchWordForCollectedString =
       new ResultOfFullyMatchWordForCollectedString(collected, xs.asInstanceOf[GenTraversable[String]], original, false, prettifier, pos)
 
     /**
@@ -6016,7 +6016,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *             ^
      * </pre>
      */
-    def shouldNot(startWithWord: StartWithWord)(implicit ev: T <:< String): ResultOfStartWithWordForCollectedString = 
+    def shouldNot(startWithWord: StartWithWord)(implicit ev: T <:< String): ResultOfStartWithWordForCollectedString =
       new ResultOfStartWithWordForCollectedString(collected, xs.asInstanceOf[GenTraversable[String]], original, false, prettifier, pos)
 
     /**
@@ -6027,7 +6027,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *             ^
      * </pre>
      */
-    def shouldNot(endWithWord: EndWithWord)(implicit ev: T <:< String): ResultOfEndWithWordForCollectedString = 
+    def shouldNot(endWithWord: EndWithWord)(implicit ev: T <:< String): ResultOfEndWithWordForCollectedString =
       new ResultOfEndWithWordForCollectedString(collected, xs.asInstanceOf[GenTraversable[String]], original, false, prettifier, pos)
 
     /**
@@ -6038,7 +6038,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *             ^
      * </pre>
      */
-    def shouldNot(includeWord: IncludeWord)(implicit ev: T <:< String): ResultOfIncludeWordForCollectedString = 
+    def shouldNot(includeWord: IncludeWord)(implicit ev: T <:< String): ResultOfIncludeWordForCollectedString =
       new ResultOfIncludeWordForCollectedString(collected, xs.asInstanceOf[GenTraversable[String]], original, false, prettifier, pos)
 
     /**
@@ -6048,7 +6048,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      */
     override def toString: String = "ResultOfCollectedAny(" + Prettifier.default(collected) + ", " + Prettifier.default(xs) + ")"
   }
-  
+
   /**
    * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html"><code>Matchers</code></a> for an overview of
    * the matchers DSL.
@@ -6058,7 +6058,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
   final class ResultOfHaveWordForCollectedExtent[A](collected: Collected, xs: scala.collection.GenTraversable[A], original: Any, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all (xs) should have length (12)
@@ -6085,9 +6085,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
           )
       }
     }
-    
+
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all (xs) should have size (12)
@@ -6132,7 +6132,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
   final class ResultOfStartWithWordForCollectedString(collected: Collected, xs: scala.collection.GenTraversable[String], original: Any, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should startWith regex ("Hel*o")
@@ -6142,17 +6142,17 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     def regex(rightRegexString: String): Assertion = { checkRegex(rightRegexString.r) }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
-     * all(string) should fullMatch regex ("a(b*)c" withGroup "bb") 
+     * all(string) should fullMatch regex ("a(b*)c" withGroup "bb")
      *                              ^
      * </pre>
      */
     def regex(regexWithGroups: RegexWithGroups): Assertion = { checkRegex(regexWithGroups.regex, regexWithGroups.groups) }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should startWith regex ("Hel*o".r)
@@ -6160,7 +6160,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * </pre>
      */
     def regex(rightRegex: Regex): Assertion = { checkRegex(rightRegex) }
-    
+
     private def checkRegex(rightRegex: Regex, groups: IndexedSeq[String] = IndexedSeq.empty): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
         val result = startWithRegexWithGroups(e, rightRegex, groups)
@@ -6189,7 +6189,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      */
     override def toString: String = "ResultOfStartWithWordForCollectedString(" + Prettifier.default(collected) + ", " + Prettifier.default(xs) + ", " + Prettifier.default(shouldBeTrue) + ")"
   }
-  
+
   /**
    * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="InspectorsMatchers.html"><code>InspectorsMatchers</code></a> for an overview of
    * the matchers DSL.
@@ -6200,7 +6200,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
   final class ResultOfIncludeWordForCollectedString(collected: Collected, xs: scala.collection.GenTraversable[String], original: Any, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should include regex ("world")
@@ -6210,17 +6210,17 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     def regex(rightRegexString: String): Assertion = { checkRegex(rightRegexString.r) }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
-     * all(string) should include regex ("a(b*)c" withGroup "bb") 
+     * all(string) should include regex ("a(b*)c" withGroup "bb")
      *                            ^
      * </pre>
      */
     def regex(regexWithGroups: RegexWithGroups): Assertion = { checkRegex(regexWithGroups.regex, regexWithGroups.groups) }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should include regex ("wo.ld".r)
@@ -6228,7 +6228,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * </pre>
      */
     def regex(rightRegex: Regex): Assertion = { checkRegex(rightRegex) }
-    
+
     private def checkRegex(rightRegex: Regex, groups: IndexedSeq[String] = IndexedSeq.empty): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
         val result = includeRegexWithGroups(e, rightRegex, groups)
@@ -6257,7 +6257,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      */
     override def toString: String = "ResultOfIncludeWordForCollectedString(" + Prettifier.default(collected) + ", " + Prettifier.default(xs) + ", " + Prettifier.default(shouldBeTrue) + ")"
   }
-  
+
   /**
    * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="InspectorsMatchers.html"><code>InspectorsMatchers</code></a> for an overview of
    * the matchers DSL.
@@ -6268,7 +6268,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
   final class ResultOfEndWithWordForCollectedString(collected: Collected, xs: scala.collection.GenTraversable[String], original: Any, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should endWith regex ("wor.d")
@@ -6278,17 +6278,17 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     def regex(rightRegexString: String): Assertion = { checkRegex(rightRegexString.r) }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
-     * all(string) should endWith regex ("a(b*)c" withGroup "bb") 
+     * all(string) should endWith regex ("a(b*)c" withGroup "bb")
      *                            ^
      * </pre>
      */
     def regex(regexWithGroups: RegexWithGroups): Assertion = { checkRegex(regexWithGroups.regex, regexWithGroups.groups) }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should endWith regex ("wor.d".r)
@@ -6296,7 +6296,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * </pre>
      */
     def regex(rightRegex: Regex): Assertion = { checkRegex(rightRegex) }
-    
+
     private def checkRegex(rightRegex: Regex, groups: IndexedSeq[String] = IndexedSeq.empty): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
         val result = endWithRegexWithGroups(e, rightRegex, groups)
@@ -6325,7 +6325,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      */
     override def toString: String = "ResultOfEndWithWordForCollectedString(" + Prettifier.default(collected) + ", " + Prettifier.default(xs) + ", " + Prettifier.default(shouldBeTrue) + ")"
   }
-  
+
   /**
    * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="InspectorsMatchers.html"><code>InspectorsMatchers</code></a> for an overview of
    * the matchers DSL.
@@ -6336,7 +6336,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
   final class ResultOfFullyMatchWordForCollectedString(collected: Collected, xs: scala.collection.GenTraversable[String], original: Any, shouldBeTrue: Boolean, prettifier: Prettifier, pos: source.Position) {
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should fullMatch regex ("Hel*o world")
@@ -6346,17 +6346,17 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     def regex(rightRegexString: String): Assertion = { checkRegex(rightRegexString.r) }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
-     * all(string) should fullMatch regex ("a(b*)c" withGroup "bb") 
+     * all(string) should fullMatch regex ("a(b*)c" withGroup "bb")
      *                              ^
      * </pre>
      */
     def regex(regexWithGroups: RegexWithGroups): Assertion = { checkRegex(regexWithGroups.regex, regexWithGroups.groups) }
 
     /**
-     * This method enables the following syntax: 
+     * This method enables the following syntax:
      *
      * <pre class="stHighlight">
      * all(string) should fullymatch regex ("Hel*o world".r)
@@ -6364,7 +6364,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * </pre>
      */
     def regex(rightRegex: Regex): Assertion = { checkRegex(rightRegex) }
-    
+
     private def checkRegex(rightRegex: Regex, groups: IndexedSeq[String] = IndexedSeq.empty): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
         val result = fullyMatchRegexWithGroups(e, rightRegex, groups)
@@ -6626,7 +6626,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     new ResultOfCollectedAny(AtMostCollected(num), collecting.genTraversableFrom(xs), xs, prettifier, pos)
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * a [RuntimeException] should be thrownBy { ... }
@@ -6637,7 +6637,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     new ResultOfATypeInvocation(classTag.runtimeClass.asInstanceOf[Class[T]])
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * an [Exception] should be thrownBy { ... }
@@ -6648,7 +6648,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     new ResultOfAnTypeInvocation(classTag.runtimeClass.asInstanceOf[Class[T]])
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * the [FileNotFoundException] should be thrownBy { ... }
@@ -6658,7 +6658,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
   def the[T : ClassTag](implicit pos: source.Position): ResultOfTheTypeInvocation[T] =
     new ResultOfTheTypeInvocation(classTag.runtimeClass.asInstanceOf[Class[T]], pos)
 
-  // This is where ShouldMatchers.scala started 
+  // This is where ShouldMatchers.scala started
 
   private object ShouldMethodHelper {
 
@@ -6767,7 +6767,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldEqual(right: Null)(implicit ev: T <:< AnyRef): Assertion = { 
+    def shouldEqual(right: Null)(implicit ev: T <:< AnyRef): Assertion = {
       if (leftSideValue != null) {
         indicateFailure(FailureMessages.didNotEqualNull(prettifier, leftSideValue), None, pos)
       }
@@ -6848,7 +6848,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * </pre>
      */
     def should(beWord: BeWord): ResultOfBeWordForAny[T] = new ResultOfBeWordForAny(leftSideValue, true, prettifier, pos)
-  
+
     /**
      * This method enables syntax such as the following:
      *
@@ -6870,7 +6870,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * This method enables syntax such as the following:
      *
      * <pre class="stHighlight">
-     * 5 shouldBe &lt; (7) 
+     * 5 shouldBe &lt; (7)
      *   ^
      * </pre>
      */
@@ -6883,18 +6883,18 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
           ),
           None,
           pos
-        ) 
+        )
       }
       else indicateSuccess(FailureMessages.wasLessThan(prettifier, leftSideValue, comparison.right))
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
      * <pre class="stHighlight">
-     * 8 shouldBe &gt; (7) 
+     * 8 shouldBe &gt; (7)
      *   ^
-     * </pre> 
+     * </pre>
      */
     def shouldBe(comparison: ResultOfGreaterThanComparison[T]): Assertion = {
       if (!comparison(leftSideValue)) {
@@ -6905,18 +6905,18 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
           ),
           None,
           pos
-        ) 
+        )
       }
       else indicateSuccess(FailureMessages.wasGreaterThan(prettifier, leftSideValue, comparison.right))
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
      * <pre class="stHighlight">
-     * 5 shouldBe &lt;= (7) 
+     * 5 shouldBe &lt;= (7)
      *   ^
-     * </pre> 
+     * </pre>
      */
     def shouldBe(comparison: ResultOfLessThanOrEqualToComparison[T]): Assertion = {
       if (!comparison(leftSideValue)) {
@@ -6927,18 +6927,18 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
           ),
           None,
           pos
-        ) 
+        )
       }
       else indicateSuccess(FailureMessages.wasLessThanOrEqualTo(prettifier, leftSideValue, comparison.right))
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
      * <pre class="stHighlight">
-     * 8 shouldBe &gt;= (7) 
+     * 8 shouldBe &gt;= (7)
      *   ^
-     * </pre> 
+     * </pre>
      */
     def shouldBe(comparison: ResultOfGreaterThanOrEqualToComparison[T]): Assertion = {
       if (!comparison(leftSideValue)) {
@@ -6949,11 +6949,11 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
           ),
           None,
           pos
-        ) 
+        )
       }
       else indicateSuccess(FailureMessages.wasGreaterThanOrEqualTo(prettifier, leftSideValue, comparison.right))
     }
-    
+
     /**
      * This method enables the following syntax, where <code>odd</code> refers to a <code>BeMatcher[Int]</code>:
      *
@@ -6997,7 +6997,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
         indicateFailure(FailureMessages.wasNotSorted(prettifier, leftSideValue), None, pos)
       else indicateSuccess(FailureMessages.wasSorted(prettifier, leftSideValue))
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7007,7 +7007,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * </pre>
      */
     def shouldBe(aType: ResultOfATypeInvocation[_]): Assertion = macro TypeMatcherMacro.shouldBeATypeImpl
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7017,7 +7017,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * </pre>
      */
     def shouldBe(anType: ResultOfAnTypeInvocation[_]): Assertion = macro TypeMatcherMacro.shouldBeAnTypeImpl
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7031,7 +7031,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
         indicateFailure(FailureMessages.wasNotReadable(prettifier, leftSideValue), None, pos)
       else indicateSuccess(FailureMessages.wasReadable(prettifier, leftSideValue))
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7045,7 +7045,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
         indicateFailure(FailureMessages.wasNotWritable(prettifier, leftSideValue), None, pos)
       else indicateSuccess(FailureMessages.wasWritable(prettifier, leftSideValue))
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7059,7 +7059,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
         indicateFailure(FailureMessages.wasNotEmpty(prettifier, leftSideValue), None, pos)
       else indicateSuccess(FailureMessages.wasEmpty(prettifier, leftSideValue))
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7095,7 +7095,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     def shouldNot(rightMatcherX1: Matcher[T]): Assertion = {
       ShouldMethodHelper.shouldNotMatcher(leftSideValue, rightMatcherX1, prettifier, pos)
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7107,7 +7107,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     def shouldNot[TYPECLASS1[_]](rightMatcherFactory1: MatcherFactory1[T, TYPECLASS1])(implicit typeClass1: TYPECLASS1[T]): Assertion = {
       ShouldMethodHelper.shouldNotMatcher(leftSideValue, rightMatcherFactory1.matcher, prettifier, pos)
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7185,7 +7185,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      */
     def shouldBe(symbol: Symbol)(implicit toAnyRef: T <:< AnyRef): Assertion = {
       val matcherResult = matchSymbolToPredicateMethod(toAnyRef(leftSideValue), symbol, false, true, prettifier, pos)
-      if (!matcherResult.matches) 
+      if (!matcherResult.matches)
         indicateFailure(matcherResult.failureMessage(prettifier), None, pos)
       else indicateSuccess(matcherResult.negatedFailureMessage(prettifier))
     }
@@ -7230,7 +7230,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
       else indicateSuccess(matcherResult.negatedFailureMessage(prettifier))
     }
     // SKIP-SCALATESTJS-END
-    
+
     /**
      * This method enables the following syntax, where <code>excellentRead</code> refers to a <code>BePropertyMatcher[Book]</code>:
      *
@@ -7241,11 +7241,11 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      */
     def shouldBe(bePropertyMatcher: BePropertyMatcher[T])(implicit ev: T <:< AnyRef): Assertion = { // TODO: Try expanding this to 2.10 AnyVal
       val result = bePropertyMatcher(leftSideValue)
-      if (!result.matches) 
+      if (!result.matches)
         indicateFailure(FailureMessages.wasNot(prettifier, leftSideValue, UnquotedString(result.propertyName)), None, pos)
       else indicateSuccess(FailureMessages.was(prettifier, leftSideValue, UnquotedString(result.propertyName)))
     }
-    
+
     /**
      * This method enables the following syntax, where <code>goodRead</code> refers to a <code>BePropertyMatcher[Book]</code>:
      *
@@ -7261,7 +7261,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
       }
       else indicateSuccess(FailureMessages.wasA(prettifier, leftSideValue, UnquotedString(result.propertyName)))
     }
-    
+
     /**
      * This method enables the following syntax, where <code>excellentRead</code> refers to a <code>BePropertyMatcher[Book]</code>:
      *
@@ -7297,7 +7297,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
     def should(containWord: ContainWord): ResultOfContainWord[T] = {
       new ResultOfContainWord(leftSideValue, true, prettifier, pos)
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7306,9 +7306,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *    ^
      * </pre>
      */
-    def shouldNot(contain: ContainWord): ResultOfContainWord[T] = 
+    def shouldNot(contain: ContainWord): ResultOfContainWord[T] =
       new ResultOfContainWord(leftSideValue, false, prettifier, pos)
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7322,7 +7322,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
         indicateFailure(FailureMessages.doesNotExist(prettifier, leftSideValue), None, pos)
       else indicateSuccess(FailureMessages.exists(prettifier, leftSideValue))
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7336,7 +7336,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
         indicateFailure(FailureMessages.exists(prettifier, leftSideValue), None, pos)
       else indicateSuccess(FailureMessages.doesNotExist(prettifier, leftSideValue))
     }
-    
+
     /**
      * This method enables syntax such as the following:
      *
@@ -7396,7 +7396,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldNot(startWithWord: StartWithWord)(implicit ev: T <:< String): ResultOfStartWithWordForString = 
+    def shouldNot(startWithWord: StartWithWord)(implicit ev: T <:< String): ResultOfStartWithWordForString =
       new ResultOfStartWithWordForString(leftSideValue, false, prettifier, pos)
 
     /**
@@ -7407,7 +7407,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldNot(endWithWord: EndWithWord)(implicit ev: T <:< String): ResultOfEndWithWordForString = 
+    def shouldNot(endWithWord: EndWithWord)(implicit ev: T <:< String): ResultOfEndWithWordForString =
       new ResultOfEndWithWordForString(leftSideValue, false, prettifier, pos)
 
     /**
@@ -7418,7 +7418,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldNot(includeWord: IncludeWord)(implicit ev: T <:< String): ResultOfIncludeWordForString = 
+    def shouldNot(includeWord: IncludeWord)(implicit ev: T <:< String): ResultOfIncludeWordForString =
       new ResultOfIncludeWordForString(leftSideValue, false, prettifier, pos)
   }
 
@@ -7439,11 +7439,11 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * This method enables syntax such as the following:
      *
      * <pre class="stHighlight">
-     * string should fullyMatch regex ("a(b*)c" withGroup "bb") 
+     * string should fullyMatch regex ("a(b*)c" withGroup "bb")
      *                                          ^
      * </pre>
      */
-    def withGroup(group: String): RegexWithGroups = 
+    def withGroup(group: String): RegexWithGroups =
       new RegexWithGroups(leftSideString.r, IndexedSeq(group))
 
     /**
@@ -7477,7 +7477,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldNot(fullyMatchWord: FullyMatchWord): ResultOfFullyMatchWordForString = 
+    def shouldNot(fullyMatchWord: FullyMatchWord): ResultOfFullyMatchWordForString =
       new ResultOfFullyMatchWordForString(leftSideString, false, prettifier, pos)
 
     /**
@@ -7575,11 +7575,11 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * This method enables syntax such as the following:
      *
      * <pre class="stHighlight">
-     * string should fullyMatch regex ("a(b*)c" withGroup "bb") 
+     * string should fullyMatch regex ("a(b*)c" withGroup "bb")
      *                                          ^
      * </pre>
      */
-    def withGroup(group: String): RegexWithGroups = 
+    def withGroup(group: String): RegexWithGroups =
       new RegexWithGroups(leftSideString.r, IndexedSeq(group))
 
     /**
@@ -7590,7 +7590,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *                                             ^
      * </pre>
      */
-    def withGroups(groups: String*): RegexWithGroups = 
+    def withGroups(groups: String*): RegexWithGroups =
       new RegexWithGroups(leftSideString.r, IndexedSeq(groups: _*))
 
     /**
@@ -7601,7 +7601,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldNot(fullyMatchWord: FullyMatchWord): ResultOfFullyMatchWordForString = 
+    def shouldNot(fullyMatchWord: FullyMatchWord): ResultOfFullyMatchWordForString =
       new ResultOfFullyMatchWordForString(leftSideString, false)
 
     /**
@@ -7612,7 +7612,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldNot(startWithWord: StartWithWord): ResultOfStartWithWordForString = 
+    def shouldNot(startWithWord: StartWithWord): ResultOfStartWithWordForString =
       new ResultOfStartWithWordForString(leftSideString, false)
 
     /**
@@ -7623,7 +7623,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldNot(endWithWord: EndWithWord): ResultOfEndWithWordForString = 
+    def shouldNot(endWithWord: EndWithWord): ResultOfEndWithWordForString =
       new ResultOfEndWithWordForString(leftSideString, false)
 
     /**
@@ -7634,7 +7634,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldNot(includeWord: IncludeWord): ResultOfIncludeWordForString = 
+    def shouldNot(includeWord: IncludeWord): ResultOfIncludeWordForString =
       new ResultOfIncludeWordForString(leftSideString, false)
 */
   }
@@ -7656,11 +7656,11 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      * This method enables syntax such as the following:
      *
      * <pre class="stHighlight">
-     * regex should fullyMatch regex ("a(b*)c" withGroup "bb") 
+     * regex should fullyMatch regex ("a(b*)c" withGroup "bb")
      *                                         ^
      * </pre>
      */
-    def withGroup(group: String): RegexWithGroups = 
+    def withGroup(group: String): RegexWithGroups =
       new RegexWithGroups(regex, IndexedSeq(group))
 
     /**
@@ -7671,7 +7671,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *                                            ^
      * </pre>
      */
-    def withGroups(groups: String*): RegexWithGroups = 
+    def withGroups(groups: String*): RegexWithGroups =
       new RegexWithGroups(regex, IndexedSeq(groups: _*))
   }
 
@@ -7705,7 +7705,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
 }
 
 /**
- * Companion object that facilitates the importing of <code>Matchers</code> members as 
+ * Companion object that facilitates the importing of <code>Matchers</code> members as
  * an alternative to mixing it the trait. One use case is to import <code>Matchers</code> members so you can use
  * them in the Scala interpreter.
  *

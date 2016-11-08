@@ -19,7 +19,7 @@ import collection.mutable
 import org.scalatest._
 
 class SetSpec extends FlatSpec with GivenWhenThen {
-  
+
   markup { """
 
 Mutable Set

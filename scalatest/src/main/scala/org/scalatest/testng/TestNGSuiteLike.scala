@@ -31,7 +31,7 @@ import events.MotionToSuppress
 /**
  * Implementation trait for class <code>TestNGSuite</code>, which represents
  * a suite of tests that can be run with either TestNG or ScalaTest.
- * 
+ *
  * <p>
  * <a href="TestNGSuite.html"><code>TestNGSuite</code></a> is a class, not a
  * trait, to minimize compile time given there is a slight compiler overhead to
@@ -58,7 +58,7 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
       throw new NullPointerException("testName was null")
     if (args == null)
       throw new NullPointerException("args was null")
-    
+
     import args._
 
     val (theStopper, report, method, testStartTime) =
@@ -71,20 +71,20 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
     val messageRecorderForThisTest = new MessageRecorder(report)
     val informerForThisTest =
       MessageRecordingInformer(
-        messageRecorderForThisTest, 
+        messageRecorderForThisTest,
         (message, payload, isConstructingThread, testWasPending, testWasCanceled, location) => createInfoProvided(thisSuite, report, tracker, Some(testName), message, payload, 2, location, isConstructingThread, true)
       )
 
     // TODO: Was using reportInfoProvided here before, to double check with Bill for changing to markup provided.
     val documenterForThisTest =
       MessageRecordingDocumenter(
-        messageRecorderForThisTest, 
+        messageRecorderForThisTest,
         (message, _, isConstructingThread, testWasPending, testWasCanceled, location) => createMarkupProvided(thisSuite, report, tracker, Some(testName), message, 2, location, isConstructingThread) // TODO: Need a test that fails because testWasCanceleed isn't being passed
       )
 
     val argsArray: Array[Object] =
       if (testMethodTakesAnInformer(testName)) {
-        Array(informerForThisTest)  
+        Array(informerForThisTest)
       }
       else Array()
 
@@ -105,7 +105,7 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
       reportTestSucceeded(this, report, tracker, testName, testName, messageRecorderForThisTest.recordedEvents(false, false), duration, formatter, rerunner, Some(getTopOfMethod(thisSuite, method)))
       SucceededStatus
     }
-    catch { 
+    catch {
       case ite: InvocationTargetException =>
         val t = ite.getTargetException
         t match {
@@ -120,7 +120,7 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
             val formatter = getEscapedIndentedTextForTest(testName, 1, true)
             // testWasCanceled = true so info's printed out in the finally clause show up yellow
             reportTestCanceled(this, report, t, testName, testName, messageRecorderForThisTest.recordedEvents(false, true), rerunner, tracker, duration, formatter, Some(TopOfMethod(thisSuite.getClass.getName, method.toGenericString())))
-            SucceededStatus                 
+            SucceededStatus
           case e if !anExceptionThatShouldCauseAnAbort(e) =>
             val duration = System.currentTimeMillis - testStartTime
             handleFailedTest(thisSuite, t, testName, messageRecorderForThisTest.recordedEvents(false, false), report, tracker, getEscapedIndentedTextForTest(testName, 1, true), duration)
@@ -131,14 +131,14 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
         val duration = System.currentTimeMillis - testStartTime
         handleFailedTest(thisSuite, e, testName, messageRecorderForThisTest.recordedEvents(false, false), report, tracker, getEscapedIndentedTextForTest(testName, 1, true), duration)
         FailedStatus
-      case e: Throwable => throw e  
+      case e: Throwable => throw e
     }
   }
 */
 
   /**
    * Execute this <code>TestNGSuite</code>.
-   * 
+   *
    * @param testName an optional name of one test to execute. If <code>None</code>, this class will execute all relevant tests.
    *                 I.e., <code>None</code> acts like a wildcard that means execute all relevant tests in this <code>TestNGSuite</code>.
    * @param args the <code>Args</code> for this run
@@ -147,7 +147,7 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
     import args._
     val status = new ScalaTestStatefulStatus
     runTestNG(testName, wrapReporterIfNecessary(thisSuite, reporter), filter, tracker, status)
-    
+
     status.setCompleted()
     status
   }
@@ -206,7 +206,7 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
   }
 
   /**
-   * Runs TestNG, running only the test method with the given name. 
+   * Runs TestNG, running only the test method with the given name.
    * @param   testName   the name of the method to run
    * @param   reporter   the reporter to be notified of test events (success, failure, etc)
    * @param   status   Status of run.
@@ -214,19 +214,19 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
   private[testng] def runTestNG(testName: String, reporter: Reporter, tracker: Tracker, status: ScalaTestStatefulStatus): Unit = {
     runTestNG(Some(testName), reporter, Filter(), tracker, status)
   }
-  
+
   /**
-   * Runs TestNG. The meat and potatoes. 
+   * Runs TestNG. The meat and potatoes.
    *
    * @param   testName   if present (Some), then only the method with the supplied name is executed and groups will be ignored
    * @param   reporter   the reporter to be notified of test events (success, failure, etc)
    * @param   groupsToInclude    contains the names of groups to run. only tests in these groups will be executed
    * @param   groupsToExclude    tests in groups in this Set will not be executed
    * @param   status   Status of run.
-   */  
+   */
   private[testng] def runTestNG(testName: Option[String], reporter: Reporter,
       filter: Filter, tracker: Tracker, status: ScalaTestStatefulStatus): Unit = {
-    
+
     val tagsToInclude =
       filter.tagsToInclude match {
         case None => Set[String]()
@@ -235,10 +235,10 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
     val tagsToExclude = filter.tagsToExclude
 
     val testng = new TestNG()
-    
+
     // only run the test methods in this class
     testng.setTestClasses(Array(this.getClass))
-    
+
     // if testName is supplied, ignore groups.
     testName match {
       case Some(tn) => setupTestNGToRunSingleMethod(tn, testng)
@@ -247,20 +247,20 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
 
     this.run(testng, reporter, tracker, status)
   }
-  
+
   /**
    * Runs the TestNG object which calls back to the given Reporter.
    */
   private[testng] def run(testng: TestNG, reporter: Reporter, tracker: Tracker, status: ScalaTestStatefulStatus): Unit = {
-    
+
     // setup the callback mechanism
     val tla = new MyTestListenerAdapter(reporter, tracker, status)
     testng.addListener(tla)
-    
+
     // finally, run TestNG
     testng.run()
   }
-  
+
   /**
    * Tells TestNG which groups to include and exclude, which is directly a one-to-one mapping.
    */
@@ -268,20 +268,20 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
     testng.setGroups(groupsToInclude.mkString(","))
     testng.setExcludedGroups(groupsToExclude.mkString(","))
   }
-  
+
   /**
    * This method ensures that TestNG will only run the test method whose name matches testName.
-   * 
+   *
    * The approach is a bit odd however because TestNG doesn't have an easy API for
-   * running a single method. To get around that we chose to use an AnnotationTransformer 
-   * to add a secret group to the test method's annotation. We then set up TestNG to run only that group. 
-   * 
+   * running a single method. To get around that we chose to use an AnnotationTransformer
+   * to add a secret group to the test method's annotation. We then set up TestNG to run only that group.
+   *
    * @param    testName    the name of the test method to be executed
    */
   private def setupTestNGToRunSingleMethod(testName: String, testng: TestNG) = {
     // NOTE: There was another option - we could TestNG's XmlSuites to specify which method to run.
     // This approach was about as much work, offered no clear benefits, and no additional problems either.
-    
+
     // Using reflection because TestNG has a incompatible change, we want to allow people to use the old and the new version of TestNG.
     try {
       val transformerSuperClass = Class.forName("org.testng.IAnnotationTransformer")
@@ -293,36 +293,36 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
       method.invoke(testng, transformerInstance)
     }
     catch {
-      case e: ClassNotFoundException => 
+      case e: ClassNotFoundException =>
         new UnsupportedOperationException("Sorry, due to incompatible changes in TestNG, running a single test is only supported in TestNG version 6 or later.", e)
     }
   }
-  
+
   /*
    * This class hooks TestNG's callback mechanism (TestListenerAdapter) to ScalaTest's
    * reporting mechanism. TestNG has many different callback points which are a near one-to-one
-   * mapping with ScalaTest. At each callback point, this class simply creates ScalaTest 
+   * mapping with ScalaTest. At each callback point, this class simply creates ScalaTest
    * reports and calls the appropriate method on the Reporter.
-   * 
-   * TODO: 
-   * (12:02:27 AM) bvenners: onTestFailedButWithinSuccessPercentage(ITestResult tr) 
+   *
+   * TODO:
+   * (12:02:27 AM) bvenners: onTestFailedButWithinSuccessPercentage(ITestResult tr)
    * (12:02:34 AM) bvenners: maybe a TestSucceeded with some extra info in the report
    */
   private[testng] class MyTestListenerAdapter(reporter: Reporter, tracker: Tracker, status: ScalaTestStatefulStatus) extends TestListenerAdapter {
-    
+
     // TODO: Put the tracker in an atomic, because TestNG can go multithreaded?
 
     val report = reporter
 
     import org.testng.ITestContext
     import org.testng.ITestResult
-    
+
     private val className = TestNGSuiteLike.this.getClass.getName
 
     def getTopOfMethod(className: String, methodName: String) = Some(TopOfMethod(className, "public void " + className + "." + methodName + "()"))
 
     /**
-     * TestNG's onTestStart maps cleanly to TestStarting. Simply build a report 
+     * TestNG's onTestStart maps cleanly to TestStarting. Simply build a report
      * and pass it to the Reporter.
      */
     override def onTestStart(result: ITestResult): Unit = {
@@ -337,7 +337,7 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
     override def onTestSuccess(result: ITestResult): Unit = {
       val testName = result.getName + params(result)
       val formatter = getIndentedTextForTest(testName, 1, true)
-      report(TestSucceeded(tracker.nextOrdinal(), thisSuite.suiteName, thisSuite.getClass.getName, Some(thisSuite.getClass.getName), testName, testName, 
+      report(TestSucceeded(tracker.nextOrdinal(), thisSuite.suiteName, thisSuite.getClass.getName, Some(thisSuite.getClass.getName), testName, testName,
              Vector.empty, None, Some(formatter), getTopOfMethod(thisSuite.getClass.getName, result.getName), Some(className))) // Can I add a duration?
     }
 
@@ -360,11 +360,11 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
       val message = if (throwableOrNull != null && throwableOrNull.getMessage != null) throwableOrNull.getMessage else Resources.testNGConfigFailed
       val testName = result.getName + params(result)
       val formatter = getIndentedTextForTest(testName, 1, true)
-      val payload = 
+      val payload =
       throwable match {
-        case optPayload: PayloadField => 
+        case optPayload: PayloadField =>
           optPayload.payload
-        case _ => 
+        case _ =>
           None
       }
       report(TestFailed(tracker.nextOrdinal(), message, thisSuite.suiteName, thisSuite.getClass.getName, Some(thisSuite.getClass.getName), testName, testName, Vector.empty, throwable, None, Some(formatter), Some(SeeStackDepthException), Some(className), payload)) // Can I add a duration?
@@ -372,7 +372,7 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
     }
 
     /**
-     * A TestNG setup method resulted in an exception, and a test method will later fail to run. 
+     * A TestNG setup method resulted in an exception, and a test method will later fail to run.
      * This TestNG callback method has the exception that caused the problem, as well
      * as the name of the method that failed. Create a Report with the method name and the
      * exception and call reporter(SuiteAborted).
@@ -389,8 +389,8 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
     /**
      * TestNG's onConfigurationSuccess doesn't have a clean mapping in ScalaTest.
      * Simply create a Report and fire InfoProvided. This works well
-     * because there may be a large number of setup methods and InfoProvided doesn't 
-     * show up in your face on the UI, and so doesn't clutter the UI. 
+     * because there may be a large number of setup methods and InfoProvided doesn't
+     * show up in your face on the UI, and so doesn't clutter the UI.
      */
     override def onConfigurationSuccess(result: ITestResult): Unit = { // TODO: Work on this report
       // For now don't print anything. Succeed with silence. Is adding clutter.
@@ -398,13 +398,13 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
     }
 
     private def params(itr: ITestResult): String = {
-      itr.getParameters match {   
+      itr.getParameters match {
         case Array() => ""
         case _ => "(" + itr.getParameters.mkString(",") + ")"
       }
     }
   }
-  
+
   /*
      TODO
     (12:02:27 AM) bvenners: onTestFailedButWithinSuccessPercentage(ITestResult tr)

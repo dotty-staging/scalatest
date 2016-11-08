@@ -50,10 +50,10 @@ import org.scalactic.exceptions.NullArgumentException
  * is that although <code>Stepwise</code> executes its own nested suites sequentially, it passes
  * whatever distributor was passed to it to those nested suites. Thus the nested suites could run their own nested
  * suites and tests in parallel if that distributor is defined. By contrast, <code>Sequential</code> always
- * passes <code>None</code> for the distributor to the nested suites, so any and every test and nested suite 
+ * passes <code>None</code> for the distributor to the nested suites, so any and every test and nested suite
  * contained within the nested suites passed to the <code>Sequential</code> construtor will be executed sequentially.
  * </p>
- * 
+ *
  * @param suitesToNest a sequence of <code>Suite</code>s to nest.
  *
  * @throws NullArgumentException if <code>suitesToNest</code>, or any suite
@@ -61,7 +61,7 @@ import org.scalactic.exceptions.NullArgumentException
  *
  * @author Bill Venners
  */
-class Stepwise(suitesToNest: Suite*) extends Suite with StepwiseNestedSuiteExecution { thisSuite => 
+class Stepwise(suitesToNest: Suite*) extends Suite with StepwiseNestedSuiteExecution { thisSuite =>
 
   requireNonNull(suitesToNest)
 

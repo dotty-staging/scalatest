@@ -15,7 +15,7 @@
  */
 package org.scalatest;
 
-import java.lang.annotation.*; 
+import java.lang.annotation.*;
 
 /**
  * Annotation to associate a <em>wrapper suite</em> with a non-<code>Suite</code> class, so it can be run via ScalaTest.

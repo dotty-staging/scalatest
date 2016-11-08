@@ -15,7 +15,7 @@
  */
 package org.scalatest;
 
-import java.lang.annotation.*; 
+import java.lang.annotation.*;
 
 @TagAnnotation
 @Retention(RetentionPolicy.RUNTIME)

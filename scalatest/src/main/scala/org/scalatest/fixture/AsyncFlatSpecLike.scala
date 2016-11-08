@@ -1983,7 +1983,7 @@ import resultOfStringPassedToVerb.verb
    * initialized with the verb and rest parameters (the second and third parameters to
    * the function, respectively).
    * </p>
-   */ 
+   */
   protected implicit val shorthandTestRegistrationFunction: StringVerbStringInvocation =
     new StringVerbStringInvocation {
       def apply(subject: String, verb: String, rest: String, pos: source.Position): ResultOfStringPassedToVerb = {

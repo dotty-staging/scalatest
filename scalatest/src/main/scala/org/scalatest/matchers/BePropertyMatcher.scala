@@ -18,7 +18,7 @@ package org.scalatest.matchers
 import scala.reflect.ClassTag
 
 // T is the type of the object that has a Boolean property to verify with an instance of this trait
-// This is not a subtype of BeMatcher, because BeMatcher only works after "be", but 
+// This is not a subtype of BeMatcher, because BeMatcher only works after "be", but
 // BePropertyMatcher will work after "be", "be a", or "be an"
 /**
  * Trait extended by matcher objects, which may appear after the word <code>be</code>, that can match against a <code>Boolean</code>
@@ -54,22 +54,22 @@ import scala.reflect.ClassTag
  *
  * <pre class="stHighlight">
  * trait CustomMatchers {
- * 
+ *
  *   class FileBePropertyMatcher extends BePropertyMatcher[java.io.File] {
  *     def apply(left: java.io.File) = BePropertyMatchResult(left.isFile, "file")
  *   }
- * 
+ *
  *   class DirectoryBePropertyMatcher extends BePropertyMatcher[java.io.File] {
  *     def apply(left: java.io.File) = BePropertyMatchResult(left.isDirectory, "directory")
  *   }
- * 
+ *
  *   val file = new FileBePropertyMatcher
  *   val directory = new DirectoryBePropertyMatcher
  * }
  * </pre>
- * 
+ *
  * <p>
- * Because the type parameter of these two <code>BePropertyMatcher</code>s is <code>java.io.File</code>, they 
+ * Because the type parameter of these two <code>BePropertyMatcher</code>s is <code>java.io.File</code>, they
  * can only be used with instances of that type. (The compiler will enforce this.) All they do is create a
  * <code>BePropertyMatchResult</code> whose <code>matches</code> field is <code>true</code> if and only if the <code>Boolean</code> property
  * is <code>true</code>. The second field, <code>propertyName</code>, is simply the string name of the property.
@@ -79,13 +79,13 @@ import scala.reflect.ClassTag
  *
  * <pre class="stHighlight">
  * class ExampleSpec extends RefSpec with Matchers with CustomMatchers {
- * 
+ *
  *   describe("A temp file") {
- * 
+ *
  *     it("should be a file, not a directory") {
- * 
+ *
  *       val tempFile = java.io.File.createTempFile("delete", "me")
- * 
+ *
  *       try {
  *         tempFile should be a (file)
  *         tempFile should not be a (directory)
@@ -117,7 +117,7 @@ import scala.reflect.ClassTag
 */
 trait BePropertyMatcher[-T] extends Function1[T, BePropertyMatchResult] {
 
-  thisBePropertyMatcher => 
+  thisBePropertyMatcher =>
 
   /**
    * Check to see if a <code>Boolean</code> property on the specified object, <code>objectWithProperty</code>, matches its

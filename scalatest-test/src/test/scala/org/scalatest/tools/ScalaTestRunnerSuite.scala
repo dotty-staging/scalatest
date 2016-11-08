@@ -25,7 +25,7 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
   // testing runner.run:
   // def run(testClassName: String, fingerprint: TestFingerprint, args: Array[String]): Array[Event]
   class ScalaTestRunnerSuite extends FunSuite with Retries {
-  
+
     override def withFixture(test: NoArgTest) = {
       if (isRetryable(test))
         withRetryOnFailure {
@@ -33,7 +33,7 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
         }
      else super.withFixture(test)
     }
-  
+
     test("call with simple class") {
       val results = run("org.scalatest.tools.test.SimpleTest")
       assert(results(0).testName === "hello, world")
@@ -119,7 +119,7 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       val results = run("org.scalatest.tools.test.PrivateConstructor")
       assert(results.size === 0)
     }
-    
+
     test("@DoNotDiscover suite"){
       val results = run("org.scalatest.tools.test.DoNotDiscoverSuite")
       assert(results.size === 0)
@@ -145,101 +145,101 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       assert(results(0).testName === "i am pending")
       assert(results(0).result === Result.Skipped)
     }
-    
+
     test("throw IllegalArgumentException when -g is passed in as argument") {
       intercept[IllegalArgumentException] {
         run("org.scalatest.tools.test.PendingTest", Array("-g"))
       }
     }
-    
+
     test("-w should execute suites that match the specified package and its sub packages") {
       val result1 = run("org.scalatest.tools.test.TagsTest", Array("-w", "org.scalatest.tools"))
       assert(result1.size === 5)
-      
+
       val result2 = run("org.scalatest.tools.test.TagsTest", Array("-w", "org.scalatest.tools.test"))
       assert(result2.size === 5)
-      
+
       val result3 = run("org.scalatest.SuiteSuite", Array("-w", "org.scalatest.tools.test"))
       assert(result3.size === 0)
     }
-    
+
     test("-m should execute suites that match the specified package and not its sub packages") {
       val result1 = run("org.scalatest.tools.test.TagsTest", Array("-m", "org.scalatest.tools"))
       assert(result1.size === 0)
-      
+
       val result2 = run("org.scalatest.tools.test.TagsTest", Array("-m", "org.scalatest.tools.test"))
       assert(result2.size === 5)
-      
+
       val result3 = run("org.scalatest.SuiteSuite", Array("-m", "org.scalatest.tools.test"))
       assert(result3.size === 0)
-      
+
       val result4 = run("org.scalatest.enablers.NoParamSpec", Array("-m", "org.scalatest.concurrent"))
       assert(result4.size === 0)
     }
-    
+
     test("ScalaTestRunner.run should throw IllegalArgumentException when -s is passed in") {
       val iae = intercept[IllegalArgumentException] {
         run("org.scalatest.tools.test.SimpleTest", Array("-s", "org.scalatest.tools.test.SimpleTest"))
       }
       assert(iae.getMessage === "-s (suite) is not supported when runs in SBT, please use SBT's test-only instead.")
     }
-    
+
     test("ScalaTestRunner.run should throw IllegalArgumentException when -j is passed in") {
       val iae = intercept[IllegalArgumentException] {
         run("org.scalatest.tools.test.SimpleTest", Array("-j", "org.scalatest.tools.test.SimpleTest"))
       }
       assert(iae.getMessage === "-j (junit) is not supported when runs in SBT.")
     }
-    
+
     test("ScalaTestRunner.run should throw IllegalArgumentException when -b is passed in") {
       val iae = intercept[IllegalArgumentException] {
         run("org.scalatest.tools.test.SimpleTest", Array("-b", "org.scalatest.tools.test.SimpleTest"))
       }
       assert(iae.getMessage === "-b (testng) is not supported when runs in SBT.")
     }
-    
+
     test("ScalaTestRunner.run should throw IllegalArgumentException when -P is passed in") {
       val iae = intercept[IllegalArgumentException] {
         run("org.scalatest.tools.test.SimpleTest", Array("-P"))
       }
       assert(iae.getMessage === "-P (concurrent) is not supported when runs in SBT, please use SBT parallel configuration instead.")
     }
-    
+
     test("ScalaTestRunner.run should throw IllegalArgumentException when -PS is passed in") {
       val iae = intercept[IllegalArgumentException] {
         run("org.scalatest.tools.test.SimpleTest", Array("-PS"))
       }
       assert(iae.getMessage === "-P (concurrent) is not supported when runs in SBT, please use SBT parallel configuration instead.")
     }
-    
+
     test("ScalaTestRunner.run should throw IllegalArgumentException when -R is passed in") {
       val iae = intercept[IllegalArgumentException] {
         run("org.scalatest.tools.test.SimpleTest", Array("-R"))
       }
       assert(iae.getMessage === "-R (runpath) is not supported when runs in SBT.")
     }
-    
+
     test("ScalaTestRunner.run should throw IllegalArgumentException when -A is passed in") {
       val iae = intercept[IllegalArgumentException] {
         run("org.scalatest.tools.test.SimpleTest", Array("-A", "again.txt"))
       }
       assert(iae.getMessage === "-A is not supported when runs in SBT, please use SBT's test-quick instead.")
     }
-    
+
     test("ScalaTestRunner.run should throw IllegalArgumentException when -q is passed in") {
       val iae = intercept[IllegalArgumentException] {
         run("org.scalatest.tools.test.SimpleTest", Array("-q", "Spec"))
       }
       assert(iae.getMessage === "-q is not supported when runs in SBT, please use SBT's test-only or test filter instead.")
     }
-    
+
     test("ScalaTestRunner.run should throw IllegalArgumentException when -T is passed in") {
       val iae = intercept[IllegalArgumentException] {
         run("org.scalatest.tools.test.SimpleTest", Array("-T", "100"))
       }
       assert(iae.getMessage === "-T is not supported when runs in SBT.")
     }
-    
+
     test("ScalaTestRunner.run should be able to pass in custom reporter via -C") {
       val framework = new ScalaTestFramework()
       val runner: TestingRunner = framework.testRunner(Thread.currentThread.getContextClassLoader, Array(new TestLogger))
@@ -248,17 +248,17 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       }
       runner.run("org.scalatest.tools.scalasbt.SampleSuite", fingerprint, listener, Array("-C", classOf[EventRecordingReporter].getName))
       framework.RunConfig.reporter.get match {
-        case Some(dispatchRep: DispatchReporter) => 
+        case Some(dispatchRep: DispatchReporter) =>
           dispatchRep.doDispose()
           dispatchRep.reporters.find(_.isInstanceOf[EventRecordingReporter]) match {
-            case Some(recordingRep : EventRecordingReporter) => 
+            case Some(recordingRep : EventRecordingReporter) =>
               assert(recordingRep.testSucceededEventsReceived.size === 3)
             case _ => fail("Expected to find EventRecordingReporter, but not found.")
           }
         case _ => fail("Expected to find DispatchReporter, but not found.")
       }
     }
-    
+
     test("-y should do nothing when the task to execute is a chosen style") {
       val framework = new ScalaTestFramework()
       val runner: TestingRunner = framework.testRunner(Thread.currentThread.getContextClassLoader, Array(new TestLogger))
@@ -267,10 +267,10 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       }
       runner.run("org.scalatest.tools.scalasbt.SampleSuite", fingerprint, listener, Array("-y", "org.scalatest.FunSuite", "-C", classOf[EventRecordingReporter].getName))
       framework.RunConfig.reporter.get match {
-        case Some(dispatchRep: DispatchReporter) => 
+        case Some(dispatchRep: DispatchReporter) =>
           dispatchRep.doDispose()
           dispatchRep.reporters.find(_.isInstanceOf[EventRecordingReporter]) match {
-            case Some(recordingRep : EventRecordingReporter) => 
+            case Some(recordingRep : EventRecordingReporter) =>
               assert(recordingRep.testSucceededEventsReceived.size === 3)
               assert(recordingRep.suiteCompletedEventsReceived.size === 1)
             case _ => fail("Expected to find EventRecordingReporter, but not found.")
@@ -278,7 +278,7 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
         case _ => fail("Expected to find DispatchReporter, but not found.")
       }
     }
-    
+
     test("-y should get SuiteAborted event with NotAllowedException when the task to execute is not a chosen style") {
       val framework = new ScalaTestFramework()
       val runner: TestingRunner = framework.testRunner(Thread.currentThread.getContextClassLoader, Array(new TestLogger))
@@ -287,15 +287,15 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       }
       runner.run("org.scalatest.tools.scalasbt.SampleSuite", fingerprint, listener, Array("-y", "org.scalatest.FunSpec", "-C", classOf[EventRecordingReporter].getName))
       framework.RunConfig.reporter.get match {
-        case Some(dispatchRep: DispatchReporter) => 
+        case Some(dispatchRep: DispatchReporter) =>
           dispatchRep.doDispose()
           dispatchRep.reporters.find(_.isInstanceOf[EventRecordingReporter]) match {
-            case Some(recordingRep : EventRecordingReporter) => 
+            case Some(recordingRep : EventRecordingReporter) =>
               assert(recordingRep.testSucceededEventsReceived.size === 0)
               val suiteAbortedEvents = recordingRep.suiteAbortedEventsReceived
               assert(suiteAbortedEvents.size === 1)
               suiteAbortedEvents(0).throwable match {
-                case Some(e: NotAllowedException) => 
+                case Some(e: NotAllowedException) =>
                   assert(e.getMessage === Resources.notTheChosenStyle("org.scalatest.FunSuite", "org.scalatest.FunSpec"))
                 case _ => fail("Expected SuiteAborted to carry NotAllowedException, but it did not.")
               }
@@ -304,7 +304,7 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
         case _ => fail("Expected to find DispatchReporter, but not found.")
       }
     }
-    
+
     test("-W should cause AlertProvided to be fired", Retryable) {
       val framework = new ScalaTestFramework()
       val runner: TestingRunner = framework.testRunner(Thread.currentThread.getContextClassLoader, Array(new TestLogger))
@@ -313,10 +313,10 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       }
       runner.run("org.scalatest.tools.scalasbt.SlowSampleSuite", fingerprint, listener, Array("-W", "1", "1", "-C", classOf[EventRecordingReporter].getName))
       framework.RunConfig.reporter.get match {
-        case Some(dispatchRep: DispatchReporter) => 
+        case Some(dispatchRep: DispatchReporter) =>
           dispatchRep.doDispose()
           dispatchRep.reporters.find(_.isInstanceOf[EventRecordingReporter]) match {
-            case Some(recordingRep : EventRecordingReporter) => 
+            case Some(recordingRep : EventRecordingReporter) =>
               assert(recordingRep.testSucceededEventsReceived.size === 1)
               assert(recordingRep.alertProvidedEventsReceived.size > 0)
             case _ => fail("Expected to find EventRecordingReporter, but not found.")
@@ -324,7 +324,7 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
         case _ => fail("Expected to find DispatchReporter, but not found.")
       }
     }
-    
+
     test("Runner should support deprecated friendly argument dsl 'include'") {
       run("org.scalatest.tools.test.SimpleTest", Array("include(org.scala.a, org.scala.b, org.scala.c)"))
       run("org.scalatest.tools.test.SimpleTest", Array("include(\"org.scala.a\", \"org.scala.b\", \"org.scala.c\")"))
@@ -334,7 +334,7 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("includeorg.scala.a, org.scala.b, org.scala.c)")) }
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("include org.scala.a, org.scala.b, org.scala.c")) }
     }
-    
+
     test("Runner should support deprecated friendly argument dsl 'exclude'") {
       run("org.scalatest.tools.test.SimpleTest", Array("exclude(org.scala.a, org.scala.b, org.scala.c)"))
       run("org.scalatest.tools.test.SimpleTest", Array("exclude(\"org.scala.a\", \"org.scala.b\", \"org.scala.c\")"))
@@ -344,7 +344,7 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("excludeorg.scala.a, org.scala.b, org.scala.c)")) }
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("exclude org.scala.a, org.scala.b, org.scala.c")) }
     }
-    
+
     test("Runner should support deprecated friendly argument dsl 'stdout'") {
       run("org.scalatest.tools.test.SimpleTest", Array("stdout"))
       run("org.scalatest.tools.test.SimpleTest", Array("stdout(config=\"nocolor fullstacks droptestsucceeded\")"))
@@ -354,7 +354,7 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("stdoutconfig=\"nocolor fullstacks doptestsucceeded\")")) }
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("stdout(confi=\"nocolor fullstacks doptestsucceeded\")")) }
     }
-    
+
     test("Runner should support deprecated friendly argument dsl 'stderr'") {
       run("org.scalatest.tools.test.SimpleTest", Array("stderr"))
       run("org.scalatest.tools.test.SimpleTest", Array("stderr(config=\"dropinfoprovided dropsuitestarting droptestignored\")"))
@@ -364,10 +364,10 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("stderrconfig=\"dopinfoprovided dropsuitestarting droptestignored\")")) }
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("stderr(confi=\"dopinfoprovided dropsuitestarting droptestignored\")")) }
     }
-    
+
     val tempDir = createTempDirectory()
     val cssFile = File.createTempFile("mystyles", "css", tempDir)
-    
+
     test("Runner should support deprecated friendly argument dsl 'file'") {
       run("org.scalatest.tools.test.SimpleTest", Array("file(filename=\"" + cssFile.getAbsolutePath + "\")"))
       run("org.scalatest.tools.test.SimpleTest", Array("file(filename=\"" + cssFile.getAbsolutePath + "\", config=\"durations shortstacks dropteststarting\")"))
@@ -379,7 +379,7 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("file=\"nocolor fullstacks doptestsucceeded\")")) }
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("file(confi=\"nocolor fullstacks doptestsucceeded\")")) }
     }
-    
+
     test("Runner should support deprecated friendly argument dsl 'junitxml'") {
       run("org.scalatest.tools.test.SimpleTest", Array("junitxml(directory=\"" + tempDir.getAbsolutePath + "\")"))
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("junitxml")) }
@@ -389,14 +389,14 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("junitxmldirectory=\"" + tempDir.getAbsolutePath + "\")")) }
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("junitxml(director=\"" + tempDir.getAbsolutePath + "\")")) }
     }
-    
+
     test("Runner should support deprecated friendly argument dsl 'html'") {
       run("org.scalatest.tools.test.SimpleTest", Array("html(directory=\"" + tempDir.getAbsolutePath + "\")"))
       run("org.scalatest.tools.test.SimpleTest", Array("html(directory=\"" + tempDir.getAbsolutePath + "\", css=\"" + cssFile.getAbsolutePath + "\")"))
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("html()")) }
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("html(directory=\"" + tempDir.getAbsolutePath + "\", css=\"\")")) }
     }
-    
+
     test("Runner should support deprecated friendly argument dsl 'reporterclass'") {
       val repClassName = classOf[EventRecordingReporter].getName
       run("org.scalatest.tools.test.SimpleTest", Array("reporterclass(classname=\"" + repClassName + "\")"))
@@ -407,13 +407,13 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("reporterclass(classname=\"a.b.c\", config=\"fullstacks\")")) }
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("reporterclass(classname=\"a.b.c\", config=\"durations\")")) }
     }
-    
+
     test("Runner should support deprecated friendly argument dsl 'membersonly'") {
       run("org.scalatest.tools.test.SimpleTest", Array("membersonly(a.b.c)"))
       run("org.scalatest.tools.test.SimpleTest", Array("membersonly(a.b.c, a.b.d, a.b.e)"))
       intercept[IllegalArgumentException] { run("org.scalatest.tools.test.SimpleTest", Array("membersonly")) }
     }
-  
+
     test("Runner should support deprecated friendly argument dsl 'wildcard'") {
       run("org.scalatest.tools.test.SimpleTest", Array("wildcard(a.b.c)"))
       run("org.scalatest.tools.test.SimpleTest", Array("wildcard(a.b.c, a.b.d, a.b.e)"))
@@ -439,15 +439,15 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
       val framework = new ScalaTestFramework()
       val runner: TestingRunner = framework.testRunner(Thread.currentThread.getContextClassLoader, Array(new TestLogger))
       runner.run(classname, fingerprint, listener, args)
-      
+
       dispose(framework)
       buf.toArray
     }
     private def dispose(framework: ScalaTestFramework): Unit = {
       framework.RunConfig.reporter.get match {
-        case Some(dispatchRep: DispatchReporter) => 
+        case Some(dispatchRep: DispatchReporter) =>
           dispatchRep.doDispose()
-        case _ => 
+        case _ =>
       }
     }
 
@@ -500,7 +500,7 @@ import org.scalatools.testing.{Event, EventHandler, Result, Logger, Runner => Te
     }
 
     private class PrivateConstructor private() extends FunSuite
-    
+
     import org.scalatest.DoNotDiscover
     @DoNotDiscover
     private class DoNotDiscoverSuite extends FunSuite {

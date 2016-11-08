@@ -21,7 +21,7 @@ import _root_.java.util.concurrent.Callable
 import org.scalatest.OutcomeOf.outcomeOf
 
 /**
- * Trait that provides each test with access to a new <code>Conductor</code> 
+ * Trait that provides each test with access to a new <code>Conductor</code>
  * via methods.
  *
  * <p>
@@ -36,23 +36,23 @@ import org.scalatest.OutcomeOf.outcomeOf
  * import java.util.concurrent.ArrayBlockingQueue
  *
  * class ArrayBlockingQueueSuite extends FunSuite with ConductorMethods with Matchers {
- * 
+ *
  *   test("calling put on a full queue blocks the producer thread") {
  *
  *     val buf = new ArrayBlockingQueue[Int](1)
- * 
+ *
  *     thread("producer") {
  *       buf put 42
  *       buf put 17
  *       beat should be (1)
  *     }
- * 
+ *
  *     thread("consumer") {
  *       waitForBeat(1)
  *       buf.take should be (42)
  *       buf.take should be (17)
  *     }
- * 
+ *
  *     whenFinished {
  *       buf should be ('empty)
  *     }

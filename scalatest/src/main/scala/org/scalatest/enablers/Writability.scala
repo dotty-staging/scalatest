@@ -30,7 +30,7 @@ import scala.collection.GenTraversable
  * can be any type for which the concept of being writable makes sense, such as <code>java.io.File</code>. ScalaTest provides
  * implicit implementation for <code>java.io.File</code>. You can enable the <code>be</code> <code>writable</code> matcher syntax on your own
  * type <code>U</code> by defining a <code>Writability[U]</code> for the type and making it available implicitly.
- * 
+ *
  * <p>
  * ScalaTest provides an implicit <code>Writability</code> instance for <code>java.io.File</code> and arbitary
  * object with <code>isWritable()</code> or <code>isWritable</code> in the <a href="Writability$.html"><code>Writability</code> companion object</a>.
@@ -77,7 +77,7 @@ object Writability {
    * @tparam T any type that has a <code>isWritable()</code> method that returns <code>Boolean</code>
    * @return <code>Writability[T]</code> that supports <code>T</code> in <code>be</code> <code>writable</code> syntax
    */
-  implicit def writabilityOfAnyRefWithIsWritableMethod[T <: AnyRef { def isWritable(): Boolean}]: Writability[T] = 
+  implicit def writabilityOfAnyRefWithIsWritableMethod[T <: AnyRef { def isWritable(): Boolean}]: Writability[T] =
     new Writability[T] {
       def isWritable(obj: T): Boolean = obj.isWritable
     }
@@ -88,7 +88,7 @@ object Writability {
    * @tparam T any type that has a parameterless <code>isWritable</code> method that returns <code>Boolean</code>
    * @return <code>Writability[T]</code> that supports <code>T</code> in <code>be</code> <code>writable</code> syntax
    */
-  implicit def writabilityOfAnyRefWithParameterlessIsWritableMethod[T <: AnyRef { def isWritable: Boolean}]: Writability[T] = 
+  implicit def writabilityOfAnyRefWithParameterlessIsWritableMethod[T <: AnyRef { def isWritable: Boolean}]: Writability[T] =
     new Writability[T] {
       def isWritable(obj: T): Boolean = obj.isWritable
     }

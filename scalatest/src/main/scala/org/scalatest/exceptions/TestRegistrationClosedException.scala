@@ -76,7 +76,7 @@ class TestRegistrationClosedException(
   ) = this(message, Left(pos))
 
   /**
-   * Constructs a <code>TestRegistrationClosedException</code> with a <code>message</code> and a pre-determined 
+   * Constructs a <code>TestRegistrationClosedException</code> with a <code>message</code> and a pre-determined
    * and <code>failedCodeStackDepth</code>. (This was the primary constructor form prior to ScalaTest 1.5.)
    *
    * @param message the exception's detail message
@@ -100,7 +100,7 @@ class TestRegistrationClosedException(
     this(message, Right(failedCodeStackDepthFun))
 
   /**
-   * Returns an exception of class <code>TestRegistrationClosedException</code> with <code>failedExceptionStackDepth</code> set to 0 and 
+   * Returns an exception of class <code>TestRegistrationClosedException</code> with <code>failedExceptionStackDepth</code> set to 0 and
    * all frames above this stack depth severed off. This can be useful when working with tools (such as IDEs) that do not
    * directly support ScalaTest. (Tools that directly support ScalaTest can use the stack depth information delivered
    * in the StackDepth exceptions.)

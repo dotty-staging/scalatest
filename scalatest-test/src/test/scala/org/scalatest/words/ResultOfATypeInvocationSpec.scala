@@ -19,13 +19,13 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfATypeInvocationSpec extends FunSpec {
-  
+
   describe("ResultOfATypeInvocation ") {
-    
+
     it("should have pretty toString") {
       val result = new ResultOfATypeInvocation(classOf[FunSpec])
       result.toString should be ("a [org.scalatest.FunSpec]")
     }
   }
-  
+
 }

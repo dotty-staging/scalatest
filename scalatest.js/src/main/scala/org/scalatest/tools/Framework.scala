@@ -22,7 +22,7 @@ import scala.collection.mutable.ListBuffer
 import scala.compat.Platform
 
 class Framework extends BaseFramework {
-  
+
   def name: String = "ScalaTest"
 
   def fingerprints: Array[Fingerprint] =

@@ -42,7 +42,7 @@ package org.scalatest.exceptions
  * </p>
  */
 trait ModifiablePayload[T <: Throwable] { this: Throwable with PayloadField =>
-  
+
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the payload option replaced with

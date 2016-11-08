@@ -28,8 +28,8 @@ private[scalactic] object DigitStringMacro {
       "DigitString.apply can only be invoked on String literals that contain all decimal digits ('0' through '9'), like \"123\"" +
       " Please use DigitString.from instead."
     ensureValidStringLiteral(c)(value, notValidMsg, notLiteralMsg) { s =>
-      s.forall(c => c >= '0' && c <= '9') 
+      s.forall(c => c >= '0' && c <= '9')
     }
     c.universe.reify { DigitString.from(value.splice).get }
-  } 
+  }
 }

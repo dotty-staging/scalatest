@@ -27,7 +27,7 @@ import Suite.autoTagClassAnnotations
  * a sister class to <code>org.scalatest.FreeSpec</code> that isolates
  * tests by running each test in its own instance of the test class, and
  * for each test, only executing the <em>path</em> leading to that test.
- * 
+ *
  * <p>
  * <a href="FreeSpec.html"><code>path.FreeSpec</code></a> is a class, not a trait,
  * to minimize compile time given there is a slight compiler overhead to
@@ -47,7 +47,7 @@ import Suite.autoTagClassAnnotations
 @Finders(Array("org.scalatest.finders.FreeSpecFinder"))
 //SCALATESTJS-ONLY @scala.scalajs.js.annotation.JSExportDescendentClasses(ignoreInvalidDescendants = true)
 trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Informing with Notifying with Alerting with Documenting { thisSuite =>
-  
+
   private final val engine = PathEngine.getEngine()
   import engine._
 
@@ -160,7 +160,7 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * Class that supports the registration of tagged tests.
    *
    * <p>
-   * Instances of this class are returned by the <code>taggedAs</code> method of 
+   * Instances of this class are returned by the <code>taggedAs</code> method of
    * class <code>FreeSpecStringWrapper</code>.
    * </p>
    *
@@ -242,7 +242,7 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
     def ignore(testFun: => Unit /* Assertion */): Unit = {
       registerTestToIgnore(specText, tags, "ignore", testFun _, pos)
     }
-  }       
+  }
 
   /**
    * A class that via an implicit conversion (named <code>convertToFreeSpecStringWrapper</code>) enables
@@ -518,7 +518,7 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
   final protected override def runTest(testName: String, args: Args): Status = {
 
     ensureTestResultsRegistered(thisSuite)
-    
+
     def dontInvokeWithFixture(theTest: TestLeaf): Outcome = {
       theTest.testFun()
     }
@@ -541,9 +541,9 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed
    * to methods <code>test</code> and <code>ignore</code>.
    * </p>
-   * 
+   *
    * <p>
-   * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
+   * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
    * </p>
    *
@@ -619,7 +619,7 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * <code>org.scalatest.FreeSpec</code>, nested suites are executed then tests are executed. In an
    * <code>org.scalatest.path.FreeSpec</code> it would be the opposite. To make the code easy to reason about,
    * therefore, this is just not allowed. If you want to add nested suites to a <code>path.FreeSpec</code>, you can
-   * instead wrap them all in a <a href="../Suites.html"><code>Suites</code></a> 
+   * instead wrap them all in a <a href="../Suites.html"><code>Suites</code></a>
    * object and put them in whatever order you wish.
    * </p>
    *
@@ -642,7 +642,7 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * <code>org.scalatest.FreeSpec</code>, nested suites are executed then tests are executed. In an
    * <code>org.scalatest.path.FreeSpec</code> it would be the opposite. To make the code easy to reason about,
    * therefore, this is just not allowed. If you want to add nested suites to a <code>path.FreeSpec</code>, you can
-   * instead wrap them all in a <a href="../Suites.html"><code>Suites</code></a> 
+   * instead wrap them all in a <a href="../Suites.html"><code>Suites</code></a>
    * object and put them in whatever order you wish.
    * </p>
    *
@@ -652,12 +652,12 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * </p>
    */
   final override def nestedSuites: collection.immutable.IndexedSeq[Suite] = Vector.empty
-  
+
   /**
    * Suite style name.
    */
   final override val styleName: String = "org.scalatest.path.FreeSpec"
-    
+
   override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = {
     ensureTestResultsRegistered(thisSuite)
     createTestDataFor(testName, theConfigMap, this)

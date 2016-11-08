@@ -30,7 +30,7 @@ import org.scalatest.TagAnnotation;
  * This tag annotation is intended to be used in conjunction with trait <a href="../Retries.html"><code>Retries</code></a>, to
  * identify tests that are candidates for retrying.
  * </p>
- * 
+ *
  * <p>
  * If you wish to mark all tests in a test class as being candidates for retries, you can annotate the test class with
  * <code>@Retryable</code>, like this:
@@ -38,13 +38,13 @@ import org.scalatest.TagAnnotation;
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.retryableall
- * 
+ *
  * import org.scalatest._
  * import tags.Retryable
- * 
+ *
  * @Retryable
  * class SetSpec extends FlatSpec with Retries {
- * 
+ *
  *   override def withFixture(test: NoArgTest) = {
  *     if (isRetryable(test))
  *       withRetry { super.withFixture(test) }
@@ -55,7 +55,7 @@ import org.scalatest.TagAnnotation;
  *   "An empty Set" should "have size 0" in {
  *     assert(Set.empty.size === 0)
  *   }
- * 
+ *
  *   it should "produce NoSuchElementException when head is invoked" in {
  *     intercept[NoSuchElementException] {
  *       Set.empty.head
@@ -106,7 +106,7 @@ import org.scalatest.TagAnnotation;
  * The main use case of annotating a test or suite of tests is to select or deselect them during runs by supplying tags to include and/or exclude. For more information,
  * see the relevant section in the documentation of object <a href="../tools/Runner$.html#specifyingTagsToIncludeAndExclude"><code>Runner</code></a>.
  * </p>
- * 
+ *
  * <p>
  * Note that because reflection is not supported on Scala.js, this annotation will only work on the JVM, not on Scala.js.
  * </p>
@@ -115,4 +115,4 @@ import org.scalatest.TagAnnotation;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Inherited
-public @interface Retryable {} 
+public @interface Retryable {}

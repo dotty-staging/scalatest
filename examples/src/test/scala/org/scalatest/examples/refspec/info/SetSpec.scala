@@ -18,9 +18,9 @@ package org.scalatest.examples.refspec.info
 import org.scalatest._
 import refspec.RefSpec
 import collection.mutable
- 
+
 class SetSpec extends RefSpec with GivenWhenThen {
-  
+
   object `A mutable Set` {
     def `should allow an element to be added` {
       Given("an empty mutable Set")

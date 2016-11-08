@@ -29,7 +29,7 @@ import org.scalatest.time.Span
  * in future version of ScalaTest, there could be more)
  * </p>
  */
-trait TimeoutField { this: Throwable => 
+trait TimeoutField { this: Throwable =>
 
   /**
    * The timeout that expired causing this <code>Timeout</code> exception.

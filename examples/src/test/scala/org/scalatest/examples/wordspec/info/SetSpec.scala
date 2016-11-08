@@ -19,7 +19,7 @@ import collection.mutable
 import org.scalatest._
 
 class SetSpec extends WordSpec with GivenWhenThen {
-  
+
   "A mutable Set" should {
     "allow an element to be added" in {
       Given("an empty mutable Set")

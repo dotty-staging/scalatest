@@ -22,11 +22,11 @@ package org.scalatest
  * <table><tr><td class="usage">
  * <strong>Recommended Usage</strong>:
  * <code>AsyncFunSpec</code> is intended to enable users of <a href="FunSpec.html"><code>FunSpec</code></a>
- * to write non-blocking asynchronous tests that are consistent with their traditional <code>FunSpec</code> tests. 
+ * to write non-blocking asynchronous tests that are consistent with their traditional <code>FunSpec</code> tests.
  * <em>Note: <code>AsyncFunSpec</code> is intended for use in special situations where non-blocking asynchronous
  * testing is needed, with class <code>FunSpec</code> used for general needs.</em>
  * </td></tr></table>
- * 
+ *
  * <p>
  * Given a <code>Future</code> returned by the code you are testing,
  * you need not block until the <code>Future</code> completes before
@@ -74,10 +74,10 @@ package org.scalatest
  *
  * <p>
  * An <code>AsyncFunSpec</code> contains <em>describe clauses</em> and tests. You define a describe clause
- * with <code>describe</code>, and a test with either <code>it</code> or <code>they</code>. 
+ * with <code>describe</code>, and a test with either <code>it</code> or <code>they</code>.
  * <code>describe</code>,  <code>it</code>, and <code>they</code> are methods, defined in
  * <code>AsyncFunSpec</code>, which will be invoked
- * by the primary constructor of <code>AddSpec</code>. 
+ * by the primary constructor of <code>AddSpec</code>.
  * A describe clause names, or gives more information about, the <em>subject</em> (class or other entity) you are specifying
  * and testing. In the previous example, <code>"addSoon"</code> and <code>"addNow"</code> are
  * the subjects under specification and test. With each test you provide a string (the <em>spec text</em>) that specifies
@@ -195,22 +195,22 @@ package org.scalatest
  * <code>AsyncFunSpec</code> extends <a href="AsyncTestSuite.html"><code>AsyncTestSuite</code></a>, which provides an
  * implicit <code>scala.concurrent.ExecutionContext</code>
  * named <code>executionContext</code>. This
- * execution context is used by <code>AsyncFunSpec</code> to 
+ * execution context is used by <code>AsyncFunSpec</code> to
  * transform the <code>Future[Assertion]</code>s returned by each test
  * into the <a href="FutureOutcome.html"><code>FutureOutcome</code></a> returned by the <code>test</code> function
  * passed to <code>withFixture</code>.
  * This <code>ExecutionContext</code> is also intended to be used in the tests,
  * including when you map assertions onto futures.
  * </p>
- * 
+ *
  * <p>
  * On both the JVM and Scala.js, the default execution context provided by ScalaTest's asynchronous
  * testing styles confines execution to a single thread per test. On JavaScript, where single-threaded
  * execution is the only possibility, the default execution context is
- * <code>scala.scalajs.concurrent.JSExecutionContext.Implicits.queue</code>. On the JVM, 
+ * <code>scala.scalajs.concurrent.JSExecutionContext.Implicits.queue</code>. On the JVM,
  * the default execution context is a <em>serial execution context</em> provided by ScalaTest itself.
  * </p>
- * 
+ *
  * <p>
  * When ScalaTest's serial execution context is called upon to execute a task, that task is recorded
  * in a queue for later execution. For example, one task that will be placed in this queue is the
@@ -249,7 +249,7 @@ package org.scalatest
  * concurrently execute tests you have competing for threads from the same limited thread pool, the more likely it
  * will be that tests will intermitently fail due to timeouts.
  * </p>
- * 
+ *
  * <p>
  * Using ScalaTest's serial execution context on the JVM will ensure the same thread that produced the <code>Future[Assertion]</code>
  * returned from a test body is also used to execute any tasks given to the execution context while executing the test
@@ -265,8 +265,8 @@ package org.scalatest
  * This thread confinement strategy does mean, however, that when you are using the default execution context on the JVM, you
  * must be sure to <em>never block</em> in the test body waiting for a task to be completed by the
  * execution context. If you block, your test will never complete. This kind of problem will be obvious, because the test will
- * consistently hang every time you run it. (If a test is hanging, and you're not sure which one it is, 
- * enable <a href="Runner.scala#slowpokeNotifications">slowpoke notifications</a>.) If you really do 
+ * consistently hang every time you run it. (If a test is hanging, and you're not sure which one it is,
+ * enable <a href="Runner.scala#slowpokeNotifications">slowpoke notifications</a>.) If you really do
  * want to block in your tests, you may wish to just use a
  * traditional <a href="FunSpec.html"><code>FunSpec</code></a> with
  * <a href="concurrent/ScalaFutures.html"><code>ScalaFutures</code></a> instead. Alternatively, you could override
@@ -312,15 +312,15 @@ package org.scalatest
  * <p>
  * If you want the tests of an <code>AsyncFunSpec</code> to be executed in parallel, you
  * must mix in <code>ParallelTestExecution</code> and enable parallel execution of tests in your build.
- * You enable parallel execution in <a href="tools/Runner$.html"><code>Runner</code></a> with the <code>-P</code> command line flag. 
+ * You enable parallel execution in <a href="tools/Runner$.html"><code>Runner</code></a> with the <code>-P</code> command line flag.
  * In the ScalaTest Maven Plugin, set <code>parallel</code> to <code>true</code>.
  * In <code>sbt</code>, parallel execution is the default, but to be explicit you can write:
- * 
+ *
  * <pre>
  * parallelExecution in Test := true // the default in sbt
  * </pre>
- * 
- * On the JVM, if both <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in and 
+ *
+ * On the JVM, if both <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in and
  * parallel execution is enabled in the build, tests in an async-style suite will be started in parallel, using threads from
  * the <a href="Distributor"><code>Distributor</code></a>, and allowed to complete in parallel, using threads from the
  * <code>executionContext</code>. If you are using ScalaTest's serial execution context, the JVM default, asynchronous tests will
@@ -332,7 +332,7 @@ package org.scalatest
  * you need not worry about synchronizing access to shared mutable state accessed by transformations and callbacks of <code>Future</code>s
  * inside the test.
  * </p>
- * 
+ *
  * <p>
  * If <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in but
  * parallel execution of suites is <em>not</em> enabled, asynchronous tests on the JVM will be started sequentially, by the single thread
@@ -344,11 +344,11 @@ package org.scalatest
  * however, even though tests will be started sequentially by one thread, they will be allowed to run concurrently using threads from the
  * execution context's thread pool.
  * </p>
- * 
+ *
  * <p>
  * The latter behavior is essentially what you'll see on Scala.js when you execute a suite that mixes in <code>ParallelTestExecution</code>.
  * Because only one thread exists when running under JavaScript, you can't "enable parallel execution of suites." However, it may
- * still be useful to run tests in parallel on Scala.js, because tests can invoke API calls that are truly asynchronous by calling into 
+ * still be useful to run tests in parallel on Scala.js, because tests can invoke API calls that are truly asynchronous by calling into
  * external APIs that take advantage of non-JavaScript threads. Thus on Scala.js, <code>ParallelTestExecution</code> allows asynchronous
  * tests to run in parallel, even though they must be started sequentially. This may give you better performance when you are using API
  * calls in your Scala.js tests that are truly asynchronous.
@@ -604,7 +604,7 @@ package org.scalatest
  * <p>
  * One of the parameters to <code>AsyncFunSpec</code>'s <code>run</code> method is a <code>Reporter</code>, which
  * will collect and report information about the running suite of tests.
- * Information about suites and tests that were run, whether tests succeeded or failed, 
+ * Information about suites and tests that were run, whether tests succeeded or failed,
  * and tests that were ignored will be passed to the <code>Reporter</code> as the suite runs.
  * Most often the reporting done by default by <code>AsyncFunSpec</code>'s methods will be sufficient, but
  * occasionally you may wish to provide custom information to the <code>Reporter</code> from a test.
@@ -618,26 +618,26 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.asyncfunspec.info
- * 
+ *
  * import collection.mutable
  * import org.scalatest._
- * 
+ *
  * class SetSpec extends AsyncFunSpec with GivenWhenThen {
- *   
+ *
  *   describe("A mutable Set") {
  *     it("should allow an element to be added") {
  *       Given("an empty mutable Set")
  *       val set = mutable.Set.empty[String]
- * 
+ *
  *       When("an element is added")
  *       set += "clarity"
- * 
+ *
  *       Then("the Set should have size 1")
  *       assert(set.size === 1)
- * 
+ *
  *       And("the Set should contain the added element")
  *       assert(set.contains("clarity"))
- * 
+ *
  *       info("That's all folks!")
  *       succeed
  *     }
@@ -651,11 +651,11 @@ package org.scalatest
  * scala&gt; org.scalatest.run(new SetSpec)
  * <span class="stGreen">A mutable Set
  * - should allow an element to be added
- *   + Given an empty mutable Set 
- *   + When an element is added 
- *   + Then the Set should have size 1 
- *   + And the Set should contain the added element 
- *   + That's all folks! </span> 
+ *   + Given an empty mutable Set
+ *   + When an element is added
+ *   + Then the Set should have size 1
+ *   + And the Set should contain the added element
+ *   + That's all folks! </span>
  * </pre>
  *
  * <a name="documenters"></a><h2>Documenters</h2>
@@ -794,7 +794,7 @@ package org.scalatest
  *
  * <p>
  * Another example is <a href="tools/Runner$.html#slowpokeNotifications">slowpoke notifications</a>.
- * If you find a test is taking a long time to complete, but you're not sure which test, you can enable 
+ * If you find a test is taking a long time to complete, but you're not sure which test, you can enable
  * slowpoke notifications. ScalaTest will use an <code>Alerter</code> to fire an event whenever a test has been running
  * longer than a specified amount of time.
  * </p>

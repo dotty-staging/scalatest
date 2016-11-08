@@ -59,7 +59,7 @@ sealed trait Status { thisStatus =>
    * a suite's tests or nested suites) has completed, then returns <code>true</code> if no tests failed and no
    * suites aborted, else returns <code>false</code>, or if an unreported exception has been installed, completes
    * abruptly with that exception.
-   * 
+   *
    * <p>
    * This method only reports <code>false</code> if there was a failed test or aborted suite in the context of the "run" lifecycle method
    * from which it was returned.
@@ -67,7 +67,7 @@ sealed trait Status { thisStatus =>
    * will (after that test has completed) return <code>false</code> if the test whose name was passed to <code>runTest</code> fails,
    * else it will return <code>true</code>.
    * In other words, so long as the test doesn't fail &#8212;whether the test succeeds, is canceled, or is pending&#8212;<code>succeeds</code>
-   * will return <code>true</code>. 
+   * will return <code>true</code>.
    * If you call <code>succeeds</code> on a <code>Status</code> returned by <code>runTests</code>, by contrast, <code>succeeds</code>
    * will (after the suite's
    * tests have completed) return <code>true</code> only if none of the tests in the suite fail. If any test in the suite fails,
@@ -82,7 +82,7 @@ sealed trait Status { thisStatus =>
    * If this <code>Status</code> fails with an "unreported exception," an exception that occurred during the
    * activity represented by this <code>Status</code> that was not reported to the <code>Reporter</code> via a
    * ScalaTest event, the <code>succeeds</code> method will complete abruptly with that exception. If the
-   * original exception was a run-aborting exception, such as <code>StackOverflowError</code>, the 
+   * original exception was a run-aborting exception, such as <code>StackOverflowError</code>, the
    * <code>unreportedException</code> method will return a <code>java.util.ExecutionException</code> that contains
    * the original run-aborting exception as its cause. The <code>succeeds</code> method will in that case
    * complete abruptly with the <code>ExecutionException</code> that wraps the original run-aborting exception.
@@ -103,7 +103,7 @@ sealed trait Status { thisStatus =>
    * Non-blocking call that indicates whether the entity represented by this
    * <code>Status</code> (one test, one suite, or all of a suite's tests or nested suites) has completed. Because this is non-blocking,
    * you can use this to poll the completion status.
-   * 
+   *
    * <p>
    * Note: this method will not indicate whether a test has failed, suite has aborted, or an unreported exception has been installed.
    * It just indicates whether the <code>Status</code> has completed or not by returning <code>true</code> or <code>false</code>.
@@ -123,7 +123,7 @@ sealed trait Status { thisStatus =>
    * If this <code>Status</code> fails with an "unreported exception," an exception that occurred during the
    * activity represented by this <code>Status</code> that was not reported to the <code>Reporter</code> via a
    * ScalaTest event, the <code>waitUntilCompleted</code> method will complete abruptly with that exception. If the
-   * original exception was a run-aborting exception, such as <code>StackOverflowError</code>, the 
+   * original exception was a run-aborting exception, such as <code>StackOverflowError</code>, the
    * <code>unreportedException</code> method will return a <code>java.util.ExecutionException</code> that contains
    * the original run-aborting exception as its cause. The <code>waitUntilCompleted</code> method will in that case
    * complete abruptly with the <code>ExecutionException</code> that wraps the original run-aborting exception.
@@ -143,10 +143,10 @@ sealed trait Status { thisStatus =>
    * Registers the passed callback function to be executed when this status completes.
    *
    * <p>
-   * If an unreported exception has been installed on this <code>Status</code>, the 
+   * If an unreported exception has been installed on this <code>Status</code>, the
    * <code>Try</code> passed into the callback function will be a <code>Failure</code> containing that exception. Otherwise
    * the <code>Try</code> will be a <code>Success</code> containing true if no tests failed
-   * or suites aborted during the activity represented by this <code>Status</code>, else <code>false</code>. 
+   * or suites aborted during the activity represented by this <code>Status</code>, else <code>false</code>.
    * </p>
    *
    * <p>
@@ -176,7 +176,7 @@ sealed trait Status { thisStatus =>
    * returned by the by-name.
    *
    * <p>
-   * The <code>Status</code> returned by this method will complete when the status produced by the 
+   * The <code>Status</code> returned by this method will complete when the status produced by the
    * <code>Status</code> produced by the passed-by name completes. The returned <code>Status</code>
    * will complete with the same <code>succeeds</code> and <code>unreportedException</code> values.
    * But unlike the <code>Status</code> produced by the by-name, the returned <code>Status</code> will
@@ -326,7 +326,7 @@ sealed trait Status { thisStatus =>
   def unreportedException: Option[Throwable] = None
 
   // TODO: Currently we are attempting to execution the after code. This is a change from how
-  // ScalaTest has behaved from the beginning, and it is inconsistent also with thenRun. So 
+  // ScalaTest has behaved from the beginning, and it is inconsistent also with thenRun. So
   // I think I want to go back to how we were doing it before, if the before code blows up
   // or runTest, etc., then we don't attempt the after code.
   /**
@@ -428,7 +428,7 @@ object SucceededStatus extends Status with Serializable {
   // SKIP-SCALATESTJS-START
   /**
    * Always returns <code>true</code>.
-   * 
+   *
    * @return <code>true</code>
    */
   def succeeds() = true
@@ -436,7 +436,7 @@ object SucceededStatus extends Status with Serializable {
 
   /**
    * Always returns <code>true</code>.
-   * 
+   *
    * @return <code>true</code>
    */
   def isCompleted = true
@@ -471,7 +471,7 @@ object FailedStatus extends Status with Serializable {
   // SKIP-SCALATESTJS-START
   /**
    * Always returns <code>false</code>.
-   * 
+   *
    * @return <code>true</code>
    */
   def succeeds() = false
@@ -479,7 +479,7 @@ object FailedStatus extends Status with Serializable {
 
   /**
    * Always returns <code>true</code>.
-   * 
+   *
    * @return <code>true</code>
    */
   def isCompleted = true
@@ -638,9 +638,9 @@ final class StatefulStatus extends Status with Serializable {
 
   // SKIP-SCALATESTJS-START
   /**
-   * Blocking call that waits until completion, as indicated by an invocation of <code>setCompleted</code> on this instance, then returns <code>false</code> 
+   * Blocking call that waits until completion, as indicated by an invocation of <code>setCompleted</code> on this instance, then returns <code>false</code>
    * if <code>setFailed</code> was called on this instance, else returns <code>true</code>.
-   * 
+   *
    * @return <code>true</code> if no tests failed and no suites aborted, <code>false</code> otherwise
    */
   def succeeds() = {
@@ -651,7 +651,7 @@ final class StatefulStatus extends Status with Serializable {
 
   /**
    * Non-blocking call that returns <code>true</code> if <code>setCompleted</code> has been invoked on this instance, <code>false</code> otherwise.
-   * 
+   *
    * @return <code>true</code> if the test or suite run is already completed, <code>false</code> otherwise.
    */
   def isCompleted = synchronized { latch.getCount == 0L }
@@ -780,7 +780,7 @@ final class StatefulStatus extends Status with Serializable {
  * @param status the <code>Status</code>es out of which this status is composed.
  */
 final class CompositeStatus(statuses: Set[Status]) extends Status with Serializable {
-  
+
   // TODO: Ensure this is visible to another thread, because I'm letting the reference
   // escape with my for loop below prior to finishing this object's construction.
   @transient private final val latch = new CountDownLatch(statuses.size)
@@ -810,7 +810,7 @@ final class CompositeStatus(statuses: Set[Status]) extends Status with Serializa
               if (asyncException.isEmpty)
                 asyncException = Some(ex)
               else {
-                println("ScalaTest can't report this exception because another preceded it, so printing its stack trace:") 
+                println("ScalaTest can't report this exception because another preceded it, so printing its stack trace:")
                 ex.printStackTrace()
               }
           }
@@ -834,7 +834,7 @@ final class CompositeStatus(statuses: Set[Status]) extends Status with Serializa
    * Blocking call that waits until all composite <code>Status</code>es have completed, then returns
    * <code>true</code> only if all of the composite <code>Status</code>es succeeded. If any <code>Status</code> passed in the <code>statuses</code> set fails, this method
    * will return <code>false</code>.
-   * 
+   *
    * @return <code>true</code> if all composite <code>Status</code>es succeed, <code>false</code> otherwise.
    */
   def succeeds() = {
@@ -844,9 +844,9 @@ final class CompositeStatus(statuses: Set[Status]) extends Status with Serializa
   // SKIP-SCALATESTJS-END
 
   /**
-   * Non-blocking call to check if the test or suite run is completed, returns <code>true</code> if all composite <code>Status</code>es have completed, 
+   * Non-blocking call to check if the test or suite run is completed, returns <code>true</code> if all composite <code>Status</code>es have completed,
    * <code>false</code> otherwise.  You can use this to poll the run status.
-   * 
+   *
    * @return <code>true</code> if all composite <code>Status</code>es have completed, <code>false</code> otherwise.
    */
   def isCompleted = synchronized { statuses }.forall(_.isCompleted)
@@ -891,7 +891,7 @@ final class CompositeStatus(statuses: Set[Status]) extends Status with Serializa
    * An optional exception that has not been reported to the reporter for this run.
    *
    * <p>
-   * This will be defined if any of the composite <code>Status</code>s (passed to this <code>Status</code>'s 
+   * This will be defined if any of the composite <code>Status</code>s (passed to this <code>Status</code>'s
    * constructor) has a defined <code>unreportedException</code>. If more than one composite <code>Status</code>
    * has a defined <code>unreportedException</code>, one of them (not specified) will be reported by this method
    * and the others will have their stack traces printed to standard output.
@@ -904,7 +904,7 @@ final class CompositeStatus(statuses: Set[Status]) extends Status with Serializa
         val optStatusWithUnrepEx = statuses.find(_.unreportedException.isDefined)
         for {
           status <- optStatusWithUnrepEx
-          unrepEx <- status.unreportedException 
+          unrepEx <- status.unreportedException
         } yield unrepEx
       }
     }

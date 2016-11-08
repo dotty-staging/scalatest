@@ -51,7 +51,7 @@ final class HaveWord {
               lengthOfLeft == expectedLength,
               Resources.rawHadLengthInsteadOfExpectedLength,
               Resources.rawHadLength,
-              Vector(left, lengthOfLeft, expectedLength), 
+              Vector(left, lengthOfLeft, expectedLength),
               Vector(left, expectedLength)
             )
           }
@@ -87,7 +87,7 @@ final class HaveWord {
               sizeOfLeft == expectedSize,
               Resources.rawHadSizeInsteadOfExpectedSize,
               Resources.rawHadSize,
-              Vector(left, sizeOfLeft, expectedSize), 
+              Vector(left, sizeOfLeft, expectedSize),
               Vector(left, expectedSize)
             )
           }
@@ -96,7 +96,7 @@ final class HaveWord {
       }
       override def toString: String = "have size " + expectedSize
     }
-  
+
   /**
    * This method enables the following syntax:
    *
@@ -116,7 +116,7 @@ final class HaveWord {
               messageOfLeft == expectedMessage,
               Resources.rawHadMessageInsteadOfExpectedMessage,
               Resources.rawHadExpectedMessage,
-              Vector(left, messageOfLeft, expectedMessage), 
+              Vector(left, messageOfLeft, expectedMessage),
               Vector(left, expectedMessage)
             )
           }
@@ -171,7 +171,7 @@ final class HaveWord {
                   UnquotedString(failedVerification.propertyName),
                   failedVerification.expectedValue,
                   failedVerification.actualValue,
-                  left  
+                  left
                 )
               )
             val (rawMidSentenceFailureMessage, midSentenceFailureMessageArgs) =
@@ -181,7 +181,7 @@ final class HaveWord {
                   UnquotedString(failedVerification.propertyName),
                   failedVerification.expectedValue,
                   failedVerification.actualValue,
-                  left  
+                  left
                 )
               )
 
@@ -197,7 +197,7 @@ final class HaveWord {
                   Vector(
                     UnquotedString(firstPropertyResult.propertyName),
                     firstPropertyResult.expectedValue,
-                    left  
+                    left
                   )
                 )
               }
@@ -211,7 +211,7 @@ final class HaveWord {
                   Vector(
                     UnquotedString(firstPropertyResult.propertyName),
                     firstPropertyResult.expectedValue,
-                    left    
+                    left
                   )
                 )
               }
@@ -220,10 +220,10 @@ final class HaveWord {
             MatchResult(true, rawFailureMessage, rawFailureMessage, rawMidSentenceFailureMessage, rawMidSentenceFailureMessage, failureMessageArgs, rawMidSentenceFailureMessageArgs)
         }
       }
-      
+
       override def toString: String = "have (" + Prettifier.default(firstPropertyMatcher) + ")"
     }
-  
+
   /**
    * Overrides toString to return "length"
    */

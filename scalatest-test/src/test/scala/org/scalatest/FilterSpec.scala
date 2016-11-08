@@ -22,9 +22,9 @@ import org.scalatest.refspec.RefSpec
 // SKIP-SCALATESTJS-END
 
 class FilterSpec extends FunSpec {
-  
+
   val suite = new Suite() { override def suiteId = "testSuiteId" }
-  
+
   describe("A Filter") {
 
     it("should during the deprecation cycle be usable as a particular Function2") {
@@ -85,8 +85,8 @@ class FilterSpec extends FunSpec {
 
     def validateIgnoreBehavior(filter: Filter): Unit = {
       val filtered = filter(Set("myTestName"), Map("myTestName" -> Set("org.scalatest.Ignore")), suite.suiteId)
-      assert(filtered exists (tuple => tuple._1 == "myTestName"), "myTestName was in the tags map, but did not show up in the result of apply") 
-      assert(filtered exists (tuple => tuple._1 == "myTestName" && tuple._2 == true), "myTestName was in the result of apply, but was not marked as ignored") 
+      assert(filtered exists (tuple => tuple._1 == "myTestName"), "myTestName was in the tags map, but did not show up in the result of apply")
+      assert(filtered exists (tuple => tuple._1 == "myTestName" && tuple._2 == true), "myTestName was in the result of apply, but was not marked as ignored")
     }
 
     it("should report a test as ignored when None is passed to filter for tagsToInclude, and" +
@@ -112,19 +112,19 @@ class FilterSpec extends FunSpec {
       val filter = Filter(Some(Set("org.scalatest.Ignore")), Set("org.scalatest.Ignore"))
       validateIgnoreBehavior(filter)
     }
-    
+
     def validateIgnoreBehaviorDynamic(filter: Filter): Unit = {
       val filtered = filter(Set("myTestName"), Map.empty[String, Set[String]], suite.suiteId)
-      assert(filtered exists (tuple => tuple._1 == "myTestName"), "myTestName was in the tags map, but did not show up in the result of apply") 
-      assert(filtered exists (tuple => tuple._1 == "myTestName" && tuple._2 == true), "myTestName was in the result of apply, but was not marked as ignored") 
+      assert(filtered exists (tuple => tuple._1 == "myTestName"), "myTestName was in the tags map, but did not show up in the result of apply")
+      assert(filtered exists (tuple => tuple._1 == "myTestName" && tuple._2 == true), "myTestName was in the result of apply, but was not marked as ignored")
     }
-    
+
     it("should report a test DYNAMICALLY tagged as Ignored as ignored when None is passed to filter for tagsToInclude, and" +
             "org.scalatest.Ignore is not passed in the tagsToExclude") {
       val filter = Filter(None, Set("no ignore here"), false, DynaTags(Map.empty, Map("testSuiteId" -> Map("myTestName" -> Set("org.scalatest.Ignore")))))
       validateIgnoreBehaviorDynamic(filter)
     }
-    
+
     it("should report a test DYNAMICALLY tagged as Ignored as ignored when None is passed to filter for tagsToInclude, and" +
             "org.scalatest.Ignore is passed in the tagsToExclude") {
       val filter = Filter(None, Set("org.scalatest.Ignore"), false, DynaTags(Map.empty, Map("testSuiteId" -> Map("myTestName" -> Set("org.scalatest.Ignore")))))
@@ -145,8 +145,8 @@ class FilterSpec extends FunSpec {
 
     def validateIgnoreOtherBehavior(filter: Filter): Unit = {
       val filtered = filter(Set("myTestName"), Map("myTestName" -> Set("org.scalatest.Ignore", "Other")), suite.suiteId)
-      assert(filtered exists (tuple => tuple._1 == "myTestName"), "myTestName was in the tags map, but did not show up in the result of apply") 
-      assert(filtered exists (tuple => tuple._1 == "myTestName" && tuple._2 == true), "myTestName was in the result of apply, but was not marked as ignored") 
+      assert(filtered exists (tuple => tuple._1 == "myTestName"), "myTestName was in the tags map, but did not show up in the result of apply")
+      assert(filtered exists (tuple => tuple._1 == "myTestName" && tuple._2 == true), "myTestName was in the result of apply, but was not marked as ignored")
     }
 
     it("should report a test tagged as Other as ignored when Some(Other) is passed to filter" +
@@ -163,8 +163,8 @@ class FilterSpec extends FunSpec {
 
     def validateIgnoreOtherBehaviorDynamic(filter: Filter): Unit = {
       val filtered = filter(Set("myTestName"), Map.empty[String, Set[String]], suite.suiteId)
-      assert(filtered exists (tuple => tuple._1 == "myTestName"), "myTestName was in the tags map, but did not show up in the result of apply") 
-      assert(filtered exists (tuple => tuple._1 == "myTestName" && tuple._2 == true), "myTestName was in the result of apply, but was not marked as ignored") 
+      assert(filtered exists (tuple => tuple._1 == "myTestName"), "myTestName was in the tags map, but did not show up in the result of apply")
+      assert(filtered exists (tuple => tuple._1 == "myTestName" && tuple._2 == true), "myTestName was in the result of apply, but was not marked as ignored")
     }
 
     it("should report a test DYNAMICALLY tagged as Other as ignored when Some(Other) is passed to filter" +
@@ -181,7 +181,7 @@ class FilterSpec extends FunSpec {
 
     def validateNotReportingIgnoresBehavior(filter: Filter): Unit = {
       val filtered = filter(Set("myTestName"), Map("myTestName" -> Set("org.scalatest.Ignore")), suite.suiteId)
-      assert(!(filtered exists (tuple => tuple._1 == "myTestName")), "myTestName's Ignore tag was not in tagsToInclude, but showed up in the result of apply") 
+      assert(!(filtered exists (tuple => tuple._1 == "myTestName")), "myTestName's Ignore tag was not in tagsToInclude, but showed up in the result of apply")
     }
 
     it("should not report a test as ignored when Some(no ignore here) is passed to filter for" +
@@ -195,12 +195,12 @@ class FilterSpec extends FunSpec {
       val filter = Filter(Some(Set("no ignore here")), Set("org.scalatest.Ignore"))
       validateNotReportingIgnoresBehavior(filter)
     }
-    
+
     def validateNotReportingIgnoresBehaviorDynamic(filter: Filter): Unit = {
       val filtered = filter(Set("myTestName"), Map.empty[String, Set[String]], suite.suiteId)
-      assert(!(filtered exists (tuple => tuple._1 == "myTestName")), "myTestName's Ignore tag was not in tagsToInclude, but showed up in the result of apply") 
+      assert(!(filtered exists (tuple => tuple._1 == "myTestName")), "myTestName's Ignore tag was not in tagsToInclude, but showed up in the result of apply")
     }
-    
+
     it("should not report a test DYNAMICALLY tagged as Ignored as ignored when Some(no ignore here) is passed to filter for" +
             "tagsToInclude, and org.scalatest.Ignore is not passed in the tagsToExclude") {
       val filter = Filter(Some(Set("no ignore here")), Set("no ignore here"), false, DynaTags(Map.empty, Map("testSuiteId" -> Map("myTestName" -> Set("org.scalatest.Ignore")))))
@@ -214,7 +214,7 @@ class FilterSpec extends FunSpec {
     }
 
     it("should work properly when None is passed to filter for tagsToInclude") {
-      
+
       // I want to pass None in for includes, pick a set of test names. From those test names, put some of them in the tags map, grabbing an arbitrary nonzero number of tags
 
       for (i <- 0 to 1000) {
@@ -244,8 +244,8 @@ class FilterSpec extends FunSpec {
         // Check that every test name that is not at all in the tags map, should be in the filtered
         for (testName <- testNames) {
           if (!tags.contains(testName)) {
-            assert(filtered exists (tuple => tuple._1 == testName), testName + " was not in the tags map, but did not show up in the result of apply") 
-            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == false), testName + " was not in the tags map, and did show up in the result of apply, but was marked as ignored") 
+            assert(filtered exists (tuple => tuple._1 == testName), testName + " was not in the tags map, but did not show up in the result of apply")
+            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == false), testName + " was not in the tags map, and did show up in the result of apply, but was marked as ignored")
           }
         }
 
@@ -255,7 +255,7 @@ class FilterSpec extends FunSpec {
         for (testName <- testNames) {
           if (tags.contains(testName) && tags(testName).exists(_ == "org.scalatest.Ignore") &&
                   ((tags(testName) - "org.scalatest.Ignore") intersect tagsToExclude).isEmpty)
-            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == true), testName + " was in the tags map as ignored, but did not show up in the result of apply marked as ignored") 
+            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == true), testName + " was in the tags map as ignored, but did not show up in the result of apply marked as ignored")
         }
 
         // Check that only the non-ignored tests are counted in the runnableTestsCount
@@ -268,7 +268,7 @@ class FilterSpec extends FunSpec {
         assert(filter.runnableTestCount(Set() ++ testNames, tags, suite.suiteId) === runnableTests.size, "runnableTests = " + runnableTests + ", testNames = " + testNames + ", tags = " + tags + ", tagsToExclude = " + tagsToExclude)
       }
     }
-    
+
     it("should work properly when None is passed to filter for tagsToInclude, when using dynamic tag") {
       // I want to pass None in for includes, pick a set of test names. From those test names, put some of them in the tags map, grabbing an arbitrary nonzero number of tags
 
@@ -299,8 +299,8 @@ class FilterSpec extends FunSpec {
         // Check that every test name that is not at all in the tags map, should be in the filtered
         for (testName <- testNames) {
           if (!tags.contains(testName)) {
-            assert(filtered exists (tuple => tuple._1 == testName), testName + " was not in the tags map, but did not show up in the result of apply") 
-            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == false), testName + " was not in the tags map, and did show up in the result of apply, but was marked as ignored") 
+            assert(filtered exists (tuple => tuple._1 == testName), testName + " was not in the tags map, but did not show up in the result of apply")
+            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == false), testName + " was not in the tags map, and did show up in the result of apply, but was marked as ignored")
           }
         }
 
@@ -310,7 +310,7 @@ class FilterSpec extends FunSpec {
         for (testName <- testNames) {
           if (tags.contains(testName) && tags(testName).exists(_ == "org.scalatest.Ignore") &&
                   ((tags(testName) - "org.scalatest.Ignore") intersect tagsToExclude).isEmpty)
-            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == true), testName + " was in the tags map as ignored, but did not show up in the result of apply marked as ignored") 
+            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == true), testName + " was in the tags map as ignored, but did not show up in the result of apply marked as ignored")
         }
 
         // Check that only the non-ignored tests are counted in the runnableTestsCount
@@ -327,29 +327,29 @@ class FilterSpec extends FunSpec {
     it("should not include an excluded tag even if it also appears as an included tag") {
       val filter = Filter(Some(Set("Slow")), Set("Slow"))
       val filtered = filter(Set("myTestName"), Map("myTestName" -> Set("Slow")), suite.suiteId)
-      assert(filtered.size === 0) 
+      assert(filtered.size === 0)
     }
-    
+
     it("should not include an excluded tag even if it also appears as an included tag, when using dynamic tag") {
       val filter = Filter(Some(Set("Slow")), Set("Slow"), false, DynaTags(Map.empty, Map("testSuiteId" -> Map("myTestName" -> Set("Slow")))))
       val filtered = filter(Set("myTestName"), Map.empty[String, Set[String]], suite.suiteId)
-      assert(filtered.size === 0) 
+      assert(filtered.size === 0)
     }
 
     it("should include an included tag if there are no excluded tags") {
       val filter = Filter(Some(Set("Slow")), Set())
       val filtered = filter(Set("myTestName"), Map("myTestName" -> Set("Slow")), suite.suiteId)
-      assert(filtered.size === 1) 
+      assert(filtered.size === 1)
     }
-    
+
     it("should include an included tag if there are no excluded tags, when using dynamic tag") {
       val filter = Filter(Some(Set("Slow")), Set(), false, DynaTags(Map.empty, Map("testSuiteId" -> Map("myTestName" -> Set("Slow")))))
       val filtered = filter(Set("myTestName"), Map.empty[String, Set[String]], suite.suiteId)
-      assert(filtered.size === 1) 
+      assert(filtered.size === 1)
     }
 
     it("should work properly when Some is passed to filter for tagsToInclude") {
-      
+
       // I want to pass None in for includes, pick a set of test names. From those test names, put some of them in the tags map, grabbing an arbitrary nonzero number of tags
 
       for (i <- 0 to 1000) {
@@ -362,7 +362,7 @@ class FilterSpec extends FunSpec {
         val tags = Map() ++ tuples
 
         val tagsToExclude = Set() ++ potentialTagNames.drop(randomPositiveInt(potentialTagNames.length)) // Do want an empty set here occasionally
-        val tagsToInclude = Set() ++ potentialTagNames.drop(randomPositiveInt(potentialTagNames.length - 1)) // Again, subtracting one to avoid an empty set, which is an illegal argument. 
+        val tagsToInclude = Set() ++ potentialTagNames.drop(randomPositiveInt(potentialTagNames.length - 1)) // Again, subtracting one to avoid an empty set, which is an illegal argument.
 
         val filter = Filter(Some(tagsToInclude), tagsToExclude)
         val filtered = filter(TreeSet[String]() ++ testNames, tags, suite.suiteId)
@@ -389,7 +389,7 @@ class FilterSpec extends FunSpec {
         // Check that every test name that is not at all in the tags map, should not be in the filtered, because it has to be tagged by one of the tags in tagsToInclude
         for (testName <- testNames) {
           if (!tags.contains(testName)) {
-            assert(!filtered.exists(tuple => tuple._1 == testName), testName + " was not in the tags map, but showed up in the result of apply even though tagsToInclude was a Some") 
+            assert(!filtered.exists(tuple => tuple._1 == testName), testName + " was not in the tags map, but showed up in the result of apply even though tagsToInclude was a Some")
           }
         }
 
@@ -401,13 +401,13 @@ class FilterSpec extends FunSpec {
           if (tags.contains(testName) && tags(testName).exists(_ == "org.scalatest.Ignore") &&
                   ((tags(testName) intersect tagsToInclude).size > 0) &&
                   ((tags(testName) - "org.scalatest.Ignore") intersect tagsToExclude).isEmpty)
-            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == true), testName + " was in the tags map as ignored, but did not show up in the result of apply marked as ignored") 
+            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == true), testName + " was in the tags map as ignored, but did not show up in the result of apply marked as ignored")
         }
       }
     }
-    
+
     it("should work properly when Some is passed to filter for tagsToInclude, when using dynamic tag") {
-      
+
       // I want to pass None in for includes, pick a set of test names. From those test names, put some of them in the tags map, grabbing an arbitrary nonzero number of tags
 
       for (i <- 0 to 1000) {
@@ -420,7 +420,7 @@ class FilterSpec extends FunSpec {
         val tags = Map() ++ tuples
 
         val tagsToExclude = Set() ++ potentialTagNames.drop(randomPositiveInt(potentialTagNames.length)) // Do want an empty set here occasionally
-        val tagsToInclude = Set() ++ potentialTagNames.drop(randomPositiveInt(potentialTagNames.length - 1)) // Again, subtracting one to avoid an empty set, which is an illegal argument. 
+        val tagsToInclude = Set() ++ potentialTagNames.drop(randomPositiveInt(potentialTagNames.length - 1)) // Again, subtracting one to avoid an empty set, which is an illegal argument.
 
         val filter = Filter(Some(tagsToInclude), tagsToExclude, false, DynaTags(Map.empty, Map("testSuiteId" -> tags)))
         val filtered = filter(TreeSet[String]() ++ testNames, Map.empty[String, Set[String]], suite.suiteId)
@@ -447,7 +447,7 @@ class FilterSpec extends FunSpec {
         // Check that every test name that is not at all in the tags map, should not be in the filtered, because it has to be tagged by one of the tags in tagsToInclude
         for (testName <- testNames) {
           if (!tags.contains(testName)) {
-            assert(!filtered.exists(tuple => tuple._1 == testName), testName + " was not in the tags map, but showed up in the result of apply even though tagsToInclude was a Some") 
+            assert(!filtered.exists(tuple => tuple._1 == testName), testName + " was not in the tags map, but showed up in the result of apply even though tagsToInclude was a Some")
           }
         }
 
@@ -459,7 +459,7 @@ class FilterSpec extends FunSpec {
           if (tags.contains(testName) && tags(testName).exists(_ == "org.scalatest.Ignore") &&
                   ((tags(testName) intersect tagsToInclude).size > 0) &&
                   ((tags(testName) - "org.scalatest.Ignore") intersect tagsToExclude).isEmpty)
-            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == true), testName + " was in the tags map as ignored, but did not show up in the result of apply marked as ignored") 
+            assert(filtered exists (tuple => tuple._1 == testName && tuple._2 == true), testName + " was in the tags map as ignored, but did not show up in the result of apply marked as ignored")
         }
       }
     }
@@ -473,7 +473,7 @@ class FilterSpec extends FunSpec {
         val filter = Filter(None, Set[String]())
         assert(filter("myTestName", emptyMap, suite.suiteId) === (false, false))
       }
-      
+
       it("should return (true, false) if tagsToInclude is None and tagsToExclude includes" +
               "SlowAsMolasses and the test is marked as SlowAsMolasses") {
         val filter = Filter(None, Set("SlowAsMolasses"))
@@ -484,7 +484,7 @@ class FilterSpec extends FunSpec {
         val filter = Filter(None, Set("SlowAsMolasses"), false, DynaTags(Map.empty, Map("testSuiteId" -> Map("myTestName" -> Set("SlowAsMolasses")))))
         assert(filter("myTestName", Map.empty[String, Set[String]], suite.suiteId) === (true, false))
       }
-      
+
       it("should return (false, true) if tagsToInclude is None and tagsToExclude is empty" +
               "and the test is marked as ignored") {
         val filter = Filter(None, Set[String]())
@@ -495,7 +495,7 @@ class FilterSpec extends FunSpec {
         val filter = Filter(None, Set[String](), false, DynaTags(Map.empty, Map("testSuiteId" -> Map("myTestName" -> Set("org.scalatest.Ignore")))))
         assert(filter("myTestName", Map.empty[String, Set[String]], suite.suiteId) === (false, true))
       }
-      
+
       it("should return (true, false) if tagsToInclude is None and tagsToExclude includes" +
               "SlowAsMolasses and the test is marked as SlowAsMolasses and ignored") {
         val filter = Filter(None, Set("SlowAsMolasses"))
@@ -517,7 +517,7 @@ class FilterSpec extends FunSpec {
         val filter = Filter(Some(Set("SlowAsMolasses")), Set[String](), false, DynaTags(Map.empty, Map("testSuiteId" -> Map("myTestName" -> Set("SlowAsMolasses")))))
         assert(filter("myTestName", Map.empty[String, Set[String]], suite.suiteId) === (false, false))
       }
-      
+
       it("should return (true, false) if tagsToInclude includes a tag for the test name and tagsToExclude" +
               "includes SlowAsMolasses and the test is marked as SlowAsMolasses") {
         val filter = Filter(Some(Set("SlowAsMolasses")), Set("SlowAsMolasses"))
@@ -528,7 +528,7 @@ class FilterSpec extends FunSpec {
         val filter = Filter(Some(Set("SlowAsMolasses")), Set("SlowAsMolasses"), false, DynaTags(Map.empty, Map("testSuiteId" -> Map("myTestName" -> Set("SlowAsMolasses")))))
         assert(filter("myTestName", Map.empty[String, Set[String]], suite.suiteId) === (true, false))
       }
-      
+
       it("should return (false, true) if tagsToInclude includes a tag for the test name and tagsToExclude" +
               "is empty and the test is marked as ignored") {
         val filter = Filter(Some(Set("SlowAsMolasses")), Set[String]())
@@ -539,7 +539,7 @@ class FilterSpec extends FunSpec {
         val filter = Filter(Some(Set("SlowAsMolasses")), Set[String](), false, DynaTags(Map.empty, Map("testSuiteId" -> Map("myTestName" -> Set("SlowAsMolasses", "org.scalatest.Ignore")))))
         assert(filter("myTestName", Map.empty[String, Set[String]], suite.suiteId)=== (false, true))
       }
-      
+
       it("should return (true, false) if tagsToInclude includes a tag for the test name and tagsToExclude" +
               "includes SlowAsMolasses and the test is marked as SlowAsMolasses and ignored") {
         val filter = Filter(Some(Set("SlowAsMolasses")), Set("SlowAsMolasses"))
@@ -561,35 +561,35 @@ class FilterSpec extends FunSpec {
       }
      }
   }
-  
+
   describe("A Filter's excludeNestedSuites field") {
-    
+
     it("should a default value of false") {
       val filter = Filter(Some(Set("SlowAsMolasses")), Set[String]())
       assert(filter.excludeNestedSuites === false)
     }
-    
+
   }
-  
+
   describe("A Filter's dynaTags field") {
-    
+
     it("should have default value of empty Set for suiteTags and empty Map for testTags") {
       val filter = Filter(Some(Set("SlowAsMolasses")), Set[String]())
       assert(filter.dynaTags.suiteTags == Map.empty)
       assert(filter.dynaTags.testTags == Map.empty)
     }
-    
+
     it("should merge in test dynamic tags in Filter.apply and Filter.runnableTestCount with suiteId") {
       val filter = Filter(Some(Set("FastAsLight")), Set("org.scalatest.Ignore"), false, DynaTags(Map.empty, Map("testSuiteId" -> Map("myTestName" -> Set("FastAsLight")))))
-      
+
       assert(filter("myTestName", Map[String, Set[String]](), suite.suiteId) === (false, false))
       assert(filter("myTestName", Map("myTestName" -> Set("FastAsLight")), suite.suiteId) === (false, false))
       assert(filter("myTestName", Map("myTestName" -> Set("FastAsLight", "org.scalatest.Ignore")), suite.suiteId) === (false, true))
-      
+
       assert(filter(Set("myTestName"), Map[String, Set[String]](), suite.suiteId) === List(("myTestName", false)))
       assert(filter(Set("myTestName"), Map("myTestName" -> Set("FastAsLight")), suite.suiteId) === List(("myTestName", false)))
       assert(filter(Set("myTestName"), Map("myTestName" -> Set("FastAsLight", "org.scalatest.Ignore")), suite.suiteId) === List(("myTestName", true)))
-      
+
       assert(filter.runnableTestCount(Set("myTestName"), Map[String, Set[String]](), suite.suiteId) === 1)
       assert(filter.runnableTestCount(Set("myTestName"), Map("myTestName" -> Set("FastAsLight")), suite.suiteId) === 1)
       assert(filter.runnableTestCount(Set("myTestName"), Map("myTestName" -> Set("FastAsLight", "org.scalatest.Ignore")), suite.suiteId) === 0)
@@ -598,7 +598,7 @@ class FilterSpec extends FunSpec {
 
   // SKIP-SCALATESTJS-START
   describe("(when invoke apply on test names with suite annotation)") {
-    
+
     @FastAsLight
     class TagSuite extends RefSpec {
       def `test method 1`: Unit = {}
@@ -608,14 +608,14 @@ class FilterSpec extends FunSpec {
       @FastAsLight
       def `test method 4`: Unit = {}
     }
-    
+
     class NoTagSuite extends RefSpec {
       def `test method 1`: Unit = {}
       def `test method 2`: Unit = {}
       def `test method 3`: Unit = {}
       def `test method 4`: Unit = {}
     }
-    
+
     class InsideTagSuite extends RefSpec {
       def `test method 1`: Unit = {}
       def `test method 2`: Unit = {}
@@ -624,15 +624,15 @@ class FilterSpec extends FunSpec {
       @FastAsLight
       def `test method 4`: Unit = {}
     }
-    
-    val expectedTestTags = Map("test method 1" -> Set("org.scalatest.FastAsLight"), 
-                               "test method 2" -> Set("org.scalatest.FastAsLight"), 
-                               "test method 3" -> Set("org.scalatest.SlowAsMolasses", "org.scalatest.FastAsLight"), 
+
+    val expectedTestTags = Map("test method 1" -> Set("org.scalatest.FastAsLight"),
+                               "test method 2" -> Set("org.scalatest.FastAsLight"),
+                               "test method 3" -> Set("org.scalatest.SlowAsMolasses", "org.scalatest.FastAsLight"),
                                "test method 4" -> Set("org.scalatest.FastAsLight"))
-    
+
     def assertTestTags(testTags: Map[String, Set[String]]): Unit = {
       assert(testTags.size == expectedTestTags.size)
-      expectedTestTags.foreach { entry => 
+      expectedTestTags.foreach { entry =>
         val testName = entry._1
         val expectedTagSet = entry._2
         if (testTags.isDefinedAt(testName)) {
@@ -643,68 +643,68 @@ class FilterSpec extends FunSpec {
           fail("Entry with test name '" + testName + "' not found in testTags.")
       }
     }
-    
+
     it("should 'just-in-time' tag test correctly when suite annotation is included in tagsToInclude") {
       val filter = Filter(Some(Set("org.scalatest.FastAsLight")), Set.empty)
       val tagSuite = new TagSuite()
       val tagSuiteTestTags = filter.mergeTestDynamicTags(tagSuite.tags, tagSuite.suiteId, tagSuite.testNames)
       assertTestTags(tagSuiteTestTags)
-      
+
       val noTagSuite = new NoTagSuite
       val dynaFilter1 = Filter(Some(Set("org.scalatest.FastAsLight")), Set.empty, false,
-                                   DynaTags(Map(noTagSuite.suiteId -> Set("org.scalatest.FastAsLight")), 
-                                            Map(noTagSuite.suiteId -> Map("test method 3" -> Set("org.scalatest.SlowAsMolasses"), 
+                                   DynaTags(Map(noTagSuite.suiteId -> Set("org.scalatest.FastAsLight")),
+                                            Map(noTagSuite.suiteId -> Map("test method 3" -> Set("org.scalatest.SlowAsMolasses"),
                                                                           "test method 4" -> Set("org.scalatest.FastAsLight")))))
       val noTagSuiteTestTags = dynaFilter1.mergeTestDynamicTags(noTagSuite.tags, noTagSuite.suiteId, noTagSuite.testNames)
       assertTestTags(noTagSuiteTestTags)
-      
+
       val insideTagSuite = new InsideTagSuite
       val dynaFilter2 = Filter(Some(Set("org.scalatest.FastAsLight")), Set.empty, false,
-                                   DynaTags(Map(insideTagSuite.suiteId -> Set("org.scalatest.FastAsLight")), 
+                                   DynaTags(Map(insideTagSuite.suiteId -> Set("org.scalatest.FastAsLight")),
                                             Map.empty))
       val insideTagSuiteTestTags = dynaFilter2.mergeTestDynamicTags(insideTagSuite.tags, insideTagSuite.suiteId, insideTagSuite.testNames)
       assertTestTags(insideTagSuiteTestTags)
     }
-    
+
     it("should 'just-in-time' tag test correctly when suite annotation is included in tagsToExclude") {
       val filter = Filter(None, Set("org.scalatest.FastAsLight"))
       val tagSuite = new TagSuite()
       val tagSuiteTestTags = filter.mergeTestDynamicTags(tagSuite.tags, tagSuite.suiteId, tagSuite.testNames)
       assertTestTags(tagSuiteTestTags)
-      
+
       val noTagSuite = new NoTagSuite
       val dynaFilter1 = Filter(None, Set("org.scalatest.FastAsLight"), false,
-                                   DynaTags(Map(noTagSuite.suiteId -> Set("org.scalatest.FastAsLight")), 
-                                            Map(noTagSuite.suiteId -> Map("test method 3" -> Set("org.scalatest.SlowAsMolasses"), 
+                                   DynaTags(Map(noTagSuite.suiteId -> Set("org.scalatest.FastAsLight")),
+                                            Map(noTagSuite.suiteId -> Map("test method 3" -> Set("org.scalatest.SlowAsMolasses"),
                                                                           "test method 4" -> Set("org.scalatest.FastAsLight")))))
       val noTagSuiteTestTags = dynaFilter1.mergeTestDynamicTags(noTagSuite.tags, noTagSuite.suiteId, noTagSuite.testNames)
       assertTestTags(noTagSuiteTestTags)
-      
+
       val insideTagSuite = new InsideTagSuite
       val dynaFilter2 = Filter(None, Set("org.scalatest.FastAsLight"), false,
-                                   DynaTags(Map(insideTagSuite.suiteId -> Set("org.scalatest.FastAsLight")), 
+                                   DynaTags(Map(insideTagSuite.suiteId -> Set("org.scalatest.FastAsLight")),
                                             Map.empty))
       val insideTagSuiteTestTags = dynaFilter2.mergeTestDynamicTags(insideTagSuite.tags, insideTagSuite.suiteId, insideTagSuite.testNames)
       assertTestTags(insideTagSuiteTestTags)
     }
-    
+
     it("should 'just-in-time' tag test correctly when suite annotation is included in both tagsToInclude and tagsToExclude") {
       val filter = Filter(Some(Set("org.scalatest.FastAsLight")), Set("org.scalatest.FastAsLight"))
       val tagSuite = new TagSuite()
       val tagSuiteTestTags = filter.mergeTestDynamicTags(tagSuite.tags, tagSuite.suiteId, tagSuite.testNames)
       assertTestTags(tagSuiteTestTags)
-      
+
       val noTagSuite = new NoTagSuite
       val dynaFilter1 = Filter(Some(Set("org.scalatest.FastAsLight")), Set("org.scalatest.FastAsLight"), false,
-                                   DynaTags(Map(noTagSuite.suiteId -> Set("org.scalatest.FastAsLight")), 
-                                            Map(noTagSuite.suiteId -> Map("test method 3" -> Set("org.scalatest.SlowAsMolasses"), 
+                                   DynaTags(Map(noTagSuite.suiteId -> Set("org.scalatest.FastAsLight")),
+                                            Map(noTagSuite.suiteId -> Map("test method 3" -> Set("org.scalatest.SlowAsMolasses"),
                                                                           "test method 4" -> Set("org.scalatest.FastAsLight")))))
       val noTagSuiteTestTags = dynaFilter1.mergeTestDynamicTags(noTagSuite.tags, noTagSuite.suiteId, noTagSuite.testNames)
       assertTestTags(noTagSuiteTestTags)
-      
+
       val insideTagSuite = new InsideTagSuite
       val dynaFilter2 = Filter(Some(Set("org.scalatest.FastAsLight")), Set("org.scalatest.FastAsLight"), false,
-                                   DynaTags(Map(insideTagSuite.suiteId -> Set("org.scalatest.FastAsLight")), 
+                                   DynaTags(Map(insideTagSuite.suiteId -> Set("org.scalatest.FastAsLight")),
                                             Map.empty))
       val insideTagSuiteTestTags = dynaFilter2.mergeTestDynamicTags(insideTagSuite.tags, insideTagSuite.suiteId, insideTagSuite.testNames)
       assertTestTags(insideTagSuiteTestTags)

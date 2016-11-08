@@ -313,15 +313,15 @@ trait Waiters extends PatienceConfiguration {
     /*
      * @volatile is not sufficient to ensure atomic compare and set, or increment.
      * Given that the code which modifies these variables should be synchronized anyway
-     * (because these variables are used in the wait condition predicate), 
-     * the @volatile is superfluous. 
+     * (because these variables are used in the wait condition predicate),
+     * the @volatile is superfluous.
      */
     /* @volatile */ private var dismissedCount = 0
     /* @volatile */ private var thrown: Option[Throwable] = None
 
     private def setThrownIfEmpty(t: Throwable): Unit = {
       /*
-       * synchronized to serialize access to `thrown` which is used in the wait condition, 
+       * synchronized to serialize access to `thrown` which is used in the wait condition,
        * and to ensure the compare and set is atomic.
        * (Arguably, a race condition on setting `thrown` is harmless, but synchronization makes
        * the class easier to reason about.)
@@ -394,14 +394,14 @@ trait Waiters extends PatienceConfiguration {
           }
           wait(timeLeft.millisPart, timeLeft.nanosPart)
         }
-        // it should never be the case that we get all the expected dismissals and still throw 
+        // it should never be the case that we get all the expected dismissals and still throw
         // a timeout failure - clients trying to debug code would find that very surprising.
         // Calls to timedOut subsequent to while loop exit constitute a kind of "double jeopardy".
         // This if-else must be in the synchronized block because it accesses and assigns dismissalsCount.
         if (thrown.isDefined)
           throw thrown.get
         else if (dismissedCount >= dismissals)
-          dismissedCount = 0 // reset the dismissed count to support multiple await calls        
+          dismissedCount = 0 // reset the dismissed count to support multiple await calls
         else if (timedOut)
           throw new TestFailedException((sde: StackDepthException) => Some(Resources.awaitTimedOut), None, pos, None)
         else throw new Exception("Should never happen: thrown was not defined; dismissedCount was not greater than dismissals; and timedOut was false")
@@ -551,7 +551,7 @@ trait Waiters extends PatienceConfiguration {
     def dismiss(): Unit = {
       /*
        * Synchronized to serialize access to `dismissedCount` used in the wait condition,
-       * and to make the increment atomic. 
+       * and to make the increment atomic.
        */
       synchronized {
         dismissedCount += 1

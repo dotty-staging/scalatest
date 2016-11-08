@@ -22,7 +22,7 @@ import scala.util.matching.Regex
  * the matchers DSL.
  *
  * <p>
- * The primary constructor enables the following syntax (with a passed <code>scala.util.matching.Regex</code>): 
+ * The primary constructor enables the following syntax (with a passed <code>scala.util.matching.Regex</code>):
  * </p>
  *
  * <pre class="stHighlight">
@@ -35,7 +35,7 @@ import scala.util.matching.Regex
 final class ResultOfRegexWordApplication(val regex: Regex, val groups: IndexedSeq[String]) {
 
   /**
-   * This auxiliary constructor enables the following syntax (with a passed <code>java.lang.String</code>): 
+   * This auxiliary constructor enables the following syntax (with a passed <code>java.lang.String</code>):
    *
    * <pre class="stHighlight">
    * "eight" should not fullyMatch regex ("""(-)?(\d+)(\.\d*)?""")
@@ -43,15 +43,15 @@ final class ResultOfRegexWordApplication(val regex: Regex, val groups: IndexedSe
    * </pre>
    */
   def this(regexString: String, groups: IndexedSeq[String]) = this(new Regex(regexString), groups)
-  
+
   /**
    * Overrides toString to return regex and groups (if available)
    */
-  override def toString: String = "regex (" + "\"" + regex.toString + "\"" + 
+  override def toString: String = "regex (" + "\"" + regex.toString + "\"" +
     (
       if (groups.isEmpty)
         ""
-      else 
+      else
         (if (groups.size > 1) " withGroups (" else " withGroup (") + groups.map("\"" + _ + "\"").mkString(", ") + ")"
     ) + ")"
 }

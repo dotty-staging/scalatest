@@ -257,9 +257,9 @@ class JavaFuturesSpec extends FunSpec with Matchers with OptionValues with JavaF
           }
       }
     }
-    
+
     describe("when using the whenReady construct") {
-      
+
       it("should just return if the function arg returns normally") {
 
         val execSvc: ExecutorService = Executors.newFixedThreadPool(1)
@@ -405,7 +405,7 @@ class JavaFuturesSpec extends FunSpec with Matchers with OptionValues with JavaF
           }
         }
       }
-      
+
       it("should allow TestCanceledException, which does not normally cause a test to fail, through immediately when thrown") {
         val task = new ThrowingTask(new TestCanceledException((_: StackDepthException) => None, None, Left(source.Position.here), None))
         intercept[TestCanceledException] {

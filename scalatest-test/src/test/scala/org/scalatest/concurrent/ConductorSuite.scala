@@ -65,7 +65,7 @@ class ConductorSuite extends FunSuite with Matchers with Conductors with Severed
 
   test("if thread(String) {} is called after the test has been conducted, it throws NotAllowedException" +
           "with a detail message that explains the problem"){
-    val conductor = new Conductor    
+    val conductor = new Conductor
     conductor.conduct
     val caught =
       intercept[NotAllowedException] {
@@ -80,7 +80,7 @@ class ConductorSuite extends FunSuite with Matchers with Conductors with Severed
 
   test("if whenFinished is called twice on the same conductor, a NotAllowedException is thrown that explains it " +
           "can only be called once") {
-    val conductor = new Conductor    
+    val conductor = new Conductor
     conductor.whenFinished { 1 should be (1) }
     val caught =
       intercept[NotAllowedException] {

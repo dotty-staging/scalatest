@@ -32,19 +32,19 @@ class InOrderContainMatcherDeciderSpec extends FunSpec with Explicitly {
   val mapTrimmed: Uniformity[(Int, String)] =
     new Uniformity[(Int, String)] {
       def normalized(s: (Int, String)): (Int, String) = (s._1, s._2.trim)
-      def normalizedCanHandle(b: Any) = 
+      def normalizedCanHandle(b: Any) =
         b match {
           case (_: Int, _: String) => true
           case _ => false
         }
-      def normalizedOrSame(b: Any) = 
+      def normalizedOrSame(b: Any) =
         b match {
           case (k: Int, v: String) => normalized((k, v))
           case _ => b
         }
     }
-  
-  val incremented: Uniformity[Int] = 
+
+  val incremented: Uniformity[Int] =
     new Uniformity[Int] {
       var count = 0
       def normalized(s: Int): Int = {
@@ -58,27 +58,27 @@ class InOrderContainMatcherDeciderSpec extends FunSpec with Explicitly {
           case _ => b
         }
     }
-  
-  val mapIncremented: Uniformity[(Int, String)] = 
+
+  val mapIncremented: Uniformity[(Int, String)] =
     new Uniformity[(Int, String)] {
       var count = 0
       def normalized(s: (Int, String)): (Int, String) = {
         count += 1
         (s._1 + count, s._2)
       }
-      def normalizedCanHandle(b: Any) = 
+      def normalizedCanHandle(b: Any) =
         b match {
           case (_: Int, _: String) => true
           case _ => false
         }
-      def normalizedOrSame(b: Any) = 
+      def normalizedOrSame(b: Any) =
         b match {
           case (k: Int, v: String) => normalized((k, v))
           case _ => b
         }
     }
-  
-  val appended: Uniformity[String] = 
+
+  val appended: Uniformity[String] =
     new Uniformity[String] {
       var count = 0
       def normalized(s: String): String = {
@@ -96,9 +96,9 @@ class InOrderContainMatcherDeciderSpec extends FunSpec with Explicitly {
           case _ => b
         }
     }
-  
+
   class Translated(map: Map[String, String]) extends Uniformity[String] {
-    def normalized(s: String): String = 
+    def normalized(s: String): String =
       map.get(s) match {
         case Some(translated) => translated
         case None => s
@@ -114,41 +114,41 @@ class InOrderContainMatcherDeciderSpec extends FunSpec with Explicitly {
           case _ => b
         }
   }
-  
-  val lowerCaseEquality = 
+
+  val lowerCaseEquality =
     new Equality[String] {
-      def areEqual(left: String, right: Any) = 
+      def areEqual(left: String, right: Any) =
         left.toLowerCase == (right match {
           case s: String => s.toLowerCase
           case other => other
         })
     }
-  
-  val reverseEquality = 
+
+  val reverseEquality =
     new Equality[String] {
-      def areEqual(left: String, right: Any) = 
+      def areEqual(left: String, right: Any) =
         left.reverse == (right match {
           case s: String => s.toLowerCase
           case other => other
         })
     }
-  
+
   describe("inOrder ") {
-    
+
     def checkShouldContainStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       e.message should be (Some(leftText + " did not contain all of (" + right.map(r => FailureMessages.decorateToStringValue(prettifier, r)).mkString(", ") + ") in order"))
       e.failedCodeFileName should be (Some("InOrderContainMatcherDeciderSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-      
+
     def checkShouldNotContainStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       e.message should be (Some(leftText + " contained all of (" + right.map(r => FailureMessages.decorateToStringValue(prettifier, r)).mkString(", ") + ") in order"))
       e.failedCodeFileName should be (Some("InOrderContainMatcherDeciderSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should take specified equality when 'should contain' is used") {
       (List("1 ", "2", "3 ") should contain inOrder ("1", "2 ", "3")) (after being trimmed)
       (Array("1 ", "2", "3 ") should contain inOrder ("1", "2 ", "3")) (after being trimmed)
@@ -156,7 +156,7 @@ class InOrderContainMatcherDeciderSpec extends FunSpec with Explicitly {
       (javaList("1", "2 ", "3") should contain inOrder ("1", "2 ", "3")) (after being trimmed)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take specified equality when 'should not contain' is used") {
       (List("1 ", "2", "3 ") should not contain inOrder ("1", "2 ", "3")) (after being appended)
       (Array("1 ", "2", "3 ") should not contain inOrder ("1", "2 ", "3")) (after being appended)
@@ -164,15 +164,15 @@ class InOrderContainMatcherDeciderSpec extends FunSpec with Explicitly {
       (javaList("1 ", "2", "3 ") should not contain inOrder ("1", "2 ", "3")) (after being appended)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should contain custom matcher' failed with specified normalization") {
-      
+
       val left1 = List("1 ", "2", "3 ")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should contain inOrder ("1", "2 ", "3")) (after being appended)
       }
       checkShouldContainStackDepth(e1, left1, Array("1", "2 ", "3").deep, thisLineNumber - 2)
-        
+
       val left2 = Array("1 ", "2", "3 ")
       val e2 = intercept[exceptions.TestFailedException] {
         (left2 should contain inOrder ("1", "2 ", "3")) (after being appended)
@@ -187,16 +187,16 @@ class InOrderContainMatcherDeciderSpec extends FunSpec with Explicitly {
       checkShouldContainStackDepth(e3, left3, Array("1", "2 ", "3").deep, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should not contain custom matcher' failed with specified normalization") {
       val translated = new Translated(Map("eno" -> "one"))
-      
+
       val left1 = List("one", "two", "three")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should not contain inOrder ("eno", "two", "three")) (after being translated)
       }
       checkShouldNotContainStackDepth(e1, left1, Array("eno", "two", "three").deep, thisLineNumber - 2)
-        
+
       val left2 = Array("one", "two", "three")
       val e2 = intercept[exceptions.TestFailedException] {
         (left2 should not contain inOrder ("eno", "two", "three")) (after being translated)
@@ -211,7 +211,7 @@ class InOrderContainMatcherDeciderSpec extends FunSpec with Explicitly {
       checkShouldNotContainStackDepth(e3, left3, Array("eno", "two", "three").deep, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take specified equality and normalization when 'should contain' is used") {
       (List("A ", "B", "C ") should contain inOrder ("a", "b ", "c")) (decided by lowerCaseEquality afterBeing trimmed)
       (Array("A ", "B", "C ") should contain inOrder ("a", "b ", "c")) (decided by lowerCaseEquality afterBeing trimmed)
@@ -219,7 +219,7 @@ class InOrderContainMatcherDeciderSpec extends FunSpec with Explicitly {
       (javaList("A ", "B", "C ") should contain inOrder ("a", "b ", "c")) (decided by lowerCaseEquality afterBeing trimmed)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take specified equality and normalization when 'should not contain' is used") {
       (List("one ", "two", "three ") should not contain inOrder ("one", "two ", "three")) (decided by reverseEquality afterBeing trimmed)
       (Array("one ", "two", "three ") should not contain inOrder ("one", "two ", "three")) (decided by reverseEquality afterBeing trimmed)
@@ -227,15 +227,15 @@ class InOrderContainMatcherDeciderSpec extends FunSpec with Explicitly {
       (javaList("one ", "two", "three ") should not contain inOrder ("one", "two ", "three")) (decided by reverseEquality afterBeing trimmed)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should contain custom matcher' failed with specified equality and normalization") {
-      
+
       val left1 = List("one ", "two", "three ")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should contain inOrder ("one", "two ", "three")) (decided by reverseEquality afterBeing trimmed)
       }
       checkShouldContainStackDepth(e1, left1, Array("one", "two ", "three").deep, thisLineNumber - 2)
-        
+
       val left2 = Array("one ", "two", "three ")
       val e2 = intercept[exceptions.TestFailedException] {
         (left2 should contain inOrder ("one", "two ", "three")) (decided by reverseEquality afterBeing trimmed)
@@ -250,15 +250,15 @@ class InOrderContainMatcherDeciderSpec extends FunSpec with Explicitly {
       checkShouldContainStackDepth(e3, left3, Array("one", "two ", "three").deep, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should not contain custom matcher' failed with specified equality and normalization") {
-      
+
       val left1 = List("one ", "two", "three ")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should not contain inOrder ("eno ", "owt", "eerht ")) (decided by reverseEquality afterBeing trimmed)
       }
       checkShouldNotContainStackDepth(e1, left1, Array("eno ", "owt", "eerht ").deep, thisLineNumber - 2)
-        
+
       val left2 = Array("one ", "two", "three ")
       val e2 = intercept[exceptions.TestFailedException] {
         (left2 should not contain inOrder ("eno ", "owt", "eerht ")) (decided by reverseEquality afterBeing trimmed)

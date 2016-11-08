@@ -28,16 +28,16 @@ import org.scalatest.Tag
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.tagobjects.cpu
- * 
+ *
  * import org.scalatest._
  * import tagobjects.CPU
- * 
+ *
  * class SetSpec extends FlatSpec {
- * 
+ *
  *   "An empty Set" should "have size 0" taggedAs(CPU) in {
  *     assert(Set.empty.size === 0)
  *   }
  * }
  * </pre>
  */
-object CPU extends Tag("org.scalatest.tags.CPU") 
+object CPU extends Tag("org.scalatest.tags.CPU")

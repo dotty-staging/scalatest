@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package org.scalatest.examples.refspec.tagging;
-import java.lang.annotation.*; 
+import java.lang.annotation.*;
 import org.scalatest.TagAnnotation;
 
 @TagAnnotation

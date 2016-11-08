@@ -20,13 +20,13 @@ import Matchers._
 import matchers.AnMatcher
 
 class ResultOfAnWordToAnMatcherApplicationSpec extends FunSpec with FileMocks {
-  
+
   describe("ResultOfAnWordToAnMatcherApplication ") {
-    
+
     it("should have pretty toString") {
       val result = new ResultOfAnWordToAnMatcherApplication(AnMatcher[FileMock]("file") { _.file  })
       result.toString should be ("an (AnMatcher[org.scalatest.FileMocks$FileMock](\"file\", org.scalatest.FileMocks$FileMock => Boolean))")
     }
   }
-  
+
 }

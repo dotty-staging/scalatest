@@ -157,7 +157,7 @@ private[scalatest] object Fact {
   class VacuousYes(underlying: Fact) extends Fact {
 
     require(underlying.isNo)
-    
+
     val rawFactMessage: String = underlying.rawFactMessage
     val rawSimplifiedFactMessage: String = underlying.rawSimplifiedFactMessage
     val rawMidSentenceFactMessage: String = underlying.rawMidSentenceFactMessage
@@ -219,8 +219,8 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>No</code> with passed <code>factMessage</code>, 
-     * <code>negativeFailureMessage</code>, <code>midSentenceFactMessage</code>, 
+     * Factory method that constructs a new <code>No</code> with passed <code>factMessage</code>,
+     * <code>negativeFailureMessage</code>, <code>midSentenceFactMessage</code>,
      * <code>midSentenceSimplifiedFailureMessage</code>, <code>factMessageArgs</code>, and <code>simplifiedFailureMessageArgs</code> fields.
      * <code>factMessageArgs</code>, and <code>simplifiedFailureMessageArgs</code> will be used in place of <code>midSentenceFactMessageArgs</code>
      * and <code>midSentenceSimplifiedFailureMessageArgs</code>.
@@ -283,7 +283,7 @@ private[scalatest] object Fact {
         prettifier,
         None
       )
-  
+
     /**
      * Factory method that constructs a new <code>No</code> with passed <code>rawFactMessage</code>,
      * <code>rawNegativeFailureMessage</code>, <code>rawMidSentenceFactMessage</code>, and
@@ -423,7 +423,7 @@ private[scalatest] object Fact {
         prettifier,
         None
       )
-  
+
     /**
      * Factory method that constructs a new <code>No</code> with passed <code>rawFactMessage</code>, and
      * <code>rawNegativeFailureMessage</code> fields. The <code>rawMidSentenceFactMessage</code> will return the same
@@ -452,7 +452,7 @@ private[scalatest] object Fact {
         prettifier,
         None
       )
-  
+
     /**
      * Factory method that constructs a new <code>No</code> with passed <code>rawFactMessage</code>,
      * <code>rawNegativeFailureMessage</code>, <code>factMessageArgs</code> and <code>simplifiedFailureMessageArgs</code> fields.
@@ -518,14 +518,14 @@ private[scalatest] object Fact {
         Some(cause)
       )
   }
-  
+
   /**
    * Companion object for the <code>Yes</code> case class.
    *
    * @author Bill Venners
    */
   object Yes {
-  
+
     def apply(
       rawFactMessage: String,
       rawSimplifiedFactMessage: String,
@@ -554,8 +554,8 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>Yes</code> with passed code>factMessage</code>, 
-     * <code>negativeFailureMessage</code>, <code>midSentenceFactMessage</code>, 
+     * Factory method that constructs a new <code>Yes</code> with passed code>factMessage</code>,
+     * <code>negativeFailureMessage</code>, <code>midSentenceFactMessage</code>,
      * <code>midSentenceSimplifiedFailureMessage</code>, <code>factMessageArgs</code>, and <code>simplifiedFailureMessageArgs</code> fields.
      * <code>factMessageArgs</code>, and <code>simplifiedFailureMessageArgs</code> will be used in place of <code>midSentenceFactMessageArgs</code>
      * and <code>midSentenceSimplifiedFailureMessageArgs</code>.
@@ -618,7 +618,7 @@ private[scalatest] object Fact {
         prettifier,
         None
       )
-  
+
     /**
      * Factory method that constructs a new <code>Yes</code> with passed <code>rawFactMessage</code>,
      * <code>rawNegativeFailureMessage</code>, <code>rawMidSentenceFactMessage</code>, and
@@ -761,7 +761,7 @@ private[scalatest] object Fact {
         prettifier,
         None
       )
-  
+
     /**
      * Factory method that constructs a new <code>Yes</code> with passed <code>rawFactMessage</code>, and
      * <code>rawNegativeFailureMessage</code> fields. The <code>rawMidSentenceFactMessage</code> will return the same
@@ -789,7 +789,7 @@ private[scalatest] object Fact {
         prettifier,
         None
       )
-  
+
     /**
      * Factory method that constructs a new <code>Yes</code> with passed <code>rawFactMessage</code>,
      * <code>rawNegativeFailureMessage</code>, <code>factMessageArgs</code> and <code>simplifiedFailureMessageArgs</code> fields.

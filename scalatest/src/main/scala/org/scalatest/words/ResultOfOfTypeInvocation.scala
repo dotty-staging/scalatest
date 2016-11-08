@@ -26,7 +26,7 @@ import scala.reflect.ClassTag
 final class ResultOfOfTypeInvocation[T](implicit ev: ClassTag[T]) {
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * book should have (length (220) (of [Book]))

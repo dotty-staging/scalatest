@@ -18,34 +18,34 @@ package org.scalatest.examples.refspec.composingbeforeandaftereach
 import org.scalatest._
 import refspec.RefSpec
 import collection.mutable.ListBuffer
- 
+
 trait Builder extends BeforeAndAfterEach { this: Suite =>
- 
+
   val builder = new StringBuilder
- 
+
   override def beforeEach() {
     builder.append("ScalaTest is ")
     super.beforeEach() // To be stackable, must call super.beforeEach
   }
- 
+
   override def afterEach() {
     try super.afterEach() // To be stackable, must call super.afterEach
     finally builder.clear()
   }
 }
- 
+
 trait Buffer extends BeforeAndAfterEach { this: Suite =>
- 
+
   val buffer = new ListBuffer[String]
- 
+
   override def afterEach() {
     try super.afterEach() // To be stackable, must call super.afterEach
     finally buffer.clear()
   }
 }
- 
+
 class ExampleSpec extends RefSpec with Builder with Buffer {
- 
+
   object `Testing ` {
     def `should be easy` {
       builder.append("easy!")
@@ -53,7 +53,7 @@ class ExampleSpec extends RefSpec with Builder with Buffer {
       assert(buffer.isEmpty)
       buffer += "sweet"
     }
- 
+
     def `should be fun` {
       builder.append("fun!")
       assert(builder.toString === "ScalaTest is fun!")

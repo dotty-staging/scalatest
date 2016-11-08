@@ -100,21 +100,21 @@ class EventuallySpec extends FunSpec with Matchers with OptionValues with Severe
       caught.getCause.getClass.getName should be ("org.scalatest.exceptions.TestFailedException")
       caught.getCause.getMessage should be ("2 did not equal 3")
     }
-    
+
     it("should provides correct stack depth when eventually is called from the overload method") {
-      
+
       val caught1 = the [TestFailedException] thrownBy {
         eventually(timeout(Span(100, Millis)), interval(Span(1, Millisecond))) { 1 + 1 should equal (3) }
       }
       caught1.failedCodeLineNumber.value should equal (thisLineNumber - 2)
       caught1.failedCodeFileName.value should be ("EventuallySpec.scala")
-      
+
       val caught3 = the [TestFailedException] thrownBy {
         eventually(timeout(Span(100, Millis))) { 1 + 1 should equal (3) }
       }
       caught3.failedCodeLineNumber.value should equal (thisLineNumber - 2)
       caught3.failedCodeFileName.value should be ("EventuallySpec.scala")
-      
+
       val caught4 = the [TestFailedException] thrownBy {
         eventually(interval(Span(1, Millisecond))) { 1 + 1 should equal (3) }
       }
@@ -156,7 +156,7 @@ class EventuallySpec extends FunSpec with Matchers with OptionValues with Severe
           if (startTime.isEmpty)
             startTime = Some(System.currentTimeMillis)
           1 + 1 should equal (3)
-        } 
+        }
       }
       (System.currentTimeMillis - startTime.get).toInt should be >= (1250)
     }
@@ -164,18 +164,18 @@ class EventuallySpec extends FunSpec with Matchers with OptionValues with Severe
     it("should, if an alternate explicit timeout is provided along with an explicit interval, invoke an always-failing by-name by at least the specified timeout, even if a different implicit is provided") {
 
       implicit val patienceConfig = PatienceConfig(timeout = Span(500, Millis), interval = Span(2, Millis))
-      
+
       var startTime: Option[Long] = None
       the [TestFailedException] thrownBy {
         eventually (timeout(Span(1388, Millis)), interval(Span(1, Millisecond))) {
           if (startTime.isEmpty)
             startTime = Some(System.currentTimeMillis)
           1 + 1 should equal (3)
-        } 
+        }
       }
       (System.currentTimeMillis - startTime.get).toInt should be >= (1388)
     }
-    
+
     it("should allow errors that do not normally cause a test to fail through immediately when thrown") {
 
       var count = 0
@@ -188,7 +188,7 @@ class EventuallySpec extends FunSpec with Matchers with OptionValues with Severe
       }
       count should equal (1)
     }
-    
+
     it("should allow TestPendingException, which does not normally cause a test to fail, through immediately when thrown") {
 
       var count = 0
@@ -200,7 +200,7 @@ class EventuallySpec extends FunSpec with Matchers with OptionValues with Severe
       }
       count should equal (1)
     }
-    
+
     it("should, when reach before first interval, wake up every 1/10 of the interval.") {
       var count = 0
       var startTime: Option[Long] = None

@@ -24,9 +24,9 @@ class ExampleSpec extends FreeSpec {
     val builder = new StringBuilder("ScalaTest is ")
     val buffer = new ListBuffer[String]
   }
-  
+
   def fixture = new Fixture
-  
+
   "Testing" - {
     "should be easy" in {
       val f = fixture
@@ -35,7 +35,7 @@ class ExampleSpec extends FreeSpec {
       assert(f.buffer.isEmpty)
       f.buffer += "sweet"
     }
-  
+
     "should be fun" in {
       val f = fixture
       f.builder.append("fun!")

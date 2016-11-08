@@ -19,13 +19,13 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfAfterWordApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfAfterWordApplication ") {
-    
+
     it("should have pretty toString") {
       val result = new ResultOfAfterWordApplication("some description", () => Unit)
       result.toString should be ("some description")
     }
   }
-  
+
 }

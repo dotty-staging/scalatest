@@ -118,7 +118,7 @@ import org.scalactic._
  * </pre>
  *
  * <p>
- * As with the default <code>Signaler</code>, the above code will eventually produce a 
+ * As with the default <code>Signaler</code>, the above code will eventually produce a
  * <code>TestFailedDueToTimeoutException</code> with a message that indicates a timeout expired. However, instead
  * of throwing the exception after approximately 500 milliseconds, it will throw it after approximately 100 milliseconds.
  * </p>
@@ -129,7 +129,7 @@ import org.scalactic._
  * if the code passed as the by-name parameter takes longer than the specified timeout to execute, even if it
  * is allowed to run to completion beyond the specified timeout and returns normally.
  * </p>
- * 
+ *
  * <p>
  * ScalaTest provides the following <code>Signaler</code> implementations:
  * </p>
@@ -190,7 +190,7 @@ import org.scalactic._
  * a loop and can check a volatile flag each pass through the loop, you could write a <code>Signaler</code> that
  * sets that flag so that the next time around, the loop would exit.
  * </p>
- * 
+ *
  * @author Chua Chee Seng
  * @author Bill Venners
  */
@@ -206,7 +206,7 @@ trait TimeLimits {
 
   /**
    * Executes the passed function, enforcing the passed time limit by attempting to signal the operation if the
-   * time limit is exceeded, and "failing" if the time limit has been 
+   * time limit is exceeded, and "failing" if the time limit has been
    * exceeded after the function completes, where what it means to "fail" is determined by the implicitly passed <code>Timed[T]</code>
    * instance.
    *
@@ -253,7 +253,7 @@ trait TimeLimits {
   // TODO: Consider creating a TestCanceledDueToTimeoutException
   /**
    * Executes the passed function, enforcing the passed time limit by attempting to signal the operation if the
-   * time limit is exceeded, and "canceling" if the time limit has been 
+   * time limit is exceeded, and "canceling" if the time limit has been
    * exceeded after the function completes, where what it means to "cancel" is determined by the implicitly passed <code>Timed[T]</code>
    * instance.
    *
@@ -298,7 +298,7 @@ trait TimeLimits {
 }
 
 /**
- * Companion object that facilitates the importing of <code>Timeouts</code> members as 
+ * Companion object that facilitates the importing of <code>Timeouts</code> members as
  * an alternative to mixing in the trait. One use case is to import <code>Timeouts</code>'s members so you can use
  * them in the Scala interpreter.
  */

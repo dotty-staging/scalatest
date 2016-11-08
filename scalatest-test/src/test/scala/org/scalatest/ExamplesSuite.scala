@@ -54,7 +54,7 @@ class ExamplesSuite extends FunSuite {
       it("should lead the whole game") {}
     }
     intercept[DuplicateTestNameException] {
-      new MySpec  
+      new MySpec
     }
     class MyOtherSpec extends FunSpec {
       def myOtherExamples(): Unit = {
@@ -65,7 +65,7 @@ class ExamplesSuite extends FunSuite {
       myOtherExamples()
     }
     intercept[DuplicateTestNameException] {
-      new MyOtherSpec  
+      new MyOtherSpec
     }
   }
 

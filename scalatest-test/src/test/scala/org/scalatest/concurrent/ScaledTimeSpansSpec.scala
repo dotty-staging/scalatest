@@ -24,7 +24,7 @@ import org.scalatest.tools.Runner
 class ScaledTimeSpansSpec extends FunSpec with Matchers with ScaledTimeSpans {
 
     describe("ScaledTimeSpans") {
-      
+
       it("should use Runner's spanScaleFactor by default") {
         // SKIP-SCALATESTJS-START
         assert(spanScaleFactor === Runner.spanScaleFactor)
@@ -37,7 +37,7 @@ class ScaledTimeSpansSpec extends FunSpec with Matchers with ScaledTimeSpans {
         // Reset back to original, else it'll affect other tests.
         //Runner.spanScaleFactor = original
       }
-      
+
     }
-  
+
 }

@@ -19,7 +19,7 @@ import collection.GenTraversable
 import scala.annotation.tailrec
 
 object GenInspectors {
-  
+
   import Generator._
 
   trait ErrorMessageTemplate extends Template {
@@ -108,35 +108,35 @@ object GenInspectors {
     val header = headerFailedPrefix + " failed, because: \\n\" + \n"
     override val children = details
   }
-  
+
   class NestedSucceedTemplate(forType: String, forText: String, name: String, text: String, assertText: String) extends Template {
-    override def toString = 
-      "def `" + forType + " and " + name + " should nest without problem` {\n" + 
-      "  " + forText + " { l =>\n" + 
-      "    " + text + 
-      "      " + assertText + "\n" + 
+    override def toString =
+      "def `" + forType + " and " + name + " should nest without problem` {\n" +
+      "  " + forText + " { l =>\n" +
+      "    " + text +
+      "      " + assertText + "\n" +
       "    }\n" +
       "  }\n" +
       "}\n"
   }
-  
+
   class NestedFailedTemplate(colText: GenTraversable[_], forType: String, forText: String, name: String, text: String, assertText: String, messageTemplate: Template) extends Template {
-    override def toString = 
-      "def `" + forType + " and " + name + " when nest should throw TestFailedException with correct stack depth and error message when failed` {\n" + 
+    override def toString =
+      "def `" + forType + " and " + name + " when nest should throw TestFailedException with correct stack depth and error message when failed` {\n" +
       "  val xs = " + colText + "\n" +
-      "  val e = intercept[exceptions.TestFailedException] {\n" + 
-      "    " + forText + " { l =>\n" + 
-      "      " + text + 
+      "  val e = intercept[exceptions.TestFailedException] {\n" +
+      "    " + forText + " { l =>\n" +
+      "      " + text +
       "        " + assertText + "\n" +
-      "      }\n" + 
-      "    }\n" + 
-      "  }\n" + 
-      "  assert(e.failedCodeFileName == Some(\"NestedInspectorsSpec.scala\"), e.failedCodeFileName + \" did not equal \" + Some(\"NestedInspectorsSpec.scala\"))\n" + 
-      "  assert(e.failedCodeLineNumber == Some(thisLineNumber - 7), e.failedCodeLineNumber + \" did not equal \" + Some(thisLineNumber - 7))\n" + 
-      "  val outerForLineNumber = thisLineNumber - 8\n" + 
-      "  val innerForLineNumber = thisLineNumber - 8\n" + 
-      "  val assertLineNumber = thisLineNumber - 8\n" + 
-      "  assert(e.message == Some(\n" + messageTemplate.toString.split("\n").map("\"" + _).mkString("\n") + "), e.message + \" did not equal \" + Some(\n" + messageTemplate.toString.split("\n").map("\"" + _).mkString("\n") + "))\n" + 
+      "      }\n" +
+      "    }\n" +
+      "  }\n" +
+      "  assert(e.failedCodeFileName == Some(\"NestedInspectorsSpec.scala\"), e.failedCodeFileName + \" did not equal \" + Some(\"NestedInspectorsSpec.scala\"))\n" +
+      "  assert(e.failedCodeLineNumber == Some(thisLineNumber - 7), e.failedCodeLineNumber + \" did not equal \" + Some(thisLineNumber - 7))\n" +
+      "  val outerForLineNumber = thisLineNumber - 8\n" +
+      "  val innerForLineNumber = thisLineNumber - 8\n" +
+      "  val assertLineNumber = thisLineNumber - 8\n" +
+      "  assert(e.message == Some(\n" + messageTemplate.toString.split("\n").map("\"" + _).mkString("\n") + "), e.message + \" did not equal \" + Some(\n" + messageTemplate.toString.split("\n").map("\"" + _).mkString("\n") + "))\n" +
       "}\n"
   }
 
@@ -194,7 +194,7 @@ object GenInspectors {
         }
     }
   }
-  
+
   def getNestedMessageTemplate(outerName: String, innerName: String, full: Boolean, xs: List[List[_]], fileName: String) = {
     val errorMessage = new SimpleMessageTemplate("0 did not equal 1")
     val assertLineNumber = "assertLineNumber"
@@ -206,7 +206,7 @@ object GenInspectors {
       }
     else
       List(getMessageTemplate(innerName, 0, xs(0), fileName, assertLineNumber, errorMessage, true))
-    val innerDetails = innerTemplates.zipWithIndex.map { case (template, index) => 
+    val innerDetails = innerTemplates.zipWithIndex.map { case (template, index) =>
       new ErrorDetailTemplate(index + "", fileName, innerLineNumber, new SimpleMessageTemplate(template.toString + " + \""))
     }
     outerName match {
@@ -1648,14 +1648,14 @@ object GenInspectors {
       )
     )
   }
-  
+
   def genNestedInspectorsSpecFile(targetDir: File) {
     val nestedInspectorsSpecFile = new File(targetDir, "NestedInspectorsSpec.scala")
     genFile(
-      nestedInspectorsSpecFile, 
+      nestedInspectorsSpecFile,
       new SingleClassFile(
-        packageName = Some("org.scalatest.inspectors.nested"), 
-        importList = List("org.scalatest._", 
+        packageName = Some("org.scalatest.inspectors.nested"),
+        importList = List("org.scalatest._",
                           "SharedHelpers._",
                           "FailureMessages.decorateToStringValue",
                           "collection.GenTraversable",
@@ -1665,66 +1665,66 @@ object GenInspectors {
           override val extendName = Some("RefSpec")
           override val withList = List("Inspectors")
           override val children = {
-            
+
             val succeededAssertion = "assert(n % 2 == 0)"
             val failedAssertion = "assert(n % 2 == 1)"
-            
-            val succeededNestedList = List(("forAll", "forAll(l) { n =>\n"), 
-                            ("forAtLeast", "forAtLeast(3, l) { n =>\n"), 
-                            ("forAtMost", "forAtMost(3, l) { n =>\n"), 
-                            ("forExactly", "forExactly(3, l) { n =>\n"), 
-                            ("forNo", "forNo(l) { n =>\n"), 
-                            ("forBetween", "forBetween(2, 4, l) { n =>\n"), 
+
+            val succeededNestedList = List(("forAll", "forAll(l) { n =>\n"),
+                            ("forAtLeast", "forAtLeast(3, l) { n =>\n"),
+                            ("forAtMost", "forAtMost(3, l) { n =>\n"),
+                            ("forExactly", "forExactly(3, l) { n =>\n"),
+                            ("forNo", "forNo(l) { n =>\n"),
+                            ("forBetween", "forBetween(2, 4, l) { n =>\n"),
                             ("forEvery", "forEvery(l) { n =>\n"))
-            
-            val failedNestedList = List(("forAll", "forAll(l) { n =>\n"), 
-                            ("forAtLeast", "forAtLeast(3, l) { n =>\n"), 
-                            ("forAtMost", "forAtMost(3, l) { n =>\n"), 
-                            ("forExactly", "forExactly(4, l) { n =>\n"), 
-                            ("forNo", "forNo(l) { n =>\n"), 
-                            ("forBetween", "forBetween(2, 4, l) { n =>\n"), 
+
+            val failedNestedList = List(("forAll", "forAll(l) { n =>\n"),
+                            ("forAtLeast", "forAtLeast(3, l) { n =>\n"),
+                            ("forAtMost", "forAtMost(3, l) { n =>\n"),
+                            ("forExactly", "forExactly(4, l) { n =>\n"),
+                            ("forNo", "forNo(l) { n =>\n"),
+                            ("forBetween", "forBetween(2, 4, l) { n =>\n"),
                             ("forEvery", "forEvery(l) { n =>\n"))
-            
+
             val theList = List(List(2, 4, 6, 8), List(8, 10, 12, 16))
-            
+
             // Generate code by templates
             (List(
-              ("forAll", "forAll(List(List(2, 4, 6), List(8, 10, 12)))", 
-               (name: String, text: String) => if (name != "forNo") succeededAssertion else failedAssertion), 
-              ("forAtLeast", "forAtLeast(2, List(List(2, 4, 6), List(8, 10, 12)))", 
-               (name: String, text: String) => if (name != "forNo") succeededAssertion else failedAssertion), 
-              ("forAtMost", "forAtMost(2, List(List(2, 4, 6), List(8, 10, 12)))", 
-               (name: String, text: String) => if (name != "forNo") succeededAssertion else failedAssertion), 
-              ("forExactly", "forExactly(2, List(List(2, 4, 6), List(8, 10, 12)))", 
-               (name: String, text: String) => if (name != "forNo") succeededAssertion else failedAssertion), 
-              ("forNo", "forNo(List(List(0, 2, 4, 6), List(8, 10, 12, 14)))", 
-               (name: String, text: String) => if (name != "forNo" && name != "forAtMost") failedAssertion else succeededAssertion), 
-              ("forBetween", "forBetween(2, 4, List(List(2, 4, 6), List(8, 10, 12)))", 
-               (name: String, text: String) => if (name != "forNo") succeededAssertion else failedAssertion), 
-              ("forEvery", "forEvery(List(List(2, 4, 6), List(8, 10, 12)))", 
+              ("forAll", "forAll(List(List(2, 4, 6), List(8, 10, 12)))",
+               (name: String, text: String) => if (name != "forNo") succeededAssertion else failedAssertion),
+              ("forAtLeast", "forAtLeast(2, List(List(2, 4, 6), List(8, 10, 12)))",
+               (name: String, text: String) => if (name != "forNo") succeededAssertion else failedAssertion),
+              ("forAtMost", "forAtMost(2, List(List(2, 4, 6), List(8, 10, 12)))",
+               (name: String, text: String) => if (name != "forNo") succeededAssertion else failedAssertion),
+              ("forExactly", "forExactly(2, List(List(2, 4, 6), List(8, 10, 12)))",
+               (name: String, text: String) => if (name != "forNo") succeededAssertion else failedAssertion),
+              ("forNo", "forNo(List(List(0, 2, 4, 6), List(8, 10, 12, 14)))",
+               (name: String, text: String) => if (name != "forNo" && name != "forAtMost") failedAssertion else succeededAssertion),
+              ("forBetween", "forBetween(2, 4, List(List(2, 4, 6), List(8, 10, 12)))",
+               (name: String, text: String) => if (name != "forNo") succeededAssertion else failedAssertion),
+              ("forEvery", "forEvery(List(List(2, 4, 6), List(8, 10, 12)))",
                (name: String, text: String) => if (name != "forNo") succeededAssertion else failedAssertion)
-            ) flatMap { case (forType, forText, assertFun) => 
-              succeededNestedList map { case (name, text) => 
+            ) flatMap { case (forType, forText, assertFun) =>
+              succeededNestedList map { case (name, text) =>
                 new NestedSucceedTemplate(forType, forText, name, text, assertFun(name, text))
               }
             }) ++
             (List(
                ("forAll", "forAll(xs)", false,
-                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") failedAssertion else succeededAssertion),        
-               ("forAtLeast", "forAtLeast(3, xs)", true, 
-                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") failedAssertion else succeededAssertion), 
-               ("forAtMost", "forAtMost(1, xs)", true, 
-                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") succeededAssertion else failedAssertion), 
-               ("forExactly", "forExactly(1, xs)", true, 
-                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") failedAssertion else succeededAssertion), 
-               ("forNo", "forNo(xs)", false, 
-                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") succeededAssertion else failedAssertion), 
-               ("forBetween", "forBetween(2, 4, xs)", true, 
-                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") failedAssertion else succeededAssertion), 
-               ("forEvery", "forEvery(xs)", true, 
+                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") failedAssertion else succeededAssertion),
+               ("forAtLeast", "forAtLeast(3, xs)", true,
+                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") failedAssertion else succeededAssertion),
+               ("forAtMost", "forAtMost(1, xs)", true,
+                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") succeededAssertion else failedAssertion),
+               ("forExactly", "forExactly(1, xs)", true,
+                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") failedAssertion else succeededAssertion),
+               ("forNo", "forNo(xs)", false,
+                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") succeededAssertion else failedAssertion),
+               ("forBetween", "forBetween(2, 4, xs)", true,
+                 (name: String, text: String) => if (name != "forNo" && name != "forAtMost") failedAssertion else succeededAssertion),
+               ("forEvery", "forEvery(xs)", true,
                  (name: String, text: String) => if (name != "forNo" && name != "forAtMost") failedAssertion else succeededAssertion)
-            ) flatMap { case (forType, forText, full, assertFun) => 
-                failedNestedList map { case (name, text) => 
+            ) flatMap { case (forType, forText, full, assertFun) =>
+                failedNestedList map { case (name, text) =>
                   new NestedFailedTemplate(theList.toString, forType, forText, name, text, assertFun(name, text), getNestedMessageTemplate(forType, name, full, theList, nestedInspectorsSpecFile.getName))
                 }
               }
@@ -1772,12 +1772,12 @@ object GenInspectors {
     genForEverySpecFile(targetDir(targetBaseDir, "forevery"))
     genNestedInspectorsSpecFile(targetDir(targetBaseDir, "nested"))
   }
-  
+
   def main(args: Array[String]) {
     val targetBaseDir = args(0)
     val version = args(1)
     val scalaVersion = args(2)
     genTest(new File(targetBaseDir), version, scalaVersion)
   }
-  
+
 }

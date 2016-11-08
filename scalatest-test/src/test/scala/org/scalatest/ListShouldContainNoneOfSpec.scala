@@ -33,7 +33,7 @@ class ListShouldContainNoneOfSpec extends FunSpec {
     new Equality[String] {
       def areEqual(a: String, b: Any): Boolean = a.toUpperCase == b
     }
-  
+
   //ADDITIONAL//
 
   describe("a List") {
@@ -198,7 +198,7 @@ class ListShouldContainNoneOfSpec extends FunSpec {
         e1.message should be (Some(Resources.noneOfDuplicate))
       }
     }
-    
+
     describe("when used with shouldNot contain noneOf (...) syntax") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {
@@ -464,7 +464,7 @@ class ListShouldContainNoneOfSpec extends FunSpec {
         e1.message should be (Some(Resources.noneOfDuplicate))
       }
     }
-    
+
     describe("when used with shouldNot contain noneOf (...) syntax") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {

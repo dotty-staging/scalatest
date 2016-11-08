@@ -23,9 +23,9 @@ package org.scalactic
  * <p>
  * The Explicitly DSL can be used with the <code>===</code> and <code>!==</code> operators of Scalactic
  * as well as the <code>should</code> <code>equal</code>, <code>be</code>, <code>contain</code>, and
- * <code>===</code> syntax of ScalaTest matchers. 
+ * <code>===</code> syntax of ScalaTest matchers.
  * </p>
- * 
+ *
  * <p>
  * If you want to customize equality for a type in general, you would likely want to place an
  * implicit <code>Equality[T]</code> for that type in scope (or in <code>T</code>'s companion object). That implicit
@@ -189,7 +189,7 @@ trait Explicitly {
      */
     def afterBeing(uniformity: Uniformity[A]): NormalizingEquality[A] =
       new ComposedNormalizingEquality[A](equality, uniformity)
-  } 
+  }
 
   /**
    * This class is part of the Scalactic &ldquo;explicitly DSL&rdquo;. Please
@@ -209,9 +209,9 @@ trait Explicitly {
    * @author Bill Venners
    */
   class DeterminedByEquivalence[T](equivalence: Equivalence[T]) extends Equivalence[T] {
-  
+
     /**
-     * Indicates whether the objects passed as <code>a</code> and <code>b</code> are equal by 
+     * Indicates whether the objects passed as <code>a</code> and <code>b</code> are equal by
      * delegating to the <code>areEquivalent</code> method of the <code>Equivalence[T]</code> passed to
      * this class's constructor.
      *
@@ -220,7 +220,7 @@ trait Explicitly {
      * @return true if the passed objects are "equal," as defined by this <code>Equality</code> instance
      */
     def areEquivalent(a: T, b: T): Boolean = equivalence.areEquivalent(a, b)
-  
+
     /**
      * This method enables syntax such as the following, given an
      * <a href="Equivalence.html"><code>Equivalence[String]</code></a> named <code>myStringEquivalence</code>:
@@ -236,7 +236,7 @@ trait Explicitly {
      */
     def afterBeing(normalization: Normalization[T]): NormalizingEquivalence[T] =
       new ComposedNormalizingEquivalence[T](equivalence, normalization)
-  } 
+  }
 
   /**
    * This class is part of the Scalactic &ldquo;explicitly DSL&rdquo;. Please

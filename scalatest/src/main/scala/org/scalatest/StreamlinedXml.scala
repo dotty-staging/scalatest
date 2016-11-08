@@ -102,8 +102,8 @@ import org.scalactic.Uniformity
  * import StreamlinedXml._
  *
  * scala&gt; import scala.xml.Elem
- * import scala.xml.Elem * 
- * 
+ * import scala.xml.Elem *
+ *
  * scala&gt; (xmlElem === &lt;summer&gt;
  *      |   &lt;day&gt;&lt;/day&gt;
  *      |   &lt;night&gt;
@@ -167,7 +167,7 @@ trait StreamlinedXml {
        * @return true if the passed <code>Any</code> is a <code>Elem</code>.
        */
       final def normalizedCanHandle(b: Any): Boolean = b.isInstanceOf[NodeSeq]
-    
+
       /**
        * Normalizes the passed object if it is a <code>Elem</code>.
        *
@@ -192,7 +192,7 @@ trait StreamlinedXml {
 }
 
 /**
- * Companion object that facilitates the importing of <code>StreamlinedXml</code> members as 
+ * Companion object that facilitates the importing of <code>StreamlinedXml</code> members as
  * an alternative to mixing it the trait. One use case is to import <code>StreamlinedXml</code> members so you can use
  * them in the Scala interpreter.
  *

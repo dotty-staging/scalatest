@@ -25,7 +25,7 @@ protected[scalatest] class ExampleSuiteTimeoutSpec extends FunSpec with Parallel
     it ("do thing 1b") {}
     it ("do thing 1c") {}
   }
-  
+
   describe("Thing 2") {
     it ("do thing 2a") {}
     it ("do thing 2b") { SleepHelper.sleep(1300) }
@@ -41,7 +41,7 @@ protected[scalatest] class ExampleSuiteTimeoutSpec2 extends FunSpec with Paralle
     it ("content 1b") {}
     it ("content 1c") {}
   }
-  
+
   describe("Subject 2") {
     it ("content 2a") {}
     it ("content 2b") {}

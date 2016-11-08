@@ -56,7 +56,7 @@ private[scalatest] class DispatchReporter(
 
   private final val latch = new CountDownLatch(1)
 
-  // We keep track of the highest ordinal seen, allowing some to be skipped. 
+  // We keep track of the highest ordinal seen, allowing some to be skipped.
   private final val highestOrdinalSeenSoFar: AtomicReference[Ordinal] = new AtomicReference[Ordinal](new Ordinal(0))
 
   // Can be either Event or Dispose.type. Be nice to capture that in the type param.
@@ -116,9 +116,9 @@ private[scalatest] class DispatchReporter(
         var suitesAbortedCount = 0
         var scopesPendingCount = 0
       }
-  
+
       val counterMap = scala.collection.mutable.Map[Int, Counter]()
-  
+
       def incrementCount(event: Event, f: (Counter) => Unit): Unit = {
         val runStamp = event.ordinal.runStamp
         if (counterMap.contains(runStamp)) {
@@ -131,7 +131,7 @@ private[scalatest] class DispatchReporter(
           counterMap(runStamp) = counter
         }
       }
-  
+
       // If None, that means don't update the summary so forward the old event. If Some,
       // create a new event with everything the same except the old summary replaced by the new one
       def updatedSummary(oldSummary: Option[Summary], ordinal: Ordinal): Option[Summary] = {
@@ -147,7 +147,7 @@ private[scalatest] class DispatchReporter(
                   counter.testsPendingCount,
                   counter.testsCanceledCount,
                   counter.suitesCompletedCount,
-                  counter.suitesAbortedCount, 
+                  counter.suitesAbortedCount,
                   counter.scopesPendingCount
                 )
               )
@@ -155,16 +155,16 @@ private[scalatest] class DispatchReporter(
            case _ => None // Also pass the old None summary through if it isn't in the counterMap
         }
       }
-  
+
       while (alive) {
         queue.take() match {
-          case event: Event => 
+          case event: Event =>
             val highestSoFar = highestOrdinalSeenSoFar.get
             if (event.ordinal > highestSoFar)
               highestOrdinalSeenSoFar.compareAndSet(highestSoFar, event.ordinal) // Ignore conflicts. Just let first one win and move on.
               // The reason is that this is used to send AlertProvided events for slowpoke notifications, and these need not have the
               // exactly the latest ordinal. So long as it is in the ballpark, that's is good enough.
-              
+
             try {
               // The event will only actually be updated if it it is a RunCompleted/Aborted/Stopped event with None
               // as its summary and its runstamp has a counter entry. In that case, it will be given a Summary taken
@@ -174,7 +174,7 @@ private[scalatest] class DispatchReporter(
               // out TestSucceeded events, then they just weren't being counted.
               val updatedEvent =
                 event match {
-  
+
                   case _: RunStarting => counterMap(event.ordinal.runStamp) = new Counter; event
 
                   case ts: TestSucceeded =>
@@ -206,7 +206,7 @@ private[scalatest] class DispatchReporter(
                         // Update the RunCompleted so that it is the same except it has a new Some(Summary)
                         RunCompleted(ordinal, duration, newSummary, formatter, location, payload, threadName, timeStamp)
                     }
-        
+
                   case oldRunStopped @ RunStopped(ordinal, duration, summary, formatter, location, payload, threadName, timeStamp) =>
                     updatedSummary(summary, ordinal) match {
                       case None => oldRunStopped
@@ -215,8 +215,8 @@ private[scalatest] class DispatchReporter(
                         // Update the RunStopped so that it is the same except it has a new Some(Summary)
                         RunStopped(ordinal, duration, newSummary, formatter, location, payload, threadName, timeStamp)
                     }
-                  
-                  case oldRunAborted @ RunAborted(ordinal, message, throwable, duration, summary, formatter, location, payload, threadName, timeStamp) => 
+
+                  case oldRunAborted @ RunAborted(ordinal, message, throwable, duration, summary, formatter, location, payload, threadName, timeStamp) =>
                     updatedSummary(summary, ordinal) match {
                       case None => oldRunAborted
                       case newSummary @ Some(_) =>
@@ -224,14 +224,14 @@ private[scalatest] class DispatchReporter(
                         // Update the RunAborted so that it is the same except it has a new Some(Summary)
                         RunAborted(ordinal, message, throwable, duration, newSummary, formatter, location, payload, threadName, timeStamp)
                     }
-                  
+
                   case ts: TestStarting =>
                     slowpokeItems match {
                       case Some((slowpokeDetector, _)) =>
                         slowpokeDetector.testStarting(
-                          suiteName = ts.suiteName, 
-                          suiteId = ts.suiteId, 
-                          testName = ts.testName, 
+                          suiteName = ts.suiteName,
+                          suiteId = ts.suiteId,
+                          testName = ts.testName,
                           now()
                         )
                       case None =>
@@ -243,7 +243,7 @@ private[scalatest] class DispatchReporter(
                 report(updatedEvent)
             }
             catch {
-              case e: Exception => 
+              case e: Exception =>
                 val stringToPrint = Resources.reporterThrew(event)
                 out.println(stringToPrint)
                 e.printStackTrace(out)

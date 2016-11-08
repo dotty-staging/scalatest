@@ -25,11 +25,11 @@ import org.scalatest.tagobjects.Slow
 class SetSpec extends FlatSpec {
 
   behavior of "An empty Set"
-  
+
   it should "have size 0" taggedAs(Slow) in {
     assert(Set.empty.size === 0)
   }
-    
+
   it should "produce NoSuchElementException when head is invoked" taggedAs(Slow, DbTest) in {
     assertThrows[NoSuchElementException] {
       Set.empty.head

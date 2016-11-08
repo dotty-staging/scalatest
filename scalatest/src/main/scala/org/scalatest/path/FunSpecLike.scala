@@ -27,7 +27,7 @@ import org.scalatest.PathEngine.isInTargetPath
  * a sister class to <code>org.scalatest.FunSpec</code> that isolates
  * tests by running each test in its own instance of the test class,
  * and for each test, only executing the <em>path</em> leading to that test.
- * 
+ *
  * <p>
  * <a href="FunSpec.html"><code>path.FunSpec</code></a> is a class, not a trait,
  * to minimize compile time given there is a slight compiler overhead to
@@ -47,7 +47,7 @@ import org.scalatest.PathEngine.isInTargetPath
 @Finders(Array("org.scalatest.finders.FunSpecFinder"))
 //SCALATESTJS-ONLY @scala.scalajs.js.annotation.JSExportDescendentClasses(ignoreInvalidDescendants = true)
 trait FunSpecLike extends org.scalatest.Suite with OneInstancePerTest with Informing with Notifying with Alerting with Documenting { thisSuite =>
-  
+
   private final val engine = PathEngine.getEngine()
   import engine._
 
@@ -153,7 +153,7 @@ trait FunSpecLike extends org.scalatest.Suite with OneInstancePerTest with Infor
       //SCALATESTJS-ONLY val stackDepthAdjustment = -4
       handleTest(thisSuite, testText, Transformer(testFun _), Resources.itCannotAppearInsideAnotherItOrThey, "FunSpecLike.scala", "apply", stackDepth, stackDepthAdjustment, None, Some(pos), testTags: _*)
     }
-    
+
     /**
      * Supports the registration of shared tests.
      *
@@ -265,7 +265,7 @@ trait FunSpecLike extends org.scalatest.Suite with OneInstancePerTest with Infor
     def apply(testText: String, testTags: Tag*)(testFun: => Unit /* Assertion */)(implicit pos: source.Position): Unit = {
       handleTest(thisSuite, testText, Transformer(testFun _), Resources.theyCannotAppearInsideAnotherItOrThey, "FunSpecLike.scala", "apply", 3, -2, None, Some(pos), testTags: _*)
     }
- 
+
     /**
      * Supports the registration of shared tests.
      *
@@ -327,7 +327,7 @@ trait FunSpecLike extends org.scalatest.Suite with OneInstancePerTest with Infor
    * </p>
    */
   protected val they = new TheyWord
-  
+
   /**
    * Supports registration of a test to ignore.
    *
@@ -357,7 +357,7 @@ trait FunSpecLike extends org.scalatest.Suite with OneInstancePerTest with Infor
     // Might not actually register it. Only will register it if it is its turn.
     handleIgnoredTest(testText, Transformer(testFun _), Resources.ignoreCannotAppearInsideAnItOrAThey, "FunSpecLike.scala", "ignore", stackDepth, stackDepthAdjustment, None, Some(pos), testTags: _*)
   }
-  
+
   /**
    * Describe a &ldquo;subject&rdquo; being specified and tested by the passed function value. The
    * passed function value may contain more describers (defined with <code>describe</code>) and/or tests
@@ -388,7 +388,7 @@ trait FunSpecLike extends org.scalatest.Suite with OneInstancePerTest with Infor
       case other: Throwable => throw other
     }
   }
-  
+
   /**
    * Supports shared test registration in <code>path.FunSpec</code>s.
    *
@@ -518,7 +518,7 @@ trait FunSpecLike extends org.scalatest.Suite with OneInstancePerTest with Infor
   final protected override def runTest(testName: String, args: Args): Status = {
 
     ensureTestResultsRegistered(thisSuite)
-    
+
     def dontInvokeWithFixture(theTest: TestLeaf): Outcome = {
       theTest.testFun()
     }
@@ -541,9 +541,9 @@ trait FunSpecLike extends org.scalatest.Suite with OneInstancePerTest with Infor
    * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed
    * to methods <code>it</code> and <code>ignore</code>.
    * </p>
-   * 
+   *
    * <p>
-   * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
+   * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
    * </p>
    *
@@ -657,7 +657,7 @@ trait FunSpecLike extends org.scalatest.Suite with OneInstancePerTest with Infor
    * Suite style name.
    */
   final override val styleName: String = "org.scalatest.path.FunSpec"
-    
+
   override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = {
     ensureTestResultsRegistered(thisSuite)
     createTestDataFor(testName, theConfigMap, this)

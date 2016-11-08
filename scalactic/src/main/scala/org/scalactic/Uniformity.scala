@@ -26,7 +26,7 @@ package org.scalactic
  * <pre class="stHighlight">
  * import org.scalactic._
  *
- * val truncated = 
+ * val truncated =
  *   new Uniformity[Double] {
  *    def normalized(d: Double) = d.floor
  *    def normalizedCanHandle(o: Any) = o.isInstanceOf[Double]
@@ -45,7 +45,7 @@ package org.scalactic
  * <pre class="stHighlight">
  * import org.scalatest._
  * import Matchers._
- * 
+ *
  * 2.1 should equal (2.0) (after being truncated)
  * </pre>
  *
@@ -61,7 +61,7 @@ package org.scalactic
  * val d = 2.1
  * d.norm // returns 2.0
  * </pre>
- * 
+ *
  * <p>
  * Note that by creating a <code>Uniformity</code> rather than just an instance of its supertype, <a href="Normalization.html"><code>Normalization</code></a>,
  * it can be used more generally. For example, <code>Uniformity</code>s allow you to the <code>Explicitly</code> DSL with
@@ -71,7 +71,7 @@ package org.scalactic
  * and <code>contain</code> matcher syntax, whereas a plain <code>Normalization</code> can only be used with <code>should</code> <code>===</code>, and only
  * under <code>TypeCheckedTripleEquals</code>.
  * </p>
- * 
+ *
  * @tparam A the type whose uniformity is being defined
  */
 trait Uniformity[A] extends Normalization[A] { thisUniformity =>
@@ -83,7 +83,7 @@ trait Uniformity[A] extends Normalization[A] { thisUniformity =>
    * Implementations can decide what &ldquo;appropriate&rdquo; means, but the intent is that it will usually mean the
    * value passed is of the type <code>A</code>.  For example, if this is a <code>Uniformity[String]</code>, appropriate means
    * that the value (of type <code>Any</code>) passed is actually an instance of <code>String</code>. Because of erasure,
-   * however, a <code>Uniformity[List[String]]</code> will only be able to tell whether a value is a <code>List[_]</code>, 
+   * however, a <code>Uniformity[List[String]]</code> will only be able to tell whether a value is a <code>List[_]</code>,
    * so it might declare any <code>List[_]</code> that contains only <code>String</code>s (determined by invoking
    * <code>isInstanceOf[String]</code> on each element) to be appropriate. This means a <code>Uniformity[List[String]]</code> might normalize
    * a <code>List[AnyRef]</code> that happens to contain only <code>Strings</code>.
@@ -182,7 +182,7 @@ trait Uniformity[A] extends Normalization[A] { thisUniformity =>
    *
    * <p>
    * The <code>normalized</code> and <code>normalizedOrSame</code> methods
-   * of the <code>Uniformity</code> returned by this method return a result 
+   * of the <code>Uniformity</code> returned by this method return a result
    * obtained by forwarding the passed value first to this <code>Uniformity</code>'s implementation of the method,
    * then passing that result to the other <code>Uniformity</code>'s implementation of the method, respectively.
    * Essentially, the body of the composed <code>normalized</code> method is:
@@ -201,7 +201,7 @@ trait Uniformity[A] extends Normalization[A] { thisUniformity =>
    * </pre>
    *
    * <p>
-   * The <code>normalizeCanHandle</code> method of the <code>Uniformity</code> returned by this method returns a result 
+   * The <code>normalizeCanHandle</code> method of the <code>Uniformity</code> returned by this method returns a result
    * obtained by anding the result of forwarding the passed value to this <code>Uniformity</code>'s implementation of the method
    * with the result of forwarding it to the passed <code>Uniformity</code>'s implementation.
    * Essentially, the body of the composed <code>normalizeCanHandle</code> method is:

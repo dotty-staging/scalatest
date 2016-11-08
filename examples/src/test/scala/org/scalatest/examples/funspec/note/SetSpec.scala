@@ -18,7 +18,7 @@ import collection.mutable
 import org.scalatest._
 
 class SetSpec extends FunSpec {
-  
+
   describe("A mutable Set") {
     it("should allow an element to be added") {
 

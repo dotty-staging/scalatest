@@ -231,11 +231,11 @@ class GeneratorSpec extends FunSpec with Matchers {
     }
     it("should be usable in a forAll") {
       import GeneratorChecks._
-      forAll { (i: Int) => 
+      forAll { (i: Int) =>
         i + i shouldEqual i * 2
       }
       a [TestFailedException] should be thrownBy {
-        forAll { (i: Int) => 
+        forAll { (i: Int) =>
           i + i shouldEqual i * 3
         }
       }
@@ -243,7 +243,7 @@ class GeneratorSpec extends FunSpec with Matchers {
     it("should be used at least minSuccessful times in a forAll") {
       import GeneratorChecks._
       var count = 0
-      forAll { (i: Int) => 
+      forAll { (i: Int) =>
         count += 1
         i + i shouldEqual i * 2
       }
@@ -252,7 +252,7 @@ class GeneratorSpec extends FunSpec with Matchers {
       {
         implicit val generatorDrivenConfig = PropertyCheckConfiguration(minSuccessful = 10)
         count = 0
-        forAll { (i: Int) => 
+        forAll { (i: Int) =>
           count += 1
           i + i shouldEqual i * 2
         }
@@ -263,7 +263,7 @@ class GeneratorSpec extends FunSpec with Matchers {
       import GeneratorChecks._
       var count = 0
       a [TestFailedException] should be thrownBy {
-        forAll { (i: Int) => 
+        forAll { (i: Int) =>
           count += 1
           whenever(false) {
             i + i shouldEqual i * 3
@@ -279,7 +279,7 @@ class GeneratorSpec extends FunSpec with Matchers {
         implicit val generatorDrivenConfig = PropertyCheckConfiguration(maxDiscardedFactor = PosZDouble.from(PropertyCheckConfiguration.calculateMaxDiscardedFactor(minSuccessful, expectedTestDiscarded)).get)
         count = 0
         a [TestFailedException] should be thrownBy {
-          forAll { (i: Int) => 
+          forAll { (i: Int) =>
             count += 1
             whenever(false) {
               i + i shouldEqual i * 3

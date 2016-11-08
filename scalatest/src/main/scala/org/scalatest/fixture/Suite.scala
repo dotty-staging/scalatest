@@ -197,7 +197,7 @@ trait Suite extends org.scalatest.Suite { thisSuite =>
    * @throws IllegalArgumentException if <code>testName</code> is defined, but no test with the specified test name
    *     exists in this <code>Suite</code>
    */
-  // Can just inheirt the supertrait implementation of runTest that 
+  // Can just inheirt the supertrait implementation of runTest that
 /*
   protected override def runTest(testName: String, args: Args): Status = {
 
@@ -218,13 +218,13 @@ trait Suite extends org.scalatest.Suite { thisSuite =>
     val messageRecorderForThisTest = new MessageRecorder(report)
     val informerForThisTest =
       MessageRecordingInformer(
-        messageRecorderForThisTest, 
+        messageRecorderForThisTest,
         (message, payload, isConstructingThread, testWasPending, testWasCanceled, location) => createInfoProvided(thisSuite, report, tracker, Some(testName), message, payload, 2, location, isConstructingThread, true)
       )
 
     val documenterForThisTest =
       MessageRecordingDocumenter(
-        messageRecorderForThisTest, 
+        messageRecorderForThisTest,
         (message, _, isConstructingThread, testWasPending, testWasCanceled, location) => createInfoProvided(thisSuite, report, tracker, Some(testName), message, None, 2, location, isConstructingThread, true) // TODO: Need a test that fails because testWasCanceleed isn't being passed
       )
 
@@ -253,7 +253,7 @@ trait Suite extends org.scalatest.Suite { thisSuite =>
         val testFun: () => Unit = {
           () => {
             val args: Array[Object] =
-              if (testMethodTakesAnInformer(testName)) 
+              if (testMethodTakesAnInformer(testName))
                 Array(informerForThisTest)
               else
                 Array()
@@ -268,7 +268,7 @@ trait Suite extends org.scalatest.Suite { thisSuite =>
       reportTestSucceeded(thisSuite, report, tracker, testName, testName, messageRecorderForThisTest.recordedEvents(false, false), duration, formatter, thisSuite.rerunner, Some(getTopOfMethod(thisSuite, method)))
       SucceededStatus
     }
-    catch { 
+    catch {
       case ite: InvocationTargetException =>
         val t = ite.getTargetException
         t match {
@@ -335,7 +335,7 @@ trait Suite extends org.scalatest.Suite { thisSuite =>
      }
   }
 */
-  
+
   /**
    * Suite style name.
    *

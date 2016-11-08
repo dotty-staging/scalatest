@@ -29,13 +29,13 @@ class ListShouldContainInOrderOnlySpec extends FunSpec {
 
   private val prettifier = Prettifier.default
 
-  private def upperCase(value: Any): Any = 
+  private def upperCase(value: Any): Any =
     value match {
       case l: List[_] => l.map(upperCase(_))
       case s: String => s.toUpperCase
       case c: Char => c.toString.toUpperCase.charAt(0)
       case (s1: String, s2: String) => (s1.toUpperCase, s2.toUpperCase)
-      case e: java.util.Map.Entry[_, _] => 
+      case e: java.util.Map.Entry[_, _] =>
         (e.getKey, e.getValue) match {
           case (k: String, v: String) => Entry(k.toUpperCase, v.toUpperCase)
           case _ => value
@@ -205,7 +205,7 @@ class ListShouldContainInOrderOnlySpec extends FunSpec {
         e1.message should be (Some(Resources.inOrderOnlyDuplicate))
       }
     }
-    
+
     describe("when used with shouldNot contain inOrderOnly (..)") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {
@@ -489,7 +489,7 @@ class ListShouldContainInOrderOnlySpec extends FunSpec {
         e1.message should be (Some(Resources.inOrderOnlyDuplicate))
       }
     }
-    
+
     describe("when used with shouldNot contain inOrderOnly (..)") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {

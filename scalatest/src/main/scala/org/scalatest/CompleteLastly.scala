@@ -113,7 +113,7 @@ trait CompleteLastly {
   /**
    * Registers a block of code that produces any "futuristic" type (any type <code>F</code> for which
    * an implicit <a href="enablers/Futuristic.html"><code>Futuristic[F]</code></a> instance is implicitly available), returning
-   * an object that offers a <code>lastly</code> method. 
+   * an object that offers a <code>lastly</code> method.
     *
     * <p>
     * See the main documentation for trait <code>CompleteLastly</code> for more detail.
@@ -127,7 +127,7 @@ trait CompleteLastly {
 }
 
 /**
- * Companion object that facilitates the importing of <code>CompleteLastly</code> members as 
+ * Companion object that facilitates the importing of <code>CompleteLastly</code> members as
  * an alternative to mixing it in.
  */
 object CompleteLastly extends CompleteLastly

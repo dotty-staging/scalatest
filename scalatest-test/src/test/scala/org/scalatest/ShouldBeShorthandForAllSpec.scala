@@ -25,8 +25,8 @@ import org.scalactic.Prettifier
 class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPropertyMatchers {
 
   private val prettifier = Prettifier.default
-  
-  def errorMessage(index: Int, message: String, lineNumber: Int, left: Any): String = 
+
+  def errorMessage(index: Int, message: String, lineNumber: Int, left: Any): String =
     "'all' inspection failed, because: \n" +
     "  at index " + index + ", " + message + " (ShouldBeShorthandForAllSpec.scala:" + lineNumber + ") \n" +
     "in " + decorateToStringValue(prettifier, left)
@@ -55,7 +55,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
     }
 
     it("should work with any") {
-      
+
       all(List(8, 8, 8)) shouldBe 8
       val list1 = List(1, 2)
       val caught1 = intercept[TestFailedException] {
@@ -64,7 +64,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(caught1.message === (Some(errorMessage(1, "2 was not 1", thisLineNumber - 2, list1))))
       assert(caught1.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       val s = null
       all(List[String](s)) shouldBe null
       val list2 = List(null, "hi")
@@ -74,7 +74,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(caught2.message === (Some(errorMessage(1, "\"hi\" was not null", thisLineNumber - 2, list2))))
       assert(caught2.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(8, 9, 10)) shouldBe > (7)
       val list3 = List(7, 8, 9)
       val caught3 = intercept[TestFailedException] {
@@ -83,8 +83,8 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(caught3.message === Some(errorMessage(0, "7 was not greater than 7", thisLineNumber - 2, list3)))
       assert(caught3.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
-      all(List(4, 5, 6)) shouldBe < (7) 
+
+      all(List(4, 5, 6)) shouldBe < (7)
       val list4 = List(5, 6, 7)
       val caught4 = intercept[TestFailedException] {
         all(list4) shouldBe < (7)
@@ -92,7 +92,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(caught4.message === Some(errorMessage(2, "7 was not less than 7", thisLineNumber - 2, list4)))
       assert(caught4.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(7, 8, 9)) shouldBe >= (7)
       val list5 = List(6, 7, 8)
       val caught5 = intercept[TestFailedException] {
@@ -101,7 +101,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(caught5.message === Some(errorMessage(0, "6 was not greater than or equal to 7", thisLineNumber - 2, list5)))
       assert(caught5.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(caught5.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(1, 2, 3)) shouldBe <= (7)
       val list6 = List(1, 2, 8)
       val caught6 = intercept[TestFailedException] {
@@ -110,7 +110,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(caught6.message === Some(errorMessage(2, "8 was not less than or equal to 7", thisLineNumber - 2, list6)))
       assert(caught6.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(caught6.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(true, true, true)) shouldBe true
       val list7 = List(true, false, true)
       val caught7 = intercept[TestFailedException] {
@@ -120,9 +120,9 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(caught7.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(caught7.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
-    
+
     it("should work with BeMatcher") {
-      
+
       class OddMatcher extends BeMatcher[Int] {
         def apply(left: Int): MatchResult = {
           MatchResult(
@@ -134,10 +134,10 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       }
       val odd = new OddMatcher
       val even = not (odd)
-      
+
       all(List(1, 3, 5)) shouldBe odd
       all(List(2, 4, 6)) shouldBe even
-      
+
       val list1 = List(1, 2, 3)
       val caught1 = intercept[TestFailedException] {
         all(list1) shouldBe (odd)
@@ -157,11 +157,11 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
 
     // SKIP-SCALATESTJS-START
     it("should work with symbol") {
-      
+
       emptyMock shouldBe 'empty
       isEmptyMock shouldBe 'empty
       all(List(emptyMock, isEmptyMock)) shouldBe 'empty
-      
+
       val list1 = List(noPredicateMock)
       val ex1 = intercept[TestFailedException] {
         all(list1) shouldBe 'empty
@@ -169,7 +169,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(ex1.message === Some(errorMessage(0, "NoPredicateMock has neither an empty nor an isEmpty method", thisLineNumber - 2, list1)))
       assert(ex1.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(ex1.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       val list2 = List(noPredicateMock)
       val ex2 = intercept[TestFailedException] {
         all(list2) shouldBe 'full
@@ -177,9 +177,9 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(ex2.message === Some(errorMessage(0, "NoPredicateMock has neither a full nor an isFull method", thisLineNumber - 2, list2)))
       assert(ex2.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(ex2.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(emptyMock, isEmptyMock)) shouldBe a ('empty)
-      
+
       val list3 = List(noPredicateMock)
       val ex3 = intercept[TestFailedException] {
         all(list3) shouldBe a ('empty)
@@ -189,7 +189,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(ex3.failedCodeLineNumber === Some(thisLineNumber - 4))
 
       all(List(emptyMock)) shouldBe an ('empty)
-      
+
       val list4 = List(noPredicateMock)
       val ex4 = intercept[TestFailedException] {
         all(list4) shouldBe an ('empty)
@@ -199,7 +199,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(ex4.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
     // SKIP-SCALATESTJS-END
-    
+
     it("should work with BePropertyMatcher") {
       case class MyFile(
         val name: String,
@@ -226,9 +226,9 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
 
       val book = new Book("A Tale of Two Cities", "Dickens", 1859, 45, true)
       val badBook = new Book("A Tale of Two Cities", "Dickens", 1859, 45, false)
-      
+
       all(List(book)) shouldBe goodRead
-      
+
       val list1 = List(badBook)
       val caught1 = intercept[TestFailedException] {
         all(list1) shouldBe goodRead
@@ -236,9 +236,9 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(caught1.message === Some(errorMessage(0, "Book(A Tale of Two Cities,Dickens,1859,45,false) was not goodRead", thisLineNumber - 2, list1)))
       assert(caught1.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(book)) shouldBe a (goodRead)
-      
+
       val list2 = List(badBook)
       val caught2 = intercept[TestFailedException] {
         all(list2) shouldBe a (goodRead)
@@ -246,9 +246,9 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(caught2.message === Some(errorMessage(0, "Book(A Tale of Two Cities,Dickens,1859,45,false) was not a goodRead", thisLineNumber - 2, list2)))
       assert(caught2.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-      
+
       all(List(book)) shouldBe an (goodRead)
-      
+
       val list3 = List(badBook)
       val caught3 = intercept[TestFailedException] {
         all(list3) shouldBe an (goodRead)
@@ -257,9 +257,9 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(caught3.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
-    
+
     it("should with +-") {
-      
+
       val sevenDotOh = 7.0
       val minusSevenDotOh = -7.0
       val sevenDotOhFloat = 7.0f
@@ -272,7 +272,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       val minusSevenShort: Short = -7
       val sevenByte: Byte = 7
       val minusSevenByte: Byte = -7
-      
+
       all(List(sevenDotOh)) shouldBe (7.1 +- 0.2)
       all(List(sevenDotOh)) shouldBe (6.9 +- 0.2)
       all(List(sevenDotOh)) shouldBe (7.0 +- 0.2)
@@ -523,7 +523,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       all(List(minusSevenByte)) shouldBe ((-7).toByte +- 2.toByte)
       all(List(minusSevenByte)) shouldBe ((-6).toByte +- 2.toByte)
       all(List(minusSevenByte)) shouldBe ((-5).toByte +- 2.toByte)
-      
+
       val list1 = List(sevenDotOh)
       val caught1 = intercept[TestFailedException] {
         all(list1) shouldBe (17.1 +- 0.2)
@@ -1068,7 +1068,7 @@ class ShouldBeShorthandForAllSpec extends FunSpec with EmptyMocks with BookPrope
       assert(caught1.failedCodeFileName === Some("ShouldBeShorthandForAllSpec.scala"))
       assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
     }
-    
+
   }
 
 }

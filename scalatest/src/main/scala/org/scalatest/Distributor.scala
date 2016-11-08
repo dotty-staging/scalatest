@@ -29,7 +29,7 @@ package org.scalatest
  * calls <code>super</code>'s <code>runNestedSuites</code> implementation, passing in <code>None</code> for the
  * <code>Distributor</code>.
  * </p>
- * 
+ *
  * <p>
  * Implementations of this trait must be thread safe.
  * </p>
@@ -37,7 +37,7 @@ package org.scalatest
  * @author Bill Venners
  */
 trait Distributor {
-  
+
   /**
    * Puts a <code>Suite</code> into the <code>Distributor</code>.
    *

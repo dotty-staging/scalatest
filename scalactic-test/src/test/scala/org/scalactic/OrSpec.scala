@@ -208,7 +208,7 @@ class OrSpec extends UnitSpec with Accumulation with TypeCheckedTripleEquals {
     Good(12).toSeq shouldEqual Seq(12)
     Good[Int].orBad(12).toSeq shouldEqual Seq.empty
   }
-// toArray, toBuffer, toIndexedSeq, toIterable, toIterator, toList, 
+// toArray, toBuffer, toIndexedSeq, toIterable, toIterator, toList,
 // toSeq, toStream, toTraversable, toVector
   it can "be used with toEither" in {
     Good(12).toEither shouldBe Right(12)

@@ -17,9 +17,9 @@ package org.scalatest.matchers
 import scala.reflect.ClassTag
 
 // T is the type of the object that has a property to verify with an instance of this trait, P is the type of that particular property
-// Since I should be able to pass 
+// Since I should be able to pass
 /**
- * Trait extended by matcher objects, which may appear after the word <code>have</code>, that can match against a 
+ * Trait extended by matcher objects, which may appear after the word <code>have</code>, that can match against a
  * property of the type specified by the <code>HavePropertyMatcher</code>'s second type parameter <code>P</code>.
  * <code>HavePropertyMatcher</code>'s first type parameter, <code>T</code>, specifies the type that declares the property. The match will succeed if and
  * only if the value of the property equals the specified value.
@@ -56,7 +56,7 @@ import scala.reflect.ClassTag
  * case class Book(val title: String, val author: String)
  *
  * trait CustomMatchers {
- * 
+ *
  *   def title(expectedValue: String) =
  *     new HavePropertyMatcher[Book, String] {
  *       def apply(book: Book) =
@@ -68,7 +68,7 @@ import scala.reflect.ClassTag
  *         )
  *     }
  *
- *   def author(expectedValue: String) = 
+ *   def author(expectedValue: String) =
  *     new HavePropertyMatcher[Book, String] {
  *       def apply(book: Book) =
  *         HavePropertyMatchResult(
@@ -80,11 +80,11 @@ import scala.reflect.ClassTag
  *     }
  * }
  * </pre>
- * 
+ *
  * <p>
  * Each time the <code>title</code> method is called, it returns a new <code>HavePropertyMatcher[Book, String]</code> that
  * can be used to match against the <code>title</code> property of the <code>Book</code> passed to its <code>apply</code>
- * method. Because the type parameter of these two <code>HavePropertyMatcher</code>s is <code>Book</code>, they 
+ * method. Because the type parameter of these two <code>HavePropertyMatcher</code>s is <code>Book</code>, they
  * can only be used with instances of that type. (The compiler will enforce this.) The match will succeed if the
  * <code>title</code> property equals the value passed as <code>expectedValue</code>.
  * If the match succeeds, the <code>matches</code> field of the returned <code>HavePropertyMatchResult</code> will be <code>true</code>.
@@ -96,13 +96,13 @@ import scala.reflect.ClassTag
  *
  * <pre class="stHighlight">
  * class ExampleSpec extends RefSpec with Matchers with CustomMatchers {
- * 
+ *
  *   describe("A book") {
- * 
+ *
  *     it("should have the correct title and author") {
- * 
+ *
  *       val book = Book("Moby Dick", "Melville")
- * 
+ *
  *       book should have (
  *         title ("Moby Dick"),
  *         author ("Melville")
@@ -185,14 +185,14 @@ object HavePropertyMatcher {
    * <pre class="stHighlight">
    *  case class Person(name: String)
    *  def name(expectedName: String) = {
-   *    HavePropertyMatcher { 
+   *    HavePropertyMatcher {
    *      (person: Person) =&gt; HavePropertyMatchResult(
    *        person.name == expectedName,
    *        "name",
    *        expectedName,
    *        person.name
-   *      ) 
-   *    } 
+   *      )
+   *    }
    * </pre>
    *
    * @author Bill Venners

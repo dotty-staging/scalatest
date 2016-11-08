@@ -29,7 +29,7 @@ package org.scalatest
  * and defines this convenience implementation of <code>java.util.Map.Entry</code>.
  * Here's how you use it:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * javaMap should contain (Entry(2, 3))
  * javaMap should contain oneOf (Entry(2, 3), Entry(3, 4))
@@ -53,7 +53,7 @@ case class Entry[K, V](key: K, value: V) extends java.util.Map.Entry[K, V] {
   /**
    * Returns the value corresponding to this entry.
    *
-   * @return the value corresponding to this entry 
+   * @return the value corresponding to this entry
    */
   def getValue: V = value
 
@@ -67,12 +67,12 @@ case class Entry[K, V](key: K, value: V) extends java.util.Map.Entry[K, V] {
   /**
    * Compares the specified object with this entry for equality.
    *
-   * @param other the object to be compared for equality with this map entry 
+   * @param other the object to be compared for equality with this map entry
    * @return true if the specified object is equal to this map entry
    */
   override def equals(other: Any): Boolean = {
     other match {
-      case that: java.util.Map.Entry[_, _] => 
+      case that: java.util.Map.Entry[_, _] =>
          (if (key == null) that.getKey == null else key == that.getKey) &&
          (if (value == null) that.getValue == null else value == that.getValue)
       case _ => false

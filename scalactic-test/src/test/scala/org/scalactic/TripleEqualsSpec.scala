@@ -130,14 +130,14 @@ class TripleEqualsSpec extends FunSpec with NonImplicitAssertions {
             class Fruit { override def equals(o: Any) = o.isInstanceOf[Fruit] }
             trait Crunchy
             class Apple extends Fruit with Crunchy
-  
+
             val fr: Fruit = new Apple
             val cr: Crunchy = new Apple
             val ap: Apple = new Apple
-  
+
             assert(1 === 1)
             assert(!(1 !== 1))
-  
+
             assert(ap === fr)
             assert(fr === ap)
             assert(ap === cr)
@@ -149,18 +149,18 @@ class TripleEqualsSpec extends FunSpec with NonImplicitAssertions {
             assert(super1 === super1)
             assert(super1 === sub1)
             assert(sub1 === super1)
-  
+
             // The rest should not compile
             // assert(1 === 1L)
             // assert(1L === 1)
             // assert(1 !== 1L)
             // assert(1L !== 1)
-  
+
             // assert("1" === 1)
             // assert(1 === "1")
             // assert("1" !== 1)
             // assert(1 !== "1")
-  
+
             // assert(fr === cr)
             // assert(cr === fr)
           }
@@ -512,7 +512,7 @@ class TripleEqualsSpec extends FunSpec with NonImplicitAssertions {
           assert(!(1L !== 1))
 
           // Should work sensibly with nulls
-          assert(!(super1 === null)) 
+          assert(!(super1 === null))
           assert(super1 !== null)
 
           assert(nullSuper === null)
@@ -687,19 +687,19 @@ class TripleEqualsSpec extends FunSpec with NonImplicitAssertions {
 */
     }
   }
-  
+
   describe("TripleEqualsInvocation ") {
-    
+
     import TripleEqualsSupport.TripleEqualsInvocation
-    
+
     it("should have pretty toString") {
       val result1 = new TripleEqualsInvocation("Bob", true)
       assert(result1.toString == "=== \"Bob\"")
-      
+
       val result2 = new TripleEqualsInvocation("Bob", false)
       assert(result2.toString == "!== \"Bob\"")
     }
-    
+
   }
 }
 

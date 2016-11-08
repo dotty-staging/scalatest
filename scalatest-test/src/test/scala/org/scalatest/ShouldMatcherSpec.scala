@@ -201,7 +201,7 @@ class ShouldMatcherSpec extends FunSpec {
       it("should do nothing when equal") {
         1 should be (1)
         val option = Some(1)
-        option should be (Some(1)) 
+        option should be (Some(1))
       }
 
       it("should throw an assertion error when not equal") {
@@ -347,7 +347,7 @@ class ShouldMatcherSpec extends FunSpec {
   }
 
   describe("The contain word") {
- 
+
     it("should work with a set, list, array, and map right after a 'should'") {
 
       val set = Set(1, 2, 3)

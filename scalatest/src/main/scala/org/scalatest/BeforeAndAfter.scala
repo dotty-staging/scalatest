@@ -28,7 +28,7 @@ import org.scalactic.source
  * or end of tests. <em>Note: For more insight into where <code>BeforeAndAfter</code> fits into the big picture, see the </em>
  * <a href="FlatSpec.html#sharedFixtures">Shared fixtures</a> section in the documentation for your chosen style trait.</em>
  * </td></tr></table>
- * 
+ *
  * <p>
  * A test <em>fixture</em> is composed of the objects and other artifacts (files, sockets, database
  * connections, <em>etc.</em>) tests use to do their work.
@@ -46,31 +46,31 @@ import org.scalactic.source
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.beforeandafter
- * 
+ *
  * import org.scalatest._
  * import collection.mutable.ListBuffer
- * 
+ *
  * class ExampleSpec extends FlatSpec with BeforeAndAfter {
- * 
+ *
  *   val builder = new StringBuilder
  *   val buffer = new ListBuffer[String]
- * 
+ *
  *   before {
  *     builder.append("ScalaTest is ")
  *   }
- * 
+ *
  *   after {
  *     builder.clear()
  *     buffer.clear()
  *   }
- * 
+ *
  *   "Testing" should "be easy" in {
  *     builder.append("easy!")
  *     assert(builder.toString === "ScalaTest is easy!")
  *     assert(buffer.isEmpty)
  *     buffer += "sweet"
  *   }
- * 
+ *
  *   it should "be fun" in {
  *     builder.append("fun!")
  *     assert(builder.toString === "ScalaTest is fun!")
@@ -97,13 +97,13 @@ import org.scalactic.source
  *
  * <p>
  * Although <code>BeforeAndAfter</code> provides a minimal-boilerplate way to execute code before and after tests, it isn't designed to enable stackable
- * traits, because the order of execution would be non-obvious.  If you want to factor out before and after code that is common to multiple test suites, you 
+ * traits, because the order of execution would be non-obvious.  If you want to factor out before and after code that is common to multiple test suites, you
  * should use trait <a href="BeforeAndAfterEach.html"><code>BeforeAndAfterEach</code></a> instead.
  * </p>
  *
  * <p>
- * The advantage this trait has over <code>BeforeAndAfterEach</code> is that its syntax is more concise. 
- * The main disadvantage is that it is not stackable, whereas <code>BeforeAndAfterEach</code> is. <em>I.e.</em>, 
+ * The advantage this trait has over <code>BeforeAndAfterEach</code> is that its syntax is more concise.
+ * The main disadvantage is that it is not stackable, whereas <code>BeforeAndAfterEach</code> is. <em>I.e.</em>,
  * you can write several traits that extend <code>BeforeAndAfterEach</code> and provide <code>beforeEach</code> methods
  * that include a call to <code>super.beforeEach</code>, and mix them together in various combinations. By contrast,
  * only one call to the <code>before</code> registration function is allowed in a suite or spec that mixes
@@ -172,7 +172,7 @@ trait BeforeAndAfter extends SuiteMixin { this: Suite =>
    * after running each test. It runs each test by invoking <code>super.runTest</code>, passing along
    * the five parameters passed to it.
    * </p>
-   * 
+   *
    * <p>
    * If any invocation of the function registered with <code>before</code> completes abruptly with an exception, this
    * method will complete abruptly with the same exception. If any call to

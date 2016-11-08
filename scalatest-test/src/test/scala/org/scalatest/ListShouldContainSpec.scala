@@ -336,7 +336,7 @@ class ListShouldContainSpec extends FunSpec {
         e.failedCodeLineNumber.get should be (thisLineNumber - 4)
       }
     }
-    
+
     describe("when used with shouldNot contain value syntax") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {
@@ -408,7 +408,7 @@ class ListShouldContainSpec extends FunSpec {
         e.failedCodeLineNumber.get should be (thisLineNumber - 4)
       }
     }
-    
+
     describe("when used with shouldNot (contain (value)) syntax") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {
@@ -791,7 +791,7 @@ class ListShouldContainSpec extends FunSpec {
           "in " + decorateToStringValue(prettifier, hiNullLists)))
       }
     }
-    
+
     describe("when used with shouldNot contain value syntax") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {

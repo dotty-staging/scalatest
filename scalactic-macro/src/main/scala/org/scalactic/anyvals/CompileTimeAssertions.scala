@@ -49,7 +49,7 @@ import reflect.macros.Context
  * you can avoid boxing the <code>Int</code>, which may be more efficient.
  * This might look like:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * final class OddInt private (val value: Int) extends AnyVal {
  *   override def toString: String = s"OddInt($value)"
@@ -142,11 +142,11 @@ import reflect.macros.Context
  *           "OddInt(3). Please use OddInt.from instead."
  *
  *     // Validate via a compile-time assertion
- *     ensureValidIntLiteral(c)(value, notValidMsg, notLiteralMsg)(isValid) 
+ *     ensureValidIntLiteral(c)(value, notValidMsg, notLiteralMsg)(isValid)
  *
  *     // Validated, so rewrite the apply call to a from call
  *     c.universe.reify { OddInt.from(value.splice).get }
- *   } 
+ *   }
  * }
  * </pre>
  *
@@ -204,8 +204,8 @@ trait CompileTimeAssertions {
           c.abort(c.enclosingPosition, notValidMsg)
       case _ =>
         c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+    }
+  }
 
   /**
    * Ensures a given expression of type <code>Long</code> is a literal with a valid value according to a given validation function.
@@ -240,8 +240,8 @@ trait CompileTimeAssertions {
           c.abort(c.enclosingPosition, notValidMsg)
       case _ =>
         c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+    }
+  }
 
   /**
    * Ensures a given expression of type <code>Float</code> is a literal with a valid value according to a given validation function.
@@ -276,8 +276,8 @@ trait CompileTimeAssertions {
           c.abort(c.enclosingPosition, notValidMsg)
       case _ =>
         c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+    }
+  }
 
   /**
    * Ensures a given expression of type <code>Double</code> is a literal with a valid value according to a given validation function.
@@ -312,8 +312,8 @@ trait CompileTimeAssertions {
           c.abort(c.enclosingPosition, notValidMsg)
       case _ =>
         c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+    }
+  }
 
   /**
    * Ensures a given expression of type <code>String</code> is a literal with a valid value according to a given validation function.
@@ -348,8 +348,8 @@ trait CompileTimeAssertions {
           c.abort(c.enclosingPosition, notValidMsg)
       case _ =>
         c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+    }
+  }
 
   /**
    * Ensures a given expression of type <code>Char</code> is a literal with a valid value according to a given validation function.
@@ -384,12 +384,12 @@ trait CompileTimeAssertions {
           c.abort(c.enclosingPosition, notValidMsg)
       case _ =>
         c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+    }
+  }
 }
 
 /**
- * Companion object that facilitates the importing of <code>CompileTimeAssertions</code> members as 
+ * Companion object that facilitates the importing of <code>CompileTimeAssertions</code> members as
  * an alternative to mixing in the trait.
- */ 
+ */
 object CompileTimeAssertions extends CompileTimeAssertions

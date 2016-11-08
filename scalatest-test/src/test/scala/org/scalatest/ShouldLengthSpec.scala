@@ -328,7 +328,7 @@ class ShouldLengthSpec extends FunSpec with Checkers with ReturnsNormallyThrowsA
 
       it("should do nothing when list length doesn't match and used in a logical-and expression with not") {
         List(1, 2) should { not { have length (5) } and not { have length (3) }}
-        List(1, 2) should { not have length (5) and (not have length (3)) }  
+        List(1, 2) should { not have length (5) and (not have length (3)) }
       }
 
       it("should do nothing when list length doesn't match and used in a logical-or expression with not") {
@@ -438,7 +438,7 @@ class ShouldLengthSpec extends FunSpec with Checkers with ReturnsNormallyThrowsA
       val javaList: java.util.List[Int] = new java.util.ArrayList
       javaList.add(1)
       javaList.add(2)
-      
+
       it("should do nothing if list length matches specified length") {
         javaList should have length (2)
         // check((lst: java.util.List[Int]) => returnsNormally(lst should have length (lst.length)))
@@ -563,13 +563,13 @@ class ShouldLengthSpec extends FunSpec with Checkers with ReturnsNormallyThrowsA
     // I repeat these with copy and paste, becuase I need to test that each static structural type works, and
     // that makes it hard to pass them to a common "behaves like" method
     describe("on an arbitrary object that has an empty-paren Int length method") {
-  
+
       class Lengthy(len: Int) {
         def length(): Int = len
         override def toString = "lengthy"
       }
       val obj = new Lengthy(2)
-  
+
       implicit val lengthOfLengthy =
         new Length[Lengthy] {
           def lengthOf(o: Lengthy): Long = o.length()
@@ -579,34 +579,34 @@ class ShouldLengthSpec extends FunSpec with Checkers with ReturnsNormallyThrowsA
         obj should have length (2)
         check((len: Int) => returnsNormally(new Lengthy(len) should have length (len)))
       }
-  
+
       it("should do nothing if object length does not match and used with should not") {
         obj should not { have length (3) }
         obj should not have length (3)
         check((len: Int, wrongLen: Int) => len != wrongLen ==> returnsNormally(new Lengthy(len) should not { have length (wrongLen) }))
         check((len: Int, wrongLen: Int) => len != wrongLen ==> returnsNormally(new Lengthy(len) should not have length (wrongLen)))
       }
-  
+
       it("should do nothing when object length matches and used in a logical-and expression") {
         obj should { have length (2) and (have length (3 - 1)) }
         obj should (have length (2) and have length (3 - 1))
       }
-  
+
       it("should do nothing when object length matches and used in a logical-or expression") {
         obj should { have length (77) or (have length (3 - 1)) }
         obj should (have length (77) or have length (3 - 1))
       }
-  
+
       it("should do nothing when object length doesn't match and used in a logical-and expression with not") {
         obj should { not { have length (5) } and not { have length (3) }}
         obj should (not have length (5) and not have length (3))
       }
-  
+
       it("should do nothing when object length doesn't match and used in a logical-or expression with not") {
         obj should { not { have length (2) } or not { have length (3) }}
         obj should (not have length (2) or not have length (3))
       }
-  
+
       it("should throw TestFailedException if object length does not match specified length") {
         val caught1 = intercept[TestFailedException] {
           obj should have length (3)
@@ -614,7 +614,7 @@ class ShouldLengthSpec extends FunSpec with Checkers with ReturnsNormallyThrowsA
         assert(caught1.getMessage === FailureMessages.hadLengthInsteadOfExpectedLength(prettifier, UnquotedString("lengthy"), 2, 3))
         check((len: Int) => throwsTestFailedException(new Lengthy(len) should have length (len + 1)))
       }
-  
+
       it("should throw TestFailedException with normal error message if specified length is negative") {
         val caught1 = intercept[TestFailedException] {
           obj should have length (-2)
@@ -622,7 +622,7 @@ class ShouldLengthSpec extends FunSpec with Checkers with ReturnsNormallyThrowsA
         assert(caught1.getMessage === FailureMessages.hadLengthInsteadOfExpectedLength(prettifier, UnquotedString("lengthy"), 2, -2))
         check((len: Int) => throwsTestFailedException(new Lengthy(len) should have length (if ((len == 0) || (len == MIN_VALUE)) -1 else -len)))
       }
-  
+
       it("should throw an assertion error when object length doesn't match and used in a logical-and expression") {
 
         val caught1 = intercept[TestFailedException] {
@@ -640,7 +640,7 @@ class ShouldLengthSpec extends FunSpec with Checkers with ReturnsNormallyThrowsA
         }
         assert(caught3.getMessage === FailureMessages.hadLengthInsteadOfExpectedLength(prettifier, UnquotedString("lengthy"), 2, 5))
       }
-  
+
       it("should throw an assertion error when object length doesn't match and used in a logical-or expression") {
 
         val caught1 = intercept[TestFailedException] {
@@ -658,7 +658,7 @@ class ShouldLengthSpec extends FunSpec with Checkers with ReturnsNormallyThrowsA
         }
         assert(caught3.getMessage === FailureMessages.commaAnd(prettifier, UnquotedString(FailureMessages.hadLengthInsteadOfExpectedLength(prettifier, UnquotedString("lengthy"), 2, 55)), UnquotedString(FailureMessages.hadLengthInsteadOfExpectedLength(prettifier, UnquotedString("lengthy"), 2, 22))))
       }
-  
+
       it("should throw an assertion error when object length matches and used in a logical-and expression with not") {
 
         val caught1 = intercept[TestFailedException] {
@@ -676,7 +676,7 @@ class ShouldLengthSpec extends FunSpec with Checkers with ReturnsNormallyThrowsA
         }
         assert(caught3.getMessage === FailureMessages.commaBut(prettifier, UnquotedString(FailureMessages.hadLengthInsteadOfExpectedLength(prettifier, UnquotedString("lengthy"), 2, 3)), UnquotedString(FailureMessages.hadLength(prettifier, UnquotedString("lengthy"), 2))))
       }
-  
+
       it("should throw an assertion error when object length matches and used in a logical-or expression with not") {
 
         val caught1 = intercept[TestFailedException] {
@@ -2206,7 +2206,7 @@ class ShouldLengthSpec extends FunSpec with Checkers with ReturnsNormallyThrowsA
 
       class Lengthy(len: Int) {
         def length: Int = len
-        def size: Int = len  
+        def size: Int = len
         override def toString = "lengthy"
       }
       val obj = new Lengthy(2)

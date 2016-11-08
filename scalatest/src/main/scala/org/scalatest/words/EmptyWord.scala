@@ -23,10 +23,10 @@ package org.scalatest.words
  * @author Chee Seng
  */
 final class EmptyWord {
-  
+
   /**
    * Overrides toString to return "empty"
    */
   override def toString: String = "empty"
-  
+
 }

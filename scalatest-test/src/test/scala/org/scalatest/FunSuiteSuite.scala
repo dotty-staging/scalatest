@@ -24,7 +24,7 @@ import org.scalatest.refspec.RefSpec
 class YeOldeFunSuiteSpec extends RefSpec {
 
   def `test that test methods with no tags dont show up in tags map` = {
-    
+
     val a = new FunSuite {
       test("test not in a group") {}
     }
@@ -67,7 +67,7 @@ class YeOldeFunSuiteSpec extends RefSpec {
       }
     }
   }
-  
+
   def `test that if you call test after execute you get an test failed exception and the test doesnt run` = {
     class MySuite extends FunSuite {
       var fromMethodTestExecuted = false
@@ -91,7 +91,7 @@ class YeOldeFunSuiteSpec extends RefSpec {
     a.execute()
     assert(!a.fromMethodTestExecuted)
   }
-  
+
   def `test that info inside a test method gets out the door` = {
     val msg = "hi there, dude"
     class MySuite extends FunSuite {
@@ -109,7 +109,7 @@ class YeOldeFunSuiteSpec extends RefSpec {
     val ip = recordedEvents(0).asInstanceOf[InfoProvided]
     assert(ip.message === msg)
   }
-  
+
   def `test that info in the constructor gets out the door` = {
     class MyReporter extends Reporter {
       var infoProvidedReceived = false
@@ -217,7 +217,7 @@ class YeOldeFunSuiteSpec extends RefSpec {
   }
 
   def callingTestFromWithinATestWithTagsClauseResultsInATestFailedErrorAtRuntime(): Unit = {
-    
+
     var testFailedAsExpected = false
     class MyReporter extends Reporter {
       def apply(event: Event): Unit = {
@@ -271,7 +271,7 @@ class YeOldeFunSuiteSpec extends RefSpec {
   }
 
   def callingIgnoreWithTagsFromWithinATestClauseResultsInATestFailedErrorAtRuntime(): Unit = {
-    
+
     var testFailedAsExpected = false
     class MyReporter extends Reporter {
       def apply(event: Event): Unit = {

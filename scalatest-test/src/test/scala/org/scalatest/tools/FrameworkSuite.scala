@@ -41,7 +41,7 @@ class FrameworkSuite extends FunSuite {
     private var ignoredEvents = List[Event]()
     private var pendingEvents = List[Event]()
     private var canceledEvents = List[Event]()
-    
+
     override def handle(event: Event): Unit = {
       event.status match {
         case Status.Success => successEvents ::= event
@@ -53,7 +53,7 @@ class FrameworkSuite extends FunSuite {
         case Status.Canceled => canceledEvents ::= event
       }
     }
-    
+
     def errorEventsReceived = errorEvents.reverse
     def failureEventsReceived = failureEvents.reverse
     def skippedEventsReceived = skippedEvents.reverse
@@ -62,15 +62,15 @@ class FrameworkSuite extends FunSuite {
     def pendingEventsReceived = pendingEvents.reverse
     def canceledEventsReceived = canceledEvents.reverse
   }
-  
+
   class TestLogger extends Logger {
-    
+
     private var errorList = List[String]()
     private var warnList = List[String]()
     private var infoList = List[String]()
     private var debugList = List[String]()
     private var traceList = List[Throwable]()
-    
+
     def ansiCodesSupported = false
     def error(msg: String): Unit = {
       errorList ::= msg
@@ -87,7 +87,7 @@ class FrameworkSuite extends FunSuite {
     def trace(t: Throwable): Unit = {
       traceList ::= t
     }
-    
+
     def errorReceived = errorList.reverse
     def warnReceived = warnList.reverse
     def infoReceived = infoList.reverse
@@ -98,7 +98,7 @@ class FrameworkSuite extends FunSuite {
   test("framework name") {
     assert(new Framework().name === "ScalaTest")
   }
-  
+
   test("fingerprints contains 2 test fingerprints, they are SubclassFingerprint for org.scalatest.Suite and AnnotatedFingerprint for org.scalatest.WrapWith") {
     val framework = new Framework
     val fingerprints = framework.fingerprints
@@ -109,33 +109,33 @@ class FrameworkSuite extends FunSuite {
     assert(testFingerprint.isModule === false)
     assert(testFingerprint.superclassName === "org.scalatest.Suite")
     assert(testFingerprint.requireNoArgConstructor === true)
-    
-    val annotatedFingerprint = 
+
+    val annotatedFingerprint =
       fingerprints(1).asInstanceOf[sbt.testing.AnnotatedFingerprint]
     assert(annotatedFingerprint.isModule === false)
     assert(annotatedFingerprint.annotationName === "org.scalatest.WrapWith")
   }
-  
+
   val testClassLoader = getClass.getClassLoader
   val subClassFingerprint = new sbt.testing.SubclassFingerprint {
                               def superclassName = "org.scalatest.Suite"
                               def isModule = false
                               def requireNoArgConstructor = true
                             }
-  
+
   val framework = new Framework
-  val subclassFingerprint = 
+  val subclassFingerprint =
     new SubclassFingerprint {
       def superclassName = "org.scalatest.Suite"
       def isModule = false
       def requireNoArgConstructor = true
     }
-  val annotatedFingerprint = 
+  val annotatedFingerprint =
     new AnnotatedFingerprint {
       def annotationName = "org.scalatest.WrapWith"
       def isModule = false
     }
-  
+
   def assertSuiteSuccessEvent(event: Event, suiteClassName: String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Success === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -144,13 +144,13 @@ class FrameworkSuite extends FunSuite {
     assert(!event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case testSelector: TestSelector => 
+      case testSelector: TestSelector =>
         assert(testName === testSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get TestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertNestedSuiteSuccessEvent(event: Event, suiteClassName: String, suiteId:String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Success === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -159,14 +159,14 @@ class FrameworkSuite extends FunSuite {
     assert(!event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case nestedTestSelector: NestedTestSelector => 
+      case nestedTestSelector: NestedTestSelector =>
         assert(suiteId === nestedTestSelector.suiteId)
         assert(testName === nestedTestSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get NestedTestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertSuiteFailureEvent(event: Event, suiteClassName: String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Failure === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -175,13 +175,13 @@ class FrameworkSuite extends FunSuite {
     assert(event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case testSelector: TestSelector => 
+      case testSelector: TestSelector =>
         assert(testName === testSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get TestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertNestedSuiteFailureEvent(event: Event, suiteClassName: String, suiteId:String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Failure === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -190,14 +190,14 @@ class FrameworkSuite extends FunSuite {
     assert(event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case nestedTestSelector: NestedTestSelector => 
+      case nestedTestSelector: NestedTestSelector =>
         assert(suiteId === nestedTestSelector.suiteId)
         assert(testName === nestedTestSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get NestedTestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertSuiteErrorEvent(event: Event, suiteClassName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Error === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -206,13 +206,13 @@ class FrameworkSuite extends FunSuite {
     assert(event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case suiteSelector: SuiteSelector => 
+      case suiteSelector: SuiteSelector =>
         // Nothing more to check, just make sure it is SuiteSelector.
-      case _ => 
+      case _ =>
         fail("Expected to get TestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertNestedSuiteErrorEvent(event: Event, suiteClassName: String, suiteId:String, fingerprint: Fingerprint): Unit = {
     assert(Status.Error === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -221,13 +221,13 @@ class FrameworkSuite extends FunSuite {
     assert(event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case nestedSuiteSelector: NestedSuiteSelector => 
+      case nestedSuiteSelector: NestedSuiteSelector =>
         assert(suiteId === nestedSuiteSelector.suiteId)
-      case _ => 
+      case _ =>
         fail("Expected to get NestedTestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertSuiteSkippedEvent(event: Event, suiteClassName: String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Skipped === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -236,13 +236,13 @@ class FrameworkSuite extends FunSuite {
     assert(!event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case testSelector: TestSelector => 
+      case testSelector: TestSelector =>
         assert(testName === testSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get TestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertSuiteIgnoredEvent(event: Event, suiteClassName: String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Ignored === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -251,13 +251,13 @@ class FrameworkSuite extends FunSuite {
     assert(!event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case testSelector: TestSelector => 
+      case testSelector: TestSelector =>
         assert(testName === testSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get TestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertSuitePendingEvent(event: Event, suiteClassName: String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Pending === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -266,13 +266,13 @@ class FrameworkSuite extends FunSuite {
     assert(!event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case testSelector: TestSelector => 
+      case testSelector: TestSelector =>
         assert(testName === testSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get TestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertSuiteCanceledEvent(event: Event, suiteClassName: String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Canceled === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -281,13 +281,13 @@ class FrameworkSuite extends FunSuite {
     assert(!event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case testSelector: TestSelector => 
+      case testSelector: TestSelector =>
         assert(testName === testSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get TestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertNestedSuiteSkippedEvent(event: Event, suiteClassName: String, suiteId:String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Skipped === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -296,14 +296,14 @@ class FrameworkSuite extends FunSuite {
     assert(!event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case nestedTestSelector: NestedTestSelector => 
+      case nestedTestSelector: NestedTestSelector =>
         assert(suiteId === nestedTestSelector.suiteId)
         assert(testName === nestedTestSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get NestedTestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertNestedSuiteIgnoredEvent(event: Event, suiteClassName: String, suiteId:String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Ignored === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -312,14 +312,14 @@ class FrameworkSuite extends FunSuite {
     assert(!event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case nestedTestSelector: NestedTestSelector => 
+      case nestedTestSelector: NestedTestSelector =>
         assert(suiteId === nestedTestSelector.suiteId)
         assert(testName === nestedTestSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get NestedTestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertNestedSuitePendingEvent(event: Event, suiteClassName: String, suiteId:String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Pending === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -328,14 +328,14 @@ class FrameworkSuite extends FunSuite {
     assert(!event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case nestedTestSelector: NestedTestSelector => 
+      case nestedTestSelector: NestedTestSelector =>
         assert(suiteId === nestedTestSelector.suiteId)
         assert(testName === nestedTestSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get NestedTestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   def assertNestedSuiteCanceledEvent(event: Event, suiteClassName: String, suiteId:String, testName: String, fingerprint: Fingerprint): Unit = {
     assert(Status.Canceled === event.status)
     assert(suiteClassName === event.fullyQualifiedName)
@@ -344,19 +344,19 @@ class FrameworkSuite extends FunSuite {
     assert(!event.throwable.isDefined)
     val selector = event.selector
     selector match {
-      case nestedTestSelector: NestedTestSelector => 
+      case nestedTestSelector: NestedTestSelector =>
         assert(suiteId === nestedTestSelector.suiteId)
         assert(testName === nestedTestSelector.testName)
-      case _ => 
+      case _ =>
         fail("Expected to get NestedTestSelector, but got: " + selector.getClass.getName)
     }
   }
-  
+
   test("ScalaTestRunner.task should return task that run whole suite when fullyQualifiedName = valid class name, explicitlySpecified = false and selectors = Array(SuiteSelector)") {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
       val testEventHandler = new TestEventHandler
-    
+
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new SuiteSelector))))
       assert(tasks.size === 1)
       val task = tasks(0)
@@ -380,7 +380,7 @@ class FrameworkSuite extends FunSuite {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
       val testEventHandler = new TestEventHandler
-    
+
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.DoNotDiscoverSuite", subclassFingerprint, false, Array(new SuiteSelector))))
       assert(tasks.size === 0)
     }
@@ -388,7 +388,7 @@ class FrameworkSuite extends FunSuite {
       runner.done()
     }
   }
-  
+
   test("When suite is neither subclass of org.scalatest.Suite or annotated with WrapWith and explicitlySpecified is true, IllegalArgumentException will be thrown when task executes") {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
@@ -403,7 +403,7 @@ class FrameworkSuite extends FunSuite {
       runner.done()
     }
   }
-  
+
   test("When suite is neither subclass of org.scalatest.Suite or annotated with WrapWith and explicitlySpecified is false, no task will be returned") {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
@@ -430,12 +430,12 @@ class FrameworkSuite extends FunSuite {
       runner.done()
     }
   }
-  
+
   test("Nested suites will be executed in task(fullyQualifiedName: String, fingerprint: Fingerprint), no nested task will be returned") {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
       val testEventHandler = new TestEventHandler
-    
+
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SuiteWithNestedSuites", subclassFingerprint, false, Array(new SuiteSelector))))
       assert(tasks.size === 1)
       val task = tasks(0)
@@ -460,12 +460,12 @@ class FrameworkSuite extends FunSuite {
       runner.done()
     }
   }
-  
+
   test("Ignore, pending, failed, canceled, suite aborted events should be translated and reported correctly for the suite and its nested suites") {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
       val testEventHandler = new TestEventHandler
-    
+
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SuiteWithFailedSkippedTests", subclassFingerprint, false, Array(new SuiteSelector))))
       assert(tasks.size === 1)
       val task = tasks(0)
@@ -518,7 +518,7 @@ class FrameworkSuite extends FunSuite {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
       val testEventHandler = new TestEventHandler
-    
+
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new SuiteSelector()))))
       val task = tasks(0)
       task.execute(testEventHandler, Array(new TestLogger))
@@ -534,7 +534,7 @@ class FrameworkSuite extends FunSuite {
       runner.done()
     }
   }
-  
+
   test("SuiteSelector should select and run test(s) in selected suite when it is explicitly specified, even when the selected suite is annotated with @DoNotDiscover") {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
@@ -560,7 +560,7 @@ class FrameworkSuite extends FunSuite {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
       val testEventHandler = new TestEventHandler
-      val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new TestSelector("test 1"), new TestSelector("test 3"))), 
+      val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new TestSelector("test 1"), new TestSelector("test 3"))),
                                      new TaskDef("org.scalatest.tools.scalasbt.SuiteWithNestedSuites", subclassFingerprint, false, Array(new TestSelector("test 2")))))
       assert(tasks.size === 2)
       val task = tasks(0)
@@ -572,7 +572,7 @@ class FrameworkSuite extends FunSuite {
       assert(testEventHandler.errorEventsReceived.length === 0)
       assert(testEventHandler.failureEventsReceived.length === 0)
       assert(testEventHandler.skippedEventsReceived.length === 0)
-    
+
       val testEventHandler2 = new TestEventHandler
       val task2 = tasks(1)
       val task2NestedSuites = task2.execute(testEventHandler2, Array(new TestLogger))
@@ -689,18 +689,18 @@ class FrameworkSuite extends FunSuite {
       runner.done()
     }
   }
-  
+
   test("NestedSuiteSelector should select and run test(s) in selected nested suite when it is explicitly specified, even if the selected nested suite is annotated with @DoNotDiscover") {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
       val testEventHandler = new TestEventHandler
-    
+
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SuiteWithNestedSuites", subclassFingerprint, true, Array(new NestedSuiteSelector("nested 1")))))
       assert(tasks.size == 1)
       val task = tasks(0)
       val nestedTasks = task.execute(testEventHandler, Array(new TestLogger))
       assert(nestedTasks.size == 0)
-    
+
       val successEvents = testEventHandler.successEventsReceived
       assert(successEvents.length == 3)
       assertNestedSuiteSuccessEvent(successEvents(0), "org.scalatest.tools.scalasbt.SuiteWithNestedSuites", "nested 1", "nested 1 test 1", subclassFingerprint)
@@ -720,13 +720,13 @@ class FrameworkSuite extends FunSuite {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
       val testEventHandler = new TestEventHandler
-    
+
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SuiteWithNestedSuites", subclassFingerprint, false, Array(new NestedSuiteSelector("nested 1")))))
       assert(tasks.size === 1)
       val task = tasks(0)
       val nestedTasks = task.execute(testEventHandler, Array(new TestLogger))
       assert(nestedTasks.size === 0)
-    
+
       val successEvents = testEventHandler.successEventsReceived
       assert(successEvents.length === 3)
       assertNestedSuiteSuccessEvent(successEvents(0), "org.scalatest.tools.scalasbt.SuiteWithNestedSuites", "nested 1", "nested 1 test 1", subclassFingerprint)
@@ -744,10 +744,10 @@ class FrameworkSuite extends FunSuite {
 
   test("NestedTestSelector should select and run selected test(s) in selected nested suite when it is explicitly specified, even if the selected nested suite is annotated with @DoNotDiscover") {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
-    
+
     try {
       val testEventHandler = new TestEventHandler
-    
+
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SuiteWithNestedSuites", subclassFingerprint, false, Array(new NestedTestSelector("nested 1", "nested 1 test 1"), new NestedTestSelector("nested 2", "nested 2 test 3")))))
       assert(tasks.size == 1)
       val task = tasks(0)
@@ -772,7 +772,7 @@ class FrameworkSuite extends FunSuite {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
     try {
       val testEventHandler = new TestEventHandler
-    
+
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SuiteWithNestedSuites", subclassFingerprint, false, Array(new NestedTestSelector("nested 1", "nested 1 test 1"), new NestedTestSelector("nested 2", "nested 2 test 3")))))
       assert(tasks.size === 1)
       val task = tasks(0)
@@ -795,7 +795,7 @@ class FrameworkSuite extends FunSuite {
 
   test("ScalaTestRunner should return summary when 'done' is called, and throw IllegalStateException if 'done' method is called twice.") {
     val runner = framework.runner(Array("-oW"), Array.empty, testClassLoader)
-    
+
     try {
       val testLogger = new TestLogger
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new SuiteSelector()))))
@@ -825,7 +825,7 @@ class FrameworkSuite extends FunSuite {
 
   test("ScalaTestRunner using -oWI should return summary that contains failed and canceled test reminder when 'done' is called") {
     val runner = framework.runner(Array("-oWI"), Array.empty, testClassLoader)
-    
+
     try {
       val testLogger = new TestLogger
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SuiteWithFailedCanceledTests", subclassFingerprint, false, Array(new SuiteSelector()))))
@@ -860,7 +860,7 @@ class FrameworkSuite extends FunSuite {
 
   test("ScalaTestRunner using -oWIK should return summary that contains failed test reminder only (without canceled test) when 'done' is called") {
     val runner = framework.runner(Array("-oWIK"), Array.empty, testClassLoader)
-    
+
     try {
       val testLogger = new TestLogger
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SuiteWithFailedCanceledTests", subclassFingerprint, false, Array(new SuiteSelector()))))
@@ -904,7 +904,7 @@ class FrameworkSuite extends FunSuite {
       runner.done()
     }
   }
-  
+
   test("ScalaTest Task's tags method should return 'network' when suite class is annotated with @Network") {
     val runner = framework.runner(Array("-oW"), Array.empty, testClassLoader)
     try {
@@ -952,26 +952,26 @@ class FrameworkSuite extends FunSuite {
       runner.done()
     }
   }
-  
+
   test("ScalaTest Task's taskDef method should return TaskDef that defines the task") {
     val runner = framework.runner(Array.empty, Array.empty, testClassLoader)
-    
+
     try {
       val testEventHandler = new TestEventHandler
       val suiteSelector = new SuiteSelector();
-      val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array.empty), 
-                                   new TaskDef("org.scalatest.tools.scalasbt.DoNotDiscoverSuite", subclassFingerprint, false, Array(suiteSelector)), 
+      val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array.empty),
+                                   new TaskDef("org.scalatest.tools.scalasbt.DoNotDiscoverSuite", subclassFingerprint, false, Array(suiteSelector)),
                                    new TaskDef("org.scalatest.tools.scalasbt.DoNotDiscoverSuite", subclassFingerprint, true, Array(suiteSelector))))
-                                   
+
       assert(tasks.length === 2)
-    
+
       val task1 = tasks(0)
       val taskDef1 = task1.taskDef
       assert(taskDef1.fullyQualifiedName === "org.scalatest.tools.scalasbt.SampleSuite")
       assert(taskDef1.fingerprint === subclassFingerprint)
       assert(taskDef1.explicitlySpecified === false)
       assert(taskDef1.selectors.length === 0)
-    
+
       val task2 = tasks(1)
       val taskDef2 = task2.taskDef
       assert(taskDef2.fullyQualifiedName === "org.scalatest.tools.scalasbt.DoNotDiscoverSuite")
@@ -988,10 +988,10 @@ class FrameworkSuite extends FunSuite {
 
   test("-l argument can be used to exclude test") {
     val runner = framework.runner(Array("-l", "org.scalatest.tools.scalasbt.SampleSuite.SlowTest"), Array.empty, testClassLoader)
-    
+
     try {
       val testEventHandler = new TestEventHandler
-    
+
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new SuiteSelector))))
       assert(tasks.size === 1)
       val task = tasks(0)
@@ -1008,12 +1008,12 @@ class FrameworkSuite extends FunSuite {
       runner.done()
     }
   }
-  
+
   test("-n argument can be used to include test") {
     val runner = framework.runner(Array("-n", "org.scalatest.tools.scalasbt.SampleSuite.SlowTest"), Array.empty, testClassLoader)
     try {
       val testEventHandler = new TestEventHandler
-    
+
       val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new SuiteSelector))))
       assert(tasks.size === 1)
       val task = tasks(0)
@@ -1029,13 +1029,13 @@ class FrameworkSuite extends FunSuite {
       runner.done()
     }
   }
-  
+
   test("-w should execute suites that match the specified package and its sub packages") {
     val runner = framework.runner(Array("-w", "org.scalatest.tools"), Array.empty, testClassLoader)
     try {
       val testEventHandler = new TestEventHandler
-      val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new SuiteSelector)), 
-                                     new TaskDef("org.scalatest.tools.FrameworkSuite", subclassFingerprint, false, Array(new SuiteSelector)), 
+      val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new SuiteSelector)),
+                                     new TaskDef("org.scalatest.tools.FrameworkSuite", subclassFingerprint, false, Array(new SuiteSelector)),
                                      new TaskDef("org.scalatest.SuiteSuite", subclassFingerprint, false, Array(new SuiteSelector))))
       assert(tasks.size === 2)
     }
@@ -1047,8 +1047,8 @@ class FrameworkSuite extends FunSuite {
   test("-m should execute suites that match the specified package and not its sub packages") {
     val runner = framework.runner(Array("-m", "org.scalatest.tools"), Array.empty, testClassLoader)
     try {
-      val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new SuiteSelector)), 
-                                     new TaskDef("org.scalatest.tools.FrameworkSuite", subclassFingerprint, false, Array(new SuiteSelector)), 
+      val tasks = runner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new SuiteSelector)),
+                                     new TaskDef("org.scalatest.tools.FrameworkSuite", subclassFingerprint, false, Array(new SuiteSelector)),
                                      new TaskDef("org.scalatest.SuiteSuite", subclassFingerprint, false, Array(new SuiteSelector))))
       assert(tasks.size === 1)
       val runner2 = framework.runner(Array("-m", "org.scalatest.concurrent"), Array.empty, testClassLoader)
@@ -1059,7 +1059,7 @@ class FrameworkSuite extends FunSuite {
       runner.done()
     }
   }
-  
+
   // Now in 0.13.0-RC4 when there are 2 TaskDef with same class name different fingerprint, only one of it will be passed in.
   // We can't rely on fingerprint for this check anymore.
   /*test("a suite should be filtered out when fingerprint is subclassFingerprint and it is not accessible, even though it is annotated with @WrapWith") {
@@ -1067,14 +1067,14 @@ class FrameworkSuite extends FunSuite {
     val tasks = runner.tasks(Array(new TaskDef("org.scalatest.SavesConfigMapSuite", subclassFingerprint, false, Array(new SuiteSelector))))
     assert(tasks.size === 0)
   }*/
-  
+
   test("Framework.runner should throw IllegalArgumentException when -s is passed in") {
     val iae = intercept[IllegalArgumentException] {
       framework.runner(Array("-s", "org.scalatest.tools.scalasbt.SampleSuite"), Array.empty, testClassLoader)
     }
     assert(iae.getMessage === "Specifying a suite (-s <suite>) or nested suite (-i <nested suite>) is not supported when running ScalaTest from sbt; Please use sbt's test-only instead.")
   }
-  
+
   test("Framework.runner should throw IllegalArgumentException when -j is passed in") {
     val iae = intercept[IllegalArgumentException] {
       framework.runner(Array("-j", "org.scalatest.tools.scalasbt.SampleJUnitSuite"), Array.empty, testClassLoader)
@@ -1088,21 +1088,21 @@ class FrameworkSuite extends FunSuite {
     }
     assert(iae.getMessage === "Running TestNG tests (-b <testng>) is not supported when running ScalaTest from sbt.")
   }
-  
+
   test("Framework.runner should throw IllegalArgumentException when -P is passed in") {
     val iae = intercept[IllegalArgumentException] {
       framework.runner(Array("-P"), Array.empty, testClassLoader)
     }
     assert(iae.getMessage === "-P <numthreads> is not supported when running ScalaTest from sbt, please use sbt parallel configuration instead.")
   }
-  
+
   test("Framework.runner should throw IllegalArgumentException when -PS is passed in") {
     val iae = intercept[IllegalArgumentException] {
       framework.runner(Array("-PS"), Array.empty, testClassLoader)
     }
     assert(iae.getMessage === "-P <numthreads> is not supported when running ScalaTest from sbt, please use sbt parallel configuration instead.")
   }
-  
+
   test("Framework.runner should throw IllegalArgumentException when -R is passed in") {
     val iae = intercept[IllegalArgumentException] {
       framework.runner(Array("-R"), Array.empty, testClassLoader)
@@ -1116,7 +1116,7 @@ class FrameworkSuite extends FunSuite {
     }
     assert(iae.getMessage === "Run again (-A) is not supported when running ScalaTest from sbt; Please use sbt's test-quick instead.")
   }
-  
+
   test("Framework.runner should throw IllegalArgumentException when -q is passed in") {
     val iae = intercept[IllegalArgumentException] {
       framework.runner(Array("-q", "Spec"), Array.empty, testClassLoader)
@@ -1130,13 +1130,13 @@ class FrameworkSuite extends FunSuite {
     }
     assert(iae.getMessage === "Sorting timeouts (-T) is not supported when running ScalaTest from sbt.")
   }
-  
+
   private def makeSureDone(runners: Runner*)(fun: => Unit): Unit = {
     try {
       fun
     }
     finally {
-      runners.foreach { r => 
+      runners.foreach { r =>
         try {
           r.done()
         }
@@ -1159,7 +1159,7 @@ class FrameworkSuite extends FunSuite {
       val scalatestRunner = runner.asInstanceOf[org.scalatest.tools.Framework#ScalaTestRunner]
       scalatestRunner.done()
       scalatestRunner.dispatchReporter.reporters.find(_.isInstanceOf[EventRecordingReporter]) match {
-        case Some(recordingRep : EventRecordingReporter) => 
+        case Some(recordingRep : EventRecordingReporter) =>
           assert(recordingRep.testSucceededEventsReceived.size === 3)
         case _ => fail("Expected to find EventRecordingReporter, but not found.")
       }
@@ -1178,14 +1178,14 @@ class FrameworkSuite extends FunSuite {
       val scalatestRunner = runner.asInstanceOf[org.scalatest.tools.Framework#ScalaTestRunner]
       scalatestRunner.done()
       scalatestRunner.dispatchReporter.reporters.find(_.isInstanceOf[EventRecordingReporter]) match {
-        case Some(recordingRep : EventRecordingReporter) => 
+        case Some(recordingRep : EventRecordingReporter) =>
           assert(recordingRep.testSucceededEventsReceived.size === 3)
           assert(recordingRep.suiteCompletedEventsReceived.size === 1)
         case _ => fail("Expected to find EventRecordingReporter, but not found.")
       }
     }
   }
-  
+
   test("-y should get SuiteAborted event with NotAllowedException when the task to execute is not a chosen style") {
     val runner = framework.runner(Array("-y", "org.scalatest.FunSpec", "-C", classOf[EventRecordingReporter].getName), Array.empty, testClassLoader)
     makeSureDone(runner) {
@@ -1198,12 +1198,12 @@ class FrameworkSuite extends FunSuite {
       val scalatestRunner = runner.asInstanceOf[org.scalatest.tools.Framework#ScalaTestRunner]
       scalatestRunner.done()
       scalatestRunner.dispatchReporter.reporters.find(_.isInstanceOf[EventRecordingReporter]) match {
-        case Some(recordingRep : EventRecordingReporter) => 
+        case Some(recordingRep : EventRecordingReporter) =>
           assert(recordingRep.testSucceededEventsReceived.size === 0)
           val suiteAbortedEvents = recordingRep.suiteAbortedEventsReceived
           assert(suiteAbortedEvents.size === 1)
           suiteAbortedEvents(0).throwable match {
-            case Some(e: NotAllowedException) => 
+            case Some(e: NotAllowedException) =>
               assert(e.getMessage === Resources.notTheChosenStyle("org.scalatest.FunSuite", "org.scalatest.FunSpec"))
             case _ => fail("Expected SuiteAborted to carry NotAllowedException, but it did not.")
           }
@@ -1316,7 +1316,7 @@ class FrameworkSuite extends FunSuite {
       }
     }
   }
-  
+
   test("-W should cause AlertProvided to be fired") {
     val runner = framework.runner(Array("-W", "1", "1", "-C", classOf[EventRecordingReporter].getName), Array.empty, testClassLoader)
     makeSureDone(runner) {
@@ -1329,7 +1329,7 @@ class FrameworkSuite extends FunSuite {
       val scalatestRunner = runner.asInstanceOf[org.scalatest.tools.Framework#ScalaTestRunner]
       scalatestRunner.done()
       scalatestRunner.dispatchReporter.reporters.find(_.isInstanceOf[EventRecordingReporter]) match {
-        case Some(recordingRep : EventRecordingReporter) => 
+        case Some(recordingRep : EventRecordingReporter) =>
           assert(recordingRep.testSucceededEventsReceived.size === 1)
           assert(recordingRep.alertProvidedEventsReceived.size > 0)
         case _ => fail("Expected to find EventRecordingReporter, but not found.")
@@ -1343,7 +1343,7 @@ class FrameworkSuite extends FunSuite {
     val subRunner = framework.runner(Array("-C", classOf[EventRecordingReporter].getName), remoteArgs, testClassLoader)
     makeSureDone(mainRunner, subRunner) {
         val testEventHandler = new TestEventHandler
-    
+
         val tasks = subRunner.tasks(Array(new TaskDef("org.scalatest.tools.scalasbt.SampleSuite", subclassFingerprint, false, Array(new SuiteSelector))))
         assert(tasks.size === 1)
         val task = tasks(0)
@@ -1363,7 +1363,7 @@ class FrameworkSuite extends FunSuite {
         subScalatestRunner.done()
         mainScalatestRunner.done()
         mainScalatestRunner.dispatchReporter.reporters.find(_.isInstanceOf[EventRecordingReporter]) match {
-          case Some(recordingRep : EventRecordingReporter) => 
+          case Some(recordingRep : EventRecordingReporter) =>
             assert(recordingRep.testSucceededEventsReceived.size === 3)
             assert(recordingRep.alertProvidedEventsReceived.size === 1)
             assert(recordingRep.noteProvidedEventsReceived.size === 1)
@@ -1371,7 +1371,7 @@ class FrameworkSuite extends FunSuite {
         }
     }
   }
-  
+
   test("Runner should support deprecated friendly argument dsl 'include'") {
     framework.runner(Array("include(org.scala.a, org.scala.b, org.scala.c)"), Array.empty, testClassLoader).done()
     framework.runner(Array("include(\"org.scala.a\", \"org.scala.b\", \"org.scala.c\")"), Array.empty, testClassLoader).done()
@@ -1381,7 +1381,7 @@ class FrameworkSuite extends FunSuite {
     intercept[IllegalArgumentException] { framework.runner(Array("includeorg.scala.a, org.scala.b, org.scala.c)"), Array.empty, testClassLoader).done() }
     intercept[IllegalArgumentException] { framework.runner(Array("include org.scala.a, org.scala.b, org.scala.c"), Array.empty, testClassLoader).done() }
   }
-  
+
   test("Runner should support deprecated friendly argument dsl 'exclude'") {
     framework.runner(Array("exclude(org.scala.a, org.scala.b, org.scala.c)"), Array.empty, testClassLoader).done()
     framework.runner(Array("exclude(\"org.scala.a\", \"org.scala.b\", \"org.scala.c\")"), Array.empty, testClassLoader).done()
@@ -1401,7 +1401,7 @@ class FrameworkSuite extends FunSuite {
     intercept[IllegalArgumentException] { framework.runner(Array("stdoutconfig=\"nocolor fullstacks doptestsucceeded\")"), Array.empty, testClassLoader).done() }
     intercept[IllegalArgumentException] { framework.runner(Array("stdout(confi=\"nocolor fullstacks doptestsucceeded\")"), Array.empty, testClassLoader).done() }
   }
-  
+
   test("Runner should support deprecated friendly argument dsl 'stderr'") {
     framework.runner(Array("stderr"), Array.empty, testClassLoader).done()
     framework.runner(Array("stderr(config=\"dropinfoprovided dropsuitestarting droptestignored\")"), Array.empty, testClassLoader).done()
@@ -1411,7 +1411,7 @@ class FrameworkSuite extends FunSuite {
     intercept[IllegalArgumentException] { framework.runner(Array("stderrconfig=\"dopinfoprovided dropsuitestarting droptestignored\")"), Array.empty, testClassLoader).done() }
     intercept[IllegalArgumentException] { framework.runner(Array("stderr(confi=\"dopinfoprovided dropsuitestarting droptestignored\")"), Array.empty, testClassLoader).done() }
   }
-  
+
   test("Runner should support deprecated friendly argument dsl 'file'") {
     framework.runner(Array("file(filename=\"" + cssFile.getAbsolutePath + "\")"), Array.empty, testClassLoader).done()
     framework.runner(Array("file(filename=\"" + cssFile.getAbsolutePath + "\", config=\"durations shortstacks dropteststarting\")"), Array.empty, testClassLoader).done()
@@ -1436,14 +1436,14 @@ class FrameworkSuite extends FunSuite {
     intercept[IllegalArgumentException] { framework.runner(Array("junitxmldirectory=\"" + tempDir.getAbsolutePath + "\")"), Array.empty, testClassLoader).done() }
     intercept[IllegalArgumentException] { framework.runner(Array("junitxml(director=\"" + tempDir.getAbsolutePath + "\")"), Array.empty, testClassLoader).done() }
   }
-  
+
   test("Runner should support deprecated friendly argument dsl 'html'") {
     framework.runner(Array("html(directory=\"" + tempDir.getAbsolutePath + "\")"), Array.empty, testClassLoader).done()
     framework.runner(Array("html(directory=\"" + tempDir.getAbsolutePath + "\", css=\"" + cssFile.getAbsolutePath + "\")"), Array.empty, testClassLoader).done()
     intercept[IllegalArgumentException] { framework.runner(Array("html()"), Array.empty, testClassLoader).done() }
     intercept[IllegalArgumentException] { framework.runner(Array("html(directory=\"" + tempDir.getAbsolutePath + "\", css=\"\")"), Array.empty, testClassLoader).done() }
   }
-  
+
   test("Runner should support deprecated friendly argument dsl 'reporterclass'") {
     val repClassName = classOf[EventRecordingReporter].getName
     framework.runner(Array("reporterclass(classname=\"" + repClassName + "\")"), Array.empty, testClassLoader).done()
@@ -1460,7 +1460,7 @@ class FrameworkSuite extends FunSuite {
     framework.runner(Array("membersonly(a.b.c, a.b.d, a.b.e)"), Array.empty, testClassLoader).done()
     intercept[IllegalArgumentException] { framework.runner(Array("membersonly"), Array.empty, testClassLoader).done() }
   }
-  
+
   test("Runner should support deprecated friendly argument dsl 'wildcard'") {
     framework.runner(Array("wildcard(a.b.c)"), Array.empty, testClassLoader).done()
     framework.runner(Array("wildcard(a.b.c, a.b.d, a.b.e)"), Array.empty, testClassLoader).done()

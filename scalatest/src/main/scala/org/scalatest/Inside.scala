@@ -53,10 +53,10 @@ import org.scalactic._
  *
  * <p>
  * If an assertion fails, the error message will include the <code>toString</code> of each value passed
- * to <code>inside</code> clauses enclosing the failed assertion. For example, if <code>rec</code> in 
+ * to <code>inside</code> clauses enclosing the failed assertion. For example, if <code>rec</code> in
  * the previous expression was defined like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * val rec = Record(
  *   Name("Sally", "Anna", "Jones"),
@@ -87,7 +87,7 @@ trait Inside {
    * </p>
    *
    * <p>
-   * If the partial function is not defined at the passed value, <code>inside</code> will throw a 
+   * If the partial function is not defined at the passed value, <code>inside</code> will throw a
    * <code>TestFailedException</code> with a detail message describing the problem. Otherwise, if the
    * partial function returns normally, <code>inside</code> will return normally. If the partial function
    * completes abruptly with an exception that mixes in <code>ModifiableMessage</code> (such as
@@ -143,7 +143,7 @@ trait Inside {
 }
 
 /**
- * Companion object that facilitates the importing of the <code>inside</code> construct as 
+ * Companion object that facilitates the importing of the <code>inside</code> construct as
  * an alternative to mixing it in. One use case is to import the <code>inside</code> construct so you can use
  * it in the Scala interpreter:
  *
@@ -152,16 +152,16 @@ trait Inside {
  * Welcome to Scala version 2.9.1.final (Java HotSpot(TM) 64-Bit Server VM, Java 1.6.0_29).
  * Type in expressions to have them evaluated.
  * Type :help for more information.
- * 
+ *
  * scala&gt; import org.scalatest._
  * import org.scalatest._
- * 
+ *
  * scala&gt; import matchers.Matchers._
  * import matchers.Matchers._
- * 
+ *
  * scala&gt; import Inside._
  * import Inside._
- * 
+ *
  * scala&gt; inside (List(1, 2, 3)) { case List(x, y, z) =>
  *     |   y should equal (2)
  *     | }

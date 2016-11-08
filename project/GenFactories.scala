@@ -355,7 +355,7 @@ $endif$
      *                             ^
      * </pre>
      */
-    def theSameElementsAs(right: GenTraversable[_]): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Aggregating] = 
+    def theSameElementsAs(right: GenTraversable[_]): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Aggregating] =
       thisMatcherFactory.and(MatcherWords.contain.theSameElementsAs(right))
 
     /**
@@ -366,7 +366,7 @@ $endif$
      *                             ^
      * </pre>
      */
-    def theSameElementsInOrderAs(right: GenTraversable[_]): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Sequencing] = 
+    def theSameElementsInOrderAs(right: GenTraversable[_]): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Sequencing] =
       thisMatcherFactory.and(MatcherWords.contain.theSameElementsInOrderAs(right))
 
     /**
@@ -476,7 +476,7 @@ $endif$
      *                             ^
      * </pre>
      */
-    def only(right: Any*): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Aggregating] = 
+    def only(right: Any*): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Aggregating] =
       thisMatcherFactory.and(MatcherWords.contain.only(right.toList: _*)(prettifier, pos))
 
     /**
@@ -885,7 +885,7 @@ $endif$
               Resources.rawDidNotEqualNull,
               Resources.rawMidSentenceEqualedNull,
               Resources.rawDidNotEqualNull,
-              Vector.empty, 
+              Vector.empty,
               Vector(left)
             )
           }
@@ -1009,7 +1009,7 @@ $endif$
      * used.  Please use should equal, should ===, shouldEqual,
      * should be, or shouldBe instead.
      * </strong>
-     * 
+     *
      * <p>
      * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
      * cases still compile, but silently wouldn't work.
@@ -1164,7 +1164,7 @@ $endif$
      *                         ^
      * </pre>
      */
-    def be[A, U <: PartialFunction[A, _]](resultOfDefinedAt: ResultOfDefinedAt[A]): MatcherFactory$arity$[SC with U, $commaSeparatedTCNs$] = 
+    def be[A, U <: PartialFunction[A, _]](resultOfDefinedAt: ResultOfDefinedAt[A]): MatcherFactory$arity$[SC with U, $commaSeparatedTCNs$] =
       thisMatcherFactory.and(MatcherWords.not.be(resultOfDefinedAt))
 
     /**
@@ -1175,7 +1175,7 @@ $endif$
      *                         ^
      * </pre>
      */
-    def be(sortedWord: SortedWord) = 
+    def be(sortedWord: SortedWord) =
       thisMatcherFactory.and(MatcherWords.not.be(sortedWord))
 
     /**
@@ -1186,7 +1186,7 @@ $endif$
      *                         ^
      * </pre>
      */
-    def be(readableWord: ReadableWord) = 
+    def be(readableWord: ReadableWord) =
       thisMatcherFactory.and(MatcherWords.not.be(readableWord))
 
     /**
@@ -1197,7 +1197,7 @@ $endif$
      *                         ^
      * </pre>
      */
-    def be(writableWord: WritableWord) = 
+    def be(writableWord: WritableWord) =
       thisMatcherFactory.and(MatcherWords.not.be(writableWord))
 
     /**
@@ -1208,7 +1208,7 @@ $endif$
      *                         ^
      * </pre>
      */
-    def be(emptyWord: EmptyWord) = 
+    def be(emptyWord: EmptyWord) =
       thisMatcherFactory.and(MatcherWords.not.be(emptyWord))
 
     /**
@@ -1219,7 +1219,7 @@ $endif$
      *                         ^
      * </pre>
      */
-    def be(definedWord: DefinedWord) = 
+    def be(definedWord: DefinedWord) =
       thisMatcherFactory.and(MatcherWords.not.be(definedWord))
 
     /**
@@ -1540,7 +1540,7 @@ $endif$
    *                 ^
    * </pre>
    */
-  def and(existWord: ExistWord): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Existence] = 
+  def and(existWord: ExistWord): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Existence] =
     thisMatcherFactory.and(MatcherWords.exist.matcherFactory)
 
   /**
@@ -1551,7 +1551,7 @@ $endif$
    *                 ^
    * </pre>
    */
-  def and(notExist: ResultOfNotExist): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Existence] = 
+  def and(notExist: ResultOfNotExist): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Existence] =
     thisMatcherFactory.and(MatcherWords.not.exist)
 
   /**
@@ -1649,7 +1649,7 @@ $endif$
      *                            ^
      * </pre>
      */
-    def theSameElementsAs(right: GenTraversable[_]): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Aggregating] = 
+    def theSameElementsAs(right: GenTraversable[_]): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Aggregating] =
       thisMatcherFactory.or(MatcherWords.contain.theSameElementsAs(right))
 
     /**
@@ -1660,7 +1660,7 @@ $endif$
      *                            ^
      * </pre>
      */
-    def theSameElementsInOrderAs(right: GenTraversable[_]): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Sequencing] = 
+    def theSameElementsInOrderAs(right: GenTraversable[_]): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Sequencing] =
       thisMatcherFactory.or(MatcherWords.contain.theSameElementsInOrderAs(right))
 
     /**
@@ -1770,7 +1770,7 @@ $endif$
      *                            ^
      * </pre>
      */
-    def only(right: Any*): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Aggregating] = 
+    def only(right: Any*): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Aggregating] =
       thisMatcherFactory.or(MatcherWords.contain.only(right.toList: _*)(prettifier, pos))
 
     /**
@@ -2179,7 +2179,7 @@ $endif$
               Resources.rawDidNotEqualNull,
               Resources.rawMidSentenceEqualedNull,
               Resources.rawDidNotEqualNull,
-              Vector.empty, 
+              Vector.empty,
               Vector(left)
             )
           }
@@ -2299,11 +2299,11 @@ $endif$
 
     /**
      * <strong>
-     * The deprecation period for the "be ===" syntax has expired, and the syntax 
+     * The deprecation period for the "be ===" syntax has expired, and the syntax
      * will now throw <code>NotAllowedException</code>.  Please use should equal, should ===, shouldEqual,
      * should be, or shouldBe instead.
      * </strong>
-     * 
+     *
      * <p>
      * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
      * cases still compile, but silently wouldn't work.
@@ -2458,7 +2458,7 @@ $endif$
      *                        ^
      * </pre>
      */
-    def be[A, U <: PartialFunction[A, _]](resultOfDefinedAt: ResultOfDefinedAt[A]): MatcherFactory$arity$[SC with U, $commaSeparatedTCNs$] = 
+    def be[A, U <: PartialFunction[A, _]](resultOfDefinedAt: ResultOfDefinedAt[A]): MatcherFactory$arity$[SC with U, $commaSeparatedTCNs$] =
       thisMatcherFactory.or(MatcherWords.not.be(resultOfDefinedAt))
 
     /**
@@ -2469,7 +2469,7 @@ $endif$
      *                        ^
      * </pre>
      */
-    def be(sortedWord: SortedWord) = 
+    def be(sortedWord: SortedWord) =
       thisMatcherFactory.or(MatcherWords.not.be(sortedWord))
 
     /**
@@ -2480,7 +2480,7 @@ $endif$
      *                        ^
      * </pre>
      */
-    def be(readableWord: ReadableWord) = 
+    def be(readableWord: ReadableWord) =
       thisMatcherFactory.or(MatcherWords.not.be(readableWord))
 
     /**
@@ -2491,7 +2491,7 @@ $endif$
      *                        ^
      * </pre>
      */
-    def be(writableWord: WritableWord) = 
+    def be(writableWord: WritableWord) =
       thisMatcherFactory.or(MatcherWords.not.be(writableWord))
 
     /**
@@ -2502,7 +2502,7 @@ $endif$
      *                        ^
      * </pre>
      */
-    def be(emptyWord: EmptyWord) = 
+    def be(emptyWord: EmptyWord) =
       thisMatcherFactory.or(MatcherWords.not.be(emptyWord))
 
     /**
@@ -2513,7 +2513,7 @@ $endif$
      *                        ^
      * </pre>
      */
-    def be(definedWord: DefinedWord) = 
+    def be(definedWord: DefinedWord) =
       thisMatcherFactory.or(MatcherWords.not.be(definedWord))
 
     /**
@@ -2831,7 +2831,7 @@ $endif$
    *                 ^
    * </pre>
    */
-  def or(existWord: ExistWord): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Existence] = 
+  def or(existWord: ExistWord): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Existence] =
     thisMatcherFactory.or(MatcherWords.exist.matcherFactory)
 
   /**
@@ -2842,7 +2842,7 @@ $endif$
    *                 ^
    * </pre>
    */
-  def or(notExist: ResultOfNotExist): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Existence] = 
+  def or(notExist: ResultOfNotExist): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Existence] =
     thisMatcherFactory.or(MatcherWords.not.exist)
 }
 
@@ -2991,7 +2991,7 @@ private[scalatest] class MatcherFactory$arity$Macro[-SC, $typeConstructors$] {
 
                     """
 
-// For some reason that I don't understand, I need to leave off the stars before the <pre> when 
+// For some reason that I don't understand, I need to leave off the stars before the <pre> when
 // they are next to ST commands. So I say  "   <pre>" sometimes instead of " * <pre>".
 
   val MaxArity = 9
@@ -3003,14 +3003,14 @@ private[scalatest] class MatcherFactory$arity$Macro[-SC, $typeConstructors$] {
     val mainDir = new File(targetDir + "/main/scala/org/scalatest/matchers")
     mainDir.mkdirs()
     genMain(mainDir, version, scalaVersion)
-    
+
 /*
     val testDir = new File("gentests/" + targetDir + "/test/scala/org/scalatest/matchers")
     testDir.mkdirs()
     genTest(testDir, scalaVersion)
 */
   }
-  
+
   def genMain(dir: File, version: String, scalaVersion: String) {
     dir.mkdirs()
     for (arity <- 1 to MaxArity) {
@@ -3024,7 +3024,7 @@ private[scalatest] class MatcherFactory$arity$Macro[-SC, $typeConstructors$] {
       genMatcherFactory(dir, arity, true)
     }
   }
-  
+
 /*
   def genTest(dir: File, scalaVersion: String) {
     dir.mkdirs()
@@ -3061,7 +3061,7 @@ private[scalatest] class MatcherFactory$arity$Macro[-SC, $typeConstructors$] {
     }
 
     val bw = new BufferedWriter(new FileWriter(new File(targetDir, "MatcherFactory" + arity + ".scala")))
- 
+
     try {
 
       val topSt = new org.antlr.stringtemplate.StringTemplate(topPart)

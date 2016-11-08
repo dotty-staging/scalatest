@@ -82,7 +82,7 @@ below:
    it completes abruptly with a <code>TestFailedDueToTimeoutException</code>. The interrupted status will be set by
    <code>ThreadSignaler</code>, the default <code>Signaler</code> implementation.
    </p>
-   
+
 */
 
   /**
@@ -129,7 +129,7 @@ below:
           task.cancel()
           result match {
             case Exceptional(ex) => throw ex  // If the result is Exceptional, the exception is already wrapped, just re-throw it to get the old behavior.
-            case _ => 
+            case _ =>
               if (task.timedOut || (endTime - startTime) > maxDuration) {
                 if (task.needToResetInterruptedStatus)
                   Thread.interrupted() // To reset the flag probably. He only does this if it was not set before and was set after, I think.

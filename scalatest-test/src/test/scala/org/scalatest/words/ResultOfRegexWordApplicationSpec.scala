@@ -19,23 +19,23 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfRegexWordApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfRegexWordApplication ") {
-    
+
     it("should have pretty toString when no group is specified") {
       val result = new ResultOfRegexWordApplication("a(b*)c", Vector.empty)
       result.toString should be ("regex (\"a(b*)c\")")
     }
-    
+
     it("should have pretty toString when 1 group is specified") {
       val result = new ResultOfRegexWordApplication("a(b*)c", Vector("bb"))
       result.toString should be ("regex (\"a(b*)c\" withGroup (\"bb\"))")
     }
-    
+
     it("should have pretty toString when > 1 group is specified") {
       val result = new ResultOfRegexWordApplication("a(b*)(c*)", Vector("bb", "cc"))
       result.toString should be ("regex (\"a(b*)(c*)\" withGroups (\"bb\", \"cc\"))")
     }
   }
-  
+
 }

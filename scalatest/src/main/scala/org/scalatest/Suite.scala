@@ -56,7 +56,7 @@ import tools.SuiteDiscoveryHelper
  * <p>
  * One of the parameters to <code>Suite</code>'s <code>run</code> method is a <code>Reporter</code>, which
  * will collect and report information about the running suite of tests.
- * Information about suites and tests that were run, whether tests succeeded or failed, 
+ * Information about suites and tests that were run, whether tests succeeded or failed,
  * and tests that were ignored will be passed to the <code>Reporter</code> as the suite runs.
  * Most often the reporting done by default will be sufficient, but
  * occasionally you may wish to provide custom information to the <code>Reporter</code> from a test.
@@ -73,7 +73,7 @@ import tools.SuiteDiscoveryHelper
  *
  * import collection.mutable
  * import org.scalatest._
- * 
+ *
  * class SetSuite extends Suite with GivenWhenThen {
  *
  *   def &#96;test: an element can be added to an empty mutable Set&#96; {
@@ -140,7 +140,7 @@ import tools.SuiteDiscoveryHelper
  * reporting the left and right values. You can alternatively encode these values in a <code>String</code> passed as
  * a second argument to <code>assert</code>, as in:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * val left = 2
  * val right = 1
@@ -148,7 +148,7 @@ import tools.SuiteDiscoveryHelper
  * </pre>
  *
  * <p>
- * Using this form of <code>assert</code>, the failure report will include the left and right values, 
+ * Using this form of <code>assert</code>, the failure report will include the left and right values,
  * helping you debug the problem. However, ScalaTest provides the <code>===</code> operator to make this easier.
  * (The <code>===</code> operator is defined in trait <a href="Assertions.html"><code>Assertions</code></a> which trait <code>Suite</code> extends.)
  * You use it like this:
@@ -183,7 +183,7 @@ import tools.SuiteDiscoveryHelper
  * because if one were named <code>expected</code> and the other <code>actual</code>, it would be difficult for people to
  * remember which was which. To help with these limitations of assertions, <code>Suite</code> includes a method called <code>assertResult</code> that
  * can be used as an alternative to <code>assert</code> with <code>===</code>. To use <code>assertResult</code>, you place
- * the expected value in parentheses after <code>assertResult</code>, followed by curly braces containing code 
+ * the expected value in parentheses after <code>assertResult</code>, followed by curly braces containing code
  * that should result in the expected value. For example:
  *
  * <pre class="stHighlight">
@@ -257,7 +257,7 @@ import tools.SuiteDiscoveryHelper
  *
  * <p>
  * ScalaTest also supports another style of assertions via its matchers DSL. By mixing in
- * trait <a href="matchers/Matchers.html"><code>Matchers</code></a>, you can 
+ * trait <a href="matchers/Matchers.html"><code>Matchers</code></a>, you can
  * write suites that look like:
  * </p>
  *
@@ -277,7 +277,7 @@ import tools.SuiteDiscoveryHelper
  *   }
  * }
  * </pre>
- * 
+ *
  * <p>If you prefer the word "<code>must</code>" to the word "<code>should</code>," you can alternatively mix in
  * trait <a href="matchers/MustMatchers.html"><code>MustMatchers</code></a>.
  * </p>
@@ -288,7 +288,7 @@ import tools.SuiteDiscoveryHelper
  * can be used as is with ScalaTest. For example, to use the <code>assertEquals</code>
  * methods provided by JUnit or TestNG, simply import them and use them. (You will of course need
  * to include the relevant JAR file for the framework whose assertions you want to use on either the
- * classpath or runpath when you run your tests.) 
+ * classpath or runpath when you run your tests.)
  * </p>
  */
 
@@ -406,7 +406,7 @@ import tools.SuiteDiscoveryHelper
  * <p>
  * You can specify a string config object is via the ScalaTest <code>Runner</code>, either via the command line
  * or ScalaTest's ant task.
- * (See the <a href="tools/Runner$.html#configMapSection">documentation for Runner</a> for information on how to specify 
+ * (See the <a href="tools/Runner$.html#configMapSection">documentation for Runner</a> for information on how to specify
  * config objects on the command line.)
  * The config map is passed to <code>run</code>, <code>runNestedSuites</code>, <code>runTests</code>, and <code>runTest</code>,
  * so one way to access it in your suite is to override one of those methods. If you need to use the config map inside your tests, you
@@ -419,10 +419,10 @@ import tools.SuiteDiscoveryHelper
  * <h2>Executing suites in parallel</h2>
  *
  * <p>
- * The <code>run</code> method takes as one of its parameters an optional <a href="Distributor.html"><code>Distributor</code></a>. If 
+ * The <code>run</code> method takes as one of its parameters an optional <a href="Distributor.html"><code>Distributor</code></a>. If
  * a <code>Distributor</code> is passed in, this trait's implementation of <code>run</code> puts its nested
  * <code>Suite</code>s into the distributor rather than executing them directly. The caller of <code>run</code>
- * is responsible for ensuring that some entity runs the <code>Suite</code>s placed into the 
+ * is responsible for ensuring that some entity runs the <code>Suite</code>s placed into the
  * distributor. The <code>-P</code> command line parameter to <code>Runner</code>, for example, will cause
  * <code>Suite</code>s put into the <code>Distributor</code> to be run in parallel via a pool of threads.
  * If you wish to execute the tests themselves in parallel, mix in <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a>.
@@ -465,7 +465,7 @@ import tools.SuiteDiscoveryHelper
  * The previous list includes all <code>Error</code>s that exist as part of Java 1.5 API, excluding <code>java.lang.AssertionError</code>.
  * ScalaTest does treat a thrown <code>AssertionError</code> as an indication of a test failure. In addition, any other
  * <code>Error</code> that is not an instance of a type mentioned in the previous list will be caught by the <code>Suite</code> traits
- * in the ScalaTest API and reported as the cause of a test failure. 
+ * in the ScalaTest API and reported as the cause of a test failure.
  * </p>
  *
  * <p>
@@ -517,7 +517,7 @@ import tools.SuiteDiscoveryHelper
  * that starts and either succeeds or fails, and can be ignored. In <code>org.scalatest.FunSuite</code>, for example, tests are represented
  * as function values. This
  * approach might look foreign to JUnit users, but may feel more natural to programmers with a functional programming background.
- * To facilitate this style of writing tests, <code>FunSuite</code> overrides <code>testNames</code>, <code>runTest</code>, and <code>run</code> such that you can 
+ * To facilitate this style of writing tests, <code>FunSuite</code> overrides <code>testNames</code>, <code>runTest</code>, and <code>run</code> such that you can
  * define tests as function values.
  * </p>
  *
@@ -706,10 +706,10 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    *
    * <p>
    * The second non-idiomatic feature is that <code>shortstacks</code> and <code>fullstacks</code> are all lower case rather than
-   * camel case. This is done to be consistent with the <a href="Shell.html"><code>Shell</code></a>, which also uses those forms. The reason 
+   * camel case. This is done to be consistent with the <a href="Shell.html"><code>Shell</code></a>, which also uses those forms. The reason
    * lower case is used in the <code>Shell</code> is to save keystrokes in an interpreter environment.  Most Unix commands, for
    * example, are all lower case, making them easier and quicker to type.  In the ScalaTest
-   * <code>Shell</code>, methods like <code>shortstacks</code>, <code>fullstacks</code>, and <code>nostats</code>, <em>etc.</em>, are 
+   * <code>Shell</code>, methods like <code>shortstacks</code>, <code>fullstacks</code>, and <code>nostats</code>, <em>etc.</em>, are
    * designed to be all lower case so they feel more like shell commands than methods.
    * </p>
    *
@@ -766,7 +766,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
     val suiteStartTime = System.currentTimeMillis
     def dispatchSuiteAborted(e: Throwable): Unit = {
       val eMessage = e.getMessage
-      val rawString = 
+      val rawString =
         if (eMessage != null && eMessage.length > 0)
           Resources.runOnSuiteException
         else
@@ -867,9 +867,9 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * implementation of this method, therefore, places one key/value pair into to the
    * <code>Map</code> for each test for which a tag annotation is discovered through reflection.
    * </p>
-   * 
+   *
    * <p>
-   * In addition to test methods annotations, this trait's implementation will also auto-tag test methods with class level annotations.  
+   * In addition to test methods annotations, this trait's implementation will also auto-tag test methods with class level annotations.
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
    * </p>
    *
@@ -902,7 +902,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
     }
 
     val testNameArray =
-      for (m <- getClass.getMethods; if isTestMethod(m)) 
+      for (m <- getClass.getMethods; if isTestMethod(m))
         yield if (takesInformer(m)) m.getName + InformerInParens else m.getName
 
     val result = TreeSet.empty[String](EncodedOrdering) ++ testNameArray
@@ -943,7 +943,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * Run a test.
    *
    * <p>
-   * This trait's implementation of this method simply returns <code>SucceededStatus</code> 
+   * This trait's implementation of this method simply returns <code>SucceededStatus</code>
    * and has no other effect.
    * </p>
    *
@@ -962,7 +962,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    *
    * <p>
    * This method takes a <code>testName</code> parameter that optionally specifies a test to invoke.
-   * If <code>testName</code> is defined, this trait's implementation of this method 
+   * If <code>testName</code> is defined, this trait's implementation of this method
    * invokes <code>runTest</code> on this object, passing in:
    * </p>
    *
@@ -1046,7 +1046,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
     // into error messages on the standard error stream.
     val report = wrapReporterIfNecessary(thisSuite, reporter)
     val newArgs = args.copy(reporter = report)
-    
+
     val statusBuffer = new ListBuffer[Status]()
 
     // If a testName is passed to run, just run that, else run the tests returned
@@ -1114,14 +1114,14 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * By making <code>runTests</code> final in such a <code>Suite</code> subtrait, you make
    * the attempt to mix <code>BeforeAndAfterEach</code> into a subclass of your subtrait
    * a compiler error. (It would fail to compile with a complaint that <code>BeforeAndAfterEach</code>
-   * is trying to override <code>runTests</code>, which is a final method in your trait.) 
+   * is trying to override <code>runTests</code>, which is a final method in your trait.)
    * </p>
    *
    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
    *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
    * @param args the <code>Args</code> for this run
    * @return a <code>Status</code> object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
-   *         
+   *
    * @throws NullArgumentException if any passed parameter is <code>null</code>.
    * @throws IllegalArgumentException if <code>testName</code> is defined, but no test with the specified test name
    *     exists in this <code>Suite</code>
@@ -1139,7 +1139,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
       val report = wrapReporterIfNecessary(thisSuite, reporter)
       val newArgs = args.copy(reporter = report)
 
-      val nestedSuitesStatus = 
+      val nestedSuitesStatus =
         testName match {
           case None => runNestedSuites(newArgs)
           case Some(_) => SucceededStatus
@@ -1168,7 +1168,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * method reports that the <code>Suite</code> aborted and attempts to run the
    * next nested <code>Suite</code>.
    * If the passed <code>distributor</code> is defined, this trait's implementation
-   * puts each nested <code>Suite</code> 
+   * puts each nested <code>Suite</code>
    * into the <code>Distributor</code> contained in the <code>Some</code>, in the order in which the
    * <code>Suite</code>s appear in the <code>List</code> returned by <code>nestedSuites</code>, passing
    * in a new <code>Tracker</code> obtained by invoking <code>nextTracker</code> on the <code>Tracker</code>
@@ -1224,10 +1224,10 @@ trait Suite extends Assertions with Serializable { thisSuite =>
               SucceededStatus
           }
         }
-        catch {       
+        catch {
           case e: RuntimeException => {
             val eMessage = e.getMessage
-            val rawString = 
+            val rawString =
               if (eMessage != null && eMessage.length > 0)
                 Resources.executeExceptionWithMessage(eMessage)
               else
@@ -1253,11 +1253,11 @@ trait Suite extends Assertions with Serializable { thisSuite =>
       distributor match {
         case None =>
           for (nestedSuite <- nestedSuitesArray) {
-            if (!stopper.stopRequested) 
+            if (!stopper.stopRequested)
               statusBuffer += callExecuteOnSuite(nestedSuite)
           }
         case Some(distribute) =>
-          for (nestedSuite <- nestedSuitesArray) 
+          for (nestedSuite <- nestedSuitesArray)
             statusBuffer += distribute(nestedSuite, args.copy(tracker = tracker.nextTracker))
       }
     }
@@ -1284,13 +1284,13 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    *
    * <p>
    * This trait's
-   * implementation of this method returns the fully qualified name of this object's class. 
+   * implementation of this method returns the fully qualified name of this object's class.
    * Each suite reported during a run will commonly be an instance of a different <code>Suite</code> class,
    * and in such cases, this default implementation of this method will suffice. However, in special cases
    * you may need to override this method to ensure it is unique for each reported suite. For example, if you write
    * a <code>Suite</code> subclass that reads in a file whose name is passed to its constructor and dynamically
    * creates a suite of tests based on the information in that file, you will likely need to override this method
-   * in your <code>Suite</code> subclass, perhaps by appending the pathname of the file to the fully qualified class name. 
+   * in your <code>Suite</code> subclass, perhaps by appending the pathname of the file to the fully qualified class name.
    * That way if you run a suite of tests based on a directory full of these files, you'll have unique suite IDs for
    * each reported suite.
    * </p>
@@ -1328,7 +1328,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
     def countNestedSuiteTests(acc: Int, nestedSuitesToCount: List[Suite], filter: Filter): Int =
       nestedSuitesToCount match {
         case List() => acc
-        case head :: tail => 
+        case head :: tail =>
           countNestedSuiteTests(acc + head.expectedTestCount(filter), tail, filter)
       }
 
@@ -1337,10 +1337,10 @@ trait Suite extends Assertions with Serializable { thisSuite =>
 
   // MOVE IT
   private[scalatest] def createCatchReporter(reporter: Reporter): Reporter = new WrapperCatchReporter(reporter)
-  
+
   /**
    * The fully qualified class name of the rerunner to rerun this suite.  This implementation will look at this.getClass and see if it is
-   * either an accessible Suite, or it has a WrapWith annotation. If so, it returns the fully qualified class name wrapped in a Some, 
+   * either an accessible Suite, or it has a WrapWith annotation. If so, it returns the fully qualified class name wrapped in a Some,
    * or else it returns None.
    */
   def rerunner: Option[String] = {
@@ -1355,12 +1355,12 @@ trait Suite extends Assertions with Serializable { thisSuite =>
     // SKIP-SCALATESTJS-END
     //SCALATESTJS-ONLY Some(suiteClass.getName)
   }
-  
+
   /**
    * Suite style name.
    */
   val styleName: String = "org.scalatest.Suite"
-  
+
   /**
    * Provides a <code>TestData</code> instance for the passed test name, given the passed config map.
    *
@@ -1376,7 +1376,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    */
   def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = {
     new TestData { // TODO: Document that we return a "null object" here. Seems odd actually, shouldn't this return an Option?
-      val configMap = theConfigMap 
+      val configMap = theConfigMap
       val name = testName
       val scopes = Vector.empty
       val text = testName
@@ -1415,7 +1415,7 @@ private[scalatest] object Suite {
 
   // SKIP-SCALATESTJS-START
   def checkForPublicNoArgConstructor(clazz: java.lang.Class[_]) = {
-    
+
     try {
       val constructor = clazz.getConstructor(new Array[java.lang.Class[T] forSome { type T }](0): _*)
 
@@ -1451,7 +1451,7 @@ private[scalatest] object Suite {
   }
 
   def diffStrings(s: String, t: String): Tuple2[String, String] = Prettifier.diffStrings(s, t)
-  
+
   // If the objects are two strings, replace them with whatever is returned by diffStrings.
   // Otherwise, use the same objects.
   def getObjectsForFailureMessage(a: Any, b: Any) = Prettifier.getObjectsForFailureMessage(a, b)
@@ -1490,16 +1490,16 @@ private[scalatest] object Suite {
   def anExceptionThatShouldCauseAnAbort(throwable: Throwable): Boolean =
     throwable match {
       // SKIP-SCALATESTJS-START
-      case _: AnnotationFormatError | 
+      case _: AnnotationFormatError |
 /*
            _: org.scalatest.TestRegistrationClosedException |
            _: org.scalatest.NotAllowedException |
 */
            _: CoderMalfunctionError |
-           _: FactoryConfigurationError | 
-           _: LinkageError | 
-           _: ThreadDeath | 
-           _: TransformerFactoryConfigurationError | 
+           _: FactoryConfigurationError |
+           _: LinkageError |
+           _: ThreadDeath |
+           _: TransformerFactoryConfigurationError |
            _: VirtualMachineError => true
       // Don't use AWTError directly because it doesn't exist on Android, and a user
       // got ScalaTest to compile under Android.
@@ -1519,7 +1519,7 @@ private[scalatest] object Suite {
 
     // name must have at least 4 chars (minimum is "test")
     val simpleName = m.getName
-    val firstFour = if (simpleName.length >= 4) simpleName.substring(0, 4) else "" 
+    val firstFour = if (simpleName.length >= 4) simpleName.substring(0, 4) else ""
 
     val paramTypes = m.getParameterTypes
     val hasNoParams = paramTypes.length == 0
@@ -1528,7 +1528,7 @@ private[scalatest] object Suite {
     // actually wrote a testNames(Informer) method and it was silently ignored.
     val isTestNames = simpleName == "testNames"
     val isTestTags = simpleName == "testTags"
-    val isTestDataFor = (simpleName == "testDataFor" && paramTypes.length == 2 && classOf[String].isAssignableFrom(paramTypes(0)) && classOf[ConfigMap].isAssignableFrom(paramTypes(1))) || 
+    val isTestDataFor = (simpleName == "testDataFor" && paramTypes.length == 2 && classOf[String].isAssignableFrom(paramTypes(0)) && classOf[ConfigMap].isAssignableFrom(paramTypes(1))) ||
                         (simpleName == "testDataFor$default$2" && paramTypes.length == 0)
 
     (isInstanceMethod, simpleName, firstFour, paramTypes, hasNoParams, isTestNames, isTestTags, isTestDataFor)
@@ -1576,25 +1576,25 @@ class ArghSpec extends RefSpec with GivenWhenThen {
 It should (and at this point does) output this:
 
 [scalatest] ArghSpec:
-[scalatest] + in ArghSpec 
+[scalatest] + in ArghSpec
 [scalatest] - outermost test (5 milliseconds)
-[scalatest]   + in outermost test 
-[scalatest] Apple 
-[scalatest] + in Apple 
-[scalatest]   Boat 
-[scalatest]   + in Boat 
-[scalatest]     Cat 
-[scalatest]     + in Cat 
-[scalatest]       Dog 
-[scalatest]       + in Dog 
-[scalatest]         Elephant 
-[scalatest]         + in Elephant 
+[scalatest]   + in outermost test
+[scalatest] Apple
+[scalatest] + in Apple
+[scalatest]   Boat
+[scalatest]   + in Boat
+[scalatest]     Cat
+[scalatest]     + in Cat
+[scalatest]       Dog
+[scalatest]       + in Dog
+[scalatest]         Elephant
+[scalatest]         + in Elephant
 [scalatest]         - Factory (1 millisecond)
-[scalatest]           + in Factory (test) 
-[scalatest]           + Given an empty Stack 
-[scalatest]           + When push is invoked 
-[scalatest]           + Then it should have size 1 
-[scalatest]           + And pop should return the pushed value 
+[scalatest]           + in Factory (test)
+[scalatest]           + Given an empty Stack
+[scalatest]           + When push is invoked
+[scalatest]           + Then it should have size 1
+[scalatest]           + And pop should return the pushed value
 
 FeatureSpec doesn't want any icons printed out. So adding includeIcon here. It
 was already in getIndentedTextForInfo because of descriptions being printed out
@@ -1615,10 +1615,10 @@ used for test events like succeeded/failed, etc.
       }
     IndentedText(formattedText, decodedTestText, level)
   }
-  
+
   def getEscapedIndentedTextForTest(testText: String, level: Int, includeIcon: Boolean) = {
     val decodedTestText = NameTransformer.decode(testText)
-    val escapedTestText = 
+    val escapedTestText =
       if (decodedTestText.startsWith("test: "))
         decodedTestText.drop(6)
       else
@@ -1671,14 +1671,14 @@ used for test events like succeeded/failed, etc.
       Resources.exceptionThrown(e.getClass.getName) // Say something like, "java.lang.Exception was thrown."
 
   def indentation(level: Int) = "  " * level
-  
-  def indentLines(level: Int, lines: GenTraversable[String]) = 
+
+  def indentLines(level: Int, lines: GenTraversable[String]) =
     lines.map(line => line.split("\n").map(indentation(level) + _).mkString("\n"))
-    
+
   def substituteHtmlSpace(value: String) = value.replaceAll(" ", "&nbsp;")
-    
+
   def unparsedXml(value: String) = scala.xml.Unparsed(value)
-  
+
   def xmlContent(value: String) = unparsedXml(substituteHtmlSpace(value))
 
   def reportTestFailed(theSuite: Suite, report: Reporter, throwable: Throwable, testName: String, testText: String,
@@ -1686,11 +1686,11 @@ used for test events like succeeded/failed, etc.
 
     val message = getMessageForException(throwable)
     //val formatter = getEscapedIndentedTextForTest(testText, level, includeIcon)
-    val payload = 
+    val payload =
       throwable match {
-        case optPayload: PayloadField => 
+        case optPayload: PayloadField =>
           optPayload.payload
-        case _ => 
+        case _ =>
           None
       }
     report(TestFailed(tracker.nextOrdinal(), message, theSuite.suiteName, theSuite.suiteId, Some(theSuite.getClass.getName), testName, testText, recordedEvents, Some(throwable), Some(duration), Some(formatter), location, theSuite.rerunner, payload))
@@ -1720,11 +1720,11 @@ used for test events like succeeded/failed, etc.
       recordedEvents: collection.immutable.IndexedSeq[RecordableEvent], rerunnable: Option[String], tracker: Tracker, duration: Long, formatter: Formatter, location: Option[Location]): Unit = {
 
     val message = getMessageForException(throwable)
-    val payload = 
+    val payload =
       throwable match {
-        case optPayload: PayloadField => 
+        case optPayload: PayloadField =>
           optPayload.payload
-        case _ => 
+        case _ =>
           None
       }
     //val formatter = getEscapedIndentedTextForTest(testText, level, includeIcon)
@@ -1741,13 +1741,13 @@ used for test events like succeeded/failed, etc.
     report(TestIgnored(tracker.nextOrdinal(), theSuite.suiteName, theSuite.suiteId, Some(theSuite.getClass.getName), testName, testText, Some(formatter),
       location))
   }
-  
+
   def createInfoProvided(theSuite: Suite,
     report: Reporter,
     tracker: Tracker,
     testName: Option[String],
     message: String,
-    payload: Option[Any], 
+    payload: Option[Any],
     level: Int,
     location: Option[Location],
     includeNameInfo: Boolean,
@@ -1771,7 +1771,7 @@ used for test events like succeeded/failed, etc.
     tracker: Tracker,
     testName: Option[String],
     message: String,
-    payload: Option[Any], 
+    payload: Option[Any],
     level: Int,
     location: Option[Location],
     includeNameInfo: Boolean,
@@ -1795,7 +1795,7 @@ used for test events like succeeded/failed, etc.
     tracker: Tracker,
     testName: Option[String],
     message: String,
-    payload: Option[Any], 
+    payload: Option[Any],
     level: Int,
     location: Option[Location],
     includeNameInfo: Boolean,
@@ -1821,7 +1821,7 @@ used for test events like succeeded/failed, etc.
     tracker: Tracker,
     testName: Option[String],
     message: String,
-    payload: Option[Any], 
+    payload: Option[Any],
     level: Int,
     location: Option[Location],
     includeNameInfo: Boolean,
@@ -1834,7 +1834,7 @@ used for test events like succeeded/failed, etc.
         tracker,
         testName,
         message,
-        payload, 
+        payload,
         level,
         location,
         includeNameInfo,
@@ -1842,14 +1842,14 @@ used for test events like succeeded/failed, etc.
       )
     )
   }
-  
+
   def reportNoteProvided(
     theSuite: Suite,
     report: Reporter,
     tracker: Tracker,
     testName: Option[String],
     message: String,
-    payload: Option[Any], 
+    payload: Option[Any],
     level: Int,
     location: Option[Location],
     includeNameInfo: Boolean,
@@ -1862,7 +1862,7 @@ used for test events like succeeded/failed, etc.
         tracker,
         testName,
         message,
-        payload, 
+        payload,
         level,
         location,
         includeNameInfo,
@@ -1870,14 +1870,14 @@ used for test events like succeeded/failed, etc.
       )
     )
   }
-  
+
   def reportAlertProvided(
     theSuite: Suite,
     report: Reporter,
     tracker: Tracker,
     testName: Option[String],
     message: String,
-    payload: Option[Any], 
+    payload: Option[Any],
     level: Int,
     location: Option[Location],
     includeNameInfo: Boolean,
@@ -1890,7 +1890,7 @@ used for test events like succeeded/failed, etc.
         tracker,
         testName,
         message,
-        payload, 
+        payload,
         level,
         location,
         includeNameInfo,
@@ -1898,7 +1898,7 @@ used for test events like succeeded/failed, etc.
       )
     )
   }
-  
+
   def createMarkupProvided(
     theSuite: Suite,
     report: Reporter,
@@ -1921,7 +1921,7 @@ used for test events like succeeded/failed, etc.
       location
     )
   }
-  
+
 
   // If not fired in the context of a test, then testName will be None
   def reportMarkupProvided(
@@ -1990,7 +1990,7 @@ used for test events like succeeded/failed, etc.
       )
     )
   }
-  
+
   def reportScopePending(
     theSuite: Suite,
     report: Reporter,
@@ -2010,7 +2010,7 @@ used for test events like succeeded/failed, etc.
       )
     )
   }
-  
+
   /*def getLineInFile(stackTraceList:List[StackTraceElement], sourceFileName:String, methodName: String):Option[LineInFile] = {
     val baseStackDepth = stackTraceList.takeWhile(stackTraceElement => sourceFileName != stackTraceElement.getFileName || stackTraceElement.getMethodName != methodName).length
     val stackTraceOpt = stackTraceList.drop(baseStackDepth).find(stackTraceElement => stackTraceElement.getMethodName() == "<init>")
@@ -2019,7 +2019,7 @@ used for test events like succeeded/failed, etc.
       case None => None
     }
   }*/
-  
+
   def getLineInFile(stackTraceList: Array[StackTraceElement], stackDepth: Int) = {
     if(stackDepth >= 0 && stackDepth < stackTraceList.length) {
       val stackTrace = stackTraceList(stackDepth)
@@ -2033,7 +2033,7 @@ used for test events like succeeded/failed, etc.
   }
 
   def checkChosenStyles(configMap: ConfigMap, styleName: String): Unit = {
-    val chosenStyleSet = 
+    val chosenStyleSet =
         if (configMap.isDefinedAt(Suite.CHOSEN_STYLES))
           configMap(Suite.CHOSEN_STYLES).asInstanceOf[Set[String]]
         else
@@ -2097,11 +2097,11 @@ used for test events like succeeded/failed, etc.
   ): Unit = {
     val message = getMessageForException(throwable)
     //val formatter = getEscapedIndentedTextForTest(testName, 1, true)
-    val payload = 
+    val payload =
       throwable match {
-        case optPayload: PayloadField => 
+        case optPayload: PayloadField =>
           optPayload.payload
-        case _ => 
+        case _ =>
           None
       }
     report(TestFailed(tracker.nextOrdinal(), message, theSuite.suiteName, theSuite.suiteId, Some(theSuite.getClass.getName), testName, testName, recordedEvents, Some(throwable), Some(duration), Some(formatter), Some(SeeStackDepthException), theSuite.rerunner, payload))

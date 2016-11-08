@@ -31,7 +31,7 @@ class ShouldLengthSizeSpec extends FunSpec with Checkers with ReturnsNormallyThr
 
     class Lengthy(len: Int) {
       def length: Int = len
-      def size: Int = len  
+      def size: Int = len
       override def toString = "lengthy"
     }
     val obj = new Lengthy(2)

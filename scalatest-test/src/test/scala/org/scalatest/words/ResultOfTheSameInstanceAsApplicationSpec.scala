@@ -19,14 +19,14 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfTheSameInstanceAsApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfTheSameInstanceAsApplication ") {
-    
+
     it("should have pretty toString") {
       val bob = "Bob"
       val result = new ResultOfTheSameInstanceAsApplication(bob)
       result.toString should be ("theSameInstanceAs (\"Bob\")")
     }
   }
-  
+
 }

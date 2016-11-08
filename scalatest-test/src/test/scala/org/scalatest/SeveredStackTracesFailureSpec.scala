@@ -22,7 +22,7 @@ class SeveredStackTracesFailureSpec extends FunSpec with SeveredStackTraces {
 
   override def withFixture(test: NoArgTest): Outcome = {
     super.withFixture(test) match {
-      case Failed(e: TestFailedException) => 
+      case Failed(e: TestFailedException) =>
         e.failedCodeStackDepth should equal (0)
         e.failedCodeFileNameAndLineNumberString match {
           case Some(s) =>

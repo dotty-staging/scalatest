@@ -18,31 +18,31 @@ package org.scalatest.tools
 import collection.mutable.ListBuffer
 
 private[scalatest] object FriendlyParamsTranslator {
-  
+
   private[scalatest] val validConfigMap = Map(
-                                             "dropteststarting" -> "N", 
-                                             "droptestsucceeded" -> "C", 
-                                             "droptestignored" -> "X", 
-                                             "droptestpending" -> "E", 
-                                             "dropsuitestarting" -> "H", 
-                                             "dropsuitecompleted" -> "L", 
-                                             "dropinfoprovided" -> "O", 
-                                             "nocolor" -> "W", 
-                                             "shortstacks" -> "S", 
-                                             "fullstacks" -> "F", 
+                                             "dropteststarting" -> "N",
+                                             "droptestsucceeded" -> "C",
+                                             "droptestignored" -> "X",
+                                             "droptestpending" -> "E",
+                                             "dropsuitestarting" -> "H",
+                                             "dropsuitecompleted" -> "L",
+                                             "dropinfoprovided" -> "O",
+                                             "nocolor" -> "W",
+                                             "shortstacks" -> "S",
+                                             "fullstacks" -> "F",
                                              "durations" -> "D"
                                            )
-  
+
   private [scalatest] def extractContentInBracket(raw:String, it:Iterator[String], expected:String):String = {
     if(!raw.startsWith("("))
       throw new IllegalArgumentException("Invalid configuration, example valid configuration: " + expected)
     val withBrackets = if(raw.endsWith(")"))
                          raw
-                       else 
+                       else
                          parseUntilFound(raw, ")", it)
     withBrackets.substring(1, withBrackets.length() - 1)
   }
-    
+
   private[scalatest] def parseUntilFound(value:String, endsWith:String, it:Iterator[String]):String = {
     if(it.hasNext) {
       val next = it.next()
@@ -54,7 +54,7 @@ private[scalatest] object FriendlyParamsTranslator {
     else
       throw new IllegalArgumentException("Unable to find '" + endsWith + "'")
   }
-    
+
   private[scalatest] def parseCompoundParams(rawParamsStr:String, it:Iterator[String], expected:String):Array[String] = {
     val rawClassArr = extractContentInBracket(rawParamsStr, it, expected).split(",")
     for(rawClass <- rawClassArr) yield {
@@ -65,13 +65,13 @@ private[scalatest] object FriendlyParamsTranslator {
         trimmed
     }
   }
-    
+
   private[scalatest] def translateCompoundParams(rawParamsStr:String, it:Iterator[String], expected:String):String = {
     val paramsArr = parseCompoundParams(rawParamsStr, it, expected)
     paramsArr.mkString(" ")
   }
-    
-  private[scalatest] def parseParams(rawParamsStr:String, it:Iterator[String], validParamSet:Set[String], expected:String):Map[String, String] = {    
+
+  private[scalatest] def parseParams(rawParamsStr:String, it:Iterator[String], validParamSet:Set[String], expected:String):Map[String, String] = {
     if(rawParamsStr.length() > 0) {
       val paramsStr = extractContentInBracket(rawParamsStr, it, expected)
       val configsArr:Array[String] = paramsStr.split(",")
@@ -83,8 +83,8 @@ private[scalatest] object FriendlyParamsTranslator {
           if(!validParamSet.contains(key))
             throw new IllegalArgumentException("Invalid configuration: " + key)
           val rawValue = keyValueArr(1).trim()
-          val value:String = 
-            if(rawValue.startsWith("\"") && rawValue.endsWith("\"") && rawValue.length() > 1) 
+          val value:String =
+            if(rawValue.startsWith("\"") && rawValue.endsWith("\"") && rawValue.length() > 1)
               rawValue.substring(1, rawValue.length() - 1)
             else
               rawValue
@@ -98,10 +98,10 @@ private[scalatest] object FriendlyParamsTranslator {
     else
       Map[String, String]()
   }
-    
+
   private[scalatest] def translateConfigs(rawConfigs:String):String = {
     val configArr = rawConfigs.split(" ")
-    val translatedArr = configArr.map {config => 
+    val translatedArr = configArr.map {config =>
           val translatedOpt:Option[String] = validConfigMap.get(config)
           translatedOpt match {
             case Some(translated) => translated
@@ -110,7 +110,7 @@ private[scalatest] object FriendlyParamsTranslator {
         }
     translatedArr.mkString
   }
-    
+
   private[scalatest] def getTranslatedConfig(paramsMap:Map[String, String]):String = {
     val configOpt:Option[String] = paramsMap.get("config")
 	configOpt match {
@@ -118,17 +118,17 @@ private[scalatest] object FriendlyParamsTranslator {
 	  case None => ""
 	}
   }
-  
+
   private[scalatest] def translateCompound(inputString:String, friendlyName:String, dash:String, it:Iterator[String]):List[String] = {
     val translatedList = new ListBuffer[String]()
     val elements:Array[String] = parseCompoundParams(inputString.substring(friendlyName.length()), it, friendlyName + "(a, b, c)")
-    elements.foreach{ element => 
+    elements.foreach{ element =>
       translatedList += dash
       translatedList += element
     }
     translatedList.toList
   }
-  
+
   private[scalatest] def parseDashAndArgument(dash:String, replaceDeprecated:String, it:Iterator[String]):List[String] = {
     // Do not show deprecated message for now, until the friendly dsl is really ready
     //println(dash + " is deprecated, use " + replaceDeprecated + " instead.")
@@ -138,27 +138,27 @@ private[scalatest] object FriendlyParamsTranslator {
           translatedList += it.next
     translatedList.toList
   }
-  
+
   private[scalatest] def showDeprecated(inputString:String, replaceDeprecated:String):String = {
     // May be we can use a logger later
     // Do not show deprecated message for now, until the friendly dsl is really ready
     //println(inputString + " is deprecated, use " + replaceDeprecated + " instead.")
     inputString
   }
-  
-  private[scalatest] def translateKeyValue(value:String, elementName:String, translated:String, requiredAttrList:List[String], 
+
+  private[scalatest] def translateKeyValue(value:String, elementName:String, translated:String, requiredAttrList:List[String],
                                           optionalAttrList:List[String], exampleValid:String, it:Iterator[String]):List[String] = {
     val paramsMap:Map[String, String] = parseParams(value.substring(elementName.length()), it, (requiredAttrList ::: optionalAttrList).toSet, exampleValid)
     val translatedList = new ListBuffer[String]()
     translatedList += translated + getTranslatedConfig(paramsMap)
-    requiredAttrList.filter(attr => attr != "config").foreach { attr => 
+    requiredAttrList.filter(attr => attr != "config").foreach { attr =>
       val option:Option[String] = paramsMap.get(attr)
       option match {
         case Some(value) => translatedList += value
         case None => throw new IllegalArgumentException(elementName + " requires " + attr + " to be specified, example: " + exampleValid)
       }
     }
-    optionalAttrList.filter(attr => attr != "config").foreach { attr => 
+    optionalAttrList.filter(attr => attr != "config").foreach { attr =>
       val option:Option[String] = paramsMap.get(attr)
       option match {
         case Some(value) => translatedList += value
@@ -179,7 +179,7 @@ private[scalatest] object FriendlyParamsTranslator {
         println("WARNING: Argument 'include' has been deprecated and will be removed in a future version of ScalaTest.  Please use -n instead.")
         newArgs ++= List("-n", translateCompoundParams(s.substring("include".length()), it, "include(a, b, c)"))
       }
-      else if (s.startsWith("exclude")) { 
+      else if (s.startsWith("exclude")) {
         println("WARNING: Argument 'exclude' has been deprecated and will be removed in a future version of ScalaTest.  Please use -l instead.")
         newArgs ++= List("-l", translateCompoundParams(s.substring("exclude".length()), it, "exclude(a, b, c)"))
       }
@@ -224,12 +224,12 @@ private[scalatest] object FriendlyParamsTranslator {
         }
         val cssOpt:Option[String] = paramsMap.get("css")
         cssOpt match {
-          case Some(css) => 
+          case Some(css) =>
             if (css.length == 0)
               throw new IllegalArgumentException("html's css value cannot be empty string, example: html(directory=\"xxx\", css=\"xxx\")")
             newArgs += "-Y"
             newArgs += css
-          case None => 
+          case None =>
         }
       }
       else if (s.startsWith("reporterclass")) {
@@ -252,14 +252,14 @@ private[scalatest] object FriendlyParamsTranslator {
         newArgs += dashR
         newArgs += classname
       }
-      else if(s.startsWith("membersonly")) 
+      else if(s.startsWith("membersonly"))
         newArgs ++= translateCompound(s, "membersonly", "-m", it)
-      else if(s.startsWith("wildcard")) 
+      else if(s.startsWith("wildcard"))
         newArgs ++= translateCompound(s, "wildcard", "-w", it)
       else
         newArgs += s
     }
-    
+
     newArgs.toArray
   }
 

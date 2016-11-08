@@ -20,8 +20,8 @@ import scala.util.{Failure, Success}
 
 
 class StatusSpec extends fixture.FunSpec {
-  
-  protected type FixtureParam = { 
+
+  protected type FixtureParam = {
     def setCompleted()
     def isCompleted: Boolean
     // SKIP-SCALATESTJS-START
@@ -32,7 +32,7 @@ class StatusSpec extends fixture.FunSpec {
     def waitUntilCompleted()
     // SKIP-SCALATESTJS-END
   }
-  
+
    override protected def withFixture(test: OneArgTest): Outcome = {
      val status1 = new ScalaTestStatefulStatus
      test(status1) match {
@@ -42,40 +42,40 @@ class StatusSpec extends fixture.FunSpec {
        case other => other
      }
    }
-  
+
   describe("StatefulStatus ") {
     it("should by default return false for isCompleted") { status =>
       import scala.language.reflectiveCalls
       assert(!status.isCompleted)
     }
-    
+
     it("should return true for isCompleted after completes() is called") { status =>
       import scala.language.reflectiveCalls
       status.setCompleted()
       assert(status.isCompleted)
     }
-    
+
   // SKIP-SCALATESTJS-START
     it("should return true for succeeds() after completes() is called without fails()") { status =>
       import scala.language.reflectiveCalls
       status.setCompleted()
       assert(status.succeeds)
     }
-    
+
     it("should return false for succeeds() after completes is called after fails()") { status =>
       import scala.language.reflectiveCalls
       status.setFailed()
       status.setCompleted()
       assert(!status.succeeds)
     }
-    
+
     it("waitUntilCompleted should not block after completes() is called") { status =>
       import scala.language.reflectiveCalls
       status.setCompleted()
       status.waitUntilCompleted()
     }
     // SKIP-SCALATESTJS-END
-    
+
     it("should throw IllegalStateException when setFailed() is called after setCompleted() is set") { status =>
       import scala.language.reflectiveCalls
       status.setCompleted()
@@ -83,7 +83,7 @@ class StatusSpec extends fixture.FunSpec {
         status.setFailed()
       }
     }
-    
+
     it("should allow setCompleted() to be called multiple times") { status =>
       import scala.language.reflectiveCalls
       status.setCompleted()

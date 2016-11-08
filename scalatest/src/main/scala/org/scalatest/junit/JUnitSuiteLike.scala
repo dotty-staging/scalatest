@@ -29,7 +29,7 @@ import collection.immutable.TreeSet
 /**
  * Implementation trait for class <code>JUnitSuite</code>, which represents
  * a suite of tests that can be run with either JUnit or ScalaTest.
- * 
+ *
  * <p>
  * <a href="JUnitSuite.html"><code>JUnitSuite</code></a> is a class, not a
  * trait, to minimize compile time given there is a slight compiler overhead to
@@ -47,7 +47,7 @@ import collection.immutable.TreeSet
  * @author Bill Venners
  */
 trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
-                 
+
   // This is volatile, because who knows what Thread JUnit will fire through this.
   @volatile private var theTracker = new Tracker
 
@@ -71,7 +71,7 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
 
     throw new UnsupportedOperationException
   }
-  
+
   /**
    * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
    * trait, given this trait's <code>run</code> method delegates to JUnit to run
@@ -179,7 +179,7 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
 
     autoTagClassAnnotations(Map() ++ elements, this)
   }
-  
+
   private def getMethodForJUnitTestName(testName: String) =
       getClass.getMethod(testName, new Array[Class[_]](0): _*)
 
@@ -193,12 +193,12 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
    * @return a <code>TestData</code> instance for the specified test, which includes the specified config map
    */
   override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = {
-    val suiteTags = for { 
+    val suiteTags = for {
       a <- this.getClass.getAnnotations
       annotationClass = a.annotationType
       if annotationClass.isAnnotationPresent(classOf[TagAnnotation])
     } yield annotationClass.getName
-    val testTags: Set[String] = 
+    val testTags: Set[String] =
       try {
         if (hasIgnoreTag(testName))
           Set("org.scalatest.Ignore")
@@ -209,7 +209,7 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
         case e: IllegalArgumentException => Set.empty[String]
       }
     new TestData {
-      val configMap = theConfigMap 
+      val configMap = theConfigMap
       val name = testName
       val scopes = Vector.empty
       val text = testName
@@ -246,11 +246,11 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
           jUnitCore.run(Request.method(myClass, tn))
       }
     }
-    
+
     status.setCompleted()
     status
   }
-  
+
   /**
    * Suite style name.
    *

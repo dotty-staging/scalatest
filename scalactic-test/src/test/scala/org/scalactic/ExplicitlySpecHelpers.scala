@@ -18,12 +18,12 @@ package org.scalactic
 
 trait ExplicitlySpecHelpers {
 
-  val intInequality = 
+  val intInequality =
     new Equality[Int] {
       def areEqual(a: Int, b: Any): Boolean = a != b
     }
 
-  val intInequivalence = 
+  val intInequivalence =
     new Equivalence[Int] {
       def areEquivalent(a: Int, b: Int): Boolean = a != b
     }
@@ -32,12 +32,12 @@ trait ExplicitlySpecHelpers {
   class Apple extends Fruit("apple")
   class Orange extends Fruit("orange")
 
-  val fruitInequality = 
+  val fruitInequality =
     new Equality[Fruit] {
       def areEqual(a: Fruit, b: Any): Boolean = a != b
     }
 
-  val fruitInequivalence = 
+  val fruitInequivalence =
     new Equivalence[Fruit] {
       def areEquivalent(a: Fruit, b: Fruit): Boolean = a != b
     }
@@ -57,12 +57,12 @@ trait ExplicitlySpecHelpers {
       def normalized(s: String): String = s.trim
     }
 
-  val stringInequality = 
+  val stringInequality =
     new Equality[String] {
       def areEqual(a: String, b: Any): Boolean = a != b
     }
 
-  val stringInequivalence = 
+  val stringInequivalence =
     new Equivalence[String] {
       def areEquivalent(a: String, b: String): Boolean = a != b
     }

@@ -22,11 +22,11 @@ package org.scalatest
  * <table><tr><td class="usage">
  * <strong>Recommended Usage</strong>:
  * <code>AsyncFunSpec</code> is intended to enable users of <a href="FunSpec.html"><code>FunSpec</code></a>
- * to write non-blocking asynchronous tests that are consistent with their traditional <code>FunSpec</code> tests. 
+ * to write non-blocking asynchronous tests that are consistent with their traditional <code>FunSpec</code> tests.
  * <em>Note: <code>AsyncFunSpec</code> is intended for use in special situations where non-blocking asynchronous
  * testing is needed, with class <code>FunSpec</code> used for general needs.</em>
  * </td></tr></table>
- * 
+ *
  * <p>
  * Given a <code>Future</code> returned by the code you are testing,
  * you need not block until the <code>Future</code> completes before
@@ -84,12 +84,12 @@ package org.scalatest
  * <p>
  * In an <code>AsyncWordSpec</code> you write a one (or more) sentence specification for each bit of behavior you wish to
  * specify and test. Each specification sentence has a
- * "subject," which is sometimes called the <em>system under test</em> (or SUT). The 
+ * "subject," which is sometimes called the <em>system under test</em> (or SUT). The
  * subject is entity being specified and tested and also serves as the subject of the sentences you write for each test. A subject
  * can be followed by one of three verbs, <code>should</code>, <code>must</code>, or <code>can</code>, and a block. Here are some
  * examples:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * "A Stack" should {
  *   // ...
@@ -101,7 +101,7 @@ package org.scalatest
  *   // ...
  * }
  * </pre>
- * 
+ *
  * <p>
  * You can describe a subject in varying situations by using a <code>when</code> clause. A <code>when</code> clause
  * follows the subject and precedes a block. In the block after the <code>when</code>, you place strings that describe a situation or a state
@@ -121,7 +121,7 @@ package org.scalatest
  *   }
  * }
  * </pre>
- * 
+ *
  * <p>
  * When you are ready to finish a sentence, you write a string followed by <code>in</code> and a block that
  * contains the code of the test.
@@ -226,22 +226,22 @@ package org.scalatest
  * <code>AsyncWordSpec</code> extends <a href="AsyncTestSuite.html"><code>AsyncTestSuite</code></a>, which provides an
  * implicit <code>scala.concurrent.ExecutionContext</code>
  * named <code>executionContext</code>. This
- * execution context is used by <code>AsyncWordSpec</code> to 
+ * execution context is used by <code>AsyncWordSpec</code> to
  * transform the <code>Future[Assertion]</code>s returned by each test
  * into the <a href="FutureOutcome.html"><code>FutureOutcome</code></a> returned by the <code>test</code> function
  * passed to <code>withFixture</code>.
  * This <code>ExecutionContext</code> is also intended to be used in the tests,
  * including when you map assertions onto futures.
  * </p>
- * 
+ *
  * <p>
  * On both the JVM and Scala.js, the default execution context provided by ScalaTest's asynchronous
  * testing styles confines execution to a single thread per test. On JavaScript, where single-threaded
  * execution is the only possibility, the default execution context is
- * <code>scala.scalajs.concurrent.JSExecutionContext.Implicits.queue</code>. On the JVM, 
+ * <code>scala.scalajs.concurrent.JSExecutionContext.Implicits.queue</code>. On the JVM,
  * the default execution context is a <em>serial execution context</em> provided by ScalaTest itself.
  * </p>
- * 
+ *
  * <p>
  * When ScalaTest's serial execution context is called upon to execute a task, that task is recorded
  * in a queue for later execution. For example, one task that will be placed in this queue is the
@@ -280,7 +280,7 @@ package org.scalatest
  * concurrently execute tests you have competing for threads from the same limited thread pool, the more likely it
  * will be that tests will intermitently fail due to timeouts.
  * </p>
- * 
+ *
  * <p>
  * Using ScalaTest's serial execution context on the JVM will ensure the same thread that produced the <code>Future[Assertion]</code>
  * returned from a test body is also used to execute any tasks given to the execution context while executing the test
@@ -296,8 +296,8 @@ package org.scalatest
  * This thread confinement strategy does mean, however, that when you are using the default execution context on the JVM, you
  * must be sure to <em>never block</em> in the test body waiting for a task to be completed by the
  * execution context. If you block, your test will never complete. This kind of problem will be obvious, because the test will
- * consistently hang every time you run it. (If a test is hanging, and you're not sure which one it is, 
- * enable <a href="Runner.scala#slowpokeNotifications">slowpoke notifications</a>.) If you really do 
+ * consistently hang every time you run it. (If a test is hanging, and you're not sure which one it is,
+ * enable <a href="Runner.scala#slowpokeNotifications">slowpoke notifications</a>.) If you really do
  * want to block in your tests, you may wish to just use a
  * traditional <a href="WordSpec.html"><code>WordSpec</code></a> with
  * <a href="concurrent/ScalaFutures.html"><code>ScalaFutures</code></a> instead. Alternatively, you could override
@@ -343,15 +343,15 @@ package org.scalatest
  * <p>
  * If you want the tests of an <code>AsyncWordSpec</code> to be executed in parallel, you
  * must mix in <code>ParallelTestExecution</code> and enable parallel execution of tests in your build.
- * You enable parallel execution in <a href="tools/Runner$.html"><code>Runner</code></a> with the <code>-P</code> command line flag. 
+ * You enable parallel execution in <a href="tools/Runner$.html"><code>Runner</code></a> with the <code>-P</code> command line flag.
  * In the ScalaTest Maven Plugin, set <code>parallel</code> to <code>true</code>.
  * In <code>sbt</code>, parallel execution is the default, but to be explicit you can write:
- * 
+ *
  * <pre>
  * parallelExecution in Test := true // the default in sbt
  * </pre>
- * 
- * On the JVM, if both <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in and 
+ *
+ * On the JVM, if both <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in and
  * parallel execution is enabled in the build, tests in an async-style suite will be started in parallel, using threads from
  * the <a href="Distributor"><code>Distributor</code></a>, and allowed to complete in parallel, using threads from the
  * <code>executionContext</code>. If you are using ScalaTest's serial execution context, the JVM default, asynchronous tests will
@@ -363,7 +363,7 @@ package org.scalatest
  * you need not worry about synchronizing access to shared mutable state accessed by transformations and callbacks of <code>Future</code>s
  * inside the test.
  * </p>
- * 
+ *
  * <p>
  * If <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> is mixed in but
  * parallel execution of suites is <em>not</em> enabled, asynchronous tests on the JVM will be started sequentially, by the single thread
@@ -375,11 +375,11 @@ package org.scalatest
  * however, even though tests will be started sequentially by one thread, they will be allowed to run concurrently using threads from the
  * execution context's thread pool.
  * </p>
- * 
+ *
  * <p>
  * The latter behavior is essentially what you'll see on Scala.js when you execute a suite that mixes in <code>ParallelTestExecution</code>.
  * Because only one thread exists when running under JavaScript, you can't "enable parallel execution of suites." However, it may
- * still be useful to run tests in parallel on Scala.js, because tests can invoke API calls that are truly asynchronous by calling into 
+ * still be useful to run tests in parallel on Scala.js, because tests can invoke API calls that are truly asynchronous by calling into
  * external APIs that take advantage of non-JavaScript threads. Thus on Scala.js, <code>ParallelTestExecution</code> allows asynchronous
  * tests to run in parallel, even though they must be started sequentially. This may give you better performance when you are using API
  * calls in your Scala.js tests that are truly asynchronous.
@@ -635,7 +635,7 @@ package org.scalatest
  * <p>
  * One of the parameters to <code>AsyncWordSpec</code>'s <code>run</code> method is a <a href="Reporter.html"><code>Reporter</code></a>, which
  * will collect and report information about the running suite of tests.
- * Information about suites and tests that were run, whether tests succeeded or failed, 
+ * Information about suites and tests that were run, whether tests succeeded or failed,
  * and tests that were ignored will be passed to the <code>Reporter</code> as the suite runs.
  * Most often the reporting done by default by <code>AsyncWordSpec</code>'s methods will be sufficient, but
  * occasionally you may wish to provide custom information to the <code>Reporter</code> from a test.
@@ -644,7 +644,7 @@ package org.scalatest
  * You can pass the extra information to the <code>Informer</code> via its <code>apply</code> method.
  * The <code>Informer</code> will then pass the information to the <code>Reporter</code> via an <a href="events/InfoProvided.html"><code>InfoProvided</code></a> event.
  * </p>
- * 
+ *
  * <p>
  * One use case for the <code>Informer</code> is to pass more information about a specification to the reporter. For example,
  * the <a href="GivenWhenThen.html"><code>GivenWhenThen</code></a> trait provides methods that use the implicit <code>info</code> provided by <code>AsyncWordSpec</code>
@@ -653,26 +653,26 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.asyncwordspec.info
- * 
+ *
  * import collection.mutable
  * import org.scalatest._
- * 
+ *
  * class SetSpec extends AsyncWordSpec with GivenWhenThen {
- *   
+ *
  *   "A mutable Set" should {
  *     "allow an element to be added" in {
  *       Given("an empty mutable Set")
  *       val set = mutable.Set.empty[String]
- * 
+ *
  *       When("an element is added")
  *       set += "clarity"
- * 
+ *
  *       Then("the Set should have size 1")
  *       assert(set.size === 1)
- * 
+ *
  *       And("the Set should contain the added element")
  *       assert(set.contains("clarity"))
- * 
+ *
  *       info("That's all folks!")
  *       succeed
  *     }
@@ -688,10 +688,10 @@ package org.scalatest
  * scala&gt; org.scalatest.run(new SetSpec)
  * <span class="stGreen">A mutable Set
  * - should allow an element to be added
- *   + Given an empty mutable Set 
- *   + When an element is added 
- *   + Then the Set should have size 1 
- *   + And the Set should contain the added element 
+ *   + Given an empty mutable Set
+ *   + When an element is added
+ *   + Then the Set should have size 1
+ *   + And the Set should contain the added element
  *   + That's all folks!</span>
  * </pre>
  *
@@ -831,7 +831,7 @@ package org.scalatest
  *
  * <p>
  * Another example is <a href="tools/Runner$.html#slowpokeNotifications">slowpoke notifications</a>.
- * If you find a test is taking a long time to complete, but you're not sure which test, you can enable 
+ * If you find a test is taking a long time to complete, but you're not sure which test, you can enable
  * slowpoke notifications. ScalaTest will use an <code>Alerter</code> to fire an event whenever a test has been running
  * longer than a specified amount of time.
  * </p>
@@ -1838,19 +1838,19 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.asyncwordspec.composingbeforeandaftereach
- * 
+ *
  * import org.scalatest._
  * import org.scalatest.BeforeAndAfterEach
  * import collection.mutable.ListBuffer
  * import scala.concurrent.Future
  * import scala.concurrent.ExecutionContext
- * 
+ *
  * // Defining actor messages
  * sealed abstract class StringOp
  * case object Clear extends StringOp
  * case class Append(value: String) extends StringOp
  * case object GetValue
- * 
+ *
  * class StringBuilderActor { // Simulating an actor
  *   private final val sb = new StringBuilder
  *   def !(op: StringOp): Unit =
@@ -1865,7 +1865,7 @@ package org.scalatest
  *       synchronized { sb.toString }
  *     }
  * }
- * 
+ *
  * class StringBufferActor {
  *   private final val buf = ListBuffer.empty[String]
  *   def !(op: StringOp): Unit =
@@ -1880,36 +1880,36 @@ package org.scalatest
  *       synchronized { buf.toList }
  *     }
  * }
- * 
+ *
  * trait Builder extends BeforeAndAfterEach { this: Suite =&gt;
- * 
+ *
  *   final val builderActor = new StringBuilderActor
- * 
+ *
  *   override def beforeEach() {
  *     builderActor ! Append("ScalaTest is ")
  *     super.beforeEach() // To be stackable, must call super.beforeEach
  *   }
- * 
+ *
  *   override def afterEach() {
  *     try super.afterEach() // To be stackable, must call super.afterEach
  *     finally builderActor ! Clear
  *   }
  * }
- * 
+ *
  * trait Buffer extends BeforeAndAfterEach { this: Suite =&gt;
- * 
+ *
  *   final val bufferActor = new StringBufferActor
- * 
+ *
  *   override def afterEach() {
  *     try super.afterEach() // To be stackable, must call super.afterEach
  *     finally bufferActor ! Clear
  *   }
  * }
- * 
+ *
  * class ExampleSpec extends AsyncWordSpec with Builder with Buffer {
- * 
+ *
  *   "Testing" should {
- * 
+ *
  *     "be easy" in {
  *       builderActor ! Append("easy!")
  *       val futureString = builderActor ? GetValue
@@ -1922,7 +1922,7 @@ package org.scalatest
  *         succeed
  *       }
  *     }
- * 
+ *
  *     "be fun" in {
  *       builderActor ! Append("fun!")
  *       val futureString = builderActor ? GetValue

@@ -29,14 +29,14 @@ import scala.language.implicitConversions
  * as efficient as an <code>Int</code>, being boxed only when an <code>Int</code>
  * would have been boxed.
  * </p>
- * 
+ *
  * <p>
  * The <code>PosInt.apply</code> factory method is implemented in terms of a macro that
  * checks literals for validity at compile time. Calling <code>PosInt.apply</code> with
  * a literal <code>Int</code> value will either produce a valid <code>PosInt</code> instance
  * at run time or an error at compile time. Here's an example:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import anyvals._
  * import anyvals._
@@ -83,7 +83,7 @@ import scala.language.implicitConversions
  * scala&gt; PosInt.from(y)
  * res4: Option[org.scalactic.anyvals.PosInt] = None
  * </pre>
- * 
+ *
  * <p>
  * The <code>PosInt.apply</code> factory method is marked implicit, so that you can pass literal <code>Int</code>s
  * into methods that require <code>PosInt</code>, and get the same compile-time checking you get when calling
@@ -123,7 +123,7 @@ import scala.language.implicitConversions
  * </p>
  *
  * @param value The <code>Int</code> value underlying this <code>PosInt</code>.
- */ 
+ */
 final class PosInt private (val value: Int) extends AnyVal {
 
   /**
@@ -701,7 +701,7 @@ object PosInt {
    * This factory method differs from the <code>apply</code> factory method
    * in that <code>apply</code> is implemented via a macro that inspects
    * <code>Int</code> literals at compile time, whereas <code>from</code> inspects
-   * <code>Int</code> values at run time. 
+   * <code>Int</code> values at run time.
    * </p>
    *
    * @param value the <code>Int</code> to inspect, and if positive, return
@@ -723,7 +723,7 @@ object PosInt {
    * expression at compile time. If
    * the expression is a positive <code>Int</code> literal, <em>i.e.</em>, with a
    * value greater than 0, it will return a <code>PosInt</code> representing that value.
-   * Otherwise, the passed <code>Int</code> 
+   * Otherwise, the passed <code>Int</code>
    * expression is either a literal that is 0 or negative, or is not a literal, so
    * this method will give a compiler error.
    * </p>
@@ -732,7 +732,7 @@ object PosInt {
    * This factory method differs from the <code>from</code> factory method
    * in that this method is implemented via a macro that inspects
    * <code>Int</code> literals at compile time, whereas <code>from</code> inspects
-   * <code>Int</code> values at run time. 
+   * <code>Int</code> values at run time.
    * </p>
    *
    * @param value the <code>Int</code> literal expression to inspect at compile time,
@@ -848,5 +848,5 @@ object PosInt {
   implicit val posIntOrd: Ordering[PosInt] =
     new Ordering[PosInt] {
       def compare(x: PosInt, y: PosInt): Int = x - y
-    } 
+    }
 }

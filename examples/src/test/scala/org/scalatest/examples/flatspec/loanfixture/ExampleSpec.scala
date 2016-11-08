@@ -63,7 +63,7 @@ class ExampleSpec extends FlatSpec {
     writer.flush()
     assert(file.length === 24)
   }
-  
+
   // This test needs the database fixture
   "Test code" should "be readable" in withDatabase { db =>
     db.append("readable!")

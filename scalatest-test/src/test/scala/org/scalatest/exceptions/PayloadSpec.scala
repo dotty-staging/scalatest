@@ -60,7 +60,7 @@ class PayloadSpec extends FlatSpec with Matchers with TableDrivenPropertyChecks 
     val iae = new IllegalArgumentException
     val caught = intercept[IllegalArgumentException] {
       withPayload("howdy") {
-        throw iae 
+        throw iae
       }
     }
     caught should be theSameInstanceAs (iae)
@@ -70,18 +70,18 @@ class PayloadSpec extends FlatSpec with Matchers with TableDrivenPropertyChecks 
     forAll (examples) { e =>
       val caught = intercept[PayloadField] {
         withPayload(null) {
-          throw e 
+          throw e
         }
       }
       caught should be theSameInstanceAs (e)
     }
   }
-  
+
   it should "given a payload, should throw a new ModifiablePayload of the same class with the given payload" in {
     forAll (examples) { e =>
       val caught = intercept[PayloadField] {
         withPayload("a payload") {
-          throw e 
+          throw e
         }
       }
       caught should not be theSameInstanceAs (e)
@@ -92,7 +92,7 @@ class PayloadSpec extends FlatSpec with Matchers with TableDrivenPropertyChecks 
 
   it should "forward the payload to be carried in TestFailed event" in {
     forAll (examples) { e =>
-      val a = 
+      val a =
         new FunSpec {
           it("should do something") {
             withPayload("a payload") {
@@ -103,56 +103,56 @@ class PayloadSpec extends FlatSpec with Matchers with TableDrivenPropertyChecks 
       val rep = new EventRecordingReporter()
       a.run(None, Args(rep))
       e match {
-        case tce: TestCanceledException => 
+        case tce: TestCanceledException =>
           rep.testCanceledEventsReceived.length should be (1)
           rep.testCanceledEventsReceived(0).payload should be (Some("a payload"))
-        case _ => 
+        case _ =>
           rep.testFailedEventsReceived.length should be (1)
           rep.testFailedEventsReceived(0).payload should be (Some("a payload"))
       }
     }
   }
-  
+
   it should "infer the type of the result of the passed in function" in {
     val result: Int = withPayload("hi") { 22 }
     assert(result === 22)
   }
-  
+
   it should "be able to accept by-name payload" in {
     val result: String = withPayload(() => 128) { "hello" }
     assert(result === "hello")
   }
-  
+
   it should "work with withFixture" in {
-    forAll(examples) { e => 
-      val a = 
+    forAll(examples) { e =>
+      val a =
         new org.scalatest.fixture.FunSpec {
           type FixtureParam = String
-        
+
           override def withFixture(test: OneArgTest) = {
             withPayload("a payload") {
               test("something")
             }
           }
-        
-          it("should do something") { p => 
+
+          it("should do something") { p =>
             throw e
           }
         }
       val rep = new EventRecordingReporter()
       a.run(None, Args(rep))
-      
+
       e match {
-        case tce: TestCanceledException => 
+        case tce: TestCanceledException =>
           rep.testCanceledEventsReceived.length should be (1)
           rep.testCanceledEventsReceived(0).payload should be (Some("a payload"))
-        case _ => 
+        case _ =>
           rep.testFailedEventsReceived.length should be (1)
           rep.testFailedEventsReceived(0).payload should be (Some("a payload"))
       }
     }
   }
-  
+
   it should "return Failed that contains TestFailedException and added payload" in {
     val failed = Failed(new TestFailedException((_: StackDepthException) => Some("boom!"), None, source.Position.here))
     val result = withPayload("a payload") { failed }
@@ -160,14 +160,14 @@ class PayloadSpec extends FlatSpec with Matchers with TableDrivenPropertyChecks 
     result.exception shouldBe a [TestFailedException]
     result.exception.asInstanceOf[TestFailedException].payload shouldBe Some("a payload")
   }
-  
+
   it should "return original Failed that contains the RuntimeException and without payload" in {
     val failed = Failed(new RuntimeException("boom!"))
     val result = withPayload("a payload") { failed }
     result should be theSameInstanceAs failed
     result.exception.getMessage shouldBe "boom!"
   }
-  
+
   it should "return Canceled that contains TestCanceledException and added payload" in {
     val canceled = Canceled(new TestCanceledException("rollback!", 3))
     val result = withPayload("a payload") { canceled }
@@ -175,7 +175,7 @@ class PayloadSpec extends FlatSpec with Matchers with TableDrivenPropertyChecks 
     result.exception shouldBe a [TestCanceledException]
     result.exception.asInstanceOf[TestCanceledException].payload shouldBe Some("a payload")
   }
-  
+
   it should "return original Canceled that contains the RuntimeException and without payload" in {
     val canceled = Canceled(new RuntimeException("boom!"))
     val result = withPayload("a payload") { canceled }
@@ -184,13 +184,13 @@ class PayloadSpec extends FlatSpec with Matchers with TableDrivenPropertyChecks 
     result.exception.asInstanceOf[TestCanceledException].payload shouldBe Some("a payload")
     result.exception.asInstanceOf[TestCanceledException].getCause.getMessage shouldBe "boom!"
   }
-  
+
   it should "return original Pending" in {
     val pending = Pending
     val result = withPayload("a payload") { pending }
     result should be theSameInstanceAs pending
   }
-  
+
   it should "return original Succeeded" in {
     val succeeded = Succeeded
     val result = withPayload("a payload") { succeeded }

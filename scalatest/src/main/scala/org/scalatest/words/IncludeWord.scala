@@ -42,7 +42,7 @@ final class IncludeWord {
     new Matcher[String] {
       def apply(left: String): MatchResult =
         MatchResult(
-          left.indexOf(expectedSubstring) >= 0, 
+          left.indexOf(expectedSubstring) >= 0,
           Resources.rawDidNotIncludeSubstring,
           Resources.rawIncludedSubstring,
           Vector(left, expectedSubstring)
@@ -60,18 +60,18 @@ final class IncludeWord {
    * </pre>
    */
   def regex[T <: String](right: T): Matcher[T] = regex(right.r)
-  
+
   /**
    * This method enables the following syntax:
    *
    * <pre class="stHighlight">
-   * string should not { include regex ("a(b*)c" withGroup "bb") } 
+   * string should not { include regex ("a(b*)c" withGroup "bb") }
    *                             ^
    * </pre>
-   */	
-  def regex(regexWithGroups: RegexWithGroups) = 
+   */
+  def regex(regexWithGroups: RegexWithGroups) =
     new Matcher[String] {
-      def apply(left: String): MatchResult = 
+      def apply(left: String): MatchResult =
         includeRegexWithGroups(left, regexWithGroups.regex, regexWithGroups.groups)
       override def toString: String = "include regex " + Prettifier.default(regexWithGroups)
     }
@@ -96,7 +96,7 @@ final class IncludeWord {
         )
       override def toString: String = "include regex \"" + Prettifier.default(expectedRegex) + "\""
     }
-  
+
   /**
    * Overrides toString to return "include"
    */

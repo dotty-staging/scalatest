@@ -146,7 +146,7 @@ class SuiteSpec extends org.scalatest.FunSpec with PrivateMethodTester {
       a.run(None, Args(rep))
       assert(!rep.eventsReceived.exists(_.isInstanceOf[TestFailed]))
     }
-    
+
     it("should not pass a NoArgTest to withFixture for test methods that take a Fixture") {
       class MySuite extends TestSuite { // Also should no longer work. Why is it not failing?
         type FixtureParam = String
@@ -249,12 +249,12 @@ class SuiteSpec extends org.scalatest.FunSpec with PrivateMethodTester {
     }
 */
   }
-  
+
   describe("OneArgTest") {
     it("should offer a factory method that takes another OneArgTest and a function that implements apply") {
       class PassedFixtureWasSpec extends FunSpec {
         type FixtureParam = String
-        def withFixture(test: OneArgTest): Outcome = { 
+        def withFixture(test: OneArgTest): Outcome = {
           // These will fail the test if the wrapped tests's TestData is not passed through
           assert(test.name == "some test")
           assert(test.configMap == ConfigMap.empty)

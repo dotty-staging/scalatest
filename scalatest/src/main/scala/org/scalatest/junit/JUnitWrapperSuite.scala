@@ -73,7 +73,7 @@ class JUnitWrapperSuite(junitClassName: String, loader: ClassLoader) extends Sui
     jUnitCore.addListener(new MyRunListener(reporter, configMap, tracker, status))
 
     jUnitCore.run(junitClass)
-    
+
     status.setCompleted()
     status
   }

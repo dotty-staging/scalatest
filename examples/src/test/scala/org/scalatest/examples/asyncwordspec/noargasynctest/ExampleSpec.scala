@@ -23,7 +23,7 @@ class ExampleSpec extends AsyncWordSpec {
 
   override def withFixture(test: NoArgAsyncTest) = {
 
-    super.withFixture(test) onFailedThen { _ => 
+    super.withFixture(test) onFailedThen { _ =>
       val currDir = new File(".")
       val fileNames = currDir.list()
       info("Dir snapshot: " + fileNames.mkString(", "))

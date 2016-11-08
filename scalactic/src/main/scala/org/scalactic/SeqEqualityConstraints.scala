@@ -91,7 +91,7 @@ import TripleEqualsSupport._
  *               Vector(1, 2) === ListBuffer(new Date, new Date)
  *                            ^
  * </pre>
- * 
+ *
  * @author Bill Venners
  */
 trait SeqEqualityConstraints {
@@ -106,7 +106,7 @@ trait SeqEqualityConstraints {
 }
 
 /**
- * Companion object that facilitates the importing of <code>SeqEqualityConstraints</code> members as 
+ * Companion object that facilitates the importing of <code>SeqEqualityConstraints</code> members as
  * an alternative to mixing it in. One use case is to import <code>SeqEqualityConstraints</code> members so you can use
  * them in the Scala interpreter.
  */

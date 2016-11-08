@@ -23,19 +23,19 @@ import org.scalactic._
 class MatchersSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   describe("Matchers ") {
-    
+
     describe("equal(Spread) method returns Matcher") {
-      
+
       val mt = equal (8 +- 1)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("equal (8 +- 1)")
       }
-      
+
       val mr = mt(9)
-      
+
       it("should have correct MatchResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe "9 did not equal 8 plus or minus 1"
@@ -51,9 +51,9 @@ class MatchersSpec extends FunSpec {
         mr.midSentenceFailureMessageArgs shouldBe Vector(9, 8, 1)
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(9, 8, 1)
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatchResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe "9 equaled 8 plus or minus 1"
@@ -69,19 +69,19 @@ class MatchersSpec extends FunSpec {
         nmr.midSentenceFailureMessageArgs shouldBe Vector(9, 8, 1)
         nmr.midSentenceNegatedFailureMessageArgs shouldBe Vector(9, 8, 1)
       }
-      
+
     }
-    
+
     describe("equal(Null) method returns Matcher") {
-      
+
       val mt = equal (null)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("equal (null)")
       }
-      
+
       val mr = mt(null)
-      
+
       it("should have correct MatchResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe "null did not equal null"
@@ -97,9 +97,9 @@ class MatchersSpec extends FunSpec {
         mr.midSentenceFailureMessageArgs shouldBe Vector(null)
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector.empty
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatchResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe "The reference equaled null"
@@ -115,23 +115,23 @@ class MatchersSpec extends FunSpec {
         nmr.midSentenceFailureMessageArgs shouldBe Vector.empty
         nmr.midSentenceNegatedFailureMessageArgs shouldBe Vector(null)
       }
-      
+
     }
 
     // SKIP-SCALATESTJS-START
     describe("HavePropertyMatcherGenerator ") {
-      
+
       describe("apply(Any) returns HavePropertyMatcher") {
-        
+
         val generator = new HavePropertyMatcherGenerator('name, Prettifier.default, source.Position.here)
         val havePropMatcher = generator("test")
-        
+
         it("should have pretty toString") {
           havePropMatcher.toString should be ("HavePropertyMatcher[AnyRef, Any](expectedValue = \"test\")")
         }
-        
+
       }
-      
+
     }
     // SKIP-SCALATESTJS-END
 
@@ -169,13 +169,13 @@ class MatchersSpec extends FunSpec {
         word.toString should be ("ResultOfFullyMatchWordForString(\"Bob\", true)")
       }
     }
-    
+
     describe("RegexWord ") {
-      
+
       it("should have pretty toString") {
         regex.toString should be ("regex")
       }
-      
+
     }
 
     describe("KeyWord ") {

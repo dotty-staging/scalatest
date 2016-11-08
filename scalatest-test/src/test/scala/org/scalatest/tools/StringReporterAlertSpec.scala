@@ -28,7 +28,7 @@ class StringReporterAlertSpec extends UnitSpec {
   describe("A StringReporter") {
     describe("when presentUnformatted is false but no formatter is supplied") {
       it("should display AlertProvided messages in yellow and unformatted") {
-      
+
         fragmentsForEvent(
           event = AlertProvided(new Ordinal(0), "some alert", Some(NameInfo("a suite name", "a suite Id", Some("a suite class"), Some("a test name")))),
           presentUnformatted = false,
@@ -44,7 +44,7 @@ class StringReporterAlertSpec extends UnitSpec {
         ) shouldEqual Vector(Fragment(Resources.alertProvided(AlertText), AnsiYellow))
       }
       it("should display NoteProvided messages in green and unformatted") {
-      
+
         fragmentsForEvent(
           event = NoteProvided(new Ordinal(0), "some update", Some(NameInfo("a suite name", "a suite Id", Some("a suite class"), Some("a test name")))),
           presentUnformatted = false,
@@ -62,7 +62,7 @@ class StringReporterAlertSpec extends UnitSpec {
     }
     describe("when a formatter is supplied but presentUnformatted is true") {
       it("should display AlertProvided messages in yellow and unformatted") {
-      
+
         fragmentsForEvent(
           event =
             AlertProvided(
@@ -85,7 +85,7 @@ class StringReporterAlertSpec extends UnitSpec {
         ) shouldEqual Vector(Fragment(Resources.alertProvided(AlertText), AnsiYellow))
       }
       it("should display NoteProvided messages in green and unformatted") {
-      
+
         fragmentsForEvent(
           event =
             NoteProvided(
@@ -110,7 +110,7 @@ class StringReporterAlertSpec extends UnitSpec {
     }
     describe("when a formatter is supplied and presentUnformatted is false") {
       it("should display AlertProvided messages formatted in yellow ") {
-      
+
         fragmentsForEvent(
           event =
             AlertProvided(

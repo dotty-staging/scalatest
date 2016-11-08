@@ -34,7 +34,7 @@ import org.scalatest.time.Span
  * See the documentation for supertrait <a href="Futures.html"><code>Futures</code></a> for the details on the syntax this trait provides
  * for testing with Java futures.
  * </p>
- * 
+ *
  * @author Bill Venners
  */
 trait JavaFutures extends Futures {
@@ -105,7 +105,7 @@ trait JavaFutures extends Futures {
             }
           case e: java.util.concurrent.ExecutionException =>
             val cause = e.getCause
-            val exToReport = if (cause == null) e else cause 
+            val exToReport = if (cause == null) e else cause
             if (anExceptionThatShouldCauseAnAbort(exToReport) || exToReport.isInstanceOf[TestPendingException] || exToReport.isInstanceOf[TestCanceledException]) {
               throw exToReport
             }

@@ -48,5 +48,5 @@ class ExampleSpec extends fixture.FreeSpec {
       f.writer.flush()
       assert(f.file.length === 17)
     }
-  } 
+  }
 }

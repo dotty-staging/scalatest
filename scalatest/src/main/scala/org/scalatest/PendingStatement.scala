@@ -16,7 +16,7 @@
 package org.scalatest
 
 /**
- * Trait mixed into the result type of the <code>pending</code> statement of trait <code>Assertions</code>, which always throws <code>TestPendingException</code>. 
+ * Trait mixed into the result type of the <code>pending</code> statement of trait <code>Assertions</code>, which always throws <code>TestPendingException</code>.
  *
  * <p>
  * This type is used primarily to facilitate the <code>is (pending)</code> syntax of

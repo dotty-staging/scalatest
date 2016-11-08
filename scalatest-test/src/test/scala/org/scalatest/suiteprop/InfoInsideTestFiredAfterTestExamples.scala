@@ -61,7 +61,7 @@ class InfoInsideTestFiredAfterTestExamples extends SuiteExamples {
     }
     override val theTestName = "testMethod(Informer)"
   }
-  
+
   class FixtureSpecExample extends StringFixtureSpec with Services {
     def `test method`(s: String) = {
       info(msg)
@@ -111,7 +111,7 @@ class InfoInsideTestFiredAfterTestExamples extends SuiteExamples {
       info(msg)
     }
   }
-  
+
   class NestedFixtureFunSpecExample extends StringFixtureFunSpec with NestedTestName {
     describe("A subject") {
       it("should test name") { s =>
@@ -136,7 +136,7 @@ class InfoInsideTestFiredAfterTestExamples extends SuiteExamples {
     }
     //SCALATESTJS-ONLY override def newInstance = new PathFunSpecExample
   }
-    
+
   class NestedPathFunSpecExample extends path.FunSpec with NestedTestName {
     describe("A subject") {
       it("should test name") {
@@ -309,7 +309,7 @@ class InfoInsideTestFiredAfterTestExamples extends SuiteExamples {
       info(msg)
     }
   }
-  
+
   class ShorthandSubjectFixtureFlatSpecExample extends StringFixtureFlatSpec with NestedTestName {
     "A subject" should "test name" in { s =>
       info(msg)
@@ -348,7 +348,7 @@ class InfoInsideTestFiredAfterTestExamples extends SuiteExamples {
       info(msg)
     }
   }
-  
+
   class ShorthandSubjectFixtureFlatSpecWithMustExample extends StringFixtureFlatSpec with NestedTestNameWithMust {
     "A subject" must "test name" in { s =>
       info(msg)
@@ -387,7 +387,7 @@ class InfoInsideTestFiredAfterTestExamples extends SuiteExamples {
       info(msg)
     }
   }
-  
+
   class ShorthandSubjectFixtureFlatSpecWithCanExample extends StringFixtureFlatSpec with NestedTestNameWithCan {
     "A subject" can "test name" in { s =>
       info(msg)
@@ -448,7 +448,7 @@ class InfoInsideTestFiredAfterTestExamples extends SuiteExamples {
     }
     //SCALATESTJS-ONLY override def newInstance = new PathFreeSpecExample
   }
-    
+
   class NestedPathFreeSpecExample extends path.FreeSpec with NestedTestName {
     "A subject" - {
       "should test name" in {
@@ -540,7 +540,7 @@ class InfoInsideTestFiredAfterTestExamples extends SuiteExamples {
   lazy val deeplyNestedWordSpecWithMust = new DeeplyNestedWordSpecWithMustExample
   lazy val nestedFixtureWordSpecWithMust = new NestedFixtureWordSpecWithMustExample
   lazy val deeplyNestedFixtureWordSpecWithMust = new DeeplyNestedFixtureWordSpecWithMustExample
-  
+
   lazy val nestedWordSpecWithCan = new NestedWordSpecWithCanExample
   lazy val deeplyNestedWordSpecWithCan = new DeeplyNestedWordSpecWithCanExample
   lazy val nestedFixtureWordSpecWithCan = new NestedFixtureWordSpecWithCanExample

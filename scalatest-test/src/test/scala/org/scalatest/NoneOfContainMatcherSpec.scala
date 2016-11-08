@@ -25,13 +25,13 @@ class NoneOfContainMatcherSpec extends FunSpec {
   private val prettifier = Prettifier.default
 
   describe("noneOf ") {
-    
+
     def checkStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       e.message should be (Some(FailureMessages.containedAtLeastOneOf(prettifier, left, UnquotedString(right.mkString(", ")))))
       e.failedCodeFileName should be (Some("NoneOfContainMatcherSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should succeed when left List contains elements available in right List") {
       List(1, 2, 3, 4, 5) should contain noneOf (6, 7, 8)
       Array(1, 2, 3, 4, 5) should contain noneOf (6, 7, 8)
@@ -44,7 +44,7 @@ class NoneOfContainMatcherSpec extends FunSpec {
       javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three"), Entry(4, "four"), Entry(5, "five")) should contain noneOf (Entry(6, "six"), Entry(7, "seven"), Entry(8, "eight"))
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should succeed when left list contains none of right list") {
       List(1, 2, 3) should contain noneOf (7, 8)
       Array(1, 2, 3) should contain noneOf (7, 8)
@@ -57,24 +57,24 @@ class NoneOfContainMatcherSpec extends FunSpec {
       javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three")) should contain noneOf (Entry(7, "seven"), Entry(8, "eight"))
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw NotAllowedException when noneOf contains duplicate element") {
       val e1 = intercept[exceptions.NotAllowedException] {
         List(1, 2, 3) should contain noneOf (6, 8, 6)
       }
       e1.getMessage() should be (FailureMessages.noneOfDuplicate)
-      
+
       val e2 = intercept[exceptions.NotAllowedException] {
         Set(1, 2, 3) should contain noneOf (6, 8, 6)
       }
       e2.getMessage() should be (FailureMessages.noneOfDuplicate)
-      
+
       val e3 = intercept[exceptions.NotAllowedException] {
         Array(1, 2, 3) should contain noneOf (6, 8, 6)
       }
       e3.getMessage() should be (FailureMessages.noneOfDuplicate)
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left List contains element in right List") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
@@ -109,16 +109,16 @@ class NoneOfContainMatcherSpec extends FunSpec {
       // SKIP-SCALATESTJS-END
     }
   }
-  
+
   describe("not noneOf ") {
-    
+
     def checkStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       e.message should be (Some(FailureMessages.didNotContainAtLeastOneOf(prettifier, left, UnquotedString(right.mkString(", ")))))
       e.failedCodeFileName should be (Some("NoneOfContainMatcherSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should succeed when left List contains element in right List") {
       List(1, 2, 3) should not contain noneOf (0, 2, 8)
       Array(1, 2, 3) should not contain noneOf (0, 2, 8)
@@ -131,7 +131,7 @@ class NoneOfContainMatcherSpec extends FunSpec {
       javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three")) should not contain noneOf (Entry(0, "zero"), Entry(2, "two"), Entry(8, "eight"))
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left List contains only element in right List in same order") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
@@ -144,7 +144,7 @@ class NoneOfContainMatcherSpec extends FunSpec {
         left2 should not contain noneOf (7, 8, 9)
       }
       checkStackDepth(e2, left2, Array(7, 8, 9).deep, thisLineNumber - 2)
-      
+
       val left3 = Map(1 -> "one", 2 -> "two", 3 -> "three")
       val e3 = intercept[exceptions.TestFailedException] {
         left3 should not contain noneOf (7 -> "seven", 8 -> "eight", 9 -> "nine")

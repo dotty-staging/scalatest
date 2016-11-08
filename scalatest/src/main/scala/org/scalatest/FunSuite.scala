@@ -18,15 +18,15 @@ package org.scalatest
 
 /**
  * A suite of tests in which each test is represented as a function value. The &ldquo;<code>Fun</code>&rdquo; in <code>FunSuite</code> stands
- * for &ldquo;function.&rdquo; 
- * 
+ * for &ldquo;function.&rdquo;
+ *
  * <table><tr><td class="usage">
  * <strong>Recommended Usage</strong>:
- * For teams coming from xUnit, <code>FunSuite</code> feels comfortable and familiar while still giving some benefits of BDD: <code>FunSuite</code> makes it easy to 
- * write descriptive test names, natural to write focused tests, and generates specification-like output that can facilitate communication among 
+ * For teams coming from xUnit, <code>FunSuite</code> feels comfortable and familiar while still giving some benefits of BDD: <code>FunSuite</code> makes it easy to
+ * write descriptive test names, natural to write focused tests, and generates specification-like output that can facilitate communication among
  * stakeholders.
  * </td></tr></table>
- * 
+ *
  * Here's an example <code>FunSuite</code>:
  *
  * <pre class="stHighlight">
@@ -53,7 +53,7 @@ package org.scalatest
  * by the primary constructor of <code>SetSuite</code>. You specify the name of the test as
  * a string between the parentheses, and the test code itself between curly braces.
  * The test code is a function passed as a by-name parameter to <code>test</code>, which registers
- * it for later execution. 
+ * it for later execution.
  * </p>
  *
  * <p>
@@ -128,7 +128,7 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funsuite.ignoreall
- * 
+ *
  * import org.scalatest.FunSuite
  * import org.scalatest.Ignore
  *
@@ -172,7 +172,7 @@ package org.scalatest
  * <p>
  * One of the parameters to <code>FunSuite</code>'s <code>run</code> method is a <code>Reporter</code>, which
  * will collect and report information about the running suite of tests.
- * Information about suites and tests that were run, whether tests succeeded or failed, 
+ * Information about suites and tests that were run, whether tests succeeded or failed,
  * and tests that were ignored will be passed to the <code>Reporter</code> as the suite runs.
  * Most often the reporting done by default by <code>FunSuite</code>'s methods will be sufficient, but
  * occasionally you may wish to provide custom information to the <code>Reporter</code> from a test.
@@ -189,7 +189,7 @@ package org.scalatest
  *
  * import collection.mutable
  * import org.scalatest._
- * 
+ *
  * class SetSuite extends FunSuite with GivenWhenThen {
  *
  *   test("An element can be added to an empty mutable Set") {
@@ -218,10 +218,10 @@ package org.scalatest
  * scala&gt; org.scalatest.run(new SetSuite)
  * <span class="stGreen">SetSuite:
  * - an element can be added to an empty mutable Set
- *   + Given an empty mutable Set 
- *   + When an element is added 
- *   + Then the Set should have size 1 
- *   + And the Set should contain the added element 
+ *   + Given an empty mutable Set
+ *   + When an element is added
+ *   + Then the Set should have size 1
+ *   + And the Set should contain the added element
  *   + That's all folks!</span>
  * </pre>
  *
@@ -356,7 +356,7 @@ package org.scalatest
  *
  * <p>
  * Another example is <a href="tools/Runner$.html#slowpokeNotifications">slowpoke notifications</a>.
- * If you find a test is taking a long time to complete, but you're not sure which test, you can enable 
+ * If you find a test is taking a long time to complete, but you're not sure which test, you can enable
  * slowpoke notifications. ScalaTest will use an <code>Alerter</code> to fire an event whenever a test has been running
  * longer than a specified amount of time.
  * </p>
@@ -434,7 +434,7 @@ package org.scalatest
  * <span class="stYellow">- An empty Set should have size 0 (pending)</span>
  * <span class="stGreen">- Invoking head on an empty Set should produce NoSuchElementException</span>
  * </pre>
- * 
+ *
  * <p>
  * One difference between an ignored test and a pending one is that an ignored test is intended to be used during a
  * significant refactorings of the code under test, when tests break and you don't want to spend the time to fix
@@ -467,7 +467,7 @@ package org.scalatest
  * you pass objects that extend class <code>org.scalatest.Tag</code> to methods
  * that register tests. Class <code>Tag</code> takes one parameter, a string name.  If you have
  * created tag annotation interfaces as described in the <a href="Tag.html"><code>Tag</code> documentation</a>, then you
- * will probably want to use tag names on your test functions that match. To do so, simply 
+ * will probably want to use tag names on your test functions that match. To do so, simply
  * pass the fully qualified names of the tag interfaces to the <code>Tag</code> constructor. For example, if you've
  * defined a tag annotation interface with fully qualified name,
  * <code>com.mycompany.tags.DbTest</code>, then you could
@@ -506,7 +506,7 @@ package org.scalatest
  * </pre>
  *
  * <p>
- * This code marks both tests with the <code>org.scalatest.tags.Slow</code> tag, 
+ * This code marks both tests with the <code>org.scalatest.tags.Slow</code> tag,
  * and the second test with the <code>com.mycompany.tags.DbTest</code> tag.
  * </p>
  *
@@ -608,7 +608,7 @@ package org.scalatest
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
  *     <p>
  *     The recommended default approach when most or all tests need the same fixture treatment. This general technique
- *     allows you, for example, to perform side effects at the beginning and end of all or most tests, 
+ *     allows you, for example, to perform side effects at the beginning and end of all or most tests,
  *     transform the outcome of tests, retry tests, make decisions based on test names, tags, or other test data.
  *     Use this technique unless:
  *     </p>
@@ -679,9 +679,9 @@ package org.scalatest
  *     val builder = new StringBuilder("ScalaTest is ")
  *     val buffer = new ListBuffer[String]
  *   }
- * 
+ *
  *   def fixture = new Fixture
- * 
+ *
  *   test("Testing should be easy") {
  *     val f = fixture
  *     f.builder.append("easy!")
@@ -689,7 +689,7 @@ package org.scalatest
  *     assert(f.buffer.isEmpty)
  *     f.buffer += "sweet"
  *   }
- * 
+ *
  *   test("Testing should be fun") {
  *     val f = fixture
  *     f.builder.append("fun!")
@@ -700,7 +700,7 @@ package org.scalatest
  * </pre>
  *
  * <p>
- * The &ldquo;<code>f.</code>&rdquo; in front of each use of a fixture object provides a visual indication of which objects 
+ * The &ldquo;<code>f.</code>&rdquo; in front of each use of a fixture object provides a visual indication of which objects
  * are part of the fixture, but if you prefer, you can import the the members with &ldquo;<code>import f._</code>&rdquo; and use the names directly.
  * </p>
  *
@@ -726,20 +726,20 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funsuite.fixturecontext
- * 
+ *
  * import collection.mutable.ListBuffer
  * import org.scalatest.FunSuite
- * 
+ *
  * class ExampleSuite extends FunSuite {
- * 
+ *
  *   trait Builder {
  *     val builder = new StringBuilder("ScalaTest is ")
  *   }
- * 
+ *
  *   trait Buffer {
  *     val buffer = ListBuffer("ScalaTest", "is")
  *   }
- * 
+ *
  *   // This test needs the StringBuilder fixture
  *   test("Testing should be productive") {
  *     new Builder {
@@ -747,7 +747,7 @@ package org.scalatest
  *       assert(builder.toString === "ScalaTest is productive!")
  *     }
  *   }
- * 
+ *
  *   // This test needs the ListBuffer[String] fixture
  *   test("Test code should be readable") {
  *     new Buffer {
@@ -755,7 +755,7 @@ package org.scalatest
  *       assert(buffer === List("ScalaTest", "is", "readable!"))
  *     }
  *   }
- * 
+ *
  *   // This test needs both the StringBuilder and ListBuffer
  *   test("Test code should be clear and concise") {
  *     new Builder with Buffer {
@@ -817,7 +817,7 @@ package org.scalatest
  * </pre>
  *
  * <p>
- * Here's an example in which <code>withFixture(NoArgTest)</code> is used to take a snapshot of the working directory if a test fails, and 
+ * Here's an example in which <code>withFixture(NoArgTest)</code> is used to take a snapshot of the working directory if a test fails, and
  * send that information to the reporter:
  * </p>
  *
@@ -840,11 +840,11 @@ package org.scalatest
  *       case other =&gt; other
  *     }
  *   }
- * 
+ *
  *   test("This test should succeed") {
  *     assert(1 + 1 === 2)
  *   }
- * 
+ *
  *   test("This test should fail") {
  *     assert(1 + 1 === 3)
  *   }
@@ -889,9 +889,9 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funsuite.loanfixture
- * 
+ *
  * import java.util.concurrent.ConcurrentHashMap
- * 
+ *
  * object DbServer { // Simulating a database server
  *   type Db = StringBuffer
  *   private val databases = new ConcurrentHashMap[String, Db]
@@ -904,14 +904,14 @@ package org.scalatest
  *     databases.remove(name)
  *   }
  * }
- * 
+ *
  * import org.scalatest.FunSuite
  * import DbServer._
  * import java.util.UUID.randomUUID
  * import java.io._
- * 
+ *
  * class ExampleSuite extends FunSuite {
- * 
+ *
  *   def withDatabase(testCode: Db =&gt; Any) {
  *     val dbName = randomUUID.toString
  *     val db = createDb(dbName) // create the fixture
@@ -921,7 +921,7 @@ package org.scalatest
  *     }
  *     finally removeDb(dbName) // clean up the fixture
  *   }
- * 
+ *
  *   def withFile(testCode: (File, FileWriter) =&gt; Any) {
  *     val file = File.createTempFile("hello", "world") // create the fixture
  *     val writer = new FileWriter(file)
@@ -931,7 +931,7 @@ package org.scalatest
  *     }
  *     finally writer.close() // clean up the fixture
  *   }
- * 
+ *
  *   // This test needs the file fixture
  *   test("Testing should be productive") {
  *     withFile { (file, writer) =&gt;
@@ -940,7 +940,7 @@ package org.scalatest
  *       assert(file.length === 24)
  *     }
  *   }
- * 
+ *
  *   // This test needs the database fixture
  *   test("Test code should be readable") {
  *     withDatabase { db =&gt;
@@ -948,7 +948,7 @@ package org.scalatest
  *       assert(db.toString === "ScalaTest is readable!")
  *     }
  *   }
- * 
+ *
  *   // This test needs both the file and the database
  *   test("Test code should be clear and concise") {
  *     withDatabase { db =&gt;
@@ -1007,14 +1007,14 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funsuite.oneargtest
- * 
+ *
  * import org.scalatest.fixture
  * import java.io._
- * 
+ *
  * class ExampleSuite extends fixture.FunSuite {
- * 
+ *
  *   case class FixtureParam(file: File, writer: FileWriter)
- * 
+ *
  *   def withFixture(test: OneArgTest) = {
  *
  *     // create the fixture
@@ -1034,7 +1034,7 @@ package org.scalatest
  *     f.writer.flush()
  *     assert(f.file.length === 18)
  *   }
- * 
+ *
  *   test("Testing should be fun") { f =&gt;
  *     f.writer.write("fun!")
  *     f.writer.flush()
@@ -1060,35 +1060,35 @@ package org.scalatest
  * to mix in trait <a href="BeforeAndAfter.html"><code>BeforeAndAfter</code></a>.  With this trait you can denote a bit of code to run before each test
  * with <code>before</code> and/or after each test each test with <code>after</code>, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funsuite.beforeandafter
- * 
+ *
  * import org.scalatest.FunSuite
  * import org.scalatest.BeforeAndAfter
  * import collection.mutable.ListBuffer
- * 
+ *
  * class ExampleSuite extends FunSuite with BeforeAndAfter {
- * 
+ *
  *   val builder = new StringBuilder
  *   val buffer = new ListBuffer[String]
- * 
+ *
  *   before {
  *     builder.append("ScalaTest is ")
  *   }
- * 
+ *
  *   after {
  *     builder.clear()
  *     buffer.clear()
  *   }
- * 
+ *
  *   test("testing should be easy") {
  *     builder.append("easy!")
  *     assert(builder.toString === "ScalaTest is easy!")
  *     assert(buffer.isEmpty)
  *     buffer += "sweet"
  *   }
- * 
+ *
  *   test("testing should be fun") {
  *     builder.append("fun!")
  *     assert(builder.toString === "ScalaTest is fun!")
@@ -1109,7 +1109,7 @@ package org.scalatest
  *
  * <p>
  * Although <code>BeforeAndAfter</code> provides a minimal-boilerplate way to execute code before and after tests, it isn't designed to enable stackable
- * traits, because the order of execution would be non-obvious.  If you want to factor out before and after code that is common to multiple test suites, you 
+ * traits, because the order of execution would be non-obvious.  If you want to factor out before and after code that is common to multiple test suites, you
  * should use trait <code>BeforeAndAfterEach</code> instead, as shown later in the next section,
  * <a href="#composingFixtures.html">composing fixtures by stacking traits</a>.
  * </p>
@@ -1127,40 +1127,40 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funsuite.composingwithfixture
- * 
+ *
  * import org.scalatest._
  * import collection.mutable.ListBuffer
- * 
+ *
  * trait Builder extends TestSuiteMixin { this: TestSuite =&gt;
- * 
+ *
  *   val builder = new StringBuilder
- * 
+ *
  *   abstract override def withFixture(test: NoArgTest) = {
  *     builder.append("ScalaTest is ")
  *     try super.withFixture(test) // To be stackable, must call super.withFixture
  *     finally builder.clear()
  *   }
  * }
- * 
+ *
  * trait Buffer extends TestSuiteMixin { this: TestSuite =&gt;
- * 
+ *
  *   val buffer = new ListBuffer[String]
- * 
+ *
  *   abstract override def withFixture(test: NoArgTest) = {
  *     try super.withFixture(test) // To be stackable, must call super.withFixture
  *     finally buffer.clear()
  *   }
  * }
- * 
+ *
  * class ExampleSuite extends FunSuite with Builder with Buffer {
- * 
+ *
  *   test("Testing should be easy") {
  *     builder.append("easy!")
  *     assert(builder.toString === "ScalaTest is easy!")
  *     assert(buffer.isEmpty)
  *     buffer += "sweet"
  *   }
- * 
+ *
  *   test("Testing should be fun") {
  *     builder.append("fun!")
  *     assert(builder.toString === "ScalaTest is fun!")
@@ -1174,7 +1174,7 @@ package org.scalatest
  * By mixing in both the <code>Builder</code> and <code>Buffer</code> traits, <code>ExampleSuite</code> gets both fixtures, which will be
  * initialized before each test and cleaned up after. The order the traits are mixed together determines the order of execution.
  * In this case, <code>Builder</code> is &ldquo;super&rdquo; to <code>Buffer</code>. If you wanted <code>Buffer</code> to be &ldquo;super&rdquo;
- * to <code>Builder</code>, you need only switch the order you mix them together, like this: 
+ * to <code>Builder</code>, you need only switch the order you mix them together, like this:
  * </p>
  *
  * <pre class="stHighlight">
@@ -1201,20 +1201,20 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funsuite.composingbeforeandaftereach
- * 
+ *
  * import org.scalatest._
  * import org.scalatest.BeforeAndAfterEach
  * import collection.mutable.ListBuffer
- * 
+ *
  * trait Builder extends BeforeAndAfterEach { this: Suite =&gt;
- * 
+ *
  *   val builder = new StringBuilder
- * 
+ *
  *   override def beforeEach() {
  *     builder.append("ScalaTest is ")
  *     super.beforeEach() // To be stackable, must call super.beforeEach
  *   }
- * 
+ *
  *   override def afterEach() {
  *     try {
  *       super.afterEach() // To be stackable, must call super.afterEach
@@ -1222,11 +1222,11 @@ package org.scalatest
  *     finally builder.clear()
  *   }
  * }
- * 
+ *
  * trait Buffer extends BeforeAndAfterEach { this: Suite =&gt;
- * 
+ *
  *   val buffer = new ListBuffer[String]
- * 
+ *
  *   override def afterEach() {
  *     try {
  *       super.afterEach() // To be stackable, must call super.afterEach
@@ -1234,16 +1234,16 @@ package org.scalatest
  *     finally buffer.clear()
  *   }
  * }
- * 
+ *
  * class ExampleSuite extends FunSuite with Builder with Buffer {
- * 
+ *
  *   test("Testing should be easy") {
  *     builder.append("easy!")
  *     assert(builder.toString === "ScalaTest is easy!")
  *     assert(buffer.isEmpty)
  *     buffer += "sweet"
  *   }
- * 
+ *
  *   test("Testing should be fun") {
  *     builder.append("fun!")
  *     assert(builder.toString === "ScalaTest is fun!")
@@ -1265,10 +1265,10 @@ package org.scalatest
  * The difference between stacking traits that extend <code>BeforeAndAfterEach</code> versus traits that implement <code>withFixture</code> is
  * that setup and cleanup code happens before and after the test in <code>BeforeAndAfterEach</code>, but at the beginning and
  * end of the test in <code>withFixture</code>. Thus if a <code>withFixture</code> method completes abruptly with an exception, it is
- * considered a failed test. By contrast, if any of the <code>beforeEach</code> or <code>afterEach</code> methods of <code>BeforeAndAfterEach</code> 
+ * considered a failed test. By contrast, if any of the <code>beforeEach</code> or <code>afterEach</code> methods of <code>BeforeAndAfterEach</code>
  * complete abruptly, it is considered an aborted suite, which will result in a <a href="events/SuiteAborted.html"><code>SuiteAborted</code></a> event.
  * </p>
- * 
+ *
  * <a name="sharedTests"></a><h2>Shared tests</h2>
  *
  * <p>
@@ -1283,7 +1283,7 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * import scala.collection.mutable.ListBuffer
- * 
+ *
  * class Stack[T] {
  *
  *   val MAX = 10
@@ -1335,26 +1335,26 @@ package org.scalatest
  * behavior <em>method</em>) is defined in a trait along with another
  * method containing shared tests for non-full stacks:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * import org.scalatest.FunSuite
- * 
+ *
  * trait FunSuiteStackBehaviors { this: FunSuite =&gt;
- * 
+ *
  *   def nonEmptyStack(createNonEmptyStack: =&gt; Stack[Int], lastItemAdded: Int) {
- * 
+ *
  *     test("empty is invoked on this non-empty stack: " + createNonEmptyStack.toString) {
  *       val stack = createNonEmptyStack
  *       assert(!stack.empty)
  *     }
- * 
+ *
  *     test("peek is invoked on this non-empty stack: " + createNonEmptyStack.toString) {
  *       val stack = createNonEmptyStack
  *       val size = stack.size
  *       assert(stack.peek === lastItemAdded)
  *       assert(stack.size === size)
  *     }
- * 
+ *
  *     test("pop is invoked on this non-empty stack: " + createNonEmptyStack.toString) {
  *       val stack = createNonEmptyStack
  *       val size = stack.size
@@ -1362,14 +1362,14 @@ package org.scalatest
  *       assert(stack.size === size - 1)
  *     }
  *   }
- *   
+ *
  *   def nonFullStack(createNonFullStack: =&gt; Stack[Int]) {
- *       
+ *
  *     test("full is invoked on this non-full stack: " + createNonFullStack.toString) {
  *       val stack = createNonFullStack
  *       assert(!stack.full)
  *     }
- *       
+ *
  *     test("push is invoked on this non-full stack: " + createNonFullStack.toString) {
  *       val stack = createNonFullStack
  *       val size = stack.size
@@ -1409,34 +1409,34 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * import org.scalatest.FunSuite
- * 
+ *
  * class StackFunSuite extends FunSuite with FunSuiteStackBehaviors {
- * 
+ *
  *   // Stack fixture creation methods
  *   def emptyStack = new Stack[Int]
- *  
+ *
  *   def fullStack = {
  *     val stack = new Stack[Int]
  *     for (i <- 0 until stack.MAX)
  *       stack.push(i)
  *     stack
  *   }
- *  
+ *
  *   def stackWithOneItem = {
  *     val stack = new Stack[Int]
  *     stack.push(9)
  *     stack
  *   }
- *  
+ *
  *   def stackWithOneItemLessThanCapacity = {
  *     val stack = new Stack[Int]
  *     for (i &lt;- 1 to 9)
  *       stack.push(i)
  *     stack
  *   }
- *  
+ *
  *   val lastValuePushed = 9
- *  
+ *
  *   test("empty is invoked on an empty stack") {
  *     val stack = emptyStack
  *     assert(stack.empty)
@@ -1505,7 +1505,7 @@ package org.scalatest
  * - pop is invoked on this non-empty stack: Stack(9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
  * - push is invoked on a full stack</span>
  * </pre>
- * 
+ *
  * <p>
  * One thing to keep in mind when using shared tests is that in ScalaTest, each test in a suite must have a unique name.
  * If you register the same tests repeatedly in the same suite, one problem you may encounter is an exception at runtime

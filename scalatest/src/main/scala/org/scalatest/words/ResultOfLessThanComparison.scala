@@ -47,7 +47,7 @@ final class ResultOfLessThanComparison[T : Ordering](val right: T) {
     val ordering = implicitly[Ordering[T]]
     ordering.lt(left, right) // left < right
   }
-  
+
   /**
    * Override toString to return "&lt; ([right])"
    */

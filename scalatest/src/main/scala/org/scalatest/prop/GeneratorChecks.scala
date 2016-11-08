@@ -32,7 +32,7 @@ private[prop] trait GeneratorChecks extends Configuration with Whenever {
 import GeneratorChecks.stackDepthFileName
 import GeneratorChecks.stackDepthMethodName
   def forAll[A](fun: (A) => Unit)
-      (implicit 
+      (implicit
         config: PropertyCheckConfiguration,
         genA: org.scalatest.prop.Generator[A],
         prettifier: Prettifier,
@@ -63,10 +63,10 @@ import GeneratorChecks.stackDepthMethodName
           if (nextDiscardedCount < maxDiscarded)
             loop(succeededCount, nextDiscardedCount, r, nextInitialSizes)
           else throw new TestFailedException((sde: StackDepthException) => Some("too many discarded evaluations"), None, pos, None)
-        case Failure(ex) => 
+        case Failure(ex) =>
           throw new GeneratorDrivenPropertyCheckFailedException(
             (sde: StackDepthException) => FailureMessages.propertyException(prettifier, UnquotedString(sde.getClass.getSimpleName)) + "\n" +
-              ( sde.failedCodeFileNameAndLineNumberString match { case Some(s) => " (" + s + ")"; case None => "" }) + "\n" + 
+              ( sde.failedCodeFileNameAndLineNumberString match { case Some(s) => " (" + s + ")"; case None => "" }) + "\n" +
               "  " + FailureMessages.propertyFailed(prettifier, succeededCount) + "\n" +
               (
                 sde match {
@@ -108,7 +108,7 @@ import GeneratorChecks.stackDepthMethodName
     loop(0, 0, Randomizer.default, initialSizes)
   }
   def forAll[A, B](fun: (A, B) => Unit)
-      (implicit 
+      (implicit
         config: PropertyCheckConfiguration,
         genA: org.scalatest.prop.Generator[A],
         genB: org.scalatest.prop.Generator[B],
@@ -136,7 +136,7 @@ import GeneratorChecks.stackDepthMethodName
     loop(0, 0, Randomizer.default)
   }
   def forAll[A, B, C](fun: (A, B, C) => Unit)
-      (implicit 
+      (implicit
         config: PropertyCheckConfiguration,
         genA: org.scalatest.prop.Generator[A],
         genB: org.scalatest.prop.Generator[B],

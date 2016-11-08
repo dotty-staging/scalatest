@@ -81,21 +81,21 @@ trait OutcomeOf {
    * @return an <code>Outcome</code> representing the outcome of executing the block of code
    */
   def outcomeOf(f: => Any): Outcome = {
-    try {                                         
-      f                                           
+    try {
+      f
       Succeeded
-    }                                             
-    catch {                                       
-      case ex: exceptions.TestCanceledException => Canceled(ex)                           
+    }
+    catch {
+      case ex: exceptions.TestCanceledException => Canceled(ex)
       case _: exceptions.TestPendingException => Pending
       case tfe: exceptions.TestFailedException => Failed(tfe)
-      case ex: Throwable if !Suite.anExceptionThatShouldCauseAnAbort(ex) => Failed(ex)                           
+      case ex: Throwable if !Suite.anExceptionThatShouldCauseAnAbort(ex) => Failed(ex)
     }
   }
 }
 
 /**
- * Companion object that facilitates the importing of <code>OutcomeOf</code>'s method as 
+ * Companion object that facilitates the importing of <code>OutcomeOf</code>'s method as
  * an alternative to mixing it in. One use case is to import <code>OutcomeOf</code>'s method so you can use
  * it in the Scala interpreter.
  *

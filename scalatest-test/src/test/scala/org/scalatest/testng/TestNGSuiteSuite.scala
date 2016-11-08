@@ -59,7 +59,7 @@ import org.scalatest.jmock.JMockCycle
     }
 
     test("If a test fails due to an exception, Report should have the exception") { () =>
-      
+
       val testReporter = new TestReporter
 
       // when
@@ -76,7 +76,7 @@ import org.scalatest.jmock.JMockCycle
     }
 
     test("Report should be generated for each invocation") { cycle => import cycle._
-      
+
       val reporter = mock[Reporter]
 
       // expect reporter gets 10 passing reports because invocationCount = 10
@@ -112,9 +112,9 @@ import org.scalatest.jmock.JMockCycle
         status.setCompleted()
       }
     }
-    
+
     test("Only the correct method should be run when specifying a single method to run") { cycle => import cycle._
-      
+
       val reporter = mock[Reporter]
 
       expecting { e =>
@@ -129,7 +129,7 @@ import org.scalatest.jmock.JMockCycle
     }
 
     test("Report for failing tests should include rerunner") { () =>
-      
+
       val testReporter = new TestReporter
 
       // when - run the failing suite
@@ -137,7 +137,7 @@ import org.scalatest.jmock.JMockCycle
       new FailureTestNGSuite().runTestNG(testReporter, new Tracker, status)
       status.setCompleted()
 
-      // then get rerunnable from the event 
+      // then get rerunnable from the event
       testReporter.lastEvent match {
         case Some(TestFailed(_, _, _, _, _, _, _, _, _, _, _, _, rerunnable, _, _, _)) =>
           assert(rerunnable.isDefined)
@@ -146,7 +146,7 @@ import org.scalatest.jmock.JMockCycle
     }
 
     test("Report for passing tests should include rerunner") { () =>
-      
+
       val testReporter = new TestReporter
 
       // when - run the passing suite
@@ -154,48 +154,48 @@ import org.scalatest.jmock.JMockCycle
       new SuccessTestNGSuite().runTestNG(testReporter, new Tracker, status)
       status.setCompleted()
 
-      // then get rerunner from report 
+      // then get rerunner from report
       val rerunner = testReporter.lastEvent.get.asInstanceOf[TestSucceeded].rerunner
       assert(rerunner != None)
       assert(rerunner.get === classOf[SuccessTestNGSuite].getName)
     }
-    
-    
+
+
     test("infoProvided should be available for BeforeMethod/Class/Suite annotations") { () =>
       // this needs to be written after i figure out the mock integration
-    }     
-    
+    }
+
     test("infoProvided should be available for AfterMethod/Class/Suite annotations") { () =>
       // this needs to be written after i figure out the mock integration
-    }     
+    }
   }
 
   package testpackage {
-    
+
     import org.testng.annotations._
-    
+
     class FailureTestNGSuite extends TestNGSuite {
       @Test def testThatFails(): Unit = { throw new Exception("fail") }
     }
-    
+
     class SuccessTestNGSuite extends TestNGSuite {
       @Test def testThatPasses(): Unit = {}
     }
-    
+
     class TestNGSuiteWithInvocationCount extends TestNGSuite {
       @Test(invocationCount = 10) def testThatPassesTenTimes(): Unit = {}
     }
-    
+
     class SuiteWithSkippedTest extends TestNGSuite {
       @Test(groups = Array("run")) def dependeeThatFails(): Unit = { throw new Exception("fail") }
       @Test(dependsOnGroups = Array("run")) def depender(): Unit = {}
-    } 
+    }
 
     class SuiteWithTwoTests extends TestNGSuite {
       @Test def testThatPasses(): Unit = {}
       @Test def anotherTestThatPasses(): Unit = {}
-    }      
-    
+    }
+
     class SuiteWithBeforeAndAfterAnnotations extends TestNGSuite {
     }
   }

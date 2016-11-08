@@ -26,8 +26,8 @@ import Matchers._
 class TheSameElementsInOrderAsContainMatcherDeciderSpec extends FunSpec with Explicitly {
 
   private val prettifier = Prettifier.default
-  
-  val incremented: Uniformity[Int] = 
+
+  val incremented: Uniformity[Int] =
     new Uniformity[Int] {
       var count = 0
       def normalized(s: Int): Int = {
@@ -41,27 +41,27 @@ class TheSameElementsInOrderAsContainMatcherDeciderSpec extends FunSpec with Exp
           case _ => b
         }
     }
-  
-  val lowerCaseEquality = 
+
+  val lowerCaseEquality =
     new Equality[String] {
-      def areEqual(left: String, right: Any) = 
+      def areEqual(left: String, right: Any) =
         left.toLowerCase == (right match {
           case s: String => s.toLowerCase
           case other => other
         })
     }
-  
-  val reverseEquality = 
+
+  val reverseEquality =
     new Equality[String] {
-      def areEqual(left: String, right: Any) = 
+      def areEqual(left: String, right: Any) =
         left.reverse == (right match {
           case s: String => s.toLowerCase
           case other => other
         })
     }
-  
+
   describe("theSameElementsInOrderAs ") {
-    
+
     def checkShouldContainStackDepth(e: exceptions.StackDepthException, left: Any, right: Any, lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       val rightText = FailureMessages.decorateToStringValue(prettifier, right)
@@ -77,7 +77,7 @@ class TheSameElementsInOrderAsContainMatcherDeciderSpec extends FunSpec with Exp
       e.failedCodeFileName should be (Some("TheSameElementsInOrderAsContainMatcherDeciderSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should take specified normalization when 'should contain' is used") {
       (List("1 ", " 2", "3 ") should contain theSameElementsInOrderAs List(" 1", "2 ", " 3")) (after being trimmed)
       (Array("1 ", " 2", "3 ") should contain theSameElementsInOrderAs List(" 1", "2 ", " 3")) (after being trimmed)
@@ -85,7 +85,7 @@ class TheSameElementsInOrderAsContainMatcherDeciderSpec extends FunSpec with Exp
       (javaList("1 ", " 2", "3 ") should contain theSameElementsInOrderAs List(" 1", "2 ", " 3")) (after being trimmed)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take specified normalization when 'should not contain' is used") {
       (List(1, 2, 3) should not contain theSameElementsInOrderAs (List(1, 2, 3))) (after being incremented)
       (Array(1, 2, 3) should not contain theSameElementsInOrderAs (List(1, 2, 3))) (after being incremented)
@@ -93,16 +93,16 @@ class TheSameElementsInOrderAsContainMatcherDeciderSpec extends FunSpec with Exp
       (javaList(1, 2, 3) should not contain theSameElementsInOrderAs (List(1, 2, 3))) (after being incremented)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should contain custom matcher' failed with specified normalization") {
-      
+
       val left1 = List(1, 2, 3)
       val right1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should contain theSameElementsInOrderAs right1) (after being incremented)
       }
       checkShouldContainStackDepth(e1, left1, right1, thisLineNumber - 2)
-        
+
       val left2 = Array(1, 2, 3)
       val right2 = List(1, 2, 3)
       val e2 = intercept[exceptions.TestFailedException] {
@@ -119,16 +119,16 @@ class TheSameElementsInOrderAsContainMatcherDeciderSpec extends FunSpec with Exp
       checkShouldContainStackDepth(e3, left3, right3, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should not contain custom matcher' failed with specified normalization") {
-      
+
       val left1 = List("1 ", " 2", "3 ")
       val right1 = List(" 1", "2 ", " 3")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should not contain theSameElementsInOrderAs (right1)) (after being trimmed)
       }
       checkShouldNotContainStackDepth(e1, left1, right1, thisLineNumber - 2)
-        
+
       val left2 = Array("1 ", " 2", "3 ")
       val right2 = List(" 1", "2 ", " 3")
       val e2 = intercept[exceptions.TestFailedException] {
@@ -145,7 +145,7 @@ class TheSameElementsInOrderAsContainMatcherDeciderSpec extends FunSpec with Exp
       checkShouldNotContainStackDepth(e3, left3, right3, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take passed in custom explicit equality when 'should contain' is used") {
       (List("A ", " B", "C ") should contain theSameElementsInOrderAs List(" a", "b ", " c")) (decided by lowerCaseEquality afterBeing trimmed)
       (Array("A ", " B", "C ") should contain theSameElementsInOrderAs List(" a", "b ", " c")) (decided by lowerCaseEquality afterBeing trimmed)
@@ -153,7 +153,7 @@ class TheSameElementsInOrderAsContainMatcherDeciderSpec extends FunSpec with Exp
       (javaList("A ", " B", "C ") should contain theSameElementsInOrderAs List(" a", "b ", " c")) (decided by lowerCaseEquality afterBeing trimmed)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take passed in custom explicit equality when 'should not contain' is used") {
       (List("one ", " two", "three ") should not contain theSameElementsInOrderAs (List(" one", "two ", " three"))) (decided by reverseEquality afterBeing trimmed)
       (Array("one ", " two", "three ") should not contain theSameElementsInOrderAs (List(" one", "two ", " three"))) (decided by reverseEquality afterBeing trimmed)
@@ -161,16 +161,16 @@ class TheSameElementsInOrderAsContainMatcherDeciderSpec extends FunSpec with Exp
       (javaList("one ", " two", "three ") should not contain theSameElementsInOrderAs (List(" one", "two ", " three"))) (decided by reverseEquality afterBeing trimmed)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should contain custom matcher' failed with custom explicit equality") {
-      
+
       val left1 = List("one ", " two", "three ")
       val right1 = List(" one", "two ", " three")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should contain theSameElementsInOrderAs right1) (decided by reverseEquality afterBeing trimmed)
       }
       checkShouldContainStackDepth(e1, left1, right1, thisLineNumber - 2)
-        
+
       val left2 = Array("one ", " two", "three ")
       val right2 = List(" one", "two ", " three")
       val e2 = intercept[exceptions.TestFailedException] {
@@ -187,16 +187,16 @@ class TheSameElementsInOrderAsContainMatcherDeciderSpec extends FunSpec with Exp
       checkShouldContainStackDepth(e3, left3, right3, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should not contain custom matcher' failed with custom explicit equality") {
-      
+
       val left1 = List("ONE ", " TWO", "THREE ")
       val right1 = List("one", "two ", " three")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should not contain theSameElementsInOrderAs (right1)) (decided by lowerCaseEquality afterBeing trimmed)
       }
       checkShouldNotContainStackDepth(e1, left1, right1, thisLineNumber - 2)
-        
+
       val left2 = Array("ONE ", " TWO", "THREE ")
       val right2 = List("one", "two ", " three")
       val e2 = intercept[exceptions.TestFailedException] {

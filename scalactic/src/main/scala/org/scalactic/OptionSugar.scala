@@ -91,7 +91,7 @@ trait OptionSugar {
      */
     def toOr[B](orElse: => B): G Or B = Or.from(option, orElse)
   }
-} 
+}
 
 /**
  * Companion object for <code>OptionSugar</code> enabling its members to be

@@ -44,7 +44,7 @@ class SuiteDiscoveryHelperFriend(sdt: SuiteDiscoveryHelper.type) {
     m.setAccessible(true)
     m.invoke(sdt, Array[Object](clazz): _*).asInstanceOf[Boolean]
   }
-  
+
   def isRunnable(clazz: java.lang.Class[_]): Boolean = {
     val m = Class.forName("org.scalatest.tools.SuiteDiscoveryHelper$").getDeclaredMethod("isRunnable",
       Array(classOf[Class[_]]): _*) // This one works in 2.7
@@ -67,7 +67,7 @@ class SuiteDiscoveryHelperFriend(sdt: SuiteDiscoveryHelper.type) {
     m.setAccessible(true)
     m.invoke(sdt, Array[Object](file, new java.lang.Character(fileSeparator)): _*).asInstanceOf[Set[String]]
   }
-  
+
   def isDiscoverableSuite(clazz: java.lang.Class[_]): Boolean = {
     val m = Class.forName("org.scalatest.tools.SuiteDiscoveryHelper$").getDeclaredMethod("isDiscoverableSuite",
       Array(classOf[Class[_]]): _*)
@@ -243,7 +243,7 @@ class SuiteDiscoveryHelperSpec extends FunSpec {
   }
 
   def `test is accessible suite` = {
-    assert(sdtf.isAccessibleSuite(classOf[SuiteDiscoveryHelperSpec])) 
+    assert(sdtf.isAccessibleSuite(classOf[SuiteDiscoveryHelperSpec]))
     assert(!sdtf.isAccessibleSuite(classOf[PackageAccessSuite]))
     assert(!sdtf.isAccessibleSuite(classOf[PackageAccessConstructorSuite]))
     assert(!sdtf.isAccessibleSuite(classOf[Suite]))
@@ -337,7 +337,7 @@ class SuiteDiscoveryHelperSpec extends FunSpec {
   }
 
   def `test get file names set from file` = {
-    
+
     assert(sdtf.getFileNamesSetFromFile(new File("harness/fnIteratorTest/empty.txt"), '/') === Set("empty.txt"))
     /*
     This one doesn't work now that I've checked the harness into subversion, because it finds the svn files.
@@ -348,11 +348,11 @@ class SuiteDiscoveryHelperSpec extends FunSpec {
   }
 
   def `test is discoverable suite` = {
-    assert(sdtf.isDiscoverableSuite(classOf[SuiteDiscoveryHelperSpec])) 
+    assert(sdtf.isDiscoverableSuite(classOf[SuiteDiscoveryHelperSpec]))
     @DoNotDiscover class NotDiscoverable {}
     assert(!sdtf.isDiscoverableSuite(classOf[NotDiscoverable]))
   }
-  
+
   def `test is runnable` = {
     class NormalClass {}
     class SuiteClass extends Suite

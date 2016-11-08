@@ -28,7 +28,7 @@ import javax.swing.JPanel
  * @author Bill Venners
  */
 private[scalatest] class StatusJPanel extends JPanel {
-  
+
   private var testsExpected: Int = 0
   private var testsRun: Int = 0
   private var testsFailed: Int = 0
@@ -46,24 +46,24 @@ private[scalatest] class StatusJPanel extends JPanel {
     val testsRunJLabel: JLabel = new JLabel(Resources.testsRun)
     val testsExpectedJLabel: JLabel = new JLabel(Resources.testsExpected)
     val testsFailedJLabel: JLabel = new JLabel(Resources.testsFailed)
-  
+
     val testsRunJPanel: JPanel = new JPanel()
-  
+
     testsRunJPanel.setLayout(new BorderLayout(4, 4))
     testsRunJPanel.add(testsRunJLabel, BorderLayout.WEST)
     testsRunJPanel.add(testsRunNumJLabel, BorderLayout.CENTER)
     val testsExpectedJPanel: JPanel = new JPanel()
-  
+
     testsExpectedJPanel.setLayout(new BorderLayout(4, 4))
     testsExpectedJPanel.add(testsExpectedJLabel, BorderLayout.WEST)
     testsExpectedJPanel.add(testsExpectedNumJLabel, BorderLayout.CENTER)
     val testsFailedJPanel: JPanel = new JPanel()
-  
+
     testsFailedJPanel.setLayout(new BorderLayout(4, 4))
     testsFailedJPanel.add(testsFailedJLabel, BorderLayout.WEST)
     testsFailedJPanel.add(testsFailedNumJLabel, BorderLayout.CENTER)
     val centeredJPanel: JPanel = new JPanel()
-  
+
     centeredJPanel.setLayout(new GridLayout(1, 3, 15, 15))
     centeredJPanel.add(testsRunJPanel)
     centeredJPanel.add(testsExpectedJPanel)
@@ -74,7 +74,7 @@ private[scalatest] class StatusJPanel extends JPanel {
 
   def setTestsRun(testsRun: Int, succeeded: Boolean): Unit = {
 
-    if (testsRun < 0) 
+    if (testsRun < 0)
       throw new IllegalArgumentException()
 
     this.testsRun = testsRun

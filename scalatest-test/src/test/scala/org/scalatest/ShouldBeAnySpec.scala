@@ -44,7 +44,7 @@ class ShouldBeAnySpec extends FunSpec with Checkers with ReturnsNormallyThrowsAs
       // objects should equal themselves
       check((s: String) => returnsNormally(s should be (s)))
       check((i: Int) => returnsNormally(i should be (i)))
-      
+
       // a string should equal another string with the same value
       check((s: String) => returnsNormally(s should be (new String(s))))
     }

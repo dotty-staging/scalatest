@@ -37,7 +37,7 @@ package org.scalatest
  * <pre>
  * package com.mycompany.myproject.testing.tags;
  *
- * import java.lang.annotation.*; 
+ * import java.lang.annotation.*;
  * import org.scalatest.TagAnnotation
  *
  * @TagAnnotation
@@ -115,7 +115,7 @@ package org.scalatest
  *
  * <p>
  * In the previous example, both tests will be tagged as <code>DBTest</code>s even though the
- * tests are not tagged as such individually. 
+ * tests are not tagged as such individually.
  * </p>
  *
  * <p>

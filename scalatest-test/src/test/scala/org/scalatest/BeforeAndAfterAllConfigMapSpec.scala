@@ -21,34 +21,34 @@ import java.util.concurrent.atomic.AtomicInteger
 import org.scalatest.concurrent.SleepHelper
 
 class BeforeAndAfterAllConfigMapSpec extends FunSpec {
-  
+
   class ExampleSuite extends FunSuite with BeforeAndAfterAllConfigMap with ParallelTestExecution {
-    
+
     @volatile var beforeAllTime: Long = 0
     @volatile var afterAllTime: Long = 0
-    
+
     override protected def beforeAll(configMap: ConfigMap): Unit = {
       beforeAllTime = System.currentTimeMillis
     }
-    
+
     test("test 1") { SleepHelper.sleep(100) }
     test("test 2") { SleepHelper.sleep(100) }
     test("test 3") { SleepHelper.sleep(100) }
-    
+
     override def newInstance: Suite with ParallelTestExecution = new ExampleSuite
-    
+
     override protected def afterAll(configMap: ConfigMap): Unit = {
       afterAllTime = System.currentTimeMillis
     }
   }
-  
+
   class ExampleNestedSuite extends FunSuite with ParallelTestExecution {
     test("test 1") { SleepHelper.sleep(100) }
     test("test 2") { SleepHelper.sleep(100) }
     test("test 3") { SleepHelper.sleep(100) }
     override def newInstance: Suite with ParallelTestExecution = new ExampleNestedSuite
   }
-  
+
   @Ignore
   class ExampleIgnoreNestedSuite extends FunSuite with ParallelTestExecution {
     test("test 1") { SleepHelper.sleep(100) }
@@ -56,51 +56,51 @@ class BeforeAndAfterAllConfigMapSpec extends FunSpec {
     test("test 3") { SleepHelper.sleep(100) }
     override def newInstance: Suite with ParallelTestExecution = new ExampleNestedSuite
   }
-  
+
   class ExampleSuites extends Suites(
     new ExampleNestedSuite
-  ) with BeforeAndAfterAllConfigMap { 
+  ) with BeforeAndAfterAllConfigMap {
     @volatile var beforeAllTime: Long = 0
     @volatile var afterAllTime: Long = 0
     override protected def beforeAll(configMap: ConfigMap): Unit = {
       beforeAllTime = System.currentTimeMillis
-    } 
+    }
     override protected def afterAll(configMap: ConfigMap): Unit = {
       afterAllTime = System.currentTimeMillis
     }
   }
-  
+
   class BeforeAfterAllCounter {
-    
+
     @volatile var beforeAll = new AtomicInteger
     @volatile var afterAll = new AtomicInteger
-    
+
     def incrementBeforeAllCount(): Unit = {
       beforeAll.incrementAndGet()
     }
-    
+
     def incrementAfterAllCount(): Unit = {
       afterAll.incrementAndGet()
     }
-    
+
     def beforeAllCount = beforeAll.get
     def afterAllCount = afterAll.get
   }
-  
-  class ExampleBeforeAndAfterAllWithParallelTestExecutionSuite(counter: BeforeAfterAllCounter) extends FunSuite with BeforeAndAfterAllConfigMap 
+
+  class ExampleBeforeAndAfterAllWithParallelTestExecutionSuite(counter: BeforeAfterAllCounter) extends FunSuite with BeforeAndAfterAllConfigMap
     with OneInstancePerTest {
-    
+
     override protected def beforeAll(configMap: ConfigMap): Unit = {
       counter.incrementBeforeAllCount()
-    } 
+    }
     override protected def afterAll(configMap: ConfigMap): Unit = {
       counter.incrementAfterAllCount()
     }
-    
+
     test("test 1") { SleepHelper.sleep(100) }
     test("test 2") { SleepHelper.sleep(100) }
     test("test 3") { SleepHelper.sleep(100) }
-    
+
     override def newInstance: Suite with OneInstancePerTest = new ExampleBeforeAndAfterAllWithParallelTestExecutionSuite(counter)
   }
 
@@ -111,7 +111,7 @@ class BeforeAndAfterAllConfigMapSpec extends FunSpec {
       val dist = new TestConcurrentDistributor(2)
       suite.run(None, Args(reporter = rep, distributor = Some(dist)))
       dist.waitUntilDone()
-      
+
       // should call beforeAll before any test starts
       val beforeAllTime = suite.beforeAllTime
       val testStartingEvents = rep.testStartingEventsReceived
@@ -119,7 +119,7 @@ class BeforeAndAfterAllConfigMapSpec extends FunSpec {
       testStartingEvents.foreach { testStarting =>
         beforeAllTime should be <= testStarting.timeStamp
       }
-      
+
       // should call afterAll after all tests completed
       val afterAllTime = suite.afterAllTime
       val testSucceededEvents = rep.testSucceededEventsReceived
@@ -134,7 +134,7 @@ class BeforeAndAfterAllConfigMapSpec extends FunSpec {
       val dist = new TestConcurrentDistributor(2)
       suite.run(None, Args(reporter = rep, distributor = Some(dist)))
       dist.waitUntilDone()
-      
+
       // should call beforeAll before any test in nested suite starts
       val beforeAllTime = suite.beforeAllTime
       val testStartingEvents = rep.testStartingEventsReceived
@@ -142,7 +142,7 @@ class BeforeAndAfterAllConfigMapSpec extends FunSpec {
       testStartingEvents.foreach { testStarting =>
         beforeAllTime should be <= testStarting.timeStamp
       }
-      
+
       // should call afterAll after all tests completed
       val afterAllTime = suite.afterAllTime
       val testSucceededEvents = rep.testSucceededEventsReceived
@@ -156,7 +156,7 @@ class BeforeAndAfterAllConfigMapSpec extends FunSpec {
       val suite = new ExampleBeforeAndAfterAllWithParallelTestExecutionSuite(counter)
       val rep = new EventRecordingReporter
       suite.run(None, Args(reporter = rep))
-      
+
       counter.beforeAllCount should be (1)
       counter.afterAllCount should be (1)
     }
@@ -214,10 +214,10 @@ class BeforeAndAfterAllConfigMapSpec extends FunSpec {
         override protected def beforeAll(configMap: ConfigMap): Unit = {
           beforeAllCount.incrementAndGet()
         }
-        override def nestedSuites: collection.immutable.IndexedSeq[Suite] = 
+        override def nestedSuites: collection.immutable.IndexedSeq[Suite] =
           Vector(
-            new ExampleNestedSuite, 
-            new ExampleNestedSuite, 
+            new ExampleNestedSuite,
+            new ExampleNestedSuite,
             new ExampleNestedSuite
           )
         override protected def afterAll(configMap: ConfigMap): Unit = {
@@ -237,10 +237,10 @@ class BeforeAndAfterAllConfigMapSpec extends FunSpec {
         override protected def beforeAll(configMap: ConfigMap): Unit = {
           beforeAllCount.incrementAndGet()
         }
-        override def nestedSuites: collection.immutable.IndexedSeq[Suite] = 
+        override def nestedSuites: collection.immutable.IndexedSeq[Suite] =
           Vector(
-            new ExampleNestedSuite, 
-            new ExampleNestedSuite, 
+            new ExampleNestedSuite,
+            new ExampleNestedSuite,
             new ExampleNestedSuite
           )
         override protected def afterAll(configMap: ConfigMap): Unit = {
@@ -306,10 +306,10 @@ class BeforeAndAfterAllConfigMapSpec extends FunSpec {
         override protected def beforeAll(configMap: ConfigMap): Unit = {
           beforeAllCount.incrementAndGet()
         }
-        override def nestedSuites: collection.immutable.IndexedSeq[Suite] = 
+        override def nestedSuites: collection.immutable.IndexedSeq[Suite] =
           Vector(
-            new ExampleIgnoreNestedSuite, 
-            new ExampleIgnoreNestedSuite, 
+            new ExampleIgnoreNestedSuite,
+            new ExampleIgnoreNestedSuite,
             new ExampleIgnoreNestedSuite
           )
         override protected def afterAll(configMap: ConfigMap): Unit = {
@@ -330,10 +330,10 @@ class BeforeAndAfterAllConfigMapSpec extends FunSpec {
         override protected def beforeAll(configMap: ConfigMap): Unit = {
           beforeAllCount.incrementAndGet()
         }
-        override def nestedSuites: collection.immutable.IndexedSeq[Suite] = 
+        override def nestedSuites: collection.immutable.IndexedSeq[Suite] =
           Vector(
-            new ExampleIgnoreNestedSuite, 
-            new ExampleIgnoreNestedSuite, 
+            new ExampleIgnoreNestedSuite,
+            new ExampleIgnoreNestedSuite,
             new ExampleIgnoreNestedSuite
           )
         override protected def afterAll(configMap: ConfigMap): Unit = {

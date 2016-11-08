@@ -25,7 +25,7 @@ import org.scalatest.testng.TestNGSuite
 import SharedHelpers._
 
 class FilterProp extends SuiteProp {
-  
+
   test("All suite types should not run nested suite when Filters's excludeNestedSuites contains the suiteId.") {
     forAll(examples) { suite =>
       val reporter = new EventRecordingReporter
@@ -39,7 +39,7 @@ class FilterProp extends SuiteProp {
       // SKIP-SCALATESTJS-END
     }
   }
-  
+
   type FixtureServices = AnyRef
 
   // SKIP-SCALATESTJS-START

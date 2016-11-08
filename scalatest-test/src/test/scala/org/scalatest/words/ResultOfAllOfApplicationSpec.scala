@@ -19,23 +19,23 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfAllOfApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfAllOfApplication ") {
-    
+
     it("should have pretty toString when right is empty") {
       val result = new ResultOfAllOfApplication(Vector.empty)
       result.toString should be ("allOf ()")
     }
-    
+
     it("should have pretty toString when right contains 1 element") {
       val result = new ResultOfAllOfApplication(Vector("Bob"))
       result.toString should be ("allOf (\"Bob\")")
     }
-    
+
     it("should have pretty toString when right contains > 1 elements") {
       val result = new ResultOfAllOfApplication(Vector("Bob", "Alice"))
       result.toString should be ("allOf (\"Bob\", \"Alice\")")
     }
   }
-  
+
 }

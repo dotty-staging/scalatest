@@ -23,59 +23,59 @@ import org.scalactic.Prettifier
 class ShouldBeEmptyStructuralLogicalOrSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   val fileName: String = "ShouldBeEmptyStructuralLogicalOrSpec.scala"
-  
-  def wasEqualTo(left: Any, right: Any): String = 
+
+  def wasEqualTo(left: Any, right: Any): String =
     FailureMessages.wasEqualTo(prettifier, left, right)
-    
-  def wasNotEqualTo(left: Any, right: Any): String = 
+
+  def wasNotEqualTo(left: Any, right: Any): String =
     FailureMessages.wasNotEqualTo(prettifier, left, right)
-    
-  def equaled(left: Any, right: Any): String = 
+
+  def equaled(left: Any, right: Any): String =
     FailureMessages.equaled(prettifier, left, right)
-    
+
   def didNotEqual(left: Any, right: Any): String =
     FailureMessages.didNotEqual(prettifier, left, right)
-  
-  def wasNotEmpty(left: Any): String = 
+
+  def wasNotEmpty(left: Any): String =
     FailureMessages.wasNotEmpty(prettifier, left)
-    
-  def wasEmpty(left: Any): String = 
+
+  def wasEmpty(left: Any): String =
     FailureMessages.wasEmpty(prettifier, left)
-    
+
   describe("empty matcher") {
-    
+
     describe("when work with arbitrary object with isEmpty() method") {
-      
+
       class MyEmptiness(value: Boolean) {
         def isEmpty(): Boolean = value
         override def toString = "definition"
       }
       val objTrue = new MyEmptiness(true)
       val objFalse = new MyEmptiness(false)
-      
+
       it("should do nothing for when both passed") {
         objTrue should (be (empty) or equal (objTrue))
         objTrue should (equal (objTrue) or be (empty))
         objTrue should (be (empty) or be (objTrue))
         objTrue should (be (objTrue) or be (empty))
       }
-      
+
       it("should do nothing when first check failed") {
         objFalse should (be (empty) or equal (objFalse))
         objTrue should (equal (objFalse) or be (empty))
         objFalse should (be (empty) or be (objFalse))
         objTrue should (be (objFalse) or be (empty))
       }
-      
+
       it("should do nothing when second check failed") {
         objTrue should (be (empty) or equal (objFalse))
         objFalse should (equal (objFalse) or be (empty))
         objTrue should (be (empty) or be (objFalse))
         objFalse should (be (objFalse) or be (empty))
       }
-      
+
       it("should throw correct TFE when both check failed") {
         val caught1 = intercept[TestFailedException] {
           objFalse should (be (empty) or equal (objTrue))
@@ -83,21 +83,21 @@ class ShouldBeEmptyStructuralLogicalOrSpec extends FunSpec {
         assert(caught1.message === Some(wasNotEmpty(objFalse) + ", and " + didNotEqual(objFalse, objTrue)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objFalse should (equal (objTrue) or be (empty))
         }
         assert(caught2.message === Some(didNotEqual(objFalse, objTrue) + ", and " + wasNotEmpty(objFalse)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objFalse should (be (empty) or be (objTrue))
         }
         assert(caught3.message === Some(wasNotEmpty(objFalse) + ", and " + wasNotEqualTo(objFalse, objTrue)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objFalse should (be (objTrue) or be (empty))
         }
@@ -106,37 +106,37 @@ class ShouldBeEmptyStructuralLogicalOrSpec extends FunSpec {
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with arbitrary object with isEmpty method") {
-      
+
       class MyEmptiness(value: Boolean) {
         def isEmpty: Boolean = value
         override def toString = "definition"
       }
       val objTrue = new MyEmptiness(true)
       val objFalse = new MyEmptiness(false)
-      
+
       it("should do nothing for when both passed") {
         objTrue should (be (empty) or equal (objTrue))
         objTrue should (equal (objTrue) or be (empty))
         objTrue should (be (empty) or be (objTrue))
         objTrue should (be (objTrue) or be (empty))
       }
-      
+
       it("should do nothing when first check failed") {
         objFalse should (be (empty) or equal (objFalse))
         objTrue should (equal (objFalse) or be (empty))
         objFalse should (be (empty) or be (objFalse))
         objTrue should (be (objFalse) or be (empty))
       }
-      
+
       it("should do nothing when second check failed") {
         objTrue should (be (empty) or equal (objFalse))
         objFalse should (equal (objFalse) or be (empty))
         objTrue should (be (empty) or be (objFalse))
         objFalse should (be (objFalse) or be (empty))
       }
-      
+
       it("should throw correct TFE when both check failed") {
         val caught1 = intercept[TestFailedException] {
           objFalse should (be (empty) or equal (objTrue))
@@ -144,21 +144,21 @@ class ShouldBeEmptyStructuralLogicalOrSpec extends FunSpec {
         assert(caught1.message === Some(wasNotEmpty(objFalse) + ", and " + didNotEqual(objFalse, objTrue)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objFalse should (equal (objTrue) or be (empty))
         }
         assert(caught2.message === Some(didNotEqual(objFalse, objTrue) + ", and " + wasNotEmpty(objFalse)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objFalse should (be (empty) or be (objTrue))
         }
         assert(caught3.message === Some(wasNotEmpty(objFalse) + ", and " + wasNotEqualTo(objFalse, objTrue)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objFalse should (be (objTrue) or be (empty))
         }
@@ -167,37 +167,37 @@ class ShouldBeEmptyStructuralLogicalOrSpec extends FunSpec {
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with arbitrary object with isEmpty val") {
-      
+
       class MyEmptiness(value: Boolean) {
         val isEmpty: Boolean = value
         override def toString = "definition"
       }
       val objTrue = new MyEmptiness(true)
       val objFalse = new MyEmptiness(false)
-      
+
       it("should do nothing for when both passed") {
         objTrue should (be (empty) or equal (objTrue))
         objTrue should (equal (objTrue) or be (empty))
         objTrue should (be (empty) or be (objTrue))
         objTrue should (be (objTrue) or be (empty))
       }
-      
+
       it("should do nothing when first check failed") {
         objFalse should (be (empty) or equal (objFalse))
         objTrue should (equal (objFalse) or be (empty))
         objFalse should (be (empty) or be (objFalse))
         objTrue should (be (objFalse) or be (empty))
       }
-      
+
       it("should do nothing when second check failed") {
         objTrue should (be (empty) or equal (objFalse))
         objFalse should (equal (objFalse) or be (empty))
         objTrue should (be (empty) or be (objFalse))
         objFalse should (be (objFalse) or be (empty))
       }
-      
+
       it("should throw correct TFE when both check failed") {
         val caught1 = intercept[TestFailedException] {
           objFalse should (be (empty) or equal (objTrue))
@@ -205,21 +205,21 @@ class ShouldBeEmptyStructuralLogicalOrSpec extends FunSpec {
         assert(caught1.message === Some(wasNotEmpty(objFalse) + ", and " + didNotEqual(objFalse, objTrue)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objFalse should (equal (objTrue) or be (empty))
         }
         assert(caught2.message === Some(didNotEqual(objFalse, objTrue) + ", and " + wasNotEmpty(objFalse)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objFalse should (be (empty) or be (objTrue))
         }
         assert(caught3.message === Some(wasNotEmpty(objFalse) + ", and " + wasNotEqualTo(objFalse, objTrue)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objFalse should (be (objTrue) or be (empty))
         }
@@ -228,6 +228,6 @@ class ShouldBeEmptyStructuralLogicalOrSpec extends FunSpec {
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
   }
 }

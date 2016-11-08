@@ -56,22 +56,22 @@ import org.scalactic.source
  * <pre class="stREPL">
  * scala&gt; import org.scalatest.RecoverMethods._
  * import org.scalatest.RecoverMethods._
- * 
+ *
  * scala&gt; import scala.concurrent.Future
  * import scala.concurrent.Future
- * 
+ *
  * scala&gt; import scala.concurrent.ExecutionContext.Implicits.global
  * import scala.concurrent.ExecutionContext.Implicits.global
- * 
+ *
  * scala&gt; recoverToSucceededIf[IllegalStateException] {
  *      |   Future { throw new IllegalStateException }
  *      | }
  * res0: scala.concurrent.Future[org.scalatest.Assertion] = ...
- * 
+ *
  * scala&gt; res0.value
  * res1: Option[scala.util.Try[org.scalatest.Assertion]] = Some(Success(Succeeded))
  * </pre>
- * 
+ *
  * <p>
  * Otherwise it fails with an error message similar to those given by <code>assertThrows</code>:
  * </p>
@@ -81,18 +81,18 @@ import org.scalactic.source
  *      |   Future { throw new RuntimeException }
  *      | }
  * res2: scala.concurrent.Future[org.scalatest.Assertion] = ...
- * 
+ *
  * scala&gt; res2.value
  * res3: Option[scala.util.Try[org.scalatest.Assertion]] =
  *     Some(Failure(org.scalatest.exceptions.TestFailedException: Expected exception
  *       java.lang.IllegalStateException to be thrown, but java.lang.RuntimeException
  *       was thrown))
- * 
+ *
  * scala&gt; recoverToSucceededIf[IllegalStateException] {
  *      |   Future { 42 }
  *      | }
  * res4: scala.concurrent.Future[org.scalatest.Assertion] = ...
- * 
+ *
  * scala&gt; res4.value
  * res5: Option[scala.util.Try[org.scalatest.Assertion]] =
  *     Some(Failure(org.scalatest.exceptions.TestFailedException: Expected exception
@@ -126,14 +126,14 @@ import org.scalactic.source
  *      |     Future { throw new IllegalStateException("hello") }
  *      |   }
  * futureEx: scala.concurrent.Future[IllegalStateException] = ...
- * 
+ *
  * scala&gt; futureEx.value
  * res6: Option[scala.util.Try[IllegalStateException]] =
  *     Some(Success(java.lang.IllegalStateException: hello))
- * 
+ *
  * scala&gt; futureEx map { ex =&gt; assert(ex.getMessage == "world") }
  * res7: scala.concurrent.Future[org.scalatest.Assertion] = ...
- * 
+ *
  * scala&gt; res7.value
  * res8: Option[scala.util.Try[org.scalatest.Assertion]] =
  *     Some(Failure(org.scalatest.exceptions.TestFailedException: "[hello]" did not equal "[world]"))
@@ -207,7 +207,7 @@ trait RecoverMethods {
 }
 
 /**
- * Companion object that facilitates the importing of <code>RecoverMethods</code>'s method as 
+ * Companion object that facilitates the importing of <code>RecoverMethods</code>'s method as
  * an alternative to mixing it in. One use case is to import <code>RecoverMethods</code>'s method so you can use
  * it in the Scala interpreter.
  *

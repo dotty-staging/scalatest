@@ -62,7 +62,7 @@ class JUnitSuiteSpec extends FunSpec {
       val b = new JUnitSuite {}
       assert(b.testNames === TreeSet[String]())
     }
- 
+
     it("should return names of methods that are annotated with Test, take no params, but have a return type " +
             "other than Unit from testNames") {
 
@@ -149,7 +149,7 @@ class JUnitSuiteSpec extends FunSpec {
       assert(!TestWasCalledSuite.theDoThisCalled)
       assert(!TestWasCalledSuite.theDoThatCalled)
     }
-        
+
     it("should return the correct test count from its expectedTestCount method") {
 
       val a = new ASuite

@@ -47,7 +47,7 @@ import org.scalatest.exceptions.NotAllowedException
  * If a method, it must take no parameters and return <code>Boolean</code>. If multiple candidates are found,
  * the <code>apply</code> method will select based on the following algorithm:
  * </p>
- * 
+ *
  * <table class="stTable">
  * <tr><th class="stHeadingCell">Field</th><th class="stHeadingCell">Method</th><th class="stHeadingCell">"is" Method</th><th class="stHeadingCell">Result</th></tr>
  * <tr><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">Throws <code>TestFailedException</code>, because no candidates found</td></tr>
@@ -59,14 +59,14 @@ import org.scalatest.exceptions.NotAllowedException
  * <tr><td class="stTableCell"><code>empty</code></td><td class="stTableCell"><code>empty()</code></td><td class="stTableCell">&nbsp;</td><td class="stTableCell">Invokes <code>empty()</code></td></tr>
  * <tr><td class="stTableCell"><code>empty</code></td><td class="stTableCell"><code>empty()</code></td><td class="stTableCell"><code>isEmpty()</code></td><td class="stTableCell">Invokes <code>empty()</code> (this can occur when <code>BeanProperty</code> annotation is used)</td></tr>
  * </table>
- * 
+ *
  * @author Bill Venners
  */
 final class BeWord {
 
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should be &lt; (7)
@@ -105,7 +105,7 @@ final class BeWord {
     }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should be &gt; (7)
@@ -144,7 +144,7 @@ final class BeWord {
     }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should be &lt;= (7)
@@ -183,7 +183,7 @@ final class BeWord {
     }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should be &gt;= (7)
@@ -223,11 +223,11 @@ final class BeWord {
 
   /**
    * <strong>
-   * The deprecation period for the "be ===" syntax has expired, and the syntax 
+   * The deprecation period for the "be ===" syntax has expired, and the syntax
    * will now throw <code>NotAllowedException</code>.  Please use should equal, should ===, shouldEqual,
    * should be, or shouldBe instead.
    * </strong>
-   * 
+   *
    * <p>
    * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
    * cases still compile, but silently wouldn't work.
@@ -240,7 +240,7 @@ final class BeWord {
 
   // SKIP-SCALATESTJS-START
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * fileMock should not { be a ('file) }
@@ -276,7 +276,7 @@ final class BeWord {
       }
       override def toString: String = "be a " + Prettifier.default(bePropertyMatcher)
     }
-  
+
   /**
    * This method enables the following syntax, where <code>negativeNumber</code> is, for example, of type <code>AMatcher</code>:
    *
@@ -285,7 +285,7 @@ final class BeWord {
    *                   ^
    * </pre>
    **/
-  def a[S](aMatcher: AMatcher[S]): Matcher[S] = 
+  def a[S](aMatcher: AMatcher[S]): Matcher[S] =
     new Matcher[S] {
       def apply(left: S): MatchResult = aMatcher(left)
       override def toString: String = "be a " + Prettifier.default(aMatcher)
@@ -293,7 +293,7 @@ final class BeWord {
 
   // SKIP-SCALATESTJS-START
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * animal should not { be an ('elephant) }
@@ -329,7 +329,7 @@ final class BeWord {
       }
       override def toString: String = "be an " + Prettifier.default(bePropertyMatcher)
     }
-  
+
   /**
    * This method enables the following syntax, where <code>oddNumber</code> is, for example, of type <code>AnMatcher</code>:
    *
@@ -338,14 +338,14 @@ final class BeWord {
    *                   ^
    * </pre>
    **/
-  def an[S](anMatcher: AnMatcher[S]): Matcher[S] = 
+  def an[S](anMatcher: AnMatcher[S]): Matcher[S] =
     new Matcher[S] {
       def apply(left: S): MatchResult = anMatcher(left)
       override def toString: String = "be an " + Prettifier.default(anMatcher)
     }
 
   /**
-   * This method enables the following syntax for the "primitive" numeric types: 
+   * This method enables the following syntax for the "primitive" numeric types:
    *
    * <pre class="stHighlight">
    * sevenDotOh should be (7.1 +- 0.2)
@@ -366,7 +366,7 @@ final class BeWord {
     }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should be theSameInstancreAs (anotherObject)
@@ -386,14 +386,14 @@ final class BeWord {
     }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should be (true)
    *                  ^
    * </pre>
    **/
-  def apply(right: Boolean): Matcher[Boolean] = 
+  def apply(right: Boolean): Matcher[Boolean] =
     new Matcher[Boolean] {
       def apply(left: Boolean): MatchResult =
         MatchResult(
@@ -406,14 +406,14 @@ final class BeWord {
     }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should be (null)
    *                  ^
    * </pre>
    **/
-  def apply(o: Null): Matcher[AnyRef] = 
+  def apply(o: Null): Matcher[AnyRef] =
     new Matcher[AnyRef] {
       def apply(left: AnyRef): MatchResult = {
         MatchResult(
@@ -422,7 +422,7 @@ final class BeWord {
           Resources.rawWasNull,
           Resources.rawWasNotNull,
           Resources.rawMidSentenceWasNull,
-          Vector(left), 
+          Vector(left),
           Vector.empty
         )
       }
@@ -430,7 +430,7 @@ final class BeWord {
     }
 
   /* *
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * set should be ('empty)
@@ -438,7 +438,7 @@ final class BeWord {
    * </pre>
   def apply[T](right: AType[T]): Matcher[Any] =
     new Matcher[Any] {
-      def apply(left: Any): MatchResult = 
+      def apply(left: Any): MatchResult =
         MatchResult(
           right.isAssignableFromClassOf(left),
           FailureMessages.wasNotAnInstanceOf(prettifier, left, UnquotedString(right.className), UnquotedString(left.getClass.getName)),
@@ -451,7 +451,7 @@ final class BeWord {
 
   // SKIP-SCALATESTJS-START
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * set should be ('empty)
@@ -503,7 +503,7 @@ final class BeWord {
     }
 
   /**
-   * This method enables <code>be</code> to be used for equality comparison. Here are some examples: 
+   * This method enables <code>be</code> to be used for equality comparison. Here are some examples:
    *
    * <pre class="stHighlight">
    * result should be (None)
@@ -526,13 +526,13 @@ final class BeWord {
           areEqualComparingArraysStructurally(left, right),
           Resources.rawWasNotEqualTo,
           Resources.rawWasEqualTo,
-          Vector(leftee, rightee), 
+          Vector(leftee, rightee),
           Vector(left, right)
         )
       }
       override def toString: String = "be (" + Prettifier.default(right) + ")"
     }
-  
+
   /**
    * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
    *
@@ -541,14 +541,14 @@ final class BeWord {
    *                          ^
    * </pre>
    **/
-  def apply(right: SortedWord): MatcherFactory1[Any, Sortable] = 
+  def apply(right: SortedWord): MatcherFactory1[Any, Sortable] =
     new MatcherFactory1[Any, Sortable] {
-      def matcher[T <: Any : Sortable]: Matcher[T] = 
+      def matcher[T <: Any : Sortable]: Matcher[T] =
         new Matcher[T] {
           def apply(left: T): MatchResult = {
             val sortable = implicitly[Sortable[T]]
             MatchResult(
-              sortable.isSorted(left), 
+              sortable.isSorted(left),
               Resources.rawWasNotSorted,
               Resources.rawWasSorted,
               Vector(left)
@@ -558,7 +558,7 @@ final class BeWord {
         }
       override def toString: String = "be (sorted)"
     }
-  
+
   /**
    * This method enables the following syntax, where <code>fraction</code> refers to a <code>PartialFunction</code>:
    *
@@ -567,7 +567,7 @@ final class BeWord {
    *                     ^
    * </pre>
    **/
-  def definedAt[A, U <: PartialFunction[A, _]](right: A): Matcher[U] = 
+  def definedAt[A, U <: PartialFunction[A, _]](right: A): Matcher[U] =
     new Matcher[U] {
       def apply(left: U): MatchResult =
         MatchResult(
@@ -588,7 +588,7 @@ final class BeWord {
    * </pre>
    **/
   def thrownBy(code: => Unit) = new ResultOfBeThrownBy(Vector(() => code))
-  
+
   /**
    * This method enables the following syntax, where <code>fraction</code> refers to a <code>PartialFunction</code>:
    *
@@ -610,7 +610,7 @@ final class BeWord {
     }
 
   import language.experimental.macros
-  
+
   /**
    * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
    *
@@ -620,7 +620,7 @@ final class BeWord {
    * </pre>
    **/
   def apply(aType: ResultOfATypeInvocation[_]): Matcher[Any] = macro TypeMatcherMacro.aTypeMatcherImpl
-  
+
   /**
    * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
    *
@@ -630,7 +630,7 @@ final class BeWord {
    * </pre>
    **/
   def apply(anType: ResultOfAnTypeInvocation[_]): Matcher[Any] = macro TypeMatcherMacro.anTypeMatcherImpl
-  
+
   /**
    * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
    *
@@ -639,14 +639,14 @@ final class BeWord {
    *                ^
    * </pre>
    **/
-  def apply(readable: ReadableWord): MatcherFactory1[Any, Readability] = 
+  def apply(readable: ReadableWord): MatcherFactory1[Any, Readability] =
     new MatcherFactory1[Any, Readability] {
-      def matcher[T <: Any : Readability]: Matcher[T] = 
+      def matcher[T <: Any : Readability]: Matcher[T] =
         new Matcher[T] {
           def apply(left: T): MatchResult = {
             val readability = implicitly[Readability[T]]
             MatchResult(
-              readability.isReadable(left), 
+              readability.isReadable(left),
               Resources.rawWasNotReadable,
               Resources.rawWasReadable,
               Vector(left)
@@ -656,7 +656,7 @@ final class BeWord {
         }
       override def toString: String = "be (" + Prettifier.default(readable) + ")"
     }
-  
+
   /**
    * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
    *
@@ -665,14 +665,14 @@ final class BeWord {
    *                 ^
    * </pre>
    **/
-  def apply(writable: WritableWord): MatcherFactory1[Any, Writability] = 
+  def apply(writable: WritableWord): MatcherFactory1[Any, Writability] =
     new MatcherFactory1[Any, Writability] {
-      def matcher[T <: Any : Writability]: Matcher[T] = 
+      def matcher[T <: Any : Writability]: Matcher[T] =
         new Matcher[T] {
           def apply(left: T): MatchResult = {
             val writability = implicitly[Writability[T]]
             MatchResult(
-              writability.isWritable(left), 
+              writability.isWritable(left),
               Resources.rawWasNotWritable,
               Resources.rawWasWritable,
               Vector(left)
@@ -682,7 +682,7 @@ final class BeWord {
         }
       override def toString: String = "be (writable)"
     }
-  
+
   /**
    * This method enables syntax such as the following:
    *
@@ -691,14 +691,14 @@ final class BeWord {
    *                 ^
    * </pre>
    **/
-  def apply(empty: EmptyWord): MatcherFactory1[Any, Emptiness] = 
+  def apply(empty: EmptyWord): MatcherFactory1[Any, Emptiness] =
     new MatcherFactory1[Any, Emptiness] {
-      def matcher[T <: Any : Emptiness]: Matcher[T] = 
+      def matcher[T <: Any : Emptiness]: Matcher[T] =
         new Matcher[T] {
           def apply(left: T): MatchResult = {
             val emptiness = implicitly[Emptiness[T]]
             MatchResult(
-              emptiness.isEmpty(left), 
+              emptiness.isEmpty(left),
               Resources.rawWasNotEmpty,
               Resources.rawWasEmpty,
               Vector(left)
@@ -708,7 +708,7 @@ final class BeWord {
         }
       override def toString: String = "be (empty)"
     }
-  
+
   /**
    * This method enables syntax such as the following:
    *
@@ -717,14 +717,14 @@ final class BeWord {
    *                 ^
    * </pre>
    **/
-  def apply(defined: DefinedWord): MatcherFactory1[Any, Definition] = 
+  def apply(defined: DefinedWord): MatcherFactory1[Any, Definition] =
     new MatcherFactory1[Any, Definition] {
-      def matcher[T <: Any : Definition]: Matcher[T] = 
+      def matcher[T <: Any : Definition]: Matcher[T] =
         new Matcher[T] {
           def apply(left: T): MatchResult = {
             val definition = implicitly[Definition[T]]
             MatchResult(
-              definition.isDefined(left), 
+              definition.isDefined(left),
               Resources.rawWasNotDefined,
               Resources.rawWasDefined,
               Vector(left)
@@ -734,7 +734,7 @@ final class BeWord {
         }
       override def toString: String = "be (defined)"
     }
-  
+
   /**
    * Overrides toString to return "be"
    */

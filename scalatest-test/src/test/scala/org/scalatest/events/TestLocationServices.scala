@@ -25,7 +25,7 @@ trait TestLocationServices {
   private[events] case class TopOfMethodPair(className: String, methodId: String, var checked: Boolean = false) extends LocationPair
   private[events] case class SeeStackDepthExceptionPair(name: String, var checked: Boolean = false) extends LocationPair
   private[events] case class LineInFilePair(message: String, fileName: String, lineNumber: Int, var checked: Boolean = false) extends LocationPair
-  
+
   val suiteTypeName: String
   val expectedSuiteStartingList: List[LocationPair]
   val expectedSuiteCompletedList: List[LocationPair]
@@ -33,48 +33,48 @@ trait TestLocationServices {
   val expectedTestFailedList: List[SeeStackDepthExceptionPair]
   val expectedTestSucceededList: List[LocationPair]
   val expectedInfoProvidedList: List[LineInFilePair]
-  
+
   private def checkLocation(expectedList: List[LocationPair], event: Event): Unit = {
     event.location match {
       case Some(location) =>
         location match {
-          case topOfClass: TopOfClass => 
+          case topOfClass: TopOfClass =>
             expectedList.find { pair =>
               pair match {
-                case topOfClassPair: TopOfClassPair => 
+                case topOfClassPair: TopOfClassPair =>
                   topOfClassPair.className == topOfClass.className
                 case _ => false
               }
             } match {
-              case Some(pair) => 
+              case Some(pair) =>
                 pair.checked = true
-              case None => 
+              case None =>
                 fail("Suite " + suiteTypeName + " got unexpected TopOfClass(className=" + topOfClass.className + ") location in " + event.getClass.getName)
             }
-          case topOfMethod: TopOfMethod => 
-            expectedList.find { pair => 
+          case topOfMethod: TopOfMethod =>
+            expectedList.find { pair =>
               pair match {
-                case topOfMethodPair: TopOfMethodPair => 
+                case topOfMethodPair: TopOfMethodPair =>
                   topOfMethodPair.className == topOfMethod.className && topOfMethodPair.methodId == topOfMethod.methodId
                 case _ => false
               }
             } match {
               case Some(pair) =>
                 pair.checked = true
-              case None => 
+              case None =>
                 fail("Suite " + suiteTypeName + " got unexpected TopOfMethod(className=" + topOfMethod.className + ", methodId=" + topOfMethod.methodId + ") location in " + event.getClass.getName)
             }
           case lineInFile: LineInFile =>
-            expectedList.find { pair => 
+            expectedList.find { pair =>
               pair match {
-                case lineInFilePair: LineInFilePair => 
+                case lineInFilePair: LineInFilePair =>
                   lineInFilePair.fileName == lineInFile.fileName && lineInFilePair.lineNumber == lineInFile.lineNumber
                 case _ => false
-              } 
+              }
             } match {
-              case Some(pair) => 
+              case Some(pair) =>
                 pair.checked = true
-              case None => 
+              case None =>
                 fail("Suite " + suiteTypeName + " got unexpected LineInFile(fileName=" + lineInFile.fileName + ", lineNumber=" + lineInFile.lineNumber + ") location in " + event.getClass.getName)
             }
           case _ =>
@@ -84,7 +84,7 @@ trait TestLocationServices {
         fail("Suite " + suiteTypeName + " got unexpected " + event.getClass.getName + ".")
     }
   }
-  
+
   private def checkSeeStackDepthExceptionPair(expectedList: List[SeeStackDepthExceptionPair], expectedName: String, event: Event): Unit = {
     val expectedPairOpt: Option[SeeStackDepthExceptionPair] = expectedList.find { pair => pair.name == expectedName }
     expectedPairOpt match {
@@ -98,27 +98,27 @@ trait TestLocationServices {
       case None => fail("Suite " + suiteTypeName + " got unexpected " + expectedName + " for event " + event.getClass.getName)
     }
   }
-  
+
   def checkFun(event: Event): Unit = {
     event match {
-      case suiteStarting: SuiteStarting => 
+      case suiteStarting: SuiteStarting =>
         checkLocation(expectedSuiteStartingList, suiteStarting)
-      case suiteCompleted: SuiteCompleted => 
+      case suiteCompleted: SuiteCompleted =>
         checkLocation(expectedSuiteCompletedList, suiteCompleted)
-      case suiteAborted: SuiteAborted => 
+      case suiteAborted: SuiteAborted =>
         checkSeeStackDepthExceptionPair(expectedSuiteAbortedList, suiteAborted.suiteId, event)
-      case testSucceeded: TestSucceeded => 
+      case testSucceeded: TestSucceeded =>
         checkLocation(expectedTestSucceededList, testSucceeded)
-        testSucceeded.recordedEvents.foreach { e => 
+        testSucceeded.recordedEvents.foreach { e =>
           checkLocation(expectedInfoProvidedList, e)
         }
-      case testFailed: TestFailed => 
+      case testFailed: TestFailed =>
         checkSeeStackDepthExceptionPair(expectedTestFailedList, testFailed.testName, event)
       //case infoProvided: InfoProvided => checkLineInFile(expectedInfoProvidedList, infoProvided.message, event)
       case _ => // Tested in LocationMethodSuiteProp or LocationFunctionSuiteProp
     }
   }
-  
+
   def allChecked: Unit = {
     expectedSuiteStartingList.foreach { pair => assert(pair.checked, suiteTypeName + ": SuiteStarting with location " + pair + " not fired.") }
     expectedSuiteCompletedList.foreach { pair => assert(pair.checked, suiteTypeName + ": SuiteCompleted with location " + pair + " not fired.") }

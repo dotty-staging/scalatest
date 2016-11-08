@@ -31,7 +31,7 @@ class OptionShouldContainOneOfSpec extends FunSpec {
     new Equality[String] {
       def areEqual(a: String, b: Any): Boolean = a != b
     }
-  
+
   val upperCaseEquality =
     new Equality[String] {
       def areEqual(a: String, b: Any): Boolean = a.toUpperCase == b

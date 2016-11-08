@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# 2013-0827 Darlene Wallach script to update the Artima, Inc. Copyright date 
-#                           in all scala and java files in all the src and 
+# 2013-0827 Darlene Wallach script to update the Artima, Inc. Copyright date
+#                           in all scala and java files in all the src and
 #                           examples directories
 
 echo `pwd`
@@ -18,7 +18,7 @@ do
 grep Copyright ${file} | grep "Artima, Inc." | grep -v ${theYear} > /dev/null
 if [ $? == 0 ]
 then
-# use sed to edit the file in place - current year for Artima, Inc. Copyright 
+# use sed to edit the file in place - current year for Artima, Inc. Copyright
 sed -i -e "s/Copyright 2001-20../$curCopyright/" ${file}
 fi
 done
@@ -30,7 +30,7 @@ do
 grep Copyright ${file} | grep "Artima, Inc." | grep -v ${theYear} > /dev/null
 if [ $? == 0 ]
 then
-# use sed to edit the file in place - current year for Artima, Inc. Copyright 
+# use sed to edit the file in place - current year for Artima, Inc. Copyright
 sed -i -e "s/Copyright 2001-20../$curCopyright/" ${file}
 fi
 done
@@ -42,7 +42,7 @@ do
 grep Copyright ${file} | grep "Artima, Inc." | grep -v ${theYear} > /dev/null
 if [ $? == 0 ]
 then
-# use sed to edit the file in place - current year for Artima, Inc. Copyright 
+# use sed to edit the file in place - current year for Artima, Inc. Copyright
 sed -i -e "s/Copyright 2001-20../$curCopyright/" ${file}
 fi
 done
@@ -54,7 +54,7 @@ do
 grep Copyright ${file} | grep "Artima, Inc." | grep -v ${theYear} > /dev/null
 if [ $? == 0 ]
 then
-# use sed to edit the file in place - current year for Artima, Inc. Copyright 
+# use sed to edit the file in place - current year for Artima, Inc. Copyright
 sed -i -e "s/Copyright 2001-20../$curCopyright/" ${file}
 fi
 done

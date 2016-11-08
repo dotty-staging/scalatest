@@ -120,7 +120,7 @@ trait MatcherWords {
   val contain = new ContainWord
 
   /**
-   * This field enables syntax like the following: 
+   * This field enables syntax like the following:
    *
    * <pre class="stHighlight">
    * myFile should (not be an (directory) and not have ('name ("foo.bar")))
@@ -128,9 +128,9 @@ trait MatcherWords {
    * </pre>
    **/
   val not = new NotWord
-  
+
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * "hi" should not have length (3)
@@ -138,9 +138,9 @@ trait MatcherWords {
    * </pre>
    **/
   val length = new LengthWord
-  
+
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * set should not have size (3)
@@ -148,9 +148,9 @@ trait MatcherWords {
    * </pre>
    **/
   val size = new SizeWord
-  
+
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * seq should be (sorted)
@@ -160,7 +160,7 @@ trait MatcherWords {
   val sorted = new SortedWord
 
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * seq should be (defined)
@@ -168,9 +168,9 @@ trait MatcherWords {
    * </pre>
    **/
   val defined = new DefinedWord
-  
+
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * noException should be thrownBy
@@ -178,9 +178,9 @@ trait MatcherWords {
    * </pre>
    **/
   def noException(implicit pos: source.Position) = new NoExceptionWord(pos)
-  
+
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * file should exist
@@ -190,18 +190,18 @@ trait MatcherWords {
   val exist = new ExistWord
 
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
-   * 
+   *
    * file should be (readable)
    *                 ^
    * </pre>
    **/
   val readable = new ReadableWord
-  
+
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
    * file should be (writable)
@@ -209,12 +209,12 @@ trait MatcherWords {
    * </pre>
    **/
   val writable = new WritableWord
-  
+
   /**
-   * This field enables the following syntax: 
+   * This field enables the following syntax:
    *
    * <pre class="stHighlight">
-   * 
+   *
    * list should be (empty)
    *                 ^
    * </pre>
@@ -255,7 +255,7 @@ trait MatcherWords {
   val matchPattern = new MatchPatternWord
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should equal (7)
@@ -268,7 +268,7 @@ trait MatcherWords {
    * will be invoked on both <code>left</code> and <code>right</code> before comparing them with <em>==</em>. Thus, even though this expression
    * will yield false, because <code>Array</code>'s <code>equals</code> method compares object identity:
    * </p>
-   * 
+   *
    * <pre class="stHighlight">
    * Array(1, 2) == Array(1, 2) // yields false
    * </pre>
@@ -299,7 +299,7 @@ trait MatcherWords {
               equality.areEqual(left, right),
               Resources.rawDidNotEqual,
               Resources.rawEqualed,
-              Vector(leftee, rightee), 
+              Vector(leftee, rightee),
               Vector(left, right)
             )
           }

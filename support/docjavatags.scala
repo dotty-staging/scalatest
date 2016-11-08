@@ -10,7 +10,7 @@ exec scala "$0" "$@"
  * they're close enough to get into the scaladocs.
  *
  * The script rewrites six files in src/main/java/org/scalatest
- *  
+ *
  *   DoNotDiscover.java
  *   Ignore.java
  *   Finders.java

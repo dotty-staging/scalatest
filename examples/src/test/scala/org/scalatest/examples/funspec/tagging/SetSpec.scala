@@ -29,7 +29,7 @@ class SetSpec extends FunSpec {
       it("should have size 0", Slow) {
         assert(Set.empty.size === 0)
       }
-      
+
       it("should produce NoSuchElementException when head is invoked", Slow, DbTest) {
         assertThrows[NoSuchElementException] {
           Set.empty.head

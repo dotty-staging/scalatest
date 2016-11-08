@@ -23,7 +23,7 @@ class AddSpec extends AsyncFlatSpec {
   def addSoon(addends: Int*): Future[Int] = Future { addends.sum }
 
   behavior of "addSoon"
-    
+
   it should "eventually compute a sum of passed Ints" in {
     val futureSum: Future[Int] = addSoon(1, 2)
     // You can map assertions onto a Future, then return

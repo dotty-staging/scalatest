@@ -17,7 +17,7 @@ package org.scalatest.words
 
 import org.scalatest._
 import Matchers._
-import matchers.{AMatcher, 
+import matchers.{AMatcher,
                  AnMatcher}
 import FailureMessages.decorateToStringValue
 import org.scalactic.Prettifier
@@ -25,26 +25,26 @@ import org.scalactic.Prettifier
 class ContainWordSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   it("should have pretty toString") {
     contain.toString should be ("contain")
   }
-  
+
   describe("ContainWord ") {
-    
+
     describe("apply(Any) method returns MatcherFactory1") {
-      
+
       val mtf = contain (2)
       val mt = mtf.matcher[Array[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("contain (2)")
         mt.toString should be ("contain (2)")
       }
-      
+
       val lhs = Array(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe "Array(1, 2, 3) did not contain element 2"
@@ -61,9 +61,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, 2)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe "Array(1, 2, 3) contained element 2"
@@ -81,19 +81,19 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("key(Any) method returns MatcherFactory1") {
-      
+
       val mtf = contain key ("2")
       val mt = mtf.matcher[Map[String, String]]
-      
+
       it("should have pretty toString") {
         mt.toString should be ("contain key \"2\"")
       }
-      
+
       val lhs = Map("1" -> "one", "2" -> "two", "3" -> "three")
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe decorateToStringValue(prettifier, lhs) + " did not contain key \"2\""
@@ -110,9 +110,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, "2")
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe decorateToStringValue(prettifier, lhs) + " contained key \"2\""
@@ -130,19 +130,19 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("value(Any) method returns MatcherFactory1") {
-      
+
       val mtf = contain value ("two")
       val mt = mtf.matcher[Map[String, String]]
-      
+
       it("should have pretty toString") {
         mt.toString should be ("contain value \"two\"")
       }
-      
+
       val lhs = Map("1" -> "one", "2" -> "two", "3" -> "three")
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe decorateToStringValue(prettifier, lhs) + " did not contain value \"two\""
@@ -159,9 +159,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, "two")
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe decorateToStringValue(prettifier, lhs) + " contained value \"two\""
@@ -179,26 +179,26 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("a(AMatcher) method returns Matcher") {
       case class MyFile(
         val name: String,
         val file: Boolean,
         val isDirectory: Boolean
       )
-      
+
       val file = AMatcher[MyFile]("file") { _.file  }
       val myFile = MyFile("test", true, false)
-      
+
       val mt = contain a (file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("contain a AMatcher[" + classOf[MyFile].getName + "](\"file\", " + classOf[MyFile].getName + " => Boolean)")
       }
-      
+
       val leftList = List(myFile)
       val mr = mt(leftList)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe leftList + " did not contain a file"
@@ -215,9 +215,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(leftList, UnquotedString("file"), UnquotedString(myFile + " was a file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe leftList + " contained a file: " + myFile + " was a file"
@@ -235,26 +235,26 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("an(AnMatcher) method returns Matcher") {
       case class MyFile(
         val name: String,
         val file: Boolean,
         val isDirectory: Boolean
       )
-      
+
       val file = AnMatcher[MyFile]("file") { _.file  }
       val myFile = MyFile("test", true, false)
-      
+
       val mt = contain an (file)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("contain an AnMatcher[" + classOf[MyFile].getName + "](\"file\", " + classOf[MyFile].getName + " => Boolean)")
       }
-      
+
       val leftList = List(myFile)
       val mr = mt(leftList)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe leftList + " did not contain an file"
@@ -271,9 +271,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(leftList, UnquotedString("file"), UnquotedString(myFile + " was an file"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe leftList + " contained an file: " + myFile + " was an file"
@@ -291,20 +291,20 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("oneOf(Any*) method returns MatcherFactory1") {
-      
+
       val mtf = contain oneOf (2, 8)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("contain oneOf (2, 8)")
         mt.toString should be ("contain oneOf (2, 8)")
       }
-      
+
       val lhs = List(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe FailureMessages.didNotContainOneOfElements(prettifier, lhs, UnquotedString("2, 8"))
@@ -321,9 +321,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("2, 8"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe FailureMessages.containedOneOfElements(prettifier, lhs, UnquotedString("2, 8"))
@@ -341,20 +341,20 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("atLeastOneOf(Any*) method returns MatcherFactory1") {
-      
+
       val mtf = contain atLeastOneOf (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("contain atLeastOneOf (1, 2)")
         mt.toString should be ("contain atLeastOneOf (1, 2)")
       }
-      
+
       val lhs = List(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe lhs + " did not contain at least one of (1, 2)"
@@ -371,9 +371,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe lhs + " contained at least one of (1, 2)"
@@ -391,20 +391,20 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("noneOf(Any*) method returns MatcherFactory1") {
-      
+
       val mtf = contain noneOf (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("contain noneOf (1, 2)")
         mt.toString should be ("contain noneOf (1, 2)")
       }
-      
+
       val lhs = List(7, 8, 9)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe FailureMessages.containedAtLeastOneOf(prettifier, lhs, UnquotedString("1, 2"))
@@ -421,9 +421,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe FailureMessages.didNotContainAtLeastOneOf(prettifier, lhs, UnquotedString("1, 2"))
@@ -441,21 +441,21 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("theSameElementsAs(GenTraversable) method returns MatcherFactory1") {
-      
+
       val rhs = List(1, 2, 3)
       val mtf = contain theSameElementsAs rhs
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("contain theSameElementsAs List(1, 2, 3)")
         mt.toString should be ("contain theSameElementsAs List(1, 2, 3)")
       }
-      
+
       val lhs = List(3, 2, 1)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe lhs + " did not contain the same elements as " + rhs
@@ -472,9 +472,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, rhs)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe lhs + " contained the same elements as " + rhs
@@ -492,21 +492,21 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("theSameElementsInOrderAs(GenTraversable) method returns MatcherFactory1") {
-      
+
       val rhs = List(1, 2, 3)
       val mtf = contain theSameElementsInOrderAs rhs
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("contain theSameElementsInOrderAs List(1, 2, 3)")
         mt.toString should be ("contain theSameElementsInOrderAs List(1, 2, 3)")
       }
-      
+
       val lhs = List(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe lhs + " did not contain the same elements in the same (iterated) order as " + rhs
@@ -523,9 +523,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, rhs)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe lhs + " contained the same elements in the same (iterated) order as " + rhs
@@ -543,20 +543,20 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("only(Any*) method returns MatcherFactory1") {
-      
+
       val mtf = contain only (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("contain only (1, 2)")
         mt.toString should be ("contain only (1, 2)")
       }
-      
+
       val lhs = List(2, 1)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe lhs + " did not contain only (1, 2)"
@@ -573,9 +573,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe lhs + " contained only (1, 2)"
@@ -593,20 +593,20 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("inOrderOnly(Any*) method returns MatcherFactory1") {
-      
+
       val mtf = contain inOrderOnly (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("contain inOrderOnly (1, 2)")
         mt.toString should be ("contain inOrderOnly (1, 2)")
       }
-      
+
       val lhs = List(1, 2)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe lhs + " did not contain only (1, 2) in order"
@@ -623,9 +623,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe lhs + " contained only (1, 2) in order"
@@ -643,20 +643,20 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("allOf(Any*) method returns MatcherFactory1") {
-      
+
       val mtf = contain allOf (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("contain allOf (1, 2)")
         mt.toString should be ("contain allOf (1, 2)")
       }
-      
+
       val lhs = List(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe lhs + " did not contain all of (1, 2)"
@@ -673,9 +673,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe lhs + " contained all of (1, 2)"
@@ -693,20 +693,20 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("inOrder(Any*) method returns MatcherFactory1") {
-      
+
       val mtf = contain inOrder (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("contain inOrder (1, 2)")
         mt.toString should be ("contain inOrder (1, 2)")
       }
-      
+
       val lhs = List(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe lhs + " did not contain all of (1, 2) in order"
@@ -723,9 +723,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe lhs + " contained all of (1, 2) in order"
@@ -743,20 +743,20 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
     describe("atMostOneOf(Any*) method returns MatcherFactory1") {
-      
+
       val mtf = contain atMostOneOf (1, 2)
       val mt = mtf.matcher[List[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("contain atMostOneOf (1, 2)")
         mt.toString should be ("contain atMostOneOf (1, 2)")
       }
-      
+
       val lhs = List(1, 6, 8)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe lhs + " did not contain at most one of (1, 2)"
@@ -773,9 +773,9 @@ class ContainWordSpec extends FunSpec {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, UnquotedString("1, 2"))
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe lhs + " contained at most one of (1, 2)"
@@ -793,7 +793,7 @@ class ContainWordSpec extends FunSpec {
 
       }
     }
-    
+
   }
-  
+
 }

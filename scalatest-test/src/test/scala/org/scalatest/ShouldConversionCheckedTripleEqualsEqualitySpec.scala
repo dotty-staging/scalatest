@@ -475,7 +475,7 @@ class ShouldConversionCheckedTripleEqualsEqualitySpec extends FunSpec with NonIm
       javaList124.add(1)
       javaList124.add(2)
       javaList124.add(4)
-      
+
       it("with default equality") {
         javaList123 should === (javaList123)
         javaList123 should !== (javaList124)

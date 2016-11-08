@@ -27,7 +27,7 @@ class NoParamSpec extends FunSpec with Matchers with LoneElement {
       ConfigMap("hi" -> 1, "ho" -> "two") should contain ("hi" -> 1)
     }
     it("should be overridable with something that takes a specific equality") {
-      implicit val inverseEquality = 
+      implicit val inverseEquality =
         new Equality[(String, Any)] {
           def areEqual(a: (String, Any), b: Any): Boolean = a != b
         }
@@ -39,7 +39,7 @@ class NoParamSpec extends FunSpec with Matchers with LoneElement {
       ConfigMap("hi" -> 1, "ho" -> "two") should contain allOf ("hi" -> 1, "ho" -> "two")
     }
     it("should be overridable with something that takes a specific equality") {
-      implicit val inverseEquality = 
+      implicit val inverseEquality =
         new Equality[(String, Any)] {
           def areEqual(a: (String, Any), b: Any): Boolean = a != b
         }
@@ -51,7 +51,7 @@ class NoParamSpec extends FunSpec with Matchers with LoneElement {
       ConfigMap("hi" -> 1, "ho" -> "two") should contain key ("hi")
     }
     it("should be overridable with something that takes a specific equality") {
-      implicit val inverseEquality = 
+      implicit val inverseEquality =
         new Equality[String] {
           def areEqual(a: String, b: Any): Boolean = a != b
         }
@@ -63,7 +63,7 @@ class NoParamSpec extends FunSpec with Matchers with LoneElement {
       ConfigMap("hi" -> 1, "ho" -> "two") should contain value (1)
     }
     it("should be overridable with something that takes a specific equality") {
-      implicit val inverseEquality = 
+      implicit val inverseEquality =
         new Equality[Any] {
           def areEqual(a: Any, b: Any): Boolean = a != b
         }
@@ -83,7 +83,7 @@ class NoParamSpec extends FunSpec with Matchers with LoneElement {
       MyStringSeq("hi", "ho", "hey") should contain inOrder ("hi", "hey")
     }
     it("should be overridable with something that takes a specific equality") {
-      implicit val inverseEquality = 
+      implicit val inverseEquality =
         new Equality[String] {
           def areEqual(a: String, b: Any): Boolean = a != b
         }

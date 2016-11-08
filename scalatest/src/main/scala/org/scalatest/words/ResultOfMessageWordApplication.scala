@@ -44,7 +44,7 @@ final class ResultOfMessageWordApplication(val expectedMessage: String) {
       }
     }
   }
-  
+
   /**
    * Overrides toString to return "message (\"XXX\")", where XXX is expectedMessage
    */

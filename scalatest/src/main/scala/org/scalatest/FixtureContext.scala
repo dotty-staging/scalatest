@@ -38,33 +38,33 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.fixturecontext
- * 
+ *
  * import collection.mutable.ListBuffer
  * import org.scalatest.FlatSpec
  * import org.scalatest.FixtureContext
- * 
+ *
  * class ExampleSpec extends FlatSpec {
- * 
+ *
  *   trait Builder extends FixtureContext {
  *     val builder = new StringBuilder("ScalaTest is ")
  *   }
- * 
+ *
  *   trait Buffer extends FixtureContext {
  *     val buffer = ListBuffer("ScalaTest", "is")
  *   }
- * 
+ *
  *   // This test needs the StringBuilder fixture
  *   "Testing" should "be productive" in new Builder {
  *     builder.append("productive!")
  *     assert(builder.toString === "ScalaTest is productive!")
  *   }
- * 
+ *
  *   // This test needs the ListBuffer[String] fixture
  *   "Test code" should "be readable" in new Buffer {
  *     buffer += ("readable!")
  *     assert(buffer === List("ScalaTest", "is", "readable!"))
  *   }
- * 
+ *
  *   // This test needs both the StringBuilder and ListBuffer
  *   it should "be clear and concise" in new Builder with Buffer {
  *     builder.append("clear!")

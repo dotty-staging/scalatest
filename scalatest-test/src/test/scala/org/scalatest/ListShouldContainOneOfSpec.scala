@@ -31,7 +31,7 @@ class ListShouldContainOneOfSpec extends FunSpec with Matchers {
     new Equality[String] {
       def areEqual(a: String, b: Any): Boolean = a.toUpperCase == b
     }
-  
+
   //ADDITIONAL//
 
   describe("a List") {
@@ -221,7 +221,7 @@ The bottom two don't, but still I don't want to support that in general.
         e1.message should be (Some(Resources.oneOfDuplicate))
       }
     }
-    
+
     describe("when used with shouldNot contain oneOf (...) syntax") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {
@@ -559,7 +559,7 @@ The top two don't, but still I don't want to support that in general.
         e1.message should be (Some(Resources.oneOfDuplicate))
       }
     }
-    
+
     describe("when used with shouldNot contain oneOf (...) syntax") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {

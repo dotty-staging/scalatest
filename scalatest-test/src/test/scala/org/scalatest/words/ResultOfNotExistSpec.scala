@@ -19,14 +19,14 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfNotExistSpec extends FunSpec {
-  
+
   describe("ResultOfNotExist ") {
-    
+
     it("should have pretty toString") {
       val result = new ResultOfNotExist(not)
       result.toString should be ("not (exist)")
     }
-    
+
   }
-  
+
 }

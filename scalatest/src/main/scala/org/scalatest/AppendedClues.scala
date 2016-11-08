@@ -176,7 +176,7 @@ trait AppendedClues {
 }
 
 /**
- * Companion object that facilitates the importing of <code>AppendedClues</code> members as 
+ * Companion object that facilitates the importing of <code>AppendedClues</code> members as
  * an alternative to mixing it in. One use case is to import <code>AppendedClues</code>
  * members so you can use them in the Scala interpreter.
  */
@@ -184,7 +184,7 @@ object AppendedClues extends AppendedClues {
   private[scalatest] def appendClue(original: String, clue: String): String =
     clue.toString.headOption match {
       case Some(firstChar) if firstChar.isWhitespace ||
-          firstChar == '.' || firstChar == ',' || firstChar == ';' => 
+          firstChar == '.' || firstChar == ',' || firstChar == ';' =>
         original + clue
       case _ => original + " " + clue
    }

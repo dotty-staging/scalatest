@@ -36,7 +36,7 @@ class ShouldLogicalMatcherExprSpec extends FunSpec with Checkers with MockitoSug
         intercept[TestFailedException] {
           "hi" should (have length (1) and { mockClown.hasBigRedNose; have length (2) })
         }
- 
+
         verify(mockClown, times(1)).hasBigRedNose
       }
     }
@@ -175,7 +175,7 @@ class ShouldLogicalMatcherExprSpec extends FunSpec with Checkers with MockitoSug
         val mockClown = mock[Clown]
 
         "hi" should (have length (2) or { mockClown.hasBigRedNose; have length (2) })
- 
+
         verify(mockClown, times(1)).hasBigRedNose
       }
     }

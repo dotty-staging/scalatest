@@ -605,7 +605,7 @@ import org.scalatest._
  * an <code>org.scalatest.FunSpec</code>. Please see the <a href="../FunSpec.html#pendingTests">Pending tests</a>
  * section in its documentation for more information.
  * </p>
- * 
+ *
  * <p>
  * Note that a separate instance will be created for a pending test,
  * and the path to the ignored test will be executed in that instance, as well as the test function (up until it
@@ -631,7 +631,7 @@ import org.scalatest._
  * has been called, and at that time the tags to include and exclude are known, only tests selected by the tags
  * will be executed.
  * </p>
- * 
+ *
  * <p>
  * In short, in an <code>org.scalatest.FunSpec</code>, tests not selected by the tags to include
  * and exclude specified for the run (via the <code>Filter</code> passed to <code>run</code>) will not be executed.

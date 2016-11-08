@@ -66,7 +66,7 @@ class ExampleSpec extends AsyncFlatSpec {
     complete {
       val futurePopulatedDb =
         futureDb map { db =>
-          db.append("ScalaTest is ") // perform setup 
+          db.append("ScalaTest is ") // perform setup
         }
       testCode(futurePopulatedDb) // "loan" the fixture to the test code
     } lastly {
@@ -83,7 +83,7 @@ class ExampleSpec extends AsyncFlatSpec {
       actor ! Clear // ensure the fixture will be cleaned up
     }
   }
-    
+
   // This test needs the actor fixture
   "Testing" should "be productive" in {
     withActor { actor =>
@@ -94,7 +94,7 @@ class ExampleSpec extends AsyncFlatSpec {
       }
     }
   }
-    
+
   // This test needs the database fixture
   "Test code" should "be readable" in {
     withDatabase { futureDb =>
@@ -121,6 +121,6 @@ class ExampleSpec extends AsyncFlatSpec {
       }
     }
   }
-  
+
 }
 

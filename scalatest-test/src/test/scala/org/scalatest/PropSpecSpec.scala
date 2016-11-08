@@ -27,7 +27,7 @@ class PropSpecSpec extends FunSpec {
   describe("A PropSpec") {
 
     it("should return the test names in registration order from testNames") {
-      
+
       val a = new PropSpec {
         property("test this") {/* ASSERTION_SUCCEED */}
         property("test that") {/* ASSERTION_SUCCEED */}
@@ -764,7 +764,7 @@ class PropSpecSpec extends FunSpec {
       assert(!k.theTestThatCalled)
       assert(!k.theTestTheOtherCalled)
     }
-    
+
     it("should return the correct test count from its expectedTestCount method") {
 
       val a = new PropSpec {
@@ -1054,9 +1054,9 @@ class PropSpecSpec extends FunSpec {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 10)
     }
   }
-  
+
   describe("when failure happens") {
-    
+
     it("should fire TestFailed event with correct stack depth info when test failed") {
       class TestSpec extends PropSpec {
         property("fail scenario") {
@@ -1070,7 +1070,7 @@ class PropSpecSpec extends FunSpec {
       assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "PropSpecSpec.scala")
       assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 8)
     }
-    
+
     it("should generate TestRegistrationClosedException with correct stack depth info when has a property nested inside a property") {
       class TestSpec extends PropSpec {
         var registrationClosedThrown = false
@@ -1082,7 +1082,7 @@ class PropSpecSpec extends FunSpec {
         override def withFixture(test: NoArgTest): Outcome = {
           val outcome = test.apply()
           outcome match {
-            case Exceptional(ex: TestRegistrationClosedException) => 
+            case Exceptional(ex: TestRegistrationClosedException) =>
               registrationClosedThrown = true
             case _ =>
           }

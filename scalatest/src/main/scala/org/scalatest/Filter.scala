@@ -25,7 +25,7 @@ import org.scalactic.Requirements._
  * <p>
  * This class handles the <code>org.scalatest.Ignore</code> tag specially, in that its <code>apply</code> method indicates which
  * tests should be ignored based on whether they are tagged with <code>org.scalatest.Ignore</code>. If
- * <code>"org.scalatest.Ignore"</code> is not passed in the <code>tagsToExclude</code> set, it will be implicitly added. However, if the 
+ * <code>"org.scalatest.Ignore"</code> is not passed in the <code>tagsToExclude</code> set, it will be implicitly added. However, if the
  * <code>tagsToInclude</code> option is defined, and the contained set does not include <code>"org.scalatest.Ignore"</code>, then only those tests
  * that are both tagged with <code>org.scalatest.Ignore</code> and at least one of the tags in the <code>tagsToInclude</code> set
  * will be included in the result of <code>apply</code> and marked as ignored (so long as the test is not also
@@ -56,7 +56,7 @@ final class Filter private (val tagsToInclude: Option[Set[String]], val tagsToEx
     case None =>
   }
 
-  private def includedTestNames(testNamesAsList: List[String], tags: Map[String, Set[String]]): List[String] = 
+  private def includedTestNames(testNamesAsList: List[String], tags: Map[String, Set[String]]): List[String] =
     tagsToInclude match {
       case None => testNamesAsList
       case Some(tagsToInclude) =>
@@ -75,7 +75,7 @@ final class Filter private (val tagsToInclude: Option[Set[String]], val tagsToEx
       case None =>
     }
   }
-  
+
   private def mergeTestTags(testTagsList: List[Map[String, Set[String]]]): Map[String, Set[String]] = {
     val mergedTags = scala.collection.mutable.Map[String, Set[String]]() ++ testTagsList.head
     for (testTags <- testTagsList.tail) {
@@ -84,29 +84,29 @@ final class Filter private (val tagsToInclude: Option[Set[String]], val tagsToEx
         existingTagSetOpt match {
           case Some(existingTagSet) =>
             mergedTags(testName) = existingTagSet ++ tagSet
-          case None => 
+          case None =>
             mergedTags += ((testName, tagSet))
         }
       }
     }
     mergedTags.toMap
   }
-  
+
   private[scalatest] def mergeTestDynamicTags(tags: Map[String, Set[String]], suiteId: String, testNames: Set[String]): Map[String, Set[String]] = {
-    val dynaTestTags = 
+    val dynaTestTags =
       if (dynaTags.testTags.isDefinedAt(suiteId))
         dynaTags.testTags(suiteId)
       else
         Map.empty[String, Set[String]]
-    
-    val dynaSuiteTags = 
+
+    val dynaSuiteTags =
       if (dynaTags.suiteTags.isDefinedAt(suiteId)) {
         val suiteTags = dynaTags.suiteTags(suiteId)
         Map() ++ testNames.map(tn => (tn, suiteTags))
       }
       else
         Map.empty[String, Set[String]]
-     
+
     mergeTestTags(List(tags, dynaTestTags, dynaSuiteTags))
   }
 
@@ -158,7 +158,7 @@ final class Filter private (val tagsToInclude: Option[Set[String]], val tagsToEx
 
     filtered
   }
-  
+
   def apply(testNames: Set[String], tags: Map[String, Set[String]], suiteId: String): List[(String, Boolean)] = {
     val testTags: Map[String, Set[String]] = mergeTestDynamicTags(tags, suiteId, testNames)
     verifyPreconditionsForMethods(testNames, testTags)
@@ -189,9 +189,9 @@ final class Filter private (val tagsToInclude: Option[Set[String]], val tagsToEx
    * both <code>org.scalatest.Ignore</code> and <code>SlowAsMolasses</code>, and <code>SlowAsMolasses</code>
    * appears in the <code>tagsToExclude</code> set, the <code>SlowAsMolasses</code> tag will
    * "overpower" the <code>org.scalatest.Ignore</code> tag, and this method will return
-   * (true, false). 
+   * (true, false).
    * </p>
-   * 
+   *
    * <pre class="stHighlight">
    * val (filterTest, ignoreTest) = filter(testName, tags)
    * if (!filterTest)
@@ -238,7 +238,7 @@ final class Filter private (val tagsToInclude: Option[Set[String]], val tagsToEx
     verifyPreconditionsForMethods(testNames, tags)
 
     val testNamesAsList = testNames.toList // to preserve the order
-    val runnableTests = 
+    val runnableTests =
       for {
         testName <- includedTestNames(testNamesAsList, tags)
         if !tags.contains(testName) || (!tags(testName).contains(IgnoreTag) && (tags(testName) intersect tagsToExclude).size == 0)
@@ -267,7 +267,7 @@ object Filter {
     new Filter(tagsToInclude, tagsToExclude, excludeNestedSuites, dynaTags)
 
   /**
-   * Factory method for a default <code>Filter</code>, for which <code>tagsToInclude is <code>None</code>, 
+   * Factory method for a default <code>Filter</code>, for which <code>tagsToInclude is <code>None</code>,
    * <code>tagsToExclude</code> is <code>Set("org.scalatest.Ignore")</code>, and <code>excludeNestedSuites</code> is false.
    *
    * @return a default <code>Filter</code>

@@ -58,12 +58,12 @@ class MatchResultSpec extends FreeSpec with Matchers with PrettyMethods {
       mr2Negated.midSentenceNegatedFailureMessageArgs shouldBe (Vector("howdy"))
     }
     "can be pattern matched via an extractor for the failureMessage if it doesn't match" in {
-      inside (mr) { case MatchFailed(failureMessage) => 
+      inside (mr) { case MatchFailed(failureMessage) =>
         failureMessage should be ("1 did not equal 2")
       }
     }
     "can be pattern matched via an extractor for the negatedFailureMessage if it does match" in {
-      inside (mr.negated) { case MatchSucceeded(negatedFailureMessage) => 
+      inside (mr.negated) { case MatchSucceeded(negatedFailureMessage) =>
         negatedFailureMessage should be ("1 did not equal 2")
       }
     }
@@ -398,7 +398,7 @@ class MatchResultSpec extends FreeSpec with Matchers with PrettyMethods {
         mr.rawMidSentenceNegatedFailureMessage should be (Resources.rawCommaAnd)
         mr.failureMessage should be (Resources.commaBut(Resources.wasGreaterThan('e'.pretty, 'b'.pretty), Resources.wasNotGreaterThan('e'.pretty, 'd'.pretty)))
         mr.negatedFailureMessage should be (Resources.commaAnd(Resources.wasGreaterThan('e'.pretty, 'b'.pretty), Resources.wasGreaterThan('e'.pretty, 'd'.pretty)))
-        mr.midSentenceFailureMessage should be (Resources.commaBut(Resources.wasGreaterThan('e'.pretty, 'b'.pretty), Resources.wasNotGreaterThan('e'.pretty, 'd'.pretty))) 
+        mr.midSentenceFailureMessage should be (Resources.commaBut(Resources.wasGreaterThan('e'.pretty, 'b'.pretty), Resources.wasNotGreaterThan('e'.pretty, 'd'.pretty)))
         mr.midSentenceNegatedFailureMessage should be (Resources.commaAnd(Resources.wasGreaterThan('e'.pretty, 'b'.pretty), Resources.wasGreaterThan('e'.pretty, 'd'.pretty)))
         mr.failureMessageArgs should be (Vector(NegatedFailureMessage(left('e')), MidSentenceFailureMessage(right('e'))))
         mr.negatedFailureMessageArgs should be (Vector(NegatedFailureMessage(left('e')), MidSentenceNegatedFailureMessage(right('e'))))
@@ -507,4 +507,4 @@ class MatchResultSpec extends FreeSpec with Matchers with PrettyMethods {
     }
   }
 }
- 
+

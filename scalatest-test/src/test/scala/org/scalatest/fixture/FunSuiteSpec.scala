@@ -235,7 +235,7 @@ class FunSuiteSpec extends org.scalatest.FunSpec /*with PrivateMethodTester*/ {
         }
       }
     }
-    
+
     class TestWasCalledSuite extends FunSuite {
       type FixtureParam = String
       def withFixture(test: OneArgTest): Outcome = { test("hi") }
@@ -866,7 +866,7 @@ class FunSuiteSpec extends org.scalatest.FunSpec /*with PrivateMethodTester*/ {
         test("should do that") { fixture =>
           assert(fixture === hello)
         }
-        
+
         test("should do something else") { fixture =>
           assert(fixture === hello)
           pending
@@ -903,7 +903,7 @@ class FunSuiteSpec extends org.scalatest.FunSpec /*with PrivateMethodTester*/ {
           assert(fixture === hello)
           pending
         }
-        
+
         test("should do that without a fixture") { () =>
           assert(2 + 2 === 4)
           theTestWithoutFixtureWasRun = true
@@ -1369,9 +1369,9 @@ class FunSuiteSpec extends org.scalatest.FunSpec /*with PrivateMethodTester*/ {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 10)
     }
   }
-  
+
   describe("when failure happens") {
-    
+
     it("should fire TestFailed event with correct stack depth info when test failed") {
       class TestSpec extends FunSuite {
         type FixtureParam = String
@@ -1389,7 +1389,7 @@ class FunSuiteSpec extends org.scalatest.FunSpec /*with PrivateMethodTester*/ {
       assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "FunSuiteSpec.scala")
       assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 8)
     }
-    
+
     it("should generate TestRegistrationClosedException with correct stack depth info when has a test nested inside a test") {
       class TestSpec extends FunSuite {
         type FixtureParam = String
@@ -1402,7 +1402,7 @@ class FunSuiteSpec extends org.scalatest.FunSpec /*with PrivateMethodTester*/ {
         override def withFixture(test: OneArgTest): Outcome = {
           val outcome = test.apply("hi")
           outcome match {
-            case Exceptional(ex: TestRegistrationClosedException) => 
+            case Exceptional(ex: TestRegistrationClosedException) =>
               registrationClosedThrown = true
             case _ =>
           }
@@ -1483,6 +1483,6 @@ class FunSuiteSpec extends org.scalatest.FunSpec /*with PrivateMethodTester*/ {
       assert(e.failedCodeLineNumber.get == thisLineNumber - 6)
       assert(!e.cause.isDefined)
     }
-    
+
   }
 }

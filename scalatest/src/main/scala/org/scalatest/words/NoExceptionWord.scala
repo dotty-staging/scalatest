@@ -27,20 +27,20 @@ import org.scalactic._
  * @author Bill Venners
  */
 final class NoExceptionWord(pos: source.Position) {
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * noException should be thrownBy { ... }
    *             ^
    * </pre>
    **/
-  def should(beWord: BeWord): ResultOfBeWordForNoException = 
+  def should(beWord: BeWord): ResultOfBeWordForNoException =
     new ResultOfBeWordForNoException(pos)
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * noException shouldBe thrownBy { ... }
@@ -91,7 +91,7 @@ final class NoExceptionWord(pos: source.Position) {
       }
     }
   }
-  
+
   /**
    * Overrides toString to return "noException"
    */

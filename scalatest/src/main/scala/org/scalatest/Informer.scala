@@ -19,7 +19,7 @@ import org.scalactic.source
 
 /**
  * Trait to which custom information about a running suite of tests can be reported.
- * 
+ *
  * <p>
  * An <code>Informer</code> is essentially
  * used to wrap a <code>Reporter</code> and provide easy ways to send custom information
@@ -36,28 +36,28 @@ import org.scalactic.source
  * method of trait <a href="FlatSpec.html"><code>FlatSpec</code></a> and indirectly via the methods of
  * trait <a href="GivenWhenThen.html"><code>GivenWhenThen</code></a>:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.info
- * 
+ *
  * import collection.mutable
  * import org.scalatest._
- * 
+ *
  * class SetSpec extends FlatSpec with GivenWhenThen {
- *   
+ *
  *   "A mutable Set" should "allow an element to be added" in {
  *     given("an empty mutable Set")
  *     val set = mutable.Set.empty[String]
- * 
+ *
  *     when("an element is added")
  *     set += "clarity"
- * 
+ *
  *     then("the Set should have size 1")
  *     assert(set.size === 1)
- * 
+ *
  *     and("the Set should contain the added element")
  *     assert(set.contains("clarity"))
- * 
+ *
  *     info("That's all folks!")
  *   }
  * }
@@ -71,10 +71,10 @@ import org.scalactic.source
  * scala&gt; org.scalatest.run(new SetSpec)
  * <span class="stGreen">A mutable Set
  * - should allow an element to be added
- *   + Given an empty mutable Set 
- *   + When an element is added 
- *   + Then the Set should have size 1 
- *   + And the Set should contain the added element 
+ *   + Given an empty mutable Set
+ *   + When an element is added
+ *   + Then the Set should have size 1
+ *   + And the Set should contain the added element
  *   + That's all folks! </span>
  * </pre>
  *

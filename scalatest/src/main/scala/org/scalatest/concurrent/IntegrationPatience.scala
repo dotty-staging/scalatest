@@ -19,7 +19,7 @@ import org.scalatest.time.{Millis, Seconds, Span}
 
 /**
  * Stackable modification trait for <a href="PatienceConfiguration.html"><code>PatienceConfiguration</code></a> that provides default timeout and interval
- * values appropriate for integration testing. 
+ * values appropriate for integration testing.
  *
  * <p>
  * The default values for the parameters are:

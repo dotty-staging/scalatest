@@ -27,25 +27,25 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
   private val prettifier = Prettifier.default
 
   describe("inOrderOnly ") {
-    
+
     def checkStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       e.message should be (Some(leftText + " did not contain only (" + right.mkString(", ") + ") in order"))
       e.failedCodeFileName should be (Some("InOrderOnlyContainMatcherSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should succeed when left List contains elements available in right List") {
       List(4, 4, 4, 5, 5, 6, 6) should contain inOrderOnly (4, 5, 6)
       Array(4, 4, 4, 5, 5, 6, 6) should contain inOrderOnly (4, 5, 6)
       // SKIP-SCALATESTJS-START
       javaList(4, 4, 4, 5, 5, 6, 6) should contain inOrderOnly (4, 5, 6)
       // SKIP-SCALATESTJS-END
-      
+
       LinkedHashMap(4 -> "four", 5 -> "five", 6 -> "six").iterator.toStream should contain inOrderOnly (4 -> "four", 5 -> "five", 6 -> "six")
       // javaMap(Entry(4, "four"), Entry(5, "five"), Entry(6, "six")) should contain inOrderOnly (4 -> "four", 5 -> "five", 6 -> "six")
     }
-    
+
     it("should fail when left list contains part of right list") {
       intercept[TestFailedException] {
         List(1, 2, 2, 3, 3, 3) should contain inOrderOnly (1, 2, 3, 4, 5)
@@ -58,7 +58,7 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
         javaList(1, 2, 2, 3, 3, 3) should contain inOrderOnly (1, 2, 3, 4, 5)
       }
       // SKIP-SCALATESTJS-END
-      
+
       intercept[TestFailedException] {
         LinkedHashMap(1 -> "one", 2 -> "two", 3 -> "three").iterator.toStream should contain inOrderOnly (1 -> "one", 2 -> "two", 3 -> "three", 4 -> "four", 5 -> "five")
       }
@@ -75,7 +75,7 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
         List(1, 2, 3) should contain inOrderOnly (1, 2, 1)
       }
       e1.getMessage() should be ("inOrderOnly must not contained duplicated value, but 1 is duplicated")
-      
+
       val e2 = intercept[IllegalArgumentException] {
         Array(1, 2, 3) should contain inOrderOnly (1, 2, 1)
       }
@@ -102,7 +102,7 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
         left3 should contain inOrderOnly (1 -> "one", 2 -> "two")
       }
       checkStackDepth(e3, left3, Array(1 -> "one", 2 -> "two"), thisLineNumber - 2)
-      
+
 /*
       val left4 = javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three"))
       val e4 = intercept[exceptions.TestFailedException] {
@@ -110,14 +110,14 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
       }
       checkStackDepth(e4, left4, Array(1 -> "one", 2 -> "two"), thisLineNumber - 2)
 */
-      
+
       val left5 = Array(1, 2, 3)
       val e5 = intercept[exceptions.TestFailedException] {
         left5 should contain inOrderOnly (1, 2)
       }
       checkStackDepth(e5, left5, Array(1, 2).deep, thisLineNumber - 2)
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left List contains only element in right List, but in different order") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
@@ -138,7 +138,7 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
         left3 should contain inOrderOnly (3 -> "three", 2 -> "two", 1 -> "one")
       }
       checkStackDepth(e3, left3, Array(3 -> "three", 2 -> "two", 1 -> "one"), thisLineNumber - 2)
-      
+
 /*
       val left4 = javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three"))
       val e4 = intercept[exceptions.TestFailedException] {
@@ -146,7 +146,7 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
       }
       checkStackDepth(e4, left4, Array(3 -> "three", 2 -> "two", 1 -> "one"), thisLineNumber - 2)
 */
-      
+
       val left5 = Array(1, 2, 3)
       val e5 = intercept[exceptions.TestFailedException] {
         left5 should contain inOrderOnly (3, 2, 1)
@@ -154,16 +154,16 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
       checkStackDepth(e5, left5, Array(3, 2, 1).deep, thisLineNumber - 2)
     }
   }
-  
+
   describe("not inOrderOnly ") {
-    
+
     def checkStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       e.message should be (Some(leftText + " contained only (" + right.mkString(", ") + ") in order"))
       e.failedCodeFileName should be (Some("InOrderOnlyContainMatcherSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should succeed when left List contains element not in right List") {
       List(1, 2, 3) should not contain inOrderOnly (1, 2)
       Array(1, 2, 3) should not contain inOrderOnly (1, 2)
@@ -174,7 +174,7 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
       LinkedHashMap(1 -> "one", 2 -> "two", 3 -> "three").iterator.toStream should not contain inOrderOnly (1 -> "one", 2 -> "two")
       // javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three")) should not contain inOrderOnly (1 -> "one", 2 -> "two")
     }
-    
+
     it("should succeed when left List contains element in right List but in different order") {
       List(1, 2, 3) should not contain inOrderOnly (3, 2, 1)
       Array(1, 2, 3) should not contain inOrderOnly (3, 2, 1)
@@ -185,7 +185,7 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
       LinkedHashMap(1 -> "one", 2 -> "two", 3 -> "three").iterator.toStream should not contain inOrderOnly (3 -> "three", 2 -> "two", 1 -> "one")
       // javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three")) should not contain inOrderOnly (3 -> "three", 2 -> "two", 1 -> "one")
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left List contains only element in right List in same order") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
@@ -206,7 +206,7 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
         left3 should not contain inOrderOnly (1 -> "one", 2 -> "two", 3 -> "three")
       }
       checkStackDepth(e3, left3, Array(1 -> "one", 2 -> "two", 3 -> "three"), thisLineNumber - 2)
-      
+
 /*
       val left4 = javaMap(Entry(1, "one"), Entry(2, "two)", Entry(3, "three"))
       val e4 = intercept[exceptions.TestFailedException] {
@@ -214,7 +214,7 @@ class InOrderOnlyContainMatcherSpec extends FunSpec {
       }
       checkStackDepth(e4, left4, Array(1 -> "one", 2 -> "two", 3 -> "three"), thisLineNumber - 2)
 */
-      
+
       val left5 = Array(1, 2, 3)
       val e5 = intercept[exceptions.TestFailedException] {
         left5 should not contain inOrderOnly (1, 2, 3)

@@ -22,7 +22,7 @@ package org.scalactic.exceptions
  * Prior to ScalaTest and Scalactic 3.0.0, a <code>null</code> argument (where non-<code>null</code> was required)
  * would result in a <code>NullPointerException</code>. Although throwing <code>NullPointerException</code> is the
  * tradition in Java APIs, Scala.js does not support a <code>NullPointerException</code>. To make the behavior
- * the same on both the JVM and Scala.js, the change to throwing <code>NullArgumentException</code> was made throughout 
+ * the same on both the JVM and Scala.js, the change to throwing <code>NullArgumentException</code> was made throughout
  * the ScalaTest and Scalactic, including the <code>requireNonNull</code> method of trait [[org.scalactic.Requirements <code>Requirements</code>]].
  * </p>
  *

@@ -44,7 +44,7 @@ abstract class PathSuiteExamples extends Tables {
   val deeplyNestedPathFreeSpec: path.FreeSpec with FixtureServices
   val siblingDeeplyNestedPathFreeSpec: path.FreeSpec with FixtureServices
   val asymetricalDeeplyNestedPathFreeSpec: path.FreeSpec with FixtureServices
- 
+
   val examples =
     Table(
     "path suite",

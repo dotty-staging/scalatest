@@ -38,10 +38,10 @@ class ScalaTestFrameworkSuite extends FunSuite{
 
     assert(testFingerprint.isModule === false)
     assert(testFingerprint.superClassName === "org.scalatest.Suite")
-    
-    val annotatedFingerprint = 
+
+    val annotatedFingerprint =
       fingerprints(1).asInstanceOf[org.scalatools.testing.AnnotatedFingerprint]
-    
+
     assert(annotatedFingerprint.isModule() === false)
     assert(annotatedFingerprint.annotationName === "org.scalatest.WrapWith")
   }

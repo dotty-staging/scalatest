@@ -19,10 +19,10 @@ import io.Source
 import java.io.{File, FileWriter, BufferedWriter}
 
 object GenSorted {
-  
+
   def translateLine(line: String, mapping: (String, String)*): String = {
     @tailrec
-    def translate(current: String, itr: Iterator[(String, String)]): String = 
+    def translate(current: String, itr: Iterator[(String, String)]): String =
       if (itr.hasNext) {
         val next = itr.next
         translate(current.replaceAll(next._1, next._2), itr)
@@ -31,13 +31,13 @@ object GenSorted {
         current
     translate(line, mapping.toIterator)
   }
-  
+
   def genTest(targetBaseDir: File, version: String, scalaVersion: String) {
-    
+
     val sourceBaseDir = new File("scalatest-test/src/test/scala/org/scalatest")
     val sortedDir = new File(targetBaseDir, "sortedTests")
     sortedDir.mkdirs()
-    
+
     def generateFile(sourceFileName: String, generatedFileName: String, mapping: (String, String)*) {
       val generatedFile = new File(sortedDir, generatedFileName)
       val writer = new BufferedWriter(new FileWriter(generatedFile))
@@ -54,43 +54,43 @@ object GenSorted {
         println("Generated " + generatedFile.getAbsolutePath)
       }
     }
-    
-    val arrayMapping = 
+
+    val arrayMapping =
       List(
-        "List\\[String\\]" -> "Array[String]", 
-        "List\\[Int\\]" -> "Array[Int]", 
-        "List" -> "Array", 
-        "Nil" -> "Array()", 
-        "ShouldBeSortedSpec" -> "ShouldBeSortedForArraySpec", 
-        "ShouldBeSortedLogicalAndSpec" -> "ShouldBeSortedLogicalAndForArraySpec", 
+        "List\\[String\\]" -> "Array[String]",
+        "List\\[Int\\]" -> "Array[Int]",
+        "List" -> "Array",
+        "Nil" -> "Array()",
+        "ShouldBeSortedSpec" -> "ShouldBeSortedForArraySpec",
+        "ShouldBeSortedLogicalAndSpec" -> "ShouldBeSortedLogicalAndForArraySpec",
         "ShouldBeSortedLogicalOrSpec" -> "ShouldBeSortedLogicalOrForArraySpec"
       )
-      
-    val javaListMapping = 
+
+    val javaListMapping =
       List(
-        "//ADDITIONAL//" -> "import SharedHelpers.javaList", 
-        "List\\[String\\]" -> "java.util.List[String]", 
-        "List\\[Int\\]" -> "java.util.List[Int]", 
-        "List.empty\\[Int\\]" -> "javaList[Int]()", 
+        "//ADDITIONAL//" -> "import SharedHelpers.javaList",
+        "List\\[String\\]" -> "java.util.List[String]",
+        "List\\[Int\\]" -> "java.util.List[Int]",
+        "List.empty\\[Int\\]" -> "javaList[Int]()",
         "List.empty\\[Student\\]" -> "javaList[Student]()",
         "List\\(0\\)" -> "javaList(0)",
         "List\\(1, 2, 3\\)" -> "javaList(1, 2, 3)",
-        "List\\(3, 2, 1\\)" -> "javaList(3, 2, 1)", 
-        "List\\(Student" -> "javaList(Student", 
-        "ShouldBeSortedSpec" -> "ShouldBeSortedForJavaColSpec", 
+        "List\\(3, 2, 1\\)" -> "javaList(3, 2, 1)",
+        "List\\(Student" -> "javaList(Student",
+        "ShouldBeSortedSpec" -> "ShouldBeSortedForJavaColSpec",
         "ShouldBeSortedLogicalAndSpec" -> "ShouldBeSortedLogicalAndForJavaColSpec",
         "ShouldBeSortedLogicalOrSpec" -> "ShouldBeSortedLogicalOrForJavaColSpec"
       )
-    
+
     generateFile("ShouldBeSortedSpec.scala", "ShouldBeSortedForArraySpec.scala", arrayMapping: _*)
     generateFile("ShouldBeSortedLogicalAndSpec.scala", "ShouldBeSortedLogicalAndForArraySpec.scala", arrayMapping: _*)
     generateFile("ShouldBeSortedLogicalOrSpec.scala", "ShouldBeSortedLogicalOrForArraySpec.scala", arrayMapping: _*)
-    
+
     generateFile("ShouldBeSortedSpec.scala", "ShouldBeSortedForJavaColSpec.scala", javaListMapping: _*)
     generateFile("ShouldBeSortedLogicalAndSpec.scala", "ShouldBeSortedLogicalAndForJavaColSpec.scala", javaListMapping: _*)
     generateFile("ShouldBeSortedLogicalOrSpec.scala", "ShouldBeSortedLogicalOrForJavaColSpec.scala", javaListMapping: _*)
   }
-  
+
   def main(args: Array[String]) {
     val targetDir = args(0)
     val version = args(1)

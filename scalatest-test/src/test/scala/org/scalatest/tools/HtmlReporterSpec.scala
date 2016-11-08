@@ -26,7 +26,7 @@ import scala.io.Source
 class HtmlReporterSpec extends FunSpec {
 
   describe("HtmlReporter ") {
-    
+
     it("should throw IllegalStateException when SuiteCompleted is received without any suite events") {
       val tempDir = createTempDirectory()
       val htmlRep = new HtmlReporter(tempDir.getAbsolutePath, false, None, None)
@@ -34,9 +34,9 @@ class HtmlReporterSpec extends FunSpec {
       val e = intercept[IllegalStateException] {
         htmlRep(suiteCompleted)
       }
-      assert(e.getMessage === "Expected SuiteStarting for completion event: " + suiteCompleted + " in the head of suite events, but we got no suite event at all") 
+      assert(e.getMessage === "Expected SuiteStarting for completion event: " + suiteCompleted + " in the head of suite events, but we got no suite event at all")
     }
-    
+
     it("should throw IllegalStateException when SuiteCompleted is received without a SuiteStarting") {
       val tempDir = createTempDirectory()
       val htmlRep = new HtmlReporter(tempDir.getAbsolutePath, false, None, None)
@@ -46,9 +46,9 @@ class HtmlReporterSpec extends FunSpec {
       val e = intercept[IllegalStateException] {
         htmlRep(suiteCompleted)
       }
-      assert(e.getMessage === "Expected SuiteStarting for completion event: " + suiteCompleted + " in the head of suite events, but we got: " + testStarting) 
+      assert(e.getMessage === "Expected SuiteStarting for completion event: " + suiteCompleted + " in the head of suite events, but we got: " + testStarting)
     }
-    
+
     it("should throw IllegalStateException when SuiteAborted is received without any suite events") {
       val tempDir = createTempDirectory()
       val htmlRep = new HtmlReporter(tempDir.getAbsolutePath, false, None, None)
@@ -56,9 +56,9 @@ class HtmlReporterSpec extends FunSpec {
       val e = intercept[IllegalStateException] {
         htmlRep(suiteAborted)
       }
-      assert(e.getMessage === "Expected SuiteStarting for completion event: " + suiteAborted + " in the head of suite events, but we got no suite event at all") 
+      assert(e.getMessage === "Expected SuiteStarting for completion event: " + suiteAborted + " in the head of suite events, but we got no suite event at all")
     }
-    
+
     it("should throw IllegalStateException when SuiteAborted is received without a SuiteStarting") {
       val tempDir = createTempDirectory()
       val htmlRep = new HtmlReporter(tempDir.getAbsolutePath, false, None, None)
@@ -68,7 +68,7 @@ class HtmlReporterSpec extends FunSpec {
       val e = intercept[IllegalStateException] {
         htmlRep(suiteAborted)
       }
-      assert(e.getMessage === "Expected SuiteStarting for completion event: " + suiteAborted + " in the head of suite events, but we got: " + testStarting) 
+      assert(e.getMessage === "Expected SuiteStarting for completion event: " + suiteAborted + " in the head of suite events, but we got: " + testStarting)
     }
 
     it("should take MarkupProvided with '&' in it without problem") {
@@ -165,5 +165,5 @@ class HtmlReporterSpec extends FunSpec {
       assert(actual === original)
     }
   }
-  
+
 }

@@ -36,13 +36,13 @@ trait CustomFileBePropertyMatchers {
 import Matchers._
 
 class ShouldFileBePropertyMatcherSpec extends FunSpec with CustomFileBePropertyMatchers {
- 
+
   describe("A temp file") {
- 
+
     it("should be a file, not a directory") {
 
       val tempFile = java.io.File.createTempFile("delete", "me")
- 
+
       try {
         tempFile should be a (file)
         tempFile should not be a (directory)

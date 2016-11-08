@@ -20,21 +20,21 @@ import Matchers._
 import java.io.File
 
 class HavePropertyMatcherSpec extends FunSpec {
-  
+
   describe("HavePropertyMatcher ") {
-    
+
     describe("instance created by HavePropertyMatcher apply method") {
-      
+
       val havePropertyMatcher = HavePropertyMatcher[String, Int] { str =>
         HavePropertyMatchResult(true, "name", 8, 9)
       }
-      
+
       it("should have pretty toString") {
         havePropertyMatcher.toString should be ("HavePropertyMatcher[java.lang.String, int](java.lang.String => HavePropertyMatchResult[int])")
       }
-      
+
     }
-    
+
   }
-  
+
 }

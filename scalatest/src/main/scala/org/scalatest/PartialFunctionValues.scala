@@ -42,7 +42,7 @@ import org.scalatest.exceptions.TestFailedException
  * </pre>
  *
  * <p>
- * Were you to simply invoke <code>apply</code> on the <code>PartialFunction</code>, passing in an input value, 
+ * Were you to simply invoke <code>apply</code> on the <code>PartialFunction</code>, passing in an input value,
  * if the partial function wasn't defined at that input, it would throw some exception, but likely not one
  * that provides a <a href="exceptions/StackDepth.html">stack depth</a>:
  * </p>
@@ -89,7 +89,7 @@ trait PartialFunctionValues {
    * @param pf the <code>PartialFunction</code> on which to add the <code>valueAt</code> method
    */
   implicit def convertPartialFunctionToValuable[A, B](pf: PartialFunction[A, B])(implicit pos: source.Position): Valuable[A, B] = new Valuable(pf, pos)
-  
+
   /**
    * Wrapper class that adds a <code>valueAt</code> method to <code>PartialFunction</code>, allowing
    * you to make statements like:
@@ -117,7 +117,7 @@ trait PartialFunctionValues {
 }
 
 /**
- * Companion object that facilitates the importing of <code>PartialFunctionValues</code> members as 
+ * Companion object that facilitates the importing of <code>PartialFunctionValues</code> members as
  * an alternative to mixing it in. One use case is to import <code>PartialFunctionValues</code>'s members so you can use
  * the <code>valueAt</code> method on <code>PartialFunction</code> in the Scala interpreter:
  *
@@ -126,21 +126,21 @@ trait PartialFunctionValues {
  * Welcome to Scala version 2.9.1.final (Java HotSpot(TM) 64-Bit Server VM, Java 1.6.0_29).
  * Type in expressions to have them evaluated.
  * Type :help for more information.
- * 
+ *
  * scala&gt; import org.scalatest._
  * import org.scalatest._
- * 
+ *
  * scala&gt; import matchers.Matchers._
  * import matchers.Matchers._
- * 
+ *
  * scala&gt; import PartialFunctionValues._
  * import PartialFunctionValues._
- * 
+ *
  * scala&gt; val pf: PartialFunction[String, Int] = Map("I" -&gt; 1, "II" -&gt; 2, "III" -&gt; 3, "IV" -&gt; 4)
  * pf: PartialFunction[String,Int] = Map(I -&gt; 1, II -&gt; 2, III -&gt; 3, IV -&gt; 4)
- * 
+ *
  * scala&gt; pf("IV") should equal (4)
- * 
+ *
  * scala&gt; pf("V") should equal (5)
  * java.util.NoSuchElementException: key not found: V
  *   at scala.collection.MapLike$class.default(MapLike.scala:224)

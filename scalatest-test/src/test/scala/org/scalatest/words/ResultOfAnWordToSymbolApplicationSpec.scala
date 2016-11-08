@@ -20,19 +20,19 @@ import Matchers._
 import java.io.File
 
 class ResultOfAnWordToSymbolApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfAnWordToSymbolApplication ") {
-    
+
     case class MyFile(
       val name: String,
       val file: Boolean,
       val isDirectory: Boolean
     )
-    
+
     it("should have pretty toString") {
       val result = new ResultOfAnWordToSymbolApplication('file)
       result.toString should be ("an ('file)")
     }
   }
-  
+
 }

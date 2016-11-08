@@ -53,7 +53,7 @@ import exceptions.StackDepthException
  * If you want to use <code>loneElement</code> with a <code>java.util.Map</code>, first transform it to a
  * set of entries with <code>entrySet</code>, and if helpful, use ScalaTest's <a href="Entry.html"><code>Entry</code></a> class:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest._
  * import org.scalatest._
@@ -80,7 +80,7 @@ trait LoneElement {
   import scala.language.higherKinds
 
   /**
-   * Wrapper class that adds a <code>loneElement</code> method to any collection type <code>C</code> for which 
+   * Wrapper class that adds a <code>loneElement</code> method to any collection type <code>C</code> for which
    * an implicit <code>Collecting[C]</code> is available.
    *
    * <p>
@@ -165,7 +165,7 @@ trait LoneElement {
           throw new exceptions.TestFailedException(
             (_: StackDepthException) => Some(FailureMessages.notLoneElement(prettifier,
                  jmap,
-                 collecting.sizeOf(jmap))), 
+                 collecting.sizeOf(jmap))),
             None,
             pos
           )
@@ -221,7 +221,7 @@ trait LoneElement {
 }
 
 /**
- * Companion object that facilitates the importing of <code>LoneElement</code> members as 
+ * Companion object that facilitates the importing of <code>LoneElement</code> members as
  * an alternative to mixing it in. One use case is to import <code>LoneElement</code>'s members so you can use
  * <code>loneElement</code> in the Scala interpreter.
  */

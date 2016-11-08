@@ -21,7 +21,7 @@ import Suite.autoTagClassAnnotations
 /**
  * Implementation trait for class <code>PropSpec</code>, which represents
  * a suite of property-based tests.
- * 
+ *
  * <p>
  * <a href="PropSpec.html"><code>PropSpec</code></a> is a class, not a trait,
  * to minimize compile time given there is a slight compiler overhead to
@@ -201,12 +201,12 @@ trait PropSpecLike extends TestSuite with TestRegistration with Informing with N
    * the <code>Set</code> of tags for the test. If this <code>PropSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
    * <p>
-   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to 
-   * methods <code>property</code> and <code>ignore</code>. 
+   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to
+   * methods <code>property</code> and <code>ignore</code>.
    * </p>
-   * 
+   *
    * <p>
-   * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
+   * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate <code>@Ignore</code> at the class level, all test methods in the class will be auto-annotated with
    * <code>org.scalatest.Ignore</code>.
    * </p>
@@ -253,11 +253,11 @@ trait PropSpecLike extends TestSuite with TestRegistration with Informing with N
    * </p>
    */
   protected def propertiesFor(unit: Unit): Unit = {}
-  
+
   /**
    * Suite style name.
    */
   final override val styleName: String = "org.scalatest.PropSpec"
-  
+
   override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = createTestDataFor(testName, theConfigMap, this)
 }

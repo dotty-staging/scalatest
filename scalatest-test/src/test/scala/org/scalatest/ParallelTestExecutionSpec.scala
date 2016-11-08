@@ -60,7 +60,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
           val runStatus = suite.run(None, args)
           if (!runStatus.succeeds())
             status.setFailed()
-          
+
           status.setCompleted()
         }
       }
@@ -69,7 +69,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
           val runStatus = suite.run(None, args)
           if (!runStatus.succeeds())
             status.setFailed()
-            
+
           status.setCompleted()
         }
       }
@@ -83,7 +83,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
     // SKIP-SCALATESTJS-START
     class ControlledOrderConcurrentDistributor(poolSize: Int) extends Distributor {
       private val futureQueue = new java.util.concurrent.LinkedBlockingQueue[Future[T] forSome { type T }]
-      
+
       val buf = ListBuffer.empty[SuiteRunner]
       val execSvc: ExecutorService = Executors.newFixedThreadPool(2)
       def apply(suite: Suite, args: Args): Status = {
@@ -96,7 +96,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
           val future: Future[_] = execSvc.submit(suiteRunner)
           futureQueue.put(future)
         }
-        while (futureQueue.peek != null) 
+        while (futureQueue.peek != null)
           futureQueue.poll().get()
       }
       def executeInReverseOrder(): Unit = {
@@ -148,10 +148,10 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
       withDistributor(_.executeInReverseOrder())
     }
     // SKIP-SCALATESTJS-END
-    
+
     // SKIP-SCALATESTJS-START
     it("should have InfoProvided fired from before and after block in correct order when tests are executed in parallel") {
-      
+
       def withDistributor(fun: ControlledOrderDistributor => Unit): Unit = {
 
         val recordingReporter = new EventRecordingReporter
@@ -176,7 +176,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
         checkTestSucceeded(eventRecorded(11), "Thing 1 do thing 1c")
         checkInfoProvided(eventRecorded(12), "In After")
         checkScopeClosed(eventRecorded(13), "Thing 1")
-        
+
         checkScopeOpened(eventRecorded(14), "Thing 2")
         checkInfoProvided(eventRecorded(15), "In Before")
         checkTestStarting(eventRecorded(16), "Thing 2 do thing 2a")
@@ -212,11 +212,11 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
         checkScopeOpened(eventRecorded(0), "Thing 1")
         checkTestStarting(eventRecorded(1), "Thing 1 do thing 1a")
         checkTestSucceeded(eventRecorded(2), "Thing 1 do thing 1a")
-        checkTestStarting(eventRecorded(3), "Thing 1 do thing 1b")        
+        checkTestStarting(eventRecorded(3), "Thing 1 do thing 1b")
         checkTestStarting(eventRecorded(4), "Thing 1 do thing 1c")
         checkTestSucceeded(eventRecorded(5), "Thing 1 do thing 1c")
         checkScopeClosed(eventRecorded(6), "Thing 1")
-        
+
         checkScopeOpened(eventRecorded(7), "Thing 2")
         checkTestStarting(eventRecorded(8), "Thing 2 do thing 2a")
         checkTestSucceeded(eventRecorded(9), "Thing 2 do thing 2a")
@@ -225,7 +225,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
         checkTestStarting(eventRecorded(12), "Thing 2 do thing 2c")
         checkTestSucceeded(eventRecorded(13), "Thing 2 do thing 2c")
         checkScopeClosed(eventRecorded(14), "Thing 2")
-        
+
         // Now the missing one.
         checkTestSucceeded(eventRecorded(15), "Thing 1 do thing 1b")
       }
@@ -242,29 +242,29 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
         val suiteSortingReporter = new SuiteSortingReporter(recordingReporter, Span(5, Seconds), new PrintStream(new ByteArrayOutputStream))
         val spec1 = new ExampleParallelSpec()
         val spec2 = new ExampleBeforeAfterParallelSpec()
-        
+
         val tracker = new Tracker()
         suiteSortingReporter(SuiteStarting(tracker.nextOrdinal, spec1.suiteName, spec1.suiteId, Some(spec1.getClass.getName), None))
         suiteSortingReporter(SuiteStarting(tracker.nextOrdinal, spec2.suiteName, spec2.suiteId, Some(spec2.getClass.getName), None))
-        
+
         spec1.run(None, Args(suiteSortingReporter, distributor = Some(outOfOrderConcurrentDistributor), distributedSuiteSorter = Some(suiteSortingReporter)))
         spec2.run(None, Args(suiteSortingReporter, distributor = Some(outOfOrderConcurrentDistributor), distributedSuiteSorter = Some(suiteSortingReporter)))
-        
+
         suiteSortingReporter(SuiteCompleted(tracker.nextOrdinal, spec1.suiteName, spec1.suiteId, Some(spec1.getClass.getName), None))
         suiteSortingReporter(SuiteCompleted(tracker.nextOrdinal, spec2.suiteName, spec2.suiteId, Some(spec2.getClass.getName), None))
-        
+
         fun(outOfOrderConcurrentDistributor)
-        
+
         recordingReporter.eventsReceived
       }
-      
+
       val spec1SuiteId = new ExampleParallelSpec().suiteId
       val spec2SuiteId = new ExampleBeforeAfterParallelSpec().suiteId
-      
+
       val inOrderEvents = withDistributor(_.executeInOrder)
-      
+
       assert(inOrderEvents.size === 48)
-      
+
       checkSuiteStarting(inOrderEvents(0), spec1SuiteId)
       checkScopeOpened(inOrderEvents(1), "Subject 1")
       checkTestStarting(inOrderEvents(2), "Subject 1 should have behavior 1a")
@@ -284,7 +284,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
       checkTestSucceeded(inOrderEvents(15), "Subject 2 should have behavior 2c")
       checkScopeClosed(inOrderEvents(16), "Subject 2")
       checkSuiteCompleted(inOrderEvents(17), spec1SuiteId)
-      
+
       checkSuiteStarting(inOrderEvents(18), spec2SuiteId)
       checkScopeOpened(inOrderEvents(19), "Thing 1")
       checkInfoProvided(inOrderEvents(20), "In Before")
@@ -300,7 +300,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
       checkTestSucceeded(inOrderEvents(30), "Thing 1 do thing 1c")
       checkInfoProvided(inOrderEvents(31), "In After")
       checkScopeClosed(inOrderEvents(32), "Thing 1")
-        
+
       checkScopeOpened(inOrderEvents(33), "Thing 2")
       checkInfoProvided(inOrderEvents(34), "In Before")
       checkTestStarting(inOrderEvents(35), "Thing 2 do thing 2a")
@@ -316,11 +316,11 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
       checkInfoProvided(inOrderEvents(45), "In After")
       checkScopeClosed(inOrderEvents(46), "Thing 2")
       checkSuiteCompleted(inOrderEvents(47), spec2SuiteId)
-      
+
       val reverseOrderEvents = withDistributor(_.executeInReverseOrder)
-      
+
       assert(reverseOrderEvents.size === 48)
-      
+
       checkSuiteStarting(reverseOrderEvents(0), spec1SuiteId)
       checkScopeOpened(reverseOrderEvents(1), "Subject 1")
       checkTestStarting(reverseOrderEvents(2), "Subject 1 should have behavior 1a")
@@ -340,7 +340,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
       checkTestSucceeded(reverseOrderEvents(15), "Subject 2 should have behavior 2c")
       checkScopeClosed(reverseOrderEvents(16), "Subject 2")
       checkSuiteCompleted(reverseOrderEvents(17), spec1SuiteId)
-      
+
       checkSuiteStarting(reverseOrderEvents(18), spec2SuiteId)
       checkScopeOpened(reverseOrderEvents(19), "Thing 1")
       checkInfoProvided(reverseOrderEvents(20), "In Before")
@@ -356,7 +356,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
       checkTestSucceeded(reverseOrderEvents(30), "Thing 1 do thing 1c")
       checkInfoProvided(reverseOrderEvents(31), "In After")
       checkScopeClosed(reverseOrderEvents(32), "Thing 1")
-        
+
       checkScopeOpened(reverseOrderEvents(33), "Thing 2")
       checkInfoProvided(reverseOrderEvents(34), "In Before")
       checkTestStarting(reverseOrderEvents(35), "Thing 2 do thing 2a")
@@ -373,7 +373,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
       checkScopeClosed(reverseOrderEvents(46), "Thing 2")
       checkSuiteCompleted(reverseOrderEvents(47), spec2SuiteId)
     }
-    
+
     it("should have the blocking suite's events fired without waiting when timeout reaches, and when the missing event finally reach later, it should just get fired") {
       val recordingReporter = new EventRecordingReporter
       val args = Args(recordingReporter)
@@ -381,27 +381,27 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
       val suiteSortingReporter = new SuiteSortingReporter(recordingReporter, Span(1, Second), new PrintStream(new ByteArrayOutputStream))
       val spec1 = new ExampleSuiteTimeoutSpec()
       val spec2 = new ExampleSuiteTimeoutSpec2()
-        
+
       val tracker = new Tracker()
-      
+
       suiteSortingReporter(SuiteStarting(tracker.nextOrdinal, spec1.suiteName, spec1.suiteId, Some(spec1.getClass.getName), None))
       suiteSortingReporter(SuiteStarting(tracker.nextOrdinal, spec2.suiteName, spec2.suiteId, Some(spec2.getClass.getName), None))
-      
+
       spec1.run(None, Args(suiteSortingReporter, distributor = Some(outOfOrderConcurrentDistributor), distributedSuiteSorter = Some(suiteSortingReporter)))
       spec2.run(None, Args(suiteSortingReporter, distributor = Some(outOfOrderConcurrentDistributor), distributedSuiteSorter = Some(suiteSortingReporter)))
-        
+
       suiteSortingReporter(SuiteCompleted(tracker.nextOrdinal, spec1.suiteName, spec1.suiteId, Some(spec1.getClass.getName), None))
       suiteSortingReporter(SuiteCompleted(tracker.nextOrdinal, spec2.suiteName, spec2.suiteId, Some(spec2.getClass.getName), None))
-      
+
       outOfOrderConcurrentDistributor.executeInOrder()
-        
+
       val eventRecorded = recordingReporter.eventsReceived
       println(eventRecorded.map(e => e.getClass.getName).mkString("\n"))
-        
+
       assert(eventRecorded.size === 34)
 
       checkSuiteStarting(eventRecorded(0), spec1.suiteId)
-        
+
       checkScopeOpened(eventRecorded(1), "Thing 1")
       checkTestStarting(eventRecorded(2), "Thing 1 do thing 1a")
       checkTestSucceeded(eventRecorded(3), "Thing 1 do thing 1a")
@@ -410,15 +410,15 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
       checkTestStarting(eventRecorded(6), "Thing 1 do thing 1c")
       checkTestSucceeded(eventRecorded(7), "Thing 1 do thing 1c")
       checkScopeClosed(eventRecorded(8), "Thing 1")
-        
+
       checkScopeOpened(eventRecorded(9), "Thing 2")
       checkTestStarting(eventRecorded(10), "Thing 2 do thing 2a")
       checkTestSucceeded(eventRecorded(11), "Thing 2 do thing 2a")
       // SuiteSortingReporter timeout should hit here.
       checkSuiteCompleted(eventRecorded(12), spec1.suiteId)
-       
+
       checkSuiteStarting(eventRecorded(13), spec2.suiteId)
-        
+
       checkScopeOpened(eventRecorded(14), "Subject 1")
       checkTestStarting(eventRecorded(15), "Subject 1 content 1a")
       checkTestSucceeded(eventRecorded(16), "Subject 1 content 1a")
@@ -427,7 +427,7 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
       checkTestStarting(eventRecorded(19), "Subject 1 content 1c")
       checkTestSucceeded(eventRecorded(20), "Subject 1 content 1c")
       checkScopeClosed(eventRecorded(21), "Subject 1")
-        
+
       checkScopeOpened(eventRecorded(22), "Subject 2")
       checkTestStarting(eventRecorded(23), "Subject 2 content 2a")
       checkTestSucceeded(eventRecorded(24), "Subject 2 content 2a")
@@ -436,49 +436,49 @@ class ParallelTestExecutionSpec extends FunSpec with EventHelpers {
       checkTestStarting(eventRecorded(27), "Subject 2 content 2c")
       checkTestSucceeded(eventRecorded(28), "Subject 2 content 2c")
       checkScopeClosed(eventRecorded(29), "Subject 2")
-        
+
       checkSuiteCompleted(eventRecorded(30), spec2.suiteId)
-       
+
       // Now the missing ones.
       checkTestStarting(eventRecorded(31), "Thing 2 do thing 2b")
       checkTestSucceeded(eventRecorded(32), "Thing 2 do thing 2b")
       checkScopeClosed(eventRecorded(33), "Thing 2")
     }
     // SKIP-SCALATESTJS-END
-    
+
     it("should only execute nested suites in outer instance") {
-      
+
       class InnerSuite extends FunSuite {
         test("hi") { info("hi info") }
       }
-      
+
       class OuterSuite extends FunSuite with ParallelTestExecution {
         override def nestedSuites = Vector(new InnerSuite)
         test("outer 1") { info("outer 1 info") }
         test("outer 2") { info("outer 2 info") }
-        
+
         override def newInstance = new OuterSuite
       }
-      
+
       val rep = new EventRecordingReporter
       val outer = new OuterSuite
       outer.run(None, Args(rep))
-      
+
       assert(rep.testStartingEventsReceived.size === 3)
       val testSucceededEvents = rep.testSucceededEventsReceived
       assert(testSucceededEvents.size === 3)
-      testSucceededEvents.foreach { e => 
+      testSucceededEvents.foreach { e =>
         e.testName match {
-          case "hi" => 
+          case "hi" =>
             assert(e.recordedEvents.size === 1)
             assert(e.recordedEvents(0).asInstanceOf[InfoProvided].message === "hi info")
-          case "outer 1" => 
+          case "outer 1" =>
             assert(e.recordedEvents.size === 1)
             assert(e.recordedEvents(0).asInstanceOf[InfoProvided].message === "outer 1 info")
-          case "outer 2" => 
+          case "outer 2" =>
             assert(e.recordedEvents.size === 1)
             assert(e.recordedEvents(0).asInstanceOf[InfoProvided].message === "outer 2 info")
-          case other => 
+          case other =>
             fail("Unexpected TestSucceeded event: " + other)
         }
       }

@@ -23,7 +23,7 @@ import reflect.macros.Context
  * <p>
  * See the main documentation for trait <a href="Snapshots.html"><code>Snapshots</code></a> for more information and examples.
  * </p>
- * 
+ *
  * @param name the name of the expression
  * @param value the value of the expression
  */
@@ -46,20 +46,20 @@ final case class Snapshot(name: String, value: Any) {
  * The intended use case of this trait is to help you write debug and log
  * messages that give a "snapshot" of program state. Here's an example:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import Snapshots._
  * import Snapshots._
- * 
+ *
  * scala&gt; snap(a, b, c, d, e, f)
  * res3: org.scalactic.SnapshotSeq = a was 1, b was 2, c was 3, d was 4, e was null, f was null
  * </pre>
- * 
+ *
  * <p><code>SnapshotSeq</code> offers a <code>lines</code> method that places each variable name/value pair on its own line:<p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; snap(a, b, c, d, e, f).lines
- * res4: String = 
+ * res4: String =
  * a was 1
  * b was 2
  * c was 3
@@ -67,11 +67,11 @@ final case class Snapshot(name: String, value: Any) {
  * e was null
  * f was null
  * </pre>
- * 
+ *
  * <p>
  * Or, because a <code>SnapshotSeq</code> is a <code>IndexedSeq[Snapshot]</code>, you can process it just like any other <code>Seq</code>, for example:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; snap(a, b, c, d, e, f).mkString("Wow! ", ", and ", ". That's so awesome!")
  * res6: String = Wow! a was 1, and b was 2, and c was 3, and d was 4, and e was null, and f was null. That's so awesome!
@@ -91,9 +91,9 @@ trait Snapshots {
 }
 
 /**
- * An <code>IndexedSeq[Snapshot]</code> providing <code>toString</code> and <code>lines</code> methods that 
+ * An <code>IndexedSeq[Snapshot]</code> providing <code>toString</code> and <code>lines</code> methods that
  * can be useful for debug and log messages about program state.
- * 
+ *
  * <p>
  * See the main documentation for trait <a href="Snapshots.html"><code>Snapshots</code></a> for more information and examples.
  * </p>
@@ -162,7 +162,7 @@ final class SnapshotSeq(underlying: collection.immutable.IndexedSeq[Snapshot]) e
   }
 
   /**
-   * The default way to present the result of the <code>snap</code> method of trait </code>Snapshots</code>. 
+   * The default way to present the result of the <code>snap</code> method of trait </code>Snapshots</code>.
    *
    * Here's an example:
    *
@@ -181,7 +181,7 @@ final class SnapshotSeq(underlying: collection.immutable.IndexedSeq[Snapshot]) e
    *
    * <pre class="stREPL">
    * scala&gt; snap(a, b, c, d, e, f).lines
-   * res4: String = 
+   * res4: String =
    * a was 1
    * b was 2
    * c was 3

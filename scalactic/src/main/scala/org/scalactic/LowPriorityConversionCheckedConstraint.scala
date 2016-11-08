@@ -31,7 +31,7 @@ import TripleEqualsSupport._
  * will be allowed if an implicit conversion exists in either direction. For example, the implicit widening conversion from
  * <code>Int</code> to <code>Long</code> will be applied on the left hand side in this expression:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * 1 === 1L
  * </pre>
@@ -39,7 +39,7 @@ import TripleEqualsSupport._
  * <p>
  * But in the next expression, it will be applied on the right hand side:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * 1L === 1
  * </pre>

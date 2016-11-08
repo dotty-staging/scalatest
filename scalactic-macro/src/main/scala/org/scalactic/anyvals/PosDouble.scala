@@ -29,7 +29,7 @@ import scala.language.implicitConversions
  * will usually be as efficient as an <code>Double</code>, being
  * boxed only when a <code>Double</code> would have been boxed.
  * </p>
- * 
+ *
  * <p>
  * The <code>PosDouble.apply</code> factory method is
  * implemented in terms of a macro that checks literals for
@@ -39,7 +39,7 @@ import scala.language.implicitConversions
  * <code>PosDouble</code> instance at run time or an error at
  * compile time. Here's an example:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import anyvals._
  * import anyvals._
@@ -92,7 +92,7 @@ import scala.language.implicitConversions
  * scala&gt; PosDouble.from(y)
  * res5: Option[org.scalactic.anyvals.PosDouble] = None
  * </pre>
- * 
+ *
  * <p>
  * The <code>PosDouble.apply</code> factory method is marked
  * implicit, so that you can pass literal <code>Double</code>s
@@ -141,7 +141,7 @@ import scala.language.implicitConversions
  * </p>
  *
  * @param value The <code>Double</code> value underlying this <code>PosDouble</code>.
- */ 
+ */
 final class PosDouble private (val value: Double) extends AnyVal {
 
   /**
@@ -526,6 +526,6 @@ object PosDouble {
   implicit val posDoubleOrd: Ordering[PosDouble] =
     new Ordering[PosDouble] {
       def compare(x: PosDouble, y: PosDouble): Int = x.toDouble.compare(y)
-    } 
+    }
 }
 

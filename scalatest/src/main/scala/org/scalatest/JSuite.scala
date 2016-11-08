@@ -61,12 +61,12 @@ private[scalatest] trait JSuite { thisSuite =>
    * @param filter a <code>Filter</code> with which to filter tests to count based on their tags
    */
   def getExpectedTestCount(filter: Filter): Int // Will be JFilter
-  
+
   /**
    * The fully qualified name of the class that can be used to rerun this suite.
    */
   def getRerunner: Option[String] // Will return a nullable String
-  
+
   /**
    * This suite's style name.
    *
@@ -99,13 +99,13 @@ private[scalatest] trait JSuite { thisSuite =>
    *
    * <p>
    * This trait's
-   * implementation of this method returns the fully qualified name of this object's class. 
+   * implementation of this method returns the fully qualified name of this object's class.
    * Each suite reported during a run will commonly be an instance of a different <code>Suite</code> class,
    * and in such cases, this default implementation of this method will suffice. However, in special cases
    * you may need to override this method to ensure it is unique for each reported suite. For example, if you write
    * a <code>Suite</code> subclass that reads in a file whose name is passed to its constructor and dynamically
    * creates a suite of tests based on the information in that file, you will likely need to override this method
-   * in your <code>Suite</code> subclass, perhaps by appending the pathname of the file to the fully qualified class name. 
+   * in your <code>Suite</code> subclass, perhaps by appending the pathname of the file to the fully qualified class name.
    * That way if you run a suite of tests based on a directory full of these files, you'll have unique suite IDs for
    * each reported suite.
    * </p>

@@ -61,7 +61,7 @@ import org.scalatest._
  * only one <code>in</code> method that takes a by-name parameter. As a result,
  * <code>FlatSpec</code> and <code>fixture.FlatSpec</code> each provide an implicit conversion
  * from <code>ResultOfStringPassedToVerb</code> to a type that provides the appropriate
- * <code>in</code> methods. 
+ * <code>in</code> methods.
  * </p>
  *
  * @author Bill Venners

@@ -19,8 +19,8 @@ import scala.xml.{NodeSeq}
 import org.scalactic.{Equality, Uniformity}
 
 /**
- * Trait providing an implicit <a href="../scalactic/Equality.html"><code>Equality[T]</code></a> for subtypes 
- * of <code>scala.xml.NodeSeq</code> that before testing for equality, will normalize left and right sides 
+ * Trait providing an implicit <a href="../scalactic/Equality.html"><code>Equality[T]</code></a> for subtypes
+ * of <code>scala.xml.NodeSeq</code> that before testing for equality, will normalize left and right sides
  * by removing empty XML text nodes and trimming non-empty text nodes.
  *
  * <p>
@@ -124,7 +124,7 @@ trait StreamlinedXmlEquality {
 }
 
 /**
- * Companion object that facilitates the importing of <code>StreamlinedXmlEquality</code> members as 
+ * Companion object that facilitates the importing of <code>StreamlinedXmlEquality</code> members as
  * an alternative to mixing it the trait. One use case is to import <code>StreamlinedXmlEquality</code> members so you can use
  * them in the Scala interpreter.
  *

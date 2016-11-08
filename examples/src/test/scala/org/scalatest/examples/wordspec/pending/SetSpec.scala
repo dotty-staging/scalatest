@@ -22,7 +22,7 @@ class SetSpec extends WordSpec {
   "A Set" when {
     "empty" should {
       "have size 0" in (pending)
-      
+
       "produce NoSuchElementException when head is invoked" in {
         assertThrows[NoSuchElementException] {
           Set.empty.head

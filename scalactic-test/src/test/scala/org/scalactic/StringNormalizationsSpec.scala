@@ -20,13 +20,13 @@ import org.scalatest._
 class StringNormalizationsSpec extends FunSpec with StringNormalizations {
 
   describe("StringNormalizations ") {
-    it("should provide a way to normalize a string by making it lower case") { 
+    it("should provide a way to normalize a string by making it lower case") {
       assert(lowerCased.normalized("Hello") === "hello")
       assert(lowerCased.normalized("hello") === "hello")
       assert(lowerCased.normalized("") === "")
       assert(lowerCased.normalized("HELLO") === "hello")
     }
-    it("should provide a way to normalize a string by trimming it") { 
+    it("should provide a way to normalize a string by trimming it") {
       assert(trimmed.normalized("hello") === "hello")
       assert(trimmed.normalized(" hello") === "hello")
       assert(trimmed.normalized("hello ") === "hello")
@@ -36,7 +36,7 @@ class StringNormalizationsSpec extends FunSpec with StringNormalizations {
       assert(trimmed.normalized("  ") === "")
       assert(trimmed.normalized("") === "")
     }
-    it("should provide a way to normalize a string by making it upper case") { 
+    it("should provide a way to normalize a string by making it upper case") {
       assert(upperCased.normalized("Hello") === "HELLO")
       assert(upperCased.normalized("hello") === "HELLO")
       assert(upperCased.normalized("") === "")

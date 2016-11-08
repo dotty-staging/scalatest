@@ -41,7 +41,7 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
 
   sealed abstract class Node(val parentOption: Option[Branch]) {
     def indentationLevel: Int = {
-      def calcLevel(currentParentOpt: Option[Branch], currentLevel: Int): Int = 
+      def calcLevel(currentParentOpt: Option[Branch], currentLevel: Int): Int =
         currentParentOpt match {
           case None => currentLevel
           case Some(parent) => calcLevel(parent.parentOption, currentLevel + 1)
@@ -62,7 +62,7 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
     parent: Branch,
     testName: String, // The full test name
     testText: String, // The last portion of the test name that showed up on an inner most nested level
-    testFun: T, 
+    testFun: T,
     location: Option[Location],
     pos: Option[source.Position],
     recordedDuration: Option[Long] = None
@@ -76,9 +76,9 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
   case class DescriptionBranch(
     parent: Branch,
     descriptionText: String,
-    childPrefix: Option[String], // If defined, put it at the beginning of any child descriptionText or testText 
+    childPrefix: Option[String], // If defined, put it at the beginning of any child descriptionText or testText
     location: Option[Location]
-  ) extends Branch(Some(parent))   
+  ) extends Branch(Some(parent))
 
   // Access to the testNamesList, testsMap, and tagsMap must be synchronized, because the test methods are invoked by
   // the primary constructor, but testNames, tags, and runTest get invoked directly or indirectly
@@ -239,7 +239,7 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
         sorter.distributingTest(testName)
     }
 
-    
+
     import args._
 
     val (theStopper, report, testStartTime) =
@@ -527,7 +527,7 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
     // into error messages on the standard error stream.
     val report = Suite.wrapReporterIfNecessary(theSuite, reporter)
     val newArgs = if (report eq reporter) args else args.copy(reporter = report)
-    
+
     val statusList: List[Status] =
       // If a testName is passed to run, just run that, else run the tests returned
       // by testNames.
@@ -573,7 +573,7 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
 
     // Set the flag that indicates registration is closed (because run has now been invoked),
     // which will disallow any further invocations of "test" or "ignore" with
-    // an RegistrationClosedException.    
+    // an RegistrationClosedException.
     val oldBundle = atomic.get
     val (currentBranch, testNamesList, testsMap, tagsMap, registrationClosed) = oldBundle.unpack
     if (!registrationClosed)
@@ -675,19 +675,19 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
     if (registrationClosed)
       throw new TestRegistrationClosedException(registrationClosedMessageFun, pos)
 
-    val branchLocation = 
+    val branchLocation =
       location match {
         case Some(loc) => Some(loc)
         case None => Some(LineInFile(pos.lineNumber, pos.fileName, Some(pos.filePathname)))
       }
-    
+
     val oldBranch = currentBranch
     val newBranch = DescriptionBranch(currentBranch, description, childPrefix, branchLocation)
 
     // Update atomic, making the current branch to the new branch
     updateAtomic(oldBundle, Bundle(newBranch, testNamesList, testsMap, tagsMap, registrationClosed))
     oldBranch.subNodes ::= newBranch
-    
+
     try {
       fun // Execute the function
     }
@@ -695,7 +695,7 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
       case e: exceptions.TestPendingException =>
         newBranch.pending = true
     }
-      
+
     { // Put the old branch back as the current branch
       val oldBundle = atomic.get
       val (currentBranch, testNamesList, testsMap, tagsMap, registrationClosed) = oldBundle.unpack
@@ -743,7 +743,7 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
 
     if (atomic.get.testsMap.keySet.contains(testName))
       throw new DuplicateTestNameException(testName, pos)
-    val testLocation = 
+    val testLocation =
       location match {
         case Some(loc) => Some(loc)
         case None => Some(LineInFile(pos.lineNumber, pos.fileName, Some(pos.filePathname)))
@@ -804,28 +804,28 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
     if (testTags.exists(_ == null))
       throw new NullArgumentException("a test tag was null")
   }
-  
+
   private[scalatest] def testPath(testName: String): List[Int] = {
     val theTestOpt = atomic.get.testsMap.get(testName)
     theTestOpt match {
       case Some(theTest) =>
         findPath(theTest.parent, theTest, List.empty)
-      case None => 
+      case None =>
         throw new IllegalArgumentException("Test name '" + testName + "' not found.")
     }
   }
- 
+
   @tailrec
   private def findPath(branch: Branch, node: Node, currentPath: List[Int]): List[Int] = {
     val idx = branch.subNodes.reverse.indexOf(node)
     branch.parentOption match {
-      case Some(parent) => 
+      case Some(parent) =>
         findPath(parent, branch, idx :: currentPath)
-      case None => 
+      case None =>
         idx :: currentPath
     }
   }
-  
+
   private[scalatest] def createTestDataFor(testName: String, theConfigMap: ConfigMap, theSuite: Suite) = {
     val theTest = atomic.get.testsMap(testName)
     new TestData {
@@ -837,10 +837,10 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
       val pos = theTest.pos
     }
   }
-  
+
   private[scalatest] def testTags(testName: String, theSuite: Suite): Set[String] = {
     // SKIP-SCALATESTJS-START
-    val suiteTags = for { 
+    val suiteTags = for {
       a <- theSuite.getClass.getAnnotations
       annotationClass = a.annotationType
       if annotationClass.isAnnotationPresent(classOf[TagAnnotation])
@@ -850,7 +850,7 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
     val testTagSet = atomic.get.tagsMap.getOrElse(testName, Set.empty)
     Set.empty ++ suiteTags ++ testTagSet
   }
-  
+
   private[scalatest] def testScopes(testName: String): collection.immutable.IndexedSeq[String] = {
     @tailrec
     def testScopesAcc(branch: Branch, acc: collection.immutable.IndexedSeq[String]): collection.immutable.IndexedSeq[String] = {
@@ -873,13 +873,13 @@ private[scalatest] sealed abstract class AsyncSuperEngine[T](concurrentBundleMod
         throw new IllegalArgumentException("Test name '" + testName + "' not found.")
     }
   }
-  
+
   private[scalatest] def testText(testName: String): String = {
     val theTestOpt = atomic.get.testsMap.get(testName)
     theTestOpt match {
       case Some(theTest) =>
         theTest.testText
-      case None => 
+      case None =>
         throw new IllegalArgumentException("Test name '" + testName + "' not found.")
     }
   }

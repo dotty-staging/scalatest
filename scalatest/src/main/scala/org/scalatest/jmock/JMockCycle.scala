@@ -279,7 +279,7 @@ final class JMockCycle {
 
   /**
    * Executes code using mocks with expectations set.
-   * 
+   *
    * <p>
    * Once you've set expectations on the mock objects, when using the JMock API directly, you use the mock, then invoke
    * <code>assertIsSatisfied</code> on the <code>Mockery</code> context to make sure the mock

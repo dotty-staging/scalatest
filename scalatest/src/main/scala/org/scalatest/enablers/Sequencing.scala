@@ -103,7 +103,7 @@ trait Sequencing[-S] {
  * </ul>
  */
 object Sequencing {
-  
+
   private def checkTheSameElementsInOrderAs[T](left: GenTraversable[T], right: GenTraversable[Any], equality: Equality[T]): Boolean = {
     @tailrec
     def checkEqual(left: Iterator[T], right: Iterator[Any]): Boolean = {
@@ -122,7 +122,7 @@ object Sequencing {
   }
 
   private def checkInOrderOnly[T](left: GenTraversable[T], right: GenTraversable[Any], equality: Equality[T]): Boolean = {
-  
+
     @tailrec
     def checkEqual(left: T, right: Any, leftItr: Iterator[T], rightItr: Iterator[Any]): Boolean = {
       if (equality.areEqual(left, right)) { // The first time in, left must equal right
@@ -140,7 +140,7 @@ object Sequencing {
         }
         val nextLeftOption = checkNextLeftAgainstCurrentRight()
         nextLeftOption match {
-          case Some(nextLeft) => 
+          case Some(nextLeft) =>
             if (rightItr.hasNext) {
               checkEqual(nextLeft, rightItr.next, leftItr, rightItr)
             }
@@ -157,7 +157,7 @@ object Sequencing {
       checkEqual(leftItr.next, rightItr.next, leftItr, rightItr)
     else left.isEmpty && right.isEmpty
   }
-  
+
   private def checkInOrder[T](left: GenTraversable[T], right: GenTraversable[Any], equality: Equality[T]): Boolean = {
     @tailrec
     def lastIndexOf(itr: Iterator[T], element: Any, idx: Option[Int], i: Int): Option[Int] = {
@@ -171,15 +171,15 @@ object Sequencing {
       else
         idx
     }
-  
+
     @tailrec
     def checkEqual(left: GenTraversable[T], rightItr: Iterator[Any]): Boolean = {
       if (rightItr.hasNext) {
         val nextRight = rightItr.next
         lastIndexOf(left.toIterator, nextRight, None, 0) match {
-          case Some(idx) => 
+          case Some(idx) =>
             checkEqual(left.drop(idx).tail, rightItr)
-          case None => 
+          case None =>
             false // Element not found, let's fail early
         }
       }
@@ -235,7 +235,7 @@ object Sequencing {
    * @tparam SEQ subtype of <code>scala.collection.GenSeq</code>
    * @return <code>Sequencing</code> of type <code>SEQ[E]</code>
    */
-  implicit def convertEqualityToGenSeqSequencing[E, SEQ[e] <: scala.collection.GenSeq[e]](equality: Equality[E]): Sequencing[SEQ[E]] = 
+  implicit def convertEqualityToGenSeqSequencing[E, SEQ[e] <: scala.collection.GenSeq[e]](equality: Equality[E]): Sequencing[SEQ[E]] =
     sequencingNatureOfGenSeq(equality)
 
   /**
@@ -279,7 +279,7 @@ object Sequencing {
    * @tparam SET subtype of <code>scala.collection.SortedSet</code>
    * @return <code>Sequencing</code> of type <code>SET[E]</code>
    */
-  implicit def convertEqualityToSortedSetSequencing[E, SET[e] <: scala.collection.SortedSet[e]](equality: Equality[E]): Sequencing[SET[E]] = 
+  implicit def convertEqualityToSortedSetSequencing[E, SET[e] <: scala.collection.SortedSet[e]](equality: Equality[E]): Sequencing[SET[E]] =
     sequencingNatureOfSortedSet(equality)
 
   /**
@@ -326,7 +326,7 @@ object Sequencing {
    * @tparam MAP subtype of <code>scala.collection.SortedMap</code>
    * @return <code>Sequencing</code> of type <code>MAP[K, V]</code>
    */
-  implicit def convertEqualityToSortedMapSequencing[K, V, MAP[k, v] <: scala.collection.SortedMap[k, v]](equality: Equality[(K, V)]): Sequencing[MAP[K, V]] = 
+  implicit def convertEqualityToSortedMapSequencing[K, V, MAP[k, v] <: scala.collection.SortedMap[k, v]](equality: Equality[(K, V)]): Sequencing[MAP[K, V]] =
     sequencingNatureOfSortedMap(equality)
 
   /**
@@ -336,7 +336,7 @@ object Sequencing {
    * @tparam E the type of the element in the <code>Array</code>
    * @return <code>Sequencing[Array[E]]</code> that supports <code>Array</code> in relevant <code>contain</code> syntax
    */
-  implicit def sequencingNatureOfArray[E](implicit equality: Equality[E]): Sequencing[Array[E]] = 
+  implicit def sequencingNatureOfArray[E](implicit equality: Equality[E]): Sequencing[Array[E]] =
     new Sequencing[Array[E]] {
 
       def containsInOrder(array: Array[E], elements: scala.collection.Seq[Any]): Boolean = {
@@ -368,7 +368,7 @@ object Sequencing {
    * @tparam E type of elements in the <code>Array</code>
    * @return <code>Sequencing</code> of type <code>Array[E]</code>
    */
-  implicit def convertEqualityToArraySequencing[E](equality: Equality[E]): Sequencing[Array[E]] = 
+  implicit def convertEqualityToArraySequencing[E](equality: Equality[E]): Sequencing[Array[E]] =
     sequencingNatureOfArray(equality)
 
   /**
@@ -379,7 +379,7 @@ object Sequencing {
    * @tparam JLIST any subtype of <code>java.util.List</code>
    * @return <code>Sequencing[JLIST[E]]</code> that supports <code>java.util.List</code> in relevant <code>contain</code> syntax
    */
-  implicit def sequencingNatureOfJavaList[E, JLIST[e] <: java.util.List[e]](implicit equality: Equality[E]): Sequencing[JLIST[E]] = 
+  implicit def sequencingNatureOfJavaList[E, JLIST[e] <: java.util.List[e]](implicit equality: Equality[E]): Sequencing[JLIST[E]] =
     new Sequencing[JLIST[E]] {
 
       def containsInOrder(col: JLIST[E], elements: scala.collection.Seq[Any]): Boolean = {
@@ -414,7 +414,7 @@ object Sequencing {
    * @tparam JLIST subtype of <code>java.util.List</code>
    * @return <code>Sequencing</code> of type <code>JLIST[E]</code>
    */
-  implicit def convertEqualityToJavaListSequencing[E, JLIST[e] <: java.util.List[e]](equality: Equality[E]): Sequencing[JLIST[E]] = 
+  implicit def convertEqualityToJavaListSequencing[E, JLIST[e] <: java.util.List[e]](equality: Equality[E]): Sequencing[JLIST[E]] =
     sequencingNatureOfJavaList(equality)
 
   /**
@@ -460,7 +460,7 @@ object Sequencing {
    * @tparam JSET subtype of <code>java.util.List</code>
    * @return <code>Sequencing</code> of type <code>JLIST[E]</code>
    */
-  implicit def convertEqualityToJavaSortedSetSequencing[E, JSET[e] <: java.util.SortedSet[e]](equality: Equality[E]): Sequencing[JSET[E]] = 
+  implicit def convertEqualityToJavaSortedSetSequencing[E, JSET[e] <: java.util.SortedSet[e]](equality: Equality[E]): Sequencing[JSET[E]] =
     sequencingNatureOfJavaSortedSet(equality)
 
   /**
@@ -509,7 +509,7 @@ object Sequencing {
    * @tparam JMAP subtype of <code>java.util.SortedMap</code>
    * @return <code>Sequencing</code> of type <code>JMAP[K, V]</code>
    */
-  implicit def convertEqualityToJavaSortedMapSequencing[K, V, JMAP[k, v] <: java.util.SortedMap[k, v]](equality: Equality[java.util.Map.Entry[K, V]]): Sequencing[JMAP[K, V]] = 
+  implicit def convertEqualityToJavaSortedMapSequencing[K, V, JMAP[k, v] <: java.util.SortedMap[k, v]](equality: Equality[java.util.Map.Entry[K, V]]): Sequencing[JMAP[K, V]] =
     sequencingNatureOfJavaSortedMap(equality)
 
   /**
@@ -518,7 +518,7 @@ object Sequencing {
    * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of <code>Char</code> in the <code>String</code>
    * @return <code>Sequencing[String]</code> that supports <code>String</code> in relevant <code>contain</code> syntax
    */
-  implicit def sequencingNatureOfString(implicit equality: Equality[Char]): Sequencing[String] = 
+  implicit def sequencingNatureOfString(implicit equality: Equality[Char]): Sequencing[String] =
     new Sequencing[String] {
 
       def containsInOrder(s: String, elements: scala.collection.Seq[Any]): Boolean = {
@@ -550,7 +550,7 @@ object Sequencing {
    * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>Char</code>
    * @return <code>Sequencing</code> of type <code>String</code>
    */
-  implicit def convertEqualityToStringSequencing(equality: Equality[Char]): Sequencing[String] = 
+  implicit def convertEqualityToStringSequencing(equality: Equality[Char]): Sequencing[String] =
     sequencingNatureOfString(equality)
 
   /**
@@ -591,5 +591,5 @@ object Sequencing {
    */
   implicit def convertEqualityToEverySequencing[E](equality: Equality[E]): Sequencing[Every[E]] =
     sequencingNatureOfEvery(equality)
-    
+
 }

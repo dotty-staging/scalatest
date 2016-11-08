@@ -50,7 +50,7 @@ private[scalatest] case class Durations(file: File) {
       }
     }
   }
-  
+
   //
   // Adds test results from specified xml to this Duration.  The xml is
   // in the format of a run file.
@@ -129,7 +129,7 @@ private[scalatest] case class Durations(file: File) {
 
       test.previousNum += 1
     }
-    
+
     val test = getTest()
     test.durations ::= new Duration(run, millis)
 

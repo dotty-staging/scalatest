@@ -23,72 +23,72 @@ import org.scalactic.Prettifier
 class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
 
   private val prettifier = Prettifier.default
-  
+
   val fileName: String = "ShouldBeWritableLogicalOrExplicitSpec.scala"
-  
-  def wasEqualTo(left: Any, right: Any): String = 
+
+  def wasEqualTo(left: Any, right: Any): String =
     FailureMessages.wasEqualTo(prettifier, left, right)
-    
-  def wasNotEqualTo(left: Any, right: Any): String = 
+
+  def wasNotEqualTo(left: Any, right: Any): String =
     FailureMessages.wasNotEqualTo(prettifier, left, right)
-    
-  def equaled(left: Any, right: Any): String = 
+
+  def equaled(left: Any, right: Any): String =
     FailureMessages.equaled(prettifier, left, right)
-    
+
   def didNotEqual(left: Any, right: Any): String =
     FailureMessages.didNotEqual(prettifier, left, right)
-  
-  def wasNotWritable(left: Any): String = 
+
+  def wasNotWritable(left: Any): String =
     FailureMessages.wasNotWritable(prettifier, left)
-    
-  def wasWritable(left: Any): String = 
+
+  def wasWritable(left: Any): String =
     FailureMessages.wasWritable(prettifier, left)
-    
+
   def allError(message: String, lineNumber: Int, left: Any): String = {
     val messageWithIndex = UnquotedString("  " + FailureMessages.forAssertionsGenTraversableMessageWithStackDepth(prettifier, 0, UnquotedString(message), UnquotedString(fileName + ":" + lineNumber)))
     FailureMessages.allShorthandFailed(prettifier, messageWithIndex, left)
   }
-    
+
   trait Thing {
     def canRead: Boolean
   }
-  
+
   val book = new Thing {
     val canRead = true
   }
-  
+
   val stone = new Thing {
     val canRead = false
   }
-  
-  val writability = 
+
+  val writability =
     new Writability[Thing] {
       def isWritable(thing: Thing): Boolean = thing.canRead
     }
-  
+
   describe("Sorted matcher") {
-    
+
     describe("when work with 'file should be (writable)'") {
-      
+
       it("should do nothing when file is writable") {
-        
+
         (book should (be (writable) or be (book))) (writability)
         (stone should (be (writable) or be (stone))) (writability)
         (book should (be (writable) or be (stone))) (writability)
-        
+
         (book should (be (book) or be (writable))) (writability)
         (book should (be (stone) or be (writable))) (writability)
         (stone should (be (stone) or be (writable))) (writability)
-        
+
         (book should (be (writable) or equal (book))) (writability, defaultEquality)
         (stone should (be (writable) or equal (stone))) (writability, defaultEquality)
         (book should (be (writable) or equal (stone))) (writability, defaultEquality)
-        
+
         (book should (equal (book) or be (writable))) (defaultEquality, writability)
         (book should (equal (stone) or be (writable))) (defaultEquality, writability)
         (stone should (equal (stone) or be (writable))) (defaultEquality, writability)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when file is not writable") {
         val caught1 = intercept[TestFailedException] {
           (stone should (be (writable) or be (book))) (writability)
@@ -96,21 +96,21 @@ class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
         assert(caught1.message === Some(wasNotWritable(stone) + ", and " + wasNotEqualTo(stone, book)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           (stone should (be (book) or be (writable))) (writability)
         }
         assert(caught2.message === Some(wasNotEqualTo(stone, book) + ", and " + wasNotWritable(stone)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           (stone should (be (writable) or equal (book))) (writability, defaultEquality)
         }
         assert(caught3.message === Some(wasNotWritable(stone) + ", and " + didNotEqual(stone, book)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           (stone should (equal (book) or be (writable))) (defaultEquality, writability)
         }
@@ -119,27 +119,27 @@ class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'file should not be writable'") {
-      
+
       it("should do nothing when file is not writable") {
         (stone should (not be writable or not be book)) (writability)
         (book should (not be writable or not be stone)) (writability)
         (stone should (not be writable or not be stone)) (writability)
-        
+
         (stone should (not be book or not be writable)) (writability)
         (stone should (not be stone or not be writable)) (writability)
         (book should (not be stone or not be writable)) (writability)
-        
+
         (stone should (not be writable or not equal book)) (writability, defaultEquality)
         (book should (not be writable or not equal stone)) (writability, defaultEquality)
         (stone should (not be writable or not equal stone)) (writability, defaultEquality)
-        
+
         (stone should (not equal book or not be writable)) (defaultEquality, writability)
         (stone should (not equal stone or not be writable)) (defaultEquality, writability)
         (book should (not equal stone or not be writable)) (defaultEquality, writability)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when file is writable") {
         val caught1 = intercept[TestFailedException] {
           (book should (not be writable or not be book)) (writability)
@@ -147,21 +147,21 @@ class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
         assert(caught1.message === Some(wasWritable(book) + ", and " + wasEqualTo(book, book)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           (book should (not be book or not be writable)) (writability)
         }
         assert(caught2.message === Some(wasEqualTo(book, book) + ", and " + wasWritable(book)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           (book should (not be writable or not equal book)) (writability, defaultEquality)
         }
         assert(caught3.message === Some(wasWritable(book) + ", and " + equaled(book, book)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           (book should (not equal book or not be writable)) (defaultEquality, writability)
         }
@@ -170,27 +170,27 @@ class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'all(xs) should be (writable)'") {
-      
+
       it("should do nothing when all(xs) is writable") {
         (all(List(book)) should (be (writable) or be (book))) (writability)
         (all(List(stone)) should (be (writable) or be (stone))) (writability)
         (all(List(book)) should (be (writable) or be (stone))) (writability)
-        
+
         (all(List(book)) should (be (book) or be (writable))) (writability)
         (all(List(book)) should (be (stone) or be (writable))) (writability)
         (all(List(stone)) should (be (stone) or be (writable))) (writability)
-        
+
         (all(List(book)) should (be (writable) or equal (book))) (writability, defaultEquality)
         (all(List(stone)) should (be (writable) or equal (stone))) (writability, defaultEquality)
         (all(List(book)) should (be (writable) or equal (stone))) (writability, defaultEquality)
-        
+
         (all(List(book)) should (equal (book) or be (writable))) (defaultEquality, writability)
         (all(List(book)) should (equal (stone) or be (writable))) (defaultEquality, writability)
         (all(List(stone)) should (equal (stone) or be (writable))) (defaultEquality, writability)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when xs is not sorted") {
         val left1 = List(stone)
         val caught1 = intercept[TestFailedException] {
@@ -199,7 +199,7 @@ class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
         assert(caught1.message === Some(allError(wasNotEqualTo(stone, book) + ", and " + wasNotWritable(stone), thisLineNumber - 2, left1)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left2 = List(stone)
         val caught2 = intercept[TestFailedException] {
           (all(left2) should (be (writable) or be (book))) (writability)
@@ -207,7 +207,7 @@ class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
         assert(caught2.message === Some(allError(wasNotWritable(stone) + ", and " + wasNotEqualTo(stone, book), thisLineNumber - 2, left2)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left3 = List(stone)
         val caught3 = intercept[TestFailedException] {
           (all(left3) should (equal (book) or be (writable))) (defaultEquality, writability)
@@ -215,7 +215,7 @@ class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
         assert(caught3.message === Some(allError(didNotEqual(stone, book) + ", and " + wasNotWritable(stone), thisLineNumber - 2, left3)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left4 = List(stone)
         val caught4 = intercept[TestFailedException] {
           (all(left4) should (be (writable) or equal (book))) (writability, defaultEquality)
@@ -225,26 +225,26 @@ class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'all(xs) should not be sorted'") {
       it("should do nothing when xs is not sorted") {
         (all(List(stone)) should (not be writable or not be book)) (writability)
         (all(List(book)) should (not be writable or not be stone)) (writability)
         (all(List(stone)) should (not be writable or not be stone)) (writability)
-        
+
         (all(List(stone)) should (not be book or not be writable)) (writability)
         (all(List(stone)) should (not be stone or not be writable)) (writability)
         (all(List(book)) should (not be stone or not be writable)) (writability)
-        
+
         (all(List(stone)) should (not be writable or not equal book)) (writability, defaultEquality)
         (all(List(book)) should (not be writable or not equal stone)) (writability, defaultEquality)
         (all(List(stone)) should (not be writable or not equal stone)) (writability, defaultEquality)
-        
+
         (all(List(stone)) should (not equal book or not be writable)) (defaultEquality, writability)
         (all(List(stone)) should (not equal stone or not be writable)) (defaultEquality, writability)
         (all(List(book)) should (not equal stone or not be writable)) (defaultEquality, writability)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when xs is not sorted") {
         val left1 = List(book)
         val caught1 = intercept[TestFailedException] {
@@ -253,7 +253,7 @@ class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
         assert(caught1.message === Some(allError(wasEqualTo(book, book) + ", and " + wasWritable(book), thisLineNumber - 2, left1)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left2 = List(book)
         val caught2 = intercept[TestFailedException] {
           (all(left2) should (not be writable or not be book)) (writability)
@@ -261,7 +261,7 @@ class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
         assert(caught2.message === Some(allError(wasWritable(book) + ", and " + wasEqualTo(book, book), thisLineNumber - 2, left2)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left3 = List(book)
         val caught3 = intercept[TestFailedException] {
           (all(left3) should (not equal book or not be writable)) (defaultEquality, writability)
@@ -269,7 +269,7 @@ class ShouldBeWritableLogicalOrExplicitSpec extends FunSpec with Matchers {
         assert(caught3.message === Some(allError(equaled(book, book) + ", and " + wasWritable(book), thisLineNumber - 2, left3)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val left4 = List(book)
         val caught4 = intercept[TestFailedException] {
           (all(left4) should (not be writable or not equal book)) (writability, defaultEquality)

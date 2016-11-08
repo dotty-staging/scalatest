@@ -28,7 +28,7 @@ import org.scalatest.matchers.MatcherFactory2
  * @author Chee Seng
  */
 final class ResultOfNotExist(notWord: NotWord) {
-  
+
   /**
    * This method enables the following syntax:
    *
@@ -41,7 +41,7 @@ final class ResultOfNotExist(notWord: NotWord) {
     notWord.exist.and(anotherMatcher)
 
   import scala.language.higherKinds
-    
+
   /**
    * This method enables the following syntax:
    *
@@ -50,7 +50,7 @@ final class ResultOfNotExist(notWord: NotWord) {
    *                        ^
    * </pre>
    */
-  def and[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] = 
+  def and[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] =
     notWord.exist.and(anotherMatcherFactory)
 
   /**
@@ -63,7 +63,7 @@ final class ResultOfNotExist(notWord: NotWord) {
    */
   def or(anotherMatcher: Matcher[Any]): MatcherFactory1[Any, Existence] =
     notWord.exist.or(anotherMatcher)
-    
+
   /**
    * This method enables the following syntax:
    *
@@ -72,12 +72,12 @@ final class ResultOfNotExist(notWord: NotWord) {
    *                        ^
    * </pre>
    */
-  def or[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] = 
-    notWord.exist.or(anotherMatcherFactory)  
-    
+  def or[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] =
+    notWord.exist.or(anotherMatcherFactory)
+
   /**
    * Overrides toString to return "not exist"
    */
   override def toString: String = "not (exist)"
-  
+
 }

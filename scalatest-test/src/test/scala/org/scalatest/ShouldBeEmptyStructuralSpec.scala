@@ -23,30 +23,30 @@ import org.scalactic.Prettifier
 class ShouldBeEmptyStructuralSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   val fileName: String = "ShouldBeEmptyStructuralSpec.scala"
-    
-  def wasNotEmpty(left: Any): String = 
+
+  def wasNotEmpty(left: Any): String =
     FailureMessages.wasNotEmpty(prettifier, left)
-    
-  def wasEmpty(left: Any): String = 
+
+  def wasEmpty(left: Any): String =
     FailureMessages.wasEmpty(prettifier, left)
-  
+
   describe("empty matcher") {
-    
+
     describe("when work with arbitrary object with isEmpty() method") {
-      
+
       class MyEmptiness(value: Boolean) {
         def isEmpty(): Boolean = value
         override def toString = "emptiness"
       }
       val objTrue = new MyEmptiness(true)
       val objFalse = new MyEmptiness(false)
-      
+
       it("should do nothing for 'objTrue should be (empty)'") {
         objTrue should be (empty)
       }
-      
+
       it("should throw TFE with correct stack depth for 'objFalse should be (empty)'") {
         val caught1 = intercept[TestFailedException] {
           objFalse should be (empty)
@@ -55,11 +55,11 @@ class ShouldBeEmptyStructuralSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should do nothing if for 'objFalse should not be empty'") {
         objFalse should not be empty
       }
-      
+
       it("should throw TFE with correct stack depth for 'objTrue should not be empty'") {
         val caught1 = intercept[TestFailedException] {
           objTrue should not be empty
@@ -69,20 +69,20 @@ class ShouldBeEmptyStructuralSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with arbitrary object with isEmpty method") {
-      
+
       class MyEmptiness(value: Boolean) {
         def isEmpty: Boolean = value
         override def toString = "emptiness"
       }
       val objTrue = new MyEmptiness(true)
       val objFalse = new MyEmptiness(false)
-      
+
       it("should do nothing for 'objTrue should be (empty)'") {
         objTrue should be (empty)
       }
-      
+
       it("should throw TFE with correct stack depth for 'objFalse should be (empty)'") {
         val caught1 = intercept[TestFailedException] {
           objFalse should be (empty)
@@ -91,11 +91,11 @@ class ShouldBeEmptyStructuralSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should do nothing if for 'objFalse should not be empty'") {
         objFalse should not be empty
       }
-      
+
       it("should throw TFE with correct stack depth for 'objTrue should not be empty'") {
         val caught1 = intercept[TestFailedException] {
           objTrue should not be empty
@@ -105,20 +105,20 @@ class ShouldBeEmptyStructuralSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with arbitrary object with isEmpty val") {
-      
+
       class MyEmptiness(value: Boolean) {
         val isEmpty: Boolean = value
         override def toString = "emptiness"
       }
       val objTrue = new MyEmptiness(true)
       val objFalse = new MyEmptiness(false)
-      
+
       it("should do nothing for 'objTrue should be (empty)'") {
         objTrue should be (empty)
       }
-      
+
       it("should throw TFE with correct stack depth for 'objFalse should be (empty)'") {
         val caught1 = intercept[TestFailedException] {
           objFalse should be (empty)
@@ -127,11 +127,11 @@ class ShouldBeEmptyStructuralSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should do nothing if for 'objFalse should not be empty'") {
         objFalse should not be empty
       }
-      
+
       it("should throw TFE with correct stack depth for 'objTrue should not be empty'") {
         val caught1 = intercept[TestFailedException] {
           objTrue should not be empty
@@ -141,7 +141,7 @@ class ShouldBeEmptyStructuralSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
   }
-    
+
 }

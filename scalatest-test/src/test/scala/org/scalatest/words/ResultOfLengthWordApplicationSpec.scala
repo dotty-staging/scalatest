@@ -19,14 +19,14 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfLengthWordApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfLengthWordApplication ") {
-    
+
     it("should have pretty toString") {
       val result = new ResultOfLengthWordApplication(8)
       result.toString should be ("length (8)")
     }
-    
+
   }
-  
+
 }

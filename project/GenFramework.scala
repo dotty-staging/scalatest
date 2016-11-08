@@ -4,8 +4,8 @@ import scala.util.matching.Regex
 
 trait Template {
   val children: List[Template] = List.empty
-  
-  protected def childrenContent = 
+
+  protected def childrenContent =
     children.map(_.toString).map(_.split("\n").map("  " + _).mkString("\n")).mkString("\n") + "\n"
 }
 
@@ -13,46 +13,46 @@ trait ClassTemplate extends Template {
   val name: String
   val extendName: Option[String] = None
   val withList: List[String] = List.empty
-  
-  private def getExtend = 
+
+  private def getExtend =
     extendName match {
       case Some(extendName) => "extends " + extendName
       case None => ""
     }
-      
-  private def getWith = 
+
+  private def getWith =
     withList.map("with " + _).mkString(" ")
-  
-  override def toString = 
+
+  override def toString =
     "class " + name + " " + getExtend + " " + getWith + " {\nprivate val prettifier = org.scalactic.Prettifier.default\n" +
-    childrenContent + 
+    childrenContent +
     "}"
 }
 
 class ScalaFileTemplate(packageName: Option[String] = None, importList: List[String] = List.empty, definitionList: List[Template]) extends Template {
-  
+
   override val children = definitionList
-  
-  private def getPackage = 
+
+  private def getPackage =
     packageName match {
       case Some(packageName) => "package " + packageName + "\n\n"
       case None => ""
     }
-  
-  private def getImports = 
+
+  private def getImports =
     importList.map("import " + _).mkString("\n")
-  
-    
-  override protected def childrenContent = 
+
+
+  override protected def childrenContent =
     children.map(_.toString).map(_.split("\n").mkString("\n")).mkString("\n") + "\n"
-    
-  override def toString = 
-    getPackage + 
-    getImports + "\n" + 
+
+  override def toString =
+    getPackage +
+    getImports + "\n" +
     childrenContent
 }
 
-class SingleClassFile(packageName: Option[String] = None, importList: List[String] = List.empty, classTemplate: ClassTemplate) 
+class SingleClassFile(packageName: Option[String] = None, importList: List[String] = List.empty, classTemplate: ClassTemplate)
   extends ScalaFileTemplate(packageName, importList, List(classTemplate))
 
 class CompositeTemplate(templates: List[Template], combinator: String = "") extends Template {
@@ -110,7 +110,7 @@ class InterceptTemplate(declaration: String, assertion: String, fileName: String
 }
 
 class MessageTemplate(autoQuoteString: Boolean) extends Template {
-  def wrapStringIfNecessary(value: Any): String = 
+  def wrapStringIfNecessary(value: Any): String =
     value match {
       case strValue: String if autoQuoteString => "\\\"" + strValue + "\\\""
       case other => other.toString
@@ -123,110 +123,110 @@ class SimpleMessageTemplate(message: String, autoQuoteString: Boolean = true) ex
 
 abstract class LeftMessageTemplate(left: Any, autoQuoteString: Boolean = true) extends MessageTemplate(autoQuoteString) {
   val message: String
-  override def toString = 
+  override def toString =
     left + message
 }
-            
+
 abstract class LeftRightMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftMessageTemplate(left, autoQuoteString) {
   val message: String
   override def toString =
     left + message + wrapStringIfNecessary(right)
 }
-            
+
 class EqualedMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " equaled "
 }
-            
+
 class DidNotEqualMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " did not equal "
 }
-            
+
 class WasEqualToMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was equal to "
 }
-            
+
 class WasNotEqualToMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was not equal to "
 }
-            
+
 class WasLessThanMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was less than "
 }
-            
+
 class WasNotLessThanMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was not less than "
 }
-            
+
 class WasLessThanOrEqualToMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was less than or equal to "
 }
-            
+
 class WasNotLessThanOrEqualToMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was not less than or equal to "
 }
-            
+
 class WasGreaterThanMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was greater than "
 }
-            
+
 class WasNotGreaterThanMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was not greater than "
 }
-            
+
 class WasGreaterThanOrEqualToMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was greater than or equal to "
 }
-            
+
 class WasNotGreaterThanOrEqualToMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was not greater than or equal to "
 }
-            
+
 class WasNullMessageTemplate extends SimpleMessageTemplate("The reference was null")
-            
+
 class WasNotNullMessageTemplate(left: Any, autoQuoteString: Boolean = true) extends LeftMessageTemplate(left, autoQuoteString) {
   val message = " was not null"
 }
-            
+
 class WasMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was "
 }
-            
+
 class WasNotMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was not "
 }
-            
+
 class WasAMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was a "
 }
-            
+
 class WasNotAMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was not a "
 }
-            
+
 class WasAnMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was an "
 }
-            
+
 class WasNotAnMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was not an "
 }
-            
+
 class WasTheSameInstanceAsMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was the same instance as "
 }
-            
+
 class WasNotTheSameInstanceAsMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
   val message = " was not the same instance as "
 }
-            
+
 class PropertyHadUnexpectedValueMessageTemplate(propertyName: String, expectedValue: Any, value: Any, target: Any, autoQuoteString: Boolean = true) extends MessageTemplate(autoQuoteString) {
-  override def toString = 
+  override def toString =
     "The " + propertyName + " property had value " + wrapStringIfNecessary(value) + ", instead of its expected value " + wrapStringIfNecessary(expectedValue) + ", on object " + wrapStringIfNecessary(target)
 }
 
 class PropertyHadExpectedValueMessageTemplate(propertyName: String, expectedValue: Any, target: Any, autoQuoteString: Boolean = true) extends MessageTemplate(autoQuoteString) {
-  override def toString = 
-    "The " + propertyName + " property had its expected value " + wrapStringIfNecessary(expectedValue) + ", on object " + wrapStringIfNecessary(target) 
+  override def toString =
+    "The " + propertyName + " property had its expected value " + wrapStringIfNecessary(expectedValue) + ", on object " + wrapStringIfNecessary(target)
 }
 
 class HadLengthMessageTemplate(left: Any, right: Any, autoQuoteString: Boolean = true) extends LeftRightMessageTemplate(left, right, autoQuoteString) {
@@ -340,9 +340,9 @@ object UnquotedString {
 }
 
 object Generator {
-  
+
   import java.io.{File, FileWriter, BufferedWriter}
-  
+
   def getIndex[T](xs: GenTraversable[T], value: T): Int = {
     @tailrec
     def getIndexAcc[T](itr: Iterator[T], count: Int): Int = {
@@ -358,7 +358,7 @@ object Generator {
     }
     getIndexAcc(xs.toIterator, 0)
   }
-  
+
   @tailrec
   final def getNext[T](itr: Iterator[T], predicate: T => Boolean): T = {
     val next = itr.next
@@ -367,10 +367,10 @@ object Generator {
     else
       getNext(itr, predicate)
   }
-  
-  def getFirst[T](col: GenTraversable[T], predicate: T => Boolean): T = 
+
+  def getFirst[T](col: GenTraversable[T], predicate: T => Boolean): T =
     getNext(col.toIterator, predicate)
-  
+
   @tailrec
   final def getNextNot[T](itr: Iterator[T], predicate: T => Boolean): T = {
     val next = itr.next
@@ -379,10 +379,10 @@ object Generator {
     else
       getNextNot(itr, predicate)
   }
-  
-  def getFirstNot[T](col: GenTraversable[T], predicate: T => Boolean): T = 
+
+  def getFirstNot[T](col: GenTraversable[T], predicate: T => Boolean): T =
     getNextNot(col.toIterator, predicate)
-  
+
   def genFile(targetFile: File, template: ScalaFileTemplate) = {
     val content = template.toString
     val writer = new BufferedWriter(new FileWriter(targetFile))

@@ -35,7 +35,7 @@ class BeforeAndAfterSuite extends FunSuite {
       super.run(testName, args)
     }
   }
-  
+
   class MySuite extends TheSuper with BeforeAndAfter {
 
     var beforeCalledBeforeRunTest = false
@@ -79,16 +79,16 @@ class BeforeAndAfterSuite extends FunSuite {
   // test exceptions with runTest
   test("If any invocation of before completes abruptly with an exception, runTest " +
     "will complete abruptly with the same exception.") {
-    
+
     class MySuite extends Suite with BeforeAndAfter {
-      before { throw new NumberFormatException } 
+      before { throw new NumberFormatException }
     }
     intercept[NumberFormatException] {
       val a = new MySuite
       a.run(Some("july"), Args(StubReporter))
     }
   }
-  
+
   test("If any call to super.runTest completes abruptly with an exception, runTest " +
     "will complete abruptly with the same exception, however, before doing so, it will invoke after") {
     trait FunkySuite extends Suite {
@@ -108,8 +108,8 @@ class BeforeAndAfterSuite extends FunSuite {
     }
     assert(a.afterCalled)
   }
-  
-  test("If both super.runTest and after complete abruptly with an exception, runTest " + 
+
+  test("If both super.runTest and after complete abruptly with an exception, runTest " +
     "will complete abruptly with the exception thrown by super.runTest.") {
     trait FunkySuite extends Suite {
       protected override def runTest(testName: String, args: Args): Status = {
@@ -164,7 +164,7 @@ class BeforeAndAfterSuite extends FunSuite {
     assert(a.afterIsCalled)
     assert(!a.testIsCalled)
   }
- 
+
   // test exceptions with run
   test("If before is called twice, the second invocation should produce NotAllowedException") {
     var beforeRegisteredFirstTime = false

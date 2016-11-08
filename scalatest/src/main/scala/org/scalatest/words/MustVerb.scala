@@ -94,7 +94,7 @@ import org.scalactic._
  * are still available. These four <code>must</code> are in fact available to any class
  * that mixes in <code>MustMatchers</code>, but each takes an implicit parameter that is provided
  * only in <code>FlatSpec</code> and <code>fixture.FlatSpec</code>, or <code>WordSpec</code> and
- * <code>fixture.WordSpec</code>.  
+ * <code>fixture.WordSpec</code>.
  * </p>
  *
  * @author Bill Venners

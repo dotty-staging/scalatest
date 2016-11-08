@@ -98,7 +98,7 @@
         <artifact:dependencies pathId="lib.path" useScope="test">
           <pom file="${build}/pom.xml"/>
         </artifact:dependencies>
-	
+
 <!-- Needed for the 2.11.0-RC3 build
         <macrodef name="readProperty">
           <attribute name="name" />
@@ -127,13 +127,13 @@
             <pathelement location="${classes}" />
             <path refid="lib.path"></path>
         </path>
-        
+
         <path id="coverage.class.path">
             <pathelement location="${instrumented}" />
             <pathelement location="${classes}" />
             <path refid="lib.path"></path>
         </path>
-     
+
         <path id="build.test.class.path">
             <pathelement location="${classes}" />
             <pathelement location="${build.tests}" />
@@ -199,7 +199,7 @@
             "${build}/scala-${scala.version}/src_managed/main/scala/org/scalatest/MustMatchers.scala">
           </mapper>
         </uptodate>
-    	
+
     	<uptodate property="geninspectors.uptodate"
     	    	  srcfile="project/GenInspectors.scala">
     	  <mapper type="merge" to=
@@ -263,7 +263,7 @@
             <include name="GenTestsHelper.scala" />
         </scalac>
     </target>
-	
+
 	<target name="clean-codegenerators">
 		<delete dir="${build.generators}" />
     </target>
@@ -285,7 +285,7 @@
             <arg value="${scala.version}" />
         </java>
     </target>
-	
+
 	<target name="geninspectors" depends="init, compile-codegenerators"
 		    unless="geninspectors.uptodate">
       <java classname="GenInspectors"
@@ -348,7 +348,7 @@
             <arg value="${scala.version}" />
     	</java>
     </target>
-	
+
 	<target name="gencontain" depends="init, compile-codegenerators"
 	        unless="gencontain.uptodate">
       <java classname="GenContain"
@@ -357,7 +357,7 @@
 		<arg value="${scala.version}" />
       </java>
 	</target>
-	
+
 	<target name="gensorted" depends="init, compile-codegenerators"
 	        unless="gensorted.uptodate">
 	  <java classname="GenSorted"
@@ -366,7 +366,7 @@
 	    <arg value="${scala.version}" />
 	  </java>
 	</target>
-	
+
 	<target name="genloneelement" depends="init, compile-codegenerators"
 	        unless="genloneelement.uptodate">
 	  <java classname="GenLoneElement"
@@ -415,7 +415,7 @@
 
     	<!-- Compile the Java code from ${javasrc} into ${classes} -->
     	<javac srcdir="${javasrc}" destdir="${classes}" compiler="javac1.5" memoryMaximumSize="1500M" fork="true" classpathref="build.class.path" debug="yes" />
-    	
+
        <!-- copy these here not in dist because sometimes I like to do -cp target/jar_contents things, such as REPL sessions -->
        <antcall target="copy-resources"/>
     </target>
@@ -474,11 +474,11 @@
     <target name="write-empty-excludes-file" unless="is.2.9">
       <echo file="${build}/scalac_excludes"/>
     </target>
-	
+
 	<target name="clean-gentests">
 	  <delete dir="${build.generated.tests.bin}" />
 	</target>
-	
+
     <target name="compile-gentests" depends="compile-main, geninspectors, geninspectorsshorthands, gencontain, gensorted, genloneelement, genempty, gentestshelper">
       <scalac destdir="${build.generated.tests.bin}" target="jvm-1.5"
               classpathref="build.test.class.path" deprecation="yes"
@@ -600,7 +600,7 @@
         <!-- Create jar, including OSGi metadata -->
         <bnd classpath="${jar.contents}" sourcepath="${jar.contents}"
              eclipse="false" failok="false" exceptions="true" files="osgi.bnd"
-             output="${dist}/lib/scalatest.jar" /> 
+             output="${dist}/lib/scalatest.jar" />
 
         <!-- Create scalactic jar, including OSGi metadata -->
         <bnd classpath="${jar.contents}" sourcepath="${jar.contents}"
@@ -706,7 +706,7 @@
             <config name="dbname" value="testdb" />
         </scalatest>
     </target>
-	
+
 	<target name="run-gentests" depends="compile-gentests,taskdefscalatest">
       <scalatest fork="true" runpath="${build.generated.tests.bin}" parallel="true" haltonfailure="true">
         <jvmarg value="-XX:MaxPermSize=512m"/>
@@ -861,7 +861,7 @@
             <suite classname="org.scalatest.fixture.FixtureSpecSpec" />
             <suite classname="org.scalatest.fixture.FixtureFlatSpecSpec" />
             <suite classname="org.scalatest.fixture.FixtureWordSpecSpec" />
-            <suite classname="org.scalatest.fixture.FixtureFeatureSpecSpec" /> 
+            <suite classname="org.scalatest.fixture.FixtureFeatureSpecSpec" />
             <membersonly package="org.scalatest.concurrent" />
             <suite classname="org.scalatest.concurrent.ConductorSuite" />
             <suite classname="org.scalatest.fixture.FixtureFlatSpecSuite" />
@@ -981,7 +981,7 @@
             <runpathurl url="http://foo.com/bar.jar" />
 
             <suite classname="org.scalatest.SuiteSuite" />
-            
+
             <reporter type="stdout" />
             <reporter type="graphic" />
         </scalatest>
@@ -1068,7 +1068,7 @@
       -       <password>password</password>
       -     </server>
       -   </servers>
-      - 
+      -
       -->
     <target name="deploy.init" depends="jar,jartests,jarsrc,jartestsrc,jardoc">
       <property name="deploy.main"
@@ -1162,11 +1162,11 @@
                value="${build}/pom.xml"/>
         <param name="deploy.main"
                value="${dist}/lib/scalactic.jar"/>
-        <param name="deploy.sources" 
+        <param name="deploy.sources"
                value="${build}/scalactic-sources.jar"/>
-        <param name="deploy.scaladoc" 
+        <param name="deploy.scaladoc"
                value="${build}/scalactic-scaladoc.jar"/>
-        <param name="deploy.javadoc" 
+        <param name="deploy.javadoc"
                value="${build}/scalactic-javadoc.jar"/>
         <param name="deploy.release"
                value="${release}"/>
@@ -1233,11 +1233,11 @@
 
       <fail message="Missing old.scala.version definition."
             unless="old.scala.version" />
-      <fail message="Missing new.scala.version definition." 
+      <fail message="Missing new.scala.version definition."
             unless="new.scala.version" />
-      <fail message="Missing new.deploy.scala.version definition." 
+      <fail message="Missing new.deploy.scala.version definition."
             unless="new.deploy.scala.version" />
-      <fail message="Missing scalatest.version definition." 
+      <fail message="Missing scalatest.version definition."
             unless="scalatest.version"  />
 
       <antcall target="redeploy-scalatest"/>
@@ -1298,15 +1298,15 @@
 
       <property name="deploy.main"
                 value="target/redeploy/scalatest.jar"/>
-      <property name="deploy.tests" 
+      <property name="deploy.tests"
                 value="target/redeploy/scalatest-tests.jar"/>
-      <property name="deploy.sources" 
+      <property name="deploy.sources"
                 value="target/redeploy/scalatest-sources.jar"/>
-      <property name="deploy.test-sources" 
+      <property name="deploy.test-sources"
                 value="target/redeploy/scalatest-test-sources.jar"/>
-      <property name="deploy.scaladoc" 
+      <property name="deploy.scaladoc"
                 value="target/redeploy/scalatest-scaladoc.jar"/>
-      <property name="deploy.javadoc" 
+      <property name="deploy.javadoc"
                 value="target/redeploy/scalatest-javadoc.jar"/>
       <property name="deploy.release"
                 value="${scalatest.version}"/>
@@ -1362,11 +1362,11 @@
                value="${build}/pom.xml"/>
         <param name="deploy.main"
                value="target/redeploy/scalactic.jar"/>
-        <param name="deploy.sources" 
+        <param name="deploy.sources"
                value="target/redeploy/scalactic-sources.jar"/>
-        <param name="deploy.scaladoc" 
+        <param name="deploy.scaladoc"
                value="target/redeploy/scalactic-scaladoc.jar"/>
-        <param name="deploy.javadoc" 
+        <param name="deploy.javadoc"
                value="target/redeploy/scalactic-javadoc.jar"/>
         <param name="deploy.release"
                value="${scalatest.version}"/>
@@ -1377,7 +1377,7 @@
     <!--
       - For internal use by targets 'deploy' and 'redeploy'.  Deploys jars
       - specified by following properties:
-      -   
+      -
       -    deploy.main
       -    deploy.tests
       -    deploy.sources

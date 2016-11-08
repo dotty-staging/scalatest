@@ -271,7 +271,7 @@ class FreeSpecSpec extends FunSpec with GivenWhenThen {
     }
 
     it("should throw DuplicateTestNameException if a duplicate test name registration is attempted") {
-      
+
       intercept[DuplicateTestNameException] {
         new FreeSpec {
           "should test this" in {/* ASSERTION_SUCCEED */}
@@ -1303,9 +1303,9 @@ class FreeSpecSpec extends FunSpec with GivenWhenThen {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 11)
     }
   }
-  
+
   describe("when failure happens") {
-    
+
     it("should fire TestFailed event with correct stack depth info when test failed") {
       class TestSpec extends FreeSpec {
         "fail scenario" in {
@@ -1326,7 +1326,7 @@ class FreeSpecSpec extends FunSpec with GivenWhenThen {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "FreeSpecSpec.scala")
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 11)
     }
-    
+
     it("should generate TestRegistrationClosedException with correct stack depth info when has an in nested inside an in") {
       class TestSpec extends FreeSpec {
         var registrationClosedThrown = false
@@ -1340,7 +1340,7 @@ class FreeSpecSpec extends FunSpec with GivenWhenThen {
         override def withFixture(test: NoArgTest): Outcome = {
           val outcome = test.apply()
           outcome match {
-            case Exceptional(ex: TestRegistrationClosedException) => 
+            case Exceptional(ex: TestRegistrationClosedException) =>
               registrationClosedThrown = true
             case _ =>
           }

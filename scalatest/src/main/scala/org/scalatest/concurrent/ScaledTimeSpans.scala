@@ -23,7 +23,7 @@ import org.scalatest.tools.Runner
 /*
 I have checked in the PoC at the following branch:-
 
-https://scalatest.googlecode.com/svn/branches/akka-span-factor 
+https://scalatest.googlecode.com/svn/branches/akka-span-factor
 
 The overriding is pretty straight forward (though it did take some time for me to read through akka's doc to figure out how to get the akka.test.timefactor correctly):-
 
@@ -94,7 +94,7 @@ class MySpec extends FunSpec with Eventually with AkkaSpanScaleFactor {
  * <a href="Waiters.html"><code>Waiters</code></a> invoke <code>scaled</code>, so those defaults
  * will be scaled automatically. Other than such defaults, however, to get a <code>Span</code>
  * to scale you'll need to explicitly pass it to <code>scaled</code>.
- * For example, here's how you would scale a <code>Span</code> you supply to 
+ * For example, here's how you would scale a <code>Span</code> you supply to
  * the <code>failAfter</code> method from trait <code>Timeouts</code>:
  * </p>
  *
@@ -112,7 +112,7 @@ class MySpec extends FunSpec with Eventually with AkkaSpanScaleFactor {
  * </p>
  *
  * <h2>Overriding <code>spanScaleFactor</code></h2>
- * 
+ *
  * </p>
  * You can override the <code>spanScaleFactor</code> method to configure the factor by a
  * different means. For example, to configure the factor from Akka
@@ -149,7 +149,7 @@ class MySpec extends FunSpec with Eventually with AkkaSpanScaleFactor {
  * Armed with this trait and configuration file, you can simply mix trait
  * <code>AkkaSpanScaleFactor</code> into any test class whose <code>Span</code>s
  * you want to scale, like this:
- * 
+ *
  * <pre class="stHighlight">
  * class MySpec extends FunSpec with Eventually with AkkaSpanScaleFactor {
  *   // ..
@@ -188,7 +188,7 @@ trait ScaledTimeSpans {
    * The factor by which the <code>scaled</code> method will scale <code>Span</code>s.
    *
    * <p>
-   * The default implementation of this method will return the <em>span scale factor</em> that 
+   * The default implementation of this method will return the <em>span scale factor</em> that
    * was specified for the run, or 1.0 if no factor was specified. For example, you can specify a span scale factor when invoking ScalaTest
    * via the command line by passing a <a href="../tools/Runner$.html#scalingTimeSpans"><code>-F</code> argument</a> to <a href="../tools/Runner$.html"><code>Runner</code></a>.
    * </p>

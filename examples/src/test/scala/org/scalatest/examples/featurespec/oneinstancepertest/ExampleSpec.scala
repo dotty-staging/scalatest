@@ -35,7 +35,7 @@ class ExampleSpec extends FeatureSpec with OneInstancePerTest {
       builder.append("be easy to reason about!")
       assert(builder.toString === "ScalaTest is designed to be easy to reason about!")
       assert(buffer.isEmpty)
-    } 
+    }
   }
 
   //SCALATESTJS-ONLY def newInstance: Suite with OneInstancePerTest = new ExampleSpec

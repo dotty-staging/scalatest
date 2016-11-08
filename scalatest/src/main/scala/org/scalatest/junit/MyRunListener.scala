@@ -32,7 +32,7 @@ import exceptions._
 
   private[junit] class MyRunListener(report: Reporter,
                                      config: Map[String, Any],
-                                     theTracker: Tracker, 
+                                     theTracker: Tracker,
                                      status: ScalaTestStatefulStatus)
   extends RunListener {
     val failedTests = Collections.synchronizedSet(new HashSet[String])
@@ -56,11 +56,11 @@ import exceptions._
           Resources.jUnitTestFailed
 
       val formatter = getIndentedTextForTest(testName, 1, true)
-      val payload = 
+      val payload =
         throwable match {
-          case optPayload: PayloadField => 
+          case optPayload: PayloadField =>
             optPayload.payload
-          case _ => 
+          case _ =>
             None
         }
       report(TestFailed(theTracker.nextOrdinal(), message, testClassName, testClass, Some(testClass), testName, testName, Vector.empty, throwable, None, Some(formatter), Some(SeeStackDepthException), None, payload))

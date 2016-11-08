@@ -103,7 +103,7 @@ trait InputFieldBehaviour extends JettySpec with Matchers with SpanSugar with We
       go to (host + file)
       pageTitle should be (typeDescription)
 
-      fn("secret1").value should be ("")                   
+      fn("secret1").value should be ("")
 
       fn("secret1").attribute("value") should be (Some(""))
       fn("secret1").value = value1
@@ -122,14 +122,14 @@ trait InputFieldBehaviour extends JettySpec with Matchers with SpanSugar with We
     it("should clear a " + description + " field.") {
       go to (host + file)
       pageTitle should be (typeDescription)
-                                                                
-      fn("secret1").value = value1                     
+
+      fn("secret1").value = value1
       fn("secret1").value should be (value1)
 
       fn("secret1").clear()
-      fn("secret1").value should be ("")                   
+      fn("secret1").value should be ("")
 
-      fn("secret1").value = value1                     
+      fn("secret1").value = value1
       fn("secret1").value should be (value1)
     }
   }
@@ -138,23 +138,23 @@ trait InputFieldBehaviour extends JettySpec with Matchers with SpanSugar with We
     it("should allow text to be entered in the active element if it is a " + description + " field.") {
       go to (host + file)
       pageTitle should be (typeDescription)
-                                                                
-      fn("secret1").value should be ("")                   
+
+      fn("secret1").value should be ("")
 
       click on "secret1"
       enter("secret 1A")
-      fn("secret1").value should be ("secret 1A")                   
+      fn("secret1").value should be ("secret 1A")
       enter("secret 1B")
-      fn("secret1").value should be ("secret 1B")                   
+      fn("secret1").value should be ("secret 1B")
       enter("")
-      fn("secret1").value should be ("")                   
+      fn("secret1").value should be ("")
 
       pressKeys("first secret!")
-      fn("secret1").value should be ("first secret!")                   
+      fn("secret1").value should be ("first secret!")
       pressKeys(" second secret!")
-      fn("secret1").value should be ("first secret! second secret!")                   
+      fn("secret1").value should be ("first secret! second secret!")
       pressKeys(" third secret!")
-      fn("secret1").value should be ("first secret! second secret! third secret!")                   
+      fn("secret1").value should be ("first secret! second secret! third secret!")
     }
 
   }
@@ -204,7 +204,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       text2.value should be ("value2")
     }
   }
-  
+
   describe("pwdField") {
     it("should throw TFE with valid stack depth if specified item not found") {
       go to (host + "find-pwdfield.html")
@@ -490,35 +490,35 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       switch to frame("frame1")
       switch to window(win)
       switch to frame("frame2")
-      
+
       switch to window(win)
       switch to frame(0)
       switch to window(win)
       switch to frame(1)
-      
+
       switch to window(win)
       switch to frame(id("frame1"))
       switch to window(win)
       switch to frame(id("frame2"))
-      
+
       switch to window(win)
       switch to frame(id("frame1").element)
       switch to window(win)
       switch to frame(id("frame2").element)
-      
+
       switch to window(win)
       val caught1= intercept[TestFailedException] {
         switch to frame("frame3")
       }
       caught1.failedCodeLineNumber should be (Some(thisLineNumber - 2))
       caught1.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
-      
+
       val caught2 = intercept[TestFailedException] {
         switch to frame(2)
       }
       caught2.failedCodeLineNumber should be (Some(thisLineNumber - 2))
       caught2.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
-      
+
       val caught3 = intercept[TestFailedException] {
         switch to frame(id("text1"))
       }
@@ -600,7 +600,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       find("textarea1") match {
         case Some(textArea: TextArea) =>
           textArea.text should be ("value1")
-        case other => 
+        case other =>
           fail("Expected Some(textArea: TextArea), but got: " + other)
       }
     }
@@ -633,32 +633,32 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       find("group2") match {
         case Some(radio: RadioButton) =>
           radio.value should be ("value2")
-        case other => 
+        case other =>
           fail("Expected Some(radio: RadioButton), but got: " + other)
       }
     }
     it("should return a defined Option[Element] containing an instance of Checkbox if specified item is found to be a checkbox") {
       go to (host + "find-checkbox.html")
       find("opt1") match {
-        case Some(checkbox: Checkbox) => 
+        case Some(checkbox: Checkbox) =>
           checkbox.isSelected should be (true)
-        case other => 
+        case other =>
           fail("Expected Some(checkbox: Checkbox), but got: " + other)
       }
     }
     it("should return a defined Option[Element] containing an instance of SingleSel if specified item is found to be a single-selection list") {
       go to (host + "find-select.html")
       find("select1") match {
-        case Some(singleSel: SingleSel) => 
+        case Some(singleSel: SingleSel) =>
           singleSel.value should be ("option2")
-        case other => 
+        case other =>
           fail("Expected Some(singleSel: SingleSel), but got: " + other)
       }
     }
     it("should return a defined Option[Element] containing an instance of MultiSel if specified item is found to be a multiple-selection list") {
       go to (host + "find-select.html")
       find("select2") match {
-        case Some(multiSel: MultiSel) => 
+        case Some(multiSel: MultiSel) =>
           multiSel.values should be (IndexedSeq("option4", "option5"))
         case other =>
           fail("Expected Some(multiSel: MultiSel), but got: " + other)
@@ -667,9 +667,9 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
     it("should return a defined Option[Element] containing an instance of Element if specified item is found but is not one of the items for which we have defined an Element subclass") {
       go to (host + "image.html")
       find("anImage") match {
-        case Some(element: Element) => 
+        case Some(element: Element) =>
           element.tagName should be ("img")
-        case other => 
+        case other =>
           fail("Expected Some(element: Element), but got: " + other)
       }
     }
@@ -685,9 +685,9 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       val text1 = findAll("text1")
       text1.hasNext should be (true)
       text1.next match {
-        case textField: TextField => 
+        case textField: TextField =>
           textField.value should be ("value1")
-        case other => 
+        case other =>
           fail("Expected TextField, but got: " + other)
       }
     }
@@ -707,9 +707,9 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       val secret1 = findAll("secret1")
       secret1.hasNext should be (true)
       secret1.next match {
-        case pwdField: PasswordField => 
+        case pwdField: PasswordField =>
           pwdField.value should be ("pwd1")
-        case other => 
+        case other =>
           fail("Expected PasswordField, but got: " + other)
       }
     }
@@ -755,7 +755,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       val select1 = findAll("select1")
       select1.hasNext should be (true)
       select1.next match {
-        case singleSel: SingleSel => 
+        case singleSel: SingleSel =>
           singleSel.value should be ("option2")
         case other =>
           fail("Expected SingleSel, but got: " + other)
@@ -766,7 +766,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       val select2 = findAll("select2")
       select2.hasNext should be (true)
       select2.next match {
-        case multiSel: MultiSel => 
+        case multiSel: MultiSel =>
           multiSel.values should be (IndexedSeq("option4", "option5"))
         case other =>
           fail("Expected MultiSel, but got: " + other)
@@ -780,7 +780,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
         case image: Element =>
           image.tagName should be ("img")
         case other =>
-          fail("Expected Element, but got: " + other)  
+          fail("Expected Element, but got: " + other)
       }
     }
   }
@@ -794,7 +794,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       result2 should be ("Hello ScalaTest")
     }
   }
-  
+
   describe("executeAsyncScript") {
     it("should execute the passed JavaScript with asynchronous call") {
       go to (host + "index.html")
@@ -814,7 +814,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       go to (host + "index.html")
       pageTitle should be ("Test Title")
     }
-    
+
     it("should go to web page by using Page and get its title correctly.") {
       class RadioPage extends Page {
         val url = host + "radio.html"
@@ -828,7 +828,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       go to (host + "textfield.html")
       pageTitle should be ("Text Field")
 
-      textField("text1").value should be ("")                   
+      textField("text1").value should be ("")
                                                                 // textField("text1") should have ('value(""), 'attribute(""))
       textField("text1").attribute("value") should be (Some(""))           // textField("text1").attribute("value") should be ("")    // ok as is
       textField("text1").value = "value 1"                          // set textField "text1" to "value 1"
@@ -841,12 +841,12 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       textField("text2").value should be ("value 2")
       textField("text2").attribute("value") should be (Some("value 2"))
     }
-    
+
     it("should get and set password field value correctly.", Slow) {
       go to (host + "pwdfield.html")
       pageTitle should be ("Password Field")
 
-      pwdField("secret1").value should be ("")                   
+      pwdField("secret1").value should be ("")
 
       pwdField("secret1").attribute("value") should be (Some(""))
       pwdField("secret1").value = "value 1"
@@ -878,48 +878,48 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
 
       go to (host + "textfield.html")
       pageTitle should be ("Text Field")
-                                                                
-      textField("text1").value should be ("")                   
+
+      textField("text1").value should be ("")
 
       click on "text1"
       enter("value 1A")
-      textField("text1").value should be ("value 1A")                   
+      textField("text1").value should be ("value 1A")
       enter("value 1B")
-      textField("text1").value should be ("value 1B")                   
+      textField("text1").value should be ("value 1B")
       enter("")
-      textField("text1").value should be ("")                   
+      textField("text1").value should be ("")
 
       pressKeys("first post!")
-      textField("text1").value should be ("first post!")                   
+      textField("text1").value should be ("first post!")
       pressKeys(" second post!")
-      textField("text1").value should be ("first post! second post!")                   
+      textField("text1").value should be ("first post! second post!")
       pressKeys(" third post!")
-      textField("text1").value should be ("first post! second post! third post!")                   
+      textField("text1").value should be ("first post! second post! third post!")
     }
-    
+
     it("should allow text to be entered in the active element if it is a password field.") {
 
       go to (host + "pwdfield.html")
       pageTitle should be ("Password Field")
-                                                                
-      pwdField("secret1").value should be ("")                   
+
+      pwdField("secret1").value should be ("")
 
       click on "secret1"
       enter("secret 1A")
-      pwdField("secret1").value should be ("secret 1A")                   
+      pwdField("secret1").value should be ("secret 1A")
       enter("secret 1B")
-      pwdField("secret1").value should be ("secret 1B")                   
+      pwdField("secret1").value should be ("secret 1B")
       enter("")
-      pwdField("secret1").value should be ("")                   
+      pwdField("secret1").value should be ("")
 
       pressKeys("first secret!")
-      pwdField("secret1").value should be ("first secret!")                   
+      pwdField("secret1").value should be ("first secret!")
       pressKeys(" second secret!")
-      pwdField("secret1").value should be ("first secret! second secret!")                   
+      pwdField("secret1").value should be ("first secret! second secret!")
       pressKeys(" third secret!")
-      pwdField("secret1").value should be ("first secret! second secret! third secret!")                   
+      pwdField("secret1").value should be ("first secret! second secret! third secret!")
     }
-    
+
     it should behave like enterField[EmailField]("emailfield.html", emailField _, "EmailField", "email2")
     it should behave like enterField[SearchField]("searchfield.html", searchField _, "SearchField", "search2")
     it should behave like enterField[TelField]("telfield.html", telField _, "TelField", "tel2")
@@ -928,45 +928,45 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
     it("should allow text to be entered in the active element if it is a email field.") {
       go to (host + "emailfield.html")
       pageTitle should be ("EmailField")
-                                                                
-      emailField("secret1").value should be ("")                   
+
+      emailField("secret1").value should be ("")
 
       click on "secret1"
       enter("secret 1A")
-      emailField("secret1").value should be ("secret 1A")                   
+      emailField("secret1").value should be ("secret 1A")
       enter("secret 1B")
-      emailField("secret1").value should be ("secret 1B")                   
+      emailField("secret1").value should be ("secret 1B")
       enter("")
-      emailField("secret1").value should be ("")                   
+      emailField("secret1").value should be ("")
 
       pressKeys("first secret!")
-      emailField("secret1").value should be ("first secret!")                   
+      emailField("secret1").value should be ("first secret!")
       pressKeys(" second secret!")
-      emailField("secret1").value should be ("first secret! second secret!")                   
+      emailField("secret1").value should be ("first secret! second secret!")
       pressKeys(" third secret!")
-      emailField("secret1").value should be ("first secret! second secret! third secret!")                   
+      emailField("secret1").value should be ("first secret! second secret! third secret!")
     }
 
     it("should allow text to be entered in the active element if it is a search field.") {
       go to (host + "searchfield.html")
       pageTitle should be ("SearchField")
-                                                                
-      searchField("secret1").value should be ("")                   
+
+      searchField("secret1").value should be ("")
 
       click on "secret1"
       enter("secret 1A")
-      searchField("secret1").value should be ("secret 1A")                   
+      searchField("secret1").value should be ("secret 1A")
       enter("secret 1B")
-      searchField("secret1").value should be ("secret 1B")                   
+      searchField("secret1").value should be ("secret 1B")
       enter("")
-      searchField("secret1").value should be ("")                   
+      searchField("secret1").value should be ("")
 
       pressKeys("first secret!")
-      searchField("secret1").value should be ("first secret!")                   
+      searchField("secret1").value should be ("first secret!")
       pressKeys(" second secret!")
-      searchField("secret1").value should be ("first secret! second secret!")                   
+      searchField("secret1").value should be ("first secret! second secret!")
       pressKeys(" third secret!")
-      searchField("secret1").value should be ("first secret! second secret! third secret!")                   
+      searchField("secret1").value should be ("first secret! second secret! third secret!")
     }
 
     it("should throw TestFailedException with correct stack depth when enter is called currently selected element is neither text field, text area, password field, email field, search field, tel field, or url field.") {
@@ -982,59 +982,59 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
     it("should clear a text field.") {
       go to (host + "textfield.html")
       pageTitle should be ("Text Field")
-                                                                
-      textField("text1").value = "value 1"                     
+
+      textField("text1").value = "value 1"
       textField("text1").value should be ("value 1")
 
       textField("text1").clear()
-      textField("text1").value should be ("")                   
+      textField("text1").value should be ("")
 
-      textField("text1").value = "value 1"                     
+      textField("text1").value = "value 1"
       textField("text1").value should be ("value 1")
     }
- 
+
     it("should get and set text area value correctly.", Slow) {
       go to (host + "textarea.html")
       pageTitle should be ("Text Area")
-      
+
       textArea("area1").value should be ("")
       textArea("area1").attribute("value") should be (Some(""))
       textArea("area1").value = "area 1 - line 1\narea 1 - line 2"
       textArea("area1").value should be ("area 1 - line 1\narea 1 - line 2")
       textArea("area1").attribute("value") should be (Some("area 1 - line 1\narea 1 - line 2"))
-      
+
       textArea("area2").value should be ("")
       textArea("area2").attribute("value") should be (Some(""))
       textArea("area2").value = "area 2 - line 1\narea 2 - line 2"
       textArea("area2").value should be ("area 2 - line 1\narea 2 - line 2")
       textArea("area2").attribute("value") should be (Some("area 2 - line 1\narea 2 - line 2"))
     }
-    
+
     it("should clear a text area.") {
       go to (host + "textarea.html")
       pageTitle should be ("Text Area")
-      
+
       textArea("area1").value = "area 1 - line 1\narea 1 - line 2"
       textArea("area1").value should be ("area 1 - line 1\narea 1 - line 2")
 
       textArea("area1").clear()
       textArea("area1").value should be ("")
     }
-    
+
     it("should clear a password field.") {
       go to (host + "pwdfield.html")
       pageTitle should be ("Password Field")
-                                                                
-      pwdField("secret1").value = "value 1"                     
+
+      pwdField("secret1").value = "value 1"
       pwdField("secret1").value should be ("value 1")
 
       pwdField("secret1").clear()
-      pwdField("secret1").value should be ("")                   
+      pwdField("secret1").value should be ("")
 
-      pwdField("secret1").value = "value 1"                     
+      pwdField("secret1").value = "value 1"
       pwdField("secret1").value should be ("value 1")
     }
-    
+
 
     it should behave like clearField[EmailField]("emailfield.html", emailField _, "EmailField", "email", "value 1")
     it should behave like clearField[ColorField]("colorfield.html", colorField _, "ColorField", "color", "#656565")
@@ -1053,44 +1053,44 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
     it("should allow text to be entered in the active element if it is a text area.") {
       go to (host + "textarea.html")
       pageTitle should be ("Text Area")
-      
+
       textArea("area1").value should be ("")
 
       click on "area1"
       enter("area 1 - line 1\narea 1 - line 2")
-      textArea("area1").value should be ("area 1 - line 1\narea 1 - line 2")                   
+      textArea("area1").value should be ("area 1 - line 1\narea 1 - line 2")
       enter("area 1 - line 0\narea 1 - line 1\narea 1 - line 2")
-      textArea("area1").value should be ("area 1 - line 0\narea 1 - line 1\narea 1 - line 2")                   
+      textArea("area1").value should be ("area 1 - line 0\narea 1 - line 1\narea 1 - line 2")
       enter("")
-      textArea("area1").value should be ("")                   
+      textArea("area1").value should be ("")
 
       pressKeys("line 1\n")
-      textArea("area1").value should be ("line 1\n")                   
+      textArea("area1").value should be ("line 1\n")
       pressKeys("line 2")
-      textArea("area1").value should be ("line 1\nline 2")                   
+      textArea("area1").value should be ("line 1\nline 2")
       pressKeys("b or not 2b")
-      textArea("area1").value should be ("line 1\nline 2b or not 2b")                   
+      textArea("area1").value should be ("line 1\nline 2b or not 2b")
     }
-    
+
     it("should get and set radio button group correctly.") {
       go to (host + "radio.html")
       pageTitle should be ("Radio Button")
-      
+
       radioButtonGroup("group1").selection should be (None)
       intercept[TestFailedException] {
         radioButtonGroup("group1").value
       }
-      
+
       radioButtonGroup("group1").value = "Option 1"
       radioButtonGroup("group1").value should be ("Option 1")
-      
+
       radioButtonGroup("group1").value = "Option 2"
       radioButtonGroup("group1").value should be ("Option 2")
-      
+
       radioButtonGroup("group1").value = "Option 3"
       radioButtonGroup("group1").value should be ("Option 3")
     }
-    
+
     it("should fail with TestFailedException with correct stack depth and cause when invalid value is set") {
       go to (host + "radio.html")
       val e = intercept[org.scalatest.exceptions.TestFailedException] {
@@ -1099,17 +1099,17 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       e.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
       e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
     }
-    
+
     it("should read, select and clear check box correctly.") {
       go to (host + "checkbox.html")
       pageTitle should be ("Check Box")
-      
+
       checkbox("opt1").isSelected should be (false)
       checkbox("opt1").select()
       checkbox("opt1").isSelected should be (true)
       checkbox("opt1").clear()
       checkbox("opt1").isSelected should be (false)
-      
+
       checkbox("opt2").isSelected should be (false)
       checkbox("opt2").select()
       checkbox("opt2").isSelected should be (true)
@@ -1120,7 +1120,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
     it("should read, select and clear dropdown list (select) correctly.", Slow) {
       go to (host + "select.html")
       pageTitle should be ("Select")
-      
+
       singleSel("select1").value should be ("option1")
       singleSel("select1").value = "option2"
       singleSel("select1").value should be ("option2")
@@ -1131,7 +1131,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       intercept[TestFailedException] {
         singleSel("select1").value = "other"
       }
-      
+
       // No options selected
       // multiSel("select2").selections should be (None)
       multiSel("select2").values should have size 0
@@ -1159,7 +1159,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       multiSel("select2").clearAll()
       // multiSel("select2").selections should be (None)
       multiSel("select2").values should have size 0
-      
+
       // Test the alternative way to clear
       multiSel("select2").values += "option6"
       multiSel("select2").values should have size 1
@@ -1168,21 +1168,21 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       // multiSel("select2").selections should be (None)
       multiSel("select2").values should have size 0
     }
-    
+
     it("should submit form when submit is called on form's element.") {
       go to (host + "submit.html")
       pageTitle should be ("Submit")
-      
+
       click on "name" // This set the focus
       textField("name").value = "Penguin"
       submit()
       // submit (name("name")) // This will work as well.
     }
-    
+
     it("should throw TestFailedException with correct stack depth when submit is called on none form's element") {
       go to (host + "submit.html")
       pageTitle should be ("Submit")
-      
+
       val e = intercept[TestFailedException] {
         click on "not_form_element" // This set the focus
         textField("not_form_element").value = "Penguin"
@@ -1191,15 +1191,15 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       e.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
       e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
     }
-    
+
     it("should submit form when submit button is clicked.") {
       go to (host + "submit.html")
       pageTitle should be ("Submit")
-      
+
       textField("name").value = "Penguin"
       click on "submitButton"
     }
-    
+
     it("should navigate to, back, forward and refresh correctly") {
       go to (host + "navigate1.html")
       pageTitle should be ("Navigation 1")
@@ -1216,7 +1216,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       // click submit button
       pageTitle should be ("Navigation 2")
     }
-    
+
     it("should support goBack, goForward and reloadPage correctly") {
       go to (host + "navigate1.html")
       pageTitle should be ("Navigation 1")
@@ -1229,19 +1229,19 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       reloadPage()
       pageTitle should be ("Navigation 2")
     }
-    
+
     it("should create, read and delete cookie correctly") {
       go to (host + "index.html")
-      
+
       add cookie("name1", "value1")
       cookie("name1").value should be ("value1")
-      
+
       add cookie("name2", "value2")
       cookie("name2").value should be ("value2")
-      
+
       add cookie("name3", "value3")
       cookie("name3").value should be ("value3")
-      
+
       delete cookie "name2"
       val e1 = intercept[TestFailedException] {
         cookie("name2") should be (null)
@@ -1250,39 +1250,39 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       e1.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
       cookie("name1").value should be ("value1")
       cookie("name3").value should be ("value3")
-      
+
       delete all cookies
       val e2 = intercept[TestFailedException] {
         cookie("name1") should be (null)
       }
       e2.failedCodeLineNumber should be (Some(thisLineNumber - 2))
       e2.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
-      
+
       val e3 = intercept[TestFailedException] {
         cookie("name3") should be (null)
       }
       e3.failedCodeLineNumber should be (Some(thisLineNumber - 2))
       e3.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
-      
+
       val e4 = intercept[TestFailedException] {
         delete cookie ("name1")
       }
       e4.failedCodeLineNumber should be (Some(thisLineNumber - 2))
       e4.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
     }
-    
+
     it("should create, read and delete cookie correctly using libraryish alternatives") {
       goTo(host + "index.html")
-      
+
       addCookie("name1", "value1")
       cookie("name1").value should be ("value1")
-      
+
       addCookie("name2", "value2")
       cookie("name2").value should be ("value2")
-      
+
       addCookie("name3", "value3")
       cookie("name3").value should be ("value3")
-      
+
       deleteCookie("name2")
       val e1 = intercept[TestFailedException] {
         cookie("name2") should be (null)  // TODO: This should throw a TFE not return null
@@ -1291,31 +1291,31 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       e1.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
       cookie("name1").value should be ("value1")
       cookie("name3").value should be ("value3")
-      
+
       deleteAllCookies()
       val e2 = intercept[TestFailedException] {
         cookie("name1") should be (null)
       }
       e2.failedCodeLineNumber should be (Some(thisLineNumber - 2))
       e2.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
-      
+
       val e3 = intercept[TestFailedException] {
         cookie("name3") should be (null)
       }
       e3.failedCodeLineNumber should be (Some(thisLineNumber - 2))
       e3.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
-      
+
       val e4 = intercept[TestFailedException] {
         deleteCookie("name1")
       }
       e4.failedCodeLineNumber should be (Some(thisLineNumber - 2))
       e4.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
     }
-    
+
     it("should support implicitlyWait method") {
       implicitlyWait(Span(2, Seconds))
     }
-  
+
     it("should support capturing screenshot", Slow) {
       go to "http://www.artima.com"
       try {
@@ -1324,32 +1324,32 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
         captureTo("MyScreenShot2.png")
       }
       catch {
-        case unsupported: UnsupportedOperationException => 
+        case unsupported: UnsupportedOperationException =>
           cancel(unsupported)
       }
     }
-    
+
     it("should support setting capture target directory", Slow) {
       go to "http://www.artima.com"
       val tempDir = new File(System.getProperty("java.io.tmpdir"))
       val targetDir1 = new File(tempDir, "scalatest-test-target1")
       val targetDir2 = new File(tempDir, "scalatest-test-target2")
-      
+
       try {
         setCaptureDir(targetDir1.getAbsolutePath)
         capture to ("MyScreenShot.png")
         new File(targetDir1, "MyScreenShot.png").exists should be (true)
-        
+
         setCaptureDir(targetDir2.getAbsolutePath)
         captureTo("MyScreenShot2.png")
         new File(targetDir2, "MyScreenShot2.png").exists should be (true)
       }
       catch {
-        case unsupported: UnsupportedOperationException => 
+        case unsupported: UnsupportedOperationException =>
           cancel(unsupported)
       }
     }
-    
+
     it("isScreenshotSupported should return false for HtmlUnitDriver") {
       val driver = try new HtmlUnitDriver catch { case e: Throwable => cancel(e) }
       try isScreenshotSupported(driver) should be (false)
@@ -1367,8 +1367,8 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       try isScreenshotSupported(driver) should be (true)
       finally close()(driver)
     }
-  
-    /* Safari is blowing up on Bill's Mac leaving windows open and hanging for 
+
+    /* Safari is blowing up on Bill's Mac leaving windows open and hanging for
        a long time before finally giving up. Get:
        [scalatest] Aug 3, 2012 4:39:18 AM org.openqa.selenium.safari.SafariDriverServer start
        [scalatest] INFO: Server started at http://Mi-Novia.local:38801/
@@ -1383,36 +1383,36 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       try isScreenshotSupported(driver) should be (true)
       finally close()(driver)
     }
-  
+
     it("isScreenshotSupported should return true for ChromeDriver") {
       val driver = try new ChromeDriver catch { case e: Throwable => cancel(e) }
       try isScreenshotSupported(driver) should be (true)
       finally close()(driver)
     }
-  
+
     it("isScreenshotSupported should return true for InternetExplorerDriver") {
       val driver = try new InternetExplorerDriver catch { case e: Throwable => cancel(e) }
       try isScreenshotSupported(driver) should be (true)
       finally close()(driver)
     }
-  
+
 /*
     ignore("should support wait method") {
       // This example is taken from http://seleniumhq.org/docs/03_webdriver.html
-  
+
       // Visit Google
       go to "http://www.google.com"
       // Alternatively the same thing can be done like this
       // navigate to "http://www.google.com"
 
-      // Click on the text input element by its name 
+      // Click on the text input element by its name
       click on "q"
       // and enter "Cheese!"
       textField("q").value = "Cheese!"
 
       // Now submit the form
       submit()
-        
+
       // Google's search is rendered dynamically with JavaScript.
       // Wait for the page to load, timeout after 10 seconds
       wait[Boolean](Span(10, Seconds)) {
@@ -1423,7 +1423,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       pageTitle should be ("Cheese! - Google Search")
     }
 */
- 
+
     ignore("should be able to use ScalaTest's eventually in place of Selenium's wait") {
       import org.scalatest.concurrent.Eventually._
 
@@ -1431,14 +1431,14 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       click on "q"
       textField("q").value = "Cheese!"
       submit()
-      
+
       eventually(timeout(10 seconds)) {
         pageTitle.toLowerCase.startsWith("cheese!") should be (true)
       }
-      
+
       pageTitle should be ("Cheese! - Google Search")
     }
-        
+
     // Some operation not supported in HtmlUnit driver, e.g. switch to alertBox.
     // Should be good enough to test the following dsl compiles.
     ignore("should support switch to") {
@@ -1451,7 +1451,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       switch to frame(name("name").element)
       switch to window(windowHandle)
     }
-    
+
     ignore("should support switchTo") {
       switchTo(activeElement)
       switchTo(alertBox)
@@ -1463,14 +1463,14 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       switchTo(window(windowHandle))
     }
   }
-  
+
   describe("WrappedCookie") {
     it("should wrap null expiry in an option") {
       val cookie = new WrappedCookie(new Cookie("name", "value", "path", null))
       cookie.expiry should be (None)
     }
   }
-  
+
   describe("goTo") {
     it("should go to given url correctly") {
       goTo(host + "index.html")
@@ -1493,7 +1493,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       pageTitle should be ("Text Field")
     }
   }
-  
+
   describe("clickOn") {
     it("should throw TFE with valid stack depth if specified item not found", Slow) {
       go to (host + "index.html")
@@ -1525,7 +1525,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       clickOn(webElement)
     }
   }
-  
+
   describe("Query") {
     describe("id") {
       it("should return Element correctly when element method is called with valid id") {
@@ -1578,7 +1578,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
         itr.hasNext should be (false)
       }
     }
-    
+
     describe("name") {
       it("should return Element correctly when element method is called with valid name") {
         go to (host + "click.html")
@@ -1630,7 +1630,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
         itr.hasNext should be (false)
       }
     }
-    
+
     describe("xpath") {
       it("should return Element correctly when element method is called with valid xpath") {
         go to (host + "click.html")
@@ -1682,7 +1682,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
         itr.hasNext should be (false)
       }
     }
-    
+
     describe("className") {
       it("should return Element correctly when element method is called with valid className") {
         go to (host + "click.html")
@@ -1734,7 +1734,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
         itr.hasNext should be (false)
       }
     }
-    
+
     describe("cssSelector") {
       it("should return Element correctly when element method is called with valid cssSelector") {
         go to (host + "click.html")
@@ -1786,7 +1786,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
         itr.hasNext should be (false)
       }
     }
-    
+
     describe("linkText") {
       it("should return Element correctly when element method is called with valid linkText") {
         go to (host + "click.html")
@@ -1838,7 +1838,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
         itr.hasNext should be (false)
       }
     }
-    
+
     describe("partialLinkText") {
       it("should return Element correctly when element method is called with valid partialLinkText") {
         go to (host + "click.html")
@@ -1890,7 +1890,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
         itr.hasNext should be (false)
       }
     }
-    
+
     describe("tagname") {
       it("should return Element correctly when element method is called with valid tagname") {
         go to (host + "click.html")
@@ -1943,7 +1943,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       }
     }
   }
-  
+
   describe("switchTo") {
     it("should switch frame correctly and throw TFE with valid stack depth if specified frame not found", Slow) {
       goTo(host + "frame.html")
@@ -1951,35 +1951,35 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       switchTo(frame("frame1"))
       switchTo(window(win))
       switchTo(frame("frame2"))
-      
+
       switchTo(window(win))
       switchTo(frame(0))
       switchTo(window(win))
       switchTo(frame(1))
-      
+
       switchTo(window(win))
       switchTo(frame(id("frame1")))
       switchTo(window(win))
       switchTo(frame(id("frame2")))
-      
+
       switchTo(window(win))
       switchTo(frame(id("frame1").element))
       switchTo(window(win))
       switchTo(frame(id("frame2").element))
-      
+
       switchTo(window(win))
       val caught1= intercept[TestFailedException] {
         switchTo(frame("frame3"))
       }
       caught1.failedCodeLineNumber should be (Some(thisLineNumber - 2))
       caught1.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
-      
+
       val caught2 = intercept[TestFailedException] {
         switch to frame(2)
       }
       caught2.failedCodeLineNumber should be (Some(thisLineNumber - 2))
       caught2.failedCodeFileName should be (Some("WebBrowserSpec.scala"))
-      
+
       val caught3 = intercept[TestFailedException] {
         switch to frame(id("text1"))
       }
@@ -2030,7 +2030,7 @@ class WebBrowserSpec extends JettySpec with Matchers with SpanSugar with WebBrow
       """ should compile
     }
   }
-  
+
   def thisLineNumber = {
     val st = Thread.currentThread.getStackTrace
 

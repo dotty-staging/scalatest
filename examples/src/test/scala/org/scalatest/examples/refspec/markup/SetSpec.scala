@@ -18,9 +18,9 @@ package org.scalatest.examples.refspec.markup
 import org.scalatest._
 import refspec.RefSpec
 import collection.mutable
- 
+
 class SetSpec extends RefSpec with GivenWhenThen {
-  
+
   markup { """
 
 Mutable Set

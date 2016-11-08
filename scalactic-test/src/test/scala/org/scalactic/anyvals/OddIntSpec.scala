@@ -19,7 +19,7 @@ package org.scalactic.anyvals
 
 // Uncomment this test once we get the OddIntMacro
 // defined in an earlier compilation run.
-/* 
+/*
 class OddIntSpec extends RefSpec with Matchers {
   object `An OddInt` {
     object `should offer a from factory method that` {

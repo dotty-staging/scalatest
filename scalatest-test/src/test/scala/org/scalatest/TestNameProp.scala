@@ -50,16 +50,16 @@ class TestNameProp  extends AllSuiteProp {
   def fixtureWordSpec = new ExampleTestNameFixtureWordSpec
   def pathFreeSpec = new ExampleTestNamePathFreeSpec
   def pathFunSpec = new ExampleTestNamePathFunSpec
-  
+
   test("test name will be constructed by concatennating scopes, outer to inner, followed by the test text, separated by a space after each component is trimmed.") {
     forAll(examples) { s => s.assertTestNames() }
   }
-  
+
 }
 
 trait TestNameFixtureServices { suite: Suite =>
   val expectedTestNames: Set[String]
-  
+
   def assertTestNames(): Unit = {
     val expectedSet = expectedTestNames
     val testNameSet = testNames
@@ -73,68 +73,68 @@ trait TestNameFixtureServices { suite: Suite =>
 // SKIP-SCALATESTJS-START
 @DoNotDiscover
 class ExampleTestNameSpec extends RefSpec with TestNameFixtureServices {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Testing 1 Scala code should be fun", 
-     "Testing 2 Scala code should be fun", 
-     "Testing 3 Scala code should be fun", 
-     "Testing 4 Scala code should be fun", 
-     "Testing 5 Scala code should be fun", 
-     "Testing 6 Scala code should be fun", 
-     "Testing 7 Scala code should be fun", 
-     "Testing 8 Scala code should be fun", 
+     "Testing 1 Scala code should be fun",
+     "Testing 2 Scala code should be fun",
+     "Testing 3 Scala code should be fun",
+     "Testing 4 Scala code should be fun",
+     "Testing 5 Scala code should be fun",
+     "Testing 6 Scala code should be fun",
+     "Testing 7 Scala code should be fun",
+     "Testing 8 Scala code should be fun",
      "Testing 9 Scala code should be fun"
     )
-  
-  object `Testing 1` { 
+
+  object `Testing 1` {
     object `Scala code` {
       def `should be fun`: Unit = {}
     }
   }
 
-  object `Testing 2 ` { 
+  object `Testing 2 ` {
     object `Scala code` {
       def `should be fun`: Unit = {}
     }
   }
 
-  object `Testing 3` { 
+  object `Testing 3` {
     object ` Scala code` {
       def `should be fun`: Unit = {}
     }
   }
 
-  object `Testing 4` { 
+  object `Testing 4` {
     object `Scala code ` {
       def `should be fun`: Unit = {}
     }
   }
 
-  object `Testing 5` { 
+  object `Testing 5` {
     object `Scala code` {
       def ` should be fun`: Unit = {}
     }
   }
 
-  object ` Testing 6` { 
+  object ` Testing 6` {
     object `Scala code` {
       def `should be fun`: Unit = {}
     }
   }
 
-  object `Testing 7` { 
+  object `Testing 7` {
     object `Scala code` {
       def `should be fun `: Unit = {}
     }
   }
 
-  object `Testing 8 ` { 
+  object `Testing 8 ` {
     object ` Scala code` {
       def `should be fun`: Unit = {}
     }
   }
 
-  object `Testing 9  ` { 
+  object `Testing 9  ` {
     object `Scala code` {
       def `should be fun`: Unit = {}
     }
@@ -143,69 +143,69 @@ class ExampleTestNameSpec extends RefSpec with TestNameFixtureServices {
 
 @DoNotDiscover
 class ExampleTestNameFixtureSpec extends fixture.Spec with TestNameFixtureServices with StringFixture {
-  
-  val expectedTestNames = 
+
+  val expectedTestNames =
     Set(
-     "Testing 1 Scala code should be fun", 
-     "Testing 2 Scala code should be fun", 
-     "Testing 3 Scala code should be fun", 
-     "Testing 4 Scala code should be fun", 
-     "Testing 5 Scala code should be fun", 
-     "Testing 6 Scala code should be fun", 
-     "Testing 7 Scala code should be fun", 
-     "Testing 8 Scala code should be fun", 
+     "Testing 1 Scala code should be fun",
+     "Testing 2 Scala code should be fun",
+     "Testing 3 Scala code should be fun",
+     "Testing 4 Scala code should be fun",
+     "Testing 5 Scala code should be fun",
+     "Testing 6 Scala code should be fun",
+     "Testing 7 Scala code should be fun",
+     "Testing 8 Scala code should be fun",
      "Testing 9 Scala code should be fun"
     )
-  
-  object `Testing 1` { 
+
+  object `Testing 1` {
     object `Scala code` {
       def `should be fun`(fixture: String): Unit = {}
     }
   }
 
-  object `Testing 2 ` { 
+  object `Testing 2 ` {
     object `Scala code` {
       def `should be fun`(fixture: String): Unit = {}
     }
   }
 
-  object `Testing 3` { 
+  object `Testing 3` {
     object ` Scala code` {
       def `should be fun`(fixture: String): Unit = {}
     }
   }
 
-  object `Testing 4` { 
+  object `Testing 4` {
     object `Scala code ` {
       def `should be fun`(fixture: String): Unit = {}
     }
   }
 
-  object `Testing 5` { 
+  object `Testing 5` {
     object `Scala code` {
       def ` should be fun`(fixture: String): Unit = {}
     }
   }
 
-  object ` Testing 6` { 
+  object ` Testing 6` {
     object `Scala code` {
       def `should be fun`(fixture: String): Unit = {}
     }
   }
 
-  object `Testing 7` { 
+  object `Testing 7` {
     object `Scala code` {
       def `should be fun `(fixture: String): Unit = {}
     }
   }
 
-  object `Testing 8 ` {  
+  object `Testing 8 ` {
     object ` Scala code` {
       def `should be fun`(fixture: String): Unit = {}
     }
   }
 
-  object `Testing 9  ` {  
+  object `Testing 9  ` {
     object `Scala code` {
       def `should be fun`(fixture: String): Unit = {}
     }
@@ -214,35 +214,35 @@ class ExampleTestNameFixtureSpec extends fixture.Spec with TestNameFixtureServic
 
 @DoNotDiscover
 class ExampleTestNameJUnit3Suite extends JUnit3Suite with TestNameFixtureServices {
-  
-  val expectedTestNames = 
+
+  val expectedTestNames =
     Set(
-     "testingShouldBeFun"     
+     "testingShouldBeFun"
     )
-    
+
   def testingShouldBeFun(): Unit = { }
 }
 
 @DoNotDiscover
 class ExampleTestNameJUnitSuite extends JUnitSuite with TestNameFixtureServices {
-  
-  val expectedTestNames = 
+
+  val expectedTestNames =
     Set(
-     "testingShouldBeFun"     
+     "testingShouldBeFun"
     )
-  
+
   @Test
   def testingShouldBeFun(): Unit = {}
 }
 
 @DoNotDiscover
 class ExampleTestNameTestNGSuite extends TestNGSuite with TestNameFixtureServices {
-  
-  val expectedTestNames = 
+
+  val expectedTestNames =
     Set(
-     "testingShouldBeFun"     
+     "testingShouldBeFun"
     )
-  
+
   @TestNG
   def testingShouldBeFun(): Unit = {}
 }
@@ -250,16 +250,16 @@ class ExampleTestNameTestNGSuite extends TestNGSuite with TestNameFixtureService
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFunSuite extends FunSuite with TestNameFixtureServices {
-  
-  val expectedTestNames = 
+
+  val expectedTestNames =
     Set(
      "Testing 1 should be fun",
      "Testing 2 should be fun",
      "Testing 3 should be fun",
      "Testing 4 should be fun",
-     "Testing 5 should be fun"     
+     "Testing 5 should be fun"
     )
-  
+
   test("Testing 1 should be fun") {}
   test(" Testing 2 should be fun") {}
   test("Testing 3 should be fun ") {}
@@ -269,16 +269,16 @@ protected[scalatest] class ExampleTestNameFunSuite extends FunSuite with TestNam
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFixtureFunSuite extends fixture.FunSuite with TestNameFixtureServices with StringFixture {
-  
-  val expectedTestNames = 
+
+  val expectedTestNames =
     Set(
      "Testing 1 should be fun",
      "Testing 2 should be fun",
      "Testing 3 should be fun",
      "Testing 4 should be fun",
-     "Testing 5 should be fun"     
+     "Testing 5 should be fun"
     )
-  
+
   test("Testing 1 should be fun") { s => }
   test(" Testing 2 should be fun") { s => }
   test("Testing 3 should be fun ") { s => }
@@ -288,68 +288,68 @@ protected[scalatest] class ExampleTestNameFixtureFunSuite extends fixture.FunSui
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFunSpec extends FunSpec with TestNameFixtureServices {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Testing 1 Scala code should be fun", 
-     "Testing 2 Scala code should be fun", 
-     "Testing 3 Scala code should be fun", 
-     "Testing 4 Scala code should be fun", 
-     "Testing 5 Scala code should be fun", 
-     "Testing 6 Scala code should be fun", 
-     "Testing 7 Scala code should be fun", 
-     "Testing 8 Scala code should be fun", 
+     "Testing 1 Scala code should be fun",
+     "Testing 2 Scala code should be fun",
+     "Testing 3 Scala code should be fun",
+     "Testing 4 Scala code should be fun",
+     "Testing 5 Scala code should be fun",
+     "Testing 6 Scala code should be fun",
+     "Testing 7 Scala code should be fun",
+     "Testing 8 Scala code should be fun",
      "Testing 9 Scala code should be fun"
     )
-  
-  describe("Testing 1") { 
+
+  describe("Testing 1") {
     describe("Scala code") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 2 ") { 
+  describe("Testing 2 ") {
     describe("Scala code") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 3") { 
+  describe("Testing 3") {
     describe(" Scala code") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 4") { 
+  describe("Testing 4") {
     describe("Scala code ") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 5") { 
+  describe("Testing 5") {
     describe("Scala code") {
       it(" should be fun") {}
     }
   }
 
-  describe(" Testing 6") { 
+  describe(" Testing 6") {
     describe("Scala code") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 7") { 
+  describe("Testing 7") {
     describe("Scala code") {
       it("should be fun ") {}
     }
   }
 
-  describe("Testing 8 ") {  
+  describe("Testing 8 ") {
     describe(" Scala code") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 9  ") {  
+  describe("Testing 9  ") {
     describe("Scala code") {
       it("should be fun") {}
     }
@@ -358,68 +358,68 @@ protected[scalatest] class ExampleTestNameFunSpec extends FunSpec with TestNameF
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFixtureFunSpec extends fixture.FunSpec with TestNameFixtureServices with StringFixture {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Testing 1 Scala code should be fun", 
-     "Testing 2 Scala code should be fun", 
-     "Testing 3 Scala code should be fun", 
-     "Testing 4 Scala code should be fun", 
-     "Testing 5 Scala code should be fun", 
-     "Testing 6 Scala code should be fun", 
-     "Testing 7 Scala code should be fun", 
-     "Testing 8 Scala code should be fun", 
+     "Testing 1 Scala code should be fun",
+     "Testing 2 Scala code should be fun",
+     "Testing 3 Scala code should be fun",
+     "Testing 4 Scala code should be fun",
+     "Testing 5 Scala code should be fun",
+     "Testing 6 Scala code should be fun",
+     "Testing 7 Scala code should be fun",
+     "Testing 8 Scala code should be fun",
      "Testing 9 Scala code should be fun"
     )
-  
-  describe("Testing 1") { 
+
+  describe("Testing 1") {
     describe("Scala code") {
       it("should be fun") { s => }
     }
   }
 
-  describe("Testing 2 ") { 
+  describe("Testing 2 ") {
     describe("Scala code") {
       it("should be fun") { s => }
     }
   }
 
-  describe("Testing 3") { 
+  describe("Testing 3") {
     describe(" Scala code") {
       it("should be fun") { s => }
     }
   }
 
-  describe("Testing 4") { 
+  describe("Testing 4") {
     describe("Scala code ") {
       it("should be fun") { s => }
     }
   }
 
-  describe("Testing 5") { 
+  describe("Testing 5") {
     describe("Scala code") {
       it(" should be fun") { s => }
     }
   }
 
-  describe(" Testing 6") { 
+  describe(" Testing 6") {
     describe("Scala code") {
       it("should be fun") { s => }
     }
   }
 
-  describe("Testing 7") { 
+  describe("Testing 7") {
     describe("Scala code") {
       it("should be fun ") { s => }
     }
   }
 
-  describe("Testing 8 ") { 
+  describe("Testing 8 ") {
     describe(" Scala code") {
       it("should be fun") { s => }
     }
   }
 
-  describe("Testing 9  ") { 
+  describe("Testing 9  ") {
     describe("Scala code") {
       it("should be fun") { s => }
     }
@@ -428,223 +428,223 @@ protected[scalatest] class ExampleTestNameFixtureFunSpec extends fixture.FunSpec
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFeatureSpec extends FeatureSpec with TestNameFixtureServices {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Feature: Testing 1 Scenario: Scala code should be fun", 
-     "Feature: Testing 2 Scenario: Scala code should be fun", 
-     "Feature: Testing 3 Scenario: Scala code should be fun", 
-     "Feature: Testing 4 Scenario: Scala code should be fun", 
-     "Feature: Testing 5 Scenario: Scala code should be fun", 
-     "Feature: Testing 6 Scenario: Scala code should be fun", 
+     "Feature: Testing 1 Scenario: Scala code should be fun",
+     "Feature: Testing 2 Scenario: Scala code should be fun",
+     "Feature: Testing 3 Scenario: Scala code should be fun",
+     "Feature: Testing 4 Scenario: Scala code should be fun",
+     "Feature: Testing 5 Scenario: Scala code should be fun",
+     "Feature: Testing 6 Scenario: Scala code should be fun",
      "Feature: Testing 7 Scenario: Scala code should be fun"
     )
-  
-  feature("Testing 1") { 
+
+  feature("Testing 1") {
     scenario("Scala code should be fun") {}
   }
 
-  feature("Testing 2 ") { 
+  feature("Testing 2 ") {
     scenario("Scala code should be fun") {}
   }
 
-  feature("Testing 3") { 
+  feature("Testing 3") {
     scenario(" Scala code should be fun") {}
   }
 
-  feature("Testing 4") { 
+  feature("Testing 4") {
     scenario("Scala code should be fun ") {}
   }
 
-  feature(" Testing 5") { 
+  feature(" Testing 5") {
     scenario("Scala code should be fun") {}
   }
 
-  feature("Testing 6 ") { 
+  feature("Testing 6 ") {
     scenario(" Scala code should be fun") {}
   }
 
-  feature("Testing 7  ") {  
+  feature("Testing 7  ") {
     scenario("Scala code should be fun") {}
   }
 }
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFixtureFeatureSpec extends fixture.FeatureSpec with TestNameFixtureServices with StringFixture {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Feature: Testing 1 Scenario: Scala code should be fun", 
-     "Feature: Testing 2 Scenario: Scala code should be fun", 
-     "Feature: Testing 3 Scenario: Scala code should be fun", 
-     "Feature: Testing 4 Scenario: Scala code should be fun", 
-     "Feature: Testing 5 Scenario: Scala code should be fun", 
-     "Feature: Testing 6 Scenario: Scala code should be fun", 
+     "Feature: Testing 1 Scenario: Scala code should be fun",
+     "Feature: Testing 2 Scenario: Scala code should be fun",
+     "Feature: Testing 3 Scenario: Scala code should be fun",
+     "Feature: Testing 4 Scenario: Scala code should be fun",
+     "Feature: Testing 5 Scenario: Scala code should be fun",
+     "Feature: Testing 6 Scenario: Scala code should be fun",
      "Feature: Testing 7 Scenario: Scala code should be fun"
     )
-  
-  feature("Testing 1") { 
+
+  feature("Testing 1") {
     scenario("Scala code should be fun") { s => }
   }
 
-  feature("Testing 2 ") { 
+  feature("Testing 2 ") {
     scenario("Scala code should be fun") { s => }
   }
 
-  feature("Testing 3") { 
+  feature("Testing 3") {
     scenario(" Scala code should be fun") { s => }
   }
 
-  feature("Testing 4") { 
+  feature("Testing 4") {
     scenario("Scala code should be fun ") { s => }
   }
 
-  feature(" Testing 5") { 
+  feature(" Testing 5") {
     scenario("Scala code should be fun") { s => }
   }
 
-  feature("Testing 6 ") { 
+  feature("Testing 6 ") {
     scenario(" Scala code should be fun") { s => }
   }
 
-  feature("Testing 7  ") { 
+  feature("Testing 7  ") {
     scenario("Scala code should be fun") { s => }
   }
 }
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFlatSpec extends FlatSpec with TestNameFixtureServices {
-  
-  val expectedTestNames = 
+
+  val expectedTestNames =
     Set(
-     "Testing 1 should be fun to code in Scala", 
-     "Testing 2 should be fun to code in Scala", 
-     "Testing 3 should be fun to code in Scala", 
-     "Testing 4 should be fun to code in Scala", 
-     "Testing 5 should be fun to code in Scala", 
-     "Testing 6 should be fun to code in Scala", 
+     "Testing 1 should be fun to code in Scala",
+     "Testing 2 should be fun to code in Scala",
+     "Testing 3 should be fun to code in Scala",
+     "Testing 4 should be fun to code in Scala",
+     "Testing 5 should be fun to code in Scala",
+     "Testing 6 should be fun to code in Scala",
      "Testing 7 should be fun to code in Scala"
     )
-  
-  "Testing 1" should "be fun to code in Scala" in { 
+
+  "Testing 1" should "be fun to code in Scala" in {
   }
 
-  "Testing 2 " should "be fun to code in Scala" in { 
+  "Testing 2 " should "be fun to code in Scala" in {
   }
 
-  "Testing 3" should " be fun to code in Scala" in { 
+  "Testing 3" should " be fun to code in Scala" in {
   }
 
-  "Testing 4" should "be fun to code in Scala " in { 
+  "Testing 4" should "be fun to code in Scala " in {
   }
 
-  " Testing 5" should "be fun to code in Scala" in { 
+  " Testing 5" should "be fun to code in Scala" in {
   }
 
-  "Testing 6 " should " be fun to code in Scala" in {  
+  "Testing 6 " should " be fun to code in Scala" in {
   }
 
-  "Testing 7  " should "be fun to code in Scala" in {  
+  "Testing 7  " should "be fun to code in Scala" in {
   }
 }
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFixtureFlatSpec extends fixture.FlatSpec with TestNameFixtureServices with StringFixture {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Testing 1 should be fun to code in Scala", 
-     "Testing 2 should be fun to code in Scala", 
-     "Testing 3 should be fun to code in Scala", 
-     "Testing 4 should be fun to code in Scala", 
-     "Testing 5 should be fun to code in Scala", 
-     "Testing 6 should be fun to code in Scala", 
+     "Testing 1 should be fun to code in Scala",
+     "Testing 2 should be fun to code in Scala",
+     "Testing 3 should be fun to code in Scala",
+     "Testing 4 should be fun to code in Scala",
+     "Testing 5 should be fun to code in Scala",
+     "Testing 6 should be fun to code in Scala",
      "Testing 7 should be fun to code in Scala"
     )
-  
-  "Testing 1" should "be fun to code in Scala" in { s => 
+
+  "Testing 1" should "be fun to code in Scala" in { s =>
   }
 
-  "Testing 2 " should "be fun to code in Scala" in { s => 
+  "Testing 2 " should "be fun to code in Scala" in { s =>
   }
 
-  "Testing 3" should " be fun to code in Scala" in { s => 
+  "Testing 3" should " be fun to code in Scala" in { s =>
   }
 
-  "Testing 4" should "be fun to code in Scala " in { s => 
+  "Testing 4" should "be fun to code in Scala " in { s =>
   }
 
-  " Testing 5" should "be fun to code in Scala" in { s => 
+  " Testing 5" should "be fun to code in Scala" in { s =>
   }
 
-  "Testing 6 " should " be fun to code in Scala" in { s =>  
+  "Testing 6 " should " be fun to code in Scala" in { s =>
   }
 
-  "Testing 7  " should "be fun to code in Scala" in { s =>  
+  "Testing 7  " should "be fun to code in Scala" in { s =>
   }
 }
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFreeSpec extends FreeSpec with TestNameFixtureServices {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Testing 1 Scala code should be fun", 
-     "Testing 2 Scala code should be fun", 
-     "Testing 3 Scala code should be fun", 
-     "Testing 4 Scala code should be fun", 
-     "Testing 5 Scala code should be fun", 
-     "Testing 6 Scala code should be fun", 
-     "Testing 7 Scala code should be fun", 
-     "Testing 8 Scala code should be fun", 
+     "Testing 1 Scala code should be fun",
+     "Testing 2 Scala code should be fun",
+     "Testing 3 Scala code should be fun",
+     "Testing 4 Scala code should be fun",
+     "Testing 5 Scala code should be fun",
+     "Testing 6 Scala code should be fun",
+     "Testing 7 Scala code should be fun",
+     "Testing 8 Scala code should be fun",
      "Testing 9 Scala code should be fun"
     )
-  
-  "Testing 1" - { 
+
+  "Testing 1" - {
     "Scala code" - {
       "should be fun" in {}
     }
   }
 
-  "Testing 2 " - { 
+  "Testing 2 " - {
     "Scala code" - {
       "should be fun" in {}
     }
   }
 
-  "Testing 3" - { 
+  "Testing 3" - {
     " Scala code" - {
       "should be fun" in {}
     }
   }
 
-  "Testing 4" - { 
+  "Testing 4" - {
     "Scala code " - {
       "should be fun" in {}
     }
   }
 
-  "Testing 5" - { 
+  "Testing 5" - {
     "Scala code" - {
       " should be fun" in {}
     }
   }
 
-  " Testing 6" - { 
+  " Testing 6" - {
     "Scala code" - {
       "should be fun" in {}
     }
   }
 
-  "Testing 7" - { 
+  "Testing 7" - {
     "Scala code" - {
       "should be fun " in {}
     }
   }
 
-  "Testing 8 " - { 
+  "Testing 8 " - {
     " Scala code" - {
       "should be fun" in {}
     }
   }
 
-  "Testing 9  " - { 
+  "Testing 9  " - {
     "Scala code" - {
       "should be fun" in {}
     }
@@ -653,68 +653,68 @@ protected[scalatest] class ExampleTestNameFreeSpec extends FreeSpec with TestNam
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFixtureFreeSpec extends fixture.FreeSpec with TestNameFixtureServices with StringFixture {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Testing 1 Scala code should be fun", 
-     "Testing 2 Scala code should be fun", 
-     "Testing 3 Scala code should be fun", 
-     "Testing 4 Scala code should be fun", 
-     "Testing 5 Scala code should be fun", 
-     "Testing 6 Scala code should be fun", 
-     "Testing 7 Scala code should be fun", 
-     "Testing 8 Scala code should be fun", 
+     "Testing 1 Scala code should be fun",
+     "Testing 2 Scala code should be fun",
+     "Testing 3 Scala code should be fun",
+     "Testing 4 Scala code should be fun",
+     "Testing 5 Scala code should be fun",
+     "Testing 6 Scala code should be fun",
+     "Testing 7 Scala code should be fun",
+     "Testing 8 Scala code should be fun",
      "Testing 9 Scala code should be fun"
     )
-  
-  "Testing 1" - { 
+
+  "Testing 1" - {
     "Scala code" - {
       "should be fun" in { s => }
     }
   }
 
-  "Testing 2 " - { 
+  "Testing 2 " - {
     "Scala code" - {
       "should be fun" in { s => }
     }
   }
 
-  "Testing 3" - { 
+  "Testing 3" - {
     " Scala code" - {
       "should be fun" in { s => }
     }
   }
 
-  "Testing 4" - { 
+  "Testing 4" - {
     "Scala code " - {
       "should be fun" in { s => }
     }
   }
 
-  "Testing 5" - { 
+  "Testing 5" - {
     "Scala code" - {
       " should be fun" in { s => }
     }
   }
 
-  " Testing 6" - { 
+  " Testing 6" - {
     "Scala code" - {
       "should be fun" in { s => }
     }
   }
 
-  "Testing 7" - { 
+  "Testing 7" - {
     "Scala code" - {
       "should be fun " in { s => }
     }
   }
 
-  "Testing 8 " - { 
+  "Testing 8 " - {
     " Scala code" - {
       "should be fun" in { s => }
     }
   }
 
-  "Testing 9  " - { 
+  "Testing 9  " - {
     "Scala code" - {
       "should be fun" in { s => }
     }
@@ -723,8 +723,8 @@ protected[scalatest] class ExampleTestNameFixtureFreeSpec extends fixture.FreeSp
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNamePropSpec extends PropSpec with TestNameFixtureServices {
-  
-  val expectedTestNames = 
+
+  val expectedTestNames =
     Set(
      "Testing 1 Scala code should be fun",
      "Testing 2 Scala code should be fun",
@@ -733,7 +733,7 @@ protected[scalatest] class ExampleTestNamePropSpec extends PropSpec with TestNam
      "Testing 5 Scala code should be fun",
      "Testing 6 Scala code should be fun"
     )
-  
+
   property("Testing 1 Scala code should be fun") {}
   property(" Testing 2 Scala code should be fun") {}
   property("Testing 3 Scala code should be fun ") {}
@@ -744,8 +744,8 @@ protected[scalatest] class ExampleTestNamePropSpec extends PropSpec with TestNam
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFixturePropSpec extends fixture.PropSpec with TestNameFixtureServices with StringFixture {
-  
-  val expectedTestNames = 
+
+  val expectedTestNames =
     Set(
      "Testing 1 Scala code should be fun",
      "Testing 2 Scala code should be fun",
@@ -754,7 +754,7 @@ protected[scalatest] class ExampleTestNameFixturePropSpec extends fixture.PropSp
      "Testing 5 Scala code should be fun",
      "Testing 6 Scala code should be fun"
     )
-  
+
   property("Testing 1 Scala code should be fun") { s => }
   property(" Testing 2 Scala code should be fun") { s => }
   property("Testing 3 Scala code should be fun ") { s => }
@@ -765,68 +765,68 @@ protected[scalatest] class ExampleTestNameFixturePropSpec extends fixture.PropSp
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameWordSpec extends WordSpec with TestNameFixtureServices {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Testing 1 should test Scala code should be fun", 
-     "Testing 2 should test Scala code should be fun", 
-     "Testing 3 should test Scala code should be fun", 
-     "Testing 4 should test Scala code should be fun", 
-     "Testing 5 should test Scala code should be fun", 
-     "Testing 6 should test Scala code should be fun", 
-     "Testing 7 should test Scala code should be fun", 
-     "Testing 8 should test Scala code should be fun", 
+     "Testing 1 should test Scala code should be fun",
+     "Testing 2 should test Scala code should be fun",
+     "Testing 3 should test Scala code should be fun",
+     "Testing 4 should test Scala code should be fun",
+     "Testing 5 should test Scala code should be fun",
+     "Testing 6 should test Scala code should be fun",
+     "Testing 7 should test Scala code should be fun",
+     "Testing 8 should test Scala code should be fun",
      "Testing 9 should test Scala code should be fun"
     )
-  
-  "Testing 1" should { 
+
+  "Testing 1" should {
     "test Scala code" should {
       "be fun" in {}
     }
   }
 
-  "Testing 2 " should { 
+  "Testing 2 " should {
     "test Scala code" should {
       "be fun" in {}
     }
   }
 
-  "Testing 3" should { 
+  "Testing 3" should {
     " test Scala code" should {
       "be fun" in {}
     }
   }
 
-  "Testing 4" should { 
+  "Testing 4" should {
     "test Scala code " should {
       "be fun" in {}
     }
   }
 
-  "Testing 5" should { 
+  "Testing 5" should {
     "test Scala code" should {
       " be fun" in {}
     }
   }
 
-  " Testing 6" should { 
+  " Testing 6" should {
     "test Scala code" should {
       "be fun" in {}
     }
   }
 
-  "Testing 7" should { 
+  "Testing 7" should {
     "test Scala code" should {
       "be fun " in {}
     }
   }
 
-  "Testing 8 " should { 
+  "Testing 8 " should {
     " test Scala code" should {
       "be fun" in {}
     }
   }
 
-  "Testing 9  " should { 
+  "Testing 9  " should {
     "test Scala code" should {
       "be fun" in {}
     }
@@ -835,68 +835,68 @@ protected[scalatest] class ExampleTestNameWordSpec extends WordSpec with TestNam
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNameFixtureWordSpec extends fixture.WordSpec with TestNameFixtureServices with StringFixture {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Testing 1 should test Scala code should be fun", 
-     "Testing 2 should test Scala code should be fun", 
-     "Testing 3 should test Scala code should be fun", 
-     "Testing 4 should test Scala code should be fun", 
-     "Testing 5 should test Scala code should be fun", 
-     "Testing 6 should test Scala code should be fun", 
-     "Testing 7 should test Scala code should be fun", 
-     "Testing 8 should test Scala code should be fun", 
+     "Testing 1 should test Scala code should be fun",
+     "Testing 2 should test Scala code should be fun",
+     "Testing 3 should test Scala code should be fun",
+     "Testing 4 should test Scala code should be fun",
+     "Testing 5 should test Scala code should be fun",
+     "Testing 6 should test Scala code should be fun",
+     "Testing 7 should test Scala code should be fun",
+     "Testing 8 should test Scala code should be fun",
      "Testing 9 should test Scala code should be fun"
     )
-  
-  "Testing 1" should { 
+
+  "Testing 1" should {
     "test Scala code" should {
       "be fun" in { s => }
     }
   }
 
-  "Testing 2 " should { 
+  "Testing 2 " should {
     "test Scala code" should {
       "be fun" in { s => }
     }
   }
 
-  "Testing 3" should { 
+  "Testing 3" should {
     " test Scala code" should {
       "be fun" in { s => }
     }
   }
 
-  "Testing 4" should { 
+  "Testing 4" should {
     "test Scala code " should {
       "be fun" in { s => }
     }
   }
 
-  "Testing 5" should { 
+  "Testing 5" should {
     "test Scala code" should {
       " be fun" in { s => }
     }
   }
 
-  " Testing 6" should { 
+  " Testing 6" should {
     "test Scala code" should {
       "be fun" in { s => }
     }
   }
 
-  "Testing 7" should { 
+  "Testing 7" should {
     "test Scala code" should {
       "be fun " in { s => }
     }
   }
 
-  "Testing 8 " should { 
+  "Testing 8 " should {
     " test Scala code" should {
       "be fun" in { s => }
     }
   }
 
-  "Testing 9  " should { 
+  "Testing 9  " should {
     "test Scala code" should {
       "be fun" in { s => }
     }
@@ -905,68 +905,68 @@ protected[scalatest] class ExampleTestNameFixtureWordSpec extends fixture.WordSp
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNamePathFreeSpec extends path.FreeSpec with TestNameFixtureServices {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Testing 1 Scala code should be fun", 
-     "Testing 2 Scala code should be fun", 
-     "Testing 3 Scala code should be fun", 
-     "Testing 4 Scala code should be fun", 
-     "Testing 5 Scala code should be fun", 
-     "Testing 6 Scala code should be fun", 
-     "Testing 7 Scala code should be fun", 
-     "Testing 8 Scala code should be fun", 
+     "Testing 1 Scala code should be fun",
+     "Testing 2 Scala code should be fun",
+     "Testing 3 Scala code should be fun",
+     "Testing 4 Scala code should be fun",
+     "Testing 5 Scala code should be fun",
+     "Testing 6 Scala code should be fun",
+     "Testing 7 Scala code should be fun",
+     "Testing 8 Scala code should be fun",
      "Testing 9 Scala code should be fun"
     )
-  
-  "Testing 1" - { 
+
+  "Testing 1" - {
     "Scala code" - {
       "should be fun" in {}
     }
   }
 
-  "Testing 2 " - { 
+  "Testing 2 " - {
     "Scala code" - {
       "should be fun" in {}
     }
   }
 
-  "Testing 3" - { 
+  "Testing 3" - {
     " Scala code" - {
       "should be fun" in {}
     }
   }
 
-  "Testing 4" - { 
+  "Testing 4" - {
     "Scala code " - {
       "should be fun" in {}
     }
   }
 
-  "Testing 5" - { 
+  "Testing 5" - {
     "Scala code" - {
       " should be fun" in {}
     }
   }
 
-  " Testing 6" - { 
+  " Testing 6" - {
     "Scala code" - {
       "should be fun" in {}
     }
   }
 
-  "Testing 7" - { 
+  "Testing 7" - {
     "Scala code" - {
       "should be fun " in {}
     }
   }
 
-  "Testing 8 " - { 
+  "Testing 8 " - {
     " Scala code" - {
       "should be fun" in {}
     }
   }
 
-  "Testing 9  " - { 
+  "Testing 9  " - {
     "Scala code" - {
       "should be fun" in {}
     }
@@ -977,68 +977,68 @@ protected[scalatest] class ExampleTestNamePathFreeSpec extends path.FreeSpec wit
 
 @DoNotDiscover
 protected[scalatest] class ExampleTestNamePathFunSpec extends path.FunSpec with TestNameFixtureServices {
-  val expectedTestNames = 
+  val expectedTestNames =
     Set(
-     "Testing 1 Scala code should be fun", 
-     "Testing 2 Scala code should be fun", 
-     "Testing 3 Scala code should be fun", 
-     "Testing 4 Scala code should be fun", 
-     "Testing 5 Scala code should be fun", 
-     "Testing 6 Scala code should be fun", 
-     "Testing 7 Scala code should be fun", 
-     "Testing 8 Scala code should be fun", 
+     "Testing 1 Scala code should be fun",
+     "Testing 2 Scala code should be fun",
+     "Testing 3 Scala code should be fun",
+     "Testing 4 Scala code should be fun",
+     "Testing 5 Scala code should be fun",
+     "Testing 6 Scala code should be fun",
+     "Testing 7 Scala code should be fun",
+     "Testing 8 Scala code should be fun",
      "Testing 9 Scala code should be fun"
     )
-  
-  describe("Testing 1") { 
+
+  describe("Testing 1") {
     describe("Scala code") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 2 ") { 
+  describe("Testing 2 ") {
     describe("Scala code") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 3") { 
+  describe("Testing 3") {
     describe(" Scala code") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 4") { 
+  describe("Testing 4") {
     describe("Scala code ") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 5") { 
+  describe("Testing 5") {
     describe("Scala code") {
       it(" should be fun") {}
     }
   }
 
-  describe(" Testing 6") { 
+  describe(" Testing 6") {
     describe("Scala code") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 7") { 
+  describe("Testing 7") {
     describe("Scala code") {
       it("should be fun ") {}
     }
   }
 
-  describe("Testing 8 ") { 
+  describe("Testing 8 ") {
     describe(" Scala code") {
       it("should be fun") {}
     }
   }
 
-  describe("Testing 9  ") { 
+  describe("Testing 9  ") {
     describe("Scala code") {
       it("should be fun") {}
     }

@@ -19,26 +19,26 @@ import org.scalatest._
 import matchers.{HavePropertyMatcher, HavePropertyMatchResult}
 
 class HaveWordSpec extends FunSpec with Matchers {
-  
+
   describe("HaveWord ") {
-    
+
     it("should have pretty toString") {
       have.toString should be ("have")
     }
-    
+
     describe("length(Long) method returns MatcherFactory1") {
-      
+
       val mtf = have length 3
       val mt = mtf.matcher[Array[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("have length 3")
         mt.toString should be ("have length 3")
       }
-      
+
       val lhs = Array(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe "Array(1, 2, 3) had length 3 instead of expected length 3"
@@ -55,9 +55,9 @@ class HaveWordSpec extends FunSpec with Matchers {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, 3)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe "Array(1, 2, 3) had length 3"
@@ -75,20 +75,20 @@ class HaveWordSpec extends FunSpec with Matchers {
 
       }
     }
-    
+
     describe("size(Long) method returns MatcherFactory1") {
-      
+
       val mtf = have size 3
       val mt = mtf.matcher[Array[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("have size 3")
         mt.toString should be ("have size 3")
       }
-      
+
       val lhs = Array(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe "Array(1, 2, 3) had size 3 instead of expected size 3"
@@ -105,9 +105,9 @@ class HaveWordSpec extends FunSpec with Matchers {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, 3)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe "Array(1, 2, 3) had size 3"
@@ -125,20 +125,20 @@ class HaveWordSpec extends FunSpec with Matchers {
 
       }
     }
-    
+
     describe("message(String) method returns MatcherFactory1") {
-      
+
       val mtf = have message "Message from Mars!"
       val mt = mtf.matcher[RuntimeException]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("have message \"Message from Mars!\"")
         mt.toString should be ("have message \"Message from Mars!\"")
       }
-      
+
       val lhs = new RuntimeException("Message from Mars!")
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe lhs + " had message \"Message from Mars!\" instead of expected message \"Message from Mars!\""
@@ -155,9 +155,9 @@ class HaveWordSpec extends FunSpec with Matchers {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, "Message from Mars!")
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe lhs + " had message \"Message from Mars!\""
@@ -175,20 +175,20 @@ class HaveWordSpec extends FunSpec with Matchers {
 
       }
     }
-    
+
     describe("apply(ResultOfLengthWordApplication) method returns MatcherFactory1") {
-      
+
       val mtf = have (new ResultOfLengthWordApplication(3))
       val mt = mtf.matcher[Array[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("have length 3")
         mt.toString should be ("have length 3")
       }
-      
+
       val lhs = Array(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe "Array(1, 2, 3) had length 3 instead of expected length 3"
@@ -205,9 +205,9 @@ class HaveWordSpec extends FunSpec with Matchers {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, 3)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe "Array(1, 2, 3) had length 3"
@@ -225,20 +225,20 @@ class HaveWordSpec extends FunSpec with Matchers {
 
       }
     }
-    
+
     describe("size(ResultOfSizeWordApplication) method returns MatcherFactory1") {
-      
+
       val mtf = have (new ResultOfSizeWordApplication(3))
       val mt = mtf.matcher[Array[Int]]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("have size 3")
         mt.toString should be ("have size 3")
       }
-      
+
       val lhs = Array(1, 2, 3)
       val mr = mt(lhs)
-      
+
       it("should have correct MatcherResult") {
         mr.matches shouldBe true
         mr.failureMessage shouldBe "Array(1, 2, 3) had size 3 instead of expected size 3"
@@ -255,9 +255,9 @@ class HaveWordSpec extends FunSpec with Matchers {
         mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(lhs, 3)
 
       }
-      
+
       val nmr = mr.negated
-      
+
       it("should have correct negated MatcherResult") {
         nmr.matches shouldBe false
         nmr.failureMessage shouldBe "Array(1, 2, 3) had size 3"
@@ -275,9 +275,9 @@ class HaveWordSpec extends FunSpec with Matchers {
 
       }
     }
-    
+
     describe("apply(HavePropertyMatcher) method returns MatcherFactory1") {
-      
+
       def name(expectedName: String) = {
         HavePropertyMatcher {
           (person: Person) => HavePropertyMatchResult(
@@ -288,21 +288,21 @@ class HaveWordSpec extends FunSpec with Matchers {
           )
         }
       }
-      
+
       val nameBob = name("Bob")
       val mt = have (nameBob)
-      
+
       case class Person(name: String)
-      
+
       it("should have pretty toString") {
         mt.toString should be ("have (" + nameBob + ")")
       }
-      
+
       describe("when evaluate to true") {
-        
+
         val lhs = Person("Bob")
         val mr = mt(lhs)
-      
+
         it("should have correct MatcherResult") {
           mr.matches shouldBe true
           mr.failureMessage shouldBe "The name property had its expected value \"Bob\", on object " + lhs
@@ -319,9 +319,9 @@ class HaveWordSpec extends FunSpec with Matchers {
           mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(UnquotedString("name"), "Bob", lhs)
 
         }
-      
+
         val nmr = mr.negated
-      
+
         it("should have correct negated MatcherResult") {
           nmr.matches shouldBe false
           nmr.failureMessage shouldBe "The name property had its expected value \"Bob\", on object " + lhs
@@ -338,14 +338,14 @@ class HaveWordSpec extends FunSpec with Matchers {
           nmr.midSentenceNegatedFailureMessageArgs shouldBe Vector(UnquotedString("name"), "Bob", lhs)
 
         }
-        
+
       }
-      
+
       describe("when evaluate to false") {
-        
+
         val lhs = Person("Alice")
         val mr = mt(lhs)
-      
+
         it("should have correct MatcherResult") {
           mr.matches shouldBe false
           mr.failureMessage shouldBe "The name property had value \"Alice\", instead of its expected value \"Bob\", on object " + lhs
@@ -362,9 +362,9 @@ class HaveWordSpec extends FunSpec with Matchers {
           mr.midSentenceNegatedFailureMessageArgs shouldBe Vector(UnquotedString("name"), "Bob", "Alice", lhs)
 
         }
-      
+
         val nmr = mr.negated
-      
+
         it("should have correct negated MatcherResult") {
           nmr.matches shouldBe true
           nmr.failureMessage shouldBe "The name property had value \"Alice\", instead of its expected value \"Bob\", on object " + lhs
@@ -381,9 +381,9 @@ class HaveWordSpec extends FunSpec with Matchers {
           nmr.midSentenceNegatedFailureMessageArgs shouldBe Vector(UnquotedString("name"), "Bob", "Alice", lhs)
 
         }
-        
+
       }
     }
   }
-  
+
 }

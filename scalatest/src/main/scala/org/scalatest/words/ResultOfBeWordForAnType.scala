@@ -30,9 +30,9 @@ import org.scalactic._
  * @author Bill Venners
  */
 final class ResultOfBeWordForAnType[T](clazz: Class[T], prettifier: Prettifier, pos: source.Position) {
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * an [Exception] should be thrownBy { ... }
@@ -48,7 +48,7 @@ final class ResultOfBeWordForAnType[T](clazz: Class[T], prettifier: Prettifier, 
       case tfe: TestFailedException => indicateFailure(tfe)
     }
   }
-  
+
   /**
    * Overrides toString to return pretty an[...] should/must be
    */

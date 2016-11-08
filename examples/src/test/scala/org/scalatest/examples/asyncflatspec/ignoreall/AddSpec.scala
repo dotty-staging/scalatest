@@ -23,7 +23,7 @@ import org.scalatest.Ignore
 class AddSpec extends AsyncFlatSpec {
 
   def addSoon(addends: Int*): Future[Int] = Future { addends.sum }
-  
+
   "addSoon" should "eventually compute a sum of passed Ints" in {
     val futureSum: Future[Int] = addSoon(1, 2)
     // You can map assertions onto a Future, then return
@@ -32,7 +32,7 @@ class AddSpec extends AsyncFlatSpec {
   }
 
   def addNow(addends: Int*): Int = addends.sum
-    
+
   "addNow" should "immediately compute a sum of passed Ints" in {
     val sum: Int = addNow(1, 2)
     // You can also write synchronous tests. The body

@@ -21,15 +21,15 @@ import java.io.PrintStream
 import Reporter.propagateDispose
 
 private[scalatest] class StopOnFailureReporter(dispatch: Reporter, stopper: Stopper, val out: PrintStream) extends CatchReporter {
-    
+
   def doApply(event: Event): Unit = {
     event match {
       case testFailed: TestFailed => stopper.requestStop()
-      case _ => 
+      case _ =>
     }
     dispatch(event)
   }
-  
+
   def doDispose(): Unit = {
     propagateDispose(dispatch)
   }

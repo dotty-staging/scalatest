@@ -145,9 +145,9 @@ class SuiteSuite extends RefSpec with SeveredStackTraces {
     assert(tagSet.size === 1)
     assert(tagSet.toList(0) === classOf[SlowAsMolasses].getName)
   }
-  
+
   def `test runNestedSuites` = {
-    
+
     class NoTagSpec extends RefSpec
     @Ignore
     class IgnoreSpec extends RefSpec {
@@ -159,14 +159,14 @@ class SuiteSuite extends RefSpec with SeveredStackTraces {
     class SlowAsMolassesSpec extends RefSpec
     @FastAsLight
     class FastAsLightSpec extends RefSpec
-    
+
     class MasterSpec extends RefSpec {
       override def nestedSuites = Vector(new NoTagSpec(), new IgnoreSpec(), new SlowAsMolassesSpec(), new FastAsLightSpec())
       override def runNestedSuites(args: Args): Status = {
         super.runNestedSuites(args)
       }
     }
-    
+
     class CounterDistributor extends Distributor {
       var count = 0
       def apply(suite: Suite, args: Args): Status = {
@@ -177,9 +177,9 @@ class SuiteSuite extends RefSpec with SeveredStackTraces {
         count += 1
       }
     }
-    
+
     val masterSuite = new MasterSpec()
-    
+
     val defaultFilter = Filter(None, Set.empty)
     val defaultReporter = new EventRecordingReporter
     masterSuite.runNestedSuites(Args(defaultReporter, Stopper.default, defaultFilter, ConfigMap.empty, None, new Tracker(new Ordinal(99)), Set.empty))
@@ -189,17 +189,17 @@ class SuiteSuite extends RefSpec with SeveredStackTraces {
     val defaultDistributor = new CounterDistributor
     masterSuite.runNestedSuites(Args(defaultReporterDist, Stopper.default, defaultFilter, ConfigMap.empty, Some(defaultDistributor), new Tracker(new Ordinal(99)), Set.empty))
     assert(defaultDistributor.count === 4)
-    
+
     val includeFilter = Filter(Some(Set("org.scalatest.FastAsLight")), Set.empty)
     val includeReporter = new EventRecordingReporter
     masterSuite.runNestedSuites(Args(includeReporter, Stopper.default, includeFilter, ConfigMap.empty, None, new Tracker(new Ordinal(99)), Set.empty))
-    assert(includeReporter.suiteStartingEventsReceived.size === 4) 
-    assert(includeReporter.testIgnoredEventsReceived.size === 0) 
+    assert(includeReporter.suiteStartingEventsReceived.size === 4)
+    assert(includeReporter.testIgnoredEventsReceived.size === 0)
     val includeReporterDist = new EventRecordingReporter
     val includeDistributor = new CounterDistributor
     masterSuite.runNestedSuites(Args(includeReporterDist, Stopper.default, includeFilter, ConfigMap.empty, Some(includeDistributor), new Tracker(new Ordinal(99)), Set.empty))
-    assert(includeDistributor.count === 4) 
-    
+    assert(includeDistributor.count === 4)
+
     val excludeFilter = Filter(None, Set("org.scalatest.SlowAsMolasses"))
     val excludeReporter = new EventRecordingReporter
     masterSuite.runNestedSuites(Args(excludeReporter, Stopper.default, excludeFilter, ConfigMap.empty, None, new Tracker(new Ordinal(99)), Set.empty))
@@ -210,7 +210,7 @@ class SuiteSuite extends RefSpec with SeveredStackTraces {
     masterSuite.runNestedSuites(Args(excludeReporterDist, Stopper.default, excludeFilter, ConfigMap.empty, Some(excludeDistributor), new Tracker(new Ordinal(99)), Set.empty))
     assert(excludeDistributor.count === 4)
   }
-  
+
   def `test expectedTestCount` = {
     class NoTagSpec extends RefSpec {
       def `test method 1`: Unit = {}
@@ -235,14 +235,14 @@ class SuiteSuite extends RefSpec with SeveredStackTraces {
       def `test method 2`: Unit = {}
       def `test method 3`: Unit = {}
     }
-    
+
     class MasterSpec extends RefSpec {
       override def nestedSuites = Vector(new NoTagSpec(), new IgnoreSpec(), new SlowAsMolassesSpec(), new FastAsLightSpec())
       override def runNestedSuites(args: Args): Status = {
         super.runNestedSuites(args)
       }
     }
-    
+
     val masterSuite = new MasterSpec()
     assert(masterSuite.expectedTestCount(Filter(None, Set.empty)) === 9)
     assert(masterSuite.expectedTestCount(Filter(Some(Set("org.scalatest.FastAsLight")), Set.empty)) === 3)
@@ -250,20 +250,20 @@ class SuiteSuite extends RefSpec with SeveredStackTraces {
     assert(masterSuite.expectedTestCount(Filter(Some(Set("org.scalatest.SlowAsMolasses")), Set.empty)) === 3)
     assert(masterSuite.expectedTestCount(Filter(None, Set("org.scalatest.SlowAsMolasses"))) === 6)
   }
-  
+
   def `test SuiteRunner` = {
     assert(new NormalSuite().rerunner.get === classOf[NormalSuite].getName)
     assert(new WrappedSuite(Map.empty).rerunner.get === classOf[WrappedSuite].getName)
     assert(new NotAccessibleSuite("test").rerunner === None)
   }
-  
+
   def `test check chosenStyles` = {
     class SimpleSpec extends RefSpec {
       def `test method 1`: Unit = {}
       def `test method 2`: Unit = {}
       def `test method 3`: Unit = {}
     }
-    
+
     val simpleSuite = new SimpleSpec()
     simpleSuite.run(None, Args(SilentReporter))
     simpleSuite.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap(CHOSEN_STYLES -> Set("org.scalatest.refspec.RefSpec")), None, new Tracker, Set.empty))
@@ -346,7 +346,7 @@ class SuiteSuite extends RefSpec with SeveredStackTraces {
       }
 
     assert(
-      formatterForSuiteStarting(emptySuite) !== 
+      formatterForSuiteStarting(emptySuite) !==
         Some(MotionToSuppress))
 
     assert(
@@ -354,7 +354,7 @@ class SuiteSuite extends RefSpec with SeveredStackTraces {
         Some(MotionToSuppress))
 
     assert(
-      formatterForSuiteStarting(nonEmptySuite) !== 
+      formatterForSuiteStarting(nonEmptySuite) !==
         Some(MotionToSuppress))
 
     assert(
@@ -379,7 +379,7 @@ class `My Test` extends RefSpec {}
 @DoNotDiscover
 class NormalSuite extends RefSpec
 @DoNotDiscover
-@WrapWith(classOf[ConfigMapWrapperSuite]) 
+@WrapWith(classOf[ConfigMapWrapperSuite])
 class WrappedSuite(configMap: Map[_, _]) extends RefSpec
 @DoNotDiscover
 class NotAccessibleSuite(name: String) extends RefSpec

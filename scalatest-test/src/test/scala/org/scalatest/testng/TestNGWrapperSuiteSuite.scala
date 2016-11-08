@@ -24,10 +24,10 @@ import org.scalatest.events.Ordinal
 package org.scalatest.testng {
 
   class TestNGWrapperSuiteSuite extends FunSuite with SuiteExpectations {
-  
+
     val XML_SUITES_PROPERTY = "xml_suites"
-      
-    val legacySuiteXml = 
+
+    val legacySuiteXml =
       <suite name="Simple Suite">
         <test verbose="10" name="org.scalatest.testng.test" annotations="JDK">
           <classes>
@@ -35,11 +35,11 @@ package org.scalatest.testng {
           </classes>
         </test>
       </suite>
-      
+
     test("wrapper suite properly notifies reporter when tests start, and pass") {
-    
+
       val xmlSuiteFile = this.createSuite( legacySuiteXml )
-          
+
       val context = new Mockery
       val reporter = context.mock(classOf[Reporter])
 
@@ -48,7 +48,7 @@ package org.scalatest.testng {
           expectSingleTestToPass(this, reporter)
         }
       )
-      
+
       val status = new ScalaTestStatefulStatus
       (new TestNGWrapperSuite(List(xmlSuiteFile))).runTestNG(reporter, new Tracker, status)
       status.setCompleted()
@@ -56,7 +56,7 @@ package org.scalatest.testng {
       context.assertIsSatisfied()
     }
 
-    val legacySuiteWithThreeTestsXml = 
+    val legacySuiteWithThreeTestsXml =
       <suite name="Simple Suite">
         <test verbose="10" name="org.scalatest.testng.test" annotations="JDK">
           <classes>
@@ -65,27 +65,27 @@ package org.scalatest.testng {
           </classes>
         </test>
       </suite>
-    
+
     test("wrapper suite should be notified for all tests") {
-      
+
       val xmlSuiteFile = this.createSuite(legacySuiteWithThreeTestsXml)
-          
+
       val context = new Mockery
       val reporter = context.mock(classOf[Reporter])
 
       context.checking(
         new Expectations() {
-          expectNTestsToPass(this, 3, reporter) 
+          expectNTestsToPass(this, 3, reporter)
         }
       )
-      
+
       val status = new ScalaTestStatefulStatus()
       (new TestNGWrapperSuite(List(xmlSuiteFile))).runTestNG(reporter, new Tracker, status)
       status.setCompleted()
 
       context.assertIsSatisfied()
     }
-    
+
     def createSuite(suiteNode: scala.xml.Elem) : String = {
       val tmp = File.createTempFile("testng", "wrapper")
       FileUtils.writeStringToFile(tmp, suiteNode.toString)
@@ -95,7 +95,7 @@ package org.scalatest.testng {
 
   package testpackage {
     import org.testng.annotations._
-  
+
     class LegacySuite extends TestNGSuite {
       @Test def legacyTestThatPasses(): Unit = {}
     }

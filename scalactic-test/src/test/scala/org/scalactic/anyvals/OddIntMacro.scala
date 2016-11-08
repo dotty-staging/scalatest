@@ -26,6 +26,6 @@ private[anyvals] object OddIntMacro extends CompileTimeAssertions {
       "OddInt(3). Please use OddInt.from instead."
     ensureValidIntLiteral(c)(value, notValidMsg, notLiteralMsg) { i => i % 2 == 1 }
     c.universe.reify { OddInt.from(value.splice).get }
-  } 
+  }
 }
 

@@ -30,5 +30,5 @@ private[scalactic] object DigitCharMacro {
       c >= '0' && c <= '9'
     }
     c.universe.reify { DigitChar.from(value.splice).get }
-  } 
+  }
 }

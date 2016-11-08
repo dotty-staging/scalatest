@@ -25,7 +25,7 @@ class ExpectationsSpec extends FunSpec with Expectations {
 
   describe("The expectResult method") {
     it("should give a correct Fact result when the expectation fails") {
-      val fact = expectResult(3) { 2 } 
+      val fact = expectResult(3) { 2 }
       assert(fact.isNo)
       assert(fact.factMessage  == "Expected 3, but got 2")
       assert(fact.simplifiedFactMessage == "3 did not equal 2")
@@ -43,7 +43,7 @@ class ExpectationsSpec extends FunSpec with Expectations {
       assert(!fact.isVacuousYes)
     }
     it("should give a correct Fact result when the expectation succeeds") {
-      val fact = expectResult(3) { 3 } 
+      val fact = expectResult(3) { 3 }
       assert(fact.isYes)
       assert(fact.factMessage  == "Expected 3, and got 3")
       assert(fact.simplifiedFactMessage == "3 equaled 3")
@@ -118,11 +118,11 @@ class ExpectationsSpec extends FunSpec with Expectations {
       assert(fact2.isNo)
       assert(fact2.factMessage  == "3 equaled 3, but 4 equaled 4")
       assert(fact2.toString ==
-        "No(" + NEWLINE + 
-        "  Yes(expected 3, and got 3) &&" + NEWLINE + 
-        "  No(" + NEWLINE + 
-        "    !Yes(expected 4, and got 4)" + NEWLINE + 
-        "  )" + NEWLINE + 
+        "No(" + NEWLINE +
+        "  Yes(expected 3, and got 3) &&" + NEWLINE +
+        "  No(" + NEWLINE +
+        "    !Yes(expected 4, and got 4)" + NEWLINE +
+        "  )" + NEWLINE +
         ")"
       )
       assert(!fact2.isVacuousYes)
@@ -206,7 +206,7 @@ class ExpectationsSpec extends FunSpec with Expectations {
         "      !Yes(expected 4, and got 4)" + NEWLINE +
         "    )" + NEWLINE +
         "  ) ||" + NEWLINE +
-        "  No(expected 5, but got 6)" + NEWLINE + 
+        "  No(expected 5, but got 6)" + NEWLINE +
         ")"
       )
       assert(fact.toString ==

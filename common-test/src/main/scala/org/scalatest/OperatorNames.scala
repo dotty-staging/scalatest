@@ -64,7 +64,7 @@ class OperatorNames {
   26  &
   2a  *
   2b  +
-  2d  - 
+  2d  -
   2f  /
   3a  :
   3c  <
@@ -148,4 +148,4 @@ public class org.scalatest.OperatorNames extends java.lang.Object implements sca
 }
 
 */
-} 
+}

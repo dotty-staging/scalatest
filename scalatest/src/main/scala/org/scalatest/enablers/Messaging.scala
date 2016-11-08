@@ -65,7 +65,7 @@ object Messaging {
    * @tparam EX any subtype of <code>java.lang.Throwable</code>
    * @return <code>Messaging[EX]</code> that supports <code>java.lang.Throwable</code> in <code>have message</code> syntax
    */
-  implicit def messagingNatureOfThrowable[EX <: Throwable]: Messaging[EX] = 
+  implicit def messagingNatureOfThrowable[EX <: Throwable]: Messaging[EX] =
     new Messaging[EX] {
       def messageOf(exception: EX): String = exception.getMessage
     }
@@ -78,7 +78,7 @@ object Messaging {
    * @tparam T any type that has a <code>message()</code> method that returns <code>String</code>
    * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
    */
-  implicit def messagingNatureOfAnyRefWithMessageMethod[T <: AnyRef { def message(): String}]: Messaging[T] = 
+  implicit def messagingNatureOfAnyRefWithMessageMethod[T <: AnyRef { def message(): String}]: Messaging[T] =
     new Messaging[T] {
       def messageOf(obj: T): String = obj.message
     }
@@ -89,7 +89,7 @@ object Messaging {
    * @tparam T any type that has a parameterless <code>message</code> method that returns <code>String</code>
    * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
    */
-  implicit def messagingNatureOfAnyRefWithParameterlessMessageMethod[T <: AnyRef { def message: String}]: Messaging[T] = 
+  implicit def messagingNatureOfAnyRefWithParameterlessMessageMethod[T <: AnyRef { def message: String}]: Messaging[T] =
     new Messaging[T] {
       def messageOf(obj: T): String = obj.message
     }
@@ -100,7 +100,7 @@ object Messaging {
    * @tparam T any type that has a <code>getMessage()</code> method that returns <code>String</code>
    * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
    */
-  implicit def messagingNatureOfAnyRefWithGetMessageMethod[T <: AnyRef { def getMessage(): String}]: Messaging[T] = 
+  implicit def messagingNatureOfAnyRefWithGetMessageMethod[T <: AnyRef { def getMessage(): String}]: Messaging[T] =
     new Messaging[T] {
       def messageOf(obj: T): String = obj.getMessage
     }
@@ -111,7 +111,7 @@ object Messaging {
    * @tparam T any type that has a parameterless <code>getMessage</code> method that returns <code>String</code>
    * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
    */
-  implicit def messagingNatureOfAnyRefWithParameterlessGetMessageMethod[T <: AnyRef { def getMessage: String}]: Messaging[T] = 
+  implicit def messagingNatureOfAnyRefWithParameterlessGetMessageMethod[T <: AnyRef { def getMessage: String}]: Messaging[T] =
     new Messaging[T] {
       def messageOf(obj: T): String = obj.getMessage
     }

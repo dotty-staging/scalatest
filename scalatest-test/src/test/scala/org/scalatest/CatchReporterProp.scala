@@ -33,7 +33,7 @@ import org.scalatest.refspec.RefSpec
 class CatchReporterProp extends AllSuiteProp {
 
   type FixtureServices = CatchReporterFixtureServices
-  
+
   def spec = new ExampleCatchReporterSpec
   def fixtureSpec = new ExampleCatchReporterFixtureSpec
   def junit3Suite = new ExampleCatchReporterJUnit3Suite
@@ -55,13 +55,13 @@ class CatchReporterProp extends AllSuiteProp {
   def fixtureWordSpec = new ExampleCatchReporterFixtureWordSpec
   def pathFreeSpec = new ExampleCatchReporterPathFreeSpec
   def pathFunSpec = new ExampleCatchReporterPathFunSpec
-  
+
   class WrapAwareReporter extends EventRecordingReporter {
     @volatile var isWrapped = false
     override def apply(event: Event): Unit = {
       if (!isWrapped) {
         val stackTraceList = Thread.currentThread.getStackTrace.drop(2)
-        isWrapped = stackTraceList.find { element => 
+        isWrapped = stackTraceList.find { element =>
           val className = element.getClassName
           try {
             val clazz = getClass.getClassLoader.loadClass(className)
@@ -76,19 +76,19 @@ class CatchReporterProp extends AllSuiteProp {
       super.apply(event)
     }
   }
-  
+
   class WrapperReporter(dispatch: Reporter) extends Reporter {
     def apply(event: Event): Unit = {
       dispatch(event)
     }
   }
-  
+
   class WrapAwareCatchReporter(dispatch: Reporter) extends WrapperCatchReporter(dispatch, new PrintStream(new ByteArrayOutputStream)) {
     @volatile var isWrapped = false
     override def apply(event: Event): Unit = {
       if (!isWrapped) {
         val stackTraceList = Thread.currentThread.getStackTrace.drop(2)
-        isWrapped = stackTraceList.find { element => 
+        isWrapped = stackTraceList.find { element =>
           val className = element.getClassName
           try {
             val clazz = getClass.getClassLoader.loadClass(className)
@@ -103,13 +103,13 @@ class CatchReporterProp extends AllSuiteProp {
       super.apply(event)
     }
   }
-  
+
   class BuggyReporter extends WrapAwareReporter {
     private var count = 0
     override def apply(event: Event): Unit = {
       val stackTraceList = Thread.currentThread.getStackTrace.drop(2)
       if (!isWrapped) {
-        isWrapped = stackTraceList.exists { element => 
+        isWrapped = stackTraceList.exists { element =>
           val className = element.getClassName
           try {
             val clazz = getClass.getClassLoader.loadClass(className)
@@ -120,9 +120,9 @@ class CatchReporterProp extends AllSuiteProp {
           }
         }
       }
-      
+
       event match {
-        case testStarting: TestStarting => 
+        case testStarting: TestStarting =>
           if (count == 0) {
             count += 1
             throw new RuntimeException
@@ -133,13 +133,13 @@ class CatchReporterProp extends AllSuiteProp {
       }
     }
   }
-  
+
   class WrapAwareDispatchReporter(reporters: List[Reporter], out: PrintStream) extends DispatchReporter(reporters, out) {
     @volatile var isWrapped = false
     override def apply(event: Event): Unit = {
       if (!isWrapped) {
         val stackTraceList = Thread.currentThread.getStackTrace.drop(2)
-        isWrapped = stackTraceList.find { element => 
+        isWrapped = stackTraceList.find { element =>
           val className = element.getClassName
           try {
             val clazz = getClass.getClassLoader.loadClass(className)
@@ -154,13 +154,13 @@ class CatchReporterProp extends AllSuiteProp {
       super.apply(event)
     }
   }
-  
+
   class WrapAwareSuiteSortingReporter(dispatch: Reporter, sortingTimeout: Span) extends SuiteSortingReporter(dispatch, sortingTimeout, new PrintStream(new ByteArrayOutputStream)) {
     @volatile var isWrapped = false
     override def apply(event: Event): Unit = {
       if (!isWrapped) {
         val stackTraceList = Thread.currentThread.getStackTrace.drop(2)
-        isWrapped = stackTraceList.find { element => 
+        isWrapped = stackTraceList.find { element =>
           val className = element.getClassName
           try {
             val clazz = getClass.getClassLoader.loadClass(className)
@@ -175,13 +175,13 @@ class CatchReporterProp extends AllSuiteProp {
       super.apply(event)
     }
   }
-  
+
   class WrapAwareTestSortingReporter(suiteId: String, dispatch: Reporter, sortingTimeout: Span, testCount: Int, suiteSorter: Option[DistributedSuiteSorter]) extends TestSortingReporter(suiteId, dispatch, sortingTimeout, testCount, suiteSorter, new PrintStream(new ByteArrayOutputStream)) {
     @volatile var isWrapped = false
     override def apply(event: Event): Unit = {
       if (!isWrapped) {
         val stackTraceList = Thread.currentThread.getStackTrace.drop(2)
-        isWrapped = stackTraceList.find { element => 
+        isWrapped = stackTraceList.find { element =>
           val className = element.getClassName
           try {
             val clazz = getClass.getClassLoader.loadClass(className)
@@ -196,13 +196,13 @@ class CatchReporterProp extends AllSuiteProp {
       super.apply(event)
     }
   }
-  
+
   class WrapAwareStopOnFailureReporter(reporter: Reporter) extends StopOnFailureReporter(reporter, Stopper.default, new PrintStream(new ByteArrayOutputStream)) {
     @volatile var isWrapped = false
     override def apply(event: Event): Unit = {
       if (!isWrapped) {
         val stackTraceList = Thread.currentThread.getStackTrace.drop(2)
-        isWrapped = stackTraceList.find { element => 
+        isWrapped = stackTraceList.find { element =>
           val className = element.getClassName
           try {
             val clazz = getClass.getClassLoader.loadClass(className)
@@ -217,22 +217,22 @@ class CatchReporterProp extends AllSuiteProp {
       super.apply(event)
     }
   }
-  
+
   test("WrapAwareReporter's isWrapped should return false when it is not wrapped in another reporter") {
     val rep = new WrapAwareReporter
     rep(TestStarting(new Ordinal(99), "suite name", "suite ID", Some("suite.className"), "test name", "test name"))
     assert(!rep.isWrapped, "WrapAwareReporter should return false when it is not wrapped, but it returns true.")
   }
-  
+
   test("WrapAwareReporter's isWrapped should return true when it is wrapped in another reporter") {
     val rep = new WrapAwareReporter
     val wrapper = new WrapperReporter(rep)
     wrapper(TestStarting(new Ordinal(99), "suite name", "suite ID", Some("suite.className"), "test name", "test name"))
     assert(rep.isWrapped, "WrapAwareReporter should return true when it is wrapped, but it returns false.")
   }
-  
+
   test("Well written reporter that does not extend CatchReporter should be wrapped with CatchReporter and execute just fine.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new WrapAwareReporter
       s.run(None, Args(reporter = rep))
       assert(rep.testStartingEventsReceived.length === 3)
@@ -240,9 +240,9 @@ class CatchReporterProp extends AllSuiteProp {
       assert(rep.isWrapped, "rep should be wrapped with CatchReporter, but it does not.")
     }
   }
-  
+
   test("Well written reporter that extends CatchReporter should not be wrapped with CatchReporter and execute just fine.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new EventRecordingReporter
       val wrapper = new WrapAwareCatchReporter(rep)
       s.run(None, Args(reporter = wrapper))
@@ -251,9 +251,9 @@ class CatchReporterProp extends AllSuiteProp {
       assert(!wrapper.isWrapped, "rep should not be wrapped with CatchReporter, but it does.")
     }
   }
-  
+
   test("Reporter that does not extend CatchReporter should be wrapped with CatchReporter and handle buggy reporter correctly.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new BuggyReporter
       s.run(None, Args(reporter = rep))
       assert(rep.testStartingEventsReceived.length === 2)
@@ -261,9 +261,9 @@ class CatchReporterProp extends AllSuiteProp {
       assert(rep.isWrapped, "rep should be wrapped with CatchReporter, but it does not.")
     }
   }
-  
+
   test("Reporter that extends CatchReporter should not be wrapped with CatchReporter and handle buggy reporter correctly.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new BuggyReporter
       val wrapper = new WrapAwareCatchReporter(rep)
       s.run(None, Args(reporter = wrapper))
@@ -272,9 +272,9 @@ class CatchReporterProp extends AllSuiteProp {
       assert(!wrapper.isWrapped, "rep should not be wrapped with CatchReporter, but it does.")
     }
   }
-  
+
   test("Reporter that extends DispatchReporter should not be wrapped with CatchReporter and execute just fine.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new EventRecordingReporter
       val wrapper = new WrapAwareDispatchReporter(List(rep), new PrintStream(new ByteArrayOutputStream))
       s.run(None, Args(reporter = wrapper))
@@ -285,9 +285,9 @@ class CatchReporterProp extends AllSuiteProp {
       wrapper.doDispose()
     }
   }
-  
+
   test("Reporter that extends DispatchReporter should not be wrapped with CatchReporter and handle buggy reporter correctly.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new BuggyReporter
       val wrapper = new WrapAwareDispatchReporter(List(rep), new PrintStream(new ByteArrayOutputStream))
       s.run(None, Args(reporter = wrapper))
@@ -298,9 +298,9 @@ class CatchReporterProp extends AllSuiteProp {
       wrapper.doDispose()
     }
   }
-  
+
   test("Reporter that extends SuiteSortingReporter should not be wrapped with CatchReporter and execute just fine.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new EventRecordingReporter
       val wrapper = new WrapAwareSuiteSortingReporter(rep, Span(5, Seconds))
       val tracker = new Tracker()
@@ -312,9 +312,9 @@ class CatchReporterProp extends AllSuiteProp {
       assert(!wrapper.isWrapped, "rep should not be wrapped with CatchReporter, but it does.")
     }
   }
-  
+
   test("Reporter that extends SuiteSortingReporter should not be wrapped with CatchReporter and handle buggy reporter correctly.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new BuggyReporter
       val wrapper = new WrapAwareSuiteSortingReporter(rep, Span(5, Seconds))
       val tracker = new Tracker()
@@ -326,9 +326,9 @@ class CatchReporterProp extends AllSuiteProp {
       assert(!wrapper.isWrapped, "rep should not be wrapped with CatchReporter, but it does.")
     }
   }
-  
+
   test("Reporter that extends TestSortingReporter should not be wrapped with CatchReporter and execute just fine.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new EventRecordingReporter
       val wrapper = new WrapAwareTestSortingReporter(s.suiteId, rep, Span(5, Seconds), 3, None)
       val tracker = new Tracker()
@@ -338,9 +338,9 @@ class CatchReporterProp extends AllSuiteProp {
       assert(!wrapper.isWrapped, "rep should not be wrapped with CatchReporter, but it does.")
     }
   }
-  
+
   test("Reporter that extends TestSortingReporter should not be wrapped with CatchReporter and handle buggy reporter correctly.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new BuggyReporter
       val wrapper = new WrapAwareTestSortingReporter(s.suiteId, rep, Span(5, Seconds), 3, None)
       val tracker = new Tracker()
@@ -352,9 +352,9 @@ class CatchReporterProp extends AllSuiteProp {
       assert(!wrapper.isWrapped, "rep should not be wrapped with CatchReporter, but it does.")
     }
   }
-  
+
   test("Reporter that extends StopOnFailureReporter should not be wrapped with CatchReporter and execute just fine.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new EventRecordingReporter
       val wrapper = new WrapAwareStopOnFailureReporter(rep)
       val tracker = new Tracker()
@@ -364,9 +364,9 @@ class CatchReporterProp extends AllSuiteProp {
       assert(!wrapper.isWrapped, "rep should not be wrapped with CatchReporter, but it does.")
     }
   }
-  
+
   test("Reporter that extends StopOnFailureReporter should not be wrapped with CatchReporter and handle buggy reporter correctly.") {
-    forAll(examples) { s => 
+    forAll(examples) { s =>
       val rep = new BuggyReporter
       val wrapper = new WrapAwareStopOnFailureReporter(rep)
       val tracker = new Tracker()
@@ -410,9 +410,9 @@ class ExampleCatchReporterJUnit3Suite extends JUnit3Suite with CatchReporterFixt
 class ExampleCatchReporterJUnitSuite extends JUnitSuite with CatchReporterFixtureServices {
   @Test
   def testMethod1(): Unit = {}
-  @Test 
+  @Test
   def testMethod2(): Unit = {}
-  @Test 
+  @Test
   def testMethod3(): Unit = {}
   override private[scalatest] def createCatchReporter(reporter: Reporter) = new WrapperCatchReporter(reporter, new PrintStream(new ByteArrayOutputStream))
 }

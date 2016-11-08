@@ -235,7 +235,7 @@ class PropSpecSpec extends org.scalatest.FunSpec {
         }
       }
     }
-    
+
     class TestWasCalledSuite extends PropSpec {
       type FixtureParam = String
       def withFixture(test: OneArgTest): Outcome = { test("hi") }
@@ -866,7 +866,7 @@ class PropSpecSpec extends org.scalatest.FunSpec {
         property("should do that") { fixture =>
           assert(fixture === hello)
         }
-        
+
         property("should do something else") { fixture =>
           assert(fixture === hello)
           pending
@@ -903,7 +903,7 @@ class PropSpecSpec extends org.scalatest.FunSpec {
           assert(fixture === hello)
           pending
         }
-        
+
         property("should do that without a fixture") { () =>
           assert(2 + 2 === 4)
           theTestWithoutFixtureWasRun = true
@@ -1302,9 +1302,9 @@ class PropSpecSpec extends org.scalatest.FunSpec {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 10)
     }
   }
-  
+
   describe("when failure happens") {
-    
+
     it("should fire TestFailed event with correct stack depth info when test failed") {
       class TestSpec extends PropSpec {
         type FixtureParam = String
@@ -1322,7 +1322,7 @@ class PropSpecSpec extends org.scalatest.FunSpec {
       assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "PropSpecSpec.scala")
       assert(rep.testFailedEventsReceived(0).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 8)
     }
-    
+
     it("should generate TestRegistrationClosedException with correct stack depth info when has a property nested inside a property") {
       class TestSpec extends PropSpec {
         var registrationClosedThrown = false
@@ -1335,7 +1335,7 @@ class PropSpecSpec extends org.scalatest.FunSpec {
         override def withFixture(test: OneArgTest): Outcome = {
           val outcome = test.apply("hi")
           outcome match {
-            case Exceptional(ex: TestRegistrationClosedException) => 
+            case Exceptional(ex: TestRegistrationClosedException) =>
               registrationClosedThrown = true
             case _ =>
           }

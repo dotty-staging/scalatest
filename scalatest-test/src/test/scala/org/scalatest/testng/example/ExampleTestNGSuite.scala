@@ -33,18 +33,18 @@ class ExampleTestNGSuite extends TestNGSuite {
   @BeforeMethod def passBeforeMethod(): Unit ={}
   @BeforeClass def passBeforeClass(): Unit ={}
   @BeforeSuite def passBeforeSuite(): Unit ={}
-  
+
   @AfterMethod def passAfterMethod(): Unit ={}
   @AfterClass def passAfterClass(): Unit ={}
   @AfterSuite def passAfterSuite(): Unit ={}
-  
+
  @Test(invocationCount = 10) def thisTestRunsTenTimes: Unit = {}
- 
+
   @Test(groups = Array("runMe"))
   def testWithException(): Unit ={
     throw new Exception("exception!!!")
   }
- 
+
   @Test(groups = Array("runMe")) def testWithAssertFail = assert( 1 === 2, "assert fail!!!" )
 
   @Test(dependsOnMethods = Array("testWithException")) def testToGetSkipped: Unit = {}
@@ -54,7 +54,7 @@ class ExampleTestNGSuite extends TestNGSuite {
     val and = Array("0", "1")
     for( x <- and; y <- and ) yield Array(x,y)
   }
- 
+
   @Test(dataProvider = "andValues")
   def testAndStates(a: String, b: String): Unit ={
     println("a=" + a + ", b=" + b)

@@ -19,7 +19,7 @@ import collection.mutable
 import org.scalatest._
 
 class SetSpec extends FeatureSpec {
-  
+
   feature("An element can be added to an empty mutable Set") {
     scenario("When an element is added to an empty mutable Set") {
 

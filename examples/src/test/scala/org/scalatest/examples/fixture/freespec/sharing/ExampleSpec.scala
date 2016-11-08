@@ -63,13 +63,13 @@ class ExampleSpec extends fixture.FreeSpec with DbFixture {
       db.append("easy!")
       assert(db.toString === "ScalaTest is easy!")
     }
-    
+
     "should be fun" in { db =>
       db.append("fun!")
       assert(db.toString === "ScalaTest is fun!")
     }
   }
-  
+
   // This test doesn't need a Db
   "Test code" - {
     "should be clear" in { () =>

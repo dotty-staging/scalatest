@@ -47,7 +47,7 @@ final class ResultOfGreaterThanOrEqualToComparison[T : Ordering](val right: T) {
     val ordering = implicitly[Ordering[T]]
     ordering.gteq(left, right) // left >= right
   }
-  
+
   /**
    * Override toString to return ">= [right]"
    */

@@ -1281,9 +1281,9 @@ class FunSpecSpec extends org.scalatest.FreeSpec {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 11)
     }
   }
-  
+
   "when failure happens" - {
-    
+
     "should fire TestFailed event with correct stack depth info when test failed" in {
       class TestSpec extends FunSpec {
         type FixtureParam = String
@@ -1306,7 +1306,7 @@ class FunSpecSpec extends org.scalatest.FreeSpec {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "FunSpecSpec.scala")
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 11)
     }
-    
+
     "should generate TestRegistrationClosedException with correct stack depth info when has a it nested inside a it" in {
       class TestSpec extends FunSpec {
         type FixtureParam = String
@@ -1321,7 +1321,7 @@ class FunSpecSpec extends org.scalatest.FreeSpec {
         override def withFixture(test: OneArgTest): Outcome = {
           val outcome = test.apply("hi")
           outcome match {
-            case Exceptional(ex: TestRegistrationClosedException) => 
+            case Exceptional(ex: TestRegistrationClosedException) =>
               registrationClosedThrown = true
             case _ =>
           }

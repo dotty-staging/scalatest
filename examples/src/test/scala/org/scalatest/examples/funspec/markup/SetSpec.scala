@@ -45,7 +45,7 @@ It is also good idea to override methods `foreach` and
 `size` for efficiency.
 
   """ }
-  
+
   describe("A mutable Set") {
     it("should allow an element to be added") {
       Given("an empty mutable Set")

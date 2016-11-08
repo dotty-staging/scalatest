@@ -20,7 +20,7 @@ import Fragment.countTrailingEOLs
 import StringReporter.ansiReset
 
 private[scalatest] case class Fragment(text: String, ansiColor: AnsiColor) {
-  
+
   def toPossiblyColoredText(presentInColor: Boolean): String =
     if (!presentInColor || text.trim.isEmpty) text
     else {

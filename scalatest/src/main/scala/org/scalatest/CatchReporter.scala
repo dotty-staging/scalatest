@@ -30,13 +30,13 @@ import Reporter.propagateDispose
 private[scalatest] trait CatchReporter extends ResourcefulReporter {
 
   val out: PrintStream
-  
+
   def apply(event: Event): Unit = {
     try {
       doApply(event)
     }
     catch {
-      case e: Exception => 
+      case e: Exception =>
         val stringToPrint = Resources.reporterThrew(event)
         out.println(stringToPrint)
         e.printStackTrace(out)
@@ -54,22 +54,22 @@ private[scalatest] trait CatchReporter extends ResourcefulReporter {
         e.printStackTrace(out)
     }
   }
-  
+
   protected def doApply(event: Event): Unit
   protected def doDispose(): Unit
 }
 
 // Out is not even being used. Can I not just ignore the whole concept?
 private[scalatest] class WrapperCatchReporter(reporter: Reporter, val out: PrintStream) extends CatchReporter {
-  
+
   def this(reporter: Reporter) = this(reporter, System.err)
-  
+
   private val report = reporter
-  
+
   def doApply(event: Event): Unit = {
     report(event)
   }
-  
+
   def doDispose(): Unit = {
     propagateDispose(reporter)
   }

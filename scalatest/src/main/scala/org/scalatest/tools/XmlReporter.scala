@@ -70,11 +70,11 @@ private[scalatest] class XmlReporter(directory: String) extends Reporter {
   private def writeSuiteFile(endEvent: Event): Unit = {
     require(endEvent.isInstanceOf[SuiteCompleted] ||
             endEvent.isInstanceOf[SuiteAborted])
-    
+
     val testsuite = getTestsuite(endEvent)
     val xmlStr    = xmlify(testsuite)
     val filespec  = directory + "/" + testsuite.name + ".xml"
-    
+
     val out = new PrintWriter(filespec, "UTF-8")
     out.print(xmlStr)
     out.close()
@@ -102,7 +102,7 @@ private[scalatest] class XmlReporter(directory: String) extends Reporter {
 
     val ordinalPrefix = endEvent.ordinal.toList.dropRight(1)
 
-    val samePrefixEvents = 
+    val samePrefixEvents =
       events.toList.filter(
         e => e.ordinal.toList.dropRight(1) == ordinalPrefix)
 
@@ -390,7 +390,7 @@ private[scalatest] class XmlReporter(directory: String) extends Reporter {
               val throwableText = getStackTrace(throwable)
               (throwableType, throwableText)
           }
-        
+
         <failure message = { { unparsedXml(failure.message.replaceAll("\n", "&#010;")) } }
                  type    = { throwableType   } >
           { throwableText }

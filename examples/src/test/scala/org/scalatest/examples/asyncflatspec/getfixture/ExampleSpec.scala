@@ -21,7 +21,7 @@ import scala.concurrent.Future
 class ExampleSpec extends AsyncFlatSpec {
 
   def fixture: Future[String] = Future { "ScalaTest is " }
-    
+
   "Testing" should "be easy" in {
     val future = fixture
     val result = future map { s => s + "easy!" }
@@ -37,6 +37,6 @@ class ExampleSpec extends AsyncFlatSpec {
       assert(s == "ScalaTest is fun!")
     }
   }
-  
+
 }
 

@@ -24,7 +24,7 @@ import org.scalatest.Tag
  * This tag object is intended to be used in conjunction with trait <a href="../Retries.html"><code>Retries</code></a>, to
  * identify tests that are candidates for retrying.
  * </p>
- * 
+ *
  * <p>
  * The corresponding tag annotation for this tag object is <code>org.scalatest.tags.Retryable</code>.
  * This tag object can be used to tag test functions (in style traits other than <code>Spec</code>, in which tests are methods
@@ -34,12 +34,12 @@ import org.scalatest.Tag
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.tagobjects.retryable
- * 
+ *
  * import org.scalatest._
  * import tagobjects.Retryable
- * 
+ *
  * class SetSpec extends FlatSpec with Retries {
- * 
+ *
  *   override def withFixture(test: NoArgTest) = {
  *     if (isRetryable(test))
  *       withRetry { super.withFixture(test) }
@@ -53,4 +53,4 @@ import org.scalatest.Tag
  * }
  * </pre>
  */
-object Retryable extends Tag("org.scalatest.tags.Retryable") 
+object Retryable extends Tag("org.scalatest.tags.Retryable")

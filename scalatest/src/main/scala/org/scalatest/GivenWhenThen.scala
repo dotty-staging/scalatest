@@ -24,28 +24,28 @@ import org.scalactic.source
  * <p>
  * Here's an example:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.info
- * 
+ *
  * import collection.mutable
  * import org.scalatest._
- * 
+ *
  * class SetSpec extends FlatSpec with GivenWhenThen {
- *   
+ *
  *   "A mutable Set" should "allow an element to be added" in {
  *     Given("an empty mutable Set")
  *     val set = mutable.Set.empty[String]
- * 
+ *
  *     When("an element is added")
  *     set += "clarity"
- * 
+ *
  *     Then("the Set should have size 1")
  *     assert(set.size === 1)
- * 
+ *
  *     And("the Set should contain the added element")
  *     assert(set.contains("clarity"))
- * 
+ *
  *     info("That's all folks!")
  *   }
  * }
@@ -59,10 +59,10 @@ import org.scalactic.source
  * scala&gt; org.scalatest.run(new SetSpec)
  * <span class="stGreen">A mutable Set
  * - should allow an element to be added
- *   + Given an empty mutable Set 
- *   + When an element is added 
- *   + Then the Set should have size 1 
- *   + And the Set should contain the added element 
+ *   + Given an empty mutable Set
+ *   + When an element is added
+ *   + Then the Set should have size 1
+ *   + And the Set should contain the added element
  *   + That's all folks! </span>
  * </pre>
  *
@@ -78,7 +78,7 @@ trait GivenWhenThen { this: Informing =>
   def Given(message: String)(implicit pos: source.Position): Unit = {
     info(Resources.givenMessage(message))(pos)
   }
-  
+
   /**
    * Forwards a message to an implicit <code>Informer</code>, preceded by "When ".
    *
@@ -87,7 +87,7 @@ trait GivenWhenThen { this: Informing =>
   def When(message: String)(implicit pos: source.Position): Unit = {
     info(Resources.whenMessage(message))(pos)
   }
-  
+
   /**
    * Forwards a message to an implicit <code>Informer</code>, preceded by "Then ".
    *
@@ -96,7 +96,7 @@ trait GivenWhenThen { this: Informing =>
   def Then(message: String)(implicit pos: source.Position): Unit = {
     info(Resources.thenMessage(message))(pos)
   }
-  
+
    /**
    * Forwards a message to an implicit <code>Informer</code>, preceded by "And ".
    *

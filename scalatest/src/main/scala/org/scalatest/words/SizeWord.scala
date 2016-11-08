@@ -24,7 +24,7 @@ package org.scalatest.words
 final class SizeWord {
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * set should not have size (3)
@@ -32,7 +32,7 @@ final class SizeWord {
    * </pre>
    */
   def apply(expectedSize: Long): ResultOfSizeWordApplication = new ResultOfSizeWordApplication(expectedSize)
-  
+
   /**
    * Overrides toString to return "size"
    */

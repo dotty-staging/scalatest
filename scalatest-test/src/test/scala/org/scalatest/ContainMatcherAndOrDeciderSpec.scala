@@ -29,22 +29,22 @@ class ContainMatcherAndOrDeciderSpec extends FunSpec with Explicitly {
   private val prettifier = Prettifier.default
 
   val equality = new Equality[String] {
-    def areEqual(left: String, right: Any) = 
+    def areEqual(left: String, right: Any) =
       left.toLowerCase == (right match {
         case s: String => s.toLowerCase
         case other => other
       })
   }
-  
+
   describe("ContainMatcher ") {
-    
+
     describe("when use with 'and'") {
-      
+
       it("should pass when both contain passes") {
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List(" three", " one", "two ")
         val right2 = List(" one", "two ", " three")
-        
+
         (left should (contain theSameElementsAs (right1) and contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right1) and contain theSameElementsInOrderAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right1) and contain allOf (" three", "two ", " one"))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
@@ -62,41 +62,41 @@ class ContainMatcherAndOrDeciderSpec extends FunSpec with Explicitly {
         (left should (contain only (" three", " one", "two ") and contain theSameElementsAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain inOrderOnly (" one", "two ", " three") and contain theSameElementsAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain noneOf (" seven", "eight ", " nine") and contain theSameElementsAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
-        
+
       }
-      
+
       it("should failed with correctly stack depth and message when first contain failed but second contain passed") {
         val left = List("ONE ", " TWO", "THREE ")
         val right = List(" three", "two ", " one")
-        
+
         val e = intercept[exceptions.TestFailedException] {
           (left should (contain theSameElementsInOrderAs right and contain theSameElementsAs right)) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         }
         e.message should be (Some(decorateToStringValue(prettifier, left) + " did not contain the same elements in the same (iterated) order as " + decorateToStringValue(prettifier, right)))
         e.failedCodeFileName should be (Some("ContainMatcherAndOrDeciderSpec.scala"))
         e.failedCodeLineNumber should be (Some(thisLineNumber - 4))
-        
+
       }
-      
+
       it("should failed with correctly stack depth and message when first contain passed but second contain failed") {
         val left = List("ONE ", " TWO", "THREE ")
         val right = List(" three", "two ", " one")
-        
+
         val e = intercept[exceptions.TestFailedException] {
           (left should (contain theSameElementsAs right and contain theSameElementsInOrderAs right)) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         }
         e.message should be (Some(decorateToStringValue(prettifier, left) + " contained the same elements as " + decorateToStringValue(prettifier, right) + ", but " + decorateToStringValue(prettifier, left) + " did not contain the same elements in the same (iterated) order as " + decorateToStringValue(prettifier, right)))
         e.failedCodeFileName should be (Some("ContainMatcherAndOrDeciderSpec.scala"))
         e.failedCodeLineNumber should be (Some(thisLineNumber - 4))
-        
+
       }
-      
+
       it("should pass when not contain and contain passes") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List("eight ", " one", "two ")
         val right2 = List(" one", "two ", " three")
-        
+
         (left should (not contain theSameElementsAs (right1) and contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain theSameElementsInOrderAs (right1) and contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain allOf ("eight ", "two ", " one") and contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
@@ -106,14 +106,14 @@ class ContainMatcherAndOrDeciderSpec extends FunSpec with Explicitly {
         (left should (not contain inOrderOnly (" one", "two ", "eight ") and contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain inOrderOnly (" one", "two ", "eight ") and contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
       }
-      
+
       it("should pass when contain and not contain passes") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List(" eight", "one ", " two")
         val right2 = List(" one", "two ", " three")
-        
-        (left should (contain theSameElementsAs (right2) and not contain theSameElementsAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)        
+
+        (left should (contain theSameElementsAs (right2) and not contain theSameElementsAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right2) and not contain theSameElementsInOrderAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right2) and not contain allOf (" eight", " two", "one "))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right2) and not contain inOrder ("one ", " two", " eight"))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
@@ -122,13 +122,13 @@ class ContainMatcherAndOrDeciderSpec extends FunSpec with Explicitly {
         (left should (contain theSameElementsAs (right2) and not contain inOrderOnly ("one ", " two", " eight"))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right2) and not contain noneOf ("one ", " two", " eight"))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
       }
-      
+
       it("should pass when not contain and not contain passes") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List(" eight", "one ", " two")
         val right2 = List("one ", " two", " eight")
-        
+
         (left should (not contain theSameElementsAs (right2) and not contain theSameElementsAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain theSameElementsAs (right2) and not contain theSameElementsInOrderAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain theSameElementsAs (right2) and not contain allOf (" eight", " two", "one "))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
@@ -138,61 +138,61 @@ class ContainMatcherAndOrDeciderSpec extends FunSpec with Explicitly {
         (left should (not contain theSameElementsAs (right2) and not contain inOrderOnly ("one ", " two", " eight"))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain theSameElementsAs (right2) and not contain noneOf ("one ", " two", " eight"))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
       }
-      
+
       it("should failed with correctly stack depth and message when first not contain failed but second contain passed") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List(" one", "two ", " three")
         val right2 = List(" three", "two ", " one")
-        
+
         val e = intercept[exceptions.TestFailedException] {
           (left should (not contain theSameElementsInOrderAs (right1) and contain theSameElementsAs right2)) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         }
         e.message should be (Some(decorateToStringValue(prettifier, left) + " contained the same elements in the same (iterated) order as " + decorateToStringValue(prettifier, right1)))
         e.failedCodeFileName should be (Some("ContainMatcherAndOrDeciderSpec.scala"))
         e.failedCodeLineNumber should be (Some(thisLineNumber - 4))
-        
+
       }
-      
+
       it("should failed with correctly stack depth and message when first contain passed but second not contain failed") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List(" three", "two ", " one")
         val right2 = List(" one", "two ", " three")
-        
+
         val e = intercept[exceptions.TestFailedException] {
-          (left should (contain theSameElementsAs right1 and not contain theSameElementsInOrderAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed) 
+          (left should (contain theSameElementsAs right1 and not contain theSameElementsInOrderAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         }
         e.message should be (Some(decorateToStringValue(prettifier, left) + " contained the same elements as " + decorateToStringValue(prettifier, right1) + ", but " + decorateToStringValue(prettifier, left) + " contained the same elements in the same (iterated) order as " + decorateToStringValue(prettifier, right2)))
         e.failedCodeFileName should be (Some("ContainMatcherAndOrDeciderSpec.scala"))
         e.failedCodeLineNumber should be (Some(thisLineNumber - 4))
-        
+
       }
-      
+
       it("should failed with correctly stack depth and message when first not contain failed and second not contain failed") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List(" one", "two ", " three")
-        val right2 = List(" three", "two ", " one")        
-        
+        val right2 = List(" three", "two ", " one")
+
         val e = intercept[exceptions.TestFailedException] {
-          (left should (not contain theSameElementsInOrderAs (right1) and not contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed) 
+          (left should (not contain theSameElementsInOrderAs (right1) and not contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         }
         e.message should be (Some(decorateToStringValue(prettifier, left) + " contained the same elements in the same (iterated) order as " + decorateToStringValue(prettifier, right1)))
         e.failedCodeFileName should be (Some("ContainMatcherAndOrDeciderSpec.scala"))
         e.failedCodeLineNumber should be (Some(thisLineNumber - 4))
-        
+
       }
-      
+
     }
-    
+
     describe("when use with 'or'") {
-      
+
       it("should pass when one of contain passes") {
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List("five ", " one", "two ")
         val right2 = List(" one", "two ", " three")
-        
+
         (left should (contain theSameElementsAs (right1) or contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right1) or contain theSameElementsInOrderAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right1) or contain allOf (" three", "two ", " one"))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
@@ -210,31 +210,31 @@ class ContainMatcherAndOrDeciderSpec extends FunSpec with Explicitly {
         (left should (contain only (" three", " one", "two ") or contain theSameElementsAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain inOrderOnly (" one", "two ", " three") or contain theSameElementsAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain noneOf ("seven ", " eight", "nine ") or contain theSameElementsAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
-        
+
       }
-      
+
       it("should failed with correctly stack depth and message when both of contain failed") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List(" three", "eight ", " one")
         val right2 = List(" three", "two ", " one")
-        
+
         val e = intercept[exceptions.TestFailedException] {
           (left should (contain theSameElementsAs right1 or contain theSameElementsInOrderAs right2)) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         }
         e.message should be (Some(decorateToStringValue(prettifier, left) + " did not contain the same elements as " + decorateToStringValue(prettifier, right1) + ", and " + decorateToStringValue(prettifier, left) + " did not contain the same elements in the same (iterated) order as " + decorateToStringValue(prettifier, right2)))
         e.failedCodeFileName should be (Some("ContainMatcherAndOrDeciderSpec.scala"))
         e.failedCodeLineNumber should be (Some(thisLineNumber - 4))
-        
+
       }
-      
+
       it("should pass when not contain and contain passes") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List("eight ", " one", "two ")
         val right2 = List(" one", "two ", " three")
-        
-        (left should (not contain theSameElementsAs (right1) or contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed) 
+
+        (left should (not contain theSameElementsAs (right1) or contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain theSameElementsInOrderAs (right1) or contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain allOf ("eight ", "two ", " one") or contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain inOrder (" one", "two ", "eight ") or contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
@@ -243,13 +243,13 @@ class ContainMatcherAndOrDeciderSpec extends FunSpec with Explicitly {
         (left should (not contain inOrderOnly (" one", "two ", "eight ") or contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain noneOf (" one", "two ", "eight ") or contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
       }
-      
+
       it("should pass when contain and not contain passes") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List("eight ", " one", "two ")
         val right2 = List(" one", "two ", " three")
-        
+
         (left should (contain theSameElementsAs (right2) or not contain theSameElementsAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right2) or not contain theSameElementsInOrderAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right2) or not contain allOf ("eight ", "two ", " one"))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
@@ -258,15 +258,15 @@ class ContainMatcherAndOrDeciderSpec extends FunSpec with Explicitly {
         (left should (contain theSameElementsAs (right2) or not contain only ("eight ", " one", "two "))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right2) or not contain inOrderOnly (" one", "two ", "eight "))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (contain theSameElementsAs (right2) or not contain noneOf (" one", "two ", "eight "))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
-        
+
       }
-      
+
       it("should pass when not contain and not contain passes") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List("eight ", " one", "two ")
         val right2 = List(" one", "two ", "eight ")
-        
+
         (left should (not contain theSameElementsAs (right2) or not contain theSameElementsAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain theSameElementsAs (right2) or not contain theSameElementsInOrderAs (right1))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain theSameElementsAs (right2) or not contain allOf ("eight ", "two ", " one"))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
@@ -276,53 +276,53 @@ class ContainMatcherAndOrDeciderSpec extends FunSpec with Explicitly {
         (left should (not contain theSameElementsAs (right2) or not contain inOrderOnly (" one", "two ", "eight "))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         (left should (not contain theSameElementsAs (right2) or not contain noneOf (" one", "two ", "eight "))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
       }
-      
+
       it("should failed with correctly stack depth and message when first not contain failed and second contain failed") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List(" one", "two ", " three")
         val right2 = List(" eight", "two ", " one")
-        
+
         val e = intercept[exceptions.TestFailedException] {
-          (left should (not contain theSameElementsInOrderAs (right1) or contain theSameElementsAs right2)) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed) 
+          (left should (not contain theSameElementsInOrderAs (right1) or contain theSameElementsAs right2)) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         }
         e.message should be (Some(decorateToStringValue(prettifier, left) + " contained the same elements in the same (iterated) order as " + decorateToStringValue(prettifier, right1) + ", and " + decorateToStringValue(prettifier, left) + " did not contain the same elements as " + decorateToStringValue(prettifier, right2)))
         e.failedCodeFileName should be (Some("ContainMatcherAndOrDeciderSpec.scala"))
         e.failedCodeLineNumber should be (Some(thisLineNumber - 4))
-        
+
       }
-      
+
       it("should failed with correctly stack depth and message when first contain failed and second not contain failed") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right = List(" three", "two ", " one")
-        
+
         val e = intercept[exceptions.TestFailedException] {
           (left should (contain theSameElementsInOrderAs (right) or not contain theSameElementsAs (right))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         }
         e.message should be (Some(decorateToStringValue(prettifier, left) + " did not contain the same elements in the same (iterated) order as " + decorateToStringValue(prettifier, right) + ", and " + decorateToStringValue(prettifier, left) + " contained the same elements as " + decorateToStringValue(prettifier, right)))
         e.failedCodeFileName should be (Some("ContainMatcherAndOrDeciderSpec.scala"))
         e.failedCodeLineNumber should be (Some(thisLineNumber - 4))
-        
+
       }
-      
+
       it("should failed with correctly stack depth and message when first not contain failed and second not contain failed") {
-        
+
         val left = List("ONE ", " TWO", "THREE ")
         val right1 = List(" one", "two ", " three")
         val right2 = List(" three", "two ", " one")
-        
+
         val e = intercept[exceptions.TestFailedException] {
-          (left should (not contain theSameElementsInOrderAs (right1) or not contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed) 
+          (left should (not contain theSameElementsInOrderAs (right1) or not contain theSameElementsAs (right2))) (decided by equality afterBeing trimmed, decided by equality afterBeing trimmed)
         }
         e.message should be (Some(decorateToStringValue(prettifier, left) + " contained the same elements in the same (iterated) order as " + decorateToStringValue(prettifier, right1) + ", and " + decorateToStringValue(prettifier, left) + " contained the same elements as " + decorateToStringValue(prettifier, right2)))
         e.failedCodeFileName should be (Some("ContainMatcherAndOrDeciderSpec.scala"))
         e.failedCodeLineNumber should be (Some(thisLineNumber - 4))
-        
+
       }
-      
+
     }
-    
+
   }
-  
+
 }

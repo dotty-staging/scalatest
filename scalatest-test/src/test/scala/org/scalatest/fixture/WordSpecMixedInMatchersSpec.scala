@@ -27,7 +27,7 @@ class WordSpecMixedInMatchersSpec extends WordSpec with Matchers with StringFixt
       "hello" should endWith regex (".*o")
       "hello" should include regex ("l*")
     }
-    "still work OK" in { _ => 
+    "still work OK" in { _ =>
       "dude" should not startWith ("he")
       "dude" should not endWith ("lo")
       "dude" should not include ("el")

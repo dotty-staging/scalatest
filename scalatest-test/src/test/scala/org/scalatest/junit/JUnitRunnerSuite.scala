@@ -133,8 +133,8 @@ import org.scalatest.junit.helpers.KerblooeySuite
     {
       val result = JUnitCore.runClasses(classOf[KerblooeySuite])
       val kerblooeySuite = new KerblooeySuite
-      assert(result.getRunCount === kerblooeySuite.runCount) 
-      assert(result.getFailureCount === kerblooeySuite.failedCount) 
+      assert(result.getRunCount === kerblooeySuite.runCount)
+      assert(result.getFailureCount === kerblooeySuite.failedCount)
       assert(result.getIgnoreCount === kerblooeySuite.ignoreCount)
     }
   }

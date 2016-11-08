@@ -330,9 +330,9 @@ class SuiteSortingReporterSpec extends FunSpec with Matchers with EventHelpers {
     it("should fire blocking suite's events when timeout, and just fire the missing event directly without waiting when received later.") {
       val recordingReporter = new EventRecordingReporter()
       val dispatch = new SuiteSortingReporter(recordingReporter, Span(1, Second), new PrintStream(new ByteArrayOutputStream))
-      
+
       val tracker = new Tracker()
-      
+
       dispatch(SuiteStarting(tracker.nextOrdinal, "suite1", "suite1", Some("suite1 class name")))
       dispatch(SuiteStarting(tracker.nextOrdinal, "suite2", "suite2", Some("suite2 class name")))
       dispatch(TestStarting(tracker.nextOrdinal, "suite2", "suite2", Some("suite2 class name"), "Suite 2 Test", "Suite 2 Test"))
@@ -340,10 +340,10 @@ class SuiteSortingReporterSpec extends FunSpec with Matchers with EventHelpers {
       dispatch(TestStarting(tracker.nextOrdinal, "suite1", "suite1", Some("suite1 class name"), "Suite 1 Test", "Suite 1 Test"))
       dispatch(TestSucceeded(tracker.nextOrdinal, "suite1", "suite1", Some("suite1 class name"), "Suite 1 Test", "Suite 1 Test", Vector.empty))
       dispatch(TestSucceeded(tracker.nextOrdinal, "suite2", "suite2", Some("suite2 class name"), "Suite 2 Test", "Suite 2 Test", Vector.empty))
-      
+
       Thread.sleep(1500) // Wait for the SuiteSortingReporter timeout, which is 1 second (set above)
       dispatch(SuiteCompleted(tracker.nextOrdinal, "suite1", "suite1", Some("suite1 class name"), None))
-      
+
       val recordedEvents = recordingReporter.eventsReceived
       assert(recordedEvents.size === 8)
       checkSuiteStarting(recordedEvents(0), "suite1")

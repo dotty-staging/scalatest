@@ -58,7 +58,7 @@ private[scalatest] class ColorBar extends JPanel {
 
   def setValue(value: Int): Unit = {
 
-    if (value < 0) 
+    if (value < 0)
       throw new IllegalArgumentException()
 
     this.value = value
@@ -115,7 +115,7 @@ private[scalatest] class ColorBar extends JPanel {
       else if (localVal != 0) {
 
         val floatExtent: Float = (dim.width.toFloat * localVal) / localMax
-        floatExtent.toInt 
+        floatExtent.toInt
       }
       else 0
 

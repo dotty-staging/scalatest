@@ -32,12 +32,12 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
     new Uniformity[(Int, String)] {
 
       def normalized(s: (Int, String)): (Int, String) = (s._1, s._2.trim)
-      def normalizedCanHandle(b: Any) = 
+      def normalizedCanHandle(b: Any) =
         b match {
           case (_: Int, _: String) => true
           case _ => false
         }
-      def normalizedOrSame(b: Any) = 
+      def normalizedOrSame(b: Any) =
         b match {
           case (k: Int, v: String) => normalized((k, v))
           case _ => b
@@ -49,18 +49,18 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
     new Uniformity[java.util.Map.Entry[Int, String]] {
 
       def normalized(s: java.util.Map.Entry[Int, String]): java.util.Map.Entry[Int, String] = Entry(s.getKey, s.getValue.trim)
-      def normalizedCanHandle(b: Any) = 
+      def normalizedCanHandle(b: Any) =
         b match {
-          case entry: java.util.Map.Entry[_, _] => 
+          case entry: java.util.Map.Entry[_, _] =>
             (entry.getKey, entry.getValue) match {
               case (_: Int, _: String) => true
               case _ => false
             }
           case _ => false
         }
-      def normalizedOrSame(b: Any) = 
+      def normalizedOrSame(b: Any) =
         b match {
-          case entry: java.util.Map.Entry[_, _] => 
+          case entry: java.util.Map.Entry[_, _] =>
             (entry.getKey, entry.getValue) match {
               case (k: Int, v: String) => normalized(Entry(k, v))
               case _ => b
@@ -69,8 +69,8 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
         }
     }
   // SKIP-SCALATESTJS-END
-  
-  val incremented: Uniformity[Int] = 
+
+  val incremented: Uniformity[Int] =
     new Uniformity[Int] {
       var count = 0
       def normalized(s: Int): Int = {
@@ -84,27 +84,27 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
           case _ => b
         }
     }
-  
-  val mapIncremented: Uniformity[(Int, String)] = 
+
+  val mapIncremented: Uniformity[(Int, String)] =
     new Uniformity[(Int, String)] {
       var count = 0
       def normalized(s: (Int, String)): (Int, String) = {
         count += 1
         (s._1 + count, s._2)
       }
-      def normalizedCanHandle(b: Any) = 
+      def normalizedCanHandle(b: Any) =
         b match {
           case (_: Int, _: String) => true
           case _ => false
         }
-      def normalizedOrSame(b: Any) = 
+      def normalizedOrSame(b: Any) =
         b match {
           case (k: Int, v: String) => normalized((k, v))
           case _ => b
         }
     }
-  
-  val appended: Uniformity[String] = 
+
+  val appended: Uniformity[String] =
     new Uniformity[String] {
       var count = 0
       def normalized(s: String): String = {
@@ -118,20 +118,20 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
           case _ => b
         }
     }
-  
-  val mapAppended: Uniformity[(Int, String)] = 
+
+  val mapAppended: Uniformity[(Int, String)] =
     new Uniformity[(Int, String)] {
       var count = 0
       def normalized(s: (Int, String)): (Int, String) = {
         count += 1
         (s._1, s._2 + count)
       }
-      def normalizedCanHandle(b: Any) = 
+      def normalizedCanHandle(b: Any) =
         b match {
           case (_: Int, _: String) => true
           case _ => false
         }
-      def normalizedOrSame(b: Any) = 
+      def normalizedOrSame(b: Any) =
         b match {
           case (k: Int, v: String) => normalized((k, v))
           case _ => b
@@ -139,25 +139,25 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
     }
 
   // SKIP-SCALATESTJS-START
-  val javaMapAppended: Uniformity[java.util.Map.Entry[Int, String]] = 
+  val javaMapAppended: Uniformity[java.util.Map.Entry[Int, String]] =
     new Uniformity[java.util.Map.Entry[Int, String]] {
       var count = 0
       def normalized(s: java.util.Map.Entry[Int, String]): java.util.Map.Entry[Int, String] = {
         count += 1
         Entry(s.getKey, s.getValue + count)
       }
-      def normalizedCanHandle(b: Any) = 
+      def normalizedCanHandle(b: Any) =
         b match {
-          case entry: java.util.Map.Entry[_, _] => 
+          case entry: java.util.Map.Entry[_, _] =>
             (entry.getKey, entry.getValue) match {
               case (_: Int, _: String) => true
               case _ => false
             }
           case _ => false
         }
-      def normalizedOrSame(b: Any) = 
+      def normalizedOrSame(b: Any) =
         b match {
-          case entry: java.util.Map.Entry[_, _] => 
+          case entry: java.util.Map.Entry[_, _] =>
             (entry.getKey, entry.getValue) match {
               case (k: Int, v: String) => normalized(Entry(k, v))
               case _ => b
@@ -166,22 +166,22 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
         }
     }
   // SKIP-SCALATESTJS-END
-  
-  val lowerCaseEquality = 
+
+  val lowerCaseEquality =
     new Equality[String] {
-      def areEqual(left: String, right: Any) = 
+      def areEqual(left: String, right: Any) =
         left.toLowerCase == (right match {
           case s: String => s.toLowerCase
           case other => other
         })
     }
-  
-  val mapLowerCaseEquality = 
+
+  val mapLowerCaseEquality =
     new Equality[(Int, String)] {
-      def areEqual(left: (Int, String), right: Any) = 
+      def areEqual(left: (Int, String), right: Any) =
         right match {
-          case t2: Tuple2[_, _] =>  
-            left._1 == t2._1 && 
+          case t2: Tuple2[_, _] =>
+            left._1 == t2._1 &&
             left._2.toLowerCase == (t2._2 match {
               case s: String => s.toLowerCase
               case other => other
@@ -191,12 +191,12 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
     }
 
   // SKIP-SCALATESTJS-START
-  val javaMapLowerCaseEquality = 
+  val javaMapLowerCaseEquality =
     new Equality[java.util.Map.Entry[Int, String]] {
-      def areEqual(left: java.util.Map.Entry[Int, String], right: Any) = 
+      def areEqual(left: java.util.Map.Entry[Int, String], right: Any) =
         right match {
-          case entry: java.util.Map.Entry[_, _] =>  
-            left.getKey == entry.getKey && 
+          case entry: java.util.Map.Entry[_, _] =>
+            left.getKey == entry.getKey &&
             left.getValue.toLowerCase == (entry.getValue match {
               case s: String => s.toLowerCase
               case other => other
@@ -205,22 +205,22 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
       }
     }
   // SKIP-SCALATESTJS-END
-  
-  val reverseEquality = 
+
+  val reverseEquality =
     new Equality[String] {
-      def areEqual(left: String, right: Any) = 
+      def areEqual(left: String, right: Any) =
         left.reverse == (right match {
           case s: String => s.toLowerCase
           case other => other
         })
     }
-  
-  val mapReverseEquality = 
+
+  val mapReverseEquality =
     new Equality[(Int, String)] {
-      def areEqual(left: (Int, String), right: Any) = 
+      def areEqual(left: (Int, String), right: Any) =
         right match {
-          case t2: Tuple2[_, _] =>  
-            left._1 == t2._1 && 
+          case t2: Tuple2[_, _] =>
+            left._1 == t2._1 &&
             left._2.reverse == (t2._2 match {
               case s: String => s.toLowerCase
               case other => other
@@ -230,12 +230,12 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
     }
 
   // SKIP-SCALATESTJS-START
-  val javaMapReverseEquality = 
+  val javaMapReverseEquality =
     new Equality[java.util.Map.Entry[Int, String]] {
-      def areEqual(left: java.util.Map.Entry[Int, String], right: Any) = 
+      def areEqual(left: java.util.Map.Entry[Int, String], right: Any) =
         right match {
-          case entry: java.util.Map.Entry[_, _] =>  
-            left.getKey == entry.getKey && 
+          case entry: java.util.Map.Entry[_, _] =>
+            left.getKey == entry.getKey &&
             left.getValue.reverse == (entry.getValue match {
               case s: String => s.toLowerCase
               case other => other
@@ -244,24 +244,24 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
       }
     }
   // SKIP-SCALATESTJS-END
-  
+
   describe("oneOf ") {
-    
+
     def checkShouldContainStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       e.message should be (Some(FailureMessages.didNotContainOneOfElements(prettifier, left, UnquotedString(right.map(r => FailureMessages.decorateToStringValue(prettifier, r)).mkString(", ")))))
       e.failedCodeFileName should be (Some("OneOfContainMatcherDeciderSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-      
+
     def checkShouldNotContainStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       e.message should be (Some(FailureMessages.containedOneOfElements(prettifier, left, UnquotedString(right.map(r => FailureMessages.decorateToStringValue(prettifier, r)).mkString(", ")))))
       e.failedCodeFileName should be (Some("OneOfContainMatcherDeciderSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should take specified normalization when 'should contain' is used") {
-      
+
       (List("1", " 2", "3") should contain oneOf ("2 ", "6", "8")) (after being trimmed)
       (Set("1", " 2", "3") should contain oneOf ("2 ", "6", "8")) (after being trimmed)
       (Array("1", " 2", "3") should contain oneOf ("2 ", "6", "8")) (after being trimmed)
@@ -273,9 +273,9 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
       (javaMap(Entry(1, "one"), Entry(2, " two"), Entry(3, "three")) should contain oneOf (Entry(2, "two"), Entry(6, "six"), Entry(8, "eight"))) (after being javaMapTrimmed)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take specified normalization when 'should not contain' is used") {
-      
+
       (List("1", "2", "3") should not contain oneOf ("1", "6", "8")) (after being appended)
       (Set("1", "2", "3") should not contain oneOf ("1", "6", "8")) (after being appended)
       (Array("1", "2", "3") should not contain oneOf ("1", "6", "8")) (after being appended)
@@ -287,27 +287,27 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
       (javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three")) should not contain oneOf (Entry(1, "one"), Entry(2, "two"), Entry(3, "three"))) (after being javaMapAppended)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should contain custom matcher' failed with specified normalization") {
-      
+
       val left1 = List("1", "2", "3")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should contain oneOf ("1", "6", "8")) (after being appended)
       }
       checkShouldContainStackDepth(e1, left1, Array("1", "6", "8").deep, thisLineNumber - 2)
-        
+
       val left2 = Set("1", "2", "3")
       val e2 = intercept[exceptions.TestFailedException] {
         (left2 should contain oneOf ("1", "6", "8")) (after being appended)
       }
       checkShouldContainStackDepth(e2, left2, Array("1", "6", "8").deep, thisLineNumber - 2)
-        
+
       val left3 = Array("1", "2", "3")
       val e3 = intercept[exceptions.TestFailedException] {
         (left3 should contain oneOf ("1", "6", "8")) (after being appended)
       }
         checkShouldContainStackDepth(e3, left3, Array("1", "6", "8").deep, thisLineNumber - 2)
-        
+
       val left4 = Map(1 -> "one", 2 -> "two", 3 -> "three")
       val e4 = intercept[exceptions.TestFailedException] {
         (left4 should contain oneOf (1 -> "one", 6 -> "six", 8 -> "eight")) (after being mapAppended)
@@ -328,27 +328,27 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
       checkShouldContainStackDepth(e6, left6, Array(Entry(1, "one"), Entry(6, "six"), Entry(8, "eight")).deep, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should not contain custom matcher' failed with specified normalization") {
-      
+
       val left1 = List("1", " 2", "3")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should not contain oneOf ("2 ", "6", "8")) (after being trimmed)
       }
       checkShouldNotContainStackDepth(e1, left1, Array("2 ", "6", "8").deep, thisLineNumber - 2)
-        
+
       val left2 = Set("1", " 2", "3")
       val e2 = intercept[exceptions.TestFailedException] {
         (left2 should not contain oneOf ("2 ", "6", "8")) (after being trimmed)
       }
       checkShouldNotContainStackDepth(e2, left2, Array("2 ", "6", "8").deep, thisLineNumber - 2)
-        
+
       val left3 = Array("1", " 2", "3")
       val e3 = intercept[exceptions.TestFailedException] {
         (left3 should not contain oneOf ("2 ", "6", "8")) (after being trimmed)
       }
       checkShouldNotContainStackDepth(e3, left3, Array("2 ", "6", "8").deep, thisLineNumber - 2)
-      
+
       val left4 = Map(1 -> "one", 2 -> " two", 3 -> "three")
       val e4 = intercept[exceptions.TestFailedException] {
         (left4 should not contain oneOf (2 -> "two ", 6 -> "six", 8 -> "eight")) (after being mapTrimmed)
@@ -369,9 +369,9 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
       checkShouldNotContainStackDepth(e6, left6, Array(Entry(2, "two "), Entry(6, "six"), Entry(8, "eight")).deep, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take specified equality and normalization equality when 'should contain' is used") {
-      
+
       (List("ONE", " TWO", "THREE") should contain oneOf ("two ", "six", "eight")) (decided by lowerCaseEquality afterBeing trimmed)
       (Set("ONE", " TWO", "THREE") should contain oneOf ("two ", "six", "eight")) (decided by lowerCaseEquality afterBeing trimmed)
       (Array("ONE", " TWO", "THREE") should contain oneOf ("two ", "six", "eight")) (decided by lowerCaseEquality afterBeing trimmed)
@@ -382,9 +382,9 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
       (javaMap(Entry(1, "ONE"), Entry(2, " TWO"), Entry(3, "THREE")) should contain oneOf (Entry(2, "two "), Entry(6, "six"), Entry(8, "eight"))) (decided by javaMapLowerCaseEquality afterBeing javaMapTrimmed)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should take specified equality and normalization when 'should not contain' is used") {
-      
+
       (List("one ", " two", "three ") should not contain oneOf (" one", "two ", " three")) (decided by reverseEquality afterBeing trimmed)
       (Set("one ", " two", "three ") should not contain oneOf (" one", "two ", " three")) (decided by reverseEquality afterBeing trimmed)
       (Array("one ", " two", "three ") should not contain oneOf (" one", "two ", " three")) (decided by reverseEquality afterBeing trimmed)
@@ -395,27 +395,27 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
       (javaMap(Entry(1, "one "), Entry(2, " two"), Entry(3, "three ")) should not contain oneOf (Entry(1, " one"), Entry(2, "two "), Entry(3, " three"))) (decided by javaMapReverseEquality afterBeing javaMapTrimmed)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should contain custom matcher' failed with specified equality and normalizationy") {
-        
+
       val left1 = List("one ", " two", "three ")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should contain oneOf (" one", "two ", " three")) (decided by reverseEquality afterBeing trimmed)
       }
       checkShouldContainStackDepth(e1, left1, Array(" one", "two ", " three").deep, thisLineNumber - 2)
-        
+
       val left2 = Set("one ", " two", "three ")
       val e2 = intercept[exceptions.TestFailedException] {
         (left2 should contain oneOf (" one", "two ", " three")) (decided by reverseEquality afterBeing trimmed)
       }
       checkShouldContainStackDepth(e2, left2, Array(" one", "two ", " three").deep, thisLineNumber - 2)
-        
+
       val left3 = Array("one ", " two", "three ")
       val e3 = intercept[exceptions.TestFailedException] {
         (left3 should contain oneOf (" one", "two ", " three")) (decided by reverseEquality afterBeing trimmed)
       }
       checkShouldContainStackDepth(e3, left3, Array(" one", "two ", " three").deep, thisLineNumber - 2)
-        
+
       val left4 = Map(1 -> "one ", 2 -> " two", 3 -> "three ")
       val e4 = intercept[exceptions.TestFailedException] {
         (left4 should contain oneOf (1 -> " one", 2 -> "two ", 3 -> " three")) (decided by mapReverseEquality afterBeing mapTrimmed)
@@ -436,27 +436,27 @@ class OneOfContainMatcherDeciderSpec extends FunSpec with Explicitly {
       checkShouldContainStackDepth(e6, left6, Array(Entry(1, " one"), Entry(2, "two "), Entry(3, " three")).deep, thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when 'should not contain custom matcher' failed with specified equality and normalization") {
-      
+
       val left1 = List("ONE ", " TWO", "THREE ")
       val e1 = intercept[exceptions.TestFailedException] {
         (left1 should not contain oneOf ("two ", " six", "eight ")) (decided by lowerCaseEquality afterBeing trimmed)
       }
       checkShouldNotContainStackDepth(e1, left1, Array("two ", " six", "eight ").deep, thisLineNumber - 2)
-        
+
       val left2 = Set("ONE ", " TWO", "THREE ")
       val e2 = intercept[exceptions.TestFailedException] {
         (left2 should not contain oneOf ("two ", " six", "eight ")) (decided by lowerCaseEquality afterBeing trimmed)
       }
       checkShouldNotContainStackDepth(e2, left2, Array("two ", " six", "eight ").deep, thisLineNumber - 2)
-        
+
       val left3 = Array("ONE ", " TWO", "THREE ")
       val e3 = intercept[exceptions.TestFailedException] {
         (left3 should not contain oneOf ("two ", " six", "eight ")) (decided by lowerCaseEquality afterBeing trimmed)
       }
       checkShouldNotContainStackDepth(e3, left3, Array("two ", " six", "eight ").deep, thisLineNumber - 2)
-      
+
       val left4 = Map(1 -> "ONE ", 2 -> " TWO", 3 -> "THREE ")
       val e4 = intercept[exceptions.TestFailedException] {
         (left4 should not contain oneOf (2 -> "two ", 6 -> " six", 8 -> "eight ")) (decided by mapLowerCaseEquality afterBeing mapTrimmed)

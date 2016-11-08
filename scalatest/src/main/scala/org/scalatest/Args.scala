@@ -36,7 +36,7 @@ import org.scalactic.Requirements._
  * The purpose of bundling these arguments into an <code>Args</code> object instead of passing them in individually is to make the signature
  * of these four lifecycle methods easier to read, write, and remember, as well as to make the methods more pleasant to override in user code.
  * </p>
- * 
+ *
  * @param reporter the <code>Reporter</code> to which results will be reported
  * @param stopper the <code>Stopper</code> that will be consulted to determine whether to stop execution early.
  * @param filter a <code>Filter</code> with which to filter tests based on their tags

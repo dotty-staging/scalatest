@@ -32,7 +32,7 @@ class ArgsSpec extends WordSpec with SeveredStackTraces {
       val dst = None
       val trk = new Tracker
       val sty = Set.empty[String]
-      
+
       val invalidCombos =
         Table(
           ("reporter", "stopper", "filter", "configMap", "distributor", "tracker", "chosenStyles"),

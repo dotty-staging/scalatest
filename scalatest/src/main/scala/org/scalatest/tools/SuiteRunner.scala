@@ -40,7 +40,7 @@ private[scalatest] class SuiteRunner(suite: Suite, args: Args, status: ScalaTest
 
       if (!suite.isInstanceOf[DistributedTestRunnerSuite])
         dispatch(SuiteStarting(tracker.nextOrdinal(), suite.suiteName, suite.suiteId, Some(suite.getClass.getName), formatter, Some(TopOfClass(suite.getClass.getName)), suite.rerunner))
-        
+
       try {
         val runStatus = suite.run(None, args)
 
@@ -52,7 +52,7 @@ private[scalatest] class SuiteRunner(suite: Suite, args: Args, status: ScalaTest
           val duration = System.currentTimeMillis - suiteStartTime
           try {
             tri match {
-              case Success(succeeded) => 
+              case Success(succeeded) =>
                 if (!succeeded)
                   status.setFailed()
                 if (!suite.isInstanceOf[DistributedTestRunnerSuite])
@@ -73,9 +73,9 @@ private[scalatest] class SuiteRunner(suite: Suite, args: Args, status: ScalaTest
           dispatch(SuiteAborted(tracker.nextOrdinal(), e.getMessage, suite.suiteName, suite.suiteId, Some(suite.getClass.getName), Some(e), Some(duration), formatter, Some(SeeStackDepthException), suite.rerunner))
           status.setFailed()
           status.setCompleted()
-        case e: RuntimeException => { // Do fire SuiteAborted even if a DistributedTestRunnerSuite 
+        case e: RuntimeException => { // Do fire SuiteAborted even if a DistributedTestRunnerSuite
           val eMessage = e.getMessage
-          val rawString3 = 
+          val rawString3 =
             if (eMessage != null && eMessage.length > 0)
                 Resources.executeExceptionWithMessage(eMessage)
               else
@@ -86,9 +86,9 @@ private[scalatest] class SuiteRunner(suite: Suite, args: Args, status: ScalaTest
           dispatch(SuiteAborted(tracker.nextOrdinal(), rawString3, suite.suiteName, suite.suiteId, Some(suite.getClass.getName), Some(e), Some(duration), formatter3, Some(SeeStackDepthException), suite.rerunner))
           status.setFailed()
           status.setCompleted()
-          
+
         }
-        case e: Throwable => 
+        case e: Throwable =>
           status.setFailed()
           status.setCompleted()
           throw e

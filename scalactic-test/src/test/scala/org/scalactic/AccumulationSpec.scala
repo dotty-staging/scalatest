@@ -61,12 +61,12 @@ class AccumulationSpec extends UnitSpec with Accumulation with TypeCheckedTriple
       case Some(nm) => Good(nm)
       case None => Bad(One("No name found"))
     }
-  def parseOptionalDate(in: Option[String]): Date Or One[ErrorMessage] = 
+  def parseOptionalDate(in: Option[String]): Date Or One[ErrorMessage] =
     in match {
       case Some(dt) => parseDate(dt)
       case None => Bad(One("No date found"))
     }
-  def parseOptionalAddress(in: Option[String]): List[String] Or One[ErrorMessage] = 
+  def parseOptionalAddress(in: Option[String]): List[String] Or One[ErrorMessage] =
     in match {
      case Some(addr) => parseAddress(addr)
      case None => Bad(One("No address found"))
@@ -77,7 +77,7 @@ class AccumulationSpec extends UnitSpec with Accumulation with TypeCheckedTriple
       val address: List[String] Or One[ErrorMessage] = parseOptionalAddress(if (in.isEmpty) None else Some(in))
       withGood(address) {
         Person(name, date, _)
-      } 
+      }
     }
     parseAddressForPerson("Name Only", parseDate("1974-02-11").get, "") shouldBe Bad(One("No address found"))
     parseAddressForPerson("Joe Collegue", parseDate("1974-02-11").get, "Rotterdam") shouldBe Bad(One("An address needs to have a street and a city, separated by a comma; found [Rotterdam]"))
@@ -91,7 +91,7 @@ class AccumulationSpec extends UnitSpec with Accumulation with TypeCheckedTriple
       val address: List[String] Or One[ErrorMessage] = parseOptionalAddress(components(1))
       withGood(date, address) {
         Person(name, _, _)
-      } 
+      }
     }
     parseDateAndAddress("Name Only", "") shouldBe Bad(Many("Can't parse [] as a date", "No address found"))
     parseDateAndAddress("Joe Collegue", "1974-??-??;Rotterdam") shouldBe Bad(Many("Can't parse [1974-??-??] as a date", "An address needs to have a street and a city, separated by a comma; found [Rotterdam]"))
@@ -110,7 +110,7 @@ class AccumulationSpec extends UnitSpec with Accumulation with TypeCheckedTriple
       // i.e., one overloaded form per arity.
       withGood(name, date, address) {
         Person(_, _, _)
-      } 
+      }
     }
 
     val bad = "Name Only"

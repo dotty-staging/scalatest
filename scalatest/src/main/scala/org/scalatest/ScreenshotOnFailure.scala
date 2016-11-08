@@ -26,8 +26,8 @@ package org.scalatest
  * To change this, override <code>screenshotDir</code>.
  * </p>
  */
-private[scalatest] trait ScreenshotOnFailure extends TestSuiteMixin { this: TestSuite with ScreenshotCapturer => 
-  
+private[scalatest] trait ScreenshotOnFailure extends TestSuiteMixin { this: TestSuite with ScreenshotCapturer =>
+
   /**
    * The name of the directory into which screenshots will be captured.
    *
@@ -37,7 +37,7 @@ private[scalatest] trait ScreenshotOnFailure extends TestSuiteMixin { this: Test
    * </p>
    */
   val screenshotDir: String = System.getProperty("java.io.tmpdir")
-  
+
   /**
    * Delegates to <code>super.withFixture</code> to execute the passed <code>NoArgTest</code>, and if the test fails,
    * captures a screenshot to the directory name defined by <code>screenshotDir</code>.
@@ -50,7 +50,7 @@ private[scalatest] trait ScreenshotOnFailure extends TestSuiteMixin { this: Test
    */
   abstract override def withFixture(test: NoArgTest): Outcome = {
     super.withFixture(test) match {
-      case failed: Failed => 
+      case failed: Failed =>
         try captureScreenshot(screenshotDir)
         catch {
           case innerE: Throwable =>

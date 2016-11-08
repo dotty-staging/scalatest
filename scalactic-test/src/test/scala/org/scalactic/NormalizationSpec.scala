@@ -21,17 +21,17 @@ class NormalizationSpec extends FunSpec with StringNormalizations {
 
   describe("A Uniformity") {
     describe("when anded with another Uniformity") {
-      it("should produce a Uniformity") { 
+      it("should produce a Uniformity") {
         assert(lowerCased.isInstanceOf[Uniformity[_]])
         assert((lowerCased and trimmed).isInstanceOf[Uniformity[_]])
       }
     }
     describe("when anded with a regular Normalization (on left or right)") {
-      val shouted: Normalization[String] = 
+      val shouted: Normalization[String] =
         new Normalization[String] {
           def normalized(s: String): String = s.toUpperCase
         }
-      it("should produce a Normalization that is not also a Uniformity") { 
+      it("should produce a Normalization that is not also a Uniformity") {
         assert(!shouted.isInstanceOf[Uniformity[_]])
         assert(trimmed.isInstanceOf[Uniformity[_]])
         val tAndS: Normalization[String] = trimmed and shouted

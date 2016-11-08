@@ -88,7 +88,7 @@ class InsideSpec extends FunSpec {
       caught.failedCodeLineNumber.value should equal (thisLineNumber - 5)
       caught.failedCodeFileName.value should be ("InsideSpec.scala")
     }
-    
+
     it("should throw a TFE when matcher fails inside due to exception") {
       val caught = the [TestFailedException] thrownBy {
         inside (rec) { case Record(name, address, age) =>

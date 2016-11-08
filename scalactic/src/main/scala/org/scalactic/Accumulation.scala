@@ -107,7 +107,7 @@ trait Accumulation {
    * For more information and examples, see the <a href="Or.html#usingCombined">Using <code>combined</code></a> section of the main documentation for class <code>Or</code>.
    * </p>
    */
-  implicit def convertGenTraversableOnceToCombinable[G, ERR, EVERY[b] <: Every[b], TRAVONCE[+e] <: GenTraversableOnce[e]](xs: TRAVONCE[G Or EVERY[ERR]])(implicit cbf: CanBuildFrom[TRAVONCE[G Or EVERY[ERR]], G, TRAVONCE[G]]): Combinable[G, ERR, TRAVONCE] = 
+  implicit def convertGenTraversableOnceToCombinable[G, ERR, EVERY[b] <: Every[b], TRAVONCE[+e] <: GenTraversableOnce[e]](xs: TRAVONCE[G Or EVERY[ERR]])(implicit cbf: CanBuildFrom[TRAVONCE[G Or EVERY[ERR]], G, TRAVONCE[G]]): Combinable[G, ERR, TRAVONCE] =
 
     new Combinable[G, ERR, TRAVONCE] {
 
@@ -116,7 +116,7 @@ trait Accumulation {
         val emptyTRAVONCEOfGBuilder: Builder[G, TRAVONCE[G]] = cbf(xs)
         // So now I want to foldLeft across my TRAVONCE[G Or EVERY[ERR]], starting with an empty TRAVONCEOfGBuilder, and each step along the way, I'll
         // += into the builder, what? Oh I get it. The result type of my foldLeft needs to be Builder[Seq[G]] Or Every[ERR]
-        val tempOr: Builder[G, TRAVONCE[G]] Or Every[ERR] = 
+        val tempOr: Builder[G, TRAVONCE[G]] Or Every[ERR] =
           xs.foldLeft((Good(emptyTRAVONCEOfGBuilder): Builder[G, TRAVONCE[G]] Or Every[ERR])) { (accumulator: Builder[G, TRAVONCE[G]] Or Every[ERR],  nextElem: G Or Every[ERR]) =>
             (accumulator, nextElem) match {
               case (Good(bldr), Good(ele)) => Good(bldr += ele)
@@ -149,12 +149,12 @@ trait Accumulation {
    * </p>
    *
    * <p>
-   * Note: This implicit is required for <code>Set</code>s because although <code>Set</code>s are <code>GenTraversableOnce</code>s, they aren't covariant, so 
+   * Note: This implicit is required for <code>Set</code>s because although <code>Set</code>s are <code>GenTraversableOnce</code>s, they aren't covariant, so
    * the implicit conversion provided by <code>convertGenTraversableOnceToCombinable</code> will not be applied, because it only works on <em>covariant</em>
    * <code>GenTraversableOnce</code>s.
    * </p>
    */
-  implicit def convertGenSetToCombinable[G, ERR, X, EVERY[b] <: Every[b], SET[e] <: GenSet[e]](xs: SET[X with (G Or EVERY[ERR])])(implicit cbf: CanBuildFrom[SET[X with (G Or EVERY[ERR])], G, SET[G]]): Combinable[G, ERR, SET] = 
+  implicit def convertGenSetToCombinable[G, ERR, X, EVERY[b] <: Every[b], SET[e] <: GenSet[e]](xs: SET[X with (G Or EVERY[ERR])])(implicit cbf: CanBuildFrom[SET[X with (G Or EVERY[ERR])], G, SET[G]]): Combinable[G, ERR, SET] =
 
     new Combinable[G, ERR, SET] {
 
@@ -163,7 +163,7 @@ trait Accumulation {
         val emptySETOfGBuilder: Builder[G, SET[G]] = cbf(xs)
         // So now I want to foldLeft across my SET[G Or EVERY[ERR]], starting with an empty SETOfGBuilder, and each step along the way, I'll
         // += into the builder, what? Oh I get it. The result type of my foldLeft needs to be Builder[Seq[G]] Or Every[ERR]
-        val tempOr: Builder[G, SET[G]] Or Every[ERR] = 
+        val tempOr: Builder[G, SET[G]] Or Every[ERR] =
           xs.foldLeft((Good(emptySETOfGBuilder): Builder[G, SET[G]] Or Every[ERR])) { (accumulator: Builder[G, SET[G]] Or Every[ERR],  nextElem: G Or Every[ERR]) =>
             (accumulator, nextElem) match {
               case (Good(bldr), Good(ele)) => Good(bldr += ele)
@@ -182,7 +182,7 @@ trait Accumulation {
    * enables the <code>combined</code> method to be invoked on it.
    *
    * <p>
-   * Note: This implicit is required for <code>Set</code>s because although <code>Set</code>s are <code>GenTraversableOnce</code>s, they aren't covariant, so 
+   * Note: This implicit is required for <code>Set</code>s because although <code>Set</code>s are <code>GenTraversableOnce</code>s, they aren't covariant, so
    * the implicit conversion provided by <code>convertGenTraversableOnceToCombinableNothing</code> will not be applied, because it only works on <em>covariant</em>
    * <code>GenTraversableOnce</code>s.
    * </p>
@@ -197,7 +197,7 @@ trait Accumulation {
    * For more information and examples, see the <a href="Or.html#usingCombined">Using <code>combined</code></a> section of the main documentation for class <code>Or</code>.
    * </p>
    */
-  implicit def convertEveryToCombinable[G, ERR](oneToMany: Every[G Or Every[ERR]]): Combinable[G, ERR, Every] = 
+  implicit def convertEveryToCombinable[G, ERR](oneToMany: Every[G Or Every[ERR]]): Combinable[G, ERR, Every] =
 
     new Combinable[G, ERR, Every] {
 
@@ -227,7 +227,7 @@ trait Accumulation {
    * For more information and examples, see the <a href="Or.html#usingCombined">Using <code>combined</code></a> section of the main documentation for class <code>Or</code>.
    * </p>
    */
-  implicit def convertOptionToCombinable[G, ERR](option: Option[G Or Every[ERR]]): Combinable[G, ERR, Option] = 
+  implicit def convertOptionToCombinable[G, ERR](option: Option[G Or Every[ERR]]): Combinable[G, ERR, Option] =
     new Combinable[G, ERR, Option] {
       def combined: Option[G] Or Every[ERR] =
         option match {
@@ -246,7 +246,7 @@ trait Accumulation {
    * the main documentation for class <code>Or</code>.
    * </p>
    */
-  implicit def convertGenTraversableOnceToValidatable[G, TRAVONCE[e] <: GenTraversableOnce[e]](xs: TRAVONCE[G]): TravValidatable[G, TRAVONCE] = 
+  implicit def convertGenTraversableOnceToValidatable[G, TRAVONCE[e] <: GenTraversableOnce[e]](xs: TRAVONCE[G]): TravValidatable[G, TRAVONCE] =
 
     new TravValidatable[G, TRAVONCE] {
 
@@ -256,7 +256,7 @@ trait Accumulation {
         val emptyTRAVONCEOfGBuilder: Builder[H, TRAVONCE[H]] = cbf(xs)
         // So now I want to foldLeft across my TRAVONCE[G Or EVERY[ERR]], starting with an empty TRAVONCEOfGBuilder, and each step along the way, I'll
         // += into the builder, what? Oh I get it. The result type of my foldLeft needs to be Builder[Seq[G]] Or Every[ERR]
-        val tempOr: Builder[H, TRAVONCE[H]] Or Every[ERR] = 
+        val tempOr: Builder[H, TRAVONCE[H]] Or Every[ERR] =
           xs.foldLeft((Good(emptyTRAVONCEOfGBuilder): Builder[H, TRAVONCE[H]] Or Every[ERR])) { (accumulator: Builder[H, TRAVONCE[H]] Or Every[ERR],  nextElem: G) =>
             (accumulator, fn(nextElem)) match {
               case (Good(bldr), Good(ele)) => Good(bldr += ele)
@@ -278,7 +278,7 @@ trait Accumulation {
    * the main documentation for class <code>Or</code>.
    * </p>
    */
-  implicit def convertEveryToValidatable[G](oneToMany: Every[G]): Validatable[G, Every] = 
+  implicit def convertEveryToValidatable[G](oneToMany: Every[G]): Validatable[G, Every] =
     new Validatable[G, Every] {
       def validatedBy[H, ERR, EVERY[e] <: Every[e]](fn: G => H Or EVERY[ERR]): Every[H] Or Every[ERR] = {
         val vec = oneToMany.toVector
@@ -307,7 +307,7 @@ trait Accumulation {
    * the main documentation for class <code>Or</code>.
    * </p>
    */
-  implicit def convertOptionToValidatable[G](option: Option[G]): Validatable[G, Option] = 
+  implicit def convertOptionToValidatable[G](option: Option[G]): Validatable[G, Option] =
     new Validatable[G, Option] {
       def validatedBy[H, ERR, EVERY[e] <: Every[e]](fn: G => H Or EVERY[ERR]): Option[H] Or Every[ERR] = {
         option.map(fn) match {
@@ -371,7 +371,7 @@ trait Accumulation {
           case Good(validFun) => Good(validFun(valid))
           case Bad(every) => Bad(every)
         }
-      case Bad(every) => 
+      case Bad(every) =>
         funOrError match {
           case Good(_) => Bad(every)
           case Bad(funEvery) => Bad(funEvery ++ every)
@@ -413,7 +413,7 @@ trait Accumulation {
           case Good(validFun) => Good(validFun(valid))
           case Bad(every) => Bad(every)
         }
-      case Bad(every) => 
+      case Bad(every) =>
         funOrError match {
           case Good(_) => Bad(every)
           case Bad(funEvery) => Bad(funEvery ++ every)
@@ -457,7 +457,7 @@ trait Accumulation {
           case Good(validFun) => Good(validFun(valid))
           case Bad(every) => Bad(every)
         }
-      case Bad(every) => 
+      case Bad(every) =>
         funOrError match {
           case Good(_) => Bad(every)
           case Bad(funEvery) => Bad(funEvery ++ every)
@@ -1731,7 +1731,7 @@ object Accumulation extends Accumulation {
      * <code>Good</code>, else a <code>Bad</code> containing every error.
      *
      * <p>
-     * For more information and examples, see the <a href="Or.html#usingZip">Using <code>zip</code></a> 
+     * For more information and examples, see the <a href="Or.html#usingZip">Using <code>zip</code></a>
      * section of the main documentation for class <code>Or</code>.
      * </p>
      */

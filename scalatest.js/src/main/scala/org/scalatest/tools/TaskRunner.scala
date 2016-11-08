@@ -167,7 +167,7 @@ println("GOT TO THIS RECOVER CALL")
           case e: Throwable =>
             val rawString = "Exception encountered when attempting to run a suite with class name: " + suiteClass.getName
             val formatter = Suite.formatterForSuiteAborted(suite, rawString)
-  
+
             val duration = Platform.currentTime - suiteStartTime
             // Do fire SuiteAborted even if a DistributedTestRunnerSuite, consistent with SuiteRunner behavior
             reporter(SuiteAborted(tracker.nextOrdinal(), rawString, suite.suiteName, suite.suiteId, Some(suiteClass.getName), Some(e), Some(duration), formatter, Some(SeeStackDepthException)))

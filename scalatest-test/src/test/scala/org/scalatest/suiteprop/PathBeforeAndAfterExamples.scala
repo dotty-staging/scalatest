@@ -35,7 +35,7 @@ class PathBeforeAndAfterExamples extends PathSuiteExamples {
   ) {
     val arr = new Array[Int](0)
   }
-  
+
   trait Services {
     val counts: Counts
     var firstTestCounts: Counts = Counts()
@@ -258,7 +258,7 @@ class PathBeforeAndAfterExamples extends PathSuiteExamples {
     val expectedSecondTestCounts = Counts()
     val expectedCounts = Counts(middle = 1)
   }
-  
+
   class EmptyNestedPathFreeSpecExample(val counts: Counts, initialInstance: Option[Services] = None) extends path.FreeSpec with Services {
     import counts._
     before0 += 1
@@ -417,7 +417,7 @@ class PathBeforeAndAfterExamples extends PathSuiteExamples {
     }
     middle += 1
     "Another subject" - {
-      before01 += 1 
+      before01 += 1
       "when created" - {
         before010 += 1
         "should second test" in { initialInstance.get.secondTestCounts = counts.copy() }
@@ -452,7 +452,7 @@ class PathBeforeAndAfterExamples extends PathSuiteExamples {
     val expectedSecondTestCounts = Counts(before0 = 2, before00 = 2, before000 = 1, after000 = 1, middle = 2, after00 = 1, after0 = 1)
     val expectedCounts = Counts(before0 = 2, before00 = 2, before000 = 1, after000 = 1, middle = 2, after00 = 2, after0 = 2)
   }
-  
+
   lazy val emptyPathFunSpec = new EmptyPathFunSpecExample(Counts())
   lazy val emptyNestedPathFunSpec = new EmptyNestedPathFunSpecExample(Counts())
   lazy val siblingEmptyNestedPathFunSpec = new SiblingEmptyNestedPathFunSpecExample(Counts())

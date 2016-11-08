@@ -27,9 +27,9 @@ package org.scalatest
  *
  * <pre class="stHighlight">
  * trait Builder extends AsyncTestSuiteMixin { this: AsyncTestSuite =&gt;
- * 
+ *
  *   final val builder = new ThreadSafeStringBuilder
- * 
+ *
  *   abstract override def withFixture(test: NoArgAsyncTest) = {
  *     builder.append("ScalaTest is ")
  *     complete {

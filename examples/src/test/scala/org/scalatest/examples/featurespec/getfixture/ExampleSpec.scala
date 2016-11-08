@@ -24,9 +24,9 @@ class ExampleSpec extends FeatureSpec {
     val builder = new StringBuilder("ScalaTest is designed to ")
     val buffer = new ListBuffer[String]
   }
-  
+
   def fixture = new Fixture
-  
+
   feature("Simplicity") {
     scenario("User needs to read test code written by others") {
       val f = fixture
@@ -35,7 +35,7 @@ class ExampleSpec extends FeatureSpec {
       assert(f.buffer.isEmpty)
       f.buffer += "sweet"
     }
-  
+
     scenario("User needs to understand what the tests are doing") {
       val f = fixture
       f.builder.append("be easy to reason about!")

@@ -307,4 +307,4 @@ class TestFailedExceptionSpec extends FunSpec with Matchers {
     }
   }
 }
- 
+

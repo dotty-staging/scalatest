@@ -1337,7 +1337,7 @@ class FeatureSpecSpec extends org.scalatest.FunSpec {
     a.run(None, Args(SilentReporter, Stopper.default, Filter(), ConfigMap("hi" -> 7), None, new Tracker(), Set.empty))
     assert(a.correctConfigMapWasPassed)
   }
-  
+
   class ExamplePrefixSpec extends FeatureSpec {
     type FixtureParam = String
     def withFixture(test: OneArgTest): Outcome = {
@@ -1349,7 +1349,7 @@ class FeatureSpecSpec extends org.scalatest.FunSpec {
       }
     }
   }
-    
+
   it("should prefix feature text with 'Feature: '") {
     val rep = new EventRecordingReporter
     (new ExamplePrefixSpec).run(None, Args(rep))
@@ -1360,7 +1360,7 @@ class FeatureSpecSpec extends org.scalatest.FunSpec {
     assert(scopeClosed.size === 1)
     assert(scopeClosed(0).message === "Feature: A Feature")
   }
-    
+
   it("should prefix scenario text with 'Scenario: '") {
     val rep = new EventRecordingReporter
     (new ExamplePrefixSpec).run(None, Args(rep))
@@ -1415,9 +1415,9 @@ class FeatureSpecSpec extends org.scalatest.FunSpec {
     assert(rep.testIgnoredEventsReceived.length == 1)
     assert(rep.testIgnoredEventsReceived(0).testName == "Scenario: test 5")
   }
-  
+
   describe("when failure happens") {
-      
+
     it("should fire TestFailed event with correct stack depth info when test failed") {
       class TestSpec extends FeatureSpec {
         type FixtureParam = String
@@ -1440,14 +1440,14 @@ class FeatureSpecSpec extends org.scalatest.FunSpec {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "FeatureSpecSpec.scala")
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 11)
     }
-      
+
     it("should generate NotAllowedException with correct stack depth info when has a feature nested inside a feature") {
       class TestSpec extends FeatureSpec {
         type FixtureParam = String
         def withFixture(test: OneArgTest): Outcome = { test("a string") }
         feature("a feature") {
           feature("inner feature") {
-            ignore("nested fail scenario") { fixture => 
+            ignore("nested fail scenario") { fixture =>
               assert(1 === 1)
             }
           }
@@ -1460,7 +1460,7 @@ class FeatureSpecSpec extends org.scalatest.FunSpec {
       assert(caught.failedCodeFileName.get === "FeatureSpecSpec.scala")
       assert(caught.failedCodeLineNumber.get === thisLineNumber - 12)
     }
-    
+
     it("should generate TestRegistrationClosedException with correct stack depth info when has a scenario nested inside a scenario") {
       class TestSpec extends FeatureSpec {
         type FixtureParam = String
@@ -1806,5 +1806,5 @@ class FeatureSpecSpec extends org.scalatest.FunSpec {
     }
     // SKIP-SCALATESTJS-END
   }
-  
+
 }

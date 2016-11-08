@@ -47,7 +47,7 @@ final class ResultOfGreaterThanComparison[T : Ordering](val right: T) {
     val ordering = implicitly[Ordering[T]]
     ordering.gt(left, right) // left > right
   }
-  
+
   /**
    * Override toString to return "> [right]"
    */

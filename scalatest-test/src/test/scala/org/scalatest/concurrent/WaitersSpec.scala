@@ -40,13 +40,13 @@ class WaitersSpec extends fixture.FunSpec with Matchers with ConductorFixture wi
 /*
   def withCause(cause: Throwable)(fun: => Unit) {
     try {
-      fun  
+      fun
     }
     catch {
       case e: TestFailedException =>
         def setCause(oldEx: Throwable) {
           if (oldEx.getCause == null)
-            oldEx.initCause(cause)  
+            oldEx.initCause(cause)
           else
             setCause(oldEx.getCause)
         }
@@ -81,7 +81,7 @@ class WaitersSpec extends fixture.FunSpec with Matchers with ConductorFixture wi
       }
       con.conduct()
     }
- 
+
     it("should continue when dismissed.") { con => import con._
       @volatile var w: Waiter = null
       thread {
@@ -112,7 +112,7 @@ class WaitersSpec extends fixture.FunSpec with Matchers with ConductorFixture wi
       }
       con.conduct()
     }
-    
+
     it("should pass through even exceptions that would not normally cause a test to fail") { con => import con._
       @volatile var w: Waiter = null
       thread {
@@ -130,7 +130,7 @@ class WaitersSpec extends fixture.FunSpec with Matchers with ConductorFixture wi
       }
       con.conduct()
     }
-  
+
     it("should wait for multiple dismissals when requested", Retryable) { con => import con._
       @volatile var w: Waiter = null
       @volatile var doneWaiting = false
@@ -191,7 +191,7 @@ class WaitersSpec extends fixture.FunSpec with Matchers with ConductorFixture wi
       }
       con.conduct()
     }
-  
+
     it("should still complete normally if await without a timeout is called after dismiss is called.") { con => import con._
       @volatile var w: Waiter = null
       thread {
@@ -230,7 +230,7 @@ class WaitersSpec extends fixture.FunSpec with Matchers with ConductorFixture wi
       }
       con.conduct()
     }
-    
+
     it("should await to be called multiple times") { con => import con._
 
       @volatile var w: Waiter = null
@@ -255,13 +255,13 @@ class WaitersSpec extends fixture.FunSpec with Matchers with ConductorFixture wi
 
       con.conduct()
     }
-    
+
     it("should should handle many dismissals without races", Retryable) { con => import con._
 
       @volatile var w: Waiter = null
-      
+
       val n = 10000
-      
+
       thread {
         waitForBeat(1)
         var i = 0

@@ -157,7 +157,7 @@ private[scalatest] class DashboardReporter(directory: String,
   // Ditto for the durations.xml file.
   //
   def archiveOldFiles(oldRunsXml: NodeSeq): Unit = {
-    val previousRunTimestamp = 
+    val previousRunTimestamp =
       if (oldRunsXml.size > 0) Some("" + oldRunsXml(0) \ "@id")
       else None
 
@@ -262,16 +262,16 @@ private[scalatest] class DashboardReporter(directory: String,
     // Generates the summary file <run> element for the current run.
     //
     def genThisRun(terminatingEvent: Event): String = {
-      val summaryOption = 
+      val summaryOption =
         terminatingEvent match {
           case e: RunCompleted => e.summary
           case e: RunAborted   => e.summary
           case e: RunStopped   => e.summary
           case _ => unexpectedEvent(terminatingEvent); None
         }
-  
+
       val summary  = summaryOption.getOrElse(Summary(0, 0, 0, 0, 0, 0, 0, 0))
-  
+
       formatRun(timestamp,
                 "" + summary.testsSucceededCount,
                 "" + summary.testsFailedCount,
@@ -509,7 +509,7 @@ private[scalatest] class DashboardReporter(directory: String,
   // "2011-10-24-105759-563", "run-2011-10-24-105759-563.xml".
   //
   // We write the file piece-by-piece directly, instead of creating a string
-  // and writing that, 
+  // and writing that,
   //
   def writeRunFile(event: Event, thisRunFile: File): Unit = {
     index = 0
@@ -580,7 +580,7 @@ private[scalatest] class DashboardReporter(directory: String,
         case e: SuiteStarting  =>
           stack.push(suiteRecord)
           suiteRecord = new SuiteRecord(e)
-          
+
         case e: TestStarting   => suiteRecord.addNestedElement(e)
         case e: TestSucceeded  => suiteRecord.addNestedElement(e)
         case e: TestIgnored    => suiteRecord.addNestedElement(e)
@@ -802,11 +802,11 @@ private[scalatest] class DashboardReporter(directory: String,
         event match {
           case TestSucceeded(_, _, _, _, _, _, _, duration, _, _, _, _, _, _)
             => duration
-          case TestFailed(_, _, _, _, _, _, _, _, _, duration, _, _, _, _, _, _) 
+          case TestFailed(_, _, _, _, _, _, _, _, _, duration, _, _, _, _, _, _)
             => duration
-          case TestPending(_, _, _, _, _, _, _, duration, _, _, _, _, _) 
+          case TestPending(_, _, _, _, _, _, _, duration, _, _, _, _, _)
             => duration
-          case TestCanceled(_, _, _, _, _, _, _, _, _, duration, _, _, _, _, _, _) 
+          case TestCanceled(_, _, _, _, _, _, _, _, _, duration, _, _, _, _, _, _)
             => duration
           case _ => None
         }
@@ -816,7 +816,7 @@ private[scalatest] class DashboardReporter(directory: String,
     // Generates initial <test> element of object's xml.
     //
     def formatTestStart: String = {
-      val duration = 
+      val duration =
         endEvent match {
           case Duration(d) => d
           case _ => endEvent.timeStamp - startEvent.timeStamp
@@ -850,7 +850,7 @@ private[scalatest] class DashboardReporter(directory: String,
         buf.append("className=\"" + event.suiteClassName.get + "\"")
 
       buf.append(">\n")
-      
+
       if (event.throwable.isDefined) {
         val throwable = event.throwable.get
         val stackTrace = throwable.getStackTrace

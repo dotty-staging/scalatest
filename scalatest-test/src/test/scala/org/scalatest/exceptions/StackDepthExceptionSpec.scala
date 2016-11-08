@@ -70,7 +70,7 @@ class StackDepthExceptionSpec extends FunSpec with Matchers with TableDrivenProp
       (Some("hi"),  Some(null))
     )
 
-  def positionExamples = 
+  def positionExamples =
     Table(
       "exception",
       new TestFailedException((_: StackDepthException) => Some("message"), None, Left(source.Position.here), None),
@@ -86,7 +86,7 @@ class StackDepthExceptionSpec extends FunSpec with Matchers with TableDrivenProp
       new DuplicateTestNameException("the test name", Left(source.Position.here))
    )
 
-  def stackDepthExamples = 
+  def stackDepthExamples =
     Table(
       "exception",
       new TestFailedException((_: StackDepthException) => Some("message"), None, Right((_: StackDepthException) => 3), None),
@@ -162,44 +162,44 @@ class StackDepthExceptionSpec extends FunSpec with Matchers with TableDrivenProp
     }
 
     it("should produce the Some(message) from getMessage, or null if message was None") {
-    
+
       val eDefined = newSDE(Some("howdy!"), None, 17)
       eDefined.getMessage should be ("howdy!")
-    
+
       val eEmpty = newSDE(None, None, 17)
       eEmpty.getMessage should be (null)
     }
 
     it("should produce the Some(cause) from getCause, or null if cause was None") {
-    
+
       val e = new Exception
 
       val eDefined = newSDE(Some("howdy!"), Some(e), 17)
       eDefined.getCause should be (e)
-    
+
       val eEmpty = newSDE(Some("howdy!"), None, 17)
       eEmpty.getCause should be (null)
     }
 
     it("should produce the Some(message) from message, or None if message was None") {
-    
+
       val eDefined = newSDE(Some("howdy!"), None, 17)
       eDefined.message should be (Some("howdy!"))
-    
+
       val eEmpty = newSDE(None, None, 17)
       eEmpty.message should be (None)
     }
 
     it("should produce the Some(cause) from cause, or None if cause was None") {
-    
+
       val e = new Exception
 
       val eDefined = newSDE(Some("howdy!"), Some(e), 17)
       eDefined.cause should be (Some(e))
-    
+
       val eEmpty = newSDE(Some("howdy!"), None, 17)
       eEmpty.cause should be (None)
     }
   }
 }
- 
+

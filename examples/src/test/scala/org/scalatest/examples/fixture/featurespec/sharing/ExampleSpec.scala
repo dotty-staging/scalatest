@@ -16,7 +16,7 @@
 package org.scalatest.examples.fixture.featurespec.sharing
 
 import java.util.concurrent.ConcurrentHashMap
-import org.scalatest._         
+import org.scalatest._
 import DbServer._
 import java.util.UUID.randomUUID
 
@@ -64,7 +64,7 @@ class ExampleSpec extends fixture.FeatureSpec with DbFixture {
       db.append("encourage clear code!")
       assert(db.toString === "ScalaTest is designed to encourage clear code!")
     }
-    
+
     scenario("User needs to understand what the tests are doing") { db =>
       db.append("be easy to reason about!")
       assert(db.toString === "ScalaTest is designed to be easy to reason about!")

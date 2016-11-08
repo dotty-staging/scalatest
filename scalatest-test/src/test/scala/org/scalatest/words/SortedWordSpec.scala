@@ -19,13 +19,13 @@ import org.scalatest._
 import Matchers._
 
 class SortedWordSpec extends FunSpec {
-  
+
   describe("SortedWord ") {
-    
+
     it("should have pretty toString") {
       val result = new SortedWord
       result.toString should be ("sorted")
     }
   }
-  
+
 }

@@ -53,9 +53,9 @@ package org.scalactic
  * import org.scalactic._
 
  * scala&gt; class TolerantDoubleEquality extends Equality[Double] {
- *      | 
+ *      |
  *      |   private val Tol = 0.01
- *      | 
+ *      |
  *      |   def areEqual(a: Double, b: Any): Boolean = {
  *      |     b match {
  *      |       case bDouble: Double =&gt; (a &gt;= bDouble + Tol) && (a &gt;= bDouble - Tol)
@@ -79,14 +79,14 @@ package org.scalactic
  * </pre>
  *
  * <p>
- * <em>Note: The <code>Equality</code> type class was inspired in part by the <code>Equal</code> type class of the 
+ * <em>Note: The <code>Equality</code> type class was inspired in part by the <code>Equal</code> type class of the
  * <a href="http://code.google.com/p/scalaz/" target="_blank"><code>scalaz</code></a> project.</em>
  * </p>
  *
  * @tparam A the type whose equality is being customized
  */
 /**
- * Provides <code>Equality</code> and <code>Equivalence</code> instances for <code>Numeric</code> types that 
+ * Provides <code>Equality</code> and <code>Equivalence</code> instances for <code>Numeric</code> types that
  * compare for equality with a given tolerance.
  *
  * <p>Here's an example:</p>
@@ -112,7 +112,7 @@ trait TolerantNumerics {
 
 // TODO: Pretty toStrings on the results
   /**
-   * Provides an <code>Equality</code> instance for <code>Double</code>s that 
+   * Provides an <code>Equality</code> instance for <code>Double</code>s that
    * compares for equality with the passed tolerance.
    *
    * @param tolerance the tolerance with which the returned <code>Equality</code> will compare <code>Double</code>s.
@@ -129,11 +129,11 @@ trait TolerantNumerics {
         }
       }
       override def toString: String = s"TolerantDoubleEquality($tolerance)"
-    } 
-  } 
+    }
+  }
 
   /**
-   * Provides an <code>Equality</code> instance for <code>Float</code>s that 
+   * Provides an <code>Equality</code> instance for <code>Float</code>s that
    * compares for equality with the passed tolerance.
    *
    * @param tolerance the tolerance with which the returned <code>Equality</code> will compare <code>Float</code>s.
@@ -150,11 +150,11 @@ trait TolerantNumerics {
         }
       }
       override def toString: String = s"TolerantFloatEquality($tolerance)"
-    } 
-  } 
+    }
+  }
 
   /**
-   * Provides an <code>Equality</code> instance for <code>Long</code>s that 
+   * Provides an <code>Equality</code> instance for <code>Long</code>s that
    * compares for equality with the passed tolerance.
    *
    * @param tolerance the tolerance with which the returned <code>Equality</code> will compare <code>Long</code>s.
@@ -171,11 +171,11 @@ trait TolerantNumerics {
         }
       }
       override def toString: String = s"TolerantLongEquality($tolerance)"
-    } 
-  } 
+    }
+  }
 
   /**
-   * Provides an <code>Equality</code> instance for <code>Int</code>s that 
+   * Provides an <code>Equality</code> instance for <code>Int</code>s that
    * compares for equality with the passed tolerance.
    *
    * @param tolerance the tolerance with which the returned <code>Equality</code> will compare <code>Int</code>s.
@@ -192,11 +192,11 @@ trait TolerantNumerics {
         }
       }
       override def toString: String = s"TolerantIntEquality($tolerance)"
-    } 
-  } 
+    }
+  }
 
   /**
-   * Provides an <code>Equality</code> instance for <code>Short</code>s that 
+   * Provides an <code>Equality</code> instance for <code>Short</code>s that
    * compares for equality with the passed tolerance.
    *
    * @param tolerance the tolerance with which the returned <code>Equality</code> will compare <code>Short</code>s.
@@ -213,11 +213,11 @@ trait TolerantNumerics {
         }
       }
       override def toString: String = s"TolerantShortEquality($tolerance)"
-    } 
-  } 
+    }
+  }
 
   /**
-   * Provides an <code>Equality</code> instance for <code>Byte</code>s that 
+   * Provides an <code>Equality</code> instance for <code>Byte</code>s that
    * compares for equality with the passed tolerance.
    *
    * @param tolerance the tolerance with which the returned <code>Equality</code> will compare <code>Byte</code>s.
@@ -234,11 +234,11 @@ trait TolerantNumerics {
         }
       }
       override def toString: String = s"TolerantByteEquality($tolerance)"
-    } 
-  } 
+    }
+  }
 
   /**
-   * Provides an <code>Equivalence[N]</code> instance for any type for which a <code>Numeric[N]</code> is available that 
+   * Provides an <code>Equivalence[N]</code> instance for any type for which a <code>Numeric[N]</code> is available that
    * compares <code>N</code>s for equality with the passed tolerance.
    *
    * @param tolerance the tolerance with which the returned <code>Equality</code> will compare <code>Numeric</code>s.
@@ -255,9 +255,9 @@ trait TolerantNumerics {
         (numeric.lteq(a, bPlusTolerance)) && (numeric.gteq(a, bMinusTolerance))
       }
       override def toString: String = s"TolerantEquivalence($tolerance)"
-    } 
-  } 
-} 
+    }
+  }
+}
 
 /**
  * Companion object for <code>TolerantNumerics</code> that enables its members to be imported as an alternative to

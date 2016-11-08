@@ -71,7 +71,7 @@ class ClueSpec extends FlatSpec with Matchers with SeveredStackTraces {
     val iae = new IllegalArgumentException
     val caught = intercept[IllegalArgumentException] {
       withClue("howdy") {
-        throw iae 
+        throw iae
       }
     }
     caught should be theSameInstanceAs (iae)
@@ -171,30 +171,30 @@ class ClueSpec extends FlatSpec with Matchers with SeveredStackTraces {
       }
     }
   }
-  
+
   it should "infer the type of the result of the passed in function" in {
     val result: Int = withClue("hi") { 22 }
     assert(result === 22)
   }
-  
+
   it should "be able to accept by-name payload" in {
     val result: String = withClue(() => 128) { "hello" }
     assert(result === "hello")
   }
 
   it should "work when used in withFixture" in {
-    forAll(examples) { e => 
-      val a = 
+    forAll(examples) { e =>
+      val a =
         new org.scalatest.fixture.FunSpec {
           type FixtureParam = String
-        
+
           override def withFixture(test: OneArgTest) = {
             withClue("a clue") {
               test("something")
             }
           }
-        
-          it("should do something") { p => 
+
+          it("should do something") { p =>
             throw e
           }
         }

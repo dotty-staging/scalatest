@@ -94,7 +94,7 @@ import TripleEqualsSupport._
  *               TreeMap("one" -&gt; 1, "two" -&gt; 2) === HashMap("one" -&gt; new Date, "two" -&gt; new Date)
  *                                               ^
  * </pre>
- * 
+ *
  * @author Bill Venners
  */
 trait MapEqualityConstraints {
@@ -109,7 +109,7 @@ trait MapEqualityConstraints {
 }
 
 /**
- * Companion object that facilitates the importing of <code>MapEqualityConstraints</code> members as 
+ * Companion object that facilitates the importing of <code>MapEqualityConstraints</code> members as
  * an alternative to mixing it in. One use case is to import <code>MapEqualityConstraints</code> members so you can use
  * them in the Scala interpreter.
  */

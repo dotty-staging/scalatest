@@ -76,7 +76,7 @@ package org.scalatest.enablers
  * <pre class="stREPL">
  * scala&gt; bridge should have size 2000
  * res4: org.scalatest.Assertion = Succeeded
- * 
+ *
  * scala&gt; bridge should have size 2001
  * org.scalatest.exceptions.TestFailedException: Bridge(2000) had size 2000 instead of expected size 2001
  *   at org.scalatest.MatchersHelper$.newTestFailedException(MatchersHelper.scala:148)
@@ -125,7 +125,7 @@ object Size {
    * @tparam JCOL any subtype of <code>java.util.Collection</code>
    * @return <code>Size[JCOL]</code> that supports <code>java.util.Collection</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfJavaCollection[JCOL <: java.util.Collection[_]]: Size[JCOL] = 
+  implicit def sizeOfJavaCollection[JCOL <: java.util.Collection[_]]: Size[JCOL] =
     new Size[JCOL] {
       def sizeOf(javaColl: JCOL): Long = javaColl.size
     }
@@ -136,7 +136,7 @@ object Size {
    * @tparam JMAP any subtype of <code>java.util.Map</code>
    * @return <code>Size[JMAP]</code> that supports <code>java.util.Map</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfJavaMap[JMAP <: java.util.Map[_, _]]: Size[JMAP] = 
+  implicit def sizeOfJavaMap[JMAP <: java.util.Map[_, _]]: Size[JMAP] =
     new Size[JMAP] {
       def sizeOf(javaMap: JMAP): Long = javaMap.size
     }
@@ -147,7 +147,7 @@ object Size {
    * @tparam TRAV any subtype of <code>scala.collection.GenTraversable</code>
    * @return <code>Size[TRAV]</code> that supports <code>scala.collection.GenTraversable</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfGenTraversable[TRAV <: scala.collection.GenTraversable[_]]: Size[TRAV] = 
+  implicit def sizeOfGenTraversable[TRAV <: scala.collection.GenTraversable[_]]: Size[TRAV] =
     new Size[TRAV] {
       def sizeOf(trav: TRAV): Long = trav.size
     }
@@ -158,7 +158,7 @@ object Size {
    * @tparam E the type of the element in the <code>Array</code>
    * @return <code>Size[Array[E]]</code> that supports <code>Array</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfArray[E]: Size[Array[E]] = 
+  implicit def sizeOfArray[E]: Size[Array[E]] =
     new Size[Array[E]] {
       def sizeOf(arr: Array[E]): Long = arr.length
     }
@@ -168,7 +168,7 @@ object Size {
    *
    * @return <code>Size[String]</code> that supports <code>String</code> in <code>have size</code> syntax
    */
-  implicit val sizeOfString: Size[String] = 
+  implicit val sizeOfString: Size[String] =
     new Size[String] {
       def sizeOf(str: String): Long = str.length
     }
@@ -181,7 +181,7 @@ object Size {
    * @tparam T any type with <code>size()</code> method that returns <code>Int</code>
    * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfAnyRefWithSizeMethodForInt[T <: AnyRef { def size(): Int}]: Size[T] = 
+  implicit def sizeOfAnyRefWithSizeMethodForInt[T <: AnyRef { def size(): Int}]: Size[T] =
     new Size[T] {
       def sizeOf(obj: T): Long = obj.size
     }
@@ -192,7 +192,7 @@ object Size {
    * @tparam T any type with parameterless <code>size</code> method that returns <code>Int</code>
    * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfAnyRefWithParameterlessSizeMethodForInt[T <: AnyRef { def size: Int}]: Size[T] = 
+  implicit def sizeOfAnyRefWithParameterlessSizeMethodForInt[T <: AnyRef { def size: Int}]: Size[T] =
     new Size[T] {
       def sizeOf(obj: T): Long = obj.size
     }
@@ -203,7 +203,7 @@ object Size {
    * @tparam T any type with <code>getSize()</code> method that returns <code>Int</code>
    * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfAnyRefWithGetSizeMethodForInt[T <: AnyRef { def getSize(): Int}]: Size[T] = 
+  implicit def sizeOfAnyRefWithGetSizeMethodForInt[T <: AnyRef { def getSize(): Int}]: Size[T] =
     new Size[T] {
       def sizeOf(obj: T): Long = obj.getSize
     }
@@ -214,7 +214,7 @@ object Size {
    * @tparam T any type with parameterless <code>getSize</code> method that returns <code>Int</code>
    * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfAnyRefWithParameterlessGetSizeMethodForInt[T <: AnyRef { def getSize: Int}]: Size[T] = 
+  implicit def sizeOfAnyRefWithParameterlessGetSizeMethodForInt[T <: AnyRef { def getSize: Int}]: Size[T] =
     new Size[T] {
       def sizeOf(obj: T): Long = obj.getSize
     }
@@ -225,7 +225,7 @@ object Size {
    * @tparam T any type with <code>size()</code> method that returns <code>Long</code>
    * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfAnyRefWithSizeMethodForLong[T <: AnyRef { def size(): Long}]: Size[T] = 
+  implicit def sizeOfAnyRefWithSizeMethodForLong[T <: AnyRef { def size(): Long}]: Size[T] =
     new Size[T] {
       def sizeOf(obj: T): Long = obj.size
     }
@@ -236,7 +236,7 @@ object Size {
    * @tparam T any type with parameterless <code>size</code> method that returns <code>Long</code>
    * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfAnyRefWithParameterlessSizeMethodForLong[T <: AnyRef { def size: Long}]: Size[T] = 
+  implicit def sizeOfAnyRefWithParameterlessSizeMethodForLong[T <: AnyRef { def size: Long}]: Size[T] =
     new Size[T] {
       def sizeOf(obj: T): Long = obj.size
     }
@@ -247,7 +247,7 @@ object Size {
    * @tparam T any type with <code>getSize()</code> method that returns <code>Long</code>
    * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfAnyRefWithGetSizeMethodForLong[T <: AnyRef { def getSize(): Long}]: Size[T] = 
+  implicit def sizeOfAnyRefWithGetSizeMethodForLong[T <: AnyRef { def getSize(): Long}]: Size[T] =
     new Size[T] {
       def sizeOf(obj: T): Long = obj.getSize
     }
@@ -258,7 +258,7 @@ object Size {
    * @tparam T any type with <code>getSize</code> method that returns <code>Long</code>
    * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
    */
-  implicit def sizeOfAnyRefWithParameterlessGetSizeMethodForLong[T <: AnyRef { def getSize: Long}]: Size[T] = 
+  implicit def sizeOfAnyRefWithParameterlessGetSizeMethodForLong[T <: AnyRef { def getSize: Long}]: Size[T] =
     new Size[T] {
       def sizeOf(obj: T): Long = obj.getSize
     }

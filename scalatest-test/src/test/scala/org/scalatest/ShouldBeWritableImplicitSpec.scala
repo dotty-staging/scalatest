@@ -24,50 +24,50 @@ import org.scalactic.Prettifier
 class ShouldBeWritableImplicitSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   trait Thing {
     def canRead: Boolean
   }
-  
+
   val book = new Thing {
     val canRead = true
   }
-  
+
   val stone = new Thing {
     val canRead = false
   }
-  
+
   implicit def writabilityOfThing[T <: Thing]: Writability[T] =
     new Writability[T] {
       def isWritable(thing: T): Boolean = thing.canRead
     }
-  
+
   val fileName: String = "ShouldBeWritableImplicitSpec.scala"
-    
-  def wasNotWritable(left: Any): String = 
+
+  def wasNotWritable(left: Any): String =
     FailureMessages.wasNotWritable(prettifier, left)
-    
-  def wasWritable(left: Any): String = 
+
+  def wasWritable(left: Any): String =
     FailureMessages.wasWritable(prettifier, left)
-  
+
   it("book should be writable, stone should not be writable") {
     assert(book.canRead === true)
     assert(stone.canRead === false)
   }
-  
+
   def allError(left: Any, message: String, lineNumber: Int): String = {
     val messageWithIndex = UnquotedString("  " + FailureMessages.forAssertionsGenTraversableMessageWithStackDepth(prettifier, 0, UnquotedString(message), UnquotedString(fileName + ":" + lineNumber)))
     FailureMessages.allShorthandFailed(prettifier, messageWithIndex, left)
   }
-  
+
   describe("Writable matcher") {
-    
+
     describe("when work with 'file should be (writable)'") {
-      
+
       it("should do nothing when file is writable") {
         book should be (writable)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when file is not writable") {
         val caught1 = intercept[TestFailedException] {
           stone should be (writable)
@@ -76,15 +76,15 @@ class ShouldBeWritableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'file should not be writable'") {
-      
+
       it("should do nothing when file is not writable") {
         stone should not be writable
       }
-      
+
       it("should throw TestFailedException with correct stack depth when file is writable") {
         val caught1 = intercept[TestFailedException] {
           book should not be writable
@@ -94,13 +94,13 @@ class ShouldBeWritableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'file shouldBe writable'") {
-      
+
       it("should do nothing when file is writable") {
         book shouldBe writable
       }
-      
+
       it("should throw TestFailedException with correct stack depth when file is not writable") {
         val caught1 = intercept[TestFailedException] {
           stone shouldBe writable
@@ -109,15 +109,15 @@ class ShouldBeWritableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'file shouldNot be (writable)'") {
-      
+
       it("should do nothing when file is not writable") {
         stone shouldNot be (writable)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when file is writable") {
         val caught1 = intercept[TestFailedException] {
           book shouldNot be (writable)
@@ -126,15 +126,15 @@ class ShouldBeWritableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) should be (writable)'") {
-      
+
       it("should do nothing when all(xs) is writable") {
         all(List(book)) should be (writable)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is not writable") {
         val left1 = List(stone)
         val caught1 = intercept[TestFailedException] {
@@ -144,15 +144,15 @@ class ShouldBeWritableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) should not be writable'") {
-      
+
       it("should do nothing when all(xs) is not writable") {
         all(List(stone)) should not be writable
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is writable") {
         val left1 = List(book)
         val caught1 = intercept[TestFailedException] {
@@ -162,15 +162,15 @@ class ShouldBeWritableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) shouldBe writable'") {
-      
+
       it("should do nothing when all(xs) is writable") {
         all(List(book)) shouldBe writable
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is not writable") {
         val left1 = List(stone)
         val caught1 = intercept[TestFailedException] {
@@ -181,13 +181,13 @@ class ShouldBeWritableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'all(xs) shouldNot be (writable)'") {
-      
+
       it("should do nothing when all(xs) is not writable") {
         all(List(stone)) shouldNot be (writable)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is writable") {
         val left1 = List(book)
         val caught1 = intercept[TestFailedException] {
@@ -197,8 +197,8 @@ class ShouldBeWritableImplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
   }
-  
+
 }

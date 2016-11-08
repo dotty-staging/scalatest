@@ -107,18 +107,18 @@ sealed abstract class Outcome extends Product with Serializable {
    * @return a <code>Some</code> wrapping the contained exception if this <code>Outcome</code> is an instance of either <code>Failed</code> or <code>Canceled</code>.
    */
   def toOption: Option[Throwable] = None
-  
+
   /**
    * Converts this <code>Outcome</code> to a <code>Succeeded</code>.
    *
    * <p>
    * When this <code>Outcome</code> instance is not Succeeded, it behaves as followed:
    * </p>
-   * 
+   *
    * <ul>
-   *   <li>Failed(ex) - throws ex</li> 
+   *   <li>Failed(ex) - throws ex</li>
    *   <li>Canceled(tce) - throws tce</li>
-   *   <li>Pending - throws TestPendingException</li> 
+   *   <li>Pending - throws TestPendingException</li>
    * </ul>
    *
    * @return Succeeded if this <code>Outcome</code> instance is a Succeeded.
@@ -138,7 +138,7 @@ sealed abstract class Outcome extends Product with Serializable {
 }
 
 /**
- * Companion object for trait <code>Outcome</code> that contains an implicit method that enables 
+ * Companion object for trait <code>Outcome</code> that contains an implicit method that enables
  * collections of <code>Outcome</code>s to be flattened into a collections of contained exceptions.
  */
 object Outcome {
@@ -179,7 +179,7 @@ object Outcome {
    * Given the above table, which includes some errors, you can obtain an <code>IndexedSeq</code> of the <code>Outcome</code>s
    * of executing an assertion on each row of the table with <code>outcomeOf</code>, like this:
    * </p>
-   * 
+   *
    * <pre class="stREPL">
    * scala&gt; import OutcomeOf._
    * import OutcomeOf._
@@ -198,7 +198,7 @@ object Outcome {
    * Now you have a collection of all the outcomes, including successful ones. If you just want the <code>Failed</code> and <code>Canceled</code> outcomes, which
    * contain exceptions, you can filter out anything that isn't "exceptional," like this:
    * </p>
-   * 
+   *
    * <pre class="stREPL">
    * scala&gt; outcomes.filter(_.isExceptional)
    * res1: IndexedSeq[org.scalatest.Outcome] =
@@ -209,7 +209,7 @@ object Outcome {
    * <p>
    * But if you just wanted the contained exceptions, you can (thanks to this implicit method) invoke <code>flatten</code> on your collection:
    * </p>
-   * 
+   *
    * <pre class="stREPL">
    * scala&gt; outcomes.flatten
    * res2: IndexedSeq[Throwable] =
@@ -274,7 +274,7 @@ sealed abstract class Exceptional(ex: Throwable) extends Outcome {
 
 /**
  * Companion object to class <code>Exceptional</code> that provides a factory method and an extractor that enables
- * patterns that match both <code>Failed</code> and <code>Canceled</code> outcomes and 
+ * patterns that match both <code>Failed</code> and <code>Canceled</code> outcomes and
  * extracts the contained exception and a factory method.
  */
 object Exceptional {
@@ -290,10 +290,10 @@ object Exceptional {
    *
    * <p>
    * For example, trait <a href="SeveredStackTraces.html"><code>SeveredStackTraces</code></a> uses this
-   * factory method to sever the stack trace of the exception contained in either a <code>Failed</code> and <code>Canceled</code> 
+   * factory method to sever the stack trace of the exception contained in either a <code>Failed</code> and <code>Canceled</code>
    * like this:
    * </p>
-   * 
+   *
    * <pre class="stHighlight">
    * abstract override def withFixture(test: NoArgTest): Outcome = {
    *   super.withFixture(test) match {
@@ -305,22 +305,22 @@ object Exceptional {
    *
    * @return a <code>Failed</code> or <code>Canceled</code> containing the passed exception.
    */
-  def apply(e: Throwable): Exceptional = 
+  def apply(e: Throwable): Exceptional =
     e match {
       case tce: exceptions.TestCanceledException => Canceled(tce)
       case _ => Failed(e)
     }
 
   /**
-   * Extractor enabling patterns that match both <code>Failed</code> and </code>Canceled</code> outcomes, 
+   * Extractor enabling patterns that match both <code>Failed</code> and </code>Canceled</code> outcomes,
    * extracting the contained exception.
    *
    * <p>
    * For example, trait <a href="SeveredStackTraces.html"><code>SeveredStackTraces</code></a> uses this
-   * extractor to sever the stack trace of the exception contained in either a <code>Failed</code> and <code>Canceled</code> 
+   * extractor to sever the stack trace of the exception contained in either a <code>Failed</code> and <code>Canceled</code>
    * like this:
    * </p>
-   * 
+   *
    * <pre class="stHighlight">
    * abstract override def withFixture(test: NoArgTest): Outcome = {
    *   super.withFixture(test) match {
@@ -334,7 +334,7 @@ object Exceptional {
    * @return a <code>Some</code> wrapping the contained throwable if <code>res</code> is an instance of
    *     either <code>Failed</code> or <code>Canceled</code>, else <code>None</code>.
    */
-  def unapply(res: Outcome): Option[Throwable] = 
+  def unapply(res: Outcome): Option[Throwable] =
     res match {
       case Failed(ex) => Some(ex)
       case Canceled(ex) => Some(ex)
@@ -404,12 +404,12 @@ case class Failed(exception: Throwable) extends Exceptional(exception) {
    * @return true
    */
   override val isFailed: Boolean = true
-  
+
   /**
    * Converts this <code>Outcome</code> to a <code>Succeeded</code>.
-   * 
+   *
    * <p>
-   * The implmentation of this class will re-throw the passed in exception. 
+   * The implmentation of this class will re-throw the passed in exception.
    * </p>
    */
   def toSucceeded: Succeeded.type = throw exception
@@ -482,12 +482,12 @@ case class Canceled(exception: exceptions.TestCanceledException) extends Excepti
    * @return true
    */
   override val isCanceled: Boolean = true
-  
+
   /**
    * Converts this <code>Outcome</code> to a <code>Succeeded</code>.
-   * 
+   *
    * <p>
-   * The implmentation of this class will re-throw the passed in exception. 
+   * The implmentation of this class will re-throw the passed in exception.
    * </p>
    */
   def toSucceeded: Succeeded.type = throw exception
@@ -495,7 +495,7 @@ case class Canceled(exception: exceptions.TestCanceledException) extends Excepti
 
 /**
  * Companion object to class <code>Canceled</code> that provides, in addition to the extractor and factory method
- * provided by the compiler given its companion is a case class, a second factory method 
+ * provided by the compiler given its companion is a case class, a second factory method
  * that produces a <code>Canceled</code> outcome given a string message.
  */
 object Canceled {
@@ -526,13 +526,13 @@ object Canceled {
     */
   def apply(ex: Throwable)(implicit pos: source.Position): Canceled = { // TODO write tests for NPEs
     ex match {
-      case tce: exceptions.TestCanceledException => 
+      case tce: exceptions.TestCanceledException =>
         new Canceled(tce)
       case _ =>
         val msg = ex.getMessage
         if (msg == null)
           new Canceled(new exceptions.TestCanceledException((_: StackDepthException) => None, Some(ex), Left(pos), None))
-        else 
+        else
           new Canceled(new exceptions.TestCanceledException((_: StackDepthException) => Some(msg), Some(ex), Left(pos), None))
     }
   }
@@ -548,7 +548,7 @@ object Canceled {
    *
    * <pre class="stHighlight">
    * abstract override def withFixture(test: NoArgTest): Outcome = {
-   *   if (cancelRemaining) 
+   *   if (cancelRemaining)
    *     Canceled("Canceled by CancelOnFailure because a test failed previously")
    *   else
    *     super.withFixture(test) match {
@@ -601,12 +601,12 @@ case object Pending extends Outcome {
    * @return true
    */
   override val isPending: Boolean = true
-  
+
   /**
    * Converts this <code>Outcome</code> to a <code>Succeeded</code>.
-   * 
+   *
    * <p>
-   * The implmentation of this class will throw <code>TestPendingException</code> with the passed in message. 
+   * The implmentation of this class will throw <code>TestPendingException</code> with the passed in message.
    * </p>
    */
   def toSucceeded: Succeeded.type = throw new exceptions.TestPendingException

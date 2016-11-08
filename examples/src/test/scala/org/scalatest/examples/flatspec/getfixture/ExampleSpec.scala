@@ -24,9 +24,9 @@ class ExampleSpec extends FlatSpec {
     val builder = new StringBuilder("ScalaTest is ")
     val buffer = new ListBuffer[String]
   }
-  
+
   def fixture = new Fixture
-  
+
   "Testing" should "be easy" in {
     val f = fixture
     f.builder.append("easy!")
@@ -34,7 +34,7 @@ class ExampleSpec extends FlatSpec {
     assert(f.buffer.isEmpty)
     f.buffer += "sweet"
   }
-  
+
   it should "be fun" in {
     val f = fixture
     f.builder.append("fun!")

@@ -25,7 +25,7 @@ package org.scalatest.fixture
  * that must be cleaned up afterwards. <em>Note: <code>fixture.AsyncFunSuite</code> is intended for use in special situations, with class <code>AsyncFunSuite</code> used for general needs. For
  * more insight into where <code>fixture.AsyncFunSuite</code> fits in the big picture, see the <a href="../AsyncFunSuite.html#withFixtureOneArgAsyncTest"><code>withFixture(OneArgAsyncTest)</code></a> subsection of the <a href="../AsyncFunSuite.html#sharedFixtures">Shared fixtures</a> section in the documentation for class <code>AsyncFunSuite</code>.</em>
  * </td></tr></table>
- * 
+ *
  * <p>
  * Class <code>fixture.AsyncFunSuite</code> behaves similarly to class <code>org.scalatest.AsyncFunSuite</code>, except that tests may have a
  * fixture parameter. The type of the
@@ -38,11 +38,11 @@ package org.scalatest.fixture
  * in the test code to run via the <code>OneArgAsyncTest</code> argument. The <code>withFixture(OneArgAsyncTest)</code> method (abstract in this class) is responsible
  * for creating the fixture argument and passing it to the test function.
  * </p>
- * 
+ *
  * <p>
  * Subclasses of this class must, therefore, do three things differently from a plain old <code>org.scalatest.AsyncFunSuite</code>:
  * </p>
- * 
+ *
  * <ol>
  * <li>define the type of the fixture parameter by specifying type <code>FixtureParam</code></li>
  * <li>define the <code>withFixture(OneArgAsyncTest)</code> method</li>
@@ -79,18 +79,18 @@ package org.scalatest.fixture
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.asyncfunsuite.oneargasynctest
- * 
+ *
  * import org.scalatest._
  * import java.io._
  * import scala.concurrent.Future
  * import scala.concurrent.ExecutionContext
- * 
+ *
  * // Defining actor messages
  * sealed abstract class StringOp
  * case object Clear extends StringOp
  * case class Append(value: String) extends StringOp
  * case object GetValue
- * 
+ *
  * class StringActor { // Simulating an actor
  *   private final val sb = new StringBuilder
  *   def !(op: StringOp): Unit =
@@ -105,13 +105,13 @@ package org.scalatest.fixture
  *       synchronized { sb.toString }
  *     }
  * }
- * 
+ *
  * class ExampleSuite extends fixture.AsyncFunSuite {
- * 
+ *
  *   type FixtureParam = StringActor
- * 
+ *
  *   def withFixture(test: OneArgAsyncTest): FutureOutcome = {
- * 
+ *
  *     val actor = new StringActor
  *     complete {
  *       actor ! Append("ScalaTest is ") // set up the fixture
@@ -120,7 +120,7 @@ package org.scalatest.fixture
  *       actor ! Clear // ensure the fixture will be cleaned up
  *     }
  *   }
- * 
+ *
  *   test("Testing should be easy") { actor =&gt;
  *     actor ! Append("easy!")
  *     val futureString = actor ? GetValue
@@ -128,7 +128,7 @@ package org.scalatest.fixture
  *       assert(s === "ScalaTest is easy!")
  *     }
  *   }
- * 
+ *
  *   test("Testing should be fun") { actor =&gt;
  *     actor ! Append("fun!")
  *     val futureString = actor ? GetValue
@@ -157,7 +157,7 @@ package org.scalatest.fixture
  * that creates a database with a unique name, passes the connector into the test, then removes the database once the test completes. This is shown in
  * the following example:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * package org.scalatest.examples.fixture.asyncfunsuite.sharing
  *

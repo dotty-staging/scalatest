@@ -17,50 +17,50 @@ package org.scalatest.matchers
 
 import org.scalatest._
 import Matchers._
-import matchers.{MatchResult, 
-                 FailureMessage, 
-                 NegatedFailureMessage, 
-                 MidSentenceNegatedFailureMessage, 
+import matchers.{MatchResult,
+                 FailureMessage,
+                 NegatedFailureMessage,
+                 MidSentenceNegatedFailureMessage,
                  MidSentenceFailureMessage}
 
 class MatcherFactorySpec extends FunSpec {
-  
+
   describe("MatcherFactory1 ") {
-    
+
     describe("AndNotWord ") {
-      
+
       describe("equal(Null) method returns Matcher") {
-        
+
         val aNullRef: String = null
         val mtf = not equal ("hi") and not equal (null)
         val mt = mtf.matcher[String]
-      
+
         it("should have pretty toString") {
           mtf.toString should be ("(not (equal (\"hi\"))) and (not equal null)")
         }
-        
+
         val mr = mt("Bob")
-        
-        val leftResult = 
+
+        val leftResult =
           MatchResult(
-            true, 
-            "{0} equaled {1}", 
+            true,
+            "{0} equaled {1}",
             "{0} did not equal {1}",
-            Vector("Bob", "hi"), 
+            Vector("Bob", "hi"),
             Vector("[Bob]", "[hi]")
           )
-          
-        val rightResult = 
+
+        val rightResult =
           MatchResult(
-            true, 
-            "The reference equaled null", 
+            true,
+            "The reference equaled null",
             "{0} did not equal null",
-            "the reference equaled null", 
-            "{0} did not equal null", 
-            Vector.empty, 
+            "the reference equaled null",
+            "{0} did not equal null",
+            Vector.empty,
             Vector("Bob")
           )
-          
+
         it("should have correct MatcherResult") {
           mr.matches shouldBe (true)
           mr.failureMessage shouldBe ("\"[Bob]\" did not equal \"[hi]\", but the reference equaled null")
@@ -76,9 +76,9 @@ class MatcherFactorySpec extends FunSpec {
           mr.midSentenceFailureMessageArgs shouldBe (Vector(MidSentenceNegatedFailureMessage(leftResult), MidSentenceFailureMessage(rightResult)))
           mr.midSentenceNegatedFailureMessageArgs shouldBe (Vector(MidSentenceNegatedFailureMessage(leftResult), MidSentenceNegatedFailureMessage(rightResult)))
         }
-      
+
         val nmr = mr.negated
-      
+
         it("should have correct negated MatcherResult") {
           nmr.matches shouldBe (false)
           nmr.failureMessage shouldBe ("\"[Bob]\" did not equal \"[hi]\", and \"Bob\" did not equal null")
@@ -94,45 +94,45 @@ class MatcherFactorySpec extends FunSpec {
           nmr.midSentenceFailureMessageArgs shouldBe (Vector(MidSentenceNegatedFailureMessage(leftResult), MidSentenceNegatedFailureMessage(rightResult)))
           nmr.midSentenceNegatedFailureMessageArgs shouldBe (Vector(MidSentenceNegatedFailureMessage(leftResult), MidSentenceFailureMessage(rightResult)))
         }
-        
+
       }
-      
+
     }
-    
+
     describe("OrNotWord ") {
-      
+
       describe("equal(Null) method returns Matcher") {
-        
+
         val aNullRef: String = null
         val mtf = not equal ("Bob") or not equal (null)
         val mt = mtf.matcher[String]
-      
+
         it("should have pretty toString") {
           mt.toString should be ("(not (equal (\"Bob\"))) or (not equal null)")
         }
-        
+
         val mr = mt("Bob")
-        
-        val leftResult = 
+
+        val leftResult =
           MatchResult(
-            false, 
-            "{0} equaled {1}", 
+            false,
+            "{0} equaled {1}",
             "{0} did not equal {1}",
-            Vector("Bob", "Bob"), 
+            Vector("Bob", "Bob"),
             Vector("Bob", "Bob")
           )
-          
-        val rightResult = 
+
+        val rightResult =
           MatchResult(
-            true, 
-            "The reference equaled null", 
+            true,
+            "The reference equaled null",
             "{0} did not equal null",
-            "the reference equaled null", 
-            "{0} did not equal null", 
-            Vector.empty, 
+            "the reference equaled null",
+            "{0} did not equal null",
+            Vector.empty,
             Vector("Bob")
           )
-        
+
         it("should have correct MatcherResult") {
           mr.matches shouldBe (true)
           mr.failureMessage shouldBe ("\"Bob\" equaled \"Bob\", and the reference equaled null")
@@ -148,9 +148,9 @@ class MatcherFactorySpec extends FunSpec {
           mr.midSentenceFailureMessageArgs shouldBe (Vector(MidSentenceFailureMessage(leftResult), MidSentenceFailureMessage(rightResult)))
           mr.midSentenceNegatedFailureMessageArgs shouldBe (Vector(MidSentenceFailureMessage(leftResult), MidSentenceNegatedFailureMessage(rightResult)))
         }
-      
+
         val nmr = mr.negated
-      
+
         it("should have correct negated MatcherResult") {
           nmr.matches shouldBe (false)
           nmr.failureMessage shouldBe ("\"Bob\" equaled \"Bob\", and \"Bob\" did not equal null")
@@ -166,33 +166,33 @@ class MatcherFactorySpec extends FunSpec {
           nmr.midSentenceFailureMessageArgs shouldBe (Vector(MidSentenceFailureMessage(leftResult), MidSentenceNegatedFailureMessage(rightResult)))
           nmr.midSentenceNegatedFailureMessageArgs shouldBe (Vector(MidSentenceFailureMessage(leftResult), MidSentenceFailureMessage(rightResult)))
         }
-        
+
       }
-      
+
     }
-    
+
     describe("and(MatcherFactory1) method returns MatcherFactory1") {
-      
+
       val mtf1 = equal ("Bob")
       val mtf = mtf1 and (equal ("Alice"))
       val mt = mtf.matcher[String]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("(equal (\"Bob\")) and (equal (\"Alice\"))")
       }
     }
-    
+
     describe("or(MatcherFactory1) method returns MatcherFactory1") {
-      
+
       val mtf1 = equal ("Bob")
       val mtf = mtf1 or (equal ("Alice"))
       val mt = mtf.matcher[String]
-      
+
       it("should have pretty toString") {
         mtf.toString should be ("(equal (\"Bob\")) or (equal (\"Alice\"))")
       }
     }
-    
+
   }
-  
+
 }

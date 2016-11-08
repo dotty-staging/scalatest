@@ -69,7 +69,7 @@ private[scalatest] object DiagrammedAssertionsMacro {
    *
    */
   private def macroImpl(context: Context)(methodName: String, condition: context.Expr[Boolean], clue: context.Expr[Any], prettifier: context.Expr[_], pos: context.Expr[source.Position]): context.Expr[Assertion] = {
-    
+
     val startLine = getFirstLine(context)(condition.tree) // Get the expression first line number
     val endLine = getLastLine(context)(condition.tree) // Get the expression last line number
 

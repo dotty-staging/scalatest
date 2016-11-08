@@ -32,14 +32,14 @@ import TripleEqualsSupport._
  * <b>Unchecked</b> - <code>A</code> and <code>B</code> can be any two types. This constraint level is available from
  * subtrait <a href="TripleEquals.html"><code>TripleEquals</code></a>.
  * </p>
- * 
+ *
  * <p>
  * <b>Statically-checked</b> - <code>A</code> must be a subtype of <code>B</code>, or vice versa, or must cooperate such that the
  * equality laws stated in the <code>equals</code> contract are preserved.
  * This (intermediate) constraint level is available by using subtrait <a href="TripleEquals.html"><code>TripleEquals</code></a> and installing the <a href="http://www.scalactic.org/supersafe">SuperSafe Community Edition</a>
  * Scala compiler plugin.
  * </p>
- * 
+ *
  * <p>
  * <b>Type-checked</b> - <code>A</code> must be a subtype of <code>B</code>, or vice versa.
  * (Both <code>A</code> and <code>B</code> can be the same type, because a type is considered a subtype
@@ -62,7 +62,7 @@ import TripleEqualsSupport._
  * <li><code>convertEquivalenceToAToBConstraint</code></li>
  * <li><code>convertEquivalenceToBToAConstraint</code></li>
  * </ul>
- * 
+ *
  * <p>
  * If in the body of a test you want to turn off the type checking, you can import the members
  * of <code>TripleEquals</code> in the body of that test. This will not only hide
@@ -70,13 +70,13 @@ import TripleEqualsSupport._
  * replacing those with implicit ones defined in <code>TripleEquals</code>, it will also hide the three methods made implicit in <code>TypeCheckedTripleEquals</code>
  * (and listed above), replacing them by <em>non-implicit</em> ones.
  * </p>
- * 
+ *
  * <p>
  * In short, you should be able to select a primary constraint level via either a mixin or import, then change that in nested scopes
  * however you want, again either through a mixin or import, without getting any implicit conversion ambiguity. The innermost constraint level in scope
  * will always be in force.
  * <p>
- * 
+ *
  * @author Bill Venners
  */
 trait TripleEqualsSupport {
@@ -106,7 +106,7 @@ trait TripleEqualsSupport {
    * @author Bill Venners
    */
   class Equalizer[L](val leftSide: L) { // Note: This is called leftSide not left to avoid a conflict with scalaz's implicit that adds left
-  
+
     /**
      * Compare two objects for equality, returning a <code>Boolean</code>, using the <code>Equality</code> type class passed as <code>equality</code>.
      *
@@ -115,7 +115,7 @@ trait TripleEqualsSupport {
      * @return true if the <code>leftSide</code> and <code>rightSide</code> objects are equal according to the passed <code>Equality</code> type class.
      */
     def ===(rightSide: Any)(implicit equality: Equality[L]): Boolean = equality.areEqual(leftSide, rightSide)
-  
+
     /**
      * Compare two objects for inequality, returning a <code>Boolean</code>, using the <code>Equality</code> type class passed as <code>equality</code>.
      *
@@ -124,23 +124,23 @@ trait TripleEqualsSupport {
      * @return true if the <code>leftSide</code> and <code>rightSide</code> objects are <em>not</em> equal according to the passed <code>Equality</code> type class.
      */
     def !==(rightSide: Any)(implicit equality: Equality[L]): Boolean = !equality.areEqual(leftSide, rightSide)
-  
+
     /**
      * Determine whether a numeric object is within the passed <code>Spread</code>, returning a <code>Boolean</code>.
      *
-     * @param spread the <code>Spread</code> against which to compare the value passed to the constructor as <code>leftSide</code> 
+     * @param spread the <code>Spread</code> against which to compare the value passed to the constructor as <code>leftSide</code>
      * @return true if the value passed to the constructor as <code>leftSide</code> is within the <code>Spread</code> passed to this method.
      */
     def ===(spread: Spread[L]): Boolean = if (spread != null) spread.isWithin(leftSide) else leftSide == spread
-  
+
     /**
      * Determine whether a numeric object is outside the passed <code>Spread</code>, returning a <code>Boolean</code>.
      *
-     * @param spread the <code>Spread</code> against which to compare the value passed to the constructor as <code>leftSide</code> 
+     * @param spread the <code>Spread</code> against which to compare the value passed to the constructor as <code>leftSide</code>
      * @return true if the value passed to the constructor as <code>leftSide</code> is <em>not</em> within the <code>Spread</code> passed to this method.
      */
     def !==(spread: Spread[L]): Boolean = if (spread != null) !spread.isWithin(leftSide) else leftSide != spread
-  
+
     /**
      * Determine whether an object reference is <code>null</code>.
      *
@@ -148,7 +148,7 @@ trait TripleEqualsSupport {
      * @return true if the value passed to the constructor as <code>leftSide</code> is <code>null</code>.
      */
     def ===(literalNull: Null): Boolean = leftSide == null
-  
+
     /**
      * Determines whether an object reference is non-<code>null</code>.
      *
@@ -183,7 +183,7 @@ trait TripleEqualsSupport {
    * @author Bill Venners
    */
   class CheckingEqualizer[L](val leftSide: L) { // Note: This is called leftSide not left to avoid a conflict with scalaz's implicit that adds left
-  
+
     /**
      * Compare two objects for equality, returning a <code>Boolean</code>, using the <code>Constraint</code> instance passed as <code>constraint</code>.
      *
@@ -193,7 +193,7 @@ trait TripleEqualsSupport {
      * @return true if the <code>leftSide</code> and <code>rightSide</code> objects are equal according to the passed <code>Constraint</code> instance.
      */
     def ===[R](rightSide: R)(implicit constraint: L CanEqual R): Boolean = constraint.areEqual(leftSide, rightSide)
-  
+
     /**
      * Compare two objects for inequality, returning a <code>Boolean</code>, using the <code>Constraint</code> instance passed as <code>constraint</code>.
      *
@@ -203,19 +203,19 @@ trait TripleEqualsSupport {
      * @return true if the <code>leftSide</code> and <code>rightSide</code> objects are <em>not</em> equal according to the passed <code>Constraint</code> instance.
      */
     def !==[R](rightSide: R)(implicit constraint: L CanEqual R): Boolean = !constraint.areEqual(leftSide, rightSide)
-  
+
     /**
      * Determine whether a numeric object is within the passed <code>Spread</code>, returning a <code>Boolean</code>.
      *
-     * @param spread the <code>Spread</code> against which to compare the value passed to the constructor as <code>leftSide</code> 
+     * @param spread the <code>Spread</code> against which to compare the value passed to the constructor as <code>leftSide</code>
      * @return true if the value passed to the constructor as <code>leftSide</code> is <em>not</em> within the <code>Spread</code> passed to this method.
      */
     def ===(spread: Spread[L]): Boolean = if (spread != null) spread.isWithin(leftSide) else leftSide == spread
-  
+
     /**
      * Determine whether a numeric object is outside the passed <code>Spread</code>, returning a <code>Boolean</code>.
      *
-     * @param spread the <code>Spread</code> against which to compare the value passed to the constructor as <code>leftSide</code> 
+     * @param spread the <code>Spread</code> against which to compare the value passed to the constructor as <code>leftSide</code>
      * @return true if the value passed to the constructor as <code>leftSide</code> is <em>not</em> within the <code>Spread</code> passed to this method.
      */
     def !==(spread: Spread[L]): Boolean = if (spread != null) !spread.isWithin(leftSide) else leftSide != spread
@@ -586,7 +586,7 @@ object TripleEqualsSupport {
 
   /**
    * An implementation of <code>Constraint</code> for two types <code>A</code> and <code>B</code> that requires an <code>Equality[B]</code>
-   * and a conversion function from <code>A</code> to <code>B</code>. 
+   * and a conversion function from <code>A</code> to <code>B</code>.
    *
    * @param equivalenceOfB an <code>Equivalence</code> type class for <code>B</code>
    */
@@ -606,15 +606,15 @@ object TripleEqualsSupport {
      */
     override def areEqual(a: A, b: B): Boolean = equivalenceOfB.areEquivalent(cnv(a), b)
   }
-  
+
   /**
    * An implementation of <code>Constraint</code> for two types <code>A</code> and <code>B</code> that requires an <code>Equality[A]</code>
-   * and a conversion function from <code>B</code> to <code>A</code>. 
+   * and a conversion function from <code>B</code> to <code>A</code>.
    *
    * @param equivalenceOfA an <code>Equivalence</code> type class for <code>A</code>
    */
   final class BToAEquivalenceConstraint[A, B](equivalenceOfA: Equivalence[A], cnv: B => A) extends (A CanEqual B) {
-  
+
     /**
      * Indicates whether the objects passed as <code>a</code> and <code>b</code> are equal by returning the
      * result of invoking <code>areEqual(a, cnv(b))</code> on the passed <code>equalityOfA</code> object.
@@ -631,8 +631,8 @@ object TripleEqualsSupport {
   }
 
   /**
-   * Facilitates the &ldquo;<code>should === (x += y)</code>&rdquo; and  &ldquo;<code>should !== (x += y)</code>&rdquo; syntax of ScalaTest's matchers DSL. 
-   *  
+   * Facilitates the &ldquo;<code>should === (x += y)</code>&rdquo; and  &ldquo;<code>should !== (x += y)</code>&rdquo; syntax of ScalaTest's matchers DSL.
+   *
    * <p>
    * Instances of this class are created and returned by the <code>===</code> and <code>!==</code> methods of
    * trait <a href="TripleEqualsSupport.html"><code>TripleEqualsSupport</code></a>.
@@ -642,10 +642,10 @@ object TripleEqualsSupport {
    * @param expectingEqual <code>true</code> if the result of a <code>===</code> invocation; <code>false</code> if the result of a <code>!==</code> invocation.
    */
   final case class TripleEqualsInvocationOnSpread[T](spread: Spread[T], expectingEqual: Boolean)
-  
+
   /**
-   * Facilitates the &ldquo;<code>should ===</code>&rdquo; and  &ldquo;<code>should !==</code>&rdquo; syntax of ScalaTest's matchers DSL. 
-   *  
+   * Facilitates the &ldquo;<code>should ===</code>&rdquo; and  &ldquo;<code>should !==</code>&rdquo; syntax of ScalaTest's matchers DSL.
+   *
    * <p>
    * Instances of this class are created and returned by the <code>===</code> and <code>!==</code> methods of
    * trait <a href="TripleEqualsSupport.html"><code>TripleEqualsSupport</code></a>.
@@ -660,26 +660,26 @@ object TripleEqualsSupport {
 
   /**
    * Class representing an spread (<em>i.e.</em>, range) between two numbers.
-   * 
+   *
    * <p>
    * The spread is expressed in terms of a <code>Numeric</code> <em>pivot</em> and <em>tolerance</em>.
    * The spread extends from <code>pivot - tolerance</code> to <code>pivot + tolerance</code>, inclusive.
    * </p>
-   * 
+   *
    * @param pivot the pivot number at the center of the spread
    * @param tolerance the tolerance that determines the high and low point of the spread
-   * 
+   *
    * @author Bill Venners
    */
   final case class Spread[T : Numeric](pivot: T, tolerance: T) {
-  
+
     private val numeric = implicitly[Numeric[T]]
-  
+
     require(numeric.signum(tolerance) >= 0, "tolerance must be zero or greater, but was " + tolerance)
-  
+
     private val max = numeric.plus(pivot, tolerance)
     private val min = numeric.minus(pivot, tolerance)
-  
+
     /**
      * Determines whether the passed <code>Numeric</code> value <code>n</code> is within the spread represented
      * by this <code>Spread</code> instance.
@@ -687,7 +687,7 @@ object TripleEqualsSupport {
     def isWithin(n: T): Boolean = {
       numeric.gteq(n, min) && numeric.lteq(n, max)
     }
-  
+
     /**
      * Returns <code>true</code> if the passed number, <code>n</code>, is within the spread represented by this <code>Spread</code> instance
      *
@@ -711,7 +711,7 @@ object TripleEqualsSupport {
      * @param n a number that may or may not lie within this spread
      */
     def ===(n: T): Boolean = isWithin(n)
-  
+
     /**
      * Returns <code>false</code> if the passed number, <code>n</code>, is within the spread represented by this <code>Spread</code> instance
      *
@@ -735,7 +735,7 @@ object TripleEqualsSupport {
      * @param n a number that may or may not lie within this spread
      */
     def !==(n: T): Boolean = !isWithin(n)
-    
+
     /**
      * Overrides toString to return "[pivot] +- [tolerance]"
      */

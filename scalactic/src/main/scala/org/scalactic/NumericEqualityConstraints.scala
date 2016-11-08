@@ -19,7 +19,7 @@ import TripleEqualsSupport._
 
 private[scalactic] trait NumericEqualityConstraints {
   implicit def numericEqualityConstraint[A, B](implicit equalityOfA: Equality[A], numA: Numeric[A], numB: Numeric[B]): A CanEqual B = new EqualityConstraint[A, B](equalityOfA)
-} 
+}
 
 private[scalactic] object NumericEqualityConstraints extends NumericEqualityConstraints
 

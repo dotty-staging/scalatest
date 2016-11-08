@@ -20,15 +20,15 @@ import org.scalatest.Tag
 class SampleSuite extends FunSuite {
 
   object SlowTest extends Tag("org.scalatest.tools.scalasbt.SampleSuite.SlowTest")
-  
+
   test("test 1") {
     alert("This is an alert!")
   }
-  
+
   test("test 2", SlowTest) {
-    
+
   }
-  
+
   test("test 3") {
     note("This is an update!")
   }

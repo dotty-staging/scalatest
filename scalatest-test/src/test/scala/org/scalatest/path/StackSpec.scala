@@ -76,7 +76,7 @@ trait StackBehaviors { this: FunSpec =>
       assert(stack.size === size - 1)
     }
   }
-  
+
   def nonFullStack(newStack: => Stack[Int]): Unit = {
 
     it("should not be full") {
@@ -100,9 +100,9 @@ class StackSpec extends org.scalatest.path.FunSpec with StackBehaviors {
   val lastValuePushed = 9
 
   describe("A Stack") {
-       
+
     val stack = new Stack[Int]
-    
+
     describe("(when empty)") {
 
       it("should be empty") {
@@ -122,11 +122,11 @@ class StackSpec extends org.scalatest.path.FunSpec with StackBehaviors {
         }
       }
     }
-  
+
     describe("(with one item)") {
-      
+
       stack.push(9)
-      
+
       it("should be non-empty, DUDE!") {
         assert(!stack.empty)
       }
@@ -139,7 +139,7 @@ class StackSpec extends org.scalatest.path.FunSpec with StackBehaviors {
     }
 
     describe("(with one item less than capacity)") {
-      
+
       for (i <- 1 to 9)
         stack.push(i)
 

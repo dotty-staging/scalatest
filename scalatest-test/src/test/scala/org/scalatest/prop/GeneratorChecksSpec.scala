@@ -26,17 +26,17 @@ class GeneratorChecksSpec extends FunSpec with Matchers {
   describe("GeneratorChecks") {
     import GeneratorChecks._
     it("should provide a forAll that takes one param and produces a GeneratorDrivenPropertyCheckFailedException") {
-      forAll { (i: Int) => 
+      forAll { (i: Int) =>
         i + i shouldEqual i * 2
       }
       a [GeneratorDrivenPropertyCheckFailedException] should be thrownBy {
-        forAll { (i: Int) => 
+        forAll { (i: Int) =>
           throw new IllegalArgumentException("oops")
         }
       }
 /*
       a [GeneratorDrivenPropertyCheckFailedException] should be thrownBy {
-        forAll { (i: Int) => 
+        forAll { (i: Int) =>
           i + i shouldEqual i * 3
         }
       }
@@ -72,22 +72,22 @@ class GeneratorChecksSpec extends FunSpec with Matchers {
     }
     it("should provide a forAll that takes two params") {
       import GeneratorChecks._
-      forAll { (i: Int, j: Int) => 
+      forAll { (i: Int, j: Int) =>
         i + j shouldEqual j + i
       }
       a [TestFailedException] should be thrownBy {
-        forAll { (i: Int, j: Int) => 
+        forAll { (i: Int, j: Int) =>
           i + j shouldEqual j * i
         }
       }
     }
     it("should provide a forAll that takes three params") {
       import GeneratorChecks._
-      forAll { (i: Int, j: Int, k: Int) => 
+      forAll { (i: Int, j: Int, k: Int) =>
         i + j + k shouldEqual k + j + i
       }
       a [TestFailedException] should be thrownBy {
-        forAll { (i: Int, j: Int, k: Int) => 
+        forAll { (i: Int, j: Int, k: Int) =>
           i + j + k shouldEqual k * j * i
         }
       }

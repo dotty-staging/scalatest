@@ -28,16 +28,16 @@ import org.scalatest.Tag
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.tagobjects.network
- * 
+ *
  * import org.scalatest._
  * import tagobjects.Network
- * 
+ *
  * class SetSpec extends FlatSpec {
- * 
+ *
  *   "An empty Set" should "have size 0" taggedAs(Network) in {
  *     assert(Set.empty.size === 0)
  *   }
  * }
  * </pre>
  */
-object Network extends Tag("org.scalatest.tags.Network") 
+object Network extends Tag("org.scalatest.tags.Network")

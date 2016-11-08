@@ -67,7 +67,7 @@ class ExampleSpec extends FunSpec {
       }
     }
   }
-  
+
   describe("Test code") {
     // This test needs the database fixture
     it("should be readable") {

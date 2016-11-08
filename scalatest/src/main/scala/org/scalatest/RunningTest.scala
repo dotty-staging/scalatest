@@ -25,7 +25,7 @@ private[scalatest] final case class RunningTest(
 ) extends Ordered[RunningTest] {
 
   // Orders them first by suiteId then by testName. When I initially made this depend on timestamp, the
-  // silly ConcurrentSkipListSet couldn't find it. 
+  // silly ConcurrentSkipListSet couldn't find it.
   def compare(other: RunningTest): Int = {
     val suiteIdComp: Int = suiteId.compareTo(other.suiteId)
     if (suiteIdComp == 0) {
@@ -44,7 +44,7 @@ private[scalatest] final case class RunningTest(
       41 + suiteId.hashCode
     ) + testName.hashCode
 
-  def toSlowpoke(currentTimeStamp: Long): Slowpoke = 
+  def toSlowpoke(currentTimeStamp: Long): Slowpoke =
     Slowpoke(
       suiteName = suiteName,
       suiteId = suiteId,

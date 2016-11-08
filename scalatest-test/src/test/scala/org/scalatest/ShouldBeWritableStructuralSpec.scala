@@ -23,30 +23,30 @@ import org.scalactic.Prettifier
 class ShouldBeWritableStructuralSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   val fileName: String = "ShouldBeWritableStructuralSpec.scala"
-    
-  def wasNotWritable(left: Any): String = 
+
+  def wasNotWritable(left: Any): String =
     FailureMessages.wasNotWritable(prettifier, left)
-    
-  def wasWritable(left: Any): String = 
+
+  def wasWritable(left: Any): String =
     FailureMessages.wasWritable(prettifier, left)
-  
+
   describe("writable matcher") {
-    
+
     describe("when work with arbitrary object with isWritable() method") {
-      
+
       class MyWritability(value: Boolean) {
         def isWritable(): Boolean = value
         override def toString = "writability"
       }
       val objTrue = new MyWritability(true)
       val objFalse = new MyWritability(false)
-      
+
       it("should do nothing for 'objTrue should be (writable)'") {
         objTrue should be (writable)
       }
-      
+
       it("should throw TFE with correct stack depth for 'objFalse should be (writable)'") {
         val caught1 = intercept[TestFailedException] {
           objFalse should be (writable)
@@ -55,11 +55,11 @@ class ShouldBeWritableStructuralSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should do nothing if for 'objFalse should not be writable'") {
         objFalse should not be writable
       }
-      
+
       it("should throw TFE with correct stack depth for 'objTrue should not be writable'") {
         val caught1 = intercept[TestFailedException] {
           objTrue should not be writable
@@ -69,20 +69,20 @@ class ShouldBeWritableStructuralSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with arbitrary object with isWritable method") {
-      
+
       class MyWritability(value: Boolean) {
         def isWritable: Boolean = value
         override def toString = "writability"
       }
       val objTrue = new MyWritability(true)
       val objFalse = new MyWritability(false)
-      
+
       it("should do nothing for 'objTrue should be (writable)'") {
         objTrue should be (writable)
       }
-      
+
       it("should throw TFE with correct stack depth for 'objFalse should be (writable)'") {
         val caught1 = intercept[TestFailedException] {
           objFalse should be (writable)
@@ -91,11 +91,11 @@ class ShouldBeWritableStructuralSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should do nothing if for 'objFalse should not be writable'") {
         objFalse should not be writable
       }
-      
+
       it("should throw TFE with correct stack depth for 'objTrue should not be writable'") {
         val caught1 = intercept[TestFailedException] {
           objTrue should not be writable
@@ -105,20 +105,20 @@ class ShouldBeWritableStructuralSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with arbitrary object with isWritable val") {
-      
+
       class MyWritability(value: Boolean) {
         val isWritable: Boolean = value
         override def toString = "writability"
       }
       val objTrue = new MyWritability(true)
       val objFalse = new MyWritability(false)
-      
+
       it("should do nothing for 'objTrue should be (writable)'") {
         objTrue should be (writable)
       }
-      
+
       it("should throw TFE with correct stack depth for 'objFalse should be (writable)'") {
         val caught1 = intercept[TestFailedException] {
           objFalse should be (writable)
@@ -127,11 +127,11 @@ class ShouldBeWritableStructuralSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should do nothing if for 'objFalse should not be writable'") {
         objFalse should not be writable
       }
-      
+
       it("should throw TFE with correct stack depth for 'objTrue should not be writable'") {
         val caught1 = intercept[TestFailedException] {
           objTrue should not be writable

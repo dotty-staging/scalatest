@@ -36,6 +36,6 @@ class ExampleSpec extends RefSpec with OneInstancePerTest {
       builder.append("fun!")
       assert(builder.toString === "ScalaTest is fun!")
       assert(buffer.isEmpty)
-    } 
+    }
   }
 }

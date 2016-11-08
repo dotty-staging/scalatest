@@ -24,24 +24,24 @@ import org.scalactic.Prettifier
 class ListLoneElementSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
-  def wasNotGreaterThan(left: Any, right: Any): String = 
+
+  def wasNotGreaterThan(left: Any, right: Any): String =
     decorateToStringValue(prettifier, left) + " was not greater than " + (right)
-    
-  def notLoneElement(left: Any, size: Int): String = 
+
+  def notLoneElement(left: Any, size: Int): String =
     "Expected " + decorateToStringValue(prettifier, left) + " to contain exactly 1 element, but it has size " + size
 
   describe("The loneElement syntax") {
-    
+
     describe("when used with List") {
       it("should work with xs.loneElement and passed when should syntax is used and xs only contains one element and the one element passed the check") {
         List(10).loneElement should be > 9
       }
-      
+
       it("should work with xs.loneElement and passed when assert syntax is used and xs only contains one element and the one element passed the check") {
         assert(List(10).loneElement > 9)
       }
-      
+
       it("should throw TestFailedException with correct stack depth and message when should syntax is used and xs.loneElement contains one element but it failed the check") {
         val e = intercept[exceptions.TestFailedException] {
           List(8).loneElement should be > 9
@@ -50,7 +50,7 @@ class ListLoneElementSpec extends FunSpec {
         e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
         e.message should be (Some(wasNotGreaterThan(8, 9)))
       }
-      
+
       it("should throw TestFailedException with correct stack depth and message when assert syntax is used and xs.loneElement contains one element but it failed the check") {
         val e = intercept[exceptions.TestFailedException] {
           assert(List(8).loneElement > 9)
@@ -59,7 +59,7 @@ class ListLoneElementSpec extends FunSpec {
         assert(e.failedCodeLineNumber == Some(thisLineNumber - 3))
         assert(e.message == Some(wasNotGreaterThan(8, 9)))
       }
-      
+
       it("should throw TestFailedException with correct stack depth and message when should syntax is used and xs contains 0 element and xs.loneElement is called") {
         val xs = List.empty[Int]
         val e = intercept[exceptions.TestFailedException] {
@@ -69,7 +69,7 @@ class ListLoneElementSpec extends FunSpec {
         e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
         e.message should be (Some(notLoneElement(xs, 0)))
       }
-      
+
       it("should throw TestFailedException with correct stack depth and message when assert syntax is used and xs contains 0 element and xs.loneElement is called") {
         val xs = List.empty[Int]
         val e = intercept[exceptions.TestFailedException] {
@@ -79,7 +79,7 @@ class ListLoneElementSpec extends FunSpec {
         assert(e.failedCodeLineNumber == Some(thisLineNumber - 3))
         assert(e.message === Some(notLoneElement(xs, 0)))
       }
-      
+
       it("should throw TestFailedException with correct stack depth and message when should syntax is used and xs contains > 1 elements and xs.loneElement is called") {
         val xs = List(10, 12)
         val e = intercept[exceptions.TestFailedException] {
@@ -89,7 +89,7 @@ class ListLoneElementSpec extends FunSpec {
         e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
         e.message should be (Some(notLoneElement(xs, 2)))
       }
-      
+
       it("should throw TestFailedException with correct stack depth and message when assert syntax is used and xs contains > 1 elements and xs.loneElement is called") {
         val xs = List(10, 12)
         val e = intercept[exceptions.TestFailedException] {

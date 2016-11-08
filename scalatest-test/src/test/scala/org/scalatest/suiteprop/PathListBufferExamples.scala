@@ -24,7 +24,7 @@ class PathListBufferExamples extends PathSuiteExamples {
   case class Counts(
     var instanceCount: Int
   )
-  
+
   trait Services {
     val expectedInstanceCount: Int
     val counts: Counts
@@ -36,7 +36,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
    counts.instanceCount += 1
    val expectedInstanceCount = 7
-   
+
    describe("A ListBuffer") {
       val buf = ListBuffer.empty[Int]
       it("should be empty when created") {
@@ -92,7 +92,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 8
-   
+
     describe("A ListBuffer") {
       val buf = ListBuffer.empty[Int]
       describe("A subject") {
@@ -150,7 +150,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
    counts.instanceCount += 1
    val expectedInstanceCount = 9
-   
+
    describe("A ListBuffer") {
       val buf = ListBuffer.empty[Int]
       describe("A subject") {
@@ -210,7 +210,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
    counts.instanceCount += 1
    val expectedInstanceCount = 9
-   
+
    describe("A ListBuffer") {
       val buf = ListBuffer.empty[Int]
       describe("A subject") {
@@ -268,12 +268,12 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     override def newInstance = new OneTestSiblingEmptyNestedPathFunSpecExample(counts)
   }
-  
+
   class OneTestSiblingEmptyDeeplyNestedPathFunSpecExample(val counts: Counts) extends path.FunSpec with Services with Matchers {
 
    counts.instanceCount += 1
    val expectedInstanceCount = 9
-   
+
    describe("A ListBuffer") {
       val buf = ListBuffer.empty[Int]
       describe("A subject") {
@@ -339,7 +339,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 7
-   
+
     describe("A Vector") {
       var vec = Vector.empty[Int]
       it("should be empty when created") {
@@ -395,7 +395,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     describe("A Vector") {
       var vec = Vector.empty[Int]
       describe("A subject") {
@@ -455,7 +455,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     describe("A Vector") {
       var vec = Vector.empty[Int]
       describe("A subject") {
@@ -517,7 +517,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     describe("A Vector") {
       var vec = Vector.empty[Int]
       describe("A subject") {
@@ -579,7 +579,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     describe("A Vector") {
       var vec = Vector.empty[Int]
       describe("A subject") {
@@ -645,7 +645,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     describe("A Vector") {
       var vec = Vector.empty[Int]
       describe("A subject") {
@@ -708,7 +708,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 7
-   
+
     "A ListBuffer" - {
       val buf = ListBuffer.empty[Int]
       "should be empty when created" in {
@@ -764,7 +764,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 8
-   
+
     "A ListBuffer" - {
       val buf = ListBuffer.empty[Int]
       "A subject" - {
@@ -822,7 +822,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     "A ListBuffer" - {
       val buf = ListBuffer.empty[Int]
       "A subject" - {
@@ -882,8 +882,8 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
-   
+
+
     "A ListBuffer" - {
       val buf = ListBuffer.empty[Int]
       "A subject" - {
@@ -941,12 +941,12 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     override def newInstance = new OneTestSiblingEmptyNestedPathFreeSpecExample(counts)
   }
-  
+
   class OneTestSiblingEmptyDeeplyNestedPathFreeSpecExample(val counts: Counts) extends path.FreeSpec with Services with Matchers {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     "A ListBuffer" - {
       val buf = ListBuffer.empty[Int]
       "A subject" - {
@@ -1012,7 +1012,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 7
-   
+
     "A Vector" - {
       var vec = Vector.empty[Int]
       "should be empty when created" in {
@@ -1068,7 +1068,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     "A Vector" - {
       var vec = Vector.empty[Int]
       "A subject" - {
@@ -1132,7 +1132,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     "A Vector" - {
       var vec = Vector.empty[Int]
       "A subject" - {
@@ -1198,7 +1198,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     "A Vector" - {
       var vec = Vector.empty[Int]
       "A subject" - {
@@ -1264,7 +1264,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     "A Vector" - {
       var vec = Vector.empty[Int]
       "A subject" - {
@@ -1334,7 +1334,7 @@ class PathListBufferExamples extends PathSuiteExamples {
 
     counts.instanceCount += 1
     val expectedInstanceCount = 9
-   
+
     "A Vector" - {
       var vec = Vector.empty[Int]
       "A subject" - {

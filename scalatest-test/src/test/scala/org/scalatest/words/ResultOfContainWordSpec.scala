@@ -19,14 +19,14 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfContainWordSpec extends FunSpec {
-  
+
   describe("ResultOfContainWord ") {
-    
+
     it("should have pretty toString") {
       val result = List(1, 2, 3) should contain
       result.toString should be ("ResultOfContainWord(List(1, 2, 3), true)")
     }
-    
+
   }
-  
+
 }

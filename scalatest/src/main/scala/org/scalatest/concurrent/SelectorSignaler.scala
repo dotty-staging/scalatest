@@ -26,7 +26,7 @@ import java.nio.channels.Selector
  * <p>
  */
 class SelectorSignaler(selector: Selector) extends Signaler {
-  
+
   /**
    * Invokes <code>wakeup</code> on the <code>java.nio.channels.Selector</code> passed to this class's constructor.
    *

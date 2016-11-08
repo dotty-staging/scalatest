@@ -37,7 +37,7 @@ class StringReporterSuite extends FunSuite with Matchers {
   val cyanRegex = "\033\\[36m"
   val resetRegex = "\033\\[0m"
 
-  // Have to pad the strings to get the count of appearances to be one less than 
+  // Have to pad the strings to get the count of appearances to be one less than
   // the array resulting from splitting on it, because split doesn't give me one
   // if it is on the end
   def pad(s: String) = " " + s + " "
@@ -129,7 +129,7 @@ class StringReporterSuite extends FunSuite with Matchers {
   }
 
   test("stringsToPrintOnError should include the message in unformatted mode") {
-    
+
     val msg = "A stitch in time saves nine."
     val strings: Vector[String] =
       StringReporter.stringsToPrintOnError(

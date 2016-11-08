@@ -24,21 +24,21 @@ class TestReporter extends Reporter {
 
   var successCount = 0
   var failureCount = 0
-  
+
   var ignoreCount = 0
-  
+
   // def errorMessage = event.get.throwable.get.getMessage
 
   def apply(event: Event): Unit = {
     event match {
       case event: TestIgnored =>
-        ignoreCount = ignoreCount + 1 
+        ignoreCount = ignoreCount + 1
         lastEvent = Some(event)
       case event: TestSucceeded =>
-        successCount = successCount + 1 
+        successCount = successCount + 1
         lastEvent = Some(event)
       case event: TestFailed =>
-        failureCount = failureCount + 1 
+        failureCount = failureCount + 1
         lastEvent = Some(event)
       case _ =>
     }

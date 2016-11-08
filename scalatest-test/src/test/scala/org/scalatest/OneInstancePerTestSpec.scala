@@ -173,7 +173,7 @@ class OneInstancePerTestSpec extends FunSpec {
         aSpec.invokeRunTests()
       }
     }
-    
+
     it("should throw NullArgumentException from runTests if either passed-in argument is null") {
       class ASpec extends WordSpec with OneInstancePerTest {
         "test this" ignore { }
@@ -192,40 +192,40 @@ class OneInstancePerTestSpec extends FunSpec {
           aSpec.invokeRunTests(null, Args(SilentReporter))
       }
     }
-    
+
     it("should only execute nested suites in outer instance") {
-      
+
       class InnerSuite extends FunSuite {
         test("hi") { info("hi info") }
       }
-      
+
       class OuterSuite extends FunSuite with OneInstancePerTest {
         override def nestedSuites = Vector(new InnerSuite)
         test("outer 1") { info("outer 1 info") }
         test("outer 2") { info("outer 2 info") }
-        
+
         override def newInstance = new OuterSuite
       }
-      
+
       val rep = new EventRecordingReporter
       val outer = new OuterSuite
       outer.run(None, Args(rep))
-      
+
       assert(rep.testStartingEventsReceived.size === 3)
       val testSucceededEvents = rep.testSucceededEventsReceived
       assert(testSucceededEvents.size === 3)
-      testSucceededEvents.foreach { e => 
+      testSucceededEvents.foreach { e =>
         e.testName match {
-          case "hi" => 
+          case "hi" =>
             assert(e.recordedEvents.size === 1)
             assert(e.recordedEvents(0).asInstanceOf[InfoProvided].message === "hi info")
-          case "outer 1" => 
+          case "outer 1" =>
             assert(e.recordedEvents.size === 1)
             assert(e.recordedEvents(0).asInstanceOf[InfoProvided].message === "outer 1 info")
-          case "outer 2" => 
+          case "outer 2" =>
             assert(e.recordedEvents.size === 1)
             assert(e.recordedEvents(0).asInstanceOf[InfoProvided].message === "outer 2 info")
-          case other => 
+          case other =>
             fail("Unexpected TestSucceeded event: " + other)
         }
       }

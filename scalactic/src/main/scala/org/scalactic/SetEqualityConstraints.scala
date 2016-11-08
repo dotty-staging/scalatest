@@ -94,7 +94,7 @@ import TripleEqualsSupport._
  *               TreeSet(1, 2) === HashSet(new Date, new Date)
  *                             ^
  * </pre>
- * 
+ *
  * @author Bill Venners
  */
 trait SetEqualityConstraints {
@@ -109,7 +109,7 @@ trait SetEqualityConstraints {
 }
 
 /**
- * Companion object that facilitates the importing of <code>SetEqualityConstraints</code> members as 
+ * Companion object that facilitates the importing of <code>SetEqualityConstraints</code> members as
  * an alternative to mixing it in. One use case is to import <code>SetEqualityConstraints</code> members so you can use
  * them in the Scala interpreter.
  */

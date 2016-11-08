@@ -25,8 +25,8 @@ class TestLocationMethodJUnit3Suite extends JUnit3Suite with TestLocationMethodS
   val expectedResultList = List(TestResultPair(classOf[TestSucceeded], "org.scalatest.events.TestLocationMethodJUnit3Suite", "testSucceed()"))
   val expectedScopeOpenedList = Nil
   val expectedScopeClosedList = Nil
-  
-  def testSucceed(): Unit = { 
-    
+
+  def testSucceed(): Unit = {
+
   }
 }

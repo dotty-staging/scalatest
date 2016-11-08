@@ -35,7 +35,7 @@ trait DeprecatedPrettyMethods {
    *
    * <p>
    * This class exists so that instances of <code>PrettifierConfig</code> can be made implicit instead
-   * of <code>Prettifer</code>. Because <code>Prettifier</code> is a <code>Any =&gt; String</code>, 
+   * of <code>Prettifer</code>. Because <code>Prettifier</code> is a <code>Any =&gt; String</code>,
    * making it implicit could result in unintentional applications.
    * </p>
    *

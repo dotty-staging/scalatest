@@ -108,7 +108,7 @@ To:
 
 - should do something interesting *** FAILED *** (0 milliseconds)
   2 did not equal 3 (<console>:18)
-  org.scalatest.TestFailedException: 
+  org.scalatest.TestFailedException:
 
 The second line would only be printed out if there was an exception. That way
 when I add noStacks option, I get:
@@ -139,7 +139,7 @@ the event. Message should just be the throwable's message, or "<exception class>
 use the message from the event.
 
 org.scalatest.prop.TableDrivenPropertyCheckFailedException: TestFailedException (included as this exception's cause) was thrown during property evaluation.
-[scalatest]   Message: 
+[scalatest]   Message:
 [scalatest]   Location: InfoInsideTestFiredAfterTestProp.scala:27
 [scalatest]   Occurred at table row 0 (zero based, not counting headings), which had values (
 [scalatest]     suite = org.scalatest.InfoInsideTestFiredAfterTestProp$$anon$3@18a4edc4
@@ -174,10 +174,10 @@ org.scalatest.prop.TableDrivenPropertyCheckFailedException: TestFailedException 
 
   // Stupid properties file won't let me put spaces at the beginning of a property
   // "  {0}" comes out as "{0}", so I can't do indenting in a localizable way. For now
-  // just indent two space to the left.  //  if (times <= 0) s 
+  // just indent two space to the left.  //  if (times <= 0) s
   //  else Resources.indentOnce(indent(s, times - 1))
 }
- 
+
 private[scalatest] object StringReporter {
 
   val shortStackTraceSize = 10
@@ -239,24 +239,24 @@ private[scalatest] object StringReporter {
       if (runCompleted) "runCompleted"
       else "runStopped"
 
-    val summaryFrags: Vector[Fragment] = 
+    val summaryFrags: Vector[Fragment] =
       summaryOption match {
         case Some(summary) =>
-  
+
           import summary._
-  
+
           Vector(
-  
+
             duration match {
               case Some(msSinceEpoch) =>
                 Some(Fragment(if (runCompleted) Resources.runCompletedIn(makeDurationString(msSinceEpoch)) else Resources.runStoppedIn(makeDurationString(msSinceEpoch)), AnsiCyan))
               case None =>
                 Some(Fragment(if (runCompleted) Resources.runCompleted else Resources.runStopped, AnsiCyan))
             },
-  
+
             // totalNumberOfTestsRun=Total number of tests run was: {0}
             Some(Fragment(Resources.totalNumberOfTestsRun(testsCompletedCount.toString), AnsiCyan)),
-  
+
             if (scopesPendingCount > 0) {
               // Suites: completed {0}, aborted {1}  Scopes: pending {2}
               Some(Fragment(Resources.suiteScopeSummary(suitesCompletedCount.toString, suitesAbortedCount.toString, scopesPendingCount.toString), AnsiCyan))
@@ -265,10 +265,10 @@ private[scalatest] object StringReporter {
               // Suites: completed {0}, aborted {1}
               Some(Fragment(Resources.suiteSummary(suitesCompletedCount.toString, suitesAbortedCount.toString), AnsiCyan))
             },
-  
+
             // Tests: succeeded {0}, failed {1}, ignored, {2}, pending {3}, canceled {4}
             Some(Fragment(Resources.testSummary(testsSucceededCount.toString, testsFailedCount.toString, testsCanceledCount.toString, testsIgnoredCount.toString, testsPendingCount.toString), AnsiCyan)),
-  
+
             // *** 1 SUITE ABORTED ***
             if (suitesAbortedCount == 1) {
               Some(Fragment(Resources.oneSuiteAborted, AnsiRed))
@@ -278,7 +278,7 @@ private[scalatest] object StringReporter {
               Some(Fragment(Resources.multipleSuitesAborted(suitesAbortedCount.toString), AnsiRed))
             }
             else None,
-  
+
             // *** 1 TEST FAILED ***
             if (testsFailedCount == 1) {
               Some(Fragment(Resources.oneTestFailed, AnsiRed))
@@ -295,7 +295,7 @@ private[scalatest] object StringReporter {
             }
             else None
           ).flatten
-  
+
         case None => Vector(Fragment(if (runCompleted) Resources.runCompleted else Resources.runStopped, AnsiCyan))
       }
 
@@ -718,10 +718,10 @@ private[scalatest] object StringReporter {
 
         fragmentsWhenNoError(String => Resources.discoveryStarting, None, "", None, None, presentUnformatted, presentAllDurations, AnsiCyan)
 
-      case DiscoveryCompleted(_, duration, _, _) => 
+      case DiscoveryCompleted(_, duration, _, _) =>
         val stringToPrint =
           duration match {
-            case Some(milliseconds) => 
+            case Some(milliseconds) =>
               Resources.discoveryCompletedIn(makeDurationString(milliseconds))
             case None =>
               Resources.discoveryCompleted
@@ -729,13 +729,13 @@ private[scalatest] object StringReporter {
 
         Vector(Fragment(stringToPrint, AnsiCyan))
 
-      case RunStarting(ordinal, testCount, configMap, formatter, location, payload, threadName, timeStamp) => 
+      case RunStarting(ordinal, testCount, configMap, formatter, location, payload, threadName, timeStamp) =>
 
         val string = Resources.runStarting(testCount.toString)
 
         Vector(Fragment(string, AnsiCyan))
 
-      case RunCompleted(ordinal, duration, summary, formatter, location, payload, threadName, timeStamp) => 
+      case RunCompleted(ordinal, duration, summary, formatter, location, payload, threadName, timeStamp) =>
 
         summaryFragments(
           true,
@@ -765,9 +765,9 @@ private[scalatest] object StringReporter {
           presentReminderWithFullStackTraces,
           presentReminderWithoutCanceledTests,
           presentFilePathname
-       ) 
+       )
 
-      case RunAborted(ordinal, message, throwable, duration, summary, formatter, location, payload, threadName, timeStamp) => 
+      case RunAborted(ordinal, message, throwable, duration, summary, formatter, location, payload, threadName, timeStamp) =>
 
         fragmentsOnError(Resources.abortedNote, Any => Resources.runAborted, message, throwable, formatter, None, None, duration,
             presentUnformatted, presentAllDurations, presentShortStackTraces, presentFullStackTraces, presentFilePathname, AnsiRed)
@@ -776,11 +776,11 @@ private[scalatest] object StringReporter {
 
         fragmentsWhenNoError(Resources.suiteStarting _, formatter, suiteName, None, None, presentUnformatted, presentAllDurations)
 
-      case SuiteCompleted(ordinal, suiteName, suiteId, suiteClassName, duration, formatter, location, rerunnable, payload, threadName, timeStamp) => 
+      case SuiteCompleted(ordinal, suiteName, suiteId, suiteClassName, duration, formatter, location, rerunnable, payload, threadName, timeStamp) =>
 
         fragmentsWhenNoError(Resources.suiteCompleted _, formatter, suiteName, None, None, presentUnformatted, presentAllDurations, AnsiGreen, duration)
 
-      case SuiteAborted(ordinal, message, suiteName, suiteId, suiteClassName, throwable, duration, formatter, location, rerunnable, payload, threadName, timeStamp) => 
+      case SuiteAborted(ordinal, message, suiteName, suiteId, suiteClassName, throwable, duration, formatter, location, rerunnable, payload, threadName, timeStamp) =>
 
         val lines = stringsToPrintOnError(Resources.abortedNote, Resources.suiteAborted _, message, throwable, formatter, Some(suiteName), None, duration,
             presentUnformatted, presentAllDurations, presentShortStackTraces, presentFullStackTraces, presentFilePathname)
@@ -793,14 +793,14 @@ private[scalatest] object StringReporter {
 
       case TestSucceeded(ordinal, suiteName, suiteId, suiteClassName, testName, testText, recordedEvents, duration, formatter, location, rerunnable, payload, threadName, timeStamp) =>
 
-        val tsf: Vector[Fragment] = 
+        val tsf: Vector[Fragment] =
           fragmentsWhenNoError(Resources.testSucceeded, formatter, suiteName, Some(testName), None, presentUnformatted, presentAllDurations, AnsiGreen, duration)
 
         val ref = recordedEventFragments(recordedEvents, AnsiGreen, presentUnformatted, presentAllDurations, presentShortStackTraces, presentFullStackTraces, presentFilePathname)
 
         tsf ++ ref
 
-      case TestIgnored(ordinal, suiteName, suiteId, suiteClassName, testName, testText, formatter, location, payload, threadName, timeStamp) => 
+      case TestIgnored(ordinal, suiteName, suiteId, suiteClassName, testName, testText, formatter, location, payload, threadName, timeStamp) =>
 
         val stringToPrint =
           if (presentUnformatted)
@@ -811,7 +811,7 @@ private[scalatest] object StringReporter {
               case Some(MotionToSuppress) => Vector.empty
               case _ => Vector(Resources.testIgnored(suiteName + ": " + testName))
             }
- 
+
         stringToPrint map (new Fragment(_, AnsiYellow))
 
       case TestFailed(ordinal, message, suiteName, suiteId, suiteClassName, testName, testText, recordedEvents, throwable, duration, formatter, location, rerunnable, payload, threadName, timeStamp) =>
@@ -851,11 +851,11 @@ private[scalatest] object StringReporter {
 
       // TODO: Reduce duplication among InfoProvided, ScopeOpened, and ScopeClosed
       case ScopeClosed(ordinal, message, nameInfo, formatter, location, payload, threadName, timeStamp) =>
-        
+
         val testNameInfo = nameInfo.testName
         fragmentsWhenNoError(Resources.scopeClosed, formatter, nameInfo.suiteName, nameInfo.testName, Some(message), presentUnformatted, presentAllDurations) // TODO: I think I want to say Scope Closed - + message
 
-      case ScopePending(ordinal, message, nameInfo, formatter, location, payload, threadName, timeStamp) => 
+      case ScopePending(ordinal, message, nameInfo, formatter, location, payload, threadName, timeStamp) =>
         val stringToPrint =
           if (presentUnformatted)
             Vector(Resources.scopePending(nameInfo.suiteName + ": " + message))
@@ -866,7 +866,7 @@ private[scalatest] object StringReporter {
               case _ => Vector(Resources.scopePending(nameInfo.suiteName + ": " + message))
             }
         stringToPrint map (new Fragment(_, AnsiYellow))
-        
+
       case mpEvent: MarkupProvided =>
 
         markupProvidedOptionalFragment(mpEvent, AnsiGreen, presentUnformatted)
@@ -974,9 +974,9 @@ private[scalatest] object StringReporter {
 
           def stackTrace(throwable: Throwable, isCause: Boolean): List[String] = {
 
-            val className = throwable.getClass.getName 
+            val className = throwable.getClass.getName
             val labeledClassName = if (isCause) Resources.DetailsCause + ": " + className else className
-            // Only show the : message if a cause, because first one will have its message printed out 
+            // Only show the : message if a cause, because first one will have its message printed out
             // Or if it is a non-StackDepth exception, because if they throw Exception with no message, the
             // message was coming out as "java.lang.Exception" then on the next line it repeated it. In the
             // case of no exception message, I think it looks best to just say the class name followed by a colon
@@ -1007,7 +1007,7 @@ private[scalatest] object StringReporter {
               else {
 
                 // The drop(1) or drop(stackDepth + 1) that extra one is the labeledClassNameWithMessage
-                val stackTraceThisThrowableTruncated = 
+                val stackTraceThisThrowableTruncated =
                   throwable match {
                     case e: Throwable with StackDepth =>
                       val stackDepth = e.failedCodeStackDepth
@@ -1015,7 +1015,7 @@ private[scalatest] object StringReporter {
                     case _ => // In case of IAE or what not, show top 10 stack frames
                       stackTraceThisThrowable.head :: stackTraceThisThrowable.drop(1).take(shortStackTraceSize) ::: List(whiteSpace + "...")
                   }
-    
+
                 if (cause == null)
                   stackTraceThisThrowableTruncated
                 else

@@ -19,14 +19,14 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfBeWordForNoExceptionSpec extends FunSpec {
-  
+
   describe("ResultOfBeWordForNoException ") {
-    
+
     it("should have pretty toString when used") {
       val result = noException should be
       result.toString should be ("ResultOfBeWordForNoException")
     }
-    
+
   }
-  
+
 }

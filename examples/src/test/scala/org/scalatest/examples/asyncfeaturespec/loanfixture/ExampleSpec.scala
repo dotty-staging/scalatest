@@ -66,7 +66,7 @@ class ExampleSpec extends AsyncFeatureSpec {
     complete {
       val futurePopulatedDb =
         futureDb map { db =>
-          db.append("ScalaTest is designed to ") // perform setup 
+          db.append("ScalaTest is designed to ") // perform setup
         }
       testCode(futurePopulatedDb) // "loan" the fixture to the test code
     } lastly {

@@ -19,9 +19,9 @@ import org.scalatest._
 
 @DoNotDiscover
 class ExampleCancelSpec extends FunSpec {
-  
+
   it("should be canceled") {
     cancel
   }
-  
+
 }

@@ -87,7 +87,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Checking strings 
+  // Checking strings
 
   test(""""abc" should startWith ("def")""") {
     val e = intercept[exceptions.TestFailedException] {
@@ -185,8 +185,8 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Greater and less than 
- 
+  // Greater and less than
+
   test("10 should be < 7") {
     val e = intercept[exceptions.TestFailedException] {
       10 should be < 7
@@ -255,7 +255,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Checking object identity 
+  // Checking object identity
   test("ref1 should be theSameInstanceAs ref2") {
     val ref1 = "hello"
     val ref2 = "world"
@@ -266,7 +266,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Checking an object's class 
+  // Checking an object's class
 
   test("result1 shouldBe a [java.util.Date]") {
     val result1 = "hello"
@@ -282,7 +282,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e2.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Checking numbers against a range 
+  // Checking numbers against a range
 
   test("1.0 should equal (6.9 +- 0.2)") {
     val e = intercept[exceptions.TestFailedException] {
@@ -382,7 +382,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Working with "containers" 
+  // Working with "containers"
 
   test("List(1, 2, 3) should contain (4)") {
     val e = intercept[exceptions.TestFailedException] {
@@ -560,7 +560,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Working with "aggregations" 
+  // Working with "aggregations"
 
   test("List(1, 2, 3) should contain atLeastOneOf (4, 5, 6)") {
     val e = intercept[exceptions.TestFailedException] {
@@ -682,7 +682,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Working with "sequences" 
+  // Working with "sequences"
 
   test("List(1, 2, 2, 3, 3, 3) should contain inOrderOnly (1, 3, 2)") {
     val e = intercept[exceptions.TestFailedException] {
@@ -716,7 +716,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Working with "sortables" 
+  // Working with "sortables"
 
   test("List(2, 1, 3) shouldBe sorted") {
     val e = intercept[exceptions.TestFailedException] {
@@ -726,7 +726,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Working with iterators 
+  // Working with iterators
 
   test("it.toStream should contain (4)") {
     val e = intercept[exceptions.TestFailedException] {
@@ -737,7 +737,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Inspector shorthands 
+  // Inspector shorthands
 
   test("forAll (ys) { y => y should be > 0 }") {
     val e = intercept[exceptions.TestFailedException] {
@@ -853,7 +853,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Single-element collections 
+  // Single-element collections
 
   test("set.loneElement should be <= 10") {
     val e = intercept[exceptions.TestFailedException] {
@@ -864,7 +864,7 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Java collections and maps 
+  // Java collections and maps
 
   test("javaCollection should be ('empty)") {
     val e = intercept[exceptions.TestFailedException] {
@@ -956,27 +956,27 @@ class MatcherStackDepthSpec extends FunSuite with Matchers {
     e.failedCodeLineNumber should be (Some(thisLineNumber - 3))
   }
 
-  // Strings and Arrays as collections 
+  // Strings and Arrays as collections
 
-  // be as an equality comparison 
+  // be as an equality comparison
 
-  // Being negative 
+  // Being negative
 
-  // Checking that a snippet of code does not compile 
+  // Checking that a snippet of code does not compile
 
   //  Logical expressions with and and or
 
-  // Working with Options 
+  // Working with Options
 
   // Checking arbitrary properties with have
 
-  // Using length and size with HavePropertyMatchers 
+  // Using length and size with HavePropertyMatchers
 
-  // Checking that an expression matches a pattern 
+  // Checking that an expression matches a pattern
 
   // Using custom matchers
 
-  // Checking for expected exceptions 
+  // Checking for expected exceptions
 
   test("""an [IndexOutOfBoundsException] should be thrownBy "hi".charAt(1)""") {
     val e = intercept[exceptions.TestFailedException] {

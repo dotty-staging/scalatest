@@ -19,23 +19,23 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfOnlyApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfOnlyApplication ") {
-    
+
     it("should have pretty toString when right is empty") {
       val result = new ResultOfOnlyApplication(Vector.empty)
       result.toString should be ("only ()")
     }
-    
+
     it("should have pretty toString when right contains 1 element") {
       val result = new ResultOfOnlyApplication(Vector("Bob"))
       result.toString should be ("only (\"Bob\")")
     }
-    
+
     it("should have pretty toString when right contains > 1 elements") {
       val result = new ResultOfOnlyApplication(Vector("Bob", "Alice"))
       result.toString should be ("only (\"Bob\", \"Alice\")")
     }
   }
-  
+
 }

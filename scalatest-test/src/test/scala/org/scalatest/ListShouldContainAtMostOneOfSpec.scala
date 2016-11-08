@@ -32,21 +32,21 @@ class ListShouldContainAtMostOneOfSpec extends FunSpec {
     new Equality[String] {
       def areEqual(a: String, b: Any): Boolean = upperCase(a) == upperCase(b)
     }
-  
-  private def upperCase(value: Any): Any = 
+
+  private def upperCase(value: Any): Any =
     value match {
       case l: List[_] => l.map(upperCase(_))
       case s: String => s.toUpperCase
       case c: Char => c.toString.toUpperCase.charAt(0)
       case (s1: String, s2: String) => (s1.toUpperCase, s2.toUpperCase)
-      case e: java.util.Map.Entry[_, _] => 
+      case e: java.util.Map.Entry[_, _] =>
         (e.getKey, e.getValue) match {
           case (k: String, v: String) => Entry(k.toUpperCase, v.toUpperCase)
           case _ => value
         }
       case _ => value
     }
-  
+
   //ADDITIONAL//
 
   describe("a List") {
@@ -79,7 +79,7 @@ class ListShouldContainAtMostOneOfSpec extends FunSpec {
         }
         intercept[TestFailedException] {
           (fumList should contain atMostOneOf (" FEE ", " FIE ", " FOE ", " FUM ")) (after being lowerCased and trimmed)
-          
+
         }
         fumList should contain atMostOneOf (" FEE ", " FIE ", " FOE ", " FUM ")
       }
@@ -207,7 +207,7 @@ class ListShouldContainAtMostOneOfSpec extends FunSpec {
         e1.message should be (Some(Resources.atMostOneOfDuplicate))
       }
     }
-    
+
     describe("when used with shouldNot contain atMostOneOf (...) syntax") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {
@@ -323,7 +323,7 @@ class ListShouldContainAtMostOneOfSpec extends FunSpec {
           all (hiLists) should contain atMostOneOf ("HI", "HE")
         }
       }
-      
+
       it("should use an explicitly provided Equality") {
         (all (hiLists) should contain atMostOneOf ("hi", "ho")) (decided by upperCaseStringEquality)
         intercept[TestFailedException] {
@@ -375,7 +375,7 @@ class ListShouldContainAtMostOneOfSpec extends FunSpec {
           all (hiLists) should (contain atMostOneOf ("HI", "HE"))
         }
       }
-      
+
       it("should use an explicitly provided Equality") {
         (all (hiLists) should (contain atMostOneOf ("hi", "ho"))) (decided by upperCaseStringEquality)
         intercept[TestFailedException] {
@@ -387,7 +387,7 @@ class ListShouldContainAtMostOneOfSpec extends FunSpec {
           (all (hiLists) should (contain atMostOneOf ("hi", "he"))) (decided by defaultEquality[String])
         }
       }
-      
+
       it("should throw NotAllowedException with correct stack depth and message when RHS contain duplicated value") {
         val e1 = intercept[exceptions.NotAllowedException] {
           all (list1s) should (contain atMostOneOf (1, 2, 2, 3))
@@ -418,7 +418,7 @@ class ListShouldContainAtMostOneOfSpec extends FunSpec {
           all (toLists) should not contain atMostOneOf ("FEE", "FIE", "FOE", "FUM")
         }
       }
-      
+
       it("should use an explicitly provided Equality") {
         (all (toLists) should not contain atMostOneOf ("HAPPY", "BIRTHDAY", "TO", "YOU")) (decided by upperCaseStringEquality)
         intercept[TestFailedException] {
@@ -429,7 +429,7 @@ class ListShouldContainAtMostOneOfSpec extends FunSpec {
           all (toLists) should not contain atMostOneOf (" HAPPY ", " BIRTHDAY ", " TO ", " YOU ")
         }
       }
-      
+
       it("should throw NotAllowedException with correct stack depth and message when RHS contain duplicated value") {
         val e1 = intercept[exceptions.NotAllowedException] {
           all (toLists) should not contain atMostOneOf ("fee", "fie", "foe", "fie", "fum")
@@ -479,7 +479,7 @@ class ListShouldContainAtMostOneOfSpec extends FunSpec {
         e1.message should be (Some(Resources.atMostOneOfDuplicate))
       }
     }
-    
+
     describe("when used with shouldNot contain atMostOneOf (...) syntax") {
 
       it("should do nothing if valid, else throw a TFE with an appropriate error message") {
@@ -500,7 +500,7 @@ class ListShouldContainAtMostOneOfSpec extends FunSpec {
           all (toLists) shouldNot contain atMostOneOf ("FEE", "FIE", "FOE", "FUM")
         }
       }
-      
+
       it("should use an explicitly provided Equality") {
         (all (toLists) shouldNot contain atMostOneOf ("HAPPY", "BIRTHDAY", "TO", "YOU")) (decided by upperCaseStringEquality)
         intercept[TestFailedException] {
@@ -511,7 +511,7 @@ class ListShouldContainAtMostOneOfSpec extends FunSpec {
           all (toLists) shouldNot contain atMostOneOf (" HAPPY ", " BIRTHDAY ", " TO ", " YOU ")
         }
       }
-      
+
       it("should throw NotAllowedException with correct stack depth and message when RHS contain duplicated value") {
         val e1 = intercept[exceptions.NotAllowedException] {
           all (toLists) shouldNot contain atMostOneOf ("fee", "fie", "foe", "fie", "fum")

@@ -23,45 +23,45 @@ import org.scalactic.Prettifier
 class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   val fileName: String = "ShouldBeWritableStructuralLogicalAndSpec.scala"
-  
-  def wasEqualTo(left: Any, right: Any): String = 
+
+  def wasEqualTo(left: Any, right: Any): String =
     FailureMessages.wasEqualTo(prettifier, left, right)
-    
-  def wasNotEqualTo(left: Any, right: Any): String = 
+
+  def wasNotEqualTo(left: Any, right: Any): String =
     FailureMessages.wasNotEqualTo(prettifier, left, right)
-    
-  def equaled(left: Any, right: Any): String = 
+
+  def equaled(left: Any, right: Any): String =
     FailureMessages.equaled(prettifier, left, right)
-    
+
   def didNotEqual(left: Any, right: Any): String =
     FailureMessages.didNotEqual(prettifier, left, right)
-  
-  def wasNotWritable(left: Any): String = 
+
+  def wasNotWritable(left: Any): String =
     FailureMessages.wasNotWritable(prettifier, left)
-    
-  def wasWritable(left: Any): String = 
+
+  def wasWritable(left: Any): String =
     FailureMessages.wasWritable(prettifier, left)
 
   describe("writable matcher") {
-    
+
     describe("when work with arbitrary object with isWritable() method") {
-      
+
       class MyWritability(value: Boolean) {
         def isWritable(): Boolean = value
         override def toString = "writability"
       }
       val objTrue = new MyWritability(true)
       val objFalse = new MyWritability(false)
-      
+
       it("should do nothing for when both passed") {
         objTrue should (be (writable) and equal (objTrue))
         objTrue should (equal (objTrue) and be (writable))
         objTrue should (be (writable) and be (objTrue))
         objTrue should (be (objTrue) and be (writable))
       }
-      
+
       it("should throw correct TFE when first check failed") {
         val caught1 = intercept[TestFailedException] {
           objFalse should (be (writable) and equal (objFalse))
@@ -69,21 +69,21 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(wasNotWritable(objFalse)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objTrue should (equal (objFalse) and be (writable))
         }
         assert(caught2.message === Some(didNotEqual(objTrue, objFalse)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objFalse should (be (writable) and be (objFalse))
         }
         assert(caught3.message === Some(wasNotWritable(objFalse)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objTrue should (be (objFalse) and be (writable))
         }
@@ -91,7 +91,7 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught4.failedCodeFileName === Some(fileName))
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should throw correct TFE when second check failed") {
         val caught1 = intercept[TestFailedException] {
           objTrue should (be (writable) and equal (objFalse))
@@ -99,21 +99,21 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(wasWritable(objTrue) + ", but " + didNotEqual(objTrue, objFalse)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objFalse should (equal (objFalse) and be (writable))
         }
         assert(caught2.message === Some(equaled(objFalse, objFalse) + ", but " + wasNotWritable(objFalse)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objTrue should (be (writable) and be (objFalse))
         }
         assert(caught3.message === Some(wasWritable(objTrue) + ", but " + wasNotEqualTo(objTrue, objFalse)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objFalse should (be (objFalse) and be (writable))
         }
@@ -121,7 +121,7 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught4.failedCodeFileName === Some(fileName))
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should throw correct TFE when both check failed") {
         val caught1 = intercept[TestFailedException] {
           objFalse should (be (writable) and equal (objTrue))
@@ -129,21 +129,21 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(wasNotWritable(objFalse)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objFalse should (equal (objTrue) and be (writable))
         }
         assert(caught2.message === Some(didNotEqual(objFalse, objTrue)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objFalse should (be (writable) and be (objTrue))
         }
         assert(caught3.message === Some(wasNotWritable(objFalse)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objFalse should (be (objTrue) and be (writable))
         }
@@ -152,23 +152,23 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with arbitrary object with isWritable method") {
-      
+
       class MyWritability(value: Boolean) {
         def isWritable: Boolean = value
         override def toString = "writability"
       }
       val objTrue = new MyWritability(true)
       val objFalse = new MyWritability(false)
-      
+
       it("should do nothing for when both passed") {
         objTrue should (be (writable) and equal (objTrue))
         objTrue should (equal (objTrue) and be (writable))
         objTrue should (be (writable) and be (objTrue))
         objTrue should (be (objTrue) and be (writable))
       }
-      
+
       it("should throw correct TFE when first check failed") {
         val caught1 = intercept[TestFailedException] {
           objFalse should (be (writable) and equal (objFalse))
@@ -176,21 +176,21 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(wasNotWritable(objFalse)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objTrue should (equal (objFalse) and be (writable))
         }
         assert(caught2.message === Some(didNotEqual(objTrue, objFalse)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objFalse should (be (writable) and be (objFalse))
         }
         assert(caught3.message === Some(wasNotWritable(objFalse)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objTrue should (be (objFalse) and be (writable))
         }
@@ -198,7 +198,7 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught4.failedCodeFileName === Some(fileName))
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should throw correct TFE when second check failed") {
         val caught1 = intercept[TestFailedException] {
           objTrue should (be (writable) and equal (objFalse))
@@ -206,21 +206,21 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(wasWritable(objTrue) + ", but " + didNotEqual(objTrue, objFalse)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objFalse should (equal (objFalse) and be (writable))
         }
         assert(caught2.message === Some(equaled(objFalse, objFalse) + ", but " + wasNotWritable(objFalse)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objTrue should (be (writable) and be (objFalse))
         }
         assert(caught3.message === Some(wasWritable(objTrue) + ", but " + wasNotEqualTo(objTrue, objFalse)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objFalse should (be (objFalse) and be (writable))
         }
@@ -228,7 +228,7 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught4.failedCodeFileName === Some(fileName))
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should throw correct TFE when both check failed") {
         val caught1 = intercept[TestFailedException] {
           objFalse should (be (writable) and equal (objTrue))
@@ -236,21 +236,21 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(wasNotWritable(objFalse)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objFalse should (equal (objTrue) and be (writable))
         }
         assert(caught2.message === Some(didNotEqual(objFalse, objTrue)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objFalse should (be (writable) and be (objTrue))
         }
         assert(caught3.message === Some(wasNotWritable(objFalse)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objFalse should (be (objTrue) and be (writable))
         }
@@ -259,23 +259,23 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with arbitrary object with isWritable val") {
-      
+
       class MyWritability(value: Boolean) {
         val isWritable: Boolean = value
         override def toString = "writability"
       }
       val objTrue = new MyWritability(true)
       val objFalse = new MyWritability(false)
-      
+
       it("should do nothing for when both passed") {
         objTrue should (be (writable) and equal (objTrue))
         objTrue should (equal (objTrue) and be (writable))
         objTrue should (be (writable) and be (objTrue))
         objTrue should (be (objTrue) and be (writable))
       }
-      
+
       it("should throw correct TFE when first check failed") {
         val caught1 = intercept[TestFailedException] {
           objFalse should (be (writable) and equal (objFalse))
@@ -283,21 +283,21 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(wasNotWritable(objFalse)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objTrue should (equal (objFalse) and be (writable))
         }
         assert(caught2.message === Some(didNotEqual(objTrue, objFalse)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objFalse should (be (writable) and be (objFalse))
         }
         assert(caught3.message === Some(wasNotWritable(objFalse)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objTrue should (be (objFalse) and be (writable))
         }
@@ -305,7 +305,7 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught4.failedCodeFileName === Some(fileName))
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should throw correct TFE when second check failed") {
         val caught1 = intercept[TestFailedException] {
           objTrue should (be (writable) and equal (objFalse))
@@ -313,21 +313,21 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(wasWritable(objTrue) + ", but " + didNotEqual(objTrue, objFalse)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objFalse should (equal (objFalse) and be (writable))
         }
         assert(caught2.message === Some(equaled(objFalse, objFalse) + ", but " + wasNotWritable(objFalse)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objTrue should (be (writable) and be (objFalse))
         }
         assert(caught3.message === Some(wasWritable(objTrue) + ", but " + wasNotEqualTo(objTrue, objFalse)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objFalse should (be (objFalse) and be (writable))
         }
@@ -335,7 +335,7 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught4.failedCodeFileName === Some(fileName))
         assert(caught4.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
       it("should throw correct TFE when both check failed") {
         val caught1 = intercept[TestFailedException] {
           objFalse should (be (writable) and equal (objTrue))
@@ -343,21 +343,21 @@ class ShouldBeWritableStructuralLogicalAndSpec extends FunSpec {
         assert(caught1.message === Some(wasNotWritable(objFalse)))
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught2 = intercept[TestFailedException] {
           objFalse should (equal (objTrue) and be (writable))
         }
         assert(caught2.message === Some(didNotEqual(objFalse, objTrue)))
         assert(caught2.failedCodeFileName === Some(fileName))
         assert(caught2.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught3 = intercept[TestFailedException] {
           objFalse should (be (writable) and be (objTrue))
         }
         assert(caught3.message === Some(wasNotWritable(objFalse)))
         assert(caught3.failedCodeFileName === Some(fileName))
         assert(caught3.failedCodeLineNumber === Some(thisLineNumber - 4))
-        
+
         val caught4 = intercept[TestFailedException] {
           objFalse should (be (objTrue) and be (writable))
         }

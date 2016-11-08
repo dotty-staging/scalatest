@@ -19,23 +19,23 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfTheSameElementsAsApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfTheSameElementsAsApplication ") {
-    
+
     it("should have pretty toString when right is empty") {
       val result = new ResultOfTheSameElementsAsApplication(Vector.empty)
       result.toString should be ("theSameElementsAs (Vector())")
     }
-    
+
     it("should have pretty toString when right contains 1 element") {
       val result = new ResultOfTheSameElementsAsApplication(Vector("Bob"))
       result.toString should be ("theSameElementsAs (Vector(\"Bob\"))")
     }
-    
+
     it("should have pretty toString when right contains > 1 elements") {
       val result = new ResultOfTheSameElementsAsApplication(Vector("Bob", "Alice"))
       result.toString should be ("theSameElementsAs (Vector(\"Bob\", \"Alice\"))")
     }
   }
-  
+
 }

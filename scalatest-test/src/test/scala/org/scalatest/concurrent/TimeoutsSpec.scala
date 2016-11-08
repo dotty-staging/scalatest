@@ -56,7 +56,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       caught.failedCodeLineNumber.value should equal (thisLineNumber - 5)
       caught.failedCodeFileName.value should be ("TimeoutsSpec.scala")
     }
- 
+
     it("should pass normally when the timeout is not reached") {
       failAfter(Span(200, Millis)) {
         Thread.sleep(100)
@@ -104,7 +104,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       }
       assert(caught.getCause().getClass === classOf[IllegalArgumentException])
     }
- 
+
     it("should close a Socket connection via SocketInterruptor when the timeout is reached") {
       val serverSocket = new ServerSocket(0)
       @volatile
@@ -126,7 +126,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       serverThread.start()
       val clientSocket = new Socket("localhost", serverSocket.getLocalPort())
       val inputStream = clientSocket.getInputStream()
-      
+
       val caught = the [TestFailedException] thrownBy {
         failAfter(Span(100, Millis)) {
           inputStream.read()
@@ -135,7 +135,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       clientSocket.close()
       drag = false
     }
-    
+
     it("should close a Socket connection via FunInterruptor when the timeout is reached") {
       val serverSocket = new ServerSocket(0)
       @volatile
@@ -157,7 +157,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       serverThread.start()
       val clientSocket = new Socket("localhost", serverSocket.getLocalPort())
       val inputStream = clientSocket.getInputStream()
-      
+
       val caught = the [TestFailedException] thrownBy {
         failAfter(Span(100, Millis)) {
           inputStream.read()
@@ -166,7 +166,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       clientSocket.close()
       drag = false
     }
-    
+
     it("should wait for the test to finish when DoNotInterrupt is used.") {
       var x = 0
       val caught = the [TestFailedException] thrownBy {
@@ -177,7 +177,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       }
       x should be (1)
     }
-    
+
     it("should close a Selector connection via SelectorInterruptor when the timeout is reached") {
       val selector = Selector.open()
       val ssChannel = ServerSocketChannel.open()
@@ -208,13 +208,13 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
           ssChannel.close()
         }
       }
-    
+
       val clientSelector = Selector.open();
       val sChannel = SocketChannel.open()
       sChannel.configureBlocking(false);
       sChannel.connect(new InetSocketAddress("localhost", ssChannel.socket().getLocalPort()));
       sChannel.register(selector, sChannel.validOps());
-    
+
       val caught = the [TestFailedException] thrownBy {
         failAfter(Span(100, Millis)) {
           clientSelector.select()
@@ -237,13 +237,13 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       caught.failedCodeLineNumber.value should equal (thisLineNumber - 5)
       caught.failedCodeFileName.value should be ("TimeoutsSpec.scala")
     }
-    
+
     it("should pass normally when timeout is not reached") {
       cancelAfter(Span(2000, Millis)) {
         Thread.sleep(1000)
       }
     }
-    
+
     it("should blow up with TestCanceledException when the task does not response interrupt request and pass after the timeout") {
       val caught = the [TestCanceledException] thrownBy {
         cancelAfter(timeout = Span(1000, Millis)) {
@@ -259,7 +259,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
         }
       }
     }
-    
+
     it("should not catch exception thrown from the test") {
       val caught = the [InterruptedException] thrownBy {
         cancelAfter(Span(1000, Millis)) {
@@ -267,7 +267,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
         }
       }
     }
-    
+
     it("should set exception thrown from the test after timeout as cause of TestCanceledException") {
       val caught = the [TestCanceledException] thrownBy {
         cancelAfter(Span(1000, Millis)) {
@@ -285,7 +285,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       }
       assert(caught.getCause().getClass === classOf[IllegalArgumentException])
     }
-    
+
     it("should close Socket connection via SocketInterruptor when timeout reached") {
       val serverSocket = new ServerSocket(0)
       @volatile
@@ -307,7 +307,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       serverThread.start()
       val clientSocket = new Socket("localhost", serverSocket.getLocalPort())
       val inputStream = clientSocket.getInputStream()
-      
+
       val caught = the [TestCanceledException] thrownBy {
         cancelAfter(Span(1000, Millis)) {
           inputStream.read()
@@ -316,7 +316,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       clientSocket.close()
       drag = false
     }
-    
+
     it("should close Socket connection via FunInterruptor when timeout reached") {
       val serverSocket = new ServerSocket(0)
       @volatile
@@ -338,7 +338,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       serverThread.start()
       val clientSocket = new Socket("localhost", serverSocket.getLocalPort())
       val inputStream = clientSocket.getInputStream()
-      
+
       val caught = the [TestCanceledException] thrownBy {
         cancelAfter(Span(1000, Millis)) {
           inputStream.read()
@@ -347,7 +347,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       clientSocket.close()
       drag = false
     }
-    
+
     it("should wait for the test to finish when DoNotInterrupt is used.") {
       var x = 0
       val caught = the [TestCanceledException] thrownBy {
@@ -358,7 +358,7 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
       }
       x should be (1)
     }
-    
+
     it("should close Selector connection via SelectorInterruptor when timeout reached") {
       val selector = Selector.open()
       val ssChannel = ServerSocketChannel.open()
@@ -389,13 +389,13 @@ class TimeoutsSpec extends FunSpec with Matchers with SeveredStackTraces {
           ssChannel.close()
         }
       }
-    
+
       val clientSelector = Selector.open();
       val sChannel = SocketChannel.open()
       sChannel.configureBlocking(false);
       sChannel.connect(new InetSocketAddress("localhost", ssChannel.socket().getLocalPort()));
       sChannel.register(selector, sChannel.validOps());
-    
+
       val caught = the [TestCanceledException] thrownBy {
         cancelAfter(Span(1000, Millis)) {
           clientSelector.select()

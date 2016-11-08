@@ -51,7 +51,7 @@ import scala.concurrent.Future
  * </p>
  *
  * <p>
- * This trait overrides and makes abstract the <code>runTest</code> method. Subtraits must 
+ * This trait overrides and makes abstract the <code>runTest</code> method. Subtraits must
  * must implement this method to call <code>withFixture(OneArgAsyncTest)</code> instead of <code>withFixture(OneArgTest)</code>,
  * where <code>withFixture(OneArgAsyncTest)</code> is a new method declared in this trait with the following
  * signature and implementation:
@@ -136,11 +136,11 @@ import scala.concurrent.Future
  * </pre>
  *
  * <p>
- * If you want to perform an action only for certain outcomes, you'll need to 
+ * If you want to perform an action only for certain outcomes, you'll need to
  * register code performing that action as a callback on the <code>Future</code> using
  * one of <code>Future</code> registration methods: <code>onComplete</code>, <code>onSuccess</code>,
  * or <code>onFailure</code>. Note that if a test fails, that will be treated as a
- * <code>scala.util.Success(org.scalatest.Failure)</code>. So if you want to perform an 
+ * <code>scala.util.Success(org.scalatest.Failure)</code>. So if you want to perform an
  * action if a test fails, for example, you'd register the callaback using <code>onSuccess</code>,
  * like this:
  * </p>
@@ -166,7 +166,7 @@ import scala.concurrent.Future
  * Lastly, if you want to transform the outcome in some way in <code>withFixture</code>, you'll need to use either the
  * <code>map</code> or <code>transform</code> methods of <code>Future</code>, like this:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * // Your implementation
  * override def withFixture(test: OneArgAsyncTest) = {
@@ -182,7 +182,7 @@ import scala.concurrent.Future
  *   }
  * }
  * </pre>
- * 
+ *
  * <p>
  * Note that a <code>NoArgAsyncTest</code>'s <code>apply</code> method will only return a <code>Failure</code> if
  * the test completes abruptly with an exception (such as <code>OutOfMemoryError</code>) that should
@@ -260,7 +260,7 @@ trait AsyncTestSuite extends org.scalatest.fixture.Suite with org.scalatest.Asyn
      * @param fixture the <code>FixtureParam</code>
      * @return an new instance of <code>NoArgAsyncTest</code>
      */
-    def toNoArgAsyncTest(fixture: FixtureParam): NoArgAsyncTest = 
+    def toNoArgAsyncTest(fixture: FixtureParam): NoArgAsyncTest =
       new NoArgAsyncTest {
         val name = thisOneArgAsyncTest.name
         val configMap = thisOneArgAsyncTest.configMap

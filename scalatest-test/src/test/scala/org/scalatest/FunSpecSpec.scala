@@ -86,7 +86,7 @@ class FunSpecSpec extends FreeSpec with GivenWhenThen {
     }
 
     "should throw DuplicateTestNameException if a duplicate test name registration is attempted" in {
-      
+
       intercept[DuplicateTestNameException] {
         new FunSpec {
           it("should test this") {/* ASSERTION_SUCCEED */}
@@ -1002,7 +1002,7 @@ class FunSpecSpec extends FreeSpec with GivenWhenThen {
       val f = new Suites(a, b, c, d, e)
       assert(f.expectedTestCount(Filter()) === 10)
     }
-    
+
     "should generate a TestPending message when the test body is (pending)" in {
 
       val a = new FunSpec {
@@ -1012,13 +1012,13 @@ class FunSpecSpec extends FreeSpec with GivenWhenThen {
         it("should do that") {
           assert(2 + 2 === 4)
         }
-        
+
         it("should do something else") {
           assert(2 + 2 === 4)
           pending
         }
       }
-      
+
       val rep = new EventRecordingReporter
       a.run(None, Args(rep))
       val tp = rep.testPendingEventsReceived
@@ -1112,9 +1112,9 @@ class FunSpecSpec extends FreeSpec with GivenWhenThen {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 11)
     }
   }
-  
+
   "when failure happens" - {
-    
+
     "should fire TestFailed event with correct stack depth info when test failed" in {
       class TestSpec extends FunSpec {
         it("fail scenario") {
@@ -1135,7 +1135,7 @@ class FunSpecSpec extends FreeSpec with GivenWhenThen {
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeFileName.get === "FunSpecSpec.scala")
       assert(rep.testFailedEventsReceived(1).throwable.get.asInstanceOf[TestFailedException].failedCodeLineNumber.get === thisLineNumber - 11)
     }
-    
+
     "should generate TestRegistrationClosedException with correct stack depth info when has a it nested inside a it" in {
       class TestSpec extends FunSpec {
         var registrationClosedThrown = false
@@ -1149,7 +1149,7 @@ class FunSpecSpec extends FreeSpec with GivenWhenThen {
         override def withFixture(test: NoArgTest): Outcome = {
           val outcome = test.apply()
           outcome match {
-            case Exceptional(ex: TestRegistrationClosedException) => 
+            case Exceptional(ex: TestRegistrationClosedException) =>
               registrationClosedThrown = true
             case _ =>
           }

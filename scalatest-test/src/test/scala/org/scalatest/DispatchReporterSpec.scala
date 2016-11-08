@@ -39,7 +39,7 @@ class DispatchReporterSpec extends FunSpec {
   val TestStartingOrdinal = new Ordinal(223)
   val SecondTestStartingOrdinal = TestStartingOrdinal.next
   val TestFinishedOrdinal = SecondTestStartingOrdinal.next
-  val SecondTestFinishedOrdinal = TestFinishedOrdinal.next 
+  val SecondTestFinishedOrdinal = TestFinishedOrdinal.next
   describe("the DispatchReporter") {
     describe("when slowpoke detection is enabled") {
       def fireTestStarting(): (EventRecordingReporter, DispatchReporter) = {
@@ -111,11 +111,11 @@ class DispatchReporterSpec extends FunSpec {
         var sizeWasSameCount = 0
         var previousSize = erp.alertProvidedEventsReceived.size
         eventually {
-          val size = erp.alertProvidedEventsReceived.size 
+          val size = erp.alertProvidedEventsReceived.size
           if (size == previousSize)
             sizeWasSameCount += 1
           else
-            sizeWasSameCount = 0 
+            sizeWasSameCount = 0
           previousSize = size
           sizeWasSameCount should be >= 5
         }

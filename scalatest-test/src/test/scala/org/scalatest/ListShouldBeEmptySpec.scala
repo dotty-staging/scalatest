@@ -25,31 +25,31 @@ class ListShouldBeEmptySpec extends FunSpec {
   private val prettifier = Prettifier.default
 
   //ADDITIONAL//
-  
+
   val nonEmptyList = List(1, 2, 3)
   val emptyList = List.empty[Int]
-  
+
   val fileName: String = "ListShouldBeEmptySpec.scala"
-    
-  def wasNotEmpty(left: Any): String = 
+
+  def wasNotEmpty(left: Any): String =
     FailureMessages.wasNotEmpty(prettifier, left)
-    
-  def wasEmpty(left: Any): String = 
+
+  def wasEmpty(left: Any): String =
     FailureMessages.wasEmpty(prettifier, left)
-  
+
   def allError(left: Any, message: String, lineNumber: Int): String = {
     val messageWithIndex = UnquotedString("  " + FailureMessages.forAssertionsGenTraversableMessageWithStackDepth(prettifier, 0, UnquotedString(message), UnquotedString(fileName + ":" + lineNumber)))
     FailureMessages.allShorthandFailed(prettifier, messageWithIndex, left)
   }
-  
+
   describe("Empty matcher") {
-    
+
     describe("when work with 'list should be (empty)'") {
-      
+
       it("should do nothing when list is empty") {
         emptyList should be (empty)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when list is not empty") {
         val caught1 = intercept[TestFailedException] {
           nonEmptyList should be (empty)
@@ -58,15 +58,15 @@ class ListShouldBeEmptySpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'list should not be empty'") {
-      
+
       it("should do nothing when list is not empty") {
         nonEmptyList should not be empty
       }
-      
+
       it("should throw TestFailedException with correct stack depth when list is empty") {
         val caught1 = intercept[TestFailedException] {
           emptyList should not be empty
@@ -76,13 +76,13 @@ class ListShouldBeEmptySpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'list shouldBe empty'") {
-      
+
       it("should do nothing when list is empty") {
         emptyList shouldBe empty
       }
-      
+
       it("should throw TestFailedException with correct stack depth when list is not empty") {
         val caught1 = intercept[TestFailedException] {
           nonEmptyList shouldBe empty
@@ -91,15 +91,15 @@ class ListShouldBeEmptySpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'list shouldNot be (empty)'") {
-      
+
       it("should do nothing when list is not empty") {
         nonEmptyList shouldNot be (empty)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when list is empty") {
         val caught1 = intercept[TestFailedException] {
           emptyList shouldNot be (empty)
@@ -108,15 +108,15 @@ class ListShouldBeEmptySpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) should be (empty)'") {
-      
+
       it("should do nothing when all(xs) is empty") {
         all(List(emptyList)) should be (empty)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is not empty") {
         val left1 = List(nonEmptyList)
         val caught1 = intercept[TestFailedException] {
@@ -126,15 +126,15 @@ class ListShouldBeEmptySpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) should not be empty'") {
-      
+
       it("should do nothing when all(xs) is not empty") {
         all(List(nonEmptyList)) should not be empty
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is empty") {
         val left1 = List(emptyList)
         val caught1 = intercept[TestFailedException] {
@@ -144,15 +144,15 @@ class ListShouldBeEmptySpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) shouldBe empty'") {
-      
+
       it("should do nothing when all(xs) is empty") {
         all(List(emptyList)) shouldBe empty
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is not empty") {
         val left1 = List(nonEmptyList)
         val caught1 = intercept[TestFailedException] {
@@ -163,13 +163,13 @@ class ListShouldBeEmptySpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'all(xs) shouldNot be (empty)'") {
-      
+
       it("should do nothing when all(xs) is not empty") {
         all(List(nonEmptyList)) shouldNot be (empty)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is empty") {
         val left1 = List(emptyList)
         val caught1 = intercept[TestFailedException] {
@@ -179,8 +179,8 @@ class ListShouldBeEmptySpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
   }
-  
+
 }

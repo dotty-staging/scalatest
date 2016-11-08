@@ -37,7 +37,7 @@ class TagGroupsSpec extends FunSpec {
 
     abstract override def run(testName: Option[String], args: Args): Status = {
 
-      def expandGroups(set: Set[String]): Set[String] = 
+      def expandGroups(set: Set[String]): Set[String] =
         set flatMap { tag => groups.getOrElse(tag, Set(tag)) }
 
       val newTagsToInclude: Option[Set[String]] =

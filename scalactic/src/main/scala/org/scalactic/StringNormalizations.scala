@@ -79,10 +79,10 @@ trait StringNormalizations {
 
       override def toString: String = "trimmed"
     }
-} 
+}
 
 /**
- * Companion object to trait <code>StringNormalizations</code> that provides an 
+ * Companion object to trait <code>StringNormalizations</code> that provides an
  * alternative to mixing it in.
  */
 object StringNormalizations extends StringNormalizations

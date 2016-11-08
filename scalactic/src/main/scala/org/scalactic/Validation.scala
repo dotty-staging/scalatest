@@ -16,7 +16,7 @@
 package org.scalactic
 
 /**
- * Represents the result of a <em>validation</em>, either the object <a href="Pass$.html"><code>Pass</code></a> if the validation 
+ * Represents the result of a <em>validation</em>, either the object <a href="Pass$.html"><code>Pass</code></a> if the validation
  * succeeded, else an instance of <a href="Fail.html"><code>Fail</code></a> containing an error value describing the validation failure.
  *
  * <p>
@@ -61,11 +61,11 @@ package org.scalactic
  * </pre>
  *
  * <p>
- * Note: You can think of <code>Validation</code> as an &ldquo;<code>Option</code> with attitude,&rdquo; where <code>Pass</code> is 
- * a <code>None</code> that indicates validation success and <code>Fail</code> is a <code>Some</code> whose value describes 
+ * Note: You can think of <code>Validation</code> as an &ldquo;<code>Option</code> with attitude,&rdquo; where <code>Pass</code> is
+ * a <code>None</code> that indicates validation success and <code>Fail</code> is a <code>Some</code> whose value describes
  * the validation failure.
  * </p>
- * 
+ *
  * @tparam E the type of error value describing a validation failure for this <code>Validation</code>
  */
 sealed trait Validation[+E] extends Product with Serializable {

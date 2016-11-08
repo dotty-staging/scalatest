@@ -72,7 +72,7 @@ class ShouldHavePropertiesSpec extends FunSpec with Checkers with ReturnsNormall
       // 1 1 | 1 | 0
       it("should do nothing if at least one of the properties does not match, when used with not") {
 
-        // 0 0 
+        // 0 0
         book should not have (
           title ("Moby Dick"),
           author ("Melville")
@@ -84,7 +84,7 @@ class ShouldHavePropertiesSpec extends FunSpec with Checkers with ReturnsNormall
         )
         // SKIP-SCALATESTJS-END
 
-        // 0 1 
+        // 0 1
         book should not have (
           title ("Moby Dick"),
           author ("Dickens")
@@ -96,7 +96,7 @@ class ShouldHavePropertiesSpec extends FunSpec with Checkers with ReturnsNormall
         )
         // SKIP-SCALATESTJS-END
 
-        // 1 0 
+        // 1 0
         book should not have (
           title ("A Tale of Two Cities"),
           author ("Melville")
@@ -307,7 +307,7 @@ class ShouldHavePropertiesSpec extends FunSpec with Checkers with ReturnsNormall
 
       /*
       Not (matcher) needs to yield the opposite result as (matcher) itself, and
-      that means that not (matcher) will be true if at least one 
+      that means that not (matcher) will be true if at least one
 
       title/author/pubYear matches | have | not have
       0 0 0 | 0 | 1

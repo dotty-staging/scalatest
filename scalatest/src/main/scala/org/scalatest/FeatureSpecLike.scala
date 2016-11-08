@@ -26,7 +26,7 @@ import org.scalatest.exceptions.NotAllowedException
  * Implementation trait for class <code>FeatureSpec</code>, which represents
  * a suite of tests in which each test represents one <em>scenario</em> of a
  * <em>feature</em>.
- * 
+ *
  * <p>
  * <a href="FeatureSpec.html"><code>FeatureSpec</code></a> is a class, not a
  * trait, to minimize compile time given there is a slight compiler overhead to
@@ -163,7 +163,7 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
     //SCALATESTJS-ONLY val stackDepthAdjustment = -6
     engine.registerIgnoredTest(Resources.scenario(specText), Transformer(testFun _), Resources.ignoreCannotAppearInsideAScenario, "FeatureSpecLike.scala", "ignore", stackDepth, stackDepthAdjustment, None, Some(pos), testTags: _*)
   }
-  
+
   /**
    * Describe a &ldquo;subject&rdquo; being specified and tested by the passed function value. The
    * passed function value may contain more describers (defined with <code>describe</code>) and/or tests
@@ -200,12 +200,12 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
    * the <code>Set</code> of tag names for the test. If this <code>FeatureSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
    * <p>
-   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to 
-   * methods <code>scenario</code> and <code>ignore</code>. 
+   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to
+   * methods <code>scenario</code> and <code>ignore</code>.
    * </p>
-   * 
+   *
    * <p>
-   * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
+   * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate <code>@Ignore</code> at the class level, all test methods in the class will be auto-annotated with
    * <code>org.scalatest.Ignore</code>.
    * </p>
@@ -366,11 +366,11 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
    * </p>
    */
   protected def scenariosFor(unit: Unit): Unit = {}
-  
+
   /**
    * Suite style name.
    */
   final override val styleName: String = "org.scalatest.FeatureSpec"
-    
+
   override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = createTestDataFor(testName, theConfigMap, this)
 }

@@ -93,14 +93,14 @@ import org.scalatools.testing.{Framework => SbtFramework, _}
  * @author Chee Seng
  */
 class ScalaTestFramework extends SbtFramework {
-  
+
   /**
    * Returns <code>"ScalaTest"</code>, the human readable name for this test framework.
    */
   def name = "ScalaTest"
 
   /**
-   * Returns an array containing fingerprint for ScalaTest's test, which are classes  
+   * Returns an array containing fingerprint for ScalaTest's test, which are classes
    * whose superclass name is <code>org.scalatest.Suite</code>
    * or is annotated with <code>org.scalatest.WrapWith</code>.
    */
@@ -115,7 +115,7 @@ class ScalaTestFramework extends SbtFramework {
         def isModule = false
       }
     )
-    
+
   private[scalatest] object RunConfig {
 
     val reporter: AtomicReference[Option[DispatchReporter]] = new AtomicReference(None)
@@ -130,8 +130,8 @@ class ScalaTestFramework extends SbtFramework {
     val slowpokeDetectionDelay: AtomicLong = new AtomicLong(60000)
     val slowpokeDetectionPeriod: AtomicLong = new AtomicLong(60000)
     val resultHolder = new SuiteResultHolder()
-    
-    def getConfigurations(args: Array[String], loggers: Array[Logger], eventHandler: EventHandler, testLoader: ClassLoader) = 
+
+    def getConfigurations(args: Array[String], loggers: Array[Logger], eventHandler: EventHandler, testLoader: ClassLoader) =
       synchronized {
         if (reporterConfigs.get.isEmpty) {
           val ParsedArgs(
@@ -147,37 +147,37 @@ class ScalaTestFramework extends SbtFramework {
             membersOnlyArgs,
             wildcardArgs,
             testNGArgs,
-            suffixes, 
-            chosenStyles, 
-            spanScaleFactors, 
+            suffixes,
+            chosenStyles,
+            spanScaleFactors,
             testSortingReporterTimeouts,
             slowpokeArgs
           ) = parseArgs(FriendlyParamsTranslator.translateArguments(args))
-          
+
           if (!runpathArgs.isEmpty)
             throw new IllegalArgumentException("-R (runpath) is not supported when runs in SBT.")
-               
+
           if (!suiteArgs.isEmpty)
             throw new IllegalArgumentException("-s (suite) is not supported when runs in SBT, please use SBT's test-only instead.")
-          
+
           if (!againArgs.isEmpty)
             throw new IllegalArgumentException("-A is not supported when runs in SBT, please use SBT's test-quick instead.")
-          
+
           if (!junitArgs.isEmpty)
             throw new IllegalArgumentException("-j (junit) is not supported when runs in SBT.")
-          
+
           if (!testNGArgs.isEmpty)
             throw new IllegalArgumentException("-b (testng) is not supported when runs in SBT.")
-          
+
           if (!concurrentArgs.isEmpty)
             throw new IllegalArgumentException("-P (concurrent) is not supported when runs in SBT, please use SBT parallel configuration instead.")
-          
+
           if (!suffixes.isEmpty)
             throw new IllegalArgumentException("-q is not supported when runs in SBT, please use SBT's test-only or test filter instead.")
-          
+
           if (!testSortingReporterTimeouts.isEmpty)
             throw new IllegalArgumentException("-T is not supported when runs in SBT.")
-          
+
           val propertiesMap = parsePropertiesArgsIntoMap(propertiesArgs)
           val chosenStyleSet: Set[String] = parseChosenStylesIntoChosenStyleSet(chosenStyles, "-y")
           if (propertiesMap.isDefinedAt(Suite.CHOSEN_STYLES))
@@ -191,21 +191,21 @@ class ScalaTestFramework extends SbtFramework {
           val slowpokeConfig: Option[SlowpokeConfig] = parseSlowpokeConfig(slowpokeArgs)
           //val (detectSlowpokes: Boolean, slowpokeDetectionDelay: Long, slowpokeDetectionPeriod: Long) =
           slowpokeConfig match {
-            case Some(SlowpokeConfig(delayInMillis, periodInMillis)) => 
+            case Some(SlowpokeConfig(delayInMillis, periodInMillis)) =>
               detectSlowpokes.getAndSet(true)
               slowpokeDetectionDelay.getAndSet(delayInMillis)
               slowpokeDetectionPeriod.getAndSet(periodInMillis)
-            case _ => 
+            case _ =>
               detectSlowpokes.getAndSet(false)
               slowpokeDetectionDelay.getAndSet(60000L)
               slowpokeDetectionPeriod.getAndSet(60000L)
           }
-          
+
           Runner.spanScaleFactor = parseDoubleArgument(spanScaleFactors, "-F", 1.0)
-          
+
           val fullReporterConfigurations = parseReporterArgsIntoConfigurations(reporterArgs)
           val sbtNoFormat = java.lang.Boolean.getBoolean("sbt.log.noformat")
-          
+
           fullReporterConfigurations.standardOutReporterConfiguration match {
             case Some(stdoutConfig) =>
               val configSet = stdoutConfig.configSet
@@ -223,7 +223,7 @@ class ScalaTestFramework extends SbtFramework {
               presentReminderWithShortStackTraces.getAndSet(configSet.contains(PresentReminderWithShortStackTraces) && !configSet.contains(PresentReminderWithFullStackTraces))
               presentReminderWithFullStackTraces.getAndSet(configSet.contains(PresentReminderWithFullStackTraces))
               presentReminderWithoutCanceledTests.getAndSet(configSet.contains(PresentReminderWithoutCanceledTests))
-            case None => 
+            case None =>
               useStdout.getAndSet(reporterArgs.isEmpty)  // If no reporters specified, just give them a default stdout reporter
               presentAllDurations.getAndSet(false)
               presentInColor.getAndSet(!sbtNoFormat)
@@ -235,46 +235,46 @@ class ScalaTestFramework extends SbtFramework {
               presentReminderWithFullStackTraces.getAndSet(false)
               presentReminderWithoutCanceledTests.getAndSet(false)
           }
-          
+
           fullReporterConfigurations.graphicReporterConfiguration match {
             case Some(g) => throw new IllegalArgumentException("Graphic reporter is not supported when runs in SBT.")
-            case None => 
+            case None =>
           }
-          
+
           reporterConfigs.getAndSet(Some(fullReporterConfigurations.copy(standardOutReporterConfiguration = None)))
         }
-        
-        if (reporter.get.isEmpty || reporter.get.get.isDisposed) 
-          reporter.getAndSet(Some(ReporterFactory.getDispatchReporter(reporterConfigs.get.get, None, None, testLoader, Some(resultHolder), detectSlowpokes.get, slowpokeDetectionDelay.get, slowpokeDetectionPeriod.get))) 
-        
-        val reporters =  
+
+        if (reporter.get.isEmpty || reporter.get.get.isDisposed)
+          reporter.getAndSet(Some(ReporterFactory.getDispatchReporter(reporterConfigs.get.get, None, None, testLoader, Some(resultHolder), detectSlowpokes.get, slowpokeDetectionDelay.get, slowpokeDetectionPeriod.get)))
+
+        val reporters =
           if (useStdout.get)
             Vector(reporter.get.get, createSbtLogInfoReporter(loggers))
           else
             Vector(reporter.get.get)
-            
+
         val dispatchReporter = new SbtDispatchReporter(reporters)
-          
+
         (dispatchReporter, filter.get.get, configMap.get.get, membersOnly.get.get, wildcard.get.get)
       }
-    
+
     private val atomicCount = new AtomicInteger(0)
-  
+
     def increaseLatch(): Unit = {
       atomicCount.incrementAndGet()
     }
-  
+
     def decreaseLatch(): Unit = {
-      if (atomicCount.decrementAndGet() == 0) 
+      if (atomicCount.decrementAndGet() == 0)
         reporter.get match {
           case Some(r) => r.dispatchDisposeAndWaitUntilDone()
           case None =>
         }
     }
-    
+
     def createSbtLogInfoReporter(loggers: Array[Logger]) = {
       new SbtLogInfoReporter(
-          loggers, 
+          loggers,
           presentAllDurations.get,
           presentInColor.get,
           presentShortStackTraces.get,
@@ -296,7 +296,7 @@ class ScalaTestFramework extends SbtFramework {
   def testRunner(testLoader: ClassLoader, loggers: Array[Logger]) = {
     new ScalaTestRunner(testLoader, loggers)
   }
-  
+
   private[scalatest] class SbtLogInfoReporter(
     loggers: Array[Logger],
     presentAllDurations: Boolean,
@@ -333,8 +333,8 @@ class ScalaTestFramework extends SbtFramework {
 
   /**The test runner for ScalaTest suites. It is compiled in a second step after the rest of sbt.*/
   private[tools] class ScalaTestRunner(val testLoader: ClassLoader, val loggers: Array[Logger]) extends org.scalatools.testing.Runner2 {
-    
-    /* 
+
+    /*
       test-only FredSuite -- -A -B -C -d  all things to right of == come in as a separate string in the array
  the other way is to set up the options and when I say test it always comes in that way
 
@@ -373,13 +373,13 @@ Tags to include and exclude: -n "CheckinTests FunctionalTests" -l "SlowTests Net
 
 
      */
-    
-    private def filterWildcard(paths: List[String], testClassName: String): Boolean = 
+
+    private def filterWildcard(paths: List[String], testClassName: String): Boolean =
       paths.exists(testClassName.startsWith(_))
-      
+
     private def filterMembersOnly(paths: List[String], testClassName: String): Boolean =
       paths.exists(path => testClassName.startsWith(path) && testClassName.substring(path.length ).lastIndexOf('.') <= 0)
-      
+
     def run(testClassName: String, fingerprint: Fingerprint, eventHandler: EventHandler, args: Array[String]): Unit = {
       try {
         RunConfig.increaseLatch()
@@ -387,21 +387,21 @@ Tags to include and exclude: -n "CheckinTests FunctionalTests" -l "SlowTests Net
         //println("sbt args: " + args.toList)
         if ((isAccessibleSuite(suiteClass) || isRunnable(suiteClass)) && isDiscoverableSuite(suiteClass)) {
           val (reporter, filter, configMap, membersOnly, wildcard) = RunConfig.getConfigurations(args, loggers, eventHandler, testLoader)
-          
+
           if ((wildcard.isEmpty && membersOnly.isEmpty) || filterWildcard(wildcard, testClassName) || filterMembersOnly(membersOnly, testClassName)) {
-          
+
             val report = new SbtReporter(eventHandler, Some(reporter))
             val tracker = new Tracker
             val suiteStartTime = System.currentTimeMillis
 
             val wrapWithAnnotation = suiteClass.getAnnotation(classOf[WrapWith])
-            val suite = 
+            val suite =
             if (wrapWithAnnotation == null)
               suiteClass.newInstance.asInstanceOf[Suite]
             else {
               val suiteClazz = wrapWithAnnotation.value
               val constructorList = suiteClazz.getDeclaredConstructors()
-              val constructor = constructorList.find { c => 
+              val constructor = constructorList.find { c =>
                   val types = c.getParameterTypes
                   types.length == 1 && types(0) == classOf[java.lang.Class[_]]
                 }
@@ -431,7 +431,7 @@ Tags to include and exclude: -n "CheckinTests FunctionalTests" -l "SlowTests Net
               }
 
             }
-            catch {       
+            catch {
               case e: Exception => {
 
                 // TODO: Could not get this from Resources. Got:
@@ -446,7 +446,7 @@ Tags to include and exclude: -n "CheckinTests FunctionalTests" -l "SlowTests Net
               }
             }
           }
-        } // I think we should do nothing for non accessible, non runnable or non discoverable suite. 
+        } // I think we should do nothing for non accessible, non runnable or non discoverable suite.
         //else throw new IllegalArgumentException("Class is not an accessible org.scalatest.Suite: " + testClassName)
       }
       catch {
@@ -458,9 +458,9 @@ Tags to include and exclude: -n "CheckinTests FunctionalTests" -l "SlowTests Net
     }
 
     private val emptyClassArray = new Array[java.lang.Class[T] forSome {type T}](0)
-    
+
     private class SbtReporter(eventHandler: EventHandler, report: Option[Reporter]) extends Reporter {
-      
+
       import org.scalatest.events._
 
       def fireEvent(tn: String, r: Result, e: Option[Throwable]): Unit = {
@@ -473,7 +473,7 @@ Tags to include and exclude: -n "CheckinTests FunctionalTests" -l "SlowTests Net
           }
         )
       }
-      
+
       override def apply(event: Event): Unit = {
         report match {
           case Some(report) => report(event)
@@ -487,13 +487,13 @@ Tags to include and exclude: -n "CheckinTests FunctionalTests" -l "SlowTests Net
           case t: TestIgnored => fireEvent(t.testName, Result.Skipped, None)
           case t: TestCanceled => fireEvent(t.testName, Result.Skipped, None)
           case t: SuiteAborted => fireEvent("!!! Suite Aborted !!!", Result.Failure, t.throwable)
-          case _ => 
+          case _ =>
         }
       }
-      
+
       def dispose(): Unit = {
         report match {
-          case Some(report: DispatchReporter) => 
+          case Some(report: DispatchReporter) =>
             report.dispatchDisposeAndWaitUntilDone()
           case _ =>
         }

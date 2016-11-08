@@ -341,7 +341,7 @@ class SuiteSpec extends FunSpec {
       val e = new SuiteE
       val f = new SuiteF
       val g = new SuiteG
-      
+
       class IgnoreStopRequestStopper extends Stopper {
         def stopRequested: Boolean = false
         def requestStop(): Unit = {}
@@ -401,7 +401,7 @@ class SuiteSpec extends FunSpec {
         type FixtureParam = String
         var theFixture = ""
         var sideEffectedFixtureWas = ""
-        override def withFixture(test: NoArgTest): Outcome = { 
+        override def withFixture(test: NoArgTest): Outcome = {
           // These will fail the test if the wrapped tests's TestData is not passed through
           assert(test.name == "some test")
           assert(test.configMap == ConfigMap.empty)

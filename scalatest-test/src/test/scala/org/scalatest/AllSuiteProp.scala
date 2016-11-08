@@ -22,8 +22,8 @@ trait AllSuiteProp extends MethodSuiteProp with FunctionSuiteProp {
       "suite",
       // SKIP-SCALATESTJS-START
       spec,
-      fixtureSpec, 
-      junit3Suite, 
+      fixtureSpec,
+      junit3Suite,
       junitSuite,
       testngSuite,
       // SKIP-SCALATESTJS-END
@@ -40,9 +40,9 @@ trait AllSuiteProp extends MethodSuiteProp with FunctionSuiteProp {
       propSpec,
       fixturePropSpec,
       wordSpec,
-      fixtureWordSpec, 
-      pathFreeSpec, 
+      fixtureWordSpec,
+      pathFreeSpec,
       pathFunSpec
     )
-  
+
 }

@@ -23,7 +23,7 @@ import org.scalatest.testng.TestNGSuite
 class ClassTaggingProp extends AllSuiteProp {
 
   type FixtureServices = ClassTaggingFixtureServices
-  
+
   def suite = new ExampleClassTaggingSuite
   def fixtureSuite = new ExampleClassTaggingFixtureSuite
   def spec = new ExampleClassTaggingSpec
@@ -47,12 +47,12 @@ class ClassTaggingProp extends AllSuiteProp {
   def fixtureWordSpec = new ExampleClassTaggingFixtureWordSpec
   def pathFreeSpec = new ExampleClassTaggingPathFreeSpec
   def pathFunSpec = new ExampleClassTaggingPathFunSpec
-  
+
   test("@Ignore marked at the class level must auto-mark all tests in the suite") {
     forAll(examples.filter(_.included)) { s =>
       val testNames = s.testNames
       val tags = s.tags
-      testNames.foreach { tn => 
+      testNames.foreach { tn =>
         val tagSet = tags.get(tn)
         tagSet.isDefined should be (true)
         tagSet.get should contain ("org.scalatest.Ignore")
@@ -109,9 +109,9 @@ class ExampleClassTaggingJUnit3Suite extends JUnit3Suite with ClassTaggingFixtur
 class ExampleClassTaggingJUnitSuite extends JUnitSuite with ClassTaggingFixtureServices {
   @Test
   def testMethod1(): Unit = {}
-  @Test 
+  @Test
   def testMethod2(): Unit = {}
-  @Test 
+  @Test
   def testMethod3(): Unit = {}
 }
 

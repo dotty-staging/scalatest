@@ -21,12 +21,12 @@ import TripleEqualsSupport._
  * <strong>Trait <code>ConversionCheckedTripleEquals</code> has been deprecated and will be removed in a future version of Scalactic. Please use <code>TypeCheckedTripleEquals</code> with a type annotation instead.</strong>
  *
  * <p>
- * Trait <code>ConversionCheckedTripleEquals</code> has been deprecated because code that uses it can break if you 
+ * Trait <code>ConversionCheckedTripleEquals</code> has been deprecated because code that uses it can break if you
  * change the equality policy to <code>TripleEquals</code>. For example, because <code>JavaConversions</code> provides
  * an implicit conversion between <code>java.util.Set</code> and <code>scala.collection.mutable.Set</code>,
  * an equality comparison under <code>ConversionCheckedTripleEquals</code> can yield <code>true</code>:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import collection.JavaConversions._
  * import collection.JavaConversions._
@@ -45,7 +45,7 @@ import TripleEqualsSupport._
  * If code written under <code>ConversionCheckedTripleEquals</code> is left unchanged, but the policy
  * is changed to <code>TripleEquals</code>, the equality comparison will now yield <code>false</code>:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt;  import TripleEquals._
  * import TripleEquals._
@@ -61,7 +61,7 @@ import TripleEqualsSupport._
  * the implicit conversion via a type annotation (following an expression with a colon and
  * the desired type). Here's an example:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; mutable.Set.empty[String] === (new java.util.HashSet[String]: mutable.Set[String])
  * res3: Boolean = true
@@ -84,7 +84,7 @@ import TripleEqualsSupport._
  * scala&gt; mutable.Set.empty[String] === (new java.util.HashSet[String]: mutable.Set[String])
  * res4: Boolean = true
  * </pre>
- * 
+ *
  * @author Bill Venners
  */
 @deprecated("ConversionCheckedTripleEquals has been deprecated and will be removed in a future version of Scalactic. Please use TypeCheckedTripleEquals with a type annotation instead")

@@ -55,7 +55,7 @@ import org.scalatest.exceptions.TestFailedException
  * </pre>
  *
  * <p>
- * Were you to simply invoke <code>get</code> on the <code>Try</code>, 
+ * Were you to simply invoke <code>get</code> on the <code>Try</code>,
  * if the <code>Try</code> wasn't a <code>Success</code>, it would throw the exception contained in the <code>Failure</code>:
  * </p>
  *
@@ -118,7 +118,7 @@ trait TryValues {
     def failure: Failure[T] = {
       theTry match {
         case failure: Failure[T] => failure
-        case _ => 
+        case _ =>
           throw new TestFailedException((_: StackDepthException) => Some(Resources.tryNotAFailure), None, pos)
       }
     }
@@ -130,7 +130,7 @@ trait TryValues {
     def success: Success[T] = {
       theTry match {
         case success: Success[T] => success
-        case _ => 
+        case _ =>
           throw new TestFailedException((_: StackDepthException) => Some(Resources.tryNotASuccess), None, pos)
       }
     }
@@ -138,7 +138,7 @@ trait TryValues {
 }
 
 /**
- * Companion object that facilitates the importing of <code>TryValues</code> members as 
+ * Companion object that facilitates the importing of <code>TryValues</code> members as
  * an alternative to mixing it in. One use case is to import <code>TryValues</code>'s members so you can use
  * <code>success</code> and <code>failure</code> on <code>Try</code> in the Scala interpreter.
  * </pre>

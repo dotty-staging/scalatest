@@ -25,14 +25,14 @@ class AllOfContainMatcherSpec extends FunSpec {
   private val prettifier = Prettifier.default
 
   describe("allOf ") {
-    
+
     def checkStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       e.message should be (Some(leftText + " did not contain all of (" + right.mkString(", ") + ")"))
       e.failedCodeFileName should be (Some("AllOfContainMatcherSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should succeeded when left List contains same elements in same order as right List") {
       List(5, 4, 3, 2, 1) should contain allOf(1, 3, 5)
       Array(5, 4, 3, 2, 1) should contain allOf(1, 3, 5)
@@ -43,7 +43,7 @@ class AllOfContainMatcherSpec extends FunSpec {
       javaMap(Entry(5, "five"), Entry(4, "four"), Entry(3, "three"), Entry(2, "two"), Entry(1, "one")) should contain allOf (Entry(1, "one"), Entry(3, "three"), Entry(5, "five"))
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should succeeded when left List contains same elements in different order as right List") {
       List(1, 2, 3) should contain allOf(2, 1, 3)
       Array(1, 2, 3) should contain allOf(2, 1, 3)
@@ -54,7 +54,7 @@ class AllOfContainMatcherSpec extends FunSpec {
       javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three")) should contain allOf (Entry(2, "two"), Entry(1, "one"), Entry(3, "three"))
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should succeeded when left List contains same elements in same order as right Set") {
       List(1, 2, 3) should contain allOf(1, 2, 3)
       Array(1, 2, 3) should contain allOf(1, 2, 3)
@@ -65,13 +65,13 @@ class AllOfContainMatcherSpec extends FunSpec {
       javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three")) should contain allOf (Entry(1, "one"), Entry(2, "two"), Entry(3, "three"))
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw NotAllowedException when allOf contains duplicate element") {
       val e1 = intercept[exceptions.NotAllowedException] {
         List(1, 2, 3) should contain allOf(1, 2, 1)
       }
       e1.getMessage() should be (FailureMessages.allOfDuplicate)
-      
+
       val e2 = intercept[exceptions.NotAllowedException] {
         Array(1, 2, 3) should contain allOf(1, 2, 1)
       }
@@ -84,14 +84,14 @@ class AllOfContainMatcherSpec extends FunSpec {
       e3.getMessage() should be (FailureMessages.allOfDuplicate)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left and right List are same size but contain different elements") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
         left1 should contain allOf (2, 5, 3)
       }
       checkStackDepth(e1, left1, Array(2, 5, 3).deep, thisLineNumber - 2)
-      
+
       val left2 = Map(1 -> "one", 2 -> "two", 3 -> "three")
       val e2 = intercept[exceptions.TestFailedException] {
         left2 should contain allOf (2 -> "two", 5 -> "five", 3 -> "three")
@@ -118,20 +118,20 @@ class AllOfContainMatcherSpec extends FunSpec {
       checkStackDepth(e5, left5, Array(Entry(2, "two"), Entry(5, "five"), Entry(3, "three")), thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left List is shorter than right List") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
         left1 should contain allOf (1, 2, 3, 4)
       }
       checkStackDepth(e1, left1, Array(1, 2, 3, 4).deep, thisLineNumber - 2)
-      
+
       val left2 = Map(1 -> "one", 2 -> "two", 3 -> "three")
       val e2 = intercept[exceptions.TestFailedException] {
         left2 should contain allOf (1 -> "one", 2 -> "two", 3 -> "three", 4 -> "four")
       }
       checkStackDepth(e2, left2, Array(1 -> "one", 2 -> "two", 3 -> "three", 4 -> "four"), thisLineNumber - 2)
-      
+
       val left3 = Array(1, 2, 3)
       val e3 = intercept[exceptions.TestFailedException] {
         left3 should contain allOf (1, 2, 3, 4)
@@ -152,20 +152,20 @@ class AllOfContainMatcherSpec extends FunSpec {
       checkStackDepth(e5, left5, Array(Entry(1, "one"), Entry(2, "two"), Entry(3, "three"), Entry(4, "four")), thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left List is longer than right List") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
         left1 should contain allOf (1, 5)
       }
       checkStackDepth(e1, left1, Array(1, 5).deep, thisLineNumber - 2)
-      
+
       val left2 = Map(1 -> "one", 2 -> "two", 3 -> "three")
       val e2 = intercept[exceptions.TestFailedException] {
         left2 should contain allOf (1 -> "one", 5 -> "five")
       }
       checkStackDepth(e2, left2, Array(1 -> "one", 5 -> "five"), thisLineNumber - 2)
-      
+
       val left3 = Array(1, 2, 3)
       val e3 = intercept[exceptions.TestFailedException] {
         left3 should contain allOf (1, 5)
@@ -187,16 +187,16 @@ class AllOfContainMatcherSpec extends FunSpec {
       // SKIP-SCALATESTJS-END
     }
   }
-  
+
   describe("not allOf ") {
-    
+
     def checkStackDepth(e: exceptions.StackDepthException, left: Any, right: GenTraversable[Any], lineNumber: Int): Unit = {
       val leftText = FailureMessages.decorateToStringValue(prettifier, left)
       e.message should be (Some(leftText + " contained all of (" + right.mkString(", ") + ")"))
       e.failedCodeFileName should be (Some("AllOfContainMatcherSpec.scala"))
       e.failedCodeLineNumber should be (Some(lineNumber))
     }
-    
+
     it("should succeeded when left List contains different elements as right List") {
       List(1, 2, 3) should not contain allOf (1, 2, 8)
       Array(1, 2, 3) should not contain allOf (1, 2, 8)
@@ -207,20 +207,20 @@ class AllOfContainMatcherSpec extends FunSpec {
       javaMap(Entry(1, "one"), Entry(2, "two"), Entry(3, "three")) should not contain allOf (Entry(1, "one"), Entry(2, "two"), Entry(8, "eight"))
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left and right List contain same elements in different order") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
         left1 should not contain allOf (2, 1, 3)
       }
       checkStackDepth(e1, left1, Array(2, 1, 3).deep, thisLineNumber - 2)
-      
+
       val left2 = Map(1 -> "one", 2 -> "two", 3 -> "three")
       val e2 = intercept[exceptions.TestFailedException] {
         left2 should not contain allOf (2 -> "two", 1 -> "one", 3 -> "three")
       }
       checkStackDepth(e2, left2, Array(2 -> "two", 1 -> "one", 3 -> "three"), thisLineNumber - 2)
-      
+
       val left3 = Array(1, 2, 3)
       val e3 = intercept[exceptions.TestFailedException] {
         left3 should not contain allOf (2, 1, 3)
@@ -241,20 +241,20 @@ class AllOfContainMatcherSpec extends FunSpec {
       checkStackDepth(e5, left5, Array(Entry(2, "two"), Entry(1, "one"), Entry(3, "three")), thisLineNumber - 2)
       // SKIP-SCALATESTJS-END
     }
-    
+
     it("should throw TestFailedException with correct stack depth and message when left and right List contain same elements in same order") {
       val left1 = List(1, 2, 3)
       val e1 = intercept[exceptions.TestFailedException] {
         left1 should not contain allOf (1, 2, 3)
       }
       checkStackDepth(e1, left1, Array(1, 2, 3).deep, thisLineNumber - 2)
-      
+
       val left2 = Map(1 -> "one", 2 -> "two", 3 -> "three")
       val e2 = intercept[exceptions.TestFailedException] {
         left2 should not contain allOf (1 -> "one", 2 -> "two", 3 -> "three")
       }
       checkStackDepth(e2, left2, Array(1 -> "one", 2 -> "two", 3 -> "three"), thisLineNumber - 2)
-      
+
       val left3 = Array(1, 2, 3)
       val e3 = intercept[exceptions.TestFailedException] {
         left3 should not contain allOf (1, 2, 3)

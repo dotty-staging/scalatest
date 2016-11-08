@@ -361,7 +361,7 @@ class ScalaFuturesSpec extends FunSpec with Matchers with OptionValues with Scal
             def onComplete[U](func: Try[String] => U)(implicit executor: ExecutionContext): Unit = {}
             def value: Option[Try[String]] = {
               count += 1
-              if (count < 5) None 
+              if (count < 5) None
               else {
                 gotToFive = true
                 Some(Success("hi"))

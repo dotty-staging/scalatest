@@ -47,7 +47,7 @@ trait MatcherProducers {
      * <pre class="stHighlight">
      * (f compose g) andThen (_ compose g)
      * </pre>
-     * 
+     *
      * <p>
      * You would use <code>composeTwice</code> if you want to create a new matcher producer from an existing one, by transforming
      * both the left and right sides of the expression with the same transformation function. As an example, the
@@ -90,7 +90,7 @@ trait MatcherProducers {
      * scala&gt; 8 should beGreaterThan (9)
      * org.scalatest.exceptions.TestFailedException: 8 was not greater than 9
      * </pre>
-     * 
+     *
      * <p>
      * Given <code>beGreaterThan</code> matcher producer function, you can create matcher producer function
      * that takes a <code>String</code> and produces a <code>Matcher[String]</code> given a function from
@@ -110,7 +110,7 @@ trait MatcherProducers {
      * org.scalatest.exceptions.TestFailedException: 7 was not greater than 8
      * ...
      * </pre>
-     * 
+     *
      * <p>
      * The <code>composeTwice</code> method is just a shorthand for this function composition expression:
      * </p>
@@ -125,7 +125,7 @@ trait MatcherProducers {
      * scala&gt; "7" should beAsIntsGreaterThan ("8")
      * org.scalatest.exceptions.TestFailedException: 7 was not greater than 8
      * </pre>
-     * 
+     *
      * <p>
      * The first part of that expression, <code>beGreaterThan</code> <code>compose</code> <code>stringToInt</code>,
      * gives you a new matcher producer function that given a <code>String</code> will produce a <code>Matcher[Int]</code>:
@@ -135,7 +135,7 @@ trait MatcherProducers {
      * scala&gt; val beAsIntGreaterThan = beGreaterThan compose stringToInt
      * beAsIntGreaterThan: String =&gt; org.scalatest.matchers.Matcher[Int] = &lt;function1&gt;
      * </pre>
-     * 
+     *
      * <p>
      * This <code>compose</code> method is inherited from <code>Function1</code>: on any <code>Function1</code>,
      * <code>(f</code> <code>compose</code> <code>g)(x)</code> means <code>f(g(x))</code>. You can use this
@@ -155,7 +155,7 @@ trait MatcherProducers {
      * <code>Matcher[String]</code>. To accomplish this you can first just apply the function to get a <code>Matcher[Int]</code>,
      * like this:
      * </p>
-     * 
+     *
      * <pre class="stREPL">
      * scala&gt; val beGreaterThanEight = beAsIntGreaterThan ("8")
      * beGreaterThanEight: org.scalatest.matchers.Matcher[Int] = be &gt; 8
@@ -195,7 +195,7 @@ trait MatcherProducers {
      * <code>(_</code> <code>compose</code> <code>stringToInt)</code> will do once it is applied to a (right-hand-side)
      * <code>String</code>, is:
      * </p>
-     * 
+     *
      * <ol>
      * <li>Transform <code>beGreaterThan</code> from an <code>Int</code> <code>=&gt;</code> <code>Matcher[Int]</code>
      * to a <code>String</code> <code>=&gt;</code> <code>Matcher[Int]</code> with the first <code>compose</code></li>
@@ -275,7 +275,7 @@ trait MatcherProducers {
    * @tparam T the type used by function <code>f</code>
    * @return an object that has <code>composeTwice</code>, <code>mapResult</code> and <code>mapArgs</code> methods.
    */
-  implicit def convertToComposifier[T](f: T => Matcher[T]): Composifier[T] = new Composifier(f) 
+  implicit def convertToComposifier[T](f: T => Matcher[T]): Composifier[T] = new Composifier(f)
 }
 
 /**

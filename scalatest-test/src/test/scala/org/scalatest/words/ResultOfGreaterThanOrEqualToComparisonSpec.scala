@@ -19,13 +19,13 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfGreaterThanOrEqualToComparisonSpec extends FunSpec {
-  
+
   describe("ResultOfGreaterThanOrEqualToComparison ") {
-    
+
     it("should have pretty toString") {
       val result = new ResultOfGreaterThanOrEqualToComparison(8)
       result.toString should be (">= (8)")
     }
   }
-  
+
 }

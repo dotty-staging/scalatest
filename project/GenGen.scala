@@ -73,7 +73,7 @@ val scaladocForTableFor1VerbatimString = """
  * property check failed and the <code>apply</code> method will complete abruptly with a
  * <code>TableDrivenPropertyCheckFailedException</code> that wraps the exception thrown by the supplied property function.
  * </p>
- * 
+ *
  * <p>
  * The usual way you'd invoke the <code>apply</code> method that checks a property is via a <code>forAll</code> method
  * provided by trait <code>TableDrivenPropertyChecks</code>. The <code>forAll</code> method takes a <code>TableFor1</code> as its
@@ -148,7 +148,7 @@ val scaladocForTableFor1VerbatimString = """
  * @param heading a string name for the lone column of this table
  * @param rows a variable length parameter list of objects containing the data of this table
  *
- * @author Bill Venners 
+ * @author Bill Venners
  */
 """
 
@@ -194,7 +194,7 @@ import org.scalactic._
  * <p>
  * For an example of trait <code>GeneratorDrivenPropertyChecks</code> in action, imagine you want to test this <code>Fraction</code> class:
  * </p>
- *  
+ *
  * <pre class="stHighlight">
  * class Fraction(n: Int, d: Int) {
  *
@@ -433,7 +433,7 @@ import org.scalactic._
  *
  * <p>
  * The property checks performed by the <code>forAll</code> methods of this trait can be flexibly configured via the services
- * provided by supertrait <code>Configuration</code>.  The five configuration parameters for property checks along with their 
+ * provided by supertrait <code>Configuration</code>.  The five configuration parameters for property checks along with their
  * default values and meanings are described in the following table:
  * </p>
  *
@@ -509,7 +509,7 @@ import org.scalactic._
  * <p>
  * The <code>forAll</code> methods of trait <code>GeneratorDrivenPropertyChecks</code> each take a <code>PropertyCheckConfiguration</code>
  * object as an implicit parameter. This object provides values for each of the five configuration parameters. Trait <code>Configuration</code>
- * provides an implicit <code>val</code> named <code>generatorDrivenConfig</code> with each configuration parameter set to its default value. 
+ * provides an implicit <code>val</code> named <code>generatorDrivenConfig</code> with each configuration parameter set to its default value.
  * If you want to set one or more configuration parameters to a different value for all property checks in a suite you can override this
  * val (or hide it, for example, if you are importing the members of the <code>GeneratorDrivenPropertyChecks</code> companion object rather
  * than mixing in the trait.) For example, if
@@ -543,11 +543,11 @@ import org.scalactic._
  * </pre>
  *
  * <p>
- * This invocation of <code>forAll</code> will use 500 for <code>minSuccessful</code> and whatever values are specified by the 
+ * This invocation of <code>forAll</code> will use 500 for <code>minSuccessful</code> and whatever values are specified by the
  * implicitly passed <code>PropertyCheckConfiguration</code> object for the other configuration parameters.
  * If you want to set multiple configuration parameters in this way, just list them separated by commas:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * forAll (minSuccessful(500), maxDiscardedFactor(0.6)) { (n: Int, d: Int) => ...
  * </pre>
@@ -556,7 +556,7 @@ import org.scalactic._
  * If you are using an overloaded form of <code>forAll</code> that already takes an initial parameter list, just
  * add the configuration parameters after the list of generators, names, or generator/name pairs, as in:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * // If providing argument names
  * forAll ("n", "d", minSuccessful(500), maxDiscarded(300)) {
@@ -574,14 +574,14 @@ import org.scalactic._
  * <p>
  * For more information, see the documentation for supertrait <a href="Configuration.html"><code>Configuration</code></a>.
  * </p>
- * 
+ *
  * @author Bill Venners
  */
 trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
 
   /**
    * Performs a property check by applying the specified property check function to arguments
-   * supplied by implicitly passed generators, modifying the values in the implicitly passed 
+   * supplied by implicitly passed generators, modifying the values in the implicitly passed
    * <code>PropertyGenConfig</code> object with explicitly passed parameter values.
    *
    * <p>
@@ -624,7 +624,7 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
 
   /**
    * Performs a configured property checks by applying property check functions passed to its <code>apply</code> methods to arguments
-   * supplied by implicitly passed generators, modifying the values in the 
+   * supplied by implicitly passed generators, modifying the values in the
    * <code>PropertyGenConfig</code> object passed implicitly to its <code>apply</code> methods with parameter values passed to its constructor.
    *
    * <p>
@@ -686,7 +686,7 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
 
   /**
    * Performs a property check by applying the specified property check function to arguments
-   * supplied by implicitly passed generators, modifying the values in the implicitly passed 
+   * supplied by implicitly passed generators, modifying the values in the implicitly passed
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
    * <p>
@@ -730,7 +730,7 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
 
   /**
    * Performs a property check by applying the specified property check function to arguments
-   * supplied by implicitly passed generators, modifying the values in the implicitly passed 
+   * supplied by implicitly passed generators, modifying the values in the implicitly passed
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
    * <p>
@@ -775,7 +775,7 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
 
   /**
    * Performs a property check by applying the specified property check function to arguments
-   * supplied by implicitly passed generators, modifying the values in the implicitly passed 
+   * supplied by implicitly passed generators, modifying the values in the implicitly passed
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
    * <p>
@@ -821,7 +821,7 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
 
   /**
    * Performs a property check by applying the specified property check function to arguments
-   * supplied by implicitly passed generators, modifying the values in the implicitly passed 
+   * supplied by implicitly passed generators, modifying the values in the implicitly passed
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
    * <p>
@@ -868,7 +868,7 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
 
   /**
    * Performs a property check by applying the specified property check function to arguments
-   * supplied by implicitly passed generators, modifying the values in the implicitly passed 
+   * supplied by implicitly passed generators, modifying the values in the implicitly passed
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
    * <p>
@@ -916,7 +916,7 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
 
   /**
    * Performs a property check by applying the specified property check function to arguments
-   * supplied by implicitly passed generators, modifying the values in the implicitly passed 
+   * supplied by implicitly passed generators, modifying the values in the implicitly passed
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
    * <p>
@@ -1067,7 +1067,7 @@ $arbShrinks$,
    * val famousLastWords = for {
    *   s <- Gen.oneOf("the", "program", "compiles", "therefore", "it", "should", "work")
    * } yield s
-   * 
+   *
    * forAll ($famousArgs$) { ($namesAndTypes$) =>
    *   $sumOfArgLengths$ should equal (($sumOfArgs$).length)
    * }
@@ -1117,7 +1117,7 @@ $shrinks$,
    * val famousLastWords = for {
    *   s <- Gen.oneOf("the", "program", "compiles", "therefore", "it", "should", "work")
    * } yield s
-   * 
+   *
    * forAll ($nameGenTuples$) { ($namesAndTypes$) =>
    *   $sumOfArgLengths$ should equal (($sumOfArgs$).length)
    * }
@@ -1871,7 +1871,7 @@ $lengthAssertions$
 $lengthAssertions$
     }
   }
- 
+
   // set minSize == maxSize with (param, param) (ensure always passed with that size)
   it("generator-driven property that takes $n$ args and generators, with minSize == maxSize, specified as (param, param)") {
 
@@ -2129,7 +2129,7 @@ val checkersSuiteTemplate = """
         res
         },
         minSuccessful(5)
-      ) 
+      )
     }
   }
 
@@ -2241,7 +2241,7 @@ val checkersSuiteTemplate = """
           (i > 7) ==> { 1 + 1 == (2) }
         },
         maxDiscarded(5)
-      ) 
+      )
     }
   }
 
@@ -2334,7 +2334,7 @@ val checkersSuiteTemplate = """
         },
         minSize(5),
         maxSize(4)
-      ) 
+      )
     }
   }
 
@@ -2414,7 +2414,7 @@ val checkersSuiteTemplate = """
 $lengthExpressions$
       },
       maxSize(5)
-    ) 
+    )
   }
 
   // set maxSize with default (ensure always passed with a size less than maxSize)
@@ -2520,7 +2520,7 @@ $okayExpressions$
 """
 // 1712  2205
 
-// For some reason that I don't understand, I need to leave off the stars before the <pre> when 
+// For some reason that I don't understand, I need to leave off the stars before the <pre> when
 // they are next to ST commands. So I say  "   <pre>" sometimes instead of " * <pre>".
 
   val thisYear = Calendar.getInstance.get(Calendar.YEAR)
@@ -2528,7 +2528,7 @@ $okayExpressions$
   def genPropertyChecks(targetDir: File) {
     targetDir.mkdirs()
     val bw = new BufferedWriter(new FileWriter(new File(targetDir, "GeneratorDrivenPropertyChecks.scala")))
- 
+
     try {
       val st = new org.antlr.stringtemplate.StringTemplate(copyrightTemplate)
       st.setAttribute("year", thisYear);
@@ -2592,18 +2592,18 @@ $okayExpressions$
   def genGeneratorDrivenSuite(targetDir: File, mixinInvitationStyle: Boolean, withTables: Boolean, doItForCheckers: Boolean) {
 
     targetDir.mkdirs()
-    
+
     val traitOrObjectName =
       if (doItForCheckers)
         "Checkers"
       else {
         if (withTables) "PropertyChecks" else "GeneratorDrivenPropertyChecks"
       }
-    val suiteClassName = traitOrObjectName + (if (mixinInvitationStyle) "Mixin" else "Import") + "Suite" 
-    val fileName = suiteClassName + ".scala" 
+    val suiteClassName = traitOrObjectName + (if (mixinInvitationStyle) "Mixin" else "Import") + "Suite"
+    val fileName = suiteClassName + ".scala"
 
     val bw = new BufferedWriter(new FileWriter(new File(targetDir, fileName)))
- 
+
     try {
       val st = new org.antlr.stringtemplate.StringTemplate(copyrightTemplate)
       st.setAttribute("year", thisYear);
@@ -2631,8 +2631,8 @@ $okayExpressions$
         val listOfIs = List.fill(i)("i").mkString(", ")
         val columnsOfOnes = List.fill(i)("        (" + rowOfOnes + ")").mkString(",\n")
         val columnsOfTwos = List.fill(i)("        (" + rowOfTwos + ")").mkString(",\n")
-        val rawRows =                              
-          for (idx <- 0 to 9) yield                
+        val rawRows =
+          for (idx <- 0 to 9) yield
             List.fill(i)("  " + idx).mkString("        (", ", ", ")")
         val columnsOfIndexes = rawRows.mkString(",\n")
         val argNames = alpha.take(i).map("\"" + _ + "\"").mkString(", ")
@@ -2680,7 +2680,7 @@ $okayExpressions$
       bw.close()
     }
   }
-  
+
   def main(args: Array[String]) {
     val targetDir = args(0)
     val version = args(1)
@@ -2688,16 +2688,16 @@ $okayExpressions$
     val mainDir = new File(targetDir + "/main/scala/org/scalatest/prop")
     mainDir.mkdirs()
     genMain(mainDir, version, scalaVersion)
-    
+
     val testDir = new File("gentests/" + targetDir + "/test/scala/org/scalatest/prop")
     testDir.mkdirs()
     genTest(testDir, version, scalaVersion)
   }
-  
+
   def genMain(dir: File, version: String, scalaVersion: String) {
     genPropertyChecks(dir)
   }
-  
+
   def genTest(dir: File, version: String, scalaVersion: String) {
     genGeneratorDrivenSuite(dir, true, false, false)
     genGeneratorDrivenSuite(dir, false, false, false)

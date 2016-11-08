@@ -19,7 +19,7 @@ import collection.mutable
 import org.scalatest._
 
 class SetSpec extends FlatSpec {
-  
+
   "A mutable Set" should "allow an element to be added" in {
 
     info("info is recorded")

@@ -34,7 +34,7 @@ object DiscoverySuiteCompanionFriend {
 */
 
 class DiscoverySuiteSuite extends FunSpec {
-  
+
   val loader = DiscoverySuite.getClass.getClassLoader
 
   it("test constructor") {

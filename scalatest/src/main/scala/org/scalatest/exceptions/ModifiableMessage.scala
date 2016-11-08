@@ -70,7 +70,7 @@ package org.scalatest.exceptions
  * Exception types that mix in this trait have a <code>modifyMessage</code> method, which
  * returns an exception identical to itself, except with the detail message option replaced with
  * the result of invoking the passed function, supplying the current detail message option
- * as the lone <code>String</code> parameter. 
+ * as the lone <code>String</code> parameter.
  * </p>
  */
 trait ModifiableMessage[T <: Throwable] { this: Throwable =>
@@ -79,7 +79,7 @@ trait ModifiableMessage[T <: Throwable] { this: Throwable =>
    * Returns an instance of this exception's class, identical to this exception,
    * except with the detail message option replaced with
    * the result of invoking the passed function, <code>fun</code>, supplying the current detail message option
-   * as the lone <code>Option[String]</code> parameter. 
+   * as the lone <code>Option[String]</code> parameter.
    *
    * <p>
    * Implementations of this method may either mutate this exception or return

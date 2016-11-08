@@ -22,34 +22,34 @@ import scala.compat.Platform
 import concurrent.SleepHelper
 
 class BeforeAndAfterAllSpec extends FunSpec {
-  
+
   class ExampleSuite extends FunSuite with BeforeAndAfterAll with ParallelTestExecution {
-    
+
     @volatile var beforeAllTime: Long = 0
     @volatile var afterAllTime: Long = 0
-    
+
     override protected def beforeAll(): Unit = {
       beforeAllTime = Platform.currentTime
     }
-    
+
     test("test 1") { SleepHelper.sleep(100) }
     test("test 2") { SleepHelper.sleep(100) }
     test("test 3") { SleepHelper.sleep(100) }
-    
+
     override def newInstance: Suite with ParallelTestExecution = new ExampleSuite
-    
+
     override protected def afterAll(): Unit = {
       afterAllTime = Platform.currentTime
     }
   }
-  
+
   class ExampleNestedSuite extends FunSuite with ParallelTestExecution {
     test("test 1") { SleepHelper.sleep(100) }
     test("test 2") { SleepHelper.sleep(100) }
     test("test 3") { SleepHelper.sleep(100) }
     override def newInstance: Suite with ParallelTestExecution = new ExampleNestedSuite
   }
-  
+
   @Ignore
   class ExampleIgnoreNestedSuite extends FunSuite with ParallelTestExecution {
     test("test 1") { SleepHelper.sleep(100) }
@@ -57,51 +57,51 @@ class BeforeAndAfterAllSpec extends FunSpec {
     test("test 3") { SleepHelper.sleep(100) }
     override def newInstance: Suite with ParallelTestExecution = new ExampleNestedSuite
   }
-  
+
   class ExampleSuites extends Suites(
     new ExampleNestedSuite
-  ) with BeforeAndAfterAll { 
+  ) with BeforeAndAfterAll {
     @volatile var beforeAllTime: Long = 0
     @volatile var afterAllTime: Long = 0
     override protected def beforeAll(): Unit = {
       beforeAllTime = Platform.currentTime
-    } 
+    }
     override protected def afterAll(): Unit = {
       afterAllTime = Platform.currentTime
     }
   }
-  
+
   class BeforeAfterAllCounter {
-    
+
     @volatile var beforeAll = new AtomicInteger
     @volatile var afterAll = new AtomicInteger
-    
+
     def incrementBeforeAllCount(): Unit = {
       beforeAll.incrementAndGet()
     }
-    
+
     def incrementAfterAllCount(): Unit = {
       afterAll.incrementAndGet()
     }
-    
+
     def beforeAllCount = beforeAll.get
     def afterAllCount = afterAll.get
   }
-  
-  class ExampleBeforeAndAfterAllWithParallelTestExecutionSuite(counter: BeforeAfterAllCounter) extends FunSuite with BeforeAndAfterAll 
+
+  class ExampleBeforeAndAfterAllWithParallelTestExecutionSuite(counter: BeforeAfterAllCounter) extends FunSuite with BeforeAndAfterAll
     with OneInstancePerTest {
-    
+
     override protected def beforeAll(): Unit = {
       counter.incrementBeforeAllCount()
-    } 
+    }
     override protected def afterAll(): Unit = {
       counter.incrementAfterAllCount()
     }
-    
+
     test("test 1") { SleepHelper.sleep(100) }
     test("test 2") { SleepHelper.sleep(100) }
     test("test 3") { SleepHelper.sleep(100) }
-    
+
     override def newInstance: Suite with OneInstancePerTest = new ExampleBeforeAndAfterAllWithParallelTestExecutionSuite(counter)
   }
 
@@ -112,7 +112,7 @@ class BeforeAndAfterAllSpec extends FunSpec {
       val dist = new TestConcurrentDistributor(2)
       suite.run(None, Args(reporter = rep, distributor = Some(dist)))
       dist.waitUntilDone()
-      
+
       // should call beforeAll before any test starts
       val beforeAllTime = suite.beforeAllTime
       val testStartingEvents = rep.testStartingEventsReceived
@@ -120,7 +120,7 @@ class BeforeAndAfterAllSpec extends FunSpec {
       testStartingEvents.foreach { testStarting =>
         beforeAllTime should be <= testStarting.timeStamp
       }
-      
+
       // should call afterAll after all tests completed
       val afterAllTime = suite.afterAllTime
       val testSucceededEvents = rep.testSucceededEventsReceived
@@ -135,7 +135,7 @@ class BeforeAndAfterAllSpec extends FunSpec {
       val dist = new TestConcurrentDistributor(2)
       suite.run(None, Args(reporter = rep, distributor = Some(dist)))
       dist.waitUntilDone()
-      
+
       // should call beforeAll before any test in nested suite starts
       val beforeAllTime = suite.beforeAllTime
       val testStartingEvents = rep.testStartingEventsReceived
@@ -143,7 +143,7 @@ class BeforeAndAfterAllSpec extends FunSpec {
       testStartingEvents.foreach { testStarting =>
         beforeAllTime should be <= testStarting.timeStamp
       }
-      
+
       // should call afterAll after all tests completed
       val afterAllTime = suite.afterAllTime
       val testSucceededEvents = rep.testSucceededEventsReceived
@@ -157,7 +157,7 @@ class BeforeAndAfterAllSpec extends FunSpec {
       val suite = new ExampleBeforeAndAfterAllWithParallelTestExecutionSuite(counter)
       val rep = new EventRecordingReporter
       suite.run(None, Args(reporter = rep))
-      
+
       counter.beforeAllCount should be (1)
       counter.afterAllCount should be (1)
     }
@@ -215,10 +215,10 @@ class BeforeAndAfterAllSpec extends FunSpec {
         override protected def beforeAll(): Unit = {
           beforeAllCount.incrementAndGet()
         }
-        override def nestedSuites: collection.immutable.IndexedSeq[Suite] = 
+        override def nestedSuites: collection.immutable.IndexedSeq[Suite] =
           Vector(
-            new ExampleNestedSuite, 
-            new ExampleNestedSuite, 
+            new ExampleNestedSuite,
+            new ExampleNestedSuite,
             new ExampleNestedSuite
           )
         override protected def afterAll(): Unit = {
@@ -238,10 +238,10 @@ class BeforeAndAfterAllSpec extends FunSpec {
         override protected def beforeAll(): Unit = {
           beforeAllCount.incrementAndGet()
         }
-        override def nestedSuites: collection.immutable.IndexedSeq[Suite] = 
+        override def nestedSuites: collection.immutable.IndexedSeq[Suite] =
           Vector(
-            new ExampleNestedSuite, 
-            new ExampleNestedSuite, 
+            new ExampleNestedSuite,
+            new ExampleNestedSuite,
             new ExampleNestedSuite
           )
         override protected def afterAll(): Unit = {
@@ -309,10 +309,10 @@ class BeforeAndAfterAllSpec extends FunSpec {
         override protected def beforeAll(): Unit = {
           beforeAllCount.incrementAndGet()
         }
-        override def nestedSuites: collection.immutable.IndexedSeq[Suite] = 
+        override def nestedSuites: collection.immutable.IndexedSeq[Suite] =
           Vector(
-            new ExampleIgnoreNestedSuite, 
-            new ExampleIgnoreNestedSuite, 
+            new ExampleIgnoreNestedSuite,
+            new ExampleIgnoreNestedSuite,
             new ExampleIgnoreNestedSuite
           )
         override protected def afterAll(): Unit = {
@@ -334,10 +334,10 @@ class BeforeAndAfterAllSpec extends FunSpec {
         override protected def beforeAll(): Unit = {
           beforeAllCount.incrementAndGet()
         }
-        override def nestedSuites: collection.immutable.IndexedSeq[Suite] = 
+        override def nestedSuites: collection.immutable.IndexedSeq[Suite] =
           Vector(
-            new ExampleIgnoreNestedSuite, 
-            new ExampleIgnoreNestedSuite, 
+            new ExampleIgnoreNestedSuite,
+            new ExampleIgnoreNestedSuite,
             new ExampleIgnoreNestedSuite
           )
         override protected def afterAll(): Unit = {
@@ -368,7 +368,7 @@ class BeforeAndAfterAllSpec extends FunSpec {
       }
       assert(!testIsCalled)
     }
-    
+
     it("should, if any call to super.run completes abruptly with an exception, run " +
       "will complete abruptly with the same exception, however, before doing so, it will invoke afterAll") {
       var afterAllIsCalled = false
@@ -388,7 +388,7 @@ class BeforeAndAfterAllSpec extends FunSpec {
       }
       assert(afterAllIsCalled)
     }
-    
+
     it("should, if both super.run and afterAll complete abruptly with an exception, run " +
       "will complete abruptly with the exception thrown by super.run.") {
       class MySuite extends FunSuite with BeforeAndAfterAll {
@@ -402,7 +402,7 @@ class BeforeAndAfterAllSpec extends FunSpec {
         a.run(None, Args(StubReporter))
       }
     }
-    
+
     it("should, if super.run returns normally, but afterEach completes abruptly with an " +
       "exception, the status returned by run will contain that exception as its unreportedException.") {
       class MySuite extends FunSuite with BeforeAndAfterAll {

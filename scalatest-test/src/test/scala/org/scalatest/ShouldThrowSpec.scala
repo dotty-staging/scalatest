@@ -51,13 +51,13 @@ class ShouldThrowSpec extends FunSpec {
       def kaboom(): Unit = { throw new Exception with Excitement }
       a [Excitement] should be thrownBy { kaboom() }
     }
-    
+
     it("return the caught exception") {
       def kaboom(): Unit = { throw new Exception("howdy") }
       val thrown = the [Exception] thrownBy { kaboom() }
       thrown.getMessage should === ("howdy")
-    }  
-    
+    }
+
     it("include that wrong exception as the TFE's cause") {
       val wrongException = new RuntimeException("oops!")
       val caught =

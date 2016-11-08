@@ -195,7 +195,7 @@ class AsyncFlatSpecLikeSpec2 extends org.scalatest.AsyncFunSpec {
       @volatile var count = 0
 
       class ExampleSpec extends AsyncFlatSpecLike {
-        
+
         type FixtureParam = String
         def withFixture(test: OneArgAsyncTest): FutureOutcome =
           test("testing")

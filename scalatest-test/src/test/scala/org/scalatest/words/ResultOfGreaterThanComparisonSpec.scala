@@ -19,13 +19,13 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfGreaterThanComparisonSpec extends FunSpec {
-  
+
   describe("ResultOfGreaterThanComparison ") {
-    
+
     it("should have pretty toString") {
       val result = new ResultOfGreaterThanComparison(8)
       result.toString should be ("> (8)")
     }
   }
-  
+
 }

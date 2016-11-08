@@ -44,7 +44,7 @@ import org.scalatest.exceptions.TestFailedException
  * </pre>
  *
  * <p>
- * Were you to simply invoke <code>right.get</code> or <code>left.get</code> on the <code>Either</code>, 
+ * Were you to simply invoke <code>right.get</code> or <code>left.get</code> on the <code>Either</code>,
  * if the <code>Either</code> wasn't defined as expected (<em>e.g.</em>, it was a <code>Left</code> when you expected a <code>Right</code>), it
  * would throw a <code>NoSuchElementException</code>:
  * </p>
@@ -120,7 +120,7 @@ trait EitherValues {
         leftProj.get
       }
       catch {
-        case cause: NoSuchElementException => 
+        case cause: NoSuchElementException =>
           throw new TestFailedException((_: StackDepthException) => Some(Resources.eitherLeftValueNotDefined), Some(cause), pos)
       }
     }
@@ -148,7 +148,7 @@ trait EitherValues {
         rightProj.get
       }
       catch {
-        case cause: NoSuchElementException => 
+        case cause: NoSuchElementException =>
           throw new TestFailedException((_: StackDepthException) => Some(Resources.eitherRightValueNotDefined), Some(cause), pos)
       }
     }
@@ -156,7 +156,7 @@ trait EitherValues {
 }
 
 /**
- * Companion object that facilitates the importing of <code>ValueEither</code> members as 
+ * Companion object that facilitates the importing of <code>ValueEither</code> members as
  * an alternative to mixing it in. One use case is to import <code>EitherValues</code>'s members so you can use
  * <code>left.value</code> and <code>right.value</code> on <code>Either</code> in the Scala interpreter:
  *
@@ -165,21 +165,21 @@ trait EitherValues {
  * Welcome to Scala version 2.9.1.final (Java HotSpot(TM) 64-Bit Server VM, Java 1.6.0_29).
  * Type in expressions to have them evaluated.
  * Type :help for more information.
- * 
+ *
  * scala&gt; import org.scalatest._
  * import org.scalatest._
- * 
+ *
  * scala&gt; import matchers.Matchers._
  * import matchers.Matchers._
- * 
+ *
  * scala&gt; import EitherValues._
  * import EitherValues._
- * 
+ *
  * scala&gt; val e: Either[String, Int] = Left("Muchas problemas")
  * e: Either[String,Int] = Left(Muchas problemas)
- * 
+ *
  * scala&gt; e.left.value should be ("Muchas problemas")
- * 
+ *
  * scala&gt; e.right.value should be &lt; 9
  * org.scalatest.TestFailedException: The Either on which rightValue was invoked was not defined.
  *   at org.scalatest.EitherValues$RightValuable.value(EitherValues.scala:148)

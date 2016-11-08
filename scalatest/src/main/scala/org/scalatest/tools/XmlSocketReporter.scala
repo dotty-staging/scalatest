@@ -22,10 +22,10 @@ import java.io.PrintWriter
 import java.io.BufferedOutputStream
 
 private[scalatest] class XmlSocketReporter(host: String, port: Int) extends ResourcefulReporter {
-  
+
   private val socket = new Socket(host, port)
   private val out = new PrintWriter(new BufferedOutputStream(socket.getOutputStream))
-  
+
   def apply(event: Event): Unit = {
     out.println(event.toXml.toString)
     out.flush()

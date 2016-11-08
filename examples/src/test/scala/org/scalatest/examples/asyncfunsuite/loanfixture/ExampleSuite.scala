@@ -66,7 +66,7 @@ class ExampleSuite extends AsyncFunSuite {
     complete {
       val futurePopulatedDb =
         futureDb map { db =>
-          db.append("ScalaTest is ") // perform setup 
+          db.append("ScalaTest is ") // perform setup
         }
       testCode(futurePopulatedDb) // "loan" the fixture to the test code
     } lastly {

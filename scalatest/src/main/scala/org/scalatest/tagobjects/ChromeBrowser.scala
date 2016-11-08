@@ -20,4 +20,4 @@ import org.scalatest.Tag
 /**
  * Tag object that indicates a Selenium test uses the Chrome browser.
  */
-object ChromeBrowser extends Tag("org.scalatest.tags.ChromeBrowser") 
+object ChromeBrowser extends Tag("org.scalatest.tags.ChromeBrowser")

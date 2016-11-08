@@ -20,4 +20,4 @@ import org.scalatest.Tag
 /**
  * Tag object that indicates a Selenium test uses the Firefox browser.
  */
-object FirefoxBrowser extends Tag("org.scalatest.tags.FirefoxBrowser") 
+object FirefoxBrowser extends Tag("org.scalatest.tags.FirefoxBrowser")

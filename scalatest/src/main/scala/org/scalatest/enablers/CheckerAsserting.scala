@@ -112,7 +112,7 @@ abstract class UnitCheckerAsserting {
           case Test.Failed(scalaCheckArgs, scalaCheckLabels) =>
 
             val stackDepth = 1
-            
+
             indicateFailure(
               sde => FailureMessages.propertyException(prettifier, UnquotedString(sde.getClass.getSimpleName)) + "\n" +
               ( sde.failedCodeFileNameAndLineNumberString match { case Some(s) => " (" + s + ")"; case None => "" }) + "\n" +

@@ -25,7 +25,7 @@ private[scalatest] class SocketReporter(host: String, port: Int) extends Resourc
 
   private val socket = new Socket(host, port)
   private val out = new ObjectOutputStream(socket.getOutputStream)
-  
+
   def apply(event: Event): Unit = {
     synchronized {
       out.writeObject(event)
@@ -38,5 +38,5 @@ private[scalatest] class SocketReporter(host: String, port: Int) extends Resourc
     out.close()
     socket.close()
   }
-  
+
 }

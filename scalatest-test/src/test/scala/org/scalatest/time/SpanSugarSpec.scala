@@ -19,11 +19,11 @@ import org.scalatest.{SeveredStackTraces, FunSpec, Matchers}
 
 
 class SpanSugarSpec extends FunSpec with SpanMatchers with Matchers with SeveredStackTraces {
-  
+
   import SpanSugar._
- 
+
   describe("The SpanSugar trait") {
-    
+
     it("should provide implicit conversions for Int time spans") {
       assert((1 nanosecond) === Span(1, Nanosecond))
       assert((2 nanoseconds) === Span(2, Nanoseconds))
@@ -42,7 +42,7 @@ class SpanSugarSpec extends FunSpec with SpanMatchers with Matchers with Severed
       assert((1 day) === Span(1, Day))
       assert((2 days) === Span(2, Days))
     }
-    
+
     it("should provide implicit conversions for Long time spans") {
       assert((1L nanosecond) === Span(1, Nanosecond))
       assert((2L nanoseconds) === Span(2, Nanoseconds))

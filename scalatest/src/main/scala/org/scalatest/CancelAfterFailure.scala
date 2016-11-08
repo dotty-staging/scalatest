@@ -31,7 +31,7 @@ package org.scalatest
  * If you are running each test in its own instance, therefore, it would not cancel the
  * remaining tests, because they would not see the same flag. For this reason, this trait contains
  * a final implementation of a method defined in <a href="OneInstancePerTest.html"><code>OneInstancePerTest</code></a>,
- * to prevent it from being mixed into any class that also mixes in <code>OneInstancePerTest</code>, 
+ * to prevent it from being mixed into any class that also mixes in <code>OneInstancePerTest</code>,
  * including by mixing in <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> or a <a href="path/package.html">path trait</a>.
  * </p>
  */
@@ -44,7 +44,7 @@ trait CancelAfterFailure extends TestSuiteMixin { this: TestSuite =>
    * any previous test run in this <code>Suite</code> instance has failed.
    */
   abstract override def withFixture(test: NoArgTest): Outcome = {
-    if (cancelRemaining) 
+    if (cancelRemaining)
       Canceled("Canceled by CancelOnFailure because a test failed previously")
     else
       super.withFixture(test) match {

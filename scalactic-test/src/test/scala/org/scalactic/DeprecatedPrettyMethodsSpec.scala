@@ -41,7 +41,7 @@ class DeprecatedPrettyMethodsSpec extends FunSpec with Matchers {
         List("1", "2", "3").pretty should be ("List(\"1\", \"2\", \"3\")")
       }
     }
-/* This proved that I got rid of the Any => String conversion, but by not compiling. 
+/* This proved that I got rid of the Any => String conversion, but by not compiling.
     it("should not simply convert Any to String") {
       new ConversionCheckedTripleEquals {
         import DeprecatedPrettyMethods._

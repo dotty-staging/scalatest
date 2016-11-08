@@ -63,7 +63,7 @@ class PosZFloatSpec extends FunSpec with Matchers with GeneratorDrivenPropertyCh
         PosZFloat.from(-0.00001f) shouldBe None
         PosZFloat.from(-99.9f) shouldBe None
       }
-    } 
+    }
     it("should offer MaxValue and MinValue factory methods") {
       PosZFloat.MaxValue shouldEqual PosZFloat.from(Float.MaxValue).get
       PosZFloat.MinValue shouldEqual PosZFloat(0.0f)
@@ -76,7 +76,7 @@ class PosZFloatSpec extends FunSpec with Matchers with GeneratorDrivenPropertyCh
     }
     it("should return the same type from its unary_+ method") {
       +PosZFloat(3.0F) shouldEqual PosZFloat(3.0F)
-    } 
+    }
     it("should be automatically widened to compatible AnyVal targets") {
       "PosZFloat(3.0F): Int" shouldNot typeCheck
       "PosZFloat(3.0F): Long" shouldNot typeCheck
@@ -145,7 +145,7 @@ class PosZFloatSpec extends FunSpec with Matchers with GeneratorDrivenPropertyCh
     }
 
     describe("when created with apply method") {
-  
+
       it("should compile when 8 is passed in") {
         "PosZFloat(8)" should compile
         PosZFloat(8).value shouldEqual 8.0F
@@ -154,7 +154,7 @@ class PosZFloatSpec extends FunSpec with Matchers with GeneratorDrivenPropertyCh
         "PosZFloat(8.0F)" should compile
         PosZFloat(8.0F).value shouldEqual 8.0F
       }
-  
+
       it("should compile when 0 is passed in") {
         "PosZFloat(0)" should compile
         PosZFloat(0).value shouldEqual 0.0F

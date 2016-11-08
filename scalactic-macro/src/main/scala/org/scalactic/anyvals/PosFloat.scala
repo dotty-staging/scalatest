@@ -29,7 +29,7 @@ import scala.language.implicitConversions
  * will usually be as efficient as an <code>Float</code>, being
  * boxed only when an <code>Float</code> would have been boxed.
  * </p>
- * 
+ *
  * <p>
  * The <code>PosFloat.apply</code> factory method is implemented
  * in terms of a macro that checks literals for validity at
@@ -38,7 +38,7 @@ import scala.language.implicitConversions
  * <code>PosFloat</code> instance at run time or an error at
  * compile time. Here's an example:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import anyvals._
  * import anyvals._
@@ -91,7 +91,7 @@ import scala.language.implicitConversions
  * scala&gt; PosFloat.from(y)
  * res4: Option[org.scalactic.anyvals.PosFloat] = None
  * </pre>
- * 
+ *
  * <p>
  * The <code>PosFloat.apply</code> factory method is marked
  * implicit, so that you can pass literal <code>Float</code>s
@@ -139,7 +139,7 @@ import scala.language.implicitConversions
  * </p>
  *
  * @param value The <code>Float</code> value underlying this <code>PosFloat</code>.
- */ 
+ */
 final class PosFloat private (val value: Float) extends AnyVal {
 
   /**
@@ -574,6 +574,6 @@ object PosFloat {
   implicit val posFloatOrd: Ordering[PosFloat] =
     new Ordering[PosFloat] {
       def compare(x: PosFloat, y: PosFloat): Int = x.toFloat.compare(y)
-    } 
+    }
 }
 

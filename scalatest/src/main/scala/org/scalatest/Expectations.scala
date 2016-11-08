@@ -22,7 +22,7 @@ import scala.concurrent.Future
 import scala.reflect.ClassTag
 
 private[scalatest] trait Expectations {
-  
+
   implicit def convertExpectationToAssertion(exp: Expectation): Assertion = exp.toAssertion
 
   // TODO: Need to make this and assertResult use custom equality I think.

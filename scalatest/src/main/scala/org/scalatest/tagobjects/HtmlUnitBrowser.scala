@@ -20,4 +20,4 @@ import org.scalatest.Tag
 /**
  * Tag object that indicates a Selenium test uses the HtmlUnit browser.
  */
-object HtmlUnitBrowser extends Tag("org.scalatest.tags.HtmlUnitBrowser") 
+object HtmlUnitBrowser extends Tag("org.scalatest.tags.HtmlUnitBrowser")

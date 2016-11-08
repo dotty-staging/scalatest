@@ -77,12 +77,12 @@ sealed abstract class Event extends Ordered[Event] with Product with Serializabl
    * the passed event
    */
   def compare(that: Event): Int = ordinal.compare(that.ordinal)
-  
+
   /**
-   * 
+   *
    */
   private [scalatest] def toXml: Elem
-  
+
   private[events] object EventXmlHelper {
     def stringOption(strOption: Option[String]) = strOption.getOrElse("")
     def longOption(longOption: Option[Long]) = if (longOption.isDefined) longOption.get.toString else ""
@@ -91,9 +91,9 @@ sealed abstract class Event extends Ordered[Event] with Product with Serializabl
       formatterOption match {
         case Some(formatter) =>
           formatter match {
-            case MotionToSuppress => 
+            case MotionToSuppress =>
               <MotionToSuppress/>
-            case indentedText: IndentedText => 
+            case indentedText: IndentedText =>
               <IndentedText>
                  <formattedText>{ indentedText.formattedText }</formattedText>
                  <rawText>{ indentedText.rawText }</rawText>
@@ -137,14 +137,14 @@ sealed abstract class Event extends Ordered[Event] with Product with Serializabl
       }
     }
     def getThrowableStackDepth(throwable: Throwable) = {
-      throwable match { 
-        case sde: StackDepthException => sde.failedCodeStackDepth 
+      throwable match {
+        case sde: StackDepthException => sde.failedCodeStackDepth
         case _ => -1
       }
     }
     def throwableOption(throwableOption: Option[Throwable]) = {
       throwableOption match {
-        case Some(throwable) => 
+        case Some(throwable) =>
           <message>{ throwable.getMessage }</message>
           <depth>{ getThrowableStackDepth(throwable) }</depth>
           <stackTraces>
@@ -186,12 +186,12 @@ sealed abstract class Event extends Ordered[Event] with Product with Serializabl
     }
     def nameInfoOption(nameInfoOption: Option[NameInfo]) = {
       nameInfoOption match {
-        case Some(nameInfo) => 
+        case Some(nameInfo) =>
           <suiteName>{ nameInfo.suiteName }</suiteName>
           <suiteId>{ nameInfo.suiteId }</suiteId>
           <suiteClassName>{ stringOption(nameInfo.suiteClassName) }</suiteClassName>
           <testName>{ stringOption(nameInfo.testName) }</testName>
-        case None => 
+        case None =>
           ""
       }
     }
@@ -284,9 +284,9 @@ final case class TestStarting (
                  rerunner,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <TestStarting>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -359,7 +359,7 @@ final case class TestSucceeded (
   suiteClassName: Option[String],
   testName: String,
   testText: String,
-  recordedEvents: collection.immutable.IndexedSeq[RecordableEvent], 
+  recordedEvents: collection.immutable.IndexedSeq[RecordableEvent],
   duration: Option[Long] = None,
   formatter: Option[Formatter] = None,
   location: Option[Location] = None,
@@ -381,9 +381,9 @@ final case class TestSucceeded (
                  rerunner,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <TestSucceeded>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -461,7 +461,7 @@ final case class TestFailed (
   suiteClassName: Option[String],
   testName: String,
   testText: String,
-  recordedEvents: collection.immutable.IndexedSeq[RecordableEvent], 
+  recordedEvents: collection.immutable.IndexedSeq[RecordableEvent],
   throwable: Option[Throwable] = None,
   duration: Option[Long] = None,
   formatter: Option[Formatter] = None,
@@ -486,9 +486,9 @@ final case class TestFailed (
                  rerunner,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <TestFailed>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -515,7 +515,7 @@ final case class TestFailed (
  *
  * <p>
  * For example, trait <a href="../Suite.html"><code>Suite</code></a> uses <code>TestIgnored</code> to report
- * that a test method of a <code>Suite</code> was ignored because it was annotated with <code>@Ignore</code>. 
+ * that a test method of a <code>Suite</code> was ignored because it was annotated with <code>@Ignore</code>.
  * Ignored tests will not be run, but will usually be reported as reminder to fix the broken test.
  * </p>
  *
@@ -567,7 +567,7 @@ final case class TestIgnored (
   threadName: String = Thread.currentThread.getName,
   timeStamp: Long = (new Date).getTime
 ) extends Event {
-    
+
   requireNonNull(ordinal,
                  suiteName,
                  suiteId,
@@ -578,9 +578,9 @@ final case class TestIgnored (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <TestIgnored>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -644,7 +644,7 @@ final case class TestPending (
   suiteClassName: Option[String],
   testName: String,
   testText: String,
-  recordedEvents: collection.immutable.IndexedSeq[RecordableEvent], 
+  recordedEvents: collection.immutable.IndexedSeq[RecordableEvent],
   duration: Option[Long] = None,
   formatter: Option[Formatter] = None,
   location: Option[Location] = None,
@@ -664,9 +664,9 @@ final case class TestPending (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <TestPending>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -738,7 +738,7 @@ final case class TestCanceled (
   suiteClassName: Option[String],
   testName: String,
   testText: String,
-  recordedEvents: collection.immutable.IndexedSeq[RecordableEvent], 
+  recordedEvents: collection.immutable.IndexedSeq[RecordableEvent],
   throwable: Option[Throwable] = None,
   duration: Option[Long] = None,
   formatter: Option[Formatter] = None,
@@ -763,9 +763,9 @@ final case class TestCanceled (
                  rerunner,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <TestCanceled>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -816,7 +816,7 @@ final case class TestCanceled (
  * @param ordinal an <a href="Ordinal.html"><code>Ordinal</code></a> that can be used to place this event in order in the context of
  *        other events reported during the same run
  * @param suiteName a localized name identifying the suite that is starting, suitable for presenting to the user
- * @param suiteId a string ID for the suite that is starting, intended to be unique across all suites in a run XXX 
+ * @param suiteId a string ID for the suite that is starting, intended to be unique across all suites in a run XXX
  * @param suiteClassName an optional fully qualifed <code>Suite</code> class name of the suite that is starting
  * @param formatter an optional <a href="Formatter.html"><code>Formatter</code></a> that provides extra information that can be used by reporters in determining
  *        how to present this event to the user
@@ -852,9 +852,9 @@ final case class SuiteStarting (
                  rerunner,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <SuiteStarting>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -939,9 +939,9 @@ final case class SuiteCompleted (
                  rerunner,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <SuiteCompleted>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1036,9 +1036,9 @@ final case class SuiteAborted (
                  rerunner,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <SuiteAborted>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1101,7 +1101,7 @@ final case class RunStarting (
   threadName: String = Thread.currentThread.getName,
   timeStamp: Long = (new Date).getTime
 ) extends Event {
-    
+
   requireNonNull(ordinal,
                  configMap,
                  formatter,
@@ -1111,16 +1111,16 @@ final case class RunStarting (
 
   if (testCount < 0)
     throw new IllegalArgumentException("testCount was less than zero: " + testCount)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <RunStarting>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
       </ordinal>
       <testCount>{ testCount }</testCount>
       <configMap>
-        { 
+        {
           for ((key, value) <- configMap) yield {
             <entry>
               <key>{ key }</key>
@@ -1202,9 +1202,9 @@ final case class RunCompleted (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <RunCompleted>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1285,9 +1285,9 @@ final case class RunStopped (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <RunStopped>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1365,9 +1365,9 @@ final case class RunAborted (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <RunAborted>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1408,7 +1408,7 @@ final case class RunAborted (
  * @param ordinal an <a href="Ordinal.html"><code>Ordinal</code></a> that can be used to place this event in order in the context of
  *        other events reported during the same run
  * @param message a localized message suitable for presenting to the user
- * @param nameInfo an optional <a href="NameInfo.html"><code>NameInfo</code></a> that if defined, provides names for the suite and optionally the test 
+ * @param nameInfo an optional <a href="NameInfo.html"><code>NameInfo</code></a> that if defined, provides names for the suite and optionally the test
  *        in the context of which the information was provided
  * @param throwable an optional <code>Throwable</code>
  * @param formatter an optional <a href="Formatter.html"><code>Formatter</code></a> that provides extra information that can be used by reporters in determining
@@ -1441,9 +1441,9 @@ final case class InfoProvided (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <InfoProvided>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1493,7 +1493,7 @@ final case class InfoProvided (
  * @param ordinal an <a href="Ordinal.html"><code>Ordinal</code></a> that can be used to place this event in order in the context of
  *        other events reported during the same run
  * @param message a localized message suitable for presenting to the user
- * @param nameInfo an optional <a href="NameInfo.html"><code>NameInfo</code></a> that if defined, provides names for the suite and optionally the test 
+ * @param nameInfo an optional <a href="NameInfo.html"><code>NameInfo</code></a> that if defined, provides names for the suite and optionally the test
  *        in the context of which the information was provided
  * @param throwable an optional <code>Throwable</code>
  * @param formatter an optional <a href="Formatter.html"><code>Formatter</code></a> that provides extra information that can be used by reporters in determining
@@ -1526,9 +1526,9 @@ final case class AlertProvided (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <AlertProvided>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1578,7 +1578,7 @@ final case class AlertProvided (
  * @param ordinal an <a href="Ordinal.html"><code>Ordinal</code></a> that can be used to place this event in order in the context of
  *        other events reported during the same run
  * @param message a localized message suitable for presenting to the user
- * @param nameInfo an optional <a href="NameInfo.html"><code>NameInfo</code></a> that if defined, provides names for the suite and optionally the test 
+ * @param nameInfo an optional <a href="NameInfo.html"><code>NameInfo</code></a> that if defined, provides names for the suite and optionally the test
  *        in the context of which the information was provided
  * @param throwable an optional <code>Throwable</code>
  * @param formatter an optional <a href="Formatter.html"><code>Formatter</code></a> that provides extra information that can be used by reporters in determining
@@ -1611,9 +1611,9 @@ final case class NoteProvided (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <NoteProvided>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1652,7 +1652,7 @@ final case class NoteProvided (
  * @param ordinal an <a href="Ordinal.html"><code>Ordinal</code></a> that can be used to place this event in order in the context of
  *        other events reported during the same run
  * @param text a snippet of markup text (in Markdown format)
- * @param nameInfo an optional <a href="NameInfo.html"><code>NameInfo</code></a> that if defined, provides names for the suite and optionally the test 
+ * @param nameInfo an optional <a href="NameInfo.html"><code>NameInfo</code></a> that if defined, provides names for the suite and optionally the test
  *        in the context of which the information was provided
  * @param formatter an optional <a href="Formatter.html"><code>Formatter</code></a> that provides extra information that can be used by reporters in determining
  *        how to present this event to the user
@@ -1682,9 +1682,9 @@ final case class MarkupProvided (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <MarkupProvided>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1711,7 +1711,7 @@ final case class MarkupProvided (
  * </pre>
  *
  * <p>
- * A <code>ScopeOpened</code> event may be fired from within suites or tests. 
+ * A <code>ScopeOpened</code> event may be fired from within suites or tests.
  * If fired in the context of a test, the <code>ScopeOpened</code> event should include a <code>NameInfo</code> in which
  * <code>testName</code> is defined. If fired in the context of a suite, but not a test, the <code>ScopeOpened</code> event
  * should include a <code>NameInfo</code> in which <code>testName</code> is <em>not</em> defined.
@@ -1720,7 +1720,7 @@ final case class MarkupProvided (
  * @param ordinal an <a href="Ordinal.html"><code>Ordinal</code></a> that can be used to place this event in order in the context of
  *        other events reported during the same run
  * @param message a localized message suitable for presenting to the user
- * @param nameInfo a <a href="NameInfo.html"><code>NameInfo</code></a> that provides names for the suite and optionally the test 
+ * @param nameInfo a <a href="NameInfo.html"><code>NameInfo</code></a> that provides names for the suite and optionally the test
  *        in the context of which the scope was opened
  * @param formatter an optional <a href="Formatter.html"><code>Formatter</code></a> that provides extra information that can be used by reporters in determining
  *        how to present this event to the user
@@ -1750,9 +1750,9 @@ final case class ScopeOpened (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <ScopeOpened>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1779,7 +1779,7 @@ final case class ScopeOpened (
  * </pre>
  *
  * <p>
- * A <code>ScopeClosed</code> event may be fired from within suites or tests. 
+ * A <code>ScopeClosed</code> event may be fired from within suites or tests.
  * If fired in the context of a test, the <code>ScopeClosed</code> event should include a <code>NameInfo</code> in which
  * <code>testName</code> is defined. If fired in the context of a suite, but not a test, the <code>ScopeClosed</code> event
  * should include a <code>NameInfo</code> in which <code>testName</code> is <em>not</em> defined.
@@ -1788,7 +1788,7 @@ final case class ScopeOpened (
  * @param ordinal an <a href="Ordinal.html"><code>Ordinal</code></a> that can be used to place this event in order in the context of
  *        other events reported during the same run
  * @param message a localized message suitable for presenting to the user
- * @param nameInfo a <a href="NameInfo.html"><code>NameInfo</code></a> that provides names for the suite and optionally the test 
+ * @param nameInfo a <a href="NameInfo.html"><code>NameInfo</code></a> that provides names for the suite and optionally the test
  *        in the context of which the scope was closed
  * @param formatter an optional <a href="Formatter.html"><code>Formatter</code></a> that provides extra information that can be used by reporters in determining
  *        how to present this event to the user
@@ -1818,9 +1818,9 @@ final case class ScopeClosed (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <ScopeClosed>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1847,14 +1847,14 @@ final case class ScopeClosed (
  * </pre>
  *
  * <p>
- * A <code>ScopePending</code> event is fired from within suites, and not tests. 
+ * A <code>ScopePending</code> event is fired from within suites, and not tests.
  * The <code>ScopePending</code> event should include a <code>NameInfo</code> in which <code>testName</code> is <em>not</em> defined.
  * </p>
  *
  * @param ordinal an <a href="Ordinal.html"><code>Ordinal</code></a> that can be used to place this event in order in the context of
  *        other events reported during the same run
  * @param message a localized message suitable for presenting to the user
- * @param nameInfo a <a href="NameInfo.html"><code>NameInfo</code></a> that provides names for the suite and optionally the test 
+ * @param nameInfo a <a href="NameInfo.html"><code>NameInfo</code></a> that provides names for the suite and optionally the test
  *        in the context of which the scope was closed
  * @param formatter an optional <a href="Formatter.html"><code>Formatter</code></a> that provides extra information that can be used by reporters in determining
  *        how to present this event to the user
@@ -1884,9 +1884,9 @@ final case class ScopePending (
                  location,
                  payload,
                  threadName)
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <ScopePending>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
@@ -1918,7 +1918,7 @@ final case class DiscoveryStarting (
   threadName: String = Thread.currentThread.getName,
   timeStamp: Long = (new Date).getTime
 ) extends Event {
- 
+
   requireNonNull(ordinal,
                  configMap,
                  threadName)
@@ -1938,13 +1938,13 @@ final case class DiscoveryStarting (
    */
   val formatter: Option[Formatter] = None
 
-    private [scalatest] def toXml = 
+    private [scalatest] def toXml =
     <DiscoveryStarting>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>
       </ordinal>
       <configMap>
-        { 
+        {
           for ((key, value) <- configMap) yield {
             <entry>
               <key>{ key }</key>
@@ -1995,9 +1995,9 @@ final case class DiscoveryCompleted (
    * <code>Formatter</code> in a <code>DiscoveryCompleted</code> is always set to <code>None</code>.
    */
   val formatter: Option[Formatter] = None
-  
+
   import EventXmlHelper._
-  private [scalatest] def toXml = 
+  private [scalatest] def toXml =
     <DiscoveryCompleted>
       <ordinal>
         <runStamp>{ ordinal.runStamp }</runStamp>

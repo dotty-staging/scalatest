@@ -47,7 +47,7 @@ private[tools] class IconEmbellishedListCellRenderer extends EventHolderListCell
     private val grayURL: URL = myClassLoader.getResource("images/graydot.gif")
     private val cyanURL: URL = myClassLoader.getResource("images/cyandot.gif")
     private val yellowURL: URL = myClassLoader.getResource("images/yellowdot.gif")
-  
+
     // Selected icon URLs
     private val purpleSelURL: URL = myClassLoader.getResource("images/purpledotsel.gif")
     private val greenSelURL: URL = myClassLoader.getResource("images/greendotsel.gif")
@@ -56,7 +56,7 @@ private[tools] class IconEmbellishedListCellRenderer extends EventHolderListCell
     private val graySelURL: URL = myClassLoader.getResource("images/graydotsel.gif")
     private val cyanSelURL: URL = myClassLoader.getResource("images/cyandotsel.gif")
     private val yellowSelURL: URL = myClassLoader.getResource("images/yellowdotsel.gif")
-  
+
     // Unselected icon images
     private val purpleImageIcon: ImageIcon = new ImageIcon(purpleURL)
     private val greenImageIcon: ImageIcon = new ImageIcon(greenURL)
@@ -65,7 +65,7 @@ private[tools] class IconEmbellishedListCellRenderer extends EventHolderListCell
     private val grayImageIcon: ImageIcon = new ImageIcon(grayURL)
     private val cyanImageIcon: ImageIcon = new ImageIcon(cyanURL)
     private val yellowImageIcon: ImageIcon = new ImageIcon(yellowURL)
-  
+
     // Selected icon images
     private val purpleSelImageIcon: ImageIcon = new ImageIcon(purpleSelURL)
     private val greenSelImageIcon: ImageIcon = new ImageIcon(greenSelURL)
@@ -125,7 +125,7 @@ private[tools] class IconEmbellishedListCellRenderer extends EventHolderListCell
   protected def decorate(renderer: JLabel, value: Object, isSelected: Boolean): Component = {
 
     // Setting to a specific background color because that color was used to make icons that
-    // look nice when the row is selected. 
+    // look nice when the row is selected.
     if (isSelected)
       renderer.setBackground(BACKGROUND_BLUE)
 

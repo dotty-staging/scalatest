@@ -159,7 +159,7 @@ private[scalatest] abstract class PrintReporter(
 
   // Stupid properties file won't let me put spaces at the beginning of a property
   // "  {0}" comes out as "{0}", so I can't do indenting in a localizable way. For now
-  // just indent two space to the left.  //  if (times <= 0) s 
+  // just indent two space to the left.  //  if (times <= 0) s
   //  else Resources.indentOnce(indent(s, times - 1))
 }
 

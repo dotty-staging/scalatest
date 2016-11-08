@@ -30,15 +30,15 @@ import org.scalatest.matchers.MatchResult
  * @author Chee Seng
  */
 final class ExistWord {
-  
-  private[scalatest] val matcherFactory: MatcherFactory1[Any, Existence] = 
+
+  private[scalatest] val matcherFactory: MatcherFactory1[Any, Existence] =
     new MatcherFactory1[Any, Existence] {
-      def matcher[T <: Any : Existence]: Matcher[T] = 
+      def matcher[T <: Any : Existence]: Matcher[T] =
         new Matcher[T] {
           def apply(left: T): MatchResult = {
             val existence = implicitly[Existence[T]]
             MatchResult(
-              existence.exists(left), 
+              existence.exists(left),
               Resources.rawDoesNotExist,
               Resources.rawExists,
               Vector(left)
@@ -50,7 +50,7 @@ final class ExistWord {
     }
 
   import scala.language.higherKinds
-  
+
   /**
    * This method enables the following syntax:
    *
@@ -59,9 +59,9 @@ final class ExistWord {
    *                    ^
    * </pre>
    */
-  def and[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] = 
+  def and[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] =
     matcherFactory.and(anotherMatcherFactory)
-  
+
   /**
    * This method enables the following syntax:
    *
@@ -70,9 +70,9 @@ final class ExistWord {
    *                    ^
    * </pre>
    */
-  def and(anotherMatcher: Matcher[Any]): MatcherFactory1[Any, Existence] = 
+  def and(anotherMatcher: Matcher[Any]): MatcherFactory1[Any, Existence] =
     matcherFactory.and(anotherMatcher)
-    
+
   /**
    * This method enables the following syntax:
    *
@@ -81,9 +81,9 @@ final class ExistWord {
    *                    ^
    * </pre>
    */
-  def or[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] = 
+  def or[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] =
     matcherFactory.or(anotherMatcherFactory)
-    
+
   /**
    * This method enables the following syntax:
    *
@@ -92,6 +92,6 @@ final class ExistWord {
    *                    ^
    * </pre>
    */
-  def or(anotherMatcher: Matcher[Any]): MatcherFactory1[Any, Existence] = 
+  def or(anotherMatcher: Matcher[Any]): MatcherFactory1[Any, Existence] =
     matcherFactory.or(anotherMatcher)
 }

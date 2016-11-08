@@ -27,13 +27,13 @@ protected[scalatest] class ExampleTimeoutParallelSpec extends FunSpec with Paral
     it ("do thing 1b") { SleepHelper.sleep(2000) }
     it ("do thing 1c") {}
   }
-  
+
   describe("Thing 2") {
     it ("do thing 2a") {}
     it ("do thing 2b") {}
     it ("do thing 2c") {}
   }
-  
+
   override protected def sortingTimeout: Span = Span(1, Second)
 
   //SCALATESTJS-ONLY override def newInstance = new ExampleTimeoutParallelSpec

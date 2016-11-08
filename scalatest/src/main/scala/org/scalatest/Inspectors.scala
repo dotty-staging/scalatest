@@ -99,7 +99,7 @@ import org.scalactic._
  * </ul>
  *
  * <p>
- * The error messages produced by inspector methods are designed to make sense no matter how deeply you nest the method invocations. 
+ * The error messages produced by inspector methods are designed to make sense no matter how deeply you nest the method invocations.
  * Here's an example of a nested inspection that fails and the resulting error message:
  * </p>
  *
@@ -107,10 +107,10 @@ import org.scalactic._
  * scala&gt; forAll (yss) { ys =&gt;
  *      |   forAll (ys) { y =&gt; y should be &lt; 2 }
  *      | }
- * org.scalatest.exceptions.TestFailedException: forAll failed, because: 
- *   at index 0, forAll failed, because: 
- *     at index 1, 2 was not less than 2 (&lt;console&gt;:20) 
- *   in List(1, 2, 3) (&lt;console&gt;:20) 
+ * org.scalatest.exceptions.TestFailedException: forAll failed, because:
+ *   at index 0, forAll failed, because:
+ *     at index 1, 2 was not less than 2 (&lt;console&gt;:20)
+ *   in List(1, 2, 3) (&lt;console&gt;:20)
  * in List(List(1, 2, 3), List(1, 2, 3), List(1, 2, 3))
  *      at org.scalatest.InspectorsHelper$.forAll(Inspectors.scala:146)
  *      ...
@@ -137,17 +137,17 @@ import org.scalactic._
  *
  * <pre class="stREPL">
  * scala&gt; forAll (xs) { x =&gt; x should be &lt; 3 }
- * org.scalatest.exceptions.TestFailedException: forAll failed, because: 
- *   at index 2, 3 was not less than 3 (&lt;console&gt;:18) 
+ * org.scalatest.exceptions.TestFailedException: forAll failed, because:
+ *   at index 2, 3 was not less than 3 (&lt;console&gt;:18)
  * in List(1, 2, 3, 4, 5)
  *      at org.scalatest.InspectorsHelper$.forAll(Inspectors.scala:146)
  *      ...
  *
  * scala&gt; forEvery (xs) { x =&gt; x should be &lt; 3 }
- * org.scalatest.exceptions.TestFailedException: forEvery failed, because: 
- *   at index 2, 3 was not less than 3 (&lt;console&gt;:18), 
- *   at index 3, 4 was not less than 3 (&lt;console&gt;:18), 
- *   at index 4, 5 was not less than 3 (&lt;console&gt;:18) 
+ * org.scalatest.exceptions.TestFailedException: forEvery failed, because:
+ *   at index 2, 3 was not less than 3 (&lt;console&gt;:18),
+ *   at index 3, 4 was not less than 3 (&lt;console&gt;:18),
+ *   at index 4, 5 was not less than 3 (&lt;console&gt;:18)
  * in List(1, 2, 3, 4, 5)
  *      at org.scalatest.InspectorsHelper$.forEvery(Inspectors.scala:226)
  *      ...
@@ -157,52 +157,52 @@ import org.scalactic._
  * Note that if you're using matchers, you can alternatively use <em>inspector shorthands</em> for writing non-nested
  * inspections. Here's an example:
  * </p>
- * 
+ *
  * <pre>
  * scala&gt; all (xs) should be &gt; 3
- * org.scalatest.exceptions.TestFailedException: 'all' inspection failed, because: 
- *   at index 0, 1 was not greater than 3 
+ * org.scalatest.exceptions.TestFailedException: 'all' inspection failed, because:
+ *   at index 0, 1 was not greater than 3
  * in List(1, 2, 3, 4, 5)
  *      at org.scalatest.InspectorsHelper$.forAll(Inspectors.scala:146)
  * </pre>
  *
  * <p>
  * You can use <code>Inspectors</code> on any <code>scala.collection.GenTraversable</code>, <code>java.util.Collection</code>,
- * <code>java.util.Map</code> (with <a href="Entry.html"><code>Entry</code></a>), <code>Array</code>, or <code>String</code>. 
+ * <code>java.util.Map</code> (with <a href="Entry.html"><code>Entry</code></a>), <code>Array</code>, or <code>String</code>.
  * Here are some examples:
  * </p>
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest._
  * import org.scalatest._
- * 
+ *
  * scala&gt; import Inspectors._
  * import Inspectors._
- * 
+ *
  * scala&gt; import Matchers._
  * import Matchers._
- * 
+ *
  * scala&gt; forAll (Array(1, 2, 3)) { e =&gt; e should be &lt; 5 }
- * 
+ *
  * scala&gt; import collection.JavaConverters._
  * import collection.JavaConverters._
- * 
+ *
  * scala&gt; val js = List(1, 2, 3).asJava
  * js: java.util.List[Int] = [1, 2, 3]
- * 
+ *
  * scala&gt; forAll (js) { j =&gt; j should be &lt; 5 }
- * 
- * scala&gt; val jmap = Map("a" -&gt; 1, "b" -&gt; 2).asJava 
+ *
+ * scala&gt; val jmap = Map("a" -&gt; 1, "b" -&gt; 2).asJava
  * jmap: java.util.Map[String,Int] = {a=1, b=2}
- * 
+ *
  * scala&gt; forAtLeast(1, jmap) { e =&gt; e shouldBe Entry("b", 2) }
- * 
+ *
  * scala&gt; forAtLeast(2, "hello, world!") { c =&gt; c shouldBe 'o' }
  * </pre>
  */
 trait Inspectors {
 
-  
+
   /**
    * Ensure that all elements in a given collection pass the given inspection function, where "pass" means returning normally from the function (<em>i.e.</em>,
    * without throwing an exception).
@@ -400,7 +400,7 @@ trait Inspectors {
   def forExactly[ASSERTION](succeededCount: Int, xs: String)(fun: Char => ASSERTION)(implicit collecting: Collecting[Char, String], asserting: InspectorAsserting[ASSERTION], prettifier: Prettifier, pos: source.Position): asserting.Result = {
     asserting.forExactly(succeededCount, collecting.genTraversableFrom(xs), xs, false, prettifier, pos)(fun)
   }
-  
+
   private[scalatest] def forNo[E, C[_], ASSERTION](xs: C[E])(fun: E => ASSERTION)(implicit collecting: Collecting[E, C[E]], asserting: InspectorAsserting[ASSERTION], prettifier: Prettifier, pos: source.Position): asserting.Result = {
     asserting.forNo(collecting.genTraversableFrom(xs), xs, false, prettifier, pos)(fun)
   }
@@ -534,7 +534,7 @@ private[scalatest] object InspectorsHelper {
 
   def indentErrorMessages(messages: IndexedSeq[String]) = indentLines(1, messages)
 
-  def shouldPropagate(throwable: Throwable): Boolean = 
+  def shouldPropagate(throwable: Throwable): Boolean =
     throwable match {
       case _: exceptions.NotAllowedException |
            _: exceptions.TestPendingException |

@@ -149,7 +149,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
 
   /**
    * <strong>
-   * The deprecation period for the "be ===" syntax has expired, and the syntax 
+   * The deprecation period for the "be ===" syntax has expired, and the syntax
    * will now throw <code>NotAllowedException</code>.  Please use should equal, should ===, shouldEqual,
    * should be, or shouldBe instead.
    * </strong>
@@ -180,7 +180,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, result.negatedFailureMessage(prettifier), result.failureMessage(prettifier))
   }
-  
+
   /**
    * This method enables the following syntax, where <code>positiveNumber</code> refers to
    * an <code>AMatcher[Int]</code>:
@@ -198,7 +198,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, result.negatedFailureMessage(prettifier), result.failureMessage(prettifier))
   }
-  
+
   /**
    * This method enables the following syntax, where <code>oddNumber</code> refers to
    * an <code>AnMatcher[Int]</code>:
@@ -218,7 +218,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   import scala.language.experimental.macros
-  
+
   /**
    * This method enables the following syntax:
    *
@@ -228,7 +228,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    * </pre>
    **/
   def be(aType: ResultOfATypeInvocation[_]): Assertion = macro TypeMatcherMacro.assertATypeShouldBeTrueImpl
-  
+
   /**
    * This method enables the following syntax:
    *
@@ -240,7 +240,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   def be(anType: ResultOfAnTypeInvocation[_]): Assertion = macro TypeMatcherMacro.assertAnTypeShouldBeTrueImpl
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * sevenDotOh should not be (6.5 +- 0.2)
@@ -253,9 +253,9 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.wasPlusOrMinus(prettifier, left, spread.pivot, spread.tolerance), FailureMessages.wasNotPlusOrMinus(prettifier, left, spread.pivot, spread.tolerance))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * partialFun should not be definedAt ("apple")
@@ -270,7 +270,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * sevenDotOh should not equal (6.5 +- 0.2)
@@ -285,7 +285,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should not equal null
@@ -334,15 +334,15 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   // The type parameter U has T as its lower bound, which means that U must be T or a supertype of T. Left is T, oh, because
   // HavePropertyMatcher is contravariant in its type parameter T, and that nmakes sense, because a HavePropertyMatcher of Any should
   // be able to match on a String.
-  // <code>not have (a (1), b (2))</code> must mean the opposite of <code>have (a (1), b (2))</code>, which means that 
+  // <code>not have (a (1), b (2))</code> must mean the opposite of <code>have (a (1), b (2))</code>, which means that
   // <code>not have (a (1), b (2))</code> will be true if either <code>(a (1)).matches</code> or <code>(b (1)).matches</code> is false.
   // Only if both <code>(a (1)).matches</code> or <code>(b (1)).matches</code> are true will <code>not have (a (1), b (2))</code> be false.
   // title/author matches | have | have not
-  // 0 0 | 0 | 1 
+  // 0 0 | 0 | 1
   // 0 1 | 0 | 1
   // 1 0 | 0 | 1
   // 1 1 | 1 | 0
-  // 
+  //
   /**
    * This method enables the following syntax, where <code>badBook</code> is, for example, of type <code>Book</code> and
    * <code>title ("One Hundred Years of Solitude")</code> results in a <code>HavePropertyMatcher[Book]</code>:
@@ -396,7 +396,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
             else FailureMessages.allPropertiesHadExpectedValues(prettifier, left)
 
           indicateFailure(failureMessage, None, pos)
-      } 
+      }
     }
     else {
       indicateSuccess(
@@ -436,7 +436,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
       )
     }
   }
-  
+
   def have(resultOfMessageWordApplication: ResultOfMessageWordApplication)(implicit messaging: Messaging[T]): Assertion = {
     val right = resultOfMessageWordApplication.expectedMessage
     val actualMessage = messaging.messageOf(left)
@@ -611,9 +611,9 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.wasSameInstanceAs(prettifier, left, resultOfSameInstanceAsApplication.right), FailureMessages.wasNotSameInstanceAs(prettifier, left, resultOfSameInstanceAsApplication.right))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * xs should not be sorted
@@ -626,9 +626,9 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.wasSorted(prettifier, left), FailureMessages.wasNotSorted(prettifier, left))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * file should not be readable
@@ -641,9 +641,9 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.wasReadable(prettifier, left), FailureMessages.wasNotReadable(prettifier, left))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * file should not be writable
@@ -656,9 +656,9 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.wasWritable(prettifier, left), FailureMessages.wasNotWritable(prettifier, left))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * list should not be empty
@@ -671,9 +671,9 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.wasEmpty(prettifier, left), FailureMessages.wasNotEmpty(prettifier, left))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * option should not be defined
@@ -779,7 +779,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.didNotContainAtLeastOneElementOf(prettifier, left, right), FailureMessages.containedAtLeastOneElementOf(prettifier, left, right))
   }
-  
+
   def contain(theSameElementsAs: ResultOfTheSameElementsAsApplication)(implicit aggregating: Aggregating[T]): Assertion = {
 
     val right = theSameElementsAs.right
@@ -799,7 +799,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.containedSameElementsInOrder(prettifier, left, right), FailureMessages.didNotContainSameElementsInOrder(prettifier, left, right))
   }
-  
+
   def contain(only: ResultOfOnlyApplication)(implicit aggregating: Aggregating[T]): Assertion = {
     val right = only.right
     val withFriendlyReminder = right.size == 1 && (right(0).isInstanceOf[scala.collection.GenTraversable[_]] || right(0).isInstanceOf[Every[_]])
@@ -852,7 +852,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
         FailureMessages.didNotContainInOrderOnlyElements(prettifier, left, UnquotedString(right.map(r => FailureMessages.decorateToStringValue(prettifier, r)).mkString(", ")))
       )
   }
-  
+
   def contain(allOf: ResultOfAllOfApplication)(implicit aggregating: Aggregating[T]): Assertion = {
 
     val right = allOf.right
@@ -881,7 +881,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.containedAllElementsOf(prettifier, left, right), FailureMessages.didNotContainAllElementsOf(prettifier, left, right))
   }
-  
+
   def contain(only: ResultOfInOrderApplication)(implicit sequencing: Sequencing[T]): Assertion = {
 
     val right = only.right
@@ -910,7 +910,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.containedAllElementsOfInOrder(prettifier, left, right), FailureMessages.didNotContainAllElementsOfInOrder(prettifier, left, right))
   }
-  
+
   def contain(atMostOneOf: ResultOfAtMostOneOfApplication)(implicit aggregating: Aggregating[T]): Assertion = {
 
     val right = atMostOneOf.right
@@ -956,9 +956,9 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.containedValue(prettifier, left, right), FailureMessages.didNotContainValue(prettifier, left, right))
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * string should not fullyMatch regex ("""(-)?(\d+)(\.\d*)?""")
@@ -979,7 +979,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * string should not include regex ("wo.ld")
@@ -1000,7 +1000,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * string should not include ("world")
@@ -1015,7 +1015,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * string should not startWith regex ("Hel*o")
@@ -1036,7 +1036,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * "eight" should not startWith ("1.7")
@@ -1051,7 +1051,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * greeting should not endWith regex ("wor.d")
@@ -1067,7 +1067,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * "eight" should not endWith ("1.7")
@@ -1092,7 +1092,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    * </pre>
    **/
   def matchPattern(right: PartialFunction[Any, _]) = macro MatchPatternMacro.matchPattern
-  
+
   /**
    * Overrides toString to return pretty text.
    */

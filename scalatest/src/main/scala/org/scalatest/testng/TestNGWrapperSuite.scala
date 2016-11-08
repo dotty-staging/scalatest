@@ -35,7 +35,7 @@ import org.testng.TestListenerAdapter
  *   List("oneTest.xml", "twoTest.xml", "redTest.xml", "blueTest.xml")
  * )
  * </pre>
- * 
+ *
  * <p>
  * You can also specify TestNG XML config files on <code>Runner</code>'s command line with <code>-t</code> parameters. See
  * the documentation for <code>Runner</code> for more information.
@@ -54,7 +54,7 @@ class TestNGWrapperSuite(xmlSuiteFilenames: List[String]) extends TestNGSuite {
 // If any files contained in the property cannot be found, a FileNotFoundException will be thrown.
   /**
    * Runs TestNG with the XML config file or files provided to the primary constructor, passing reports to the specified <code>Reporter</code>.
-   * 
+   *
    * @param testName If present (Some), then only the method with the supplied name is executed and groups will be ignored.
    * @param args the <code>Args</code> for this run
    */
@@ -86,7 +86,7 @@ class TestNGWrapperSuite(xmlSuiteFilenames: List[String]) extends TestNGSuite {
 
   /**
    * Executes the following:
-   * 
+   *
    * 1) Calls the super class to set up groups with the given groups Sets.
    * 2) Adds the xml suites to TestNG
    * 3) Runs TestNG
@@ -95,27 +95,27 @@ class TestNGWrapperSuite(xmlSuiteFilenames: List[String]) extends TestNGSuite {
    * @param   groupsToInclude    contains the names of groups to run. only tests in these groups will be executed
    * @param   groupsToExclude    tests in groups in this Set will not be executed
    * @param   status   Run status.
-   */ 
-  private[testng] def runTestNG(reporter: Reporter, groupsToInclude: Set[String], 
+   */
+  private[testng] def runTestNG(reporter: Reporter, groupsToInclude: Set[String],
       groupsToExclude: Set[String], tracker: Tracker, status: ScalaTestStatefulStatus): Unit = {
-    
+
     val testng = new TestNG
     handleGroups(groupsToInclude, groupsToExclude, testng)
     addXmlSuitesToTestNG(testng)
-    
+
     run(testng, reporter, tracker, status)
   }
-  
-  // TODO: We should probably do this checking in the constructor.    
+
+  // TODO: We should probably do this checking in the constructor.
   /**
    * TestNG allows users to programmatically tell it which xml suites to run via the setTestSuites method.
-   * This method takes a java.util.List containing java.io.File objects, where each file is a TestNG xml suite. 
+   * This method takes a java.util.List containing java.io.File objects, where each file is a TestNG xml suite.
    * TestNGWrapperSuite takes xmlSuitesPropertyName in its constructor. This property should contain
-   * the full paths of one or more xml suites, comma seperated. This method simply creates a java.util.List 
+   * the full paths of one or more xml suites, comma seperated. This method simply creates a java.util.List
    * containing each xml suite contained in xmlSuitesPropertyName and calls the setTestSuites method on the
-   * given TestNG object. 
+   * given TestNG object.
    *
-   * @param testng	the TestNG object to set the suites on 
+   * @param testng	the TestNG object to set the suites on
    *
    * @throws FileNotFoundException if a file in xmlSuitesPropertyName does not exist.
    *
@@ -123,14 +123,14 @@ class TestNGWrapperSuite(xmlSuiteFilenames: List[String]) extends TestNGSuite {
   private def addXmlSuitesToTestNG(testng: TestNG): Unit = {
     import java.io.File
     import java.io.FileNotFoundException
-    
+
     val files = new java.util.ArrayList[String]
-    
-    xmlSuiteFilenames.foreach( { name => 
+
+    xmlSuiteFilenames.foreach( { name =>
         val f = new File( name )
         if( ! f.exists ) throw new FileNotFoundException( f.getAbsolutePath )
         files add name
-      } 
+      }
     )
     testng.setTestSuites(files)
   }

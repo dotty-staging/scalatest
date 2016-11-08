@@ -47,7 +47,7 @@ final class NotWord {
 
   /**
    * This method enables the following syntax, where <code>tempFile</code>, for example, refers to a <code>java.io.File</code>
-   * and <code>exist</code> is a <code>Matcher[java.io.File]</code>: 
+   * and <code>exist</code> is a <code>Matcher[java.io.File]</code>:
    *
    * <pre class="stHighlight">
    * tempFile should not (exist)
@@ -97,7 +97,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables any <code>BeMatcher</code> to be negated by passing it to <code>not</code>. 
+   * This method enables any <code>BeMatcher</code> to be negated by passing it to <code>not</code>.
    * For example, if you have a <code>BeMatcher[Int]</code> called <code>odd</code>, which matches
    * <code>Int</code>s that are odd, you can negate it to get a <code>BeMatcher[Int]</code> that matches
    * even <code>Int</code>s, like this:
@@ -128,7 +128,7 @@ final class NotWord {
       def apply(left: S): MatchResult = beMatcher(left).negated
       override def toString: String = "not (" + Prettifier.default(beMatcher) + ")"
     }
-  
+
   /**
    * This method enables syntax such as the following:
    *
@@ -137,27 +137,27 @@ final class NotWord {
    *             ^
    * </pre>
    **/
-  def apply(existWord: ExistWord): ResultOfNotExist = 
+  def apply(existWord: ExistWord): ResultOfNotExist =
     new ResultOfNotExist(this)
 
-  /* 
-   * This is used in logical expression like: 
+  /*
+   * This is used in logical expression like:
    * outerInstance.and(MatcherWords.not.exist)
    *                                    ^
-   */ 
-  private[scalatest] val exist: MatcherFactory1[Any, Existence] = 
+   */
+  private[scalatest] val exist: MatcherFactory1[Any, Existence] =
     new MatcherFactory1[Any, Existence] {
-      def matcher[T : Existence]: Matcher[T] = 
+      def matcher[T : Existence]: Matcher[T] =
         new Matcher[T] {
           def apply(left: T): MatchResult = {
             val existence = implicitly[Existence[T]]
             MatchResult(
-              !existence.exists(left), 
+              !existence.exists(left),
               Resources.rawExists,
               Resources.rawDoesNotExist,
               Vector(left)
             )
-          } 
+          }
           override def toString: String = "not exist"
         }
     }
@@ -173,7 +173,7 @@ final class NotWord {
   def equal(right: Any): MatcherFactory1[Any, Equality] = apply(MatcherWords.equal(right))
 
   /**
-   * This method enables the following syntax for the "primitive" numeric types: 
+   * This method enables the following syntax for the "primitive" numeric types:
    *
    * <pre class="stHighlight">
    * sevenDotOh should ((not equal (17.1 +- 0.2)) and (not equal (27.1 +- 0.2)))
@@ -195,7 +195,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * map should (not equal (null))
@@ -211,9 +211,9 @@ final class NotWord {
           Resources.rawDidNotEqualNull,
           Resources.rawMidSentenceEqualedNull,
           Resources.rawDidNotEqualNull,
-          Vector.empty, 
-          Vector(left), 
-          Vector.empty, 
+          Vector.empty,
+          Vector(left),
+          Vector.empty,
           Vector(left)
         )
       }
@@ -221,7 +221,7 @@ final class NotWord {
     }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not have length (5) and not have length (3))
@@ -233,7 +233,7 @@ final class NotWord {
 
   // This looks similar to the AndNotWord one, but not quite the same because no and
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not have size (5) and not have size (3))
@@ -242,9 +242,9 @@ final class NotWord {
    **/
   def have(resultOfSizeWordApplication: ResultOfSizeWordApplication): MatcherFactory1[Any, Size] =
     apply(MatcherWords.have.size(resultOfSizeWordApplication.expectedSize))
-    
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should (not have message ("Message from Mars!") and not have message ("Message from Mars!"))
@@ -296,7 +296,7 @@ final class NotWord {
   def matchPattern(right: PartialFunction[Any, _]): Matcher[Any] = macro MatchPatternMacro.notMatchPatternMatcher
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * map should (not be (null))
@@ -312,9 +312,9 @@ final class NotWord {
           Resources.rawWasNotNull,
           Resources.rawMidSentenceWasNull,
           Resources.rawWasNotNull,
-          Vector.empty, 
-          Vector(left), 
-          Vector.empty, 
+          Vector.empty,
+          Vector(left),
+          Vector.empty,
           Vector(left)
         )
       }
@@ -323,7 +323,7 @@ final class NotWord {
 
   // These next four are for things like not be </>/<=/>=:
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * num should (not be < (7) and not be > (10))
@@ -344,7 +344,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * num should (not be > (10) and not be < (7))
@@ -365,7 +365,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * num should (not be <= (7) and not be > (10))
@@ -386,7 +386,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * num should (not be >= (10) and not be < (7))
@@ -408,7 +408,7 @@ final class NotWord {
 
   /**
    * <strong>
-   * The deprecation period for the "be ===" syntax has expired, and the syntax 
+   * The deprecation period for the "be ===" syntax has expired, and the syntax
    * will now throw <code>NotAllowedException</code>.  Please use should equal, should ===, shouldEqual,
    * should be, or shouldBe instead.
    * </strong>
@@ -425,7 +425,7 @@ final class NotWord {
 
   // SKIP-SCALATESTJS-START
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * myFile should (not be ('hidden) and have (name ("temp.txt")))
@@ -439,8 +439,8 @@ final class NotWord {
         MatchResult(
           !positiveMatchResult.matches,
           positiveMatchResult.rawNegatedFailureMessage,
-          positiveMatchResult.rawFailureMessage, 
-          positiveMatchResult.negatedFailureMessageArgs, 
+          positiveMatchResult.rawFailureMessage,
+          positiveMatchResult.negatedFailureMessageArgs,
           positiveMatchResult.failureMessageArgs
         )
       }
@@ -451,7 +451,7 @@ final class NotWord {
 
   /**
    * This method enables the following syntax, where <code>tempFile</code>, for example, refers to a <code>java.io.File</code>
-   * and <code>hidden</code> is a <code>BePropertyMatcher[java.io.File]</code>: 
+   * and <code>hidden</code> is a <code>BePropertyMatcher[java.io.File]</code>:
    *
    * <pre class="stHighlight">
    * tempFile should (not be (hidden) and have ('name ("temp.txt")))
@@ -475,7 +475,7 @@ final class NotWord {
 
   // SKIP-SCALATESTJS-START
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * isNotFileMock should (not be a ('file) and have ('name ("temp.txt"))))
@@ -489,8 +489,8 @@ final class NotWord {
         MatchResult(
           !positiveMatchResult.matches,
           positiveMatchResult.rawNegatedFailureMessage,
-          positiveMatchResult.rawFailureMessage, 
-          positiveMatchResult.negatedFailureMessageArgs, 
+          positiveMatchResult.rawFailureMessage,
+          positiveMatchResult.negatedFailureMessageArgs,
           positiveMatchResult.failureMessageArgs
         )
       }
@@ -501,7 +501,7 @@ final class NotWord {
 
   /**
    * This method enables the following syntax, where <code>notSoSecretFile</code>, for example, refers to a <code>java.io.File</code>
-   * and <code>directory</code> is a <code>BePropertyMatcher[java.io.File]</code>: 
+   * and <code>directory</code> is a <code>BePropertyMatcher[java.io.File]</code>:
    *
    * <pre class="stHighlight">
    * notSoSecretFile should (not be a (directory) and have ('name ("passwords.txt")))
@@ -522,9 +522,9 @@ final class NotWord {
       override def toString: String = "not be " + Prettifier.default(resultOfAWordApplication)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should (not be a (passedMarks) and be a (validMarks)))
@@ -538,8 +538,8 @@ final class NotWord {
         MatchResult(
           !result.matches,
           result.rawNegatedFailureMessage,
-          result.rawFailureMessage, 
-          result.negatedFailureMessageArgs, 
+          result.rawFailureMessage,
+          result.negatedFailureMessageArgs,
           result.failureMessageArgs
         )
       }
@@ -549,7 +549,7 @@ final class NotWord {
 
   // SKIP-SCALATESTJS-START
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * isNotAppleMock should (not be an ('apple) and not be ('rotten))
@@ -563,8 +563,8 @@ final class NotWord {
         MatchResult(
           !positiveMatchResult.matches,
           positiveMatchResult.rawNegatedFailureMessage,
-          positiveMatchResult.rawFailureMessage, 
-          positiveMatchResult.negatedFailureMessageArgs, 
+          positiveMatchResult.rawFailureMessage,
+          positiveMatchResult.negatedFailureMessageArgs,
           positiveMatchResult.failureMessageArgs
         )
       }
@@ -574,7 +574,7 @@ final class NotWord {
   // SKIP-SCALATESTJS-END
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * myFile should (not be an (directory) and not be an (directory))
@@ -595,9 +595,9 @@ final class NotWord {
       override def toString: String = "not be " + Prettifier.default(resultOfAnWordApplication)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should (not be a (passedMarks) and be a (validMarks)))
@@ -611,8 +611,8 @@ final class NotWord {
         MatchResult(
           !result.matches,
           result.rawNegatedFailureMessage,
-          result.rawFailureMessage, 
-          result.negatedFailureMessageArgs, 
+          result.rawFailureMessage,
+          result.negatedFailureMessageArgs,
           result.failureMessageArgs
         )
       }
@@ -621,7 +621,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * myFish should (not be theSameInstanceAs (redFish) and not be theSameInstanceAs (blueFish))
@@ -643,7 +643,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax for the "primitive" numeric types: 
+   * This method enables the following syntax for the "primitive" numeric types:
    *
    * <pre class="stHighlight">
    * sevenDotOh should ((not be (17.1 +- 0.2)) and (not be (27.1 +- 0.2)))
@@ -663,7 +663,7 @@ final class NotWord {
       override def toString: String = "not be " + Prettifier.default(spread)
     }
   }
-  
+
   /**
    * This method enables the following syntax, where fraction is a <code>PartialFunction</code>:
    *
@@ -707,21 +707,21 @@ final class NotWord {
         left match {
           case null =>
             MatchResult(
-              right != null, 
+              right != null,
               Resources.rawWasNull,
               Resources.rawWasNotNull,
               Resources.rawMidSentenceWasNull,
               Resources.rawWasNotNull,
-              Vector.empty, 
+              Vector.empty,
               Vector(right)
             )
-          case _ => 
+          case _ =>
             val (leftee, rightee) = getObjectsForFailureMessage(left, right) // TODO: To move this to reporter
             MatchResult(
               !areEqualComparingArraysStructurally(left, right),
               Resources.rawWasEqualTo,
               Resources.rawWasNotEqualTo,
-              Vector(left, right), 
+              Vector(left, right),
               Vector(leftee, rightee)
             )
         }
@@ -729,7 +729,7 @@ final class NotWord {
       override def toString: String = "not be " + Prettifier.default(right)
     }
   }
-  
+
   /**
      * This method enables the following syntax:
      *
@@ -740,7 +740,7 @@ final class NotWord {
      **/
   def be[T](sortedWord: SortedWord): MatcherFactory1[Any, Sortable] =
     apply(MatcherWords.be(sortedWord))
-    
+
   /**
      * This method enables the following syntax:
      *
@@ -751,7 +751,7 @@ final class NotWord {
      **/
   def be(readableWord: ReadableWord): MatcherFactory1[Any, Readability] =
     apply(MatcherWords.be(readableWord))
-  
+
   /**
      * This method enables the following syntax:
      *
@@ -762,7 +762,7 @@ final class NotWord {
      **/
   def be(writableWord: WritableWord): MatcherFactory1[Any, Writability] =
     apply(MatcherWords.be(writableWord))
-    
+
   /**
      * This method enables the following syntax:
      *
@@ -773,7 +773,7 @@ final class NotWord {
      **/
   def be(emptyWord: EmptyWord): MatcherFactory1[Any, Emptiness] =
     apply(MatcherWords.be(emptyWord))
-    
+
   /**
      * This method enables the following syntax:
      *
@@ -784,7 +784,7 @@ final class NotWord {
      **/
   def be(definedWord: DefinedWord): MatcherFactory1[Any, Definition] =
     apply(MatcherWords.be(definedWord))
-    
+
   /**
    * This method enables the following syntax:
    *
@@ -794,7 +794,7 @@ final class NotWord {
    * </pre>
    **/
   def be(aType: ResultOfATypeInvocation[_]) = macro TypeMatcherMacro.notATypeMatcher
-  
+
   /**
    * This method enables the following syntax:
    *
@@ -806,7 +806,7 @@ final class NotWord {
   def be(anType: ResultOfAnTypeInvocation[_]) = macro TypeMatcherMacro.notAnTypeMatcher
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * string should (not fullyMatch regex ("Hel*o") and not include ("orld"))
@@ -818,10 +818,10 @@ final class NotWord {
       def apply(left: String): MatchResult = {
         val result = fullyMatchRegexWithGroups(left, resultOfRegexWordApplication.regex, resultOfRegexWordApplication.groups)
         MatchResult(
-          !result.matches, 
-          result.rawNegatedFailureMessage, 
-          result.rawFailureMessage, 
-          result.negatedFailureMessageArgs, 
+          !result.matches,
+          result.rawNegatedFailureMessage,
+          result.rawFailureMessage,
+          result.negatedFailureMessageArgs,
           result.failureMessageArgs
         )
       }
@@ -830,7 +830,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * string should (not include regex ("Hel.o") and not include regex ("""(-)?(\d+)(\.\d*)?"""))
@@ -843,10 +843,10 @@ final class NotWord {
       def apply(left: String): MatchResult = {
         val result = includeRegexWithGroups(left, resultOfRegexWordApplication.regex, resultOfRegexWordApplication.groups)
         MatchResult(
-          !result.matches, 
-          result.rawNegatedFailureMessage, 
-          result.rawFailureMessage, 
-          result.negatedFailureMessageArgs, 
+          !result.matches,
+          result.rawNegatedFailureMessage,
+          result.rawFailureMessage,
+          result.negatedFailureMessageArgs,
           result.failureMessageArgs
         )
       }
@@ -855,7 +855,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * string should (not include ("cat") and not include ("1.7"))
@@ -866,7 +866,7 @@ final class NotWord {
     new Matcher[String] {
       def apply(left: String): MatchResult =
         MatchResult(
-          !(left.indexOf(expectedSubstring) >= 0), 
+          !(left.indexOf(expectedSubstring) >= 0),
           Resources.rawIncludedSubstring,
           Resources.rawDidNotIncludeSubstring,
           Vector(left, expectedSubstring)
@@ -876,7 +876,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * string should (not startWith regex ("hel*o") and not endWith regex ("wor.d"))
@@ -889,10 +889,10 @@ final class NotWord {
       def apply(left: String): MatchResult = {
         val result = startWithRegexWithGroups(left, resultOfRegexWordApplication.regex, resultOfRegexWordApplication.groups)
         MatchResult(
-          !result.matches, 
-          result.rawNegatedFailureMessage, 
-          result.rawFailureMessage, 
-          result.negatedFailureMessageArgs, 
+          !result.matches,
+          result.rawNegatedFailureMessage,
+          result.rawFailureMessage,
+          result.negatedFailureMessageArgs,
           result.failureMessageArgs
         )
       }
@@ -901,7 +901,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * string should ((not startWith ("red")) and (not startWith ("1.7")))
@@ -922,7 +922,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * string should (not endWith regex ("wor.d") and not startWith regex ("Hel*o"))
@@ -935,10 +935,10 @@ final class NotWord {
       def apply(left: String): MatchResult = {
         val result = endWithRegexWithGroups(left, resultOfRegexWordApplication.regex, resultOfRegexWordApplication.groups)
         MatchResult(
-          !result.matches, 
-          result.rawNegatedFailureMessage, 
-          result.rawFailureMessage, 
-          result.negatedFailureMessageArgs, 
+          !result.matches,
+          result.rawNegatedFailureMessage,
+          result.rawFailureMessage,
+          result.negatedFailureMessageArgs,
           result.failureMessageArgs
         )
       }
@@ -947,7 +947,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * string should (not endWith ("blue") and not endWith ("1.7"))
@@ -996,7 +996,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not contain (5) and not contain (3))
@@ -1005,7 +1005,7 @@ final class NotWord {
    **/
   def contain[T](expectedElement: T): MatcherFactory1[Any, Containing] = {
     new MatcherFactory1[Any, Containing] {
-      def matcher[U : Containing]: Matcher[U] = 
+      def matcher[U : Containing]: Matcher[U] =
         new Matcher[U] {
           def apply(left: U): MatchResult = {
             val containing = implicitly[Containing[U]]
@@ -1023,7 +1023,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not contain oneOf (5, 6, 7))
@@ -1035,7 +1035,7 @@ final class NotWord {
       def matcher[T](implicit containing: Containing[T]): Matcher[T] = {
         new Matcher[T] {
           def apply(left: T): MatchResult = {
-        
+
             val right = oneOf.right
 
             MatchResult(
@@ -1083,7 +1083,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not contain (5) and not contain (3))
@@ -1095,7 +1095,7 @@ final class NotWord {
       def matcher[T](implicit aggregating: Aggregating[T]): Matcher[T] = {
         new Matcher[T] {
           def apply(left: T): MatchResult = {
-        
+
             val right = atLeastOneOf.right
 
             MatchResult(
@@ -1141,9 +1141,9 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(atLeastOneElementOf)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not contain noneOf (5, 6, 7))
@@ -1155,7 +1155,7 @@ final class NotWord {
       def matcher[T](implicit containing: Containing[T]): Matcher[T] = {
         new Matcher[T] {
           def apply(left: T): MatchResult = {
-        
+
             val right = noneOf.right
 
             MatchResult(
@@ -1201,9 +1201,9 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(noElementsOf)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not contain theSameElementsAs (1, 2, 3) and not contain (3))
@@ -1215,7 +1215,7 @@ final class NotWord {
       def matcher[T](implicit aggregating: Aggregating[T]): Matcher[T] = {
         new Matcher[T] {
           def apply(left: T): MatchResult = {
-        
+
             val right = theSameElementAs.right
 
             MatchResult(
@@ -1231,9 +1231,9 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(theSameElementAs)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not contain theSameElementsInOrderAs (1, 2, 3) and not contain (3))
@@ -1245,7 +1245,7 @@ final class NotWord {
       def matcher[T](implicit sequencing: Sequencing[T]): Matcher[T] = {
         new Matcher[T] {
           def apply(left: T): MatchResult = {
-        
+
             val right = theSameElementInOrderAs.right
 
             MatchResult(
@@ -1261,9 +1261,9 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(theSameElementInOrderAs)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not contain only (1, 2, 3) and not contain (3))
@@ -1275,7 +1275,7 @@ final class NotWord {
       def matcher[T](implicit aggregating: Aggregating[T]): Matcher[T] = {
         new Matcher[T] {
           def apply(left: T): MatchResult = {
-        
+
             val right = only.right
 
             val withFriendlyReminder = right.size == 1 && (right(0).isInstanceOf[scala.collection.GenTraversable[_]] || right(0).isInstanceOf[Every[_]])
@@ -1293,9 +1293,9 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(only)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not contain only (1, 2, 3) and not contain (3))
@@ -1307,7 +1307,7 @@ final class NotWord {
       def matcher[T](implicit sequencing: Sequencing[T]): Matcher[T] = {
         new Matcher[T] {
           def apply(left: T): MatchResult = {
-        
+
             val right = inOrderOnly.right
 
             MatchResult(
@@ -1323,9 +1323,9 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(inOrderOnly)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not contain allOf (1, 2, 3) and not contain (3))
@@ -1337,7 +1337,7 @@ final class NotWord {
       def matcher[T](implicit aggregating: Aggregating[T]): Matcher[T] = {
         new Matcher[T] {
           def apply(left: T): MatchResult = {
-        
+
             val right = allOf.right
 
             MatchResult(
@@ -1383,9 +1383,9 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(allElementsOf)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not contain inOrder (1, 2, 3) and not contain (3))
@@ -1397,7 +1397,7 @@ final class NotWord {
       def matcher[T](implicit sequencing: Sequencing[T]): Matcher[T] = {
         new Matcher[T] {
           def apply(left: T): MatchResult = {
-        
+
             val right = inOrder.right
 
             MatchResult(
@@ -1443,9 +1443,9 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(inOrderElementsOf)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Array(1, 2) should (not contain atMostOneOf (5) and not contain (3))
@@ -1457,7 +1457,7 @@ final class NotWord {
       def matcher[T](implicit aggregating: Aggregating[T]): Matcher[T] = {
         new Matcher[T] {
           def apply(left: T): MatchResult = {
-        
+
             val right = atMostOneOf.right
 
             MatchResult(
@@ -1503,9 +1503,9 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(atMostOneElementOf)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Map("one" -&gt; 1, "two" -&gt; 2) should (not contain key ("three"))
@@ -1533,7 +1533,7 @@ final class NotWord {
   }
 
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * Map("one" -&gt; 1, "two" -&gt; 2) should (not contain value (3))
@@ -1559,9 +1559,9 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(resultOfValueWordApplication)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should (not contain a (passedMarks) and contain a (validMarks)))
@@ -1574,7 +1574,7 @@ final class NotWord {
         val aMatcher = resultOfAWordApplication.aMatcher
         val matched = left.find(aMatcher(_).matches)
         MatchResult(
-          !matched.isDefined, 
+          !matched.isDefined,
           Resources.rawContainedA,
           Resources.rawDidNotContainA,
           Vector(left, UnquotedString(aMatcher.nounName), UnquotedString(if (matched.isDefined) aMatcher(matched.get).negatedFailureMessage(Prettifier.default) else "-")),
@@ -1584,9 +1584,9 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(resultOfAWordApplication)
     }
   }
-  
+
   /**
-   * This method enables the following syntax: 
+   * This method enables the following syntax:
    *
    * <pre class="stHighlight">
    * result should (not contain an (passedMarks) and contain an (validMarks)))
@@ -1599,7 +1599,7 @@ final class NotWord {
         val anMatcher = resultOfAnWordApplication.anMatcher
         val matched = left.find(anMatcher(_).matches)
         MatchResult(
-          !matched.isDefined, 
+          !matched.isDefined,
           Resources.rawContainedAn,
           Resources.rawDidNotContainAn,
           Vector(left, UnquotedString(anMatcher.nounName), UnquotedString(if (matched.isDefined) anMatcher(matched.get).negatedFailureMessage(Prettifier.default) else "-")),
@@ -1609,7 +1609,7 @@ final class NotWord {
       override def toString: String = "not contain " + Prettifier.default(resultOfAnWordApplication)
     }
   }
-  
+
   /**
    * Overrides toString to return "not"
    */

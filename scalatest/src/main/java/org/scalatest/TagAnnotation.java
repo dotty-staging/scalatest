@@ -15,7 +15,7 @@
  */
 package org.scalatest;
 
-import java.lang.annotation.*; 
+import java.lang.annotation.*;
 
 /**
  * Annotation used to annotate annotation interfaces that define tags for ScalaTest tests.
@@ -34,8 +34,8 @@ import java.lang.annotation.*;
  * <pre>
  * package com.mycompany.myproject.testing.tags;
  *
- * import java.lang.annotation.*; 
- * import org.scalatest.TagAnnotation * 
+ * import java.lang.annotation.*;
+ * import org.scalatest.TagAnnotation *
  *
  * @TagAnnotation
  * @Retention(RetentionPolicy.RUNTIME)

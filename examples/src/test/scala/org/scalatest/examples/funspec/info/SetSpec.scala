@@ -19,7 +19,7 @@ import collection.mutable
 import org.scalatest._
 
 class SetSpec extends FunSpec with GivenWhenThen {
-  
+
   describe("A mutable Set") {
     it("should allow an element to be added") {
       Given("an empty mutable Set")

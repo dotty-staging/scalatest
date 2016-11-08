@@ -96,4 +96,4 @@ class TableDrivenPropertyCheckFailedExceptionSpec extends FunSpec with Matchers 
     }
   }
 }
- 
+

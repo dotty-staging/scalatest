@@ -19,23 +19,23 @@ import org.scalatest._
 import Matchers._
 
 class ResultOfTheSameElementsInOrderAsApplicationSpec extends FunSpec {
-  
+
   describe("ResultOfTheSameElementsInOrderAsApplication ") {
-    
+
     it("should have pretty toString when right is empty") {
       val result = new ResultOfTheSameElementsInOrderAsApplication(Vector.empty)
       result.toString should be ("theSameElementsInOrderAs (Vector())")
     }
-    
+
     it("should have pretty toString when right contains 1 element") {
       val result = new ResultOfTheSameElementsInOrderAsApplication(Vector("Bob"))
       result.toString should be ("theSameElementsInOrderAs (Vector(\"Bob\"))")
     }
-    
+
     it("should have pretty toString when right contains > 1 elements") {
       val result = new ResultOfTheSameElementsInOrderAsApplication(Vector("Bob", "Alice"))
       result.toString should be ("theSameElementsInOrderAs (Vector(\"Bob\", \"Alice\"))")
     }
   }
-  
+
 }

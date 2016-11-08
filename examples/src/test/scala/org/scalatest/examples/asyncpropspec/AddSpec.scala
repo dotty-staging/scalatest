@@ -24,7 +24,7 @@ class AddSpec extends AsyncPropSpec with TableDrivenPropertyChecks {
 
   val examples =
     Table(
-      ("a", "b", "sum"), 
+      ("a", "b", "sum"),
       (1, 2, 3),
       (2, 3, 5),
       (3, 4, 7)
@@ -47,7 +47,7 @@ class AddSpec extends AsyncPropSpec with TableDrivenPropertyChecks {
       val futureSum: Future[Int] = addSoon(a, b)
       futureSum map { sum => assert(sum == expectedSum) }
     }
-  } 
+  }
 
   def addNow(addends: Int*): Int = addends.sum
 

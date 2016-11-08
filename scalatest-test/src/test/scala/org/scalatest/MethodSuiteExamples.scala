@@ -33,14 +33,14 @@ trait MethodSuiteExamples extends Tables {
   def junitSuite: JUnitSuite with FixtureServices
   def testngSuite: TestNGSuite with FixtureServices
   // SKIP-SCALATESTJS-END
-  
+
   def examples =
     Table[Suite with FixtureServices](
       // SKIP-SCALATESTJS-START
       "suite",
       spec,
-      fixtureSpec, 
-      junit3Suite, 
+      fixtureSpec,
+      junit3Suite,
       junitSuite,
       testngSuite
       // SKIP-SCALATESTJS-END

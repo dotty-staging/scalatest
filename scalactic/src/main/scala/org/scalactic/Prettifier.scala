@@ -22,7 +22,7 @@ import scala.xml
 
 /**
  * A function that given any object will produce a &ldquo;pretty&rdquo; string representation of that object,
- * where &ldquo;pretty&rdquo; is in the eye of the implementer. 
+ * where &ldquo;pretty&rdquo; is in the eye of the implementer.
  *
  * <p>
  * Scala's <code>Any</code> type declares a <code>toString</code> that will convert any object to a <code>String</code>
@@ -46,7 +46,7 @@ import scala.xml
  * </pre>
  *
  * <p>
- * To make it quicker to figure out why the assertion failed, ScalaTest <em>prettifies</em> the objects involved in 
+ * To make it quicker to figure out why the assertion failed, ScalaTest <em>prettifies</em> the objects involved in
  * the error message. The default <code>Prettifier</code> will place double quotes on either side of a <code>String</code>s
  * <code>toString</code> result:
  * </p>
@@ -144,7 +144,7 @@ object Prettifier {
     }
 
   /**
-   * A default <code>Prettifier</code>. 
+   * A default <code>Prettifier</code>.
    *
    * <p>
    * This default <code>Prettifier</code> is used in ScalaTest to clarify error messages.
@@ -336,7 +336,7 @@ object Prettifier {
       }
       case _ => (a, b)
     }
-	
+
   private[org] val lineSeparator: String = scala.compat.Platform.EOL
 }
 

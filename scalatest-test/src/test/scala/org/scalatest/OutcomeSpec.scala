@@ -120,14 +120,14 @@ class OutcomeSpec extends FunSpec {
     it("should offer an apply factory method that takes no parameters") {
       val failed = Failed()
       failed.exception match {
-        case tfe: exceptions.TestFailedException => 
+        case tfe: exceptions.TestFailedException =>
           assert(tfe.message === None)
           assert(tfe.cause === None)
           assert(tfe.failedCodeFileName === Some(fileName))
           assert(tfe.failedCodeLineNumber === Some(thisLineNumber - 6))
         case _ => fail(failed.exception + " was not a TestFailedException")
       }
-    } 
+    }
     it("should offer an apply factory method that takes (and simply holds) an exception") {
       val ex = new RuntimeException
       val failed = Failed(ex)
@@ -137,7 +137,7 @@ class OutcomeSpec extends FunSpec {
       val ex = new RuntimeException("I meant to do that!")
       val failed = Failed.here(ex)
       failed.exception match {
-        case tfe: exceptions.TestFailedException => 
+        case tfe: exceptions.TestFailedException =>
           assert(tfe.message === Some("I meant to do that!"))
           assert(tfe.getCause eq ex)
           assert(tfe.failedCodeFileName === Some(fileName))
@@ -148,7 +148,7 @@ class OutcomeSpec extends FunSpec {
     it("should offer an apply factory method that takes a message") {
       val failed = Failed("Oops!")
       failed.exception match {
-        case tfe: exceptions.TestFailedException => 
+        case tfe: exceptions.TestFailedException =>
           assert(tfe.message === Some("Oops!"))
           assert(tfe.cause === None)
           assert(tfe.failedCodeFileName === Some(fileName))
@@ -160,7 +160,7 @@ class OutcomeSpec extends FunSpec {
       val ex = new RuntimeException
       val failed = Failed("Oops!", ex)
       failed.exception match {
-        case tfe: exceptions.TestFailedException => 
+        case tfe: exceptions.TestFailedException =>
           assert(tfe.message === Some("Oops!"))
           assert(tfe.cause === Some(ex))
           assert(tfe.failedCodeFileName === Some(fileName))
@@ -209,7 +209,7 @@ class OutcomeSpec extends FunSpec {
     it("should offer an apply factory method that takes no parameters") {
       val canceled = Canceled()
       canceled.exception match {
-        case tce: exceptions.TestCanceledException => 
+        case tce: exceptions.TestCanceledException =>
           assert(tce.message === None)
           assert(tce.cause === None)
           assert(tce.failedCodeFileName === Some(fileName))
@@ -241,7 +241,7 @@ class OutcomeSpec extends FunSpec {
       val ex = new RuntimeException("I meant to do that!")
       val canceled = Canceled.here(ex)
       canceled.exception match {
-        case tfe: exceptions.TestCanceledException => 
+        case tfe: exceptions.TestCanceledException =>
           assert(tfe.message === Some("I meant to do that!"))
           assert(tfe.getCause eq ex)
           assert(tfe.failedCodeFileName === Some(fileName))
@@ -252,7 +252,7 @@ class OutcomeSpec extends FunSpec {
     it("should offer an apply factory method that takes a message") {
       val canceled = Canceled("Oops!")
       canceled.exception match {
-        case tfe: exceptions.TestCanceledException => 
+        case tfe: exceptions.TestCanceledException =>
           assert(tfe.message === Some("Oops!"))
           assert(tfe.cause === None)
           assert(tfe.failedCodeFileName === Some(fileName))
@@ -264,7 +264,7 @@ class OutcomeSpec extends FunSpec {
       val ex = new RuntimeException
       val canceled = Canceled("Oops!", ex)
       canceled.exception match {
-        case tfe: exceptions.TestCanceledException => 
+        case tfe: exceptions.TestCanceledException =>
           assert(tfe.message === Some("Oops!"))
           assert(tfe.cause === Some(ex))
           assert(tfe.failedCodeFileName === Some(fileName))
@@ -294,15 +294,15 @@ class OutcomeSpec extends FunSpec {
     }
     // SKIP-SCALATESTJS-END
   }
-  
+
   describe("The Outcome's toSucceeded method") {
-    
+
     it("should return itself when it is Succeeded") {
       val outcome: Outcome = Succeeded
       val result = outcome.toSucceeded
       assert(result eq outcome)
     }
-    
+
     it("should throw the containing exception when it is Failed") {
       val tfe = new exceptions.TestFailedException((_: StackDepthException) => Some("boom!"), None, source.Position.here)
       val outcome1: Outcome = Failed(tfe)
@@ -310,7 +310,7 @@ class OutcomeSpec extends FunSpec {
         outcome1.toSucceeded
       }
       assert(e1 eq tfe)
-      
+
       val re = new RuntimeException("boom!")
       val outcome2: Outcome = Failed(re)
       val e2 = intercept[RuntimeException] {
@@ -326,7 +326,7 @@ class OutcomeSpec extends FunSpec {
         outcome1.toSucceeded
       }
       assert(e1 eq tce)
-      
+
       val re = new RuntimeException("boom!")
       val outcome2: Outcome = Canceled(re)
       val e2 = intercept[exceptions.TestCanceledException] {

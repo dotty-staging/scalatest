@@ -24,44 +24,44 @@ import org.scalactic.Prettifier
 class ShouldBeEmptyExplicitSpec extends FunSpec {
 
   private val prettifier = Prettifier.default
-  
+
   trait Thing {
     def isEmpty: Boolean
   }
-  
+
   val nonEmptyThing = new Thing {
     val isEmpty = false
   }
   val emptyThing = new Thing {
     val isEmpty = true
   }
-  
+
   val emptiness: Emptiness[Thing] =
     new Emptiness[Thing] {
       def isEmpty(thing: Thing): Boolean = thing.isEmpty
     }
-  
+
   val fileName: String = "ShouldBeEmptyExplicitSpec.scala"
-    
-  def wasNotEmpty(left: Any): String = 
+
+  def wasNotEmpty(left: Any): String =
     FailureMessages.wasNotEmpty(prettifier, left)
-    
-  def wasEmpty(left: Any): String = 
+
+  def wasEmpty(left: Any): String =
     FailureMessages.wasEmpty(prettifier, left)
-  
+
   def allError(left: Any, message: String, lineNumber: Int): String = {
     val messageWithIndex = UnquotedString("  " + FailureMessages.forAssertionsGenTraversableMessageWithStackDepth(prettifier, 0, UnquotedString(message), UnquotedString(fileName + ":" + lineNumber)))
     FailureMessages.allShorthandFailed(prettifier, messageWithIndex, left)
   }
-  
+
   describe("Empty matcher") {
-    
+
     describe("when work with 'list should be (empty)'") {
-      
+
       it("should do nothing when list is empty") {
         (emptyThing should be (empty)) (emptiness)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when list is not empty") {
         val caught1 = intercept[TestFailedException] {
           (nonEmptyThing should be (empty)) (emptiness)
@@ -70,15 +70,15 @@ class ShouldBeEmptyExplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'list should not be empty'") {
-      
+
       it("should do nothing when list is not empty") {
         (nonEmptyThing should not be empty) (emptiness)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when list is empty") {
         val caught1 = intercept[TestFailedException] {
           (emptyThing should not be empty) (emptiness)
@@ -88,13 +88,13 @@ class ShouldBeEmptyExplicitSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'list shouldBe empty'") {
-      
+
       it("should do nothing when list is empty") {
         (emptyThing shouldBe empty) (emptiness)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when list is not empty") {
         val caught1 = intercept[TestFailedException] {
           (nonEmptyThing shouldBe empty) (emptiness)
@@ -103,15 +103,15 @@ class ShouldBeEmptyExplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'list shouldNot be (empty)'") {
-      
+
       it("should do nothing when list is not empty") {
         (nonEmptyThing shouldNot be (empty)) (emptiness)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when list is empty") {
         val caught1 = intercept[TestFailedException] {
           (emptyThing shouldNot be (empty)) (emptiness)
@@ -120,15 +120,15 @@ class ShouldBeEmptyExplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) should be (empty)'") {
-      
+
       it("should do nothing when all(xs) is empty") {
         (all(List(emptyThing)) should be (empty)) (emptiness)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is not empty") {
         val left1 = List(nonEmptyThing)
         val caught1 = intercept[TestFailedException] {
@@ -138,15 +138,15 @@ class ShouldBeEmptyExplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) should not be empty'") {
-      
+
       it("should do nothing when all(xs) is not empty") {
         (all(List(nonEmptyThing)) should not be empty) (emptiness)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is empty") {
         val left1 = List(emptyThing)
         val caught1 = intercept[TestFailedException] {
@@ -156,15 +156,15 @@ class ShouldBeEmptyExplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
-    
+
     describe("when work with 'all(xs) shouldBe empty'") {
-      
+
       it("should do nothing when all(xs) is empty") {
         (all(List(emptyThing)) shouldBe empty) (emptiness)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is not empty") {
         val left1 = List(nonEmptyThing)
         val caught1 = intercept[TestFailedException] {
@@ -175,13 +175,13 @@ class ShouldBeEmptyExplicitSpec extends FunSpec {
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
     }
-    
+
     describe("when work with 'all(xs) shouldNot be (empty)'") {
-      
+
       it("should do nothing when all(xs) is not empty") {
         (all(List(nonEmptyThing)) shouldNot be (empty)) (emptiness)
       }
-      
+
       it("should throw TestFailedException with correct stack depth when all(xs) is empty") {
         val left1 = List(emptyThing)
         val caught1 = intercept[TestFailedException] {
@@ -191,8 +191,8 @@ class ShouldBeEmptyExplicitSpec extends FunSpec {
         assert(caught1.failedCodeFileName === Some(fileName))
         assert(caught1.failedCodeLineNumber === Some(thisLineNumber - 4))
       }
-      
+
     }
   }
-  
+
 }
