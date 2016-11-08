@@ -81,7 +81,7 @@ sealed abstract class Event extends Ordered[Event] with Product with Serializabl
   /**
    *
    */
-  private [scalatest] def toXml: Elem
+  private [scalatest] def toXml: Elem = new scala.xml.Elem(null, "PLACEHOLDER", scala.xml.Null, scala.xml.TopScope)
 
   private[events] object EventXmlHelper {
     def stringOption(strOption: Option[String]) = strOption.getOrElse("")
@@ -89,41 +89,42 @@ sealed abstract class Event extends Ordered[Event] with Product with Serializabl
     def booleanOption(booleanOption: Option[Boolean]) = if (booleanOption.isDefined) booleanOption.get.toString else ""
     def formatterOption(formatterOption: Option[Formatter]) = {
       formatterOption match {
-        case Some(formatter) =>
-          formatter match {
-            case MotionToSuppress =>
-              <MotionToSuppress/>
-            case indentedText: IndentedText =>
-              <IndentedText>
-                 <formattedText>{ indentedText.formattedText }</formattedText>
-                 <rawText>{ indentedText.rawText }</rawText>
-                 <indentationLevel>{ indentedText.indentationLevel }</indentationLevel>
-              </IndentedText>
-          }
-        case None => ""
+        // case Some(formatter) =>
+        //   formatter match {
+        //     case MotionToSuppress =>
+        //       <MotionToSuppress/>
+        //     case indentedText: IndentedText =>
+        //       <IndentedText>
+        //          <formattedText>{ indentedText.formattedText }</formattedText>
+        //          <rawText>{ indentedText.rawText }</rawText>
+        //          <indentationLevel>{ indentedText.indentationLevel }</indentationLevel>
+        //       </IndentedText>
+        //   }
+        // case None => ""
+        case _ => ""
       }
     }
     def locationOption(locationOption: Option[Location]) = {
       locationOption match {
         case Some(location) =>
           location match {
-            case topOfClass: TopOfClass =>
-              <TopOfClass>
-                <className>{ topOfClass.className }</className>
-              </TopOfClass>
-            case topOfMethod: TopOfMethod =>
-              <TopOfMethod>
-                <className>{ topOfMethod.className }</className>
-                <methodId>{ topOfMethod.methodId }</methodId>
-              </TopOfMethod>
-            case lineInFile: LineInFile =>
-              <LineInFile>
-                <lineNumber>{ lineInFile.lineNumber }</lineNumber>
-                <fileName>{ lineInFile.fileName }</fileName>
-                <filePathname>{ filePathnameOption(lineInFile.filePathname) }</filePathname>
-              </LineInFile>
-            case SeeStackDepthException =>
-                <SeeStackDepthException />
+            // case topOfClass: TopOfClass =>
+            //   <TopOfClass>
+            //     <className>{ topOfClass.className }</className>
+            //   </TopOfClass>
+            // case topOfMethod: TopOfMethod =>
+            //   <TopOfMethod>
+            //     <className>{ topOfMethod.className }</className>
+            //     <methodId>{ topOfMethod.methodId }</methodId>
+            //   </TopOfMethod>
+            // case lineInFile: LineInFile =>
+            //   <LineInFile>
+            //     <lineNumber>{ lineInFile.lineNumber }</lineNumber>
+            //     <fileName>{ lineInFile.fileName }</fileName>
+            //     <filePathname>{ filePathnameOption(lineInFile.filePathname) }</filePathname>
+            //   </LineInFile>
+            // case SeeStackDepthException =>
+            //     <SeeStackDepthException />
             case _ =>
               ""
           }
@@ -144,55 +145,58 @@ sealed abstract class Event extends Ordered[Event] with Product with Serializabl
     }
     def throwableOption(throwableOption: Option[Throwable]) = {
       throwableOption match {
-        case Some(throwable) =>
-          <message>{ throwable.getMessage }</message>
-          <depth>{ getThrowableStackDepth(throwable) }</depth>
-          <stackTraces>
-            {
-              val stackTraces = throwable.getStackTrace
-              for (stackTrace <- stackTraces) yield {
-                <stackTrace>
-                  <className>{ stackTrace.getClassName }</className>
-                  <methodName>{ stackTrace.getMethodName }</methodName>
-                  <fileName>{ stackTrace.getFileName }</fileName>
-                  <lineNumber>{ stackTrace.getLineNumber }</lineNumber>
-                  <isNative>{ stackTrace.isNativeMethod }</isNative>
-                  <toString>{ stackTrace.toString }</toString>
-                </stackTrace>
-              }
-              /*val stringWriter = new StringWriter()
-              val writer = new PrintWriter(new BufferedWriter(stringWriter))
-              throwable.printStackTrace(writer)
-              writer.flush()
-              stringWriter.toString*/
-            }
-          </stackTraces>
-        case None => ""
+        // case Some(throwable) =>
+        //   <message>{ throwable.getMessage }</message>
+        //   <depth>{ getThrowableStackDepth(throwable) }</depth>
+        //   <stackTraces>
+        //     {
+        //       val stackTraces = throwable.getStackTrace
+        //       for (stackTrace <- stackTraces) yield {
+        //         <stackTrace>
+        //           <className>{ stackTrace.getClassName }</className>
+        //           <methodName>{ stackTrace.getMethodName }</methodName>
+        //           <fileName>{ stackTrace.getFileName }</fileName>
+        //           <lineNumber>{ stackTrace.getLineNumber }</lineNumber>
+        //           <isNative>{ stackTrace.isNativeMethod }</isNative>
+        //           <toString>{ stackTrace.toString }</toString>
+        //         </stackTrace>
+        //       }
+        //       /*val stringWriter = new StringWriter()
+        //       val writer = new PrintWriter(new BufferedWriter(stringWriter))
+        //       throwable.printStackTrace(writer)
+        //       writer.flush()
+        //       stringWriter.toString*/
+        //     }
+        //   </stackTraces>
+        // case None => ""
+        case _ => ""
       }
     }
     def summaryOption(summaryOption: Option[Summary]) = {
       summaryOption match {
-        case Some(summary) =>
-          <testsSucceededCount>{ summary.testsSucceededCount }</testsSucceededCount>
-          <testsFailedCount>{ summary.testsFailedCount }</testsFailedCount>
-          <testsIgnoredCount>{ summary.testsIgnoredCount }</testsIgnoredCount>
-          <testsPendingCount>{ summary.testsPendingCount }</testsPendingCount>
-          <testsCanceledCount>{ summary.testsCanceledCount }</testsCanceledCount>
-          <suitesCompletedCount>{ summary.suitesCompletedCount }</suitesCompletedCount>
-          <suitesAbortedCount>{ summary.suitesAbortedCount }</suitesAbortedCount>
-          <scopesPendingCount>{ summary.scopesPendingCount }</scopesPendingCount>
-        case None => ""
+        // case Some(summary) =>
+        //   <testsSucceededCount>{ summary.testsSucceededCount }</testsSucceededCount>
+        //   <testsFailedCount>{ summary.testsFailedCount }</testsFailedCount>
+        //   <testsIgnoredCount>{ summary.testsIgnoredCount }</testsIgnoredCount>
+        //   <testsPendingCount>{ summary.testsPendingCount }</testsPendingCount>
+        //   <testsCanceledCount>{ summary.testsCanceledCount }</testsCanceledCount>
+        //   <suitesCompletedCount>{ summary.suitesCompletedCount }</suitesCompletedCount>
+        //   <suitesAbortedCount>{ summary.suitesAbortedCount }</suitesAbortedCount>
+        //   <scopesPendingCount>{ summary.scopesPendingCount }</scopesPendingCount>
+        // case None => ""
+        case _ => ""
       }
     }
     def nameInfoOption(nameInfoOption: Option[NameInfo]) = {
       nameInfoOption match {
-        case Some(nameInfo) =>
-          <suiteName>{ nameInfo.suiteName }</suiteName>
-          <suiteId>{ nameInfo.suiteId }</suiteId>
-          <suiteClassName>{ stringOption(nameInfo.suiteClassName) }</suiteClassName>
-          <testName>{ stringOption(nameInfo.testName) }</testName>
-        case None =>
-          ""
+        // case Some(nameInfo) =>
+        //   <suiteName>{ nameInfo.suiteName }</suiteName>
+        //   <suiteId>{ nameInfo.suiteId }</suiteId>
+        //   <suiteClassName>{ stringOption(nameInfo.suiteClassName) }</suiteClassName>
+        //   <testName>{ stringOption(nameInfo.testName) }</testName>
+        // case None =>
+        //   ""
+        case _ => ""
       }
     }
   }
@@ -286,22 +290,22 @@ final case class TestStarting (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <TestStarting>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <suiteName>{ suiteName }</suiteName>
-      <suiteId>{ suiteId }</suiteId>
-      <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
-      <testName>{ testName }</testName>
-      <testText>{ testText }</testText>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <rerunner>{ stringOption(rerunner) }</rerunner>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </TestStarting>
+  // private [scalatest] def toXml =
+  //   <TestStarting>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <suiteName>{ suiteName }</suiteName>
+  //     <suiteId>{ suiteId }</suiteId>
+  //     <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
+  //     <testName>{ testName }</testName>
+  //     <testText>{ testText }</testText>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <rerunner>{ stringOption(rerunner) }</rerunner>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </TestStarting>
 }
 
 /**
@@ -383,24 +387,24 @@ final case class TestSucceeded (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <TestSucceeded>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <suiteName>{ suiteName }</suiteName>
-      <suiteId>{ suiteId }</suiteId>
-      <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
-      <duration>{ longOption(duration) }</duration>
-      <testName>{ testName }</testName>
-      <testText>{ testText }</testText>
-      <recordedEvents>{ recordedEvents.map(_.toXml) }</recordedEvents>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <rerunner>{ stringOption(rerunner) }</rerunner>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </TestSucceeded>
+  // private [scalatest] def toXml =
+  //   <TestSucceeded>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <suiteName>{ suiteName }</suiteName>
+  //     <suiteId>{ suiteId }</suiteId>
+  //     <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
+  //     <duration>{ longOption(duration) }</duration>
+  //     <testName>{ testName }</testName>
+  //     <testText>{ testText }</testText>
+  //     <recordedEvents>{ recordedEvents.map(_.toXml) }</recordedEvents>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <rerunner>{ stringOption(rerunner) }</rerunner>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </TestSucceeded>
 }
 
 /**
@@ -488,26 +492,26 @@ final case class TestFailed (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <TestFailed>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <message>{ message }</message>
-      <suiteName>{ suiteName }</suiteName>
-      <suiteId>{ suiteId }</suiteId>
-      <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
-      <duration>{ longOption(duration) }</duration>
-      <testName>{ testName }</testName>
-      <testText>{ testText }</testText>
-      <recordedEvents>{ recordedEvents.map(_.toXml) }</recordedEvents>
-      <throwable>{ throwableOption(throwable) }</throwable>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <rerunner>{ stringOption(rerunner) }</rerunner>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </TestFailed>
+  // private [scalatest] def toXml =
+  //   <TestFailed>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <message>{ message }</message>
+  //     <suiteName>{ suiteName }</suiteName>
+  //     <suiteId>{ suiteId }</suiteId>
+  //     <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
+  //     <duration>{ longOption(duration) }</duration>
+  //     <testName>{ testName }</testName>
+  //     <testText>{ testText }</testText>
+  //     <recordedEvents>{ recordedEvents.map(_.toXml) }</recordedEvents>
+  //     <throwable>{ throwableOption(throwable) }</throwable>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <rerunner>{ stringOption(rerunner) }</rerunner>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </TestFailed>
 }
 
 /**
@@ -580,21 +584,21 @@ final case class TestIgnored (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <TestIgnored>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <suiteName>{ suiteName }</suiteName>
-      <suiteId>{ suiteId }</suiteId>
-      <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
-      <testName>{ testName }</testName>
-      <testText>{ testText }</testText>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </TestIgnored>
+  // private [scalatest] def toXml =
+  //   <TestIgnored>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <suiteName>{ suiteName }</suiteName>
+  //     <suiteId>{ suiteId }</suiteId>
+  //     <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
+  //     <testName>{ testName }</testName>
+  //     <testText>{ testText }</testText>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </TestIgnored>
 }
 
 /**
@@ -666,23 +670,23 @@ final case class TestPending (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <TestPending>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <suiteName>{ suiteName }</suiteName>
-      <suiteId>{ suiteId }</suiteId>
-      <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
-      <duration>{ longOption(duration) }</duration>
-      <testName>{ testName }</testName>
-      <testText>{ testText }</testText>
-      <recordedEvents>{ recordedEvents.map(_.toXml) }</recordedEvents>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </TestPending>
+  // private [scalatest] def toXml =
+  //   <TestPending>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <suiteName>{ suiteName }</suiteName>
+  //     <suiteId>{ suiteId }</suiteId>
+  //     <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
+  //     <duration>{ longOption(duration) }</duration>
+  //     <testName>{ testName }</testName>
+  //     <testText>{ testText }</testText>
+  //     <recordedEvents>{ recordedEvents.map(_.toXml) }</recordedEvents>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </TestPending>
 }
 
 /**
@@ -765,26 +769,26 @@ final case class TestCanceled (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <TestCanceled>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <message>{ message }</message>
-      <suiteName>{ suiteName }</suiteName>
-      <suiteId>{ suiteId }</suiteId>
-      <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
-      <duration>{ longOption(duration) }</duration>
-      <testName>{ testName }</testName>
-      <testText>{ testText }</testText>
-      <recordedEvents>{ recordedEvents.map(_.toXml) }</recordedEvents>
-      <throwable>{ throwableOption(throwable) }</throwable>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <rerunner>{ stringOption(rerunner) }</rerunner>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </TestCanceled>
+  // private [scalatest] def toXml =
+  //   <TestCanceled>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <message>{ message }</message>
+  //     <suiteName>{ suiteName }</suiteName>
+  //     <suiteId>{ suiteId }</suiteId>
+  //     <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
+  //     <duration>{ longOption(duration) }</duration>
+  //     <testName>{ testName }</testName>
+  //     <testText>{ testText }</testText>
+  //     <recordedEvents>{ recordedEvents.map(_.toXml) }</recordedEvents>
+  //     <throwable>{ throwableOption(throwable) }</throwable>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <rerunner>{ stringOption(rerunner) }</rerunner>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </TestCanceled>
 }
 
 /**
@@ -854,20 +858,20 @@ final case class SuiteStarting (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <SuiteStarting>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <suiteName>{ suiteName }</suiteName>
-      <suiteId>{ suiteId }</suiteId>
-      <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <rerunner>{ stringOption(rerunner) }</rerunner>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </SuiteStarting>
+  // private [scalatest] def toXml =
+  //   <SuiteStarting>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <suiteName>{ suiteName }</suiteName>
+  //     <suiteId>{ suiteId }</suiteId>
+  //     <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <rerunner>{ stringOption(rerunner) }</rerunner>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </SuiteStarting>
 }
 
 /**
@@ -941,21 +945,21 @@ final case class SuiteCompleted (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <SuiteCompleted>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <suiteName>{ suiteName }</suiteName>
-      <suiteId>{ suiteId }</suiteId>
-      <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
-      <duration>{ longOption(duration) }</duration>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <rerunner>{ stringOption(rerunner) }</rerunner>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </SuiteCompleted>
+  // private [scalatest] def toXml =
+  //   <SuiteCompleted>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <suiteName>{ suiteName }</suiteName>
+  //     <suiteId>{ suiteId }</suiteId>
+  //     <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
+  //     <duration>{ longOption(duration) }</duration>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <rerunner>{ stringOption(rerunner) }</rerunner>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </SuiteCompleted>
 }
 
 /**
@@ -1038,23 +1042,23 @@ final case class SuiteAborted (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <SuiteAborted>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <message>{ message }</message>
-      <suiteName>{ suiteName }</suiteName>
-      <suiteId>{ suiteId }</suiteId>
-      <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
-      <duration>{ longOption(duration) }</duration>
-      <throwable>{ throwableOption(throwable) }</throwable>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <rerunner>{ stringOption(rerunner) }</rerunner>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </SuiteAborted>
+  // private [scalatest] def toXml =
+  //   <SuiteAborted>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <message>{ message }</message>
+  //     <suiteName>{ suiteName }</suiteName>
+  //     <suiteId>{ suiteId }</suiteId>
+  //     <suiteClassName>{ stringOption(suiteClassName) }</suiteClassName>
+  //     <duration>{ longOption(duration) }</duration>
+  //     <throwable>{ throwableOption(throwable) }</throwable>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <rerunner>{ stringOption(rerunner) }</rerunner>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </SuiteAborted>
 }
 
 /**
@@ -1113,27 +1117,27 @@ final case class RunStarting (
     throw new IllegalArgumentException("testCount was less than zero: " + testCount)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <RunStarting>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <testCount>{ testCount }</testCount>
-      <configMap>
-        {
-          for ((key, value) <- configMap) yield {
-            <entry>
-              <key>{ key }</key>
-              <value>{ value }</value>
-            </entry>
-          }
-        }
-      </configMap>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </RunStarting>
+//   private [scalatest] def toXml =
+//     <RunStarting>
+//       <ordinal>
+//         <runStamp>{ ordinal.runStamp }</runStamp>
+//       </ordinal>
+//       <testCount>{ testCount }</testCount>
+//       <configMap>
+//         {
+//           for ((key, value) <- configMap) yield {
+//             <entry>
+//               <key>{ key }</key>
+//               <value>{ value }</value>
+//             </entry>
+//           }
+//         }
+//       </configMap>
+//       <formatter>{ formatterOption(formatter) }</formatter>
+//       <location>{ locationOption(location) }</location>
+//       <threadName>{ threadName }</threadName>
+//       <timeStamp>{ timeStamp }</timeStamp>
+//     </RunStarting>
 }
 
 /**
@@ -1204,18 +1208,18 @@ final case class RunCompleted (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <RunCompleted>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <duration>{ longOption(duration) }</duration>
-      <summary>{ summaryOption(summary) }</summary>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </RunCompleted>
+  // private [scalatest] def toXml =
+  //   <RunCompleted>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <duration>{ longOption(duration) }</duration>
+  //     <summary>{ summaryOption(summary) }</summary>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </RunCompleted>
 }
 
 /**
@@ -1287,18 +1291,18 @@ final case class RunStopped (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <RunStopped>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <duration>{ longOption(duration) }</duration>
-      <summary>{ summaryOption(summary) }</summary>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </RunStopped>
+  // private [scalatest] def toXml =
+  //   <RunStopped>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <duration>{ longOption(duration) }</duration>
+  //     <summary>{ summaryOption(summary) }</summary>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </RunStopped>
 }
 
 /**
@@ -1367,20 +1371,20 @@ final case class RunAborted (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <RunAborted>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <message>{ message }</message>
-      <throwable>{ throwableOption(throwable) }</throwable>
-      <duration>{ longOption(duration) }</duration>
-      <summary>{ summaryOption(summary) }</summary>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </RunAborted>
+  // private [scalatest] def toXml =
+  //   <RunAborted>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <message>{ message }</message>
+  //     <throwable>{ throwableOption(throwable) }</throwable>
+  //     <duration>{ longOption(duration) }</duration>
+  //     <summary>{ summaryOption(summary) }</summary>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </RunAborted>
 }
 
 /**
@@ -1443,19 +1447,19 @@ final case class InfoProvided (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <InfoProvided>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <message>{ message }</message>
-      <nameInfo>{ nameInfoOption(nameInfo) }</nameInfo>
-      <throwable>{ throwableOption(throwable) }</throwable>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </InfoProvided>
+  // private [scalatest] def toXml =
+  //   <InfoProvided>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <message>{ message }</message>
+  //     <nameInfo>{ nameInfoOption(nameInfo) }</nameInfo>
+  //     <throwable>{ throwableOption(throwable) }</throwable>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </InfoProvided>
 }
 
 /**
@@ -1528,19 +1532,19 @@ final case class AlertProvided (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <AlertProvided>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <message>{ message }</message>
-      <nameInfo>{ nameInfoOption(nameInfo) }</nameInfo>
-      <throwable>{ throwableOption(throwable) }</throwable>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </AlertProvided>
+  // private [scalatest] def toXml =
+  //   <AlertProvided>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <message>{ message }</message>
+  //     <nameInfo>{ nameInfoOption(nameInfo) }</nameInfo>
+  //     <throwable>{ throwableOption(throwable) }</throwable>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </AlertProvided>
 }
 
 /**
@@ -1613,19 +1617,19 @@ final case class NoteProvided (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <NoteProvided>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <message>{ message }</message>
-      <nameInfo>{ nameInfoOption(nameInfo) }</nameInfo>
-      <throwable>{ throwableOption(throwable) }</throwable>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </NoteProvided>
+  // private [scalatest] def toXml =
+  //   <NoteProvided>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <message>{ message }</message>
+  //     <nameInfo>{ nameInfoOption(nameInfo) }</nameInfo>
+  //     <throwable>{ throwableOption(throwable) }</throwable>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </NoteProvided>
 }
 
 /**
@@ -1684,18 +1688,18 @@ final case class MarkupProvided (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <MarkupProvided>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <text>{ text }</text>
-      <nameInfo>{ nameInfoOption(nameInfo) }</nameInfo>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </MarkupProvided>
+  // private [scalatest] def toXml =
+  //   <MarkupProvided>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <text>{ text }</text>
+  //     <nameInfo>{ nameInfoOption(nameInfo) }</nameInfo>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </MarkupProvided>
 }
 
 /**
@@ -1752,18 +1756,18 @@ final case class ScopeOpened (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <ScopeOpened>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <message>{ message }</message>
-      <nameInfo>{ nameInfoOption(if (nameInfo != null) Some(nameInfo) else None) }</nameInfo>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </ScopeOpened>
+  // private [scalatest] def toXml =
+  //   <ScopeOpened>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <message>{ message }</message>
+  //     <nameInfo>{ nameInfoOption(if (nameInfo != null) Some(nameInfo) else None) }</nameInfo>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </ScopeOpened>
 }
 
 /**
@@ -1820,18 +1824,18 @@ final case class ScopeClosed (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <ScopeClosed>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <message>{ message }</message>
-      <nameInfo>{ nameInfoOption(if (nameInfo != null) Some(nameInfo) else None) }</nameInfo>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </ScopeClosed>
+  // private [scalatest] def toXml =
+  //   <ScopeClosed>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <message>{ message }</message>
+  //     <nameInfo>{ nameInfoOption(if (nameInfo != null) Some(nameInfo) else None) }</nameInfo>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </ScopeClosed>
 }
 
 /**
@@ -1886,18 +1890,18 @@ final case class ScopePending (
                  threadName)
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <ScopePending>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <message>{ message }</message>
-      <nameInfo>{ nameInfoOption(if (nameInfo != null) Some(nameInfo) else None) }</nameInfo>
-      <formatter>{ formatterOption(formatter) }</formatter>
-      <location>{ locationOption(location) }</location>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </ScopePending>
+  // private [scalatest] def toXml =
+  //   <ScopePending>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <message>{ message }</message>
+  //     <nameInfo>{ nameInfoOption(if (nameInfo != null) Some(nameInfo) else None) }</nameInfo>
+  //     <formatter>{ formatterOption(formatter) }</formatter>
+  //     <location>{ locationOption(location) }</location>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </ScopePending>
 }
 
 /**
@@ -1938,24 +1942,24 @@ final case class DiscoveryStarting (
    */
   val formatter: Option[Formatter] = None
 
-    private [scalatest] def toXml =
-    <DiscoveryStarting>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <configMap>
-        {
-          for ((key, value) <- configMap) yield {
-            <entry>
-              <key>{ key }</key>
-              <value>{ value }</value>
-            </entry>
-          }
-        }
-      </configMap>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </DiscoveryStarting>
+    // private [scalatest] def toXml =
+    // <DiscoveryStarting>
+    //   <ordinal>
+    //     <runStamp>{ ordinal.runStamp }</runStamp>
+    //   </ordinal>
+    //   <configMap>
+    //     {
+    //       for ((key, value) <- configMap) yield {
+    //         <entry>
+    //           <key>{ key }</key>
+    //           <value>{ value }</value>
+    //         </entry>
+    //       }
+    //     }
+    //   </configMap>
+    //   <threadName>{ threadName }</threadName>
+    //   <timeStamp>{ timeStamp }</timeStamp>
+    // </DiscoveryStarting>
 }
 
 /**
@@ -1997,14 +2001,14 @@ final case class DiscoveryCompleted (
   val formatter: Option[Formatter] = None
 
   import EventXmlHelper._
-  private [scalatest] def toXml =
-    <DiscoveryCompleted>
-      <ordinal>
-        <runStamp>{ ordinal.runStamp }</runStamp>
-      </ordinal>
-      <duration>{ longOption(duration) }</duration>
-      <threadName>{ threadName }</threadName>
-      <timeStamp>{ timeStamp }</timeStamp>
-    </DiscoveryCompleted>
+  // private [scalatest] def toXml =
+  //   <DiscoveryCompleted>
+  //     <ordinal>
+  //       <runStamp>{ ordinal.runStamp }</runStamp>
+  //     </ordinal>
+  //     <duration>{ longOption(duration) }</duration>
+  //     <threadName>{ threadName }</threadName>
+  //     <timeStamp>{ timeStamp }</timeStamp>
+  //   </DiscoveryCompleted>
 }
 

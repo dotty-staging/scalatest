@@ -139,14 +139,14 @@ private[scalatest] class DashboardReporter(directory: String,
   // xml containing all empty elements.
   //
   def getOldSummaryXml: Elem = {
-    if (summaryFile.exists)
+    // if (summaryFile.exists)
       XML.loadFile(summaryFile)
-    else
-      <summary>
-        <runs/>
-        <regressions/>
-        <recentlySlower/>
-      </summary>
+    // else
+    //   <summary>
+    //     <runs/>
+    //     <regressions/>
+    //     <recentlySlower/>
+    //   </summary>
   }
 
   //
@@ -248,7 +248,7 @@ private[scalatest] class DashboardReporter(directory: String,
     //
     def formatRun(id: String, succeeded: String, failed: String,
                   ignored: String, canceled: String, pending: String): String =
-    {
+    """{
       "    <run "     +
       "id=\""         + id         + "\" " +
       "succeeded=\""  + succeeded  + "\" " +
@@ -256,7 +256,7 @@ private[scalatest] class DashboardReporter(directory: String,
       "ignored=\""    + ignored    + "\" " +
       "canceled=\""   + canceled   + "\" " +
       "pending=\""    + pending    + "\" " + "/>\n"
-    }
+    }"""
 
     //
     // Generates the summary file <run> element for the current run.
@@ -325,7 +325,7 @@ private[scalatest] class DashboardReporter(directory: String,
       def formatRegression(suite: Node, test: Node, result: String,
                            lastSucceeded: String, firstRegressed: String):
       String =
-      {
+      """{
         "    <regressedTest " +
         "suiteId=\""        + (suite \ "@id")    + "\" " +
         "suiteName=\""      + (suite \ "@name")  + "\" " +
@@ -333,7 +333,7 @@ private[scalatest] class DashboardReporter(directory: String,
         "status=\""         + result             + "\" " +
         "firstRegressed=\"" + firstRegressed     + "\" " +
         "lastSucceeded=\""  + lastSucceeded      + "\"/>\n"
-      }
+      }"""
 
       //
       // Gets the timestamp of the previous run.
@@ -523,7 +523,7 @@ private[scalatest] class DashboardReporter(directory: String,
     //
     // Formats <summary> element of output xml.
     //
-    def formatSummary(event: Event): String = {
+    def formatSummary(event: Event): String = """{
       val (summaryOption, durationOption) =
         event match {
           case e: RunCompleted => (e.summary, e.duration)
@@ -546,7 +546,7 @@ private[scalatest] class DashboardReporter(directory: String,
       "suitesAbortedCount=\""   + summary.suitesAbortedCount   + "\" " +
       "date=\""                 + formatDate(event.timeStamp)  + "\" " +
       "thread=\""               + event.threadName             + "\"/>\n"
-    }
+    }"""
 
     //
     // Closes out a SuiteRecord.  Gets called upon receipt of a
@@ -614,14 +614,14 @@ private[scalatest] class DashboardReporter(directory: String,
   //
   // Generates xml for a TestIgnored event.
   //
-  def formatTestIgnored(event: TestIgnored): String = {
+  def formatTestIgnored(event: TestIgnored): String = """{
     "<test index=\"" + nextIndex() + "\" " +
     "result=\"ignored\" " +
     "text=\"" + testMessage(event.testName, event.formatter) + "\" " +
     "name=\"" + escape(event.testName) + "\" " +
     "thread=\"" + event.threadName + "\"" +
     "/>\n"
-  }
+  }"""
 
   //
   // Extracts message from specified formatter if there is one, otherwise
@@ -696,7 +696,7 @@ private[scalatest] class DashboardReporter(directory: String,
       //
       // Generates opening <suite ...> element
       //
-      def formatStartOfSuite: String = {
+      def formatStartOfSuite: String = """{
         val duration = endEvent.timeStamp - startEvent.timeStamp
         "\n" +
         "<suite index=\"" + nextIndex()                   + "\" " +
@@ -705,7 +705,7 @@ private[scalatest] class DashboardReporter(directory: String,
         "name=\""         + escape(startEvent.suiteName)  + "\" " +
         "duration=\""     + duration                      + "\" " +
         "thread=\""       + startEvent.threadName         + "\">\n"
-      }
+      }"""
 
       //
       // Indicates whether a test record is currently open during
@@ -815,7 +815,7 @@ private[scalatest] class DashboardReporter(directory: String,
     //
     // Generates initial <test> element of object's xml.
     //
-    def formatTestStart: String = {
+    def formatTestStart: String = """{
       val duration =
         endEvent match {
           case Duration(d) => d
@@ -830,12 +830,12 @@ private[scalatest] class DashboardReporter(directory: String,
       "duration=\""    + duration                    + "\" " +
       "thread=\""      + startEvent.threadName       + "\"" +
       ">\n"
-    }
+    }"""
 
     //
     // Generates <exception> xml for a test failure.
     //
-    def formatException(event: TestFailed): String = {
+    def formatException(event: TestFailed): String = """{
       val buf = new StringBuilder
       var depth = -1
 
@@ -889,7 +889,7 @@ private[scalatest] class DashboardReporter(directory: String,
       buf.append("</exception>\n")
 
       buf.toString
-    }
+    }"""
 
     //
     // Generates xml string representation of object.

@@ -326,38 +326,39 @@ private[scalatest] class RunnerJFrame(
                 }
 
             def getHTMLForStackTrace(stackTraceList: List[StackTraceElement]) =
-              stackTraceList.map((ste: StackTraceElement) => <span>{ ste.toString }</span><br />)
+              stackTraceList.map((ste: StackTraceElement) => new scala.xml.Elem(null, "PLACEHOLDER", scala.xml.Null, scala.xml.TopScope)/* <span>{ ste.toString }</span><br /> */)
 
             def getHTMLForCause(throwable: Throwable): scala.xml.NodeBuffer = {
               val cause = throwable.getCause
-              if (cause != null) {
-                <table>
-                <tr valign="top">
-                <td align="right"><span class="label">{ Resources.DetailsCause + ":" }</span></td>
-                <td align="left">{ cause.getClass.getName }</td>
-                </tr>
-                <tr valign="top">
-                <td align="right"><span class="label">{ Resources.DetailsMessage + ":" }</span></td>
-                <td align="left">
-                  <span>
-                  {
-                    if (cause.getMessage != null)
-                      // scala automatically change <br /> to <br></br>, which will cause 2 line breaks, use unparsedXml("<br />") to solve it.
-                      for (line <- cause.getMessage.split('\n')) yield <span>{ xmlContent(line) }{ unparsedXml("<br />") }</span>
-                    else
-                      Resources.None
-                  }
-                  </span>
-                </td>
-                </tr>
-                </table>
-                <table>
-                <tr valign="top">
-                <td align="left" colspan="2">{ getHTMLForStackTrace(cause.getStackTrace.toList) }</td>
-                </tr>
-                </table> &+ getHTMLForCause(cause)
-              }
-              else new scala.xml.NodeBuffer
+              // if (cause != null) {
+              //   <table>
+              //   <tr valign="top">
+              //   <td align="right"><span class="label">{ Resources.DetailsCause + ":" }</span></td>
+              //   <td align="left">{ cause.getClass.getName }</td>
+              //   </tr>
+              //   <tr valign="top">
+              //   <td align="right"><span class="label">{ Resources.DetailsMessage + ":" }</span></td>
+              //   <td align="left">
+              //     <span>
+              //     {
+              //       if (cause.getMessage != null)
+              //         // scala automatically change <br /> to <br></br>, which will cause 2 line breaks, use unparsedXml("<br />") to solve it.
+              //         for (line <- cause.getMessage.split('\n')) yield <span>{ xmlContent(line) }{ unparsedXml("<br />") }</span>
+              //       else
+              //         Resources.None
+              //     }
+              //     </span>
+              //   </td>
+              //   </tr>
+              //   </table>
+              //   <table>
+              //   <tr valign="top">
+              //   <td align="left" colspan="2">{ getHTMLForStackTrace(cause.getStackTrace.toList) }</td>
+              //   </tr>
+              //   </table> &+ getHTMLForCause(cause)
+              // }
+              // else
+              new scala.xml.NodeBuffer
             }
 
             val mainMessage =
@@ -466,107 +467,107 @@ private[scalatest] class RunnerJFrame(
               }
 
             val detailsHTML =
-              <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-                <head>
-                  <style type="text/css">
-                    body {{ font-family: sans-serif; font-size: { fontSize }pt; }}
-                    .label {{ color: #444444; font-weight: bold; }}
-                    .gray {{ color: black; }}
-                    .dark {{ font-weight: bold; color: #111111; }}
-                  </style>
-                </head>
-                <body>
-                  <table>
-                  <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsEvent + ":" }</span></td><td align="left"><span>{ title }</span></td></tr>
-                  {
-                    if (name.isDefined) {
-                      <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsName + ":" }</span></td><td align="left">{ name.get }</td></tr>
-                    }
-                    else <!-- -->
-                  }
-                  {
-                    if (name.isDefined) {
-                      <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsSuiteId + ":" }</span></td><td align="left">{ suiteId.get }</td></tr>
-                    }
-                    else <!-- -->
-                  }
-                  {
-                    if (mainMessage.isDefined) {
-                      <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsMessage + ":" }</span></td><td align="left">
-                      {
-                        // scala automatically change <br /> to <br></br>, which will cause 2 line breaks, use unparsedXml("<br />") to solve it.
-                        def lineSpans = for (line <- mainMessage.get.split('\n')) yield <span>{ xmlContent(line) }{ unparsedXml("<br />") }</span>
-                        if (isFailureEvent) {
-                          <span class="dark">{ lineSpans }</span>
-                        } else {
-                          <span>{ lineSpans }</span>
-                        }
-                      }
-                      </td></tr>
-                    }
-                    else <!-- -->
-                  }
-                  {
-                    fileAndLineOption match {
-                      case Some(fileAndLine) =>
-                        <tr valign="top"><td align="right"><span class="label">{ Resources.LineNumber + ":" }</span></td><td align="left"><span class="dark">{ "(" + fileAndLine + ")" }</span></td></tr>
-                      case None =>
-                    }
-                  }
-                  {
-                    holder.summary match {
-                      case Some(summary) =>
+              // <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+              //   <head>
+              //     <style type="text/css">
+              //       body {{ font-family: sans-serif; font-size: { fontSize }pt; }}
+              //       .label {{ color: #444444; font-weight: bold; }}
+              //       .gray {{ color: black; }}
+              //       .dark {{ font-weight: bold; color: #111111; }}
+              //     </style>
+              //   </head>
+              //   <body>
+              //     <table>
+              //     <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsEvent + ":" }</span></td><td align="left"><span>{ title }</span></td></tr>
+              //     {
+              //       if (name.isDefined) {
+              //         <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsName + ":" }</span></td><td align="left">{ name.get }</td></tr>
+              //       }
+              //       else <!-- -->
+              //     }
+              //     {
+              //       if (name.isDefined) {
+              //         <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsSuiteId + ":" }</span></td><td align="left">{ suiteId.get }</td></tr>
+              //       }
+              //       else <!-- -->
+              //     }
+              //     {
+              //       if (mainMessage.isDefined) {
+              //         <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsMessage + ":" }</span></td><td align="left">
+              //         {
+              //           // scala automatically change <br /> to <br></br>, which will cause 2 line breaks, use unparsedXml("<br />") to solve it.
+              //           def lineSpans = for (line <- mainMessage.get.split('\n')) yield <span>{ xmlContent(line) }{ unparsedXml("<br />") }</span>
+              //           if (isFailureEvent) {
+              //             <span class="dark">{ lineSpans }</span>
+              //           } else {
+              //             <span>{ lineSpans }</span>
+              //           }
+              //         }
+              //         </td></tr>
+              //       }
+              //       else <!-- -->
+              //     }
+              //     {
+              //       fileAndLineOption match {
+              //         case Some(fileAndLine) =>
+              //           <tr valign="top"><td align="right"><span class="label">{ Resources.LineNumber + ":" }</span></td><td align="left"><span class="dark">{ "(" + fileAndLine + ")" }</span></td></tr>
+              //         case None =>
+              //       }
+              //     }
+              //     {
+              //       holder.summary match {
+              //         case Some(summary) =>
 
-                        <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsSummary + ":" }</span></td><td align="left"><strong>{ Resources.totalNumberOfTestsRun(summary.testsCompletedCount.toString) }</strong></td></tr>
-                        <tr valign="top"><td align="right"><span class="label">&nbsp;</span></td><td align="left"><strong>{ Resources.suiteSummary(summary.suitesCompletedCount.toString, summary.suitesAbortedCount.toString) }</strong></td></tr>
-                        <tr valign="top"><td align="right"><span class="label">&nbsp;</span></td><td align="left"><strong>
-                          {
-                            Resources.testSummary(
-                              summary.testsSucceededCount.toString,
-                              summary.testsFailedCount.toString,
-                              summary.testsCanceledCount.toString,
-                              summary.testsIgnoredCount.toString,
-                              summary.testsPendingCount.toString
-                            )
-                          }
-                        </strong></td></tr>
+              //           <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsSummary + ":" }</span></td><td align="left"><strong>{ Resources.totalNumberOfTestsRun(summary.testsCompletedCount.toString) }</strong></td></tr>
+              //           <tr valign="top"><td align="right"><span class="label">&nbsp;</span></td><td align="left"><strong>{ Resources.suiteSummary(summary.suitesCompletedCount.toString, summary.suitesAbortedCount.toString) }</strong></td></tr>
+              //           <tr valign="top"><td align="right"><span class="label">&nbsp;</span></td><td align="left"><strong>
+              //             {
+              //               Resources.testSummary(
+              //                 summary.testsSucceededCount.toString,
+              //                 summary.testsFailedCount.toString,
+              //                 summary.testsCanceledCount.toString,
+              //                 summary.testsIgnoredCount.toString,
+              //                 summary.testsPendingCount.toString
+              //               )
+              //             }
+              //           </strong></td></tr>
 
-                      case None => new scala.xml.NodeBuffer
-                    }
-                  }
-                  {
-                    duration match {
-                      case Some(milliseconds) =>
-                        <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsDuration + ":" }</span></td><td align="left">{ StringReporter.makeDurationString(milliseconds) }</td></tr>
-                      case None => new scala.xml.NodeBuffer
-                    }
-                  }
-                  <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsDate + ":" }</span></td><td align="left">{ new java.util.Date(event.timeStamp) }</td></tr>
-                  <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsThread + ":" }</span></td><td align="left">{ event.threadName }</td></tr>
-                  {
-                    throwableTitle match {
-                      case Some(title) =>
-                        <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsThrowable + ":" }</span></td><td align="left">{ title }</td></tr>
-                      case None => new scala.xml.NodeBuffer
-                    }
-                  }
-                  </table>
-                  <table>
-                  <tr valign="top"><td align="left" colspan="2">
-                  { grayStackTraceElements.map((ste: StackTraceElement) => <span class="gray">{ ste.toString }</span><br />) }
-                  { blackStackTraceElements.map((ste: StackTraceElement) => <span>{ ste.toString }</span><br />) }
-                  </td></tr>
-                  </table>
-                  {
-                    holder.throwable match {
-                      case Some(t) => getHTMLForCause(t)
-                      case None =>
-                    }
-                  }
-                </body>
-              </html>
+              //         case None => new scala.xml.NodeBuffer
+              //       }
+              //     }
+              //     {
+              //       duration match {
+              //         case Some(milliseconds) =>
+              //           <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsDuration + ":" }</span></td><td align="left">{ StringReporter.makeDurationString(milliseconds) }</td></tr>
+              //         case None => new scala.xml.NodeBuffer
+              //       }
+              //     }
+              //     <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsDate + ":" }</span></td><td align="left">{ new java.util.Date(event.timeStamp) }</td></tr>
+              //     <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsThread + ":" }</span></td><td align="left">{ event.threadName }</td></tr>
+              //     {
+              //       throwableTitle match {
+              //         case Some(title) =>
+              //           <tr valign="top"><td align="right"><span class="label">{ Resources.DetailsThrowable + ":" }</span></td><td align="left">{ title }</td></tr>
+              //         case None => new scala.xml.NodeBuffer
+              //       }
+              //     }
+              //     </table>
+              //     <table>
+              //     <tr valign="top"><td align="left" colspan="2">
+              //     { grayStackTraceElements.map((ste: StackTraceElement) => <span class="gray">{ ste.toString }</span><br />) }
+              //     { blackStackTraceElements.map((ste: StackTraceElement) => <span>{ ste.toString }</span><br />) }
+              //     </td></tr>
+              //     </table>
+              //     {
+              //       holder.throwable match {
+              //         case Some(t) => getHTMLForCause(t)
+              //         case None =>
+              //       }
+              //     }
+              //   </body>
+              // </html>
 
-            detailsJEditorPane.setText(detailsHTML.toString)
+            detailsJEditorPane.setText("detailsHTML.toString")
             detailsJEditorPane.setCaretPosition(0)
             currentState = currentState.listSelectionChanged(RunnerJFrame.this)
           }

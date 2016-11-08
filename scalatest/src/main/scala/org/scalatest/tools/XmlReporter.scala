@@ -312,36 +312,36 @@ private[scalatest] class XmlReporter(directory: String) extends Reporter {
   // Creates an xml string describing a run of a test suite.
   //
   def xmlify(testsuite: Testsuite): String = {
-    val xmlVal =
-      <testsuite
-        errors    = { "" + testsuite.errors         }
-        failures  = { "" + testsuite.failures       }
-        hostname  = { "" + findHostname             }
-        name      = { "" + testsuite.name           }
-        tests     = { "" + testsuite.testcases.size }
-        time      = { "" + testsuite.time / 1000.0  }
-        timestamp = { "" + formatTimeStamp(testsuite.timeStamp) }>
-      { propertiesXml }
-      {
-        for (testcase <- testsuite.testcases) yield {
-          <testcase
-            name      = { "" + testcase.name              }
-            classname = { "" + strVal(testcase.className) }
-            time      = { "" + testcase.time / 1000.0     }
-            pending   = { "" + testcase.pending           }
-            ignored   = { "" + testcase.ignored           }
-          >
-          {
-            failureXml(testcase.failure)
-          }
-          </testcase>
-        }
-      }
-        <system-out><![CDATA[]]></system-out>
-        <system-err><![CDATA[]]></system-err>
-      </testsuite>
+    // val xmlVal =
+    //   <testsuite
+    //     errors    = { "" + testsuite.errors         }
+    //     failures  = { "" + testsuite.failures       }
+    //     hostname  = { "" + findHostname             }
+    //     name      = { "" + testsuite.name           }
+    //     tests     = { "" + testsuite.testcases.size }
+    //     time      = { "" + testsuite.time / 1000.0  }
+    //     timestamp = { "" + formatTimeStamp(testsuite.timeStamp) }>
+    //   { propertiesXml }
+    //   {
+    //     for (testcase <- testsuite.testcases) yield {
+    //       <testcase
+    //         name      = { "" + testcase.name              }
+    //         classname = { "" + strVal(testcase.className) }
+    //         time      = { "" + testcase.time / 1000.0     }
+    //         pending   = { "" + testcase.pending           }
+    //         ignored   = { "" + testcase.ignored           }
+    //       >
+    //       {
+    //         failureXml(testcase.failure)
+    //       }
+    //       </testcase>
+    //     }
+    //   }
+    //     <system-out><![CDATA[]]></system-out>
+    //     <system-err><![CDATA[]]></system-err>
+    //   </testsuite>
 
-    val prettified = (new xml.PrettyPrinter(76, 2)).format(xmlVal)
+    val prettified = "(new xml.PrettyPrinter(76, 2)).format(xmlVal)"
 
     // scala xml strips out the <![CDATA[]]> elements, so restore them here
     val withCDATA =
@@ -377,24 +377,25 @@ private[scalatest] class XmlReporter(directory: String) extends Reporter {
   //
   private def failureXml(failureOption: Option[TestFailed]): xml.NodeSeq = {
     failureOption match {
-      case None =>
+      // case None =>
+      case _ =>
         xml.NodeSeq.Empty
 
-      case Some(failure) =>
-        val (throwableType, throwableText) =
-          failure.throwable match {
-            case None => ("", "")
+      // case Some(failure) =>
+      //   val (throwableType, throwableText) =
+      //     failure.throwable match {
+      //       case None => ("", "")
 
-            case Some(throwable) =>
-              val throwableType = "" + throwable.getClass
-              val throwableText = getStackTrace(throwable)
-              (throwableType, throwableText)
-          }
+      //       case Some(throwable) =>
+      //         val throwableType = "" + throwable.getClass
+      //         val throwableText = getStackTrace(throwable)
+      //         (throwableType, throwableText)
+      //     }
 
-        <failure message = { { unparsedXml(failure.message.replaceAll("\n", "&#010;")) } }
-                 type    = { throwableType   } >
-          { throwableText }
-        </failure>
+      //   <failure message = { { unparsedXml(failure.message.replaceAll("\n", "&#010;")) } }
+      //            type    = { throwableType   } >
+      //     { throwableText }
+      //   </failure>
     }
   }
 
@@ -428,14 +429,14 @@ private[scalatest] class XmlReporter(directory: String) extends Reporter {
   //
   private def genPropertiesXml: xml.Elem = {
     val sysprops = System.getProperties
-
-    <properties> {
-      for (name <- propertyNames(sysprops))
-        yield
-          <property name={ name } value = { sysprops.getProperty(name) }>
-          </property>
-    }
-    </properties>
+    new scala.xml.Elem(null, "PLACEHOLDER", scala.xml.Null, scala.xml.TopScope)
+    // <properties> {
+    //   for (name <- propertyNames(sysprops))
+    //     yield
+    //       <property name={ name } value = { sysprops.getProperty(name) }>
+    //       </property>
+    // }
+    // </properties>
   }
 
   //
