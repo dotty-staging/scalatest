@@ -247,7 +247,7 @@ class ScalaTestFramework extends SbtFramework {
         if (reporter.get.isEmpty || reporter.get.get.isDisposed)
           reporter.getAndSet(Some(ReporterFactory.getDispatchReporter(reporterConfigs.get.get, None, None, testLoader, Some(resultHolder), detectSlowpokes.get, slowpokeDetectionDelay.get, slowpokeDetectionPeriod.get)))
 
-        val reporters =
+        val reporters: IndexedSeq[Reporter] =
           if (useStdout.get)
             Vector(reporter.get.get, createSbtLogInfoReporter(loggers))
           else

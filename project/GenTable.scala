@@ -1744,7 +1744,7 @@ $columnsOfIndexes$
          |                )
          |            }
          |
-         |          innerRunAndCollectResult(itr, newResult, index + 1)(fun)
+         |          innerRunAndCollectResult(itr, newResult.asInstanceOf[ForResult[E]], index + 1)(fun)
          |        }
          |        else
          |          result

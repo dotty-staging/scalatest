@@ -1616,7 +1616,7 @@ used for test events like succeeded/failed, etc.
     IndentedText(formattedText, decodedTestText, level)
   }
 
-  def getEscapedIndentedTextForTest(testText: String, level: Int, includeIcon: Boolean) = {
+  def getEscapedIndentedTextForTest(testText: String, level: Int, includeIcon: Boolean): IndentedText = {
     val decodedTestText = NameTransformer.decode(testText)
     val escapedTestText =
       if (decodedTestText.startsWith("test: "))
@@ -1751,8 +1751,8 @@ used for test events like succeeded/failed, etc.
     level: Int,
     location: Option[Location],
     includeNameInfo: Boolean,
-    includeIcon: Boolean = true) = {
-    InfoProvided(
+    includeIcon: Boolean = true): RecordableEvent = {
+      InfoProvided(
         tracker.nextOrdinal(),
         message,
         if (includeNameInfo)
@@ -1763,7 +1763,7 @@ used for test events like succeeded/failed, etc.
         Some(getIndentedTextForInfo(message, level, includeIcon, testName.isDefined)),
         location,
         payload
-      )
+      ).asInstanceOf[RecordableEvent]
   }
 
   def createNoteProvided(theSuite: Suite,
@@ -1909,7 +1909,7 @@ used for test events like succeeded/failed, etc.
     location: Option[Location],
     includeNameInfo: Boolean,
     includeIcon: Boolean = true
-  ) = {
+  ): RecordableEvent = {
     MarkupProvided(
       tracker.nextOrdinal(),
       message,
@@ -1919,7 +1919,7 @@ used for test events like succeeded/failed, etc.
         None,
       Some(getIndentedTextForInfo(message, level, includeIcon, testName.isDefined)),
       location
-    )
+    ).asInstanceOf[RecordableEvent]
   }
 
 

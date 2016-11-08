@@ -855,7 +855,7 @@ $endif$
      * </pre>
      */
     def equal(any: Any): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Equality] =
-      thisMatcherFactory.and(MatcherWords.not.apply(MatcherWords.equal(any)))
+      thisMatcherFactory.and(MatcherWords.not.apply[SC, Equality](MatcherWords.equal(any)))
 
     /**
      * This method enables the following syntax, for the "primitive" numeric types:
@@ -914,7 +914,7 @@ $endif$
      * </pre>
      */
     def have(resultOfLengthWordApplication: ResultOfLengthWordApplication): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Length] =
-      thisMatcherFactory.and(MatcherWords.not.apply(MatcherWords.have.length(resultOfLengthWordApplication.expectedLength)))
+      thisMatcherFactory.and(MatcherWords.not.apply[SC, Length](MatcherWords.have.length(resultOfLengthWordApplication.expectedLength)))
 
     /**
      * This method enables the following syntax given a <code>MatcherFactory$arity$</code>:
@@ -925,7 +925,7 @@ $endif$
      * </pre>
      */
     def have(resultOfSizeWordApplication: ResultOfSizeWordApplication): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Size] =
-      thisMatcherFactory.and(MatcherWords.not.apply(MatcherWords.have.size(resultOfSizeWordApplication.expectedSize)))
+      thisMatcherFactory.and(MatcherWords.not.apply[SC, Size](MatcherWords.have.size(resultOfSizeWordApplication.expectedSize)))
 
     /**
      * This method enables the following syntax given a <code>MatcherFactory$arity$</code>:
@@ -936,7 +936,7 @@ $endif$
      * </pre>
      */
     def have(resultOfMessageWordApplication: ResultOfMessageWordApplication): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Messaging] =
-      thisMatcherFactory.and(MatcherWords.not.apply(MatcherWords.have.message(resultOfMessageWordApplication.expectedMessage)))
+      thisMatcherFactory.and(MatcherWords.not.apply[SC, Messaging](MatcherWords.have.message(resultOfMessageWordApplication.expectedMessage)))
 
     /**
      * This method enables the following syntax given a <code>MatcherFactory$arity$</code>:
@@ -2149,7 +2149,7 @@ $endif$
      * </pre>
      */
     def equal(any: Any): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Equality] =
-      thisMatcherFactory.or(MatcherWords.not.apply(MatcherWords.equal(any)))
+      thisMatcherFactory.or(MatcherWords.not.apply[SC, Equality](MatcherWords.equal(any)))
 
     /**
      * This method enables the following syntax for the "primitive" numeric types:
@@ -2208,7 +2208,7 @@ $endif$
      * </pre>
      */
     def have(resultOfLengthWordApplication: ResultOfLengthWordApplication): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Length] =
-      thisMatcherFactory.or(MatcherWords.not.apply(MatcherWords.have.length(resultOfLengthWordApplication.expectedLength)))
+      thisMatcherFactory.or(MatcherWords.not.apply[SC, Length](MatcherWords.have.length(resultOfLengthWordApplication.expectedLength)))
 
     /**
      * This method enables the following syntax given a <code>MatcherFactory$arity$</code>:
@@ -2219,7 +2219,7 @@ $endif$
      * </pre>
      */
     def have(resultOfSizeWordApplication: ResultOfSizeWordApplication): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Size] =
-      thisMatcherFactory.or(MatcherWords.not.apply(MatcherWords.have.size(resultOfSizeWordApplication.expectedSize)))
+      thisMatcherFactory.or(MatcherWords.not.apply[SC, Size](MatcherWords.have.size(resultOfSizeWordApplication.expectedSize)))
 
     /**
      * This method enables the following syntax given a <code>MatcherFactory$arity$</code>:
@@ -2230,7 +2230,7 @@ $endif$
      * </pre>
      */
     def have(resultOfMessageWordApplication: ResultOfMessageWordApplication): MatcherFactory$arityPlusOne$[SC, $commaSeparatedTCNs$, Messaging] =
-      thisMatcherFactory.or(MatcherWords.not.apply(MatcherWords.have.message(resultOfMessageWordApplication.expectedMessage)))
+      thisMatcherFactory.or(MatcherWords.not.apply[SC, Messaging](MatcherWords.have.message(resultOfMessageWordApplication.expectedMessage)))
 
     /**
      * This method enables the following syntax given a <code>MatcherFactory$arity$</code>:

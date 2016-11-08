@@ -279,7 +279,7 @@ package org.scalatest.time
  */
 trait SpanSugar {
 
-  implicit val postfixOps = language.postfixOps
+  import scala.language.postfixOps
 
   /**
    * Class containing methods that return a <code>Span</code> time value calculated from the

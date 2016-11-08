@@ -29,8 +29,8 @@ package object mock {
   @deprecated("Please use org.scalatest.jmock.JMockCycle instead")
   type JMockCycle = jmock.JMockCycle
 
-  @deprecated("Please use org.scalatest.jmock.JMockCycleFixture instead")
-  type JMockCycleFixture = jmock.JMockCycleFixture
+  // @deprecated("Please use org.scalatest.jmock.JMockCycleFixture instead")
+  // type JMockCycleFixture = jmock.JMockCycleFixture
 
   @deprecated("Please use org.scalatest.jmock.JMockExpectations instead")
   type JMockExpectations = jmock.JMockExpectations

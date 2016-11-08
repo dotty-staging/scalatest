@@ -1228,7 +1228,7 @@ trait Assertions extends TripleEquals  {
       }
     }
     catch {
-      case e: org.scalatest.exceptions.ModifiableMessage[_] =>
+      case e: Throwable with org.scalatest.exceptions.ModifiableMessage[_] =>
         if (clue != "")
           throw e.modifyMessage(prepend)
         else
@@ -1388,7 +1388,7 @@ object Assertions extends Assertions {
 
   @deprecated("The trap method is no longer needed for demos in the REPL, which now abreviates stack traces, so NormalResult will be removed in a future version of ScalaTest")
   case class NormalResult(result: Any) extends Throwable {
-    override def toString = if (result == ()) Resources.noExceptionWasThrown else Resources.resultWas(Prettifier.default(result))
+    override def toString = if (() == result) Resources.noExceptionWasThrown else Resources.resultWas(Prettifier.default(result))
   }
 
   private[scalatest] def areEqualComparingArraysStructurally(left: Any, right: Any): Boolean = {

@@ -72,10 +72,10 @@ trait Accumulation {
               case Good(h) => Good((g, h))
               case Bad(otherB) => Bad(otherB)
             }
-          case Bad(myBad) =>
+          case Bad(myBad: Every[ERR]) =>
             other match {
               case Good(_) => Bad(myBad)
-              case Bad(otherB) => Bad(myBad ++ otherB)
+              case Bad(otherB: Every[ERR]) => Bad(myBad ++ otherB)
             }
         }
       }
@@ -121,7 +121,7 @@ trait Accumulation {
             (accumulator, nextElem) match {
               case (Good(bldr), Good(ele)) => Good(bldr += ele)
               case (Good(_), Bad(err)) => Bad(err)
-              case (Bad(errA), Bad(errB)) => Bad(errA ++ errB)
+              case (Bad(errA: Every[ERR]), Bad(errB: Every[ERR])) => Bad(errA ++ errB)
               case (Bad(errA), Good(_)) => Bad(errA)
             }
           }
@@ -168,7 +168,7 @@ trait Accumulation {
             (accumulator, nextElem) match {
               case (Good(bldr), Good(ele)) => Good(bldr += ele)
               case (Good(_), Bad(err)) => Bad(err)
-              case (Bad(errA), Bad(errB)) => Bad(errA ++ errB)
+              case (Bad(errA: Every[ERR]), Bad(errB: Every[ERR])) => Bad(errA ++ errB)
               case (Bad(errA), Good(_)) => Bad(errA)
             }
           }
@@ -212,7 +212,7 @@ trait Accumulation {
           (accumulator, nextElem) match {
             case (Good(everyG), Good(g)) => Good(everyG :+ g)
             case (Good(_), Bad(err)) => Bad(err)
-            case (Bad(errA), Bad(errB)) => Bad(errA ++ errB)
+            case (Bad(errA: Every[ERR]), Bad(errB: Every[ERR])) => Bad(errA ++ errB)
             case (Bad(errA), Good(_)) => Bad(errA)
           }
         }
@@ -261,7 +261,7 @@ trait Accumulation {
             (accumulator, fn(nextElem)) match {
               case (Good(bldr), Good(ele)) => Good(bldr += ele)
               case (Good(bldr), Bad(err)) => Bad(err)
-              case (Bad(errA), Bad(errB)) => Bad(errA ++ errB)
+              case (Bad(errA: Every[ERR]), Bad(errB: Every[ERR])) => Bad(errA ++ errB)
               case (Bad(errA), Good(ele)) => Bad(errA)
             }
           }
@@ -291,7 +291,7 @@ trait Accumulation {
           (accumulator, fn(nextElem)) match {
             case (Good(everyG), Good(h)) => Good(everyG :+ h)
             case (Good(_), Bad(err)) => Bad(err)
-            case (Bad(errA), Bad(errB)) => Bad(errA ++ errB)
+            case (Bad(errA: Every[ERR]), Bad(errB: Every[ERR])) => Bad(errA ++ errB)
             case (Bad(errA), Good(_)) => Bad(errA)
           }
         }
@@ -335,7 +335,7 @@ trait Accumulation {
   ): RESULT Or Every[ERR] = {
     a match {
       case Good(valid) => Good(fn(valid))
-      case Bad(every) => Bad(every)
+      case Bad(every: Every[ERR]) => Bad(every)
     }
   }
 
@@ -369,12 +369,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -411,12 +411,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -455,12 +455,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -501,12 +501,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -550,12 +550,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -601,12 +601,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -654,12 +654,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -709,12 +709,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -766,12 +766,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -825,12 +825,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -886,12 +886,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -949,12 +949,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -1014,12 +1014,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -1081,12 +1081,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -1150,12 +1150,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -1221,12 +1221,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -1294,12 +1294,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -1369,12 +1369,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -1446,12 +1446,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -1525,12 +1525,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }
@@ -1606,12 +1606,12 @@ trait Accumulation {
       case Good(valid) =>
         funOrError match {
           case Good(validFun) => Good(validFun(valid))
-          case Bad(every) => Bad(every)
+          case Bad(every: Every[ERR]) => Bad(every)
         }
-      case Bad(every) =>
+      case Bad(every: Every[ERR]) =>
         funOrError match {
           case Good(_) => Bad(every)
-          case Bad(funEvery) => Bad(funEvery ++ every)
+          case Bad(funEvery: Every[ERR]) => Bad(funEvery ++ every)
         }
     }
   }

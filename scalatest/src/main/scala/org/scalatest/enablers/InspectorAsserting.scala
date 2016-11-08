@@ -415,7 +415,7 @@ object InspectorAsserting extends UnitInspectorAsserting /*ExpectationInspectorA
   private[scalatest] final def runFor[T, ASSERTION](itr: Iterator[T], xsIsMap: Boolean, index:Int, result: ForResult[T], fun: T => ASSERTION, stopFun: ForResult[_] => Boolean): ForResult[T] = {
     if (itr.hasNext) {
       val head = itr.next
-      val newResult =
+      val newResult: ForResult[T] =
         try {
           fun(head)
           result.copy(passedCount = result.passedCount + 1, passedElements = result.passedElements :+ (index, head))

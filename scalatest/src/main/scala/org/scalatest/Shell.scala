@@ -319,52 +319,52 @@ sealed trait Shell {
    * A <code>Shell</code> whose <code>run</code> method will pass <code>true</code> for <code>execute</code>'s <code>color</code>
    * parameter, and pass for all other parameters the same values as this <code>Shell</code>.
    */
-  val color: Shell
+  def color: Shell
 
   /**
    * A <code>Shell</code> whose <code>run</code> method will pass <code>true</code> for <code>execute</code>'s <code>durations</code>
    * parameter, and pass for all other parameters the same values as this <code>Shell</code>.
    */
-  val durations: Shell
+  def durations: Shell
 
   /**
    * A <code>Shell</code> whose <code>run</code> method will pass <code>true</code> for <code>execute</code>'s <code>shortstacks</code>
    * parameter and <code>false</code> for its <code>fullstacks</code> parameter, and pass for all other parameters the same values as
    * this <code>Shell</code>.
    */
-  val shortstacks: Shell
+  def shortstacks: Shell
 
   /**
    * A <code>Shell</code> whose <code>run</code> method will pass <code>false</code> for <code>execute</code>'s <code>shortstacks</code>
    * parameter and <code>true</code> for its <code>fullstacks</code> parameter, and pass for all other parameters the same values as this <code>Shell</code>.
    */
-  val fullstacks: Shell
+  def fullstacks: Shell
 
   /**
    * A <code>Shell</code> whose <code>run</code> method will pass <code>true</code> for <code>execute</code>'s <code>stats</code>
    * parameter, and pass for all other parameters the same values as this <code>Shell</code>.
    */
-  val stats: Shell
+  def stats: Shell
 
   /**
    * Returns a copy of this <code>Shell</code> with <code>colorPassed</code> configuration parameter set to <code>false</code>.
    */
-  val nocolor: Shell
+  def nocolor: Shell
 
   /**
    * Returns a copy of this <code>Shell</code> with <code>durationsPassed</code> configuration parameter set to <code>false</code>.
    */
-  val nodurations: Shell
+  def nodurations: Shell
 
   /**
    * Returns a copy of this <code>Shell</code> with <code>shortStacksPassed</code> configuration parameter set to <code>false</code>.
    */
-  val nostacks: Shell
+  def nostacks: Shell
 
   /**
    * Returns a copy of this <code>Shell</code> with <code>statsPassed</code> configuration parameter set to <code>false</code>.
    */
-  val nostats: Shell
+  def nostats: Shell
 
   /**
    * Run the passed suite, optionally passing in a test name and config map.
