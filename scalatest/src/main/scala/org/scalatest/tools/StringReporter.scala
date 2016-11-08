@@ -812,7 +812,7 @@ private[scalatest] object StringReporter {
               case _ => Vector(Resources.testIgnored(suiteName + ": " + testName))
             }
 
-        stringToPrint map (new Fragment(_, AnsiYellow))
+        stringToPrint map (x => new Fragment(x.toString, AnsiYellow))
 
       case TestFailed(ordinal, message, suiteName, suiteId, suiteClassName, testName, testText, recordedEvents, throwable, duration, formatter, location, rerunnable, payload, threadName, timeStamp) =>
 
@@ -865,7 +865,7 @@ private[scalatest] object StringReporter {
               case Some(MotionToSuppress) => Vector.empty
               case _ => Vector(Resources.scopePending(nameInfo.suiteName + ": " + message))
             }
-        stringToPrint map (new Fragment(_, AnsiYellow))
+        stringToPrint map (x => new Fragment(x.toString, AnsiYellow))
 
       case mpEvent: MarkupProvided =>
 
@@ -883,7 +883,7 @@ private[scalatest] object StringReporter {
               case _ => Vector(Resources.testPending(suiteName + ": " + testName))
             }
 
-        val tpf = stringToPrint map (new Fragment(_, AnsiYellow))
+        val tpf = stringToPrint map (x => new Fragment(x.toString, AnsiYellow))
 
         val ref = recordedEventFragments(recordedEvents, AnsiYellow, presentUnformatted, presentAllDurations, presentShortStackTraces, presentFullStackTraces, presentFilePathname)
 
