@@ -1,0 +1,5 @@
+pipeline:
+  test:
+    image: scalaplatform/scala:0.6
+    commands:
+      - /usr/bin/sbt compile
