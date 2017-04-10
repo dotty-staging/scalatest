@@ -85,6 +85,7 @@ object ScalatestBuild extends Build {
     version := releaseVersion,
     scalacOptions ++= Seq("-feature", "-target:jvm-1.6"),
     resolvers += "Sonatype Public" at "https://oss.sonatype.org/content/groups/public",
+    resolvers += Resolver.typesafeIvyRepo("releases"),
     libraryDependencies ++= scalaLibraries(scalaVersion.value),
     publishTo <<= version { v: String =>
       val nexus = "https://oss.sonatype.org/"
