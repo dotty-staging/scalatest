@@ -147,15 +147,18 @@ object ScalatestBuild extends Build {
   def scalacheckDependency(config: String) =
     "org.scalacheck" %% "scalacheck" % scalacheckVersion % config
 
+  def scalaModules = Seq(
+    "org.scala-lang.modules" %% "scala-xml" % "1.0.5",
+    "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4",
+    scalacheckDependency("optional")
+  )
+
   def crossBuildLibraryDependencies(theScalaVersion: String) =
     CrossVersion.partialVersion(theScalaVersion) match {
+      // Dotty is scalaVersion 0.x
+      case Some((0, _))                              => scalaModules
       // if scala 2.11+ is used, add dependency on scala-xml module
-      case Some((2, scalaMajor)) if scalaMajor >= 11 =>
-        Seq(
-          "org.scala-lang.modules" %% "scala-xml" % "1.0.5",
-          "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4",
-          scalacheckDependency("optional")
-        )
+      case Some((2, scalaMajor)) if scalaMajor >= 11 => scalaModules
       case _ =>
         Seq(scalacheckDependency("optional"))
     }
