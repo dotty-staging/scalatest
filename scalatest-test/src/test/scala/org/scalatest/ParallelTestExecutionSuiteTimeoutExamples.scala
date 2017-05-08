@@ -38,7 +38,7 @@ trait SuiteTimeoutSuites extends EventHelpers {
   val holdingTestName: String
   val holdingScopeClosedName: Option[String]
   val holdUntilEventCount: Int
-  def assertSuiteTimeoutTest(events: List[Event])
+  def assertSuiteTimeoutTest(events: List[Event]): Unit
 }
 
 class SuiteHoldingReporter(dispatch: Reporter, holdingSuiteId: String, holdingTestName: String, holdingScopeClosedName: Option[String]) extends CatchReporter {

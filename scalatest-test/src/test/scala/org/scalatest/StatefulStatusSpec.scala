@@ -21,16 +21,16 @@ import scala.util.{Try, Success}
 class StatefulStatusSpec extends fixture.FunSpec {
 
   protected type FixtureParam = {
-    def setCompleted()
+    def setCompleted(): Unit
     def isCompleted: Boolean
     // SKIP-SCALATESTJS-START
     def succeeds(): Boolean
     // SKIP-SCALATESTJS-END
-    def setFailed()
+    def setFailed(): Unit
     // SKIP-SCALATESTJS-START
-    def waitUntilCompleted()
+    def waitUntilCompleted(): Unit
     // SKIP-SCALATESTJS-END
-    def whenCompleted(f: Try[Boolean] => Unit)
+    def whenCompleted(f: Try[Boolean] => Unit): Unit
     def setFailedWith(ex: Throwable): Unit
     def unreportedException: Option[Throwable]
   }

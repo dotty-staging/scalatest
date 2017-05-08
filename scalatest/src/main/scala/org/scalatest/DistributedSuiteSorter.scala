@@ -29,6 +29,6 @@ package org.scalatest
  * </p>
  */
 trait DistributedSuiteSorter {
-  def distributingTests(suiteId: String)
-  def completedTests(suiteId: String)
+  def distributingTests(suiteId: String): Unit
+  def completedTests(suiteId: String): Unit
 }

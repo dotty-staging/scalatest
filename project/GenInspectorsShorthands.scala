@@ -2551,7 +2551,7 @@ trait GenInspectorsShorthandsBase {
     targetDir
   }
 
-  def genTest(targetBaseDir: File, version: String, scalaVersion: String)
+  def genTest(targetBaseDir: File, version: String, scalaVersion: String): Unit
 
 }
 
