@@ -15,7 +15,7 @@
  */
 package org.scalatest.fixture
 
-import org.scalatest._
+import org.scalatest.{Transformer => _, TestSuite => _, _}
 import org.scalatest.exceptions._
 import Spec._
 import Suite._
