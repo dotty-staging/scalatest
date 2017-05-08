@@ -6,7 +6,7 @@ import scala.io.Source
 
 object GenTheyWord {
 
-  def generateFile(srcFileDir: String, srcClassName: String, targetFileDir: String, targetClassName: String) {
+  def generateFile(srcFileDir: String, srcClassName: String, targetFileDir: String, targetClassName: String): Unit = {
     val targetDir = new File(targetFileDir)
     targetDir.mkdirs()
     val writer = new BufferedWriter(new FileWriter(new File(targetFileDir, targetClassName + ".scala")))
@@ -31,10 +31,10 @@ object GenTheyWord {
     }
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
   }
 
-  def genTest(dir: File, version: String, scalaVersion: String) {
+  def genTest(dir: File, version: String, scalaVersion: String): Unit = {
     generateFile("scalatest-test/src/test/scala/org/scalatest",
                  "FunSpecSuite",
                  dir.getAbsolutePath,

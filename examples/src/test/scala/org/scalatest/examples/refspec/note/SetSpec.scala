@@ -22,7 +22,7 @@ import collection.mutable
 class SetSpec extends RefSpec {
 
   object `A mutable Set` {
-    def `should allow an element to be added` {
+    def `should allow an element to be added`: Unit = {
 
       info("info is recorded")
       markup("markup is *also* recorded")

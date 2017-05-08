@@ -20,13 +20,13 @@ import java.io.{File, FileWriter, BufferedWriter}
 
 object GenContain1 extends GenContainBase {
 
-  def genTest(targetBaseDir: File, version: String, scalaVersion: String) {
+  def genTest(targetBaseDir: File, version: String, scalaVersion: String): Unit = {
 
     val sourceBaseDir = new File("scalatest-test/src/test/scala/org/scalatest")
     val containDir = new File(targetBaseDir, "containTests")
     containDir.mkdirs()
 
-    def generateFile(sourceFileName: String, typeName: String, mapping: (String, String)*) {
+    def generateFile(sourceFileName: String, typeName: String, mapping: (String, String)*): Unit = {
       val generatedFileName = sourceFileName.replaceAll("List", typeName)
       val generatedFile = new File(containDir, generatedFileName)
       val writer = new BufferedWriter(new FileWriter(generatedFile))
@@ -170,7 +170,7 @@ object GenContain1 extends GenContainBase {
     generateFile("ListShouldContainTheSameElementsAsLogicalOrSpec.scala", "String", stringMapping: _*)
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val targetDir = args(0)
     val version = args(1)
     val scalaVersion = args(2)

@@ -61,7 +61,7 @@ object GenRegularTests4 extends GenRegularTestsBase {
   val baseDirPath: String = "scalatest-test/src/test/scala/org/scalatest"
   val name: String = "genregular4"
 
-  override def genTest(targetBaseDir: File, version: String, scalaVersion: String) {
+  override def genTest(targetBaseDir: File, version: String, scalaVersion: String): Unit = {
     copyJavaDir(targetBaseDir)
 
     // these are accessed through reflections.
@@ -111,7 +111,7 @@ object GenRegularTests5 extends GenRegularTestsBase {
   val baseDirPath: String = "scalatest-test/src/test/scala/org/scalatest"
   val name: String = "genregular5"
 
-  override def genTest(targetBaseDir: File, version: String, scalaVersion: String) {
+  override def genTest(targetBaseDir: File, version: String, scalaVersion: String): Unit = {
     copyJavaDir(targetBaseDir)
 
     // these are accessed through reflections.

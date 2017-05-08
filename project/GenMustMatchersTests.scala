@@ -39,7 +39,7 @@ trait GenMustMatchersTestsBase {
     temp12.replaceAll("I_WAS_Must_ORIGINALLY", "Should")
   }
 
-  def genTestImpl(targetBaseDir: File, version: String, scalaVersion: String, scalaJS: Boolean) {
+  def genTestImpl(targetBaseDir: File, version: String, scalaVersion: String, scalaJS: Boolean): Unit = {
 
     val scalaJSSkipList =
       List(
@@ -55,7 +55,7 @@ trait GenMustMatchersTestsBase {
     val matchersDir = new File(targetBaseDir, "matchers")
     matchersDir.mkdirs()
 
-    def transformFile(shouldFile: File, mustFile: File) {
+    def transformFile(shouldFile: File, mustFile: File): Unit = {
       val writer = new BufferedWriter(new FileWriter(mustFile))
       try {
         val shouldLines = Source.fromFile(shouldFile).getLines().toList // for 2.8

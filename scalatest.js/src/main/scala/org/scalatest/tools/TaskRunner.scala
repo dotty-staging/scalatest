@@ -203,13 +203,13 @@ println("GOT TO THIS RECOVER CALL")
     presentFilePathname
   ) {
 
-    protected def printPossiblyInColor(fragment: Fragment) {
+    protected def printPossiblyInColor(fragment: Fragment): Unit = {
       loggers.foreach { logger =>
         logger.info(fragment.toPossiblyColoredText(logger.ansiCodesSupported && presentInColor))
       }
     }
 
-    override def apply(event: Event) {
+    override def apply(event: Event): Unit = {
       /*event match {
         case ee: ExceptionalEvent if presentReminder =>
           if (!presentReminderWithoutCanceledTests || event.isInstanceOf[TestFailed]) {

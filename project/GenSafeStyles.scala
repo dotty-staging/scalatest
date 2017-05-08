@@ -128,11 +128,11 @@ object GenSafeStyles {
     translateFile(safeFixtureDir, "SafeWordSpec.scala", "scalatest/src/main/scala/org/scalatest/fixture/WordSpec.scala", scalaVersion, scalaJS, translateLine("WordSpec"))
   }
 
-  def genMain(targetDir: File, version: String, scalaVersion: String) {
+  def genMain(targetDir: File, version: String, scalaVersion: String): Unit = {
     genMainImpl(targetDir, version, scalaVersion, false)
   }
 
-  def genMainForScalaJS(targetDir: File, version: String, scalaVersion: String) {
+  def genMainForScalaJS(targetDir: File, version: String, scalaVersion: String): Unit = {
     genMainImpl(targetDir, version, scalaVersion, true)
   }
 

@@ -44,12 +44,12 @@ class OsgiSuite extends JUnitSuite with ShouldMatchersForJUnit {
     mavenBundle.groupId("org.scala-lang").artifactId("scala-compiler").version(compiledAgainstScalaVersionString)
   )
 
-  @Test def verifyScalaTestBundlesResolve {
+  @Test def verifyScalaTestBundlesResolve: Unit = {
     bundleNamed("org.scalatest") should be ('defined)
     bundleNamed("org.scalactic") should be ('defined)
   }
 
-  @Test def scalaPackageImportsUseVersionRangeForCurrentMinorUpToNextMinor {
+  @Test def scalaPackageImportsUseVersionRangeForCurrentMinorUpToNextMinor: Unit = {
     checkScalaPackage(bundleNamed("org.scalatest").get)
     checkScalaPackage(bundleNamed("org.scalactic").get)
   }

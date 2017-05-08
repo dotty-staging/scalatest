@@ -21,11 +21,11 @@ import tags.CPU
 
 class SetSpec extends RefSpec {
 
-  @CPU def `an empty Set should have size 0` {
+  @CPU def `an empty Set should have size 0`: Unit = {
     assert(Set.empty.size === 0)
   }
 
-  def `invoking head on an empty Set should produce NoSuchElementException` {
+  def `invoking head on an empty Set should produce NoSuchElementException`: Unit = {
     assertThrows[NoSuchElementException] {
       Set.empty.head
     }

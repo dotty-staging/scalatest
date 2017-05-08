@@ -152,11 +152,11 @@ object GenMatchers {
     translateFile(targetDir, "FactMatcherWords.scala", "scalatest/src/main/scala/org/scalatest/words/MatcherWords.scala", scalaVersion, scalaJS, translateShouldToWill)*/
   }
 
-  def genMain(targetDir: File, version: String, scalaVersion: String) {
+  def genMain(targetDir: File, version: String, scalaVersion: String): Unit = {
     genMainImpl(targetDir, version, scalaVersion, false)
   }
 
-  def genMainForScalaJS(targetDir: File, version: String, scalaVersion: String) {
+  def genMainForScalaJS(targetDir: File, version: String, scalaVersion: String): Unit = {
     genMainImpl(targetDir, version, scalaVersion, true)
   }
 }

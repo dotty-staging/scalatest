@@ -24,7 +24,7 @@ trait GenRegularTestsBase {
   val baseDirPath: String
   val name: String
 
-  def copyFile(inputFile: File, outputFile: File) {
+  def copyFile(inputFile: File, outputFile: File): Unit = {
     val writer = new BufferedWriter(new FileWriter(outputFile))
     try {
       val inputLines = Source.fromFile(inputFile).getLines().toList // for 2.8
@@ -79,7 +79,7 @@ trait GenRegularTestsBase {
     processJavaDir(new File("scalatest-test/src/test/java"), new File(javaDir, name))
   }
 
-  def genTest(targetBaseDir: File, version: String, scalaVersion: String) {
+  def genTest(targetBaseDir: File, version: String, scalaVersion: String): Unit = {
     val sourceBaseDir = new File(baseDirPath)
     val regularDir = new File(targetBaseDir, name + "/org/scalatest/")
 

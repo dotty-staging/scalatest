@@ -101,13 +101,13 @@ trait StateSuite extends Suite {
     super.run(testName, args)
   }
 
-  private def reportTestStarting(theSuite: Suite, report: Reporter, tracker: Tracker, testName: String, testText: String, suiteRerunner: Option[String], location: Option[Location]) {
+  private def reportTestStarting(theSuite: Suite, report: Reporter, tracker: Tracker, testName: String, testText: String, suiteRerunner: Option[String], location: Option[Location]): Unit = {
     report(TestStarting(tracker.nextOrdinal(), theSuite.suiteName, theSuite.suiteId, Some(theSuite.getClass.getName), testName, testText, Some(MotionToSuppress),
       location, suiteRerunner))
   }
 
  private def reportTestFailed(theSuite: Suite, report: Reporter, throwable: Throwable, testName: String, testText: String,
-      suiteRerunner: Option[String], tracker: Tracker, duration: Long, level: Int, includeIcon: Boolean, location: Option[Location]) {
+      suiteRerunner: Option[String], tracker: Tracker, duration: Long, level: Int, includeIcon: Boolean, location: Option[Location]): Unit = {
 
     val message = getMessageForException(throwable)
     val formatter = getIndentedText(testText, level, includeIcon)
@@ -115,19 +115,19 @@ trait StateSuite extends Suite {
   }
 
   private def reportTestCanceled(theSuite: Suite, report: Reporter, throwable: Throwable, testName: String, testText: String,
-      rerunnable: Option[Rerunner], tracker: Tracker, duration: Long, level: Int, includeIcon: Boolean, location: Option[Location]) {
+      rerunnable: Option[Rerunner], tracker: Tracker, duration: Long, level: Int, includeIcon: Boolean, location: Option[Location]): Unit = {
 
     val message = getMessageForException(throwable)
     val formatter = getIndentedText(testText, level, includeIcon)
     report(TestCanceled(tracker.nextOrdinal(), message, theSuite.suiteName, theSuite.suiteId, Some(theSuite.getClass.getName), testName, testText, Vector.empty, Some(throwable), Some(duration), Some(formatter), location, rerunnable))
   }
 
-  private def reportTestSucceeded(theSuite: Suite, report: Reporter, tracker: Tracker, testName: String, testText: String, duration: Long, formatter: Formatter, suiteRerunner: Option[String], location: Option[Location]) {
+  private def reportTestSucceeded(theSuite: Suite, report: Reporter, tracker: Tracker, testName: String, testText: String, duration: Long, formatter: Formatter, suiteRerunner: Option[String], location: Option[Location]): Unit = {
     report(TestSucceeded(tracker.nextOrdinal(), theSuite.suiteName, theSuite.suiteId, Some(theSuite.getClass.getName), testName, testText, Vector.empty, Some(duration), Some(formatter),
       location, suiteRerunner))
   }
 
-  private def reportTestPending(theSuite: Suite, report: Reporter, tracker: Tracker, testName: String, testText: String, duration: Long, formatter: Formatter, location: Option[Location]) {
+  private def reportTestPending(theSuite: Suite, report: Reporter, tracker: Tracker, testName: String, testText: String, duration: Long, formatter: Formatter, location: Option[Location]): Unit = {
     report(TestPending(tracker.nextOrdinal(), theSuite.suiteName, theSuite.suiteId, Some(theSuite.getClass.getName), testName, testText, Vector.empty, Some(duration), Some(formatter),
       location))
   }
@@ -152,7 +152,7 @@ trait StateSuite extends Suite {
 
   def indentation(level: Int) = "  " * level
 
-  private def reportTestIgnored(report: Reporter, tracker: Tracker, testName: String, testText: String, level: Int) {
+  private def reportTestIgnored(report: Reporter, tracker: Tracker, testName: String, testText: String, level: Int): Unit = {
     val testSucceededIcon = "-"
     val formattedText = indentation(level - 1) + (testSucceededIcon + " " + testText)
     report(TestIgnored(tracker.nextOrdinal(), suiteName, suiteId, Some(getClass.getName), testName, testText, Some(IndentedText(formattedText, testText, level)),
@@ -161,7 +161,7 @@ trait StateSuite extends Suite {
   }
 
   private def handleFailedTest(throwable: Throwable, testName: String,
-      report: Reporter, tracker: Tracker, duration: Long, location: Option[Location]) {
+      report: Reporter, tracker: Tracker, duration: Long, location: Option[Location]): Unit = {
 
     val message = getMessageForException(throwable)
     val formatter = getIndentedText(testName, 1, true)

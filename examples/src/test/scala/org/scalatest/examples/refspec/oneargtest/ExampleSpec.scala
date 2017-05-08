@@ -37,13 +37,13 @@ class ExampleSpec extends fixture.Spec {
   }
 
   object `Testing ` {
-    def `should be easy` { f: FixtureParam =>
+    def `should be easy`: Unit = { f: FixtureParam =>
       f.writer.write("easy!")
       f.writer.flush()
       assert(f.file.length === 18)
     }
 
-    def `should be fun` { f: FixtureParam =>
+    def `should be fun`: Unit = { f: FixtureParam =>
       f.writer.write("fun!")
       f.writer.flush()
       assert(f.file.length === 17)

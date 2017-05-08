@@ -1163,7 +1163,7 @@ $columnsOfIndexes$
 
   val thisYear = Calendar.getInstance.get(Calendar.YEAR)
 
-  def genTableForNs(targetDir: File, scalaJS: Boolean) {
+  def genTableForNs(targetDir: File, scalaJS: Boolean): Unit = {
 
     val bw = new BufferedWriter(new FileWriter(new File(targetDir, "TableFor1.scala")))
 
@@ -1214,7 +1214,7 @@ $columnsOfIndexes$
     }
   }
 
-  def genPropertyChecks(targetDir: File) {
+  def genPropertyChecks(targetDir: File): Unit = {
     val filename = "TableDrivenPropertyChecks.scala"
     val bw = new BufferedWriter(new FileWriter(new File(targetDir, filename)))
 
@@ -1273,7 +1273,7 @@ $columnsOfIndexes$
     }
   }
 
-  def genTables(targetDir: File) {
+  def genTables(targetDir: File): Unit = {
 
     val bw = new BufferedWriter(new FileWriter(new File(targetDir, "Tables.scala")))
 
@@ -1896,7 +1896,7 @@ $columnsOfIndexes$
     }
   }
 
-  def genTableSuite(targetDir: File) {
+  def genTableSuite(targetDir: File): Unit = {
 
     val bw = new BufferedWriter(new FileWriter(new File(targetDir, "TableSuite.scala")))
 
@@ -1943,7 +1943,7 @@ $columnsOfIndexes$
     }
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val targetDir = args(0)
     val version = args(1)
     val scalaVersion = args(2)
@@ -1957,7 +1957,7 @@ $columnsOfIndexes$
     genTest(testDir, version, scalaVersion)
   }
 
-  def genMain(dir: File, version: String, scalaVersion: String) {
+  def genMain(dir: File, version: String, scalaVersion: String): Unit = {
     dir.mkdirs()
     genTableForNs(dir, false)
     genPropertyChecks(dir)
@@ -1965,7 +1965,7 @@ $columnsOfIndexes$
     genTableAsserting(dir, false)
   }
 
-  def genMainForScalaJS(dir: File, version: String, scalaVersion: String) {
+  def genMainForScalaJS(dir: File, version: String, scalaVersion: String): Unit = {
     dir.mkdirs()
     genTableForNs(dir, true)
     genPropertyChecks(dir)
@@ -1973,7 +1973,7 @@ $columnsOfIndexes$
     genTableAsserting(dir, true)
   }
 
-  def genTest(dir: File, version: String, scalaVersion: String) {
+  def genTest(dir: File, version: String, scalaVersion: String): Unit = {
     dir.mkdirs()
     genTableSuite(dir)
   }

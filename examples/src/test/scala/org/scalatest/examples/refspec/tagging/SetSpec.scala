@@ -25,12 +25,12 @@ class SetSpec extends RefSpec {
     object `when empty` {
 
       @Slow
-      def `should have size 0` {
+      def `should have size 0`: Unit = {
         assert(Set.empty.size === 0)
       }
 
       @Slow @DbTest
-      def `should produce NoSuchElementException when head is invoked` {
+      def `should produce NoSuchElementException when head is invoked`: Unit = {
         assertThrows[NoSuchElementException] {
           Set.empty.head
         }

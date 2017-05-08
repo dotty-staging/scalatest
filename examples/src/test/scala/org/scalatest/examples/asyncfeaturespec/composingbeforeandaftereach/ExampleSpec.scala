@@ -61,12 +61,12 @@ trait Builder extends BeforeAndAfterEach { this: Suite =>
 
   final val builderActor = new StringBuilderActor
 
-  override def beforeEach() {
+  override def beforeEach(): Unit = {
     builderActor ! Append("ScalaTest is designed to ")
     super.beforeEach() // To be stackable, must call super.beforeEach
   }
 
-  override def afterEach() {
+  override def afterEach(): Unit = {
     try super.afterEach() // To be stackable, must call super.afterEach
     finally builderActor ! Clear
   }
@@ -76,7 +76,7 @@ trait Buffer extends BeforeAndAfterEach { this: Suite =>
 
   final val bufferActor = new StringBufferActor
 
-  override def afterEach() {
+  override def afterEach(): Unit = {
     try super.afterEach() // To be stackable, must call super.afterEach
     finally bufferActor ! Clear
   }

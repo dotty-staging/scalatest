@@ -30,7 +30,7 @@ class ExampleSpec extends RefSpec {
 
   object `Testing ` {
     // This test needs the StringBuilder fixture
-    def `should be productive` {
+    def `should be productive`: Unit = {
       new Builder {
         builder.append("productive!")
         assert(builder.toString === "ScalaTest is productive!")
@@ -40,7 +40,7 @@ class ExampleSpec extends RefSpec {
 
   object `Test code` {
     // This test needs the ListBuffer[String] fixture
-    def `should be readable` {
+    def `should be readable`: Unit = {
       new Buffer {
         buffer += ("readable!")
         assert(buffer === List("ScalaTest", "is", "readable!"))
@@ -48,7 +48,7 @@ class ExampleSpec extends RefSpec {
     }
 
     // This test needs both the StringBuilder and ListBuffer
-    def `should be clear and concise` {
+    def `should be clear and concise`: Unit = {
       new Builder with Buffer {
         builder.append("clear!")
         buffer += ("concise!")

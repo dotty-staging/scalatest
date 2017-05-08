@@ -46,7 +46,7 @@ class ExampleSpec extends Suites(
 
   // Set up the temp file needed by the test, taking
   // a file name from the configMap
-  override def beforeAll(configMap: ConfigMap) {
+  override def beforeAll(configMap: ConfigMap): Unit = {
 
     require(
       configMap.isDefinedAt(tempFileName),
@@ -61,7 +61,7 @@ class ExampleSpec extends Suites(
   }
 
   // Delete the temp file
-  override def afterAll(configMap: ConfigMap) {
+  override def afterAll(configMap: ConfigMap): Unit = {
     // No need to require that configMap contains the key again because it won't get
     // here if it didn't contain the key in beforeAll
     val fileName = configMap("tempFileName").asInstanceOf[String]

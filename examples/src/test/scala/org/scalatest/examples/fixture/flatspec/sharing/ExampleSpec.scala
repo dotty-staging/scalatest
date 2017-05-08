@@ -28,7 +28,7 @@ object DbServer { // Simulating a database server
     databases.put(name, db)
     db
   }
-  def removeDb(name: String) {
+  def removeDb(name: String): Unit = {
     databases.remove(name)
   }
 }
@@ -39,7 +39,7 @@ trait DbFixture { this: fixture.TestSuite =>
 
   // Allow clients to populate the database after
   // it is created
-  def populateDb(db: Db) {}
+  def populateDb(db: Db): Unit = {}
 
   def withFixture(test: OneArgTest): Outcome = {
     val dbName = randomUUID.toString
@@ -54,7 +54,7 @@ trait DbFixture { this: fixture.TestSuite =>
 
 class ExampleSpec extends fixture.FlatSpec with DbFixture {
 
-  override def populateDb(db: Db) { // setup the fixture
+  override def populateDb(db: Db): Unit = { // setup the fixture
     db.append("ScalaTest is ")
   }
 

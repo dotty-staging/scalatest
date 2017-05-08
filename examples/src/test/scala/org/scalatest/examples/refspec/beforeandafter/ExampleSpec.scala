@@ -34,14 +34,14 @@ class ExampleSpec extends RefSpec with BeforeAndAfter {
   }
 
   object `Testing ` {
-    def `should be easy` {
+    def `should be easy`: Unit = {
       builder.append("easy!")
       assert(builder.toString === "ScalaTest is easy!")
       assert(buffer.isEmpty)
       buffer += "sweet"
     }
 
-    def `should be fun` {
+    def `should be fun`: Unit = {
       builder.append("fun!")
       assert(builder.toString === "ScalaTest is fun!")
       assert(buffer.isEmpty)
