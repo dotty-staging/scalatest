@@ -156,17 +156,16 @@ object ScalatestBuild extends Build {
   def crossBuildLibraryDependencies(theScalaVersion: String) =
     CrossVersion.partialVersion(theScalaVersion) match {
       // Dotty is scalaVersion 0.x
-      case Some((0, _))                              => scalaModules.map(_.cross(CrossVersion.binaryMapped(_ => "2.11")))
+      case Some((0, _)) => scalaModules.map(_.cross(CrossVersion.binaryMapped(_ => "2.11")))
       // if scala 2.11+ is used, add dependency on scala-xml module
-      case Some((2, scalaMajor)) if scalaMajor >= 11 => scalaModules
-      case _ =>
-        Seq(scalacheckDependency("optional"))
+      case _ => scalaModules
     }
 
   def scalaLibraries(theScalaVersion: String) =
-    Seq(
-      // "org.scala-lang" % "scala-compiler" % theScalaVersion % "provided"
-      // "org.scala-lang" % "scala-reflect" % theScalaVersion // this is needed to compile macro
+    if (theScalaVersion.startsWith("0.1")) Nil
+    else List(
+      "org.scala-lang" % "scala-compiler" % theScalaVersion % "provided",
+      "org.scala-lang" % "scala-reflect" % theScalaVersion // this is needed to compile macro
     )
 
   def scalatestLibraryDependencies =
@@ -304,6 +303,7 @@ object ScalatestBuild extends Build {
     .settings(scalacticDocSettings: _*)
     .settings(
       projectTitle := "Scalactic",
+      libraryDependencies ++= crossBuildLibraryDependencies(scalaVersion.value),
       organization := "org.scalactic",
       initialCommands in console := "import org.scalactic._",
       sourceGenerators in Compile += {
