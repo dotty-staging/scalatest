@@ -15,7 +15,7 @@
  */
 package org.scalatest.fixture
 
-import org.scalatest._
+import org.scalatest.{TestSuite => _, TestRegistration => _, Transformer => _, AsyncTestSuite => _, AsyncTestRegistration => _, _}
 import org.scalatest.exceptions._
 import org.scalactic.{source, Prettifier}
 import java.util.ConcurrentModificationException

@@ -15,7 +15,7 @@
  */
 package org.scalatest.fixture
 
-import org.scalatest._
+import org.scalatest.{TestRegistration => _, TestSuite => _, Transformer => _, _}
 import org.scalactic.source
 import java.util.ConcurrentModificationException
 import java.util.concurrent.atomic.AtomicReference

@@ -15,7 +15,7 @@
  */
 package org.scalatest.fixture
 
-import org.scalatest._
+import org.scalatest.{TestSuite => _, Transformer => _, TestRegistration => _, _}
 import org.scalactic.source
 import org.scalatest.Suite.autoTagClassAnnotations
 

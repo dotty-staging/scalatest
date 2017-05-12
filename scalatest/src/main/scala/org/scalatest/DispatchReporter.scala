@@ -15,7 +15,6 @@
  */
 package org.scalatest
 
-import java.util.concurrent.CountDownLatch
 import java.io.PrintStream
 import org.scalatest.events._
 import org.scalactic.Requirements._

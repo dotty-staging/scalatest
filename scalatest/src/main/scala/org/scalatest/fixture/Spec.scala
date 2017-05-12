@@ -15,7 +15,7 @@
  */
 package org.scalatest.fixture
 
-import org.scalatest._
+import org.scalatest.{SpecLike => _, _}
 import java.lang.reflect.{Method, Modifier, InvocationTargetException}
 import org.scalatest.Suite.autoTagClassAnnotations
 import org.scalatest.events.{TopOfClass, TopOfMethod}
