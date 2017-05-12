@@ -32,14 +32,14 @@ class ExampleSpec extends Suites(
 
   // Set up the temp file needed by the test, taking
   // a file name from the config map
-  override def beforeAll() {
+  override def beforeAll(): Unit = {
     val writer = new FileWriter(tempFileName)
     try writer.write("Hello, suite of tests!")
     finally writer.close()
   }
 
   // Delete the temp file
-  override def afterAll() {
+  override def afterAll(): Unit = {
     val file = new File(tempFileName)
     file.delete()
   }

@@ -22,7 +22,7 @@ class TVSet {
 
   def isOn: Boolean = on
 
-  def pressPowerButton() {
+  def pressPowerButton(): Unit = {
     on = !on
   }
 }

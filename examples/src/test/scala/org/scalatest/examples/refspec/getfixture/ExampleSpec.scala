@@ -28,7 +28,7 @@ class ExampleSpec extends RefSpec {
   def fixture = new Fixture
 
   object `Testing ` {
-    def `should be easy` {
+    def `should be easy`: Unit = {
       val f = fixture
       f.builder.append("easy!")
       assert(f.builder.toString === "ScalaTest is easy!")
@@ -36,7 +36,7 @@ class ExampleSpec extends RefSpec {
       f.buffer += "sweet"
     }
 
-    def `should be fun` {
+    def `should be fun`: Unit = {
       val f = fixture
       f.builder.append("fun!")
       assert(f.builder.toString === "ScalaTest is fun!")

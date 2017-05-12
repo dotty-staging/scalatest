@@ -48,7 +48,7 @@ It is also good idea to override methods `foreach` and
   """ }
 
   object `A mutable Set` {
-    def `should allow an element to be added` {
+    def `should allow an element to be added`: Unit = {
       Given("an empty mutable Set")
       val set = mutable.Set.empty[String]
 

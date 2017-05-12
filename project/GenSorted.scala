@@ -32,13 +32,13 @@ object GenSorted {
     translate(line, mapping.toIterator)
   }
 
-  def genTest(targetBaseDir: File, version: String, scalaVersion: String) {
+  def genTest(targetBaseDir: File, version: String, scalaVersion: String): Unit = {
 
     val sourceBaseDir = new File("scalatest-test/src/test/scala/org/scalatest")
     val sortedDir = new File(targetBaseDir, "sortedTests")
     sortedDir.mkdirs()
 
-    def generateFile(sourceFileName: String, generatedFileName: String, mapping: (String, String)*) {
+    def generateFile(sourceFileName: String, generatedFileName: String, mapping: (String, String)*): Unit = {
       val generatedFile = new File(sortedDir, generatedFileName)
       val writer = new BufferedWriter(new FileWriter(generatedFile))
       try {
@@ -91,7 +91,7 @@ object GenSorted {
     generateFile("ShouldBeSortedLogicalOrSpec.scala", "ShouldBeSortedLogicalOrForJavaColSpec.scala", javaListMapping: _*)
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val targetDir = args(0)
     val version = args(1)
     val scalaVersion = args(2)

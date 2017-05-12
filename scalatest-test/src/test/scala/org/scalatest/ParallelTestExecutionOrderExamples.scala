@@ -22,7 +22,7 @@ import org.scalatest.refspec.RefSpec
 // SKIP-SCALATESTJS-END
 
 trait OrderExpectedResults extends EventHelpers {
-  def assertOrderTest(events: List[Event])
+  def assertOrderTest(events: List[Event]): Unit
 }
 
 object ParallelTestExecutionOrderExamples extends Tables {

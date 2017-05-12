@@ -25,7 +25,7 @@ object DbServer { // Simulating a database server
     databases.put(name, db)
     db
   }
-  def removeDb(name: String) {
+  def removeDb(name: String): Unit = {
     databases.remove(name)
   }
 }
@@ -37,7 +37,7 @@ import java.io._
 
 class ExampleSpec extends RefSpec {
 
-  def withDatabase(testCode: Db => Any) {
+  def withDatabase(testCode: Db => Any): Unit = {
     val dbName = randomUUID.toString
     val db = createDb(dbName) // create the fixture
     try {
@@ -47,7 +47,7 @@ class ExampleSpec extends RefSpec {
     finally removeDb(dbName) // clean up the fixture
   }
 
-  def withFile(testCode: (File, FileWriter) => Any) {
+  def withFile(testCode: (File, FileWriter) => Any): Unit = {
     val file = File.createTempFile("hello", "world") // create the fixture
     val writer = new FileWriter(file)
     try {
@@ -59,7 +59,7 @@ class ExampleSpec extends RefSpec {
 
   object `Testing ` {
     // This test needs the file fixture
-    def `should be productive` {
+    def `should be productive`: Unit = {
       withFile { (file, writer) =>
         writer.write("productive!")
         writer.flush()
@@ -70,7 +70,7 @@ class ExampleSpec extends RefSpec {
 
   object `Test code` {
     // This test needs the database fixture
-    def `should be readable` {
+    def `should be readable`: Unit = {
       withDatabase { db =>
         db.append("readable!")
         assert(db.toString === "ScalaTest is readable!")
@@ -78,7 +78,7 @@ class ExampleSpec extends RefSpec {
     }
 
     // This test needs both the file and the database
-    def `should be clear and concise` {
+    def `should be clear and concise`: Unit = {
       withDatabase { db =>
         withFile { (file, writer) => // loan-fixture methods compose
           db.append("clear!")

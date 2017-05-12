@@ -22,14 +22,14 @@ import scala.util.{Failure, Success}
 class StatusSpec extends fixture.FunSpec {
 
   protected type FixtureParam = {
-    def setCompleted()
+    def setCompleted(): Unit
     def isCompleted: Boolean
     // SKIP-SCALATESTJS-START
     def succeeds(): Boolean
     // SKIP-SCALATESTJS-END
-    def setFailed()
+    def setFailed(): Unit
     // SKIP-SCALATESTJS-START
-    def waitUntilCompleted()
+    def waitUntilCompleted(): Unit
     // SKIP-SCALATESTJS-END
   }
 

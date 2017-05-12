@@ -1446,7 +1446,7 @@ object GenInspectors {
     override def toString = childrenContent
   }
 
-  def genForAllSpecFile(targetDir: File) {
+  def genForAllSpecFile(targetDir: File): Unit = {
     val forAllSpecFile = new File(targetDir, "ForAllInspectorsSpec.scala")
     genFile(
       forAllSpecFile,
@@ -1475,7 +1475,7 @@ object GenInspectors {
     )
   }
 
-  def genForAtLeastSpecFile(targetDir: File) {
+  def genForAtLeastSpecFile(targetDir: File): Unit = {
     val forAtLeastSpecFile = new File(targetDir, "ForAtLeastInspectorsSpec.scala")
     genFile(
       forAtLeastSpecFile,
@@ -1504,7 +1504,7 @@ object GenInspectors {
     )
   }
 
-  def genForAtMostSpecFile(targetDir: File) {
+  def genForAtMostSpecFile(targetDir: File): Unit = {
     val forAtMostSpecFile = new File(targetDir, "ForAtMostInspectorsSpec.scala")
     genFile(
       forAtMostSpecFile,
@@ -1533,7 +1533,7 @@ object GenInspectors {
     )
   }
 
-  def genForExactlySpecFile(targetDir: File) {
+  def genForExactlySpecFile(targetDir: File): Unit = {
     val forExactlySpecFile = new File(targetDir, "ForExactlyInspectorsSpec.scala")
     genFile(
       forExactlySpecFile,
@@ -1562,7 +1562,7 @@ object GenInspectors {
     )
   }
 
-  def genForNoSpecFile(targetDir: File) {
+  def genForNoSpecFile(targetDir: File): Unit = {
     val forNoSpecFile = new File(targetDir, "ForNoInspectorsSpec.scala")
     genFile(
       forNoSpecFile,
@@ -1591,7 +1591,7 @@ object GenInspectors {
     )
   }
 
-  def genForBetweenSpecFile(targetDir: File) {
+  def genForBetweenSpecFile(targetDir: File): Unit = {
     val forBetweenSpecFile = new File(targetDir, "ForBetweenInspectorsSpec.scala")
     genFile(
       forBetweenSpecFile,
@@ -1620,7 +1620,7 @@ object GenInspectors {
     )
   }
 
-  def genForEverySpecFile(targetDir: File) {
+  def genForEverySpecFile(targetDir: File): Unit = {
     val forEverySpecFile = new File(targetDir, "ForEveryInspectorsSpec.scala")
     genFile(
       forEverySpecFile,
@@ -1649,7 +1649,7 @@ object GenInspectors {
     )
   }
 
-  def genNestedInspectorsSpecFile(targetDir: File) {
+  def genNestedInspectorsSpecFile(targetDir: File): Unit = {
     val nestedInspectorsSpecFile = new File(targetDir, "NestedInspectorsSpec.scala")
     genFile(
       nestedInspectorsSpecFile,
@@ -1762,7 +1762,7 @@ object GenInspectors {
     targetDir
   }
 
-  def genTest(targetBaseDir: File, version: String, scalaVersion: String) {
+  def genTest(targetBaseDir: File, version: String, scalaVersion: String): Unit = {
     genForAllSpecFile(targetDir(targetBaseDir, "forall"))
     genForAtLeastSpecFile(targetDir(targetBaseDir, "foratleast"))
     genForAtMostSpecFile(targetDir(targetBaseDir, "foratmost"))
@@ -1773,7 +1773,7 @@ object GenInspectors {
     genNestedInspectorsSpecFile(targetDir(targetBaseDir, "nested"))
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val targetBaseDir = args(0)
     val version = args(1)
     val scalaVersion = args(2)

@@ -2525,7 +2525,7 @@ $okayExpressions$
 
   val thisYear = Calendar.getInstance.get(Calendar.YEAR)
 
-  def genPropertyChecks(targetDir: File) {
+  def genPropertyChecks(targetDir: File): Unit = {
     targetDir.mkdirs()
     val bw = new BufferedWriter(new FileWriter(new File(targetDir, "GeneratorDrivenPropertyChecks.scala")))
 
@@ -2589,7 +2589,7 @@ $okayExpressions$
   }
 
   // Invitation style indicates how GeneratorDrivenPropertyChecks is imported
-  def genGeneratorDrivenSuite(targetDir: File, mixinInvitationStyle: Boolean, withTables: Boolean, doItForCheckers: Boolean) {
+  def genGeneratorDrivenSuite(targetDir: File, mixinInvitationStyle: Boolean, withTables: Boolean, doItForCheckers: Boolean): Unit = {
 
     targetDir.mkdirs()
 
@@ -2681,7 +2681,7 @@ $okayExpressions$
     }
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val targetDir = args(0)
     val version = args(1)
     val scalaVersion = args(2)
@@ -2694,11 +2694,11 @@ $okayExpressions$
     genTest(testDir, version, scalaVersion)
   }
 
-  def genMain(dir: File, version: String, scalaVersion: String) {
+  def genMain(dir: File, version: String, scalaVersion: String): Unit = {
     genPropertyChecks(dir)
   }
 
-  def genTest(dir: File, version: String, scalaVersion: String) {
+  def genTest(dir: File, version: String, scalaVersion: String): Unit = {
     genGeneratorDrivenSuite(dir, true, false, false)
     genGeneratorDrivenSuite(dir, false, false, false)
     genGeneratorDrivenSuite(dir, true, true, false)

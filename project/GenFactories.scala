@@ -3008,7 +3008,7 @@ private[scalatest] class MatcherFactory$arity$Macro[-SC, $typeConstructors$] {
 
   val MaxArity = 9
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val targetDir = args(0)
     val version = args(1)
     val scalaVersion = args(2)
@@ -3023,7 +3023,7 @@ private[scalatest] class MatcherFactory$arity$Macro[-SC, $typeConstructors$] {
 */
   }
 
-  def genMain(dir: File, version: String, scalaVersion: String) {
+  def genMain(dir: File, version: String, scalaVersion: String): Unit = {
     dir.mkdirs()
     for (arity <- 1 to MaxArity) {
       genMatcherFactory(dir, arity, false)
@@ -3058,9 +3058,9 @@ private[scalatest] class MatcherFactory$arity$Macro[-SC, $typeConstructors$] {
     }.mkString("\n")
   }
 
-  def genMatcherFactory(targetDir: File, arity: Int, scalaJS: Boolean) {
+  def genMatcherFactory(targetDir: File, arity: Int, scalaJS: Boolean): Unit = {
 
-    def setCommonOnes(arity: Int, st: org.antlr.stringtemplate.StringTemplate) {
+    def setCommonOnes(arity: Int, st: org.antlr.stringtemplate.StringTemplate): Unit = {
       if (arity == 1)
         st.setAttribute("arityIsOne", "true");
       st.setAttribute("arity", arity);
@@ -3119,7 +3119,7 @@ private[scalatest] class MatcherFactory$arity$Macro[-SC, $typeConstructors$] {
       // return another MatcherFactory<MaxArity> could be implemented. That would mean only *some* of the
       // DSL is implemented under MatcherFactory<MaxArity>. I'd rather just say none of it is.
       if (arity < MaxArity) {
-        def doABottomHalf(bottomSt: org.antlr.stringtemplate.StringTemplate) {
+        def doABottomHalf(bottomSt: org.antlr.stringtemplate.StringTemplate): Unit = {
           setCommonOnes(arity, bottomSt)
           bottomSt.setAttribute("arityPlusOne", arity + 1);
           bw.write(transform(bottomSt.toString))

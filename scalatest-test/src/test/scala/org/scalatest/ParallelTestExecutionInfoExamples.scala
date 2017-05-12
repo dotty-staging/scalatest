@@ -22,7 +22,7 @@ import org.scalatest.refspec.RefSpec
 // SKIP-SCALATESTJS-END
 
 trait InfoExpectedResults extends EventHelpers {
-  def assertBeforeAfterInfo(events: List[Event])
+  def assertBeforeAfterInfo(events: List[Event]): Unit
 }
 
 object ParallelTestExecutionInfoExamples extends Tables {

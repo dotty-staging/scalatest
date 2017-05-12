@@ -22,9 +22,9 @@ class SetSpec extends RefSpec {
 
   object `A Set` {
     object `when empty` {
-      def `should have size 0` { pending }
+      def `should have size 0`: Unit = { pending }
 
-      def `should produce NoSuchElementException when head is invoked` {
+      def `should produce NoSuchElementException when head is invoked`: Unit = {
         assertThrows[NoSuchElementException] {
           Set.empty.head
         }

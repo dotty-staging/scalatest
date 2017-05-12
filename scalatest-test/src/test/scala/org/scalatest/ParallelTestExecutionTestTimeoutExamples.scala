@@ -26,7 +26,7 @@ import org.scalatest.refspec.RefSpec
 // SKIP-SCALATESTJS-END
 
 trait TestTimeoutExpectedResults extends EventHelpers { s: ParallelTestExecution =>
-  def assertTestTimeoutTest(events: List[Event])
+  def assertTestTimeoutTest(events: List[Event]): Unit
   val holdTestSucceededName: String
   val holdUntilEventCount: Int
   override def sortingTimeout: Span = Span(300, Millis)

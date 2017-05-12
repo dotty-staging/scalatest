@@ -32,13 +32,13 @@ object GenEmpty {
     translate(line, mapping.toIterator)
   }
 
-  def genTest(targetBaseDir: File, version: String, scalaVersion: String) {
+  def genTest(targetBaseDir: File, version: String, scalaVersion: String): Unit = {
 
     val sourceBaseDir = new File("scalatest-test/src/test/scala/org/scalatest")
     val targetDir = new File(targetBaseDir, "emptyTests")
     targetDir.mkdirs()
 
-    def generateFile(sourceFileName: String, typeName: String, mapping: (String, String)*) {
+    def generateFile(sourceFileName: String, typeName: String, mapping: (String, String)*): Unit = {
       val generatedFileName = sourceFileName.replaceAll("List", typeName)
       val generatedFile = new File(targetDir, generatedFileName)
       val writer = new BufferedWriter(new FileWriter(generatedFile))
@@ -147,7 +147,7 @@ object GenEmpty {
     generateFile("ListShouldBeEmptyLogicalOrSpec.scala", "JavaMap", javaMapMapping: _*)
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val targetDir = args(0)
     val version = args(1)
     val scalaVersion = args(2)

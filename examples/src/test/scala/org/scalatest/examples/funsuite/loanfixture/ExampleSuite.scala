@@ -25,7 +25,7 @@ object DbServer { // Simulating a database server
     databases.put(name, db)
     db
   }
-  def removeDb(name: String) {
+  def removeDb(name: String): Unit = {
     databases.remove(name)
   }
 }
@@ -37,7 +37,7 @@ import java.io._
 
 class ExampleSuite extends FunSuite {
 
-  def withDatabase(testCode: Db => Any) {
+  def withDatabase(testCode: Db => Any): Unit = {
     val dbName = randomUUID.toString
     val db = createDb(dbName) // create the fixture
     try {
@@ -47,7 +47,7 @@ class ExampleSuite extends FunSuite {
     finally removeDb(dbName) // clean up the fixture
   }
 
-  def withFile(testCode: (File, FileWriter) => Any) {
+  def withFile(testCode: (File, FileWriter) => Any): Unit = {
     val file = File.createTempFile("hello", "world") // create the fixture
     val writer = new FileWriter(file)
     try {

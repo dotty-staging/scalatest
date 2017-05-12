@@ -846,7 +846,7 @@ trait GenInspectorsShorthandsBase {
   def filterArraySymbol(colText: String, condition: String): Boolean =
     !(colText.startsWith("Array") && condition == "'traversable should not be symbol' failed")
 
-  def genInspectorShorthandsForAllSpecFile(targetDir: File) {
+  def genInspectorShorthandsForAllSpecFile(targetDir: File): Unit = {
     val int123Col = genCol("1, 2, 3", "\"Array(1, 2, 3)\"")
 
     val succeedTests =
@@ -1087,7 +1087,7 @@ trait GenInspectorsShorthandsBase {
     }
   }
 
-  def genInspectorShorthandsForAtLeastSpecFile(targetDir: File) {
+  def genInspectorShorthandsForAtLeastSpecFile(targetDir: File): Unit = {
     val int123Col = genCol("1, 2, 3", "\"Array(1, 2, 3)\"")
 
     val succeedTests =
@@ -1327,7 +1327,7 @@ trait GenInspectorsShorthandsBase {
     }
   }
 
-  def genInspectorShorthandsForEverySpecFile(targetMatchersDir: File) {
+  def genInspectorShorthandsForEverySpecFile(targetMatchersDir: File): Unit = {
     val int123Col = genCol("1, 2, 3", "\"Array(1, 2, 3)\"")
 
     val succeedTests =
@@ -1568,7 +1568,7 @@ trait GenInspectorsShorthandsBase {
     }
   }
 
-  def genInspectorShorthandsForExactlySpecFile(targetMatchersDir: File) {
+  def genInspectorShorthandsForExactlySpecFile(targetMatchersDir: File): Unit = {
     val int123Col = genCol("1, 2, 3", "\"Array(1, 2, 3)\"")
 
     val succeedTests =
@@ -1809,7 +1809,7 @@ trait GenInspectorsShorthandsBase {
     }
   }
 
-  def genInspectorShorthandsForNoSpecFile(targetMatchersDir: File) {
+  def genInspectorShorthandsForNoSpecFile(targetMatchersDir: File): Unit = {
     val int123Col = genCol("1, 2, 3", "\"Array(1, 2, 3)\"")
 
     val succeedTests =
@@ -2049,7 +2049,7 @@ trait GenInspectorsShorthandsBase {
     }
   }
 
-  def genInspectorShorthandsForBetweenSpecFile(targetMatchersDir: File) {
+  def genInspectorShorthandsForBetweenSpecFile(targetMatchersDir: File): Unit = {
     val int123Col = genCol("1, 2, 3", "\"Array(1, 2, 3)\"")
 
     val succeedTests =
@@ -2291,7 +2291,7 @@ trait GenInspectorsShorthandsBase {
     }
   }
 
-  def genInspectorShorthandsForAtMostSpecFile(targetMatchersDir: File) {
+  def genInspectorShorthandsForAtMostSpecFile(targetMatchersDir: File): Unit = {
     val int123Col = genCol("1, 2, 3, 4, 5", "\"Array(1, 2, 3, 4, 5)\"")
 
     val succeedTests =
@@ -2551,13 +2551,13 @@ trait GenInspectorsShorthandsBase {
     targetDir
   }
 
-  def genTest(targetBaseDir: File, version: String, scalaVersion: String)
+  def genTest(targetBaseDir: File, version: String, scalaVersion: String): Unit
 
 }
 
 object GenInspectorsShorthands1 extends GenInspectorsShorthandsBase {
 
-  def genTest(targetBaseDir: File, version: String, scalaVersion: String) {
+  def genTest(targetBaseDir: File, version: String, scalaVersion: String): Unit = {
     genInspectorShorthandsForAllSpecFile(targetDir(targetBaseDir, "all"))
     genInspectorShorthandsForAtLeastSpecFile(targetDir(targetBaseDir, "atLeast"))
     genInspectorShorthandsForEverySpecFile(targetDir(targetBaseDir, "every"))
@@ -2567,7 +2567,7 @@ object GenInspectorsShorthands1 extends GenInspectorsShorthandsBase {
 
 object GenInspectorsShorthands2 extends GenInspectorsShorthandsBase {
 
-  def genTest(targetBaseDir: File, version: String, scalaVersion: String) {
+  def genTest(targetBaseDir: File, version: String, scalaVersion: String): Unit = {
     genInspectorShorthandsForNoSpecFile(targetDir(targetBaseDir, "no"))
     genInspectorShorthandsForBetweenSpecFile(targetDir(targetBaseDir, "between"))
     genInspectorShorthandsForAtMostSpecFile(targetDir(targetBaseDir, "atMost"))

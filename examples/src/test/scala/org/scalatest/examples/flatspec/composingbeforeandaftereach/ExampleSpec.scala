@@ -22,12 +22,12 @@ trait Builder extends BeforeAndAfterEach { this: Suite =>
 
   val builder = new StringBuilder
 
-  override def beforeEach() {
+  override def beforeEach(): Unit = {
     builder.append("ScalaTest is ")
     super.beforeEach() // To be stackable, must call super.beforeEach
   }
 
-  override def afterEach() {
+  override def afterEach(): Unit = {
     try super.afterEach() // To be stackable, must call super.afterEach
     finally builder.clear()
   }
@@ -37,7 +37,7 @@ trait Buffer extends BeforeAndAfterEach { this: Suite =>
 
   val buffer = new ListBuffer[String]
 
-  override def afterEach() {
+  override def afterEach(): Unit = {
     try super.afterEach() // To be stackable, must call super.afterEach
     finally buffer.clear()
   }

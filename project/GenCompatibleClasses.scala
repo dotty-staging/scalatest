@@ -2,7 +2,7 @@ import java.io.{FileWriter, BufferedWriter, File}
 
 object GenCompatibleClasses {
 
-  def genMain(targetDir: File, version: String, scalaVersion: String) {
+  def genMain(targetDir: File, version: String, scalaVersion: String): Unit = {
     targetDir.mkdirs()
     val listCellRendererClass = Class.forName("javax.swing.ListCellRenderer")
     val isJava7 = listCellRendererClass.getTypeParameters.length > 0
@@ -65,7 +65,7 @@ object GenCompatibleClasses {
     }
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
 
     val targetDir = args(0)
     val version = args(1)

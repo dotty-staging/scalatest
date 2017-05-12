@@ -20,7 +20,7 @@ import org.scalatest._
 class TVSet {
   private var on: Boolean = false
   def isOn: Boolean = on
-  def pressPowerButton() {
+  def pressPowerButton(): Unit = {
     on = !on
   }
 }

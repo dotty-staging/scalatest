@@ -34,11 +34,11 @@ class ExampleSpec extends RefSpec {
   }
 
   object `This test` {
-    def `should succeed` {
+    def `should succeed`: Unit = {
       assert(1 + 1 === 2)
     }
 
-    def `should fail` {
+    def `should fail`: Unit = {
       assert(1 + 1 === 3)
     }
   }
