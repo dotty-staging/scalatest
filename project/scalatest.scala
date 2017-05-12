@@ -162,10 +162,9 @@ object ScalatestBuild extends Build {
     }
 
   def scalaLibraries(theScalaVersion: String) =
-    if (theScalaVersion.startsWith("0.1")) Nil
-    else List(
-      "org.scala-lang" % "scala-compiler" % theScalaVersion % "provided",
-      "org.scala-lang" % "scala-reflect" % theScalaVersion // this is needed to compile macro
+    List(
+      "org.scala-lang" % "scala-compiler" % "2.11.8",
+      "org.scala-lang" % "scala-reflect" % "2.11.8"
     )
 
   def scalatestLibraryDependencies =
