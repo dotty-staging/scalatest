@@ -7,6 +7,7 @@ import com.typesafe.sbt.osgi.SbtOsgi._
 import com.typesafe.sbt.SbtPgp._
 import org.scalajs.sbtplugin.ScalaJSPlugin
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
+import dotty.tools.sbtplugin.DottyPlugin.autoImport._
 
 object ScalatestBuild extends Build {
 
@@ -19,7 +20,7 @@ object ScalatestBuild extends Build {
 
   // To temporarily switch sbt to a different Scala version:
   // > ++ 2.10.5
-  val buildScalaVersion = "2.11.8"
+  val buildScalaVersion = "2.12.3"
 
   val releaseVersion = "3.0.1"
 
@@ -80,7 +81,7 @@ object ScalatestBuild extends Build {
   def sharedSettings: Seq[Setting[_]] = Seq(
     javaHome := getJavaHome,
     scalaVersion := buildScalaVersion,
-    crossScalaVersions := Seq(buildScalaVersion, "2.10.6", "2.12.0"),
+    crossScalaVersions := Seq("2.10.6", "2.11.8", buildScalaVersion),
     version := releaseVersion,
     scalacOptions ++= Seq("-feature", "-target:jvm-1.6"),
     resolvers += "Sonatype Public" at "https://oss.sonatype.org/content/groups/public",
@@ -152,8 +153,10 @@ object ScalatestBuild extends Build {
   def scalacheckDependency(config: String) =
     "org.scalacheck" %% "scalacheck" % scalacheckVersion % config
 
-  def crossBuildLibraryDependencies(theScalaVersion: String) =
-    CrossVersion.partialVersion(theScalaVersion) match {
+  def crossBuildLibraryDependencies(theScalaVersion: String) = {
+    val isDotty = theScalaVersion.startsWith("0.")
+    val version = if (isDotty) "2.12.3" else theScalaVersion
+    CrossVersion.partialVersion(version) match {
       // if scala 2.11+ is used, add dependency on scala-xml module
       case Some((2, scalaMajor)) if scalaMajor >= 11 =>
         Seq(
@@ -164,12 +167,16 @@ object ScalatestBuild extends Build {
       case _ =>
         Seq(scalacheckDependency("optional"))
     }
+  }
 
-  def scalaLibraries(theScalaVersion: String) =
+  def scalaLibraries(theScalaVersion: String) = {
+    val isDotty = theScalaVersion.startsWith("0.")
+    val version = if (isDotty) "2.12.3" else theScalaVersion
     Seq(
-      "org.scala-lang" % "scala-compiler" % theScalaVersion % "provided",
-      "org.scala-lang" % "scala-reflect" % theScalaVersion // this is needed to compile macro
+      "org.scala-lang" % "scala-compiler" % version % "provided",
+      "org.scala-lang" % "scala-reflect" % version // this is needed to compile macro
     )
+  }
 
   def scalatestLibraryDependencies =
     Seq(
@@ -290,6 +297,7 @@ object ScalatestBuild extends Build {
       publish := {},
       publishLocal := {}
     )
+    .settings(dottySettings)
 
   lazy val scalacticMacroJS = Project("scalacticMacroJS", file("scalactic-macro.js"))
     .settings(sharedSettings: _*)
@@ -349,6 +357,7 @@ object ScalatestBuild extends Build {
         "Bundle-Vendor" -> "Artima, Inc."
       )
     ).dependsOn(scalacticMacro % "compile-internal, test-internal")  // avoid dependency in pom on non-existent scalactic-macro artifact, per discussion in http://grokbase.com/t/gg/simple-build-tool/133shekp07/sbt-avoid-dependence-in-a-macro-based-project
+    .settings(dottySettings)
 
   lazy val scalacticJS = Project("scalacticJS", file("scalactic.js"))
     .settings(sharedSettings: _*)
@@ -527,6 +536,7 @@ object ScalatestBuild extends Build {
         "Main-Class" -> "org.scalatest.tools.Runner"
       )
    ).dependsOn(scalacticMacro % "compile-internal, test-internal", scalactic)
+   .settings(dottySettings)
 
   lazy val scalatestTest = Project("scalatest-test", file("scalatest-test"))
     .settings(sharedSettings: _*)
@@ -1435,8 +1445,16 @@ object ScalatestBuild extends Build {
     doc in Compile := docTask((doc in Compile).value,
       (sourceManaged in Compile).value,
       name.value)
+
+  lazy val dottyVersion = dottyLatestNightlyBuild.get
+  lazy val dottySettings = List(
+    scalaVersion := dottyVersion,
+    libraryDependencies := libraryDependencies.value.map(_.withDottyCompat()),
+    scalacOptions := List("-language:Scala2")
+  )
 }
 // set scalacOptions in (Compile, console) += "-Xlog-implicits"
 // set scalacOptions in (Compile, console) += "-Xlog-implicits"
 // set scalacOptions in (Compile, console) += "-Xlog-implicits"
 // set scalacOptions in (Compile, console) += "-nowarn"
+
