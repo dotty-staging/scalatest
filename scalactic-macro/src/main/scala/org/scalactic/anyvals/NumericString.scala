@@ -2754,7 +2754,7 @@ object NumericString {
    *     a valid <code>String</code> literal, the invocation of this method
    *     will not compile.)
    */
-  def apply(value: String): NumericString = macro NumericStringMacro.apply
+  def apply(value: String): NumericString = ???
 
   /**
    * A factory/validation method that produces a <code>NumericString</code>,

@@ -293,7 +293,7 @@ final class NotWord {
    *                    ^
    * </pre>
    **/
-  def matchPattern(right: PartialFunction[Any, _]): Matcher[Any] = macro MatchPatternMacro.notMatchPatternMatcher
+  def matchPattern(right: PartialFunction[Any, _]): Matcher[Any] = ??? //MatchPatternMacro.notMatchPatternMatcher
 
   /**
    * This method enables the following syntax: 
@@ -793,7 +793,7 @@ final class NotWord {
    *                    ^
    * </pre>
    **/
-  def be(aType: ResultOfATypeInvocation[_]) = macro TypeMatcherMacro.notATypeMatcher
+  def be(aType: ResultOfATypeInvocation[_]) = ??? //TypeMatcherMacro.notATypeMatcher
   
   /**
    * This method enables the following syntax:
@@ -803,7 +803,7 @@ final class NotWord {
    *                    ^
    * </pre>
    **/
-  def be(anType: ResultOfAnTypeInvocation[_]) = macro TypeMatcherMacro.notAnTypeMatcher
+  def be(anType: ResultOfAnTypeInvocation[_]) = ??? //TypeMatcherMacro.notAnTypeMatcher
 
   /**
    * This method enables the following syntax: 

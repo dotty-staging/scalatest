@@ -7051,7 +7051,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *         ^
      * </pre>
      */
-    def shouldBe(aType: ResultOfATypeInvocation[_]): Assertion = macro TypeMatcherMacro.shouldBeATypeImpl
+    def shouldBe(aType: ResultOfATypeInvocation[_]): Assertion = ??? //TypeMatcherMacro.shouldBeATypeImpl
     
     /**
      * This method enables syntax such as the following:
@@ -7061,7 +7061,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *         ^
      * </pre>
      */
-    def shouldBe(anType: ResultOfAnTypeInvocation[_]): Assertion = macro TypeMatcherMacro.shouldBeAnTypeImpl
+    def shouldBe(anType: ResultOfAnTypeInvocation[_]): Assertion = ??? //TypeMatcherMacro.shouldBeAnTypeImpl
     
     /**
      * This method enables syntax such as the following:
@@ -7533,7 +7533,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def should(compileWord: CompileWord)(implicit pos: source.Position): Assertion = macro CompileMacro.shouldCompileImpl
+    def should(compileWord: CompileWord)(implicit pos: source.Position): Assertion = ??? //CompileMacro.shouldCompileImpl
 
     /**
      * This method enables syntax such as the following:
@@ -7543,7 +7543,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldNot(compileWord: CompileWord)(implicit pos: source.Position): Assertion = macro CompileMacro.shouldNotCompileImpl
+    def shouldNot(compileWord: CompileWord)(implicit pos: source.Position): Assertion = ??? //CompileMacro.shouldNotCompileImpl
 
     /**
      * This method enables syntax such as the following:
@@ -7553,7 +7553,7 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
      *        ^
      * </pre>
      */
-    def shouldNot(typeCheckWord: TypeCheckWord)(implicit pos: source.Position): Assertion = macro CompileMacro.shouldNotTypeCheckImpl
+    def shouldNot(typeCheckWord: TypeCheckWord)(implicit pos: source.Position): Assertion = ??? //CompileMacro.shouldNotTypeCheckImpl
 
 /*
     /**

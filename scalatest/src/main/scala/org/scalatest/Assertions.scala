@@ -465,7 +465,7 @@ trait Assertions extends TripleEquals  {
    * @param condition the boolean condition to assert
    * @throws TestFailedException if the condition is <code>false</code>.
    */
-  def assert(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro AssertionsMacro.assert
+  def assert(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ??? //AssertionsMacro.assert
 
   private[scalatest] def newAssertionFailedException(optionalMessage: Option[String], optionalCause: Option[Throwable], pos: source.Position, analysis: scala.collection.immutable.IndexedSeq[String]): Throwable =
     new exceptions.TestFailedException(toExceptionFunction(optionalMessage), optionalCause, Left(pos), None, analysis)
@@ -523,7 +523,7 @@ trait Assertions extends TripleEquals  {
    * @throws TestFailedException if the condition is <code>false</code>.
    * @throws NullArgumentException if <code>message</code> is <code>null</code>.
    */
-  def assert(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro AssertionsMacro.assertWithClue
+  def assert(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ??? //AssertionsMacro.assertWithClue
 
   /**
    * Assume that a boolean condition is true.
@@ -570,7 +570,7 @@ trait Assertions extends TripleEquals  {
    * @param condition the boolean condition to assume
    * @throws TestCanceledException if the condition is <code>false</code>.
    */
-  def assume(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro AssertionsMacro.assume
+  def assume(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ??? //AssertionsMacro.assume
 
   /**
    * Assume that a boolean condition, described in <code>String</code>
@@ -622,7 +622,7 @@ trait Assertions extends TripleEquals  {
    * @throws TestCanceledException if the condition is <code>false</code>.
    * @throws NullArgumentException if <code>message</code> is <code>null</code>.
    */
-  def assume(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro AssertionsMacro.assumeWithClue
+  def assume(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ??? //AssertionsMacro.assumeWithClue
 
   /**
    * Asserts that a given string snippet of code does not pass the Scala type checker, failing if the given
@@ -654,7 +654,7 @@ trait Assertions extends TripleEquals  {
    *
    * @param code the snippet of code that should not type check
    */
-  def assertTypeError(code: String)(implicit pos: source.Position): Assertion = macro CompileMacro.assertTypeErrorImpl
+  def assertTypeError(code: String)(implicit pos: source.Position): Assertion = ??? //CompileMacro.assertTypeErrorImpl
 
   /**
    * Asserts that a given string snippet of code does not pass either the Scala parser or type checker.
@@ -685,7 +685,7 @@ trait Assertions extends TripleEquals  {
    *
    * @param code the snippet of code that should not type check
    */
-  def assertDoesNotCompile(code: String)(implicit pos: source.Position): Assertion = macro CompileMacro.assertDoesNotCompileImpl
+  def assertDoesNotCompile(code: String)(implicit pos: source.Position): Assertion = ??? //CompileMacro.assertDoesNotCompileImpl
 
   /**
    * Asserts that a given string snippet of code passes both the Scala parser and type checker.
@@ -706,7 +706,7 @@ trait Assertions extends TripleEquals  {
    *
    * @param code the snippet of code that should compile
    */
-  def assertCompiles(code: String)(implicit pos: source.Position): Assertion = macro CompileMacro.assertCompilesImpl
+  def assertCompiles(code: String)(implicit pos: source.Position): Assertion = ??? //CompileMacro.assertCompilesImpl
 
   /**
    * Intercept and return an exception that's expected to
@@ -1331,7 +1331,7 @@ object Assertions extends Assertions {
 
   @deprecated("The trap method is no longer needed for demos in the REPL, which now abreviates stack traces, so NormalResult will be removed in a future version of ScalaTest")
   case class NormalResult(result: Any) extends Throwable {
-    override def toString = if (result == ()) Resources.noExceptionWasThrown else Resources.resultWas(Prettifier.default(result))
+    override def toString = if (result == (())) Resources.noExceptionWasThrown else Resources.resultWas(Prettifier.default(result))
   }
 
   private[scalatest] def areEqualComparingArraysStructurally(left: Any, right: Any): Boolean = {

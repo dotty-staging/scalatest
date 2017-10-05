@@ -15,219 +15,219 @@
  */
 package org.scalatest.matchers
 
-import org.scalatest.Resources
-import reflect.macros.Context
+// import org.scalatest.Resources
+// import reflect.macros.Context
 
-private[scalatest] object MatchPatternMacro {
+// private[scalatest] object MatchPatternMacro {
 
-  /**
-   * Check the case definition AST, raise an compiler error if the body is not empty.
-   */
-  def checkCaseDefinitions(context: Context)(tree: context.Tree): Unit = {
-    import context.universe._
+//   /**
+//    * Check the case definition AST, raise an compiler error if the body is not empty.
+//    */
+//   def checkCaseDefinitions(context: Context)(tree: context.Tree): Unit = {
+//     import context.universe._
 
-    // Check if it is a default case
-    def defaultCase(t: Tree): Boolean =
-      t match {
-        case Bind(defaultCaseTermName, Ident(nme.WILDCARD)) if defaultCaseTermName.decoded == "defaultCase$" => true  // default case
-        case _ => false // not default case
-      }
+//     // Check if it is a default case
+//     def defaultCase(t: Tree): Boolean =
+//       t match {
+//         case Bind(defaultCaseTermName, Ident(nme.WILDCARD)) if defaultCaseTermName.decoded == "defaultCase$" => true  // default case
+//         case _ => false // not default case
+//       }
 
-    tree match {
-      case Typed(Block(List(ClassDef(_, _, _, Template(_, _, List(_, DefDef(_, applyOrElseTermName, _, _, _, Match(_, caseDefList)), _)))), _), _) if applyOrElseTermName.decoded == "applyOrElse" =>
-        // We got a case definition list, let's go through them to check
-        caseDefList.foreach {
-          case CaseDef(pat, _, body) if !defaultCase(pat) => // case definition, and not default case
-            body match {
-              case Literal(Constant(())) => // ok, empty body
-              case _ => context.abort(body.pos, Resources.nonEmptyMatchPatternCase)  // not empty body, raise compiler error
-            }
+//     tree match {
+//       case Typed(Block(List(ClassDef(_, _, _, Template(_, _, List(_, DefDef(_, applyOrElseTermName, _, _, _, Match(_, caseDefList)), _)))), _), _) if applyOrElseTermName.decoded == "applyOrElse" =>
+//         // We got a case definition list, let's go through them to check
+//         caseDefList.foreach {
+//           case CaseDef(pat, _, body) if !defaultCase(pat) => // case definition, and not default case
+//             body match {
+//               case Literal(Constant(())) => // ok, empty body
+//               case _ => context.abort(body.pos, Resources.nonEmptyMatchPatternCase)  // not empty body, raise compiler error
+//             }
 
-          case _ => // other thing, just do nothing
-        }
+//           case _ => // other thing, just do nothing
+//         }
 
-      case _ => // other thing, just do nothing
-    }
-  }
+//       case _ => // other thing, just do nothing
+//     }
+//   }
 
-  // Do checking on case definition and generate AST that returns a match pattern matcher
-  def matchPatternMatcher(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Expr[Matcher[Any]] = {
-    import context.universe._
+//   // Do checking on case definition and generate AST that returns a match pattern matcher
+//   def matchPatternMatcher(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Expr[Matcher[Any]] = {
+//     import context.universe._
 
-    val tree = right.tree
+//     val tree = right.tree
 
-    // check case definitions
-    checkCaseDefinitions(context)(tree)
+//     // check case definitions
+//     checkCaseDefinitions(context)(tree)
 
-    /**
-     * Generate AST for the following code:
-     *
-     * org.scalatest.matchers.MatchPatternHelper.matchPatternHelper(partialFunction)
-     */
-    val callHelper =
-      Apply(
-        Select(
-          Select(
-            Select(
-              Select(
-                Ident(newTermName("org")),
-                newTermName("scalatest")
-              ),
-              newTermName("matchers")
-            ),
-            newTermName("MatchPatternHelper")
-          ),
-          newTermName("matchPatternMatcher")
-        ),
-        List(tree)
-      )
+//     /**
+//      * Generate AST for the following code:
+//      *
+//      * org.scalatest.matchers.MatchPatternHelper.matchPatternHelper(partialFunction)
+//      */
+//     val callHelper =
+//       Apply(
+//         Select(
+//           Select(
+//             Select(
+//               Select(
+//                 Ident(newTermName("org")),
+//                 newTermName("scalatest")
+//               ),
+//               newTermName("matchers")
+//             ),
+//             newTermName("MatchPatternHelper")
+//           ),
+//           newTermName("matchPatternMatcher")
+//         ),
+//         List(tree)
+//       )
 
-    context.Expr(callHelper)
-  }
+//     context.Expr(callHelper)
+//   }
 
-  // Do checking on case definition and generate AST that returns a negated match pattern matcher
-  def notMatchPatternMatcherTree(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Tree = {
-    import context.universe._
+//   // Do checking on case definition and generate AST that returns a negated match pattern matcher
+//   def notMatchPatternMatcherTree(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Tree = {
+//     import context.universe._
 
-    val tree = right.tree
+//     val tree = right.tree
 
-    // check case definitions
-    checkCaseDefinitions(context)(tree)
+//     // check case definitions
+//     checkCaseDefinitions(context)(tree)
 
-    /**
-     * Generate AST for the following code:
-     *
-     * org.scalatest.matchers.MatchPatternHelper.notMatchPatternMatcher(partialFunction)
-     */
-    Apply(
-      Select(
-        Select(
-          Select(
-            Select(
-              Ident(newTermName("org")),
-              newTermName("scalatest")
-            ),
-            newTermName("matchers")
-          ),
-          newTermName("MatchPatternHelper")
-        ),
-        newTermName("notMatchPatternMatcher")
-      ),
-      List(tree)
-    )
-  }
+//     /**
+//      * Generate AST for the following code:
+//      *
+//      * org.scalatest.matchers.MatchPatternHelper.notMatchPatternMatcher(partialFunction)
+//      */
+//     Apply(
+//       Select(
+//         Select(
+//           Select(
+//             Select(
+//               Ident(newTermName("org")),
+//               newTermName("scalatest")
+//             ),
+//             newTermName("matchers")
+//           ),
+//           newTermName("MatchPatternHelper")
+//         ),
+//         newTermName("notMatchPatternMatcher")
+//       ),
+//       List(tree)
+//     )
+//   }
 
-  // Generate AST that returns a negated match pattern matcher expression
-  def notMatchPatternMatcher(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Expr[Matcher[Any]] =
-    context.Expr(notMatchPatternMatcherTree(context)(right))
+//   // Generate AST that returns a negated match pattern matcher expression
+//   def notMatchPatternMatcher(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Expr[Matcher[Any]] =
+//     context.Expr(notMatchPatternMatcherTree(context)(right))
 
-  // Do checking on case definition and generate AST that does a 'and not' logical expression matcher.
-  def andNotMatchPatternMatcher(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Expr[Matcher[Any]] = {
-    import context.universe._
+//   // Do checking on case definition and generate AST that does a 'and not' logical expression matcher.
+//   def andNotMatchPatternMatcher(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Expr[Matcher[Any]] = {
+//     import context.universe._
 
-    val tree = right.tree
+//     val tree = right.tree
 
-    // Generate a negated matcher by calling notMatchPatternMatcher
-    val notMatcher = notMatchPatternMatcherTree(context)(right)
+//     // Generate a negated matcher by calling notMatchPatternMatcher
+//     val notMatcher = notMatchPatternMatcherTree(context)(right)
 
-    /**
-     * Generate AST for code that call the 'and' method on the Matcher instance (reference through 'owner'):
-     *
-     * owner.and(notMatcher)
-     */
-    val callHelper =
-      context.macroApplication match {
-        case Apply(Select(qualifier, _), _) =>
-          Apply(
-            Select(
-              Select(
-                qualifier,
-                "owner"
-              ),
-              newTermName("and")
-            ),
-            List(notMatcher)
-          )
-        case _ => context.abort(context.macroApplication.pos, "This macro should be used with 'and not' syntax only.")
-      }
+//     /**
+//      * Generate AST for code that call the 'and' method on the Matcher instance (reference through 'owner'):
+//      *
+//      * owner.and(notMatcher)
+//      */
+//     val callHelper =
+//       context.macroApplication match {
+//         case Apply(Select(qualifier, _), _) =>
+//           Apply(
+//             Select(
+//               Select(
+//                 qualifier,
+//                 "owner"
+//               ),
+//               newTermName("and")
+//             ),
+//             List(notMatcher)
+//           )
+//         case _ => context.abort(context.macroApplication.pos, "This macro should be used with 'and not' syntax only.")
+//       }
 
-    context.Expr(callHelper)
-  }
+//     context.Expr(callHelper)
+//   }
 
-  def orNotMatchPatternMatcher(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Expr[Matcher[Any]] = {
-    import context.universe._
+//   def orNotMatchPatternMatcher(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Expr[Matcher[Any]] = {
+//     import context.universe._
 
-    val tree = right.tree
+//     val tree = right.tree
 
-    // Generate a negated matcher by calling notMatchPatternMatcher
-    val notMatcher = notMatchPatternMatcherTree(context)(right)
+//     // Generate a negated matcher by calling notMatchPatternMatcher
+//     val notMatcher = notMatchPatternMatcherTree(context)(right)
 
-    /**
-     * Generate AST for code that call the 'and' method on the Matcher instance (reference through 'owner'):
-     *
-     * owner.or(notMatcher)
-     */
-    val callHelper =
-      context.macroApplication match {
-        case Apply(Select(qualifier, _), _) =>
-          Apply(
-            Select(
-              Select(
-                qualifier,
-                "owner"
-              ),
-              newTermName("or")
-            ),
-            List(notMatcher)
-          )
-        case _ => context.abort(context.macroApplication.pos, "This macro should be used with 'or not' syntax only.")
-      }
+//     /**
+//      * Generate AST for code that call the 'and' method on the Matcher instance (reference through 'owner'):
+//      *
+//      * owner.or(notMatcher)
+//      */
+//     val callHelper =
+//       context.macroApplication match {
+//         case Apply(Select(qualifier, _), _) =>
+//           Apply(
+//             Select(
+//               Select(
+//                 qualifier,
+//                 "owner"
+//               ),
+//               newTermName("or")
+//             ),
+//             List(notMatcher)
+//           )
+//         case _ => context.abort(context.macroApplication.pos, "This macro should be used with 'or not' syntax only.")
+//       }
 
-    context.Expr(callHelper)
-  }
+//     context.Expr(callHelper)
+//   }
 
-  /**
-   * Check case definitions and generate AST for code that check that the left match the pattern given on the right, which code looks like this:
-   *
-   * org.scalatest.matchers.MatchPatternHelper.checkPatternMatcher(left, right)
-   */
-  def matchPattern(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Expr[_] = {
-    import context.universe._
+//   /**
+//    * Check case definitions and generate AST for code that check that the left match the pattern given on the right, which code looks like this:
+//    *
+//    * org.scalatest.matchers.MatchPatternHelper.checkPatternMatcher(left, right)
+//    */
+//   def matchPattern(context: Context)(right: context.Expr[PartialFunction[Any, _]]): context.Expr[_] = {
+//     import context.universe._
 
-    val tree = right.tree
+//     val tree = right.tree
 
-    // check case definitions
-    checkCaseDefinitions(context)(tree)
+//     // check case definitions
+//     checkCaseDefinitions(context)(tree)
 
-    /**
-     * Generate AST for the following code:
-     *
-     * org.scalatest.matchers.MatchPatternHelper.checkPatternMatcher(left, right)
-     */
-    val callHelper =
-      context.macroApplication match {
-        case Apply(Select(qualifier, _), _) =>
-          Apply(
-            Select(
-              Select(
-                Select(
-                  Select(
-                    Ident(newTermName("org")),
-                    newTermName("scalatest")
-                  ),
-                  newTermName("matchers")
-                ),
-                newTermName("MatchPatternHelper")
-              ),
-              newTermName("checkMatchPattern")
-            ),
-            List(qualifier, tree)
-          )
+//     /**
+//      * Generate AST for the following code:
+//      *
+//      * org.scalatest.matchers.MatchPatternHelper.checkPatternMatcher(left, right)
+//      */
+//     val callHelper =
+//       context.macroApplication match {
+//         case Apply(Select(qualifier, _), _) =>
+//           Apply(
+//             Select(
+//               Select(
+//                 Select(
+//                   Select(
+//                     Ident(newTermName("org")),
+//                     newTermName("scalatest")
+//                   ),
+//                   newTermName("matchers")
+//                 ),
+//                 newTermName("MatchPatternHelper")
+//               ),
+//               newTermName("checkMatchPattern")
+//             ),
+//             List(qualifier, tree)
+//           )
 
-        case _ => context.abort(context.macroApplication.pos, "This macro should be used with should not syntax only.")
-      }
+//         case _ => context.abort(context.macroApplication.pos, "This macro should be used with should not syntax only.")
+//       }
 
-    context.Expr(callHelper)
-  }
+//     context.Expr(callHelper)
+//   }
 
-}
+// }

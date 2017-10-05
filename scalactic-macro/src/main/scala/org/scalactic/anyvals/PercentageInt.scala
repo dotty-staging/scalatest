@@ -31,6 +31,6 @@ private[scalactic] object PercentageInt {
     }
 
   import scala.language.experimental.macros
-  def apply(value: Int): PercentageInt = macro PercentageIntMacro.apply
+  def apply(value: Int): PercentageInt = ???
 }
 

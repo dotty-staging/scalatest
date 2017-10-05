@@ -618,7 +618,7 @@ final class BeWord {
    *               ^
    * </pre>
    **/
-  def apply(aType: ResultOfATypeInvocation[_]): Matcher[Any] = macro TypeMatcherMacro.aTypeMatcherImpl
+  def apply(aType: ResultOfATypeInvocation[_]): Matcher[Any] = ??? //TypeMatcherMacro.aTypeMatcherImpl
   
   /**
    * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
@@ -628,7 +628,7 @@ final class BeWord {
    *               ^
    * </pre>
    **/
-  def apply(anType: ResultOfAnTypeInvocation[_]): Matcher[Any] = macro TypeMatcherMacro.anTypeMatcherImpl
+  def apply(anType: ResultOfAnTypeInvocation[_]): Matcher[Any] = ??? //TypeMatcherMacro.anTypeMatcherImpl
   
   /**
    * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:

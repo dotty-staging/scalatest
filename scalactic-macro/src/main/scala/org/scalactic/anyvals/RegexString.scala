@@ -189,6 +189,6 @@ private[scalactic] object RegexString {
     if (RegexStringMacro.isValid(value)) new RegexString(value) else default
 
   import scala.language.experimental.macros
-  def apply(value: String): RegexString = macro RegexStringMacro.apply
+  def apply(value: String): RegexString = ???
 }
 

@@ -34,5 +34,5 @@ private[scalatest] class SuiteResultHolder {
     Summary(succeeded, failed, ignored, pending, canceled, suiteList.length, suiteList.filter(!_.isCompleted).length, scopesPending)
   }
   
-  def totalDuration: Long = suiteList.map(s => if (s.duration.isDefined) s.duration.get else 0).sum
+  def totalDuration: Long = suiteList.map(s => if (s.duration.isDefined) s.duration.get else 0L).sum
 }

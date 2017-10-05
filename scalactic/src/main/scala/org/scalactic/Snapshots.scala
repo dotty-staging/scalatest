@@ -87,7 +87,7 @@ trait Snapshots {
    * @param expressions expressions to be snapped
    * @return an <code>IndexedSeq</code> of <code>Snapshot</code> for the given expressions.
    */
-  def snap(expressions: Any*): SnapshotSeq = macro SnapshotsMacro.snap
+  def snap(expressions: Any*): SnapshotSeq = ??? //SnapshotsMacro.snap
 }
 
 /**
@@ -220,42 +220,42 @@ object SnapshotSeq {
  */
 object Snapshots extends Snapshots
 
-private[scalactic] object SnapshotsMacro {
+// private[scalactic] object SnapshotsMacro {
 
-  def snap(context: Context)(expressions: context.Expr[Any]*): context.Expr[SnapshotSeq] = {
-    import context.universe._
+//   def snap(context: Context)(expressions: context.Expr[Any]*): context.Expr[SnapshotSeq] = {
+//     import context.universe._
 
-    val snapshots =
-      expressions.map { expr =>
-        Apply(
-          Select(
-            Select(
-              Select(
-                Ident(newTermName("org")),
-                newTermName("scalactic")
-              ),
-              newTermName("Snapshot")
-            ),
-            newTermName("apply")
-          ),
-          List(context.literal(show(expr.tree)).tree, expr.tree.duplicate)
-        )
-      }
+//     val snapshots =
+//       expressions.map { expr =>
+//         Apply(
+//           Select(
+//             Select(
+//               Select(
+//                 Ident(newTermName("org")),
+//                 newTermName("scalactic")
+//               ),
+//               newTermName("Snapshot")
+//             ),
+//             newTermName("apply")
+//           ),
+//           List(context.literal(show(expr.tree)).tree, expr.tree.duplicate)
+//         )
+//       }
 
-    context.Expr(
-      Apply(
-        Select(
-          Select(
-            Select(
-              Ident(newTermName("org")),
-              newTermName("scalactic")
-            ),
-            newTermName("SnapshotSeq")
-          ),
-          newTermName("apply")
-        ),
-        List(snapshots: _*)
-      )
-    )
-  }
-}
+//     context.Expr(
+//       Apply(
+//         Select(
+//           Select(
+//             Select(
+//               Ident(newTermName("org")),
+//               newTermName("scalactic")
+//             ),
+//             newTermName("SnapshotSeq")
+//           ),
+//           newTermName("apply")
+//         ),
+//         List(snapshots: _*)
+//       )
+//     )
+//   }
+// }

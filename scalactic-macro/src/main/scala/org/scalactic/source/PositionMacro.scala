@@ -15,51 +15,51 @@
  */
 package org.scalactic.source
 
-import org.scalactic.Resources
+// import org.scalactic.Resources
 
-import scala.reflect.macros.Context
+// import scala.reflect.macros.Context
 
-/**
- * Helper class for Position macro. (Will be removed from the public API if possible in a subsequent 3.0.0-RCx release.)
- */
-object PositionMacro {
+// /**
+//  * Helper class for Position macro. (Will be removed from the public API if possible in a subsequent 3.0.0-RCx release.)
+//  */
+// object PositionMacro {
 
-  private[scalactic] lazy val showScalacticFillFilePathnames: Boolean = {
-    val value = System.getenv("SCALACTIC_FILL_FILE_PATHNAMES")
-    value != null && value == "yes"
-  }
+//   private[scalactic] lazy val showScalacticFillFilePathnames: Boolean = {
+//     val value = System.getenv("SCALACTIC_FILL_FILE_PATHNAMES")
+//     value != null && value == "yes"
+//   }
 
-  /**
-   * Helper method for Position macro.
-   */
-  def genPosition(context: Context) = {
-    import context.universe._
+//   /**
+//    * Helper method for Position macro.
+//    */
+//   def genPosition(context: Context) = {
+//     import context.universe._
 
-    context.Expr(
-      Apply(
-        Select(
-          Select(
-            Select(
-              Select(
-                Select(
-                  Ident(newTermName("_root_")),
-                  newTermName("org")
-                ),
-              newTermName("scalactic")
-              ),
-              newTermName("source")
-            ),
-            newTermName("Position")
-          ),
-          newTermName("apply")
-        ),
-        List(
-          Literal(Constant(context.enclosingPosition.source.file.name)),
-          Literal(if (showScalacticFillFilePathnames) Constant(context.enclosingPosition.source.path) else Constant(Resources.pleaseDefineScalacticFillFilePathnameEnvVar)),
-          Literal(Constant(context.enclosingPosition.line))
-        )
-      )
-    )
-  }
+//     context.Expr(
+//       Apply(
+//         Select(
+//           Select(
+//             Select(
+//               Select(
+//                 Select(
+//                   Ident(newTermName("_root_")),
+//                   newTermName("org")
+//                 ),
+//               newTermName("scalactic")
+//               ),
+//               newTermName("source")
+//             ),
+//             newTermName("Position")
+//           ),
+//           newTermName("apply")
+//         ),
+//         List(
+//           Literal(Constant(context.enclosingPosition.source.file.name)),
+//           Literal(if (showScalacticFillFilePathnames) Constant(context.enclosingPosition.source.path) else Constant(Resources.pleaseDefineScalacticFillFilePathnameEnvVar)),
+//           Literal(Constant(context.enclosingPosition.line))
+//         )
+//       )
+//     )
+//   }
 
-}
+// }
