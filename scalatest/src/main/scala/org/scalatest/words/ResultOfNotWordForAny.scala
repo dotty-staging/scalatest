@@ -227,7 +227,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    *                   ^
    * </pre>
    **/
-  def be(aType: ResultOfATypeInvocation[_]): Assertion = macro TypeMatcherMacro.assertATypeShouldBeTrueImpl
+  def be(aType: ResultOfATypeInvocation[_]): Assertion = ??? //TypeMatcherMacro.assertATypeShouldBeTrueImpl
   
   /**
    * This method enables the following syntax:
@@ -237,7 +237,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    *                   ^
    * </pre>
    **/
-  def be(anType: ResultOfAnTypeInvocation[_]): Assertion = macro TypeMatcherMacro.assertAnTypeShouldBeTrueImpl
+  def be(anType: ResultOfAnTypeInvocation[_]): Assertion = ??? //TypeMatcherMacro.assertAnTypeShouldBeTrueImpl
 
   /**
    * This method enables the following syntax: 
@@ -1091,7 +1091,7 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    *                   ^
    * </pre>
    **/
-  def matchPattern(right: PartialFunction[Any, _]) = macro MatchPatternMacro.matchPattern
+  def matchPattern(right: PartialFunction[Any, _]) = ??? //MatchPatternMacro.matchPattern
   
   /**
    * Overrides toString to return pretty text.

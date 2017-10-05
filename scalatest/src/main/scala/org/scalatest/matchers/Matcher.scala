@@ -1454,7 +1454,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                  ^
      * </pre>
      **/
-    def be(aType: ResultOfATypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.andNotATypeMatcher
+    def be(aType: ResultOfATypeInvocation[_]): Matcher[T] = ??? //TypeMatcherMacro.andNotATypeMatcher
       
     /**
      * This method enables the following syntax:
@@ -1464,7 +1464,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                  ^
      * </pre>
      **/
-    def be(anType: ResultOfAnTypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.andNotAnTypeMatcher
+    def be(anType: ResultOfAnTypeInvocation[_]): Matcher[T] = ??? //TypeMatcherMacro.andNotAnTypeMatcher
     
     /**
      * This method enables the following syntax:
@@ -1847,7 +1847,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                  ^
      * </pre>
      **/
-    def matchPattern(right: PartialFunction[Any, _]) = macro MatchPatternMacro.andNotMatchPatternMatcher
+    def matchPattern(right: PartialFunction[Any, _]) = ??? //MatchPatternMacro.andNotMatchPatternMatcher
   }
 
   /**
@@ -2736,7 +2736,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                 ^
      * </pre>
      **/
-    def be(aType: ResultOfATypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.orNotATypeMatcher
+    def be(aType: ResultOfATypeInvocation[_]): Matcher[T] = ??? //TypeMatcherMacro.orNotATypeMatcher
     
     /**
      * This method enables the following syntax:
@@ -2746,7 +2746,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                 ^
      * </pre>
      **/
-    def be(anType: ResultOfAnTypeInvocation[_]): Matcher[T] = macro TypeMatcherMacro.orNotAnTypeMatcher
+    def be(anType: ResultOfAnTypeInvocation[_]): Matcher[T] = ??? //TypeMatcherMacro.orNotAnTypeMatcher
     
     /**
      * This method enables the following syntax:
@@ -3128,7 +3128,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
      *                 ^
      * </pre>
      **/
-    def matchPattern(right: PartialFunction[Any, _]) = macro MatchPatternMacro.orNotMatchPatternMatcher
+    def matchPattern(right: PartialFunction[Any, _]) = ??? //MatchPatternMacro.orNotMatchPatternMatcher
   }
 
   /**

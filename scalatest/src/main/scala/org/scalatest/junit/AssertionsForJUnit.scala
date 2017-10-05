@@ -102,13 +102,13 @@ trait AssertionsForJUnit extends Assertions {
 
   import scala.language.experimental.macros
 
-  override def assert(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro AssertionsForJUnitMacro.assert
+  override def assert(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ??? //AssertionsForJUnitMacro.assert
 
-  override def assert(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro AssertionsForJUnitMacro.assertWithClue
+  override def assert(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ??? //AssertionsForJUnitMacro.assertWithClue
 
-  override def assume(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro AssertionsForJUnitMacro.assume
+  override def assume(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ??? //AssertionsForJUnitMacro.assume
 
-  override def assume(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro AssertionsForJUnitMacro.assumeWithClue
+  override def assume(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ??? //AssertionsForJUnitMacro.assumeWithClue
   
  /*
   private[scalatest] override def newAssertionFailedException(optionalMessage: Option[Any], optionalCause: Option[Throwable], stackDepth: Int): Throwable = {

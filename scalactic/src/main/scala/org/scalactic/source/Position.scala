@@ -54,6 +54,6 @@ object Position {
    *
    * @return the enclosing source position
    */
-  implicit def here: Position = macro PositionMacro.genPosition
+  implicit def here: Position = ??? //PositionMacro.genPosition
 }
 
