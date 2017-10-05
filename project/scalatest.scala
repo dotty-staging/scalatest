@@ -115,7 +115,7 @@ object ScalatestBuild extends Build {
   def sharedSettings: Seq[Setting[_]] = Seq(
     javaHome := getJavaHome(scalaBinaryVersion.value),
     scalaVersion := buildScalaVersion,
-    crossScalaVersions := Seq(buildScalaVersion, "2.10.6", "2.12.0"),
+    crossScalaVersions := Seq("2.10.6", "2.11.8", buildScalaVersion),
     version := releaseVersion,
     scalacOptions ++= Seq("-feature", "-target:jvm-1.6"),
     resolvers += "Sonatype Public" at "https://oss.sonatype.org/content/groups/public",
@@ -214,11 +214,14 @@ object ScalatestBuild extends Build {
     }
   }
 
-  def scalaLibraries(theScalaVersion: String) =
+  def scalaLibraries(theScalaVersion: String) = {
+    val isDotty = theScalaVersion.startsWith("0.")
+    val version = if (isDotty) "2.12.3" else theScalaVersion
     Seq(
-      "org.scala-lang" % "scala-compiler" % theScalaVersion % "provided",
-      "org.scala-lang" % "scala-reflect" % theScalaVersion // this is needed to compile macro
+      "org.scala-lang" % "scala-compiler" % version % "provided",
+      "org.scala-lang" % "scala-reflect" % version // this is needed to compile macro
     )
+  }
 
   def scalatestLibraryDependencies =
     Seq(
@@ -399,6 +402,7 @@ object ScalatestBuild extends Build {
       publish := {},
       publishLocal := {}
     )
+    .settings(dottySettings)
 
   lazy val deleteJsDependenciesTask = taskKey[Unit]("Delete JS_DEPENDENCIES")
 
@@ -488,6 +492,7 @@ object ScalatestBuild extends Build {
         "Bundle-Vendor" -> "Artima, Inc."
       )
     ).dependsOn(scalacticMacro % "compile-internal, test-internal")  // avoid dependency in pom on non-existent scalactic-macro artifact, per discussion in http://grokbase.com/t/gg/simple-build-tool/133shekp07/sbt-avoid-dependence-in-a-macro-based-project
+    .settings(dottySettings)
 
   lazy val scalacticJS = Project("scalacticJS", file("scalactic.js"))
     .settings(sharedSettings: _*)
@@ -737,6 +742,7 @@ object ScalatestBuild extends Build {
         "Main-Class" -> "org.scalatest.tools.Runner"
       )
    ).dependsOn(scalacticMacro % "compile-internal, test-internal", scalactic)
+   .settings(dottySettings)
 
   lazy val scalatestTest = Project("scalatest-test", file("scalatest-test"))
     .settings(sharedSettings: _*)
@@ -1938,8 +1944,18 @@ object ScalatestBuild extends Build {
     doc in Compile := docTask((doc in Compile).value,
       (resourceManaged in Compile).value,
       name.value)
+
+  import dotty.tools.sbtplugin.DottyPlugin.autoImport._
+  // lazy val dottyVersion = dottyLatestNightlyBuild.get
+  lazy val dottyVersion = "0.8.0-bin-20180411-7b91742-NIGHTLY"
+  lazy val dottySettings = List(
+    scalaVersion := dottyVersion,
+    libraryDependencies := libraryDependencies.value.map(_.withDottyCompat()),
+    scalacOptions := List("-language:Scala2")
+  )
 }
 // set scalacOptions in (Compile, console) += "-Xlog-implicits"
 // set scalacOptions in (Compile, console) += "-Xlog-implicits"
 // set scalacOptions in (Compile, console) += "-Xlog-implicits"
 // set scalacOptions in (Compile, console) += "-nowarn"
+
