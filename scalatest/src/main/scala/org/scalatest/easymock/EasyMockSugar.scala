@@ -353,7 +353,7 @@ trait EasyMockSugar {
    * <code>expecting</code> invoke <code>replay</code> last.
    * </p>
    */
-  def expecting(unused: Any): Unit = ()
+  def expecting(`unused`: Any): Unit = ()
 
   /**
    * Invokes <code>replay</code> on the passed mock object or objects, executes the passed function, then invokes
