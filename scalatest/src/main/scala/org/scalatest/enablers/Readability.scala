@@ -59,7 +59,7 @@ trait Readability[-T] {
  */
 object Readability {
 
-  // DOTTY-ONLY import scala.reflect.Selectable.reflectiveSelectable
+  import scala.reflect.Selectable.reflectiveSelectable
 
   /**
    * Enable <code>Readability</code> implementation for <code>java.io.File</code>.
