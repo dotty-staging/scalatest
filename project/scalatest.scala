@@ -2,28 +2,32 @@ import sbt._
 import Keys._
 import java.net.{URL, URLClassLoader}
 import java.io.PrintWriter
+import java.io.File
 import scala.io.Source
-import com.typesafe.sbt.osgi.SbtOsgi._
-import com.typesafe.sbt.SbtPgp._
+import com.typesafe.sbt.osgi.OsgiKeys
+import com.typesafe.sbt.osgi.SbtOsgi
+import com.typesafe.sbt.osgi.SbtOsgi.autoImport._
+import com.typesafe.sbt.SbtPgp.autoImport._
 /*import org.scalajs.sbtplugin.ScalaJSPlugin.
   autoImport.{scalaJSOptimizerOptions, scalaJSStage, FastOptStage, jsEnv, RhinoJSEnv}*/
 
 import org.scalajs.sbtplugin.ScalaJSPlugin
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.{scalaJSLinkerConfig, jsEnv}
 
+import sbtcrossproject.{crossProject, CrossType}
 import sbtcrossproject.CrossPlugin.autoImport._
 
+import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
+
 import scalanative.sbtplugin.ScalaNativePlugin
-import scalanative.tools
-import scalanative.optimizer.{inject, pass}
-import scalanative.sbtplugin.ScalaNativePluginInternal.{nativeConfig, nativeOptimizerDriver, nativeLinkerReporter, nativeOptimizerReporter, NativeTest}
+import scalanative.sbtplugin.ScalaNativePluginInternal.NativeTest
 import ScalaNativePlugin.autoImport._
 
 import com.typesafe.tools.mima.plugin.MimaKeys.{mimaPreviousArtifacts, mimaCurrentClassfiles, mimaBinaryIssueFilters}
 import com.typesafe.tools.mima.core._
 import com.typesafe.tools.mima.core.ProblemFilters._
 
-object ScalatestBuild extends Build {
+object ScalatestBuild {
 
   // To run gentests
   // rm -rf gentests
@@ -216,7 +220,7 @@ object ScalatestBuild extends Build {
 
   def scalaLibraries(theScalaVersion: String) = {
     val isDotty = theScalaVersion.startsWith("0.")
-    val version = if (isDotty) "2.12.3" else theScalaVersion
+    val version = if (isDotty) "2.12.4" else theScalaVersion
     Seq(
       "org.scala-lang" % "scala-compiler" % version % "provided",
       "org.scala-lang" % "scala-reflect" % version // this is needed to compile macro
@@ -423,12 +427,13 @@ object ScalatestBuild extends Build {
       publishArtifact := false,
       publish := {},
       publishLocal := {}, 
-      deleteJsDependenciesTask <<= (classDirectory in Compile) map { jsDependenciesFile =>
+      deleteJsDependenciesTask := Def.task {
+        val jsDependenciesFile = (classDirectory in Compile).value
         (jsDependenciesFile/ "JS_DEPENDENCIES").delete()
         ()
         //val loader: ClassLoader = ClasspathUtilities.toLoader(classpath.map(_.data).map(_.getAbsoluteFile))
         //loader.loadClass("your.class.Here").newInstance()
-      } triggeredBy(compile in Compile)
+      }.triggeredBy(compile in Compile)
     ).enablePlugins(ScalaJSPlugin)
 
   lazy val scalacticMacroNative = Project("scalacticMacroNative", file("scalactic-macro.native"))
@@ -450,6 +455,7 @@ object ScalatestBuild extends Build {
     ).enablePlugins(ScalaNativePlugin)
 
   lazy val scalactic = Project("scalactic", file("scalactic"))
+    .enablePlugins(SbtOsgi)
     .settings(sharedSettings: _*)
     .settings(scalacticDocSettings: _*)
     .settings(
@@ -495,6 +501,7 @@ object ScalatestBuild extends Build {
     .settings(dottySettings)
 
   lazy val scalacticJS = Project("scalacticJS", file("scalactic.js"))
+    .enablePlugins(SbtOsgi)
     .settings(sharedSettings: _*)
     .settings(
       projectTitle := "Scalactic.js",
@@ -638,10 +645,6 @@ object ScalatestBuild extends Build {
       libraryDependencies += "org.scalacheck" %%% "scalacheck" % nativeScalacheckVersion % "test",
       testOptions in Test ++=
         Seq(Tests.Argument(TestFrameworks.ScalaTest, "-oDIF")),
-      nativeOptimizerDriver in NativeTest := {
-        val orig = tools.OptimizerDriver((nativeConfig in NativeTest).value)
-        orig.withPasses(orig.passes.filterNot(p => p == pass.DeadBlockElimination || p == pass.GlobalBoxingElimination))
-      },
       nativeLinkStubs in NativeTest := true,
       sourceGenerators in Test += {
         Def.task {
@@ -653,10 +656,8 @@ object ScalatestBuild extends Build {
       publishLocal := {}
     ).dependsOn(scalacticNative, scalatestNative % "test", commonTestNative % "test").enablePlugins(ScalaNativePlugin)
 
-  lazy val scalatest = Project("scalatest", file("scalatest"))
-   .settings(sharedSettings: _*)
-   .settings(scalatestDocSettings: _*)
-   .settings(
+  lazy val scalatestSettings = sharedSettings ++ scalatestDocSettings ++ osgiSettings ++
+    Seq(
      projectTitle := "ScalaTest",
      organization := "org.scalatest",
      moduleName := "scalatest",
@@ -695,8 +696,7 @@ object ScalatestBuild extends Build {
          exclude[MissingClassProblem]("org.scalatest.tools.SbtCommandParser$"),
          exclude[MissingClassProblem]("org.scalatest.tools.SbtCommandParser")
        )
-     }
-   ).settings(osgiSettings: _*).settings(
+     },
       OsgiKeys.exportPackage := Seq(
         "org.scalatest",
         "org.scalatest.compatible",
@@ -741,7 +741,12 @@ object ScalatestBuild extends Build {
         "Bundle-Vendor" -> "Artima, Inc.",
         "Main-Class" -> "org.scalatest.tools.Runner"
       )
-   ).dependsOn(scalacticMacro % "compile-internal, test-internal", scalactic)
+   )
+
+  lazy val scalatest = Project("scalatest", file("scalatest"))
+   .enablePlugins(SbtOsgi)
+   .settings(scalatestSettings)
+   .dependsOn(scalacticMacro % "compile-internal, test-internal", scalactic)
    .settings(dottySettings)
 
   lazy val scalatestTest = Project("scalatest-test", file("scalatest-test"))
@@ -764,6 +769,7 @@ object ScalatestBuild extends Build {
     ).dependsOn(scalatest % "test", commonTest % "test")
 
   lazy val scalatestJS = Project("scalatestJS", file("scalatest.js"))
+    .enablePlugins(SbtOsgi)
     .settings(sharedSettings: _*)
     .settings(
       projectTitle := "ScalaTest",
@@ -784,8 +790,8 @@ object ScalatestBuild extends Build {
           ScalaTestGenResourcesJSVM.genResources((sourceManaged in Compile).value / "org" / "scalatest", version.value, scalaVersion.value)
         }.taskValue
       },
-      javaSourceManaged <<= target(t => t / "java"),
-      managedSourceDirectories in Compile <+= javaSourceManaged,
+      javaSourceManaged := target.value / "java",
+      managedSourceDirectories in Compile += javaSourceManaged.value,
       sourceGenerators in Compile += {
         Def.task{
           GenScalaTestJS.genJava((javaSourceManaged in Compile).value, version.value, scalaVersion.value)
@@ -885,6 +891,7 @@ object ScalatestBuild extends Build {
     ).dependsOn(scalatestJS % "test", commonTestJS % "test").enablePlugins(ScalaJSPlugin)
 
   lazy val scalatestNative = Project("scalatestNative", file("scalatest.native"))
+    .enablePlugins(SbtOsgi)
     .settings(sharedSettings: _*)
     .settings(
       projectTitle := "ScalaTest",
@@ -906,8 +913,8 @@ object ScalatestBuild extends Build {
           ScalaTestGenResourcesJSVM.genFailureMessages((sourceManaged in Compile).value / "scala" / "org" / "scalatest", version.value, scalaVersion.value)
         }.taskValue
       },
-      javaSourceManaged <<= target(t => t / "java"),
-      managedSourceDirectories in Compile <+= javaSourceManaged,
+      javaSourceManaged := target.value / "java",
+      managedSourceDirectories in Compile += javaSourceManaged.value,
       sourceGenerators in Compile += {
         Def.task{
           GenScalaTestNative.genJava((javaSourceManaged in Compile).value / "java", version.value, scalaVersion.value)
@@ -978,21 +985,6 @@ object ScalatestBuild extends Build {
       libraryDependencies += "org.scalacheck" %%% "scalacheck" % nativeScalacheckVersion % "test",
       // libraryDependencies += "io.circe" %%% "circe-parser" % "0.7.1" % "test",
       fork in test := false,
-      nativeOptimizerDriver in NativeTest := {
-        val orig = tools.OptimizerDriver((nativeConfig in NativeTest).value)
-        orig.withPasses(orig.passes.filterNot(p => p == pass.DeadBlockElimination || p == pass.GlobalBoxingElimination))
-      },
-      nativeOptimizerReporter in NativeTest := new tools.OptimizerReporter {
-        override def onStart(batchId: Int, batchDefns: Seq[scalanative.nir.Defn]): Unit = {
-          println(s"start $batchId")
-        }
-        override def onPass(batchId: Int, passId: Int, pass: scala.scalanative.optimizer.Pass, batchDefns: Seq[scalanative.nir.Defn]): Unit = {
-          println(s"$batchId ${pass.getClass.getSimpleName}")
-        }
-        override def onComplete(batchId: Int, batchDefns: Seq[scalanative.nir.Defn]): Unit = {
-          println(s"end $batchId")
-        }
-      },
       nativeLinkStubs in NativeTest := true,
       testOptions in Test := scalatestTestNativeOptions,
       publishArtifact := false,
@@ -1010,6 +1002,7 @@ object ScalatestBuild extends Build {
     ).dependsOn(scalatestNative % "test", commonTestNative % "test").enablePlugins(ScalaNativePlugin)
 
   lazy val scalatestApp = Project("scalatestApp", file("."))
+    .enablePlugins(SbtOsgi)
     .settings(sharedSettings: _*)
     .settings(
       projectTitle := "ScalaTest App",
@@ -1086,6 +1079,7 @@ object ScalatestBuild extends Build {
     ).dependsOn(scalacticMacro % "compile-internal, test-internal", scalactic % "compile-internal", scalatest % "compile-internal").aggregate(scalacticMacro, scalactic, scalatest, commonTest, scalacticTest, scalatestTest)
 
   lazy val scalatestAppJS = Project("scalatestAppJS", file("scalatest-app.js"))
+    .enablePlugins(SbtOsgi)
     .settings(sharedSettings: _*)
     .settings(
       projectTitle := "ScalaTest App",
@@ -1154,6 +1148,7 @@ object ScalatestBuild extends Build {
     ).dependsOn(scalacticMacroJS % "compile-internal, test-internal", scalacticJS % "compile-internal", scalatestJS % "compile-internal").aggregate(scalacticMacroJS, scalacticJS, scalatestJS, commonTestJS, scalacticTestJS, scalatestTestJS).enablePlugins(ScalaJSPlugin)
 
     lazy val scalatestAppNative = Project("scalatestAppNative", file("scalatest-app.native"))
+      .enablePlugins(SbtOsgi)
       .settings(sharedSettings: _*)
       .settings(
         projectTitle := "ScalaTest App",
@@ -1280,8 +1275,8 @@ object ScalatestBuild extends Build {
       genRegularTask4,
       libraryDependencies ++= scalatestLibraryDependencies,
       testOptions in Test := scalatestTestOptions,
-      javaSourceManaged <<= target(t => t / "java"),
-      managedSourceDirectories in Test <+= javaSourceManaged,
+      javaSourceManaged := target.value / "java",
+      managedSourceDirectories in Test += javaSourceManaged.value,
       sourceGenerators in Test += {
         Def.task{
           GenRegularTests4.genJava((javaSourceManaged in Compile).value)
@@ -1301,8 +1296,8 @@ object ScalatestBuild extends Build {
       libraryDependencies ++= scalatestLibraryDependencies,
       libraryDependencies ++= gentestsLibraryDependencies,
       testOptions in Test := scalatestTestOptions,
-      javaSourceManaged <<= target(t => t / "java"),
-      managedSourceDirectories in Test <+= javaSourceManaged,
+      javaSourceManaged := target.value / "java",
+      managedSourceDirectories in Test += javaSourceManaged.value,
       sourceGenerators in Test += {
         Def.task{
           GenRegularTests5.genJava((javaSourceManaged in Compile).value)
@@ -1374,8 +1369,11 @@ object ScalatestBuild extends Build {
     .settings(gentestsSharedSettings: _*)
     .settings(
       genGenTask,
-      sourceGenerators in Test <+=
-        (baseDirectory, sourceManaged in Test, version, scalaVersion) map genFiles("genscalacheckgen", "GenScalaCheckGen.scala")(GenScalaCheckGen.genTest)
+      sourceGenerators in Test += {
+        Def.task {
+          genFiles("genscalacheckgen", "GenScalaCheckGen.scala")(GenScalaCheckGen.genTest)(baseDirectory.value, (sourceManaged in Test).value, version.value, scalaVersion.value)
+        }.taskValue
+      }
     ).dependsOn(scalatest, commonTest, scalacticMacro % "compile-internal, test-internal")
 
   lazy val genTablesTests = Project("genTablesTests", file("gentests/GenTables"))
@@ -1503,14 +1501,18 @@ object ScalatestBuild extends Build {
     .aggregate(genMustMatchersTests1, genMustMatchersTests2, genMustMatchersTests3, genMustMatchersTests4, genGenTests, genTablesTests, genInspectorsTests, genInspectorsShorthandsTests1,
                genInspectorsShorthandsTests2, genTheyTests, genContainTests1, genContainTests2, genSortedTests, genLoneElementTests, genEmptyTests/*, genSafeStyleTests*/)
 
-  lazy val examples = Project("examples", file("examples"), delegates = scalatest :: Nil)
+  lazy val examples = Project("examples", file("examples"))
+    .enablePlugins(SbtOsgi)
     .settings(
+      scalatestSettings,
       scalaVersion := buildScalaVersion,
       libraryDependencies += scalacheckDependency("test")
     ).dependsOn(scalacticMacro, scalactic, scalatest)
 
-  lazy val examplesJS = Project("examplesJS", file("examples.js"), delegates = scalatest :: Nil)
+  lazy val examplesJS = Project("examplesJS", file("examples.js"))
+    .enablePlugins(SbtOsgi)
     .settings(
+      scalatestSettings,
       scalaVersion := buildScalaVersion,
       libraryDependencies += "org.scalacheck" %%% "scalacheck" % scalacheckVersion % "test",
       sourceGenerators in Test += {
@@ -1639,7 +1641,12 @@ object ScalatestBuild extends Build {
   }
 
   val genScalaCheckGen = TaskKey[Unit]("genscalacheckgen", "Generate ScalaCheck driven Property Checks")
-  val genScalaCheckGenTask = genScalaCheckGen <<= (sourceManaged in Compile, sourceManaged in Test, name, version, scalaVersion) map { (mainTargetDir: File, testTargetDir: File, projName: String, theVersion: String, theScalaVersion: String) =>
+  val genScalaCheckGenTask = genScalaCheckGen := {
+    val mainTargetDir = (sourceManaged in Compile).value
+    val testTargetDir = (sourceManaged in Test).value
+    val projName = name.value
+    val theVersion = version.value
+    val theScalaVersion = scalaVersion.value
     projName match {
       case "scalatest" =>
         GenGen.genMain(new File(mainTargetDir, "scala/genscalacheckgen"), theVersion, theScalaVersion)
@@ -1946,11 +1953,10 @@ object ScalatestBuild extends Build {
       name.value)
 
   import dotty.tools.sbtplugin.DottyPlugin.autoImport._
-  // lazy val dottyVersion = dottyLatestNightlyBuild.get
-  lazy val dottyVersion = "0.8.0-bin-20180411-7b91742-NIGHTLY"
+  lazy val dottyVersion = dottyLatestNightlyBuild.get
   lazy val dottySettings = List(
     scalaVersion := dottyVersion,
-    libraryDependencies := libraryDependencies.value.map(_.withDottyCompat()),
+    libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)),
     scalacOptions := List("-language:Scala2")
   )
 }
