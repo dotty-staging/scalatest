@@ -1161,7 +1161,7 @@ object SharedHelpers extends Assertions with LineNumberHelper {
   private def succeededIndexes[T](xs: GenTraversable[T], filterFun: T => Boolean): String = {
     xs match {
       case map: GenMap[_, _] =>
-        val passedList = map.toList.filter(e => filterFun(e)).map(_._1).toList
+        val passedList = map.toList.filter(e => filterFun(e.asInstanceOf[T])).map(_._1).toList
         if (passedList.size > 1)
           "key " + passedList.dropRight(1).mkString(", ") + " and " + passedList.last
         else if (passedList.size == 1)
@@ -1206,7 +1206,7 @@ object SharedHelpers extends Assertions with LineNumberHelper {
   private def failEarlySucceededIndexes[T](xs: GenTraversable[T], filterFun: T => Boolean, maxSucceed: Int): String = {
     xs match {
       case map: GenMap[_, _] =>
-        val passedList = map.toList.filter(e => filterFun(e)).take(maxSucceed).toList.map(_._1)
+        val passedList = map.toList.filter(e => filterFun(e.asInstanceOf[T])).take(maxSucceed).toList.map(_._1)
         if (passedList.size > 1)
           "key " + passedList.dropRight(1).mkString(", ") + " and " + passedList.last
         else if (passedList.size == 1)
@@ -1801,7 +1801,7 @@ object SharedHelpers extends Assertions with LineNumberHelper {
   def sortedSet[T](elements: T*): SortedSet[T] = {
     val orderMap = Map.empty[T, Int] ++ elements.zipWithIndex
     val comparator = orderMapComparator(orderMap)
-    implicit val ordering = new Ordering[T] {
+    implicit val ordering: Ordering[T] = new Ordering[T] {
       def compare(x: T, y: T): Int = comparator.compare(x, y)
     }
     SortedSet.empty[T] ++ elements
@@ -1810,7 +1810,7 @@ object SharedHelpers extends Assertions with LineNumberHelper {
   def sortedMap[K, V](elements: (K, V)*): SortedMap[K, V] = {
     val orderMap = Map.empty[K, Int] ++ elements.map(_._1).zipWithIndex
     val comparator = orderMapComparator(orderMap)
-    implicit val ordering = new Ordering[K] {
+    implicit val ordering: Ordering[K]  = new Ordering[K] {
       def compare(x: K, y: K): Int = comparator.compare(x, y)
     }
     SortedMap.empty[K, V] ++ elements

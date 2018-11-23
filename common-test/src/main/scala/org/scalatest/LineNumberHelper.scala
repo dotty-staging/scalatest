@@ -1,9 +1,16 @@
 package org.scalatest
 
+import scala.quoted._
+import scala.tasty._
+
 private[scalatest] trait LineNumberHelper {
+  inline def thisLineNumber = ~LineNumberMacro.thisLineNumberImpl
+}
 
-  import scala.language.experimental.macros
+object LineNumberMacro {
+  def thisLineNumberImpl(implicit refl: Reflection): Expr[Int] = {
+    import refl._
 
-  def thisLineNumber = macro LineNumberMacro.thisLineNumberImpl
-
+    refl.rootPosition.startLine.toExpr
+  }
 }

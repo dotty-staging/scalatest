@@ -26,6 +26,7 @@ import exceptions.StackDepthException.toExceptionFunction
 import exceptions.TestFailedException
 import exceptions.TestPendingException
 import org.scalactic.anyvals.NonEmptyArray
+import scala.quoted._
 
 /**
  * Trait that contains ScalaTest's basic assertion methods.
@@ -55,7 +56,7 @@ import org.scalactic.anyvals.NonEmptyArray
  * the <code>assert</code> method defined in object <code>Predef</code>, whose members are implicitly imported into every
  * Scala source file. This <code>Assertions</code> trait defines another <code>assert</code> method that hides the
  * one in <code>Predef</code>. It behaves the same, except that if <code>false</code> is passed it throws
- * <a href="exceptions/TestFailedException.html"><code>TestFailedException</code></a> instead of <code>AssertionError</code>. 
+ * <a href="exceptions/TestFailedException.html"><code>TestFailedException</code></a> instead of <code>AssertionError</code>.
  * Why? Because unlike <code>AssertionError</code>, <code>TestFailedException</code> carries information about exactly
  * which item in the stack trace represents
  * the line of test code that failed, which can help users more quickly find an offending line of code in a failing test.
@@ -103,7 +104,7 @@ import org.scalactic.anyvals.NonEmptyArray
  * assert(Some(2).isEmpty)
  * // Error message: Some(2) was not empty
  * </pre>
- * 
+ *
  * <p>
  * For expressions that are not recognized, the macro currently prints out a string
  * representation of the (desugared) AST and adds <code>"was false"</code>. Here are some examples of
@@ -117,7 +118,7 @@ import org.scalactic.anyvals.NonEmptyArray
  * assert(xs.exists(i =&gt; i &gt; 10))
  * // Error message: xs.exists(((i: Int) =&gt; i.&gt;(10))) was false
  * </pre>
- * 
+ *
  * <p>
  * You can augment the standard error message by providing a <code>String</code> as a second argument
  * to <code>assert</code>, like this:
@@ -265,7 +266,7 @@ import org.scalactic.anyvals.NonEmptyArray
  *
  * <a name="checkingThatCodeDoesNotCompile"></a>
  * <h2>Checking that a snippet of code does or does not compile</h2>
- * 
+ *
  * <p>
  * Often when creating libraries you may wish to ensure that certain arrangements of code that
  * represent potential &ldquo;user errors&rdquo; do not compile, so that your library is more error resistant.
@@ -301,7 +302,7 @@ import org.scalactic.anyvals.NonEmptyArray
  *
  * <p>
  * Although the previous three constructs are implemented with macros that determine at compile time whether
- * the snippet of code represented by the string does or does not compile, errors 
+ * the snippet of code represented by the string does or does not compile, errors
  * are reported as test failures at runtime.
  * </p>
  *
@@ -418,8 +419,6 @@ trait Assertions extends TripleEquals  {
 
   //implicit val prettifier = Prettifier.default
 
-  import language.experimental.macros
-
   /**
    * Assert that a boolean condition is true.
    * If the condition is <code>true</code>, this method returns normally.
@@ -465,7 +464,7 @@ trait Assertions extends TripleEquals  {
    * @param condition the boolean condition to assert
    * @throws TestFailedException if the condition is <code>false</code>.
    */
-  def assert(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ??? //AssertionsMacro.assert
+  inline def assert(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ~AssertionsMacro.assert('(condition), '(prettifier), '(pos))
 
   private[scalatest] def newAssertionFailedException(optionalMessage: Option[String], optionalCause: Option[Throwable], pos: source.Position, analysis: scala.collection.immutable.IndexedSeq[String]): Throwable =
     new exceptions.TestFailedException(toExceptionFunction(optionalMessage), optionalCause, Left(pos), None, analysis)
@@ -640,7 +639,7 @@ trait Assertions extends TripleEquals  {
    *
    * <p>
    * Although <code>assertTypeError</code> is implemented with a macro that determines at compile time whether
-   * the snippet of code represented by the passed string type checks, errors (<em>i.e.</em>, 
+   * the snippet of code represented by the passed string type checks, errors (<em>i.e.</em>,
    * snippets of code that <em>do</em> type check) are reported as test failures at runtime.
    * </p>
    *
@@ -880,7 +879,7 @@ trait Assertions extends TripleEquals  {
    *    at scala.tools.nsc.MainGenericRunner$.main(MainGenericRunner.scala:105)
    *    at scala.tools.nsc.MainGenericRunner.main(MainGenericRunner.scala)
    * </pre>
-   * 
+   *
    * <p>
    * That's a pretty tall stack trace. Here's what it looks like when you use <code>trap</code>:
    * </p>
@@ -948,7 +947,7 @@ trait Assertions extends TripleEquals  {
     Succeeded
   }
 
-  /** 
+  /**
    * Assert that the value passed as <code>expected</code> equals the value passed as <code>actual</code>.
    * If the <code>actual</code> value equals the <code>expected</code> value
    * (as determined by <code>==</code>), <code>assertResult</code> returns
@@ -967,7 +966,7 @@ trait Assertions extends TripleEquals  {
     }
     Succeeded
   }
-  
+
 /*
    * TODO: Delete this if sticking with Nothing instead of Unit as result type of fail.
    * <p>
@@ -1028,7 +1027,7 @@ trait Assertions extends TripleEquals  {
   def fail(message: String)(implicit pos: source.Position): Nothing = {
 
     requireNonNull(message)
-     
+
     throw newAssertionFailedException(Some(message),  None, pos, Vector.empty)
   }
 
@@ -1060,10 +1059,10 @@ trait Assertions extends TripleEquals  {
   def fail(cause: Throwable)(implicit pos: source.Position): Nothing = {
 
     requireNonNull(cause)
-        
+
     throw newAssertionFailedException(None, Some(cause), pos, Vector.empty)
   }
-  
+
   /**
    * Throws <code>TestCanceledException</code> to indicate a test was canceled.
    */
@@ -1080,7 +1079,7 @@ trait Assertions extends TripleEquals  {
   def cancel(message: String)(implicit pos: source.Position): Nothing = {
 
     requireNonNull(message)
-     
+
     throw newTestCanceledException(Some(message),  None, pos)
   }
 
@@ -1112,10 +1111,10 @@ trait Assertions extends TripleEquals  {
   def cancel(cause: Throwable)(implicit pos: source.Position): Nothing = {
 
     requireNonNull(cause)
-        
+
     throw newTestCanceledException(None, Some(cause), pos)
   }
-  
+
   /**
    * Executes the block of code passed as the second parameter, and, if it
    * completes abruptly with a <code>ModifiableMessage</code> exception,
@@ -1210,7 +1209,7 @@ trait Assertions extends TripleEquals  {
    * <p>
    * Note: This method always completes abruptly with a <code>TestPendingException</code>. Thus it always has a side
    * effect. Methods with side effects are usually invoked with parentheses, as in <code>pending()</code>. This
-   * method is defined as a parameterless method, in flagrant contradiction to recommended Scala style, because it 
+   * method is defined as a parameterless method, in flagrant contradiction to recommended Scala style, because it
    * forms a kind of DSL for pending tests. It enables tests in suites such as <code>FunSuite</code> or <code>FunSpec</code>
    * to be denoted by placing "<code>(pending)</code>" after the test name, as in:
    * </p>
@@ -1251,7 +1250,7 @@ trait Assertions extends TripleEquals  {
    * causing your test code to fail has been fixed.
    * </p>
    *
-   * @param f a block of code, which if it completes abruptly, should trigger a <code>TestPendingException</code> 
+   * @param f a block of code, which if it completes abruptly, should trigger a <code>TestPendingException</code>
    * @throws TestPendingException if the passed block of code completes abruptly with an <code>Exception</code> or <code>AssertionError</code>
    */
   def pendingUntilFixed(f: => Unit)(implicit pos: source.Position): Assertion with PendingStatement = {
@@ -1274,7 +1273,7 @@ trait Assertions extends TripleEquals  {
    * The <code>Succeeded</code> singleton.
    *
    * <p>
-   * You can use <code>succeed</code> to solve a type error when an async test 
+   * You can use <code>succeed</code> to solve a type error when an async test
    * does not end in either <code>Future[Assertion]</code> or <code>Assertion</code>.
    * Because <code>Assertion</code> is a type alias for <code>Succeeded.type</code>,
    * putting <code>succeed</code> at the end of a test body (or at the end of a
@@ -1286,7 +1285,7 @@ trait Assertions extends TripleEquals  {
 }
 
 /**
- * Companion object that facilitates the importing of <code>Assertions</code> members as 
+ * Companion object that facilitates the importing of <code>Assertions</code> members as
  * an alternative to mixing it in. One use case is to import <code>Assertions</code> members so you can use
  * them in the Scala interpreter:
  *
@@ -1392,8 +1391,8 @@ object Assertions extends Assertions {
       * @param bool the <code>Bool</code> to assert for
       * @param clue optional clue to be included in <code>TestFailedException</code>'s error message when assertion failed
       */
-    def macroAssert(bool: Bool, clue: Any, prettifier: Prettifier, pos: source.Position): Assertion = {
-      requireNonNull(clue)(prettifier, pos)
+    def macroAssert(bool: Bool, clue: Any, pos: source.Position): Assertion = {
+      requireNonNull(clue)(bool.prettifier, pos)
       if (!bool.value) {
         val failureMessage = if (Bool.isSimpleWithoutExpressionText(bool)) None else Some(bool.failureMessage)
         throw newAssertionFailedException(append(failureMessage, clue), None, pos, bool.analysis)
@@ -1407,8 +1406,8 @@ object Assertions extends Assertions {
       * @param bool the <code>Bool</code> to assume for
       * @param clue optional clue to be included in <code>TestCanceledException</code>'s error message when assertion failed
       */
-    def macroAssume(bool: Bool, clue: Any, prettifier: Prettifier, pos: source.Position): Assertion = {
-      requireNonNull(clue)(prettifier, pos)
+    def macroAssume(bool: Bool, clue: Any, pos: source.Position): Assertion = {
+      requireNonNull(clue)(bool.prettifier, pos)
       if (!bool.value) {
         val failureMessage = if (Bool.isSimpleWithoutExpressionText(bool)) None else Some(bool.failureMessage)
         throw newTestCanceledException(append(failureMessage, clue), None, pos)

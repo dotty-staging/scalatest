@@ -14,7 +14,6 @@ package syntactical
 
 import token._
 import lexical.StdLexical
-import scala.language.implicitConversions
 
 /** This component provides primitive parsers for the standard tokens defined in `StdTokens`.
 *
@@ -22,7 +21,7 @@ import scala.language.implicitConversions
  */
 class StandardTokenParsers extends StdTokenParsers {
   type Tokens = StdTokens
-  val lexical = new StdLexical
+  val lexical: StdLexical  = new StdLexical
 
   //an implicit keyword function that gives a warning when a given word is not in the reserved/delimiters list
   override implicit def keyword(chars : String): Parser[String] =

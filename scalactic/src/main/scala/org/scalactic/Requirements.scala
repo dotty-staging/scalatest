@@ -16,105 +16,107 @@
 package org.scalactic
 
 import exceptions.NullArgumentException
-import reflect.macros.Context
+
+import scala.quoted._
+import scala.tasty._
 
 /**
  * Trait that contains <code>require</code>, and <code>requireState</code>, and <code>requireNonNull</code> methods for checking pre-conditions
  * that give descriptive error messages extracted via a macro.
- * 
+ *
  * <p>These methods of trait <code>Requirements</code> aim to improve error messages provided when a pre-condition check fails at runtime in
  * production code. Although it is recommended practice to supply helpful error messages when doing pre-condition checks, often people
  * don't. Instead of this:
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; val length = 5
  * length: Int = 5
- * 
+ *
  * scala&gt; val idx = 6
  * idx: Int = 6
- * 
+ *
  * scala&gt; require(idx &gt;= 0 &amp;&amp; idx &lt;= length, "index, " + idx + ", was less than zero or greater than or equal to length, " + length)
  * java.lang.IllegalArgumentException: <strong>requirement failed: index, 6, was less than zero or greater than or equal to length, 5</strong>
  * 	at scala.Predef$.require(Predef.scala:233)
  * 	...
  * </pre>
- * 
+ *
  * <p>
  * People write simply:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; require(idx &gt;= 0 &amp;&amp; idx &lt;= length)
  * java.lang.IllegalArgumentException: <strong>requirement failed</strong>
  * 	at scala.Predef$.require(Predef.scala:221)
  * 	...
  * </pre>
- * 
+ *
  * <p>
  * Note that the detail message of the <code>IllegalArgumentException</code> thrown by the previous line of code is simply, <code>"requirement failed"</code>.
  * Such messages often end up in a log file or bug report, where a better error message can save time in debugging the problem.
  * By importing the members of <code>Requirements</code> (or mixing in its companion trait), you'll get a more helpful error message
  * extracted by a macro, whether or not a clue message is provided:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
  * import org.scalactic._
- * 
+ *
  * scala&gt; import Requirements._
  * import Requirements._
- * 
+ *
  * scala&gt; require(idx &gt;= 0 &amp;&amp; idx &lt;= length)
  * java.lang.IllegalArgumentException: <strong>6 was greater than or equal to 0, but 6 was not less than or equal to 5</strong>
  * 	at org.scalactic.Requirements$RequirementsHelper.macroRequire(Requirements.scala:56)
  * 	...
- * 
+ *
  * scala&gt; require(idx &gt;= 0 &amp;&amp; idx &lt;= length, "(hopefully that helps)")
  * java.lang.IllegalArgumentException: <strong>6 was greater than or equal to 0, but 6 was not less than or equal to 5 (hopefully that helps)</strong>
  * 	at org.scalactic.Requirements$RequirementsHelper.macroRequire(Requirements.scala:56)
  * 	...
  * </pre>
- * 
+ *
  * <p>
  * The <code>requireState</code> method provides identical error messages to <code>require</code>, but throws
  * <code>IllegalStateException</code> instead of <code>IllegalArgumentException</code>:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; val connectionOpen = false
  * connectionOpen: Boolean = false
- * 
+ *
  * scala&gt; requireState(connectionOpen)
  * java.lang.IllegalStateException: <strong>connectionOpen was false</strong>
  * 	at org.scalactic.Requirements$RequirementsHelper.macroRequireState(Requirements.scala:71)
  * 	...
  * </pre>
- * 
+ *
  * <p>
  * Thus, whereas the <code>require</code> methods throw the Java platform's standard exception indicating a passed argument
  * violated a precondition, <code>IllegalArgumentException</code>, the <code>requireState</code> methods throw the standard
  * exception indicating an object's method was invoked when the object was in an inappropriate state for that method,
  * <code>IllegalStateException</code>.
  * </p>
- * 
+ *
  * <p>
  * The <code>requireNonNull</code> method takes one or more variables as arguments and throws <code>NullArgumentException</code>
  * with an error messages that includes the variable names if any are <code>null</code>. Here's an example:
  * </p>
- * 
+ *
  * <pre class="stREPL">
  * scala&gt; val e: String = null
  * e: String = null
- * 
+ *
  * scala&gt; val f: java.util.Date = null
  * f: java.util.Date = null
- * 
+ *
  * scala&gt; requireNonNull(a, b, c, d, e, f)
  * org.scalactic.exceptions.NullArgumentException: <strong>e and f were null</strong>
  * 	at org.scalactic.Requirements$RequirementsHelper.macroRequireNonNull(Requirements.scala:101)
  * 	...
  * </pre>
- * 
+ *
  * <p>
  * Although trait <code>Requirements</code> can help you debug problems that occur in production, bear in mind that a much
  * better alternative is to make it impossible for such events to occur at all. Use the type system to ensure that all
@@ -123,8 +125,6 @@ import reflect.macros.Context
  * </p>
  */
 trait Requirements {
-
-  import language.experimental.macros
 
   import Requirements.requirementsHelper
 
@@ -144,7 +144,8 @@ trait Requirements {
    * @param condition the boolean condition to check as requirement
    * @throws IllegalArgumentException if the condition is <code>false</code>.
    */
-  def require(condition: Boolean)(implicit prettifier: Prettifier): Unit = ??? //RequirementsMacro.require
+  inline def require(condition: Boolean)(implicit prettifier: Prettifier): Unit =
+    ~RequirementsMacro.require('(condition), '(prettifier))
 
   /**
    * Require that a boolean condition about an argument passed to a method, function, or constructor,
@@ -211,42 +212,50 @@ trait Requirements {
    * @param arguments arguments to check for <code>null</code> value
    * @throws NullArgumentException if any of the arguments are <code>null</code>.
    */
-  def requireNonNull(arguments: Any*)(implicit prettifier: Prettifier, pos: source.Position): Unit = ??? //RequirementsMacro.requireNonNull
+  inline def requireNonNull(arguments: Any*)(implicit prettifier: Prettifier, pos: source.Position): Unit =
+    ~RequirementsMacro.requireNonNull('(arguments), '(prettifier), '(pos))
 }
 
 // /**
 //  * Macro implementation that provides rich error message for boolean expression requirements.
 //  */
-// private[scalactic] object RequirementsMacro {
+object RequirementsMacro {
 
-//   /**
-//    * Provides requirement implementation for <code>Requirements.require(booleanExpr: Boolean)</code>, with rich error message.
-//    *
-//    * @param context macro context
-//    * @param condition original condition expression
-//    * @return transformed expression that performs the requirement check and throw <code>IllegalArgumentException</code> with rich error message if requirement failed
-//    */
-//   def require(context: Context)(condition: context.Expr[Boolean])(prettifier: context.Expr[Prettifier]): context.Expr[Unit] = {
-//     import context.universe._
-//     new BooleanMacro[context.type](context).genMacro(
-//       Select(
-//         Select(
-//           Select(
-//             Select(
-//               Ident(newTermName("_root_")),
-//               newTermName("org")
-//             ),
-//             newTermName("scalactic")
-//           ),
-//           newTermName("Requirements")
-//         ),
-//         newTermName("requirementsHelper")
-//       ),
-//       condition,
-//       "macroRequire",
-//       context.literal(""),
-//       prettifier)
-//   }
+  /**
+   * Provides requirement implementation for <code>Requirements.require(booleanExpr: Boolean)</code>, with rich error message.
+   *
+   * @param context macro context
+   * @param condition original condition expression
+   * @return transformed expression that performs the requirement check and throw <code>IllegalArgumentException</code> with rich error message if requirement failed
+   */
+  def require(condition: Expr[Boolean], prettifier: Expr[Prettifier])(implicit tasty: Reflection): Expr[Unit] = {
+    import tasty._
+
+    val tree = condition.reflect
+    def exprStr: String = tree.show
+
+    tree match {
+      case Term.Apply(Term.Select(lhs, op, _), rhs :: Nil) =>
+        val left = lhs.reify[Any]
+        val right = rhs.reify[Any]
+        op match {
+          case "==" =>
+            '{
+              val _left   = ~left
+              val _right  = ~right
+              val _result = _left == _right
+              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+              Requirements.requirementsHelper.macroRequire(_bool, None)
+            }
+          case "!=" =>
+            '(Requirements.requirementsHelper.macroRequire(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None))
+        }
+      case Term.Select(left, "unary_!", _) =>
+        '(Requirements.requirementsHelper.macroRequire(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None))
+      case _ =>
+        '(Requirements.requirementsHelper.macroRequire(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None))
+    }
+  }
 
 //   /**
 //    * Provides requirement implementation for <code>Requirements.require(booleanExpr: Boolean, clue: Any)</code>, with rich error message.
@@ -314,7 +323,7 @@ trait Requirements {
 //    * @param condition original condition expression
 //    * @param clue original clue expression
 //    * @return transformed expression that performs the requirement check and throw <code>IllegalStateException</code> with rich error message (clue included) if requirement failed
-   
+
 //   def requireStateWithClue(context: Context)(condition: context.Expr[Boolean], clue: context.Expr[Any])(prettifier: context.Expr[Prettifier]): context.Expr[Unit] = {
 //     import context.universe._
 //     new BooleanMacro[context.type](context).genMacro(
@@ -337,79 +346,57 @@ trait Requirements {
 //       prettifier)
 //   }
 
-//   /**
-//    * Provides requirement implementation for <code>Requirements.requireNonNull(arguments: Any*)</code>, with rich error message.
-//    *
-//    * @param context macro context
-//    * @param arguments original arguments expression(s)
-//    * @param prettifier <code>Prettifier</code> to be used for error message
-//    * @return transformed expression that performs the requirement check and throw <code>NullArgumentException</code> with rich error message if requirement failed
-//    */
-//   def requireNonNull(context: Context)(arguments: context.Expr[Any]*)(prettifier: context.Expr[_], pos: context.Expr[_]): context.Expr[Unit] = {
-//     import context.universe._
+  /**
+   * Provides requirement implementation for <code>Requirements.requireNonNull(arguments: Any*)</code>, with rich error message.
+   *
+   * @param arguments original arguments expression(s)
+   * @param prettifier <code>Prettifier</code> to be used for error message
+   * @return transformed expression that performs the requirement check and throw <code>NullArgumentException</code> with rich error message if requirement failed
+   */
+  def requireNonNull(arguments: Expr[Seq[Any]], prettifier: Expr[Prettifier], pos: Expr[source.Position])(implicit reflect: Reflection): Expr[Unit] = {
+    import reflect._
+    import Term._
 
-//     // generate AST that create array containing the argument name in source (get from calling 'show')
-//     // for example, if you have:
-//     // val a = "1"
-//     // val b = null
-//     // val c = "3"
-//     // requireNonNull(a, b, c)
-//     // it will generate the following code:
-//     //
-//     // Array("a", "b", "c")
-//     val variablesNamesArray =
-//       Apply(
-//         Select(
-//           Ident("Array"),
-//           newTermName("apply")
-//         ),
-//         List(arguments.map(e => context.literal(show(e.tree)).tree): _*)
-//       )
+    def liftSeq(args: Seq[Expr[String]]): Expr[Seq[String]] = args match {
+      case x :: xs  => '{ (~x) +: ~(liftSeq(xs))  }
+      case Nil => '(Seq(): Seq[String])
+    }
 
-//     // generate AST that create array containing the argument values
-//     // for example, if you have:
-//     // val a = "1"
-//     // val b = null
-//     // val c = "3"
-//     // requireNonNull(a, b, c)
-//     // it will generate the following code:
-//     //
-//     // Array(a, b, c)
-//     val argumentsArray =
-//       Apply(
-//         Select(
-//           Ident("Array"),
-//           newTermName("apply")
-//         ),
-//         List(arguments.map(e => e.tree): _*)
-//       )
+    val argStr: List[Expr[String]] = arguments.reflect.underlyingArgument match {
+      case Typed(Repeated(args), _) => // only sequence literal
+        args.map(arg => arg.show.toExpr)
+      case _ =>
+        throw QuoteError("requireNonNull can only be used with sequence literal, not `seq : _*`")
+    }
 
-//     // Generate AST to call requirementsHelper.macroRequireNonNull and pass in both variable names and values array:
-//     //
-//     // requirementsHelper.macroRequireNonNull(variableNamesArray, valuesArray)
-//     context.Expr(
-//       Apply(
-//         Select(
-//           Select(
-//             Select(
-//               Select(
-//                 Select(
-//                   Ident(newTermName("_root_")),
-//                   newTermName("org")
-//                 ),
-//                 newTermName("scalactic")
-//               ),
-//               newTermName("Requirements")
-//             ),
-//             newTermName("requirementsHelper")
-//           ),
-//           newTermName("macroRequireNonNull")
-//         ),
-//         List(variablesNamesArray, argumentsArray, prettifier.tree, pos.tree)
-//       )
-//     )
-//   }
-// }
+    // generate AST that create array containing the argument name in source (get from calling 'show')
+    // for example, if you have:
+    // val a = "1"
+    // val b = null
+    // val c = "3"
+    // requireNonNull(a, b, c)
+    // it will generate the following code:
+    //
+    // Array("a", "b", "c")
+    val argumentsS: Expr[Seq[String]] = liftSeq(argStr)
+
+    // generate AST that create array containing the argument values
+    // for example, if you have:
+    // val a = "1"
+    // val b = null
+    // val c = "3"
+    // requireNonNull(a, b, c)
+    // it will generate the following code:
+    //
+    // Array(a, b, c)
+    // val argumentsArray = '{ ~arguments.toArray }
+
+    // Generate AST to call requirementsHelper.macroRequireNonNull and pass in both variable names and values array:
+    //
+    // requirementsHelper.macroRequireNonNull(variableNamesArray, valuesArray)
+    '{ Requirements.requirementsHelper.macroRequireNonNull((~argumentsS).toArray, (~arguments).toArray, ~prettifier, ~pos) }
+  }
+}
 
 /**
  * Companion object that facilitates the importing of <code>Requirements</code> members as

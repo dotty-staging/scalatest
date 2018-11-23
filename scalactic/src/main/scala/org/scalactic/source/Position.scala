@@ -15,6 +15,9 @@
  */
 package org.scalactic.source
 
+import scala.quoted._
+import scala.tasty._
+
 /**
  * A source file position consisting of a simple source file name, the
  * full path to the file, and a line number.
@@ -29,7 +32,7 @@ package org.scalactic.source
  * is the simple file name. For example, if the <code>filePathname</code> were <code>"/Users/this/is/a/class/Act.scala"</code>,
  * the <code>fileName</code> would be <code>"Act.scala"</code>.
  * </p>
- * 
+ *
  * <p>
  * <em>Note: Class <code>Position</code> is in part inspired by the <a href="https://github.com/lihaoyi/sourcecode" target="_blank"><code>sourcecode</code></a> library designed by Li Haoyi.</a></em>
  * </p>
@@ -46,7 +49,7 @@ case class Position(fileName: String, filePathname: String, lineNumber: Int)
  */
 object Position {
 
-  import scala.language.experimental.macros
+  import org.scalactic.Resources
 
   /**
    * Implicit method, implemented with a macro, that returns the enclosing
@@ -54,6 +57,25 @@ object Position {
    *
    * @return the enclosing source position
    */
-  implicit def here: Position = ??? //PositionMacro.genPosition
+  implicit inline def here: Position = ~genPosition
+
+  private[scalactic] lazy val showScalacticFillFilePathnames: Boolean = {
+    val value = System.getenv("SCALACTIC_FILL_FILE_PATHNAMES")
+    value != null && value == "yes"
+  }
+
+  /**
+   * Helper method for Position macro.
+   */
+  private def genPosition(implicit refl: Reflection): Expr[Position] = {
+    import refl._
+
+    val file = refl.rootPosition.sourceFile
+    val fileName: String = file.getFileName.toString
+    val filePath: String = if (showScalacticFillFilePathnames) file.toString else Resources.pleaseDefineScalacticFillFilePathnameEnvVar()
+    val lineNo: Int = refl.rootPosition.startLine
+    '(Position(~fileName.toExpr, ~filePath.toExpr, ~lineNo.toExpr))
+  }
+
 }
 
