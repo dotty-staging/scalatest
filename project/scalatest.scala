@@ -189,7 +189,7 @@ object ScalatestBuild {
   )
 
   def scalacheckDependency(config: String) =
-    "org.scalacheck" %% "scalacheck" % scalacheckVersion % config
+    "org.scalacheck" % "scalacheck_2.12" % scalacheckVersion % config
 
   lazy val crossBuildLibraryDependencies = Def.setting {
     CrossVersion.partialVersion(scalaVersion.value) match {
@@ -350,6 +350,7 @@ object ScalatestBuild {
 
   lazy val commonTest = Project("common-test", file("common-test"))
     .settings(sharedSettings: _*)
+    .settings(dottySettings: _*)
     .settings(
       projectTitle := "Common test classes used by scalactic and scalatest",
       libraryDependencies += scalacheckDependency("optional"),
@@ -426,7 +427,7 @@ object ScalatestBuild {
       // Disable publishing macros directly, included in scalactic main jar
       publishArtifact := false,
       publish := {},
-      publishLocal := {}, 
+      publishLocal := {},
       deleteJsDependenciesTask := Def.task {
         val jsDependenciesFile = (classDirectory in Compile).value
         (jsDependenciesFile/ "JS_DEPENDENCIES").delete()
@@ -690,7 +691,7 @@ object ScalatestBuild {
      },
      docTaskSetting,
      mimaPreviousArtifacts := Set(organization.value %% name.value % previousReleaseVersion),
-     mimaCurrentClassfiles := (classDirectory in Compile).value.getParentFile / (name.value + "_" + scalaBinaryVersion.value + "-" + releaseVersion + ".jar"), 
+     mimaCurrentClassfiles := (classDirectory in Compile).value.getParentFile / (name.value + "_" + scalaBinaryVersion.value + "-" + releaseVersion + ".jar"),
      mimaBinaryIssueFilters ++= {
        Seq(
          exclude[MissingClassProblem]("org.scalatest.tools.SbtCommandParser$"),
@@ -751,6 +752,7 @@ object ScalatestBuild {
 
   lazy val scalatestTest = Project("scalatest-test", file("scalatest-test"))
     .settings(sharedSettings: _*)
+    .settings(dottySettings: _*)
     .settings(
       projectTitle := "ScalaTest Test",
       organization := "org.scalatest",
@@ -906,7 +908,7 @@ object ScalatestBuild {
       sourceGenerators in Compile += {
         Def.task {
           GenScalaTestNative.genHtml((sourceManaged in Compile).value, version.value, scalaVersion.value)
- 
+
           GenScalaTestNative.genScala((sourceManaged in Compile).value / "scala", version.value, scalaVersion.value) ++
           GenVersions.genScalaTestVersions((sourceManaged in Compile).value / "scala" / "org" / "scalatest", version.value, scalaVersion.value) ++
           ScalaTestGenResourcesJSVM.genResources((sourceManaged in Compile).value / "scala" / "org" / "scalatest", version.value, scalaVersion.value) ++
@@ -1957,7 +1959,7 @@ object ScalatestBuild {
   lazy val dottySettings = List(
     scalaVersion := dottyVersion,
     libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)),
-    scalacOptions := List("-language:Scala2")
+    scalacOptions := List("-language:Scala2,implicitConversions")
   )
 }
 // set scalacOptions in (Compile, console) += "-Xlog-implicits"
