@@ -37,7 +37,7 @@ object AssertionsMacro {
     val tree = condition.reflect
     def exprStr: String = condition.show
 
-    tree match {
+    tree.underlyingArgument match {
       case Term.Apply(Term.Select(lhs, op, _), rhs :: Nil) =>
         val left = lhs.reify[Any]
         val right = rhs.reify[Any]
@@ -50,7 +50,23 @@ object AssertionsMacro {
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
               Assertions.assertionsHelper.macroAssert(_bool, None, ~pos)
             }
-          case "!=" =>
+          case "===" =>
+            '{
+              val _left   = ~left
+              val _right  = ~right
+              val _result = _left == _right
+              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+              Assertions.assertionsHelper.macroAssert(_bool, None, ~pos)
+            }
+          case "eq" =>
+            '{
+              val _left   = ~left
+              val _right  = ~right
+              val _result = _left == _right
+              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+              Assertions.assertionsHelper.macroAssert(_bool, None, ~pos)
+            }
+          case _ =>
             '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None, ~pos))
         }
       case Term.Select(left, "unary_!", _) =>
