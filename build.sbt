@@ -8,6 +8,7 @@ lazy val scalacticTest = ScalatestBuild.scalacticTest
 lazy val scalacticTestJS = ScalatestBuild.scalacticTestJS
 lazy val scalatest = ScalatestBuild.scalatest
 lazy val scalatestTest = ScalatestBuild.scalatestTest
+lazy val scalatestTestDotty = ScalatestBuild.scalatestTestDotty
 lazy val scalatestJS = ScalatestBuild.scalatestJS
 lazy val scalatestTestJS = ScalatestBuild.scalatestTestJS
 lazy val scalatestApp = ScalatestBuild.scalatestApp

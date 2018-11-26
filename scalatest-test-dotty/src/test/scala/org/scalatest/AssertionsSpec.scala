@@ -31,7 +31,7 @@ class AssertionsSpec extends FunSpec {
   val fileName: String = "AssertionsSpec.scala"
 
   private val prettifier = Prettifier.default
-
+  /*
   describe("The === method") {
     it("should be usable when the left expression results in null") {
       val npe = new NullPointerException
@@ -94,6 +94,7 @@ class AssertionsSpec extends FunSpec {
       assert(e1.message === Some(FailureMessages.didNotEqual(prettifier, a, null)))
     }
   }
+
   describe("The intercept method") {
     it("should catch subtypes") {
       class MyException extends RuntimeException
@@ -6527,7 +6528,7 @@ class AssertionsSpec extends FunSpec {
       val x = 1
       assert(assertResult(2) { x + 1 } eq Succeeded)
     }
-  }
+  } */
 
   describe("The assertResult method that 'gets a clue'") {
     it("should be usable when the left expression results in null") {

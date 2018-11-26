@@ -162,7 +162,7 @@ trait Requirements {
    * @throws IllegalArgumentException if the condition is <code>false</code>.
    * @throws NullPointerException if <code>message</code> is <code>null</code>.
    */
-  def require(condition: Boolean, clue: Any)(implicit prettifier: Prettifier): Unit = ??? //RequirementsMacro.requireWithClue
+  def require(condition: Boolean, clue: Any)(implicit prettifier: Prettifier): Unit = () //RequirementsMacro.requireWithClue
 
   /**
    * Require that a boolean condition is true about the state of an object on which a method has been invoked.

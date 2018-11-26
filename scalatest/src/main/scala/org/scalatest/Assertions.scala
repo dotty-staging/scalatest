@@ -464,7 +464,7 @@ trait Assertions extends TripleEquals  {
    * @param condition the boolean condition to assert
    * @throws TestFailedException if the condition is <code>false</code>.
    */
-  inline def assert(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ~AssertionsMacro.assert('(condition), '(prettifier), '(pos))
+  inline def assert(condition: => Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ~AssertionsMacro.assert('(condition), '(prettifier), '(pos))
 
   private[scalatest] def newAssertionFailedException(optionalMessage: Option[String], optionalCause: Option[Throwable], pos: source.Position, analysis: scala.collection.immutable.IndexedSeq[String]): Throwable =
     new exceptions.TestFailedException(toExceptionFunction(optionalMessage), optionalCause, Left(pos), None, analysis)

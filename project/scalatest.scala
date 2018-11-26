@@ -770,6 +770,26 @@ object ScalatestBuild {
       publishLocal := {}
     ).dependsOn(scalatest % "test", commonTest % "test")
 
+  lazy val scalatestTestDotty = Project("scalatest-test-dotty", file("scalatest-test-dotty"))
+    .settings(sharedSettings: _*)
+    .settings(dottySettings: _*)
+    .settings(
+      projectTitle := "ScalaTest Test",
+      organization := "org.scalatest",
+      libraryDependencies ++= crossBuildLibraryDependencies.value,
+      libraryDependencies ++= scalatestLibraryDependencies,
+      libraryDependencies ++= scalatestTestLibraryDependencies(scalaVersion.value),
+      testOptions in Test := scalatestTestOptions,
+      logBuffered in Test := false,
+      //fork in Test := true,
+      //parallelExecution in Test := true,
+      //testForkedParallel in Test := true,
+      baseDirectory in Test := file("./"),
+      publishArtifact := false,
+      publish := {},
+      publishLocal := {}
+    ).dependsOn(scalatest % "test", commonTest % "test")
+
   lazy val scalatestJS = Project("scalatestJS", file("scalatest.js"))
     .enablePlugins(SbtOsgi)
     .settings(sharedSettings: _*)

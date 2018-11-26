@@ -32,9 +32,10 @@ object AssertionsMacro {
    */
   def assert(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position])(implicit refl: Reflection): Expr[Assertion] = {
     import refl._
+    import quoted.Toolbox.Default._
 
     val tree = condition.reflect
-    def exprStr: String = tree.show
+    def exprStr: String = condition.show
 
     tree match {
       case Term.Apply(Term.Select(lhs, op, _), rhs :: Nil) =>
