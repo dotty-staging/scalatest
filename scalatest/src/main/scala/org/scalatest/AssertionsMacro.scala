@@ -30,7 +30,7 @@ object AssertionsMacro {
    * @param condition original condition expression
    * @return transformed expression that performs the assertion check and throw <code>TestFailedException</code> with rich error message if assertion failed
    */
-  def assert(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position])(implicit refl: Reflection): Expr[Assertion] = {
+  def assert(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(implicit refl: Reflection): Expr[Assertion] = {
     import refl._
     import quoted.Toolbox.Default._
 
@@ -41,14 +41,72 @@ object AssertionsMacro {
       case Term.Apply(Term.Select(lhs, op), rhs :: Nil) =>
         op match {
           case "==" =>
-          val left = lhs.seal[Any]
-          val right = rhs.seal[Any]
+            val left = lhs.seal[Any]
+            val right = rhs.seal[Any]
             '{
               val _left   = ~left
               val _right  = ~right
               val _result = _left == _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, "", ~pos)
+              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+            }
+          case "!=" =>
+            val left = lhs.seal[Any]
+            val right = rhs.seal[Any]
+            '{
+              val _left   = ~left
+              val _right  = ~right
+              val _result = _left != _right
+              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+            }
+          case ">" =>
+            // blocked by tasty constructors
+            // https://github.com/lampepfl/dotty/pull/5438
+            val left = lhs.seal[Int]
+            val right = rhs.seal[Int]
+            '{
+              val _left   = ~left
+              val _right  = ~right
+              val _result = _left > _right
+              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+            }
+          case "<" =>
+            // blocked by tasty constructors
+            // https://github.com/lampepfl/dotty/pull/5438
+            val left = lhs.seal[Int]
+            val right = rhs.seal[Int]
+            '{
+              val _left   = ~left
+              val _right  = ~right
+              val _result = _left < _right
+              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+            }
+          case ">=" =>
+            // blocked by tasty constructors
+            // https://github.com/lampepfl/dotty/pull/5438
+            val left = lhs.seal[Int]
+            val right = rhs.seal[Int]
+            '{
+              val _left   = ~left
+              val _right  = ~right
+              val _result = _left >= _right
+              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+            }
+          case "<=" =>
+            // blocked by tasty constructors
+            // https://github.com/lampepfl/dotty/pull/5438
+            val left = lhs.seal[Int]
+            val right = rhs.seal[Int]
+            '{
+              val _left   = ~left
+              val _right  = ~right
+              val _result = _left <= _right
+              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
             }
           case "===" =>
             val left = lhs.seal[TripleEqualsSupport#Equalizer[_]]
@@ -58,7 +116,7 @@ object AssertionsMacro {
               val _right  = ~right
               val _result = _left === _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, "", ~pos)
+              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
             }
           case "eq" =>
             val left = lhs.seal[AnyRef]
@@ -68,49 +126,20 @@ object AssertionsMacro {
               val _right  = ~right
               val _result = _left `eq` _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, None, ~pos)
+              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
             }
           case _ =>
-            '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None, ~pos))
+            '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), ~clue, ~pos))
         }
       case Term.Select(left, "unary_!") =>
-        '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None, ~pos))
+        '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), ~clue, ~pos))
+      case Term.Literal(_) =>
+        '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, "", ~prettifier), ~clue, ~pos))
       case _ =>
-        '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None, ~pos))
+        '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), ~clue, ~pos))
     }
 
   }
-
-//   /**
-//    * Provides assertion implementation for <code>Assertions.assert(booleanExpr: Boolean, clue: Any)</code>, with rich error message.
-//    *
-//    * @param context macro context
-//    * @param condition original condition expression
-//    * @param clue original clue expression
-//    * @return transformed expression that performs the assertion check and throw <code>TestFailedException</code> with rich error message (clue included) if assertion failed
-//    */
-//   def assertWithClue(context: Context)(condition: context.Expr[Boolean], clue: context.Expr[Any])(prettifier: context.Expr[Prettifier], pos: context.Expr[source.Position]): context.Expr[Assertion] = {
-//     import context.universe._
-//     new BooleanMacro[context.type](context).genMacro[Assertion](
-//       Select(
-//         Select(
-//           Select(
-//             Select(
-//               Ident(newTermName("_root_")),
-//               newTermName("org")
-//             ),
-//             newTermName("scalatest")
-//           ),
-//           newTermName("Assertions")
-//         ),
-//         newTermName("assertionsHelper")
-//       ),
-//       condition,
-//       "macroAssert",
-//       clue,
-//       prettifier,
-//       pos)
-//   }
 
 //   /**
 //    * Provides implementation for <code>Assertions.assume(booleanExpr: Boolean)</code>, with rich error message.

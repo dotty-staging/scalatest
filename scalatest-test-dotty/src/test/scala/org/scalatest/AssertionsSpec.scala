@@ -370,7 +370,7 @@ class AssertionsSpec extends FunSpec {
   }
 
   val floatLengthSize = new FloatLengthSize(2.0f)
-  /*
+
   describe("The assert(boolean) method") {
     val a = 3
     val b = 5
@@ -655,7 +655,7 @@ class AssertionsSpec extends FunSpec {
     it("should do nothing when is used to check a === 3") {
       assert(a === 3)
     }
-
+    /*
     it("should throw TestFailedException with correct message and stack depth when is used to check a === 5") {
       val e = intercept[TestFailedException] {
         assert(a === 5)
@@ -1805,9 +1805,9 @@ class AssertionsSpec extends FunSpec {
     it("should result in type Assertion and, on success, return the Succeeded value") {
       val x = 1
       assert(assert(x + 1 == 2) eq Succeeded)
-    }
+    } */
   }
-
+  /*
   describe("The assert(boolean, clue) method") {
     val a = 3
     val b = 5
