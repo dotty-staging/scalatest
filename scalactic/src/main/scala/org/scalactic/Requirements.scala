@@ -231,13 +231,13 @@ object RequirementsMacro {
   def require(condition: Expr[Boolean], prettifier: Expr[Prettifier])(implicit tasty: Reflection): Expr[Unit] = {
     import tasty._
 
-    val tree = condition.reflect
+    val tree = condition.unseal
     def exprStr: String = tree.show
 
     tree match {
-      case Term.Apply(Term.Select(lhs, op, _), rhs :: Nil) =>
-        val left = lhs.reify[Any]
-        val right = rhs.reify[Any]
+      case Term.Apply(Term.Select(lhs, op), rhs :: Nil) =>
+        val left = lhs.seal[Any]
+        val right = rhs.seal[Any]
         op match {
           case "==" =>
             '{
@@ -250,7 +250,7 @@ object RequirementsMacro {
           case "!=" =>
             '(Requirements.requirementsHelper.macroRequire(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None))
         }
-      case Term.Select(left, "unary_!", _) =>
+      case Term.Select(left, "unary_!") =>
         '(Requirements.requirementsHelper.macroRequire(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None))
       case _ =>
         '(Requirements.requirementsHelper.macroRequire(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None))
@@ -362,7 +362,7 @@ object RequirementsMacro {
       case Nil => '(Seq(): Seq[String])
     }
 
-    val argStr: List[Expr[String]] = arguments.reflect.underlyingArgument match {
+    val argStr: List[Expr[String]] = arguments.unseal.underlyingArgument match {
       case Typed(Repeated(args), _) => // only sequence literal
         args.map(arg => arg.show.toExpr)
       case _ =>

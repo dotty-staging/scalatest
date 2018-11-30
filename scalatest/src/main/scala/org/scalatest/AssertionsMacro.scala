@@ -34,42 +34,46 @@ object AssertionsMacro {
     import refl._
     import quoted.Toolbox.Default._
 
-    val tree = condition.reflect
+    val tree = condition.unseal
     def exprStr: String = condition.show
 
     tree.underlyingArgument match {
-      case Term.Apply(Term.Select(lhs, op, _), rhs :: Nil) =>
-        val left = lhs.reify[Any]
-        val right = rhs.reify[Any]
+      case Term.Apply(Term.Select(lhs, op), rhs :: Nil) =>
         op match {
           case "==" =>
+          val left = lhs.seal[Any]
+          val right = rhs.seal[Any]
             '{
               val _left   = ~left
               val _right  = ~right
               val _result = _left == _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, None, ~pos)
+              Assertions.assertionsHelper.macroAssert(_bool, "", ~pos)
             }
           case "===" =>
+            val left = lhs.seal[TripleEqualsSupport#Equalizer[_]]
+            val right = rhs.seal[Any]
             '{
               val _left   = ~left
               val _right  = ~right
-              val _result = _left == _right
+              val _result = _left === _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, None, ~pos)
+              Assertions.assertionsHelper.macroAssert(_bool, "", ~pos)
             }
           case "eq" =>
+            val left = lhs.seal[AnyRef]
+            val right = rhs.seal[AnyRef]
             '{
               val _left   = ~left
               val _right  = ~right
-              val _result = _left == _right
+              val _result = _left `eq` _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
               Assertions.assertionsHelper.macroAssert(_bool, None, ~pos)
             }
           case _ =>
             '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None, ~pos))
         }
-      case Term.Select(left, "unary_!", _) =>
+      case Term.Select(left, "unary_!") =>
         '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None, ~pos))
       case _ =>
         '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None, ~pos))

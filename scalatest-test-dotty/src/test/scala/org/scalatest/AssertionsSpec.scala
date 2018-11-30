@@ -33,11 +33,10 @@ class AssertionsSpec extends FunSpec {
   private val prettifier = Prettifier.default
 
   describe("The === method") {
-    /*
     it("should be usable when the left expression results in null") {
       val npe = new NullPointerException
       assert(npe.getMessage === null)
-    } */
+    }
     it("should compare arrays structurally") {
       val a1 = Array(1, 2, 3)
       val a2 = Array(1, 2, 3)
@@ -71,7 +70,7 @@ class AssertionsSpec extends FunSpec {
         assert(a3 === a1)
       }
     }
-    /*
+
     it("should compare nulls in a satisfying manner") {
       val n1: String = null
       val n2: String = null
@@ -94,7 +93,7 @@ class AssertionsSpec extends FunSpec {
         assert(a === null)
       }
       assert(e1.message === Some(FailureMessages.didNotEqual(prettifier, a, null)))
-    } */
+    }
   }
 
   describe("The intercept method") {
@@ -134,7 +133,6 @@ class AssertionsSpec extends FunSpec {
       assert(result eq e)
     }
 
-    /*
     describe("when the bit of code throws the wrong exception") {
       it("should include that wrong exception as the TFE's cause") {
         val wrongException = new RuntimeException("oops!")
@@ -146,7 +144,7 @@ class AssertionsSpec extends FunSpec {
           }
         assert(caught.cause.value eq wrongException)
       }
-    } */
+    }
   }
 
   describe("The assertThrows method") {
@@ -185,7 +183,6 @@ class AssertionsSpec extends FunSpec {
       assert(caught.isInstanceOf[TestFailedException])
     }
 
-    /*
     describe("when the bit of code throws the wrong exception") {
       it("should include that wrong exception as the TFE's cause") {
         val wrongException = new RuntimeException("oops!")
@@ -197,9 +194,9 @@ class AssertionsSpec extends FunSpec {
           }
         assert(caught.cause.value eq wrongException)
       }
-    } */
+    }
   }
-  /*
+
   describe("The trap method") {
     it("should be a shorthand for catch and return any thrown exception that would cause a test to fail") {
       val a = 12
@@ -373,7 +370,7 @@ class AssertionsSpec extends FunSpec {
   }
 
   val floatLengthSize = new FloatLengthSize(2.0f)
-
+  /*
   describe("The assert(boolean) method") {
     val a = 3
     val b = 5
