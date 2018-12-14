@@ -1000,13 +1000,17 @@ import java.net.{ServerSocket, InetAddress}
       }
       else {
         // We need to use the following code to set Runner object instance for different Runner using different class loader.
-        import scala.reflect.runtime._
+        // import scala.reflect.runtime._
 
-        val runtimeMirror = universe.runtimeMirror(testClassLoader)
+        // val runtimeMirror = universe.runtimeMirror(testClassLoader)
 
-        val module = runtimeMirror.staticModule("org.scalatest.tools.Runner$")
-        val obj = runtimeMirror.reflectModule(module)
-        obj.instance.asInstanceOf[Runner.type]
+        // val module = runtimeMirror.staticModule("org.scalatest.tools.Runner$")
+        // val obj = runtimeMirror.reflectModule(module)
+        // obj.instance.asInstanceOf[Runner.type]
+        val runnerCompanionClass = testClassLoader.loadClass("org.scalatest.tools.Runner$")
+        val module = runnerCompanionClass.getField("MODULE$")
+        val obj = module.get(runnerCompanionClass)
+        obj.asInstanceOf[Runner.type]
       }
 
     runnerInstance.spanScaleFactor = parseDoubleArgument(spanScaleFactors, "-F", 1.0)
