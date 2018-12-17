@@ -42,7 +42,7 @@ object AssertionsMacro {
   def assume(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(implicit refl: Reflection): Expr[Assertion] =
     transform('(Assertions.assertionsHelper.macroAssume), condition, prettifier, pos, clue)
 
-  def transform(
+  private def transform(
     helper:Expr[(Bool, Any, source.Position) => Assertion],
     condition: Expr[Boolean], prettifier: Expr[Prettifier],
     pos: Expr[source.Position], clue: Expr[Any]
@@ -53,7 +53,17 @@ object AssertionsMacro {
     import quoted.Toolbox.Default._
 
     val tree = condition.unseal
+
+    val bool = parse(tree.underlyingArgument.seal[Boolean], prettifier)
+    '{ (~helper)(~bool, ~clue, ~pos) }
+  }
+
+  private def parse(condition: Expr[Boolean], prettifier: Expr[Prettifier])(implicit refl: Reflection): Expr[Bool] = {
+    import refl._
+    import quoted.Toolbox.Default._
+
     def exprStr: String = condition.show
+    def defaultCase = '(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier))
 
     // AssertionsSpec.this.convertToEqualizer[scala.Int](a).===(5)(scalactic.Equality.default[scala.Int])
     object TripleEqual {
@@ -68,9 +78,7 @@ object AssertionsMacro {
       }
     }
 
-    def defaultCase = '((~helper)(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), ~clue, ~pos))
-
-    tree.underlyingArgument match {
+    condition.unseal match {
       case Term.Apply(Term.Select(lhs, op), rhs :: Nil) =>
         op match {
           case "==" =>
@@ -80,8 +88,7 @@ object AssertionsMacro {
               val _left   = ~left
               val _right  = ~right
               val _result = _left == _right
-              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              (~helper)(_bool, ~clue, ~pos)
+              Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
             }
           case "!=" =>
             val left = lhs.seal[Any]
@@ -90,8 +97,7 @@ object AssertionsMacro {
               val _left   = ~left
               val _right  = ~right
               val _result = _left != _right
-              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              (~helper)(_bool, ~clue, ~pos)
+              Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
             }
           case ">" =>
             // blocked by tasty constructors
@@ -102,8 +108,7 @@ object AssertionsMacro {
               val _left   = ~left
               val _right  = ~right
               val _result = _left > _right
-              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              (~helper)(_bool, ~clue, ~pos)
+              Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
             }
           case "<" =>
             // blocked by tasty constructors
@@ -114,8 +119,7 @@ object AssertionsMacro {
               val _left   = ~left
               val _right  = ~right
               val _result = _left < _right
-              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              (~helper)(_bool, ~clue, ~pos)
+              Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
             }
           case ">=" =>
             // blocked by tasty constructors
@@ -126,8 +130,7 @@ object AssertionsMacro {
               val _left   = ~left
               val _right  = ~right
               val _result = _left >= _right
-              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              (~helper)(_bool, ~clue, ~pos)
+              Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
             }
           case "<=" =>
             // blocked by tasty constructors
@@ -138,8 +141,7 @@ object AssertionsMacro {
               val _left   = ~left
               val _right  = ~right
               val _result = _left <= _right
-              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              (~helper)(_bool, ~clue, ~pos)
+              Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
             }
           case "eq" =>
             val left = lhs.seal[AnyRef]
@@ -148,8 +150,7 @@ object AssertionsMacro {
               val _left   = ~left
               val _right  = ~right
               val _result = _left `eq` _right
-              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              (~helper)(_bool, ~clue, ~pos)
+              Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
             }
           case "ne" =>
             val left = lhs.seal[AnyRef]
@@ -158,9 +159,16 @@ object AssertionsMacro {
               val _left   = ~left
               val _right  = ~right
               val _result = _left `ne` _right
-              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              (~helper)(_bool, ~clue, ~pos)
+              Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
             }
+          case "||" =>
+            val left = parse(lhs.seal[Boolean], prettifier)
+            val right = parse(rhs.seal[Boolean], prettifier)
+            '(~left || ~right)
+          case "&&" =>
+            val left = parse(lhs.seal[Boolean], prettifier)
+            val right = parse(rhs.seal[Boolean], prettifier)
+            '(~left && ~right)
           case _ =>
             defaultCase
         }
@@ -175,16 +183,14 @@ object AssertionsMacro {
       //         val _left   = ~left
       //         val _right  = ~right
       //         val _result = (~fun)(_left).===(_right)(~equality)
-      //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-      //         (~helper)(_bool, ~clue, ~pos)
+      //         Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
       //       }
       //     case "!==" =>
       //       '{
       //         val _left   = ~left
       //         val _right  = ~right
       //         val _result = (~fun)(_left).!==(_right)(~equality)
-      //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-      //         (~helper)(_bool, ~clue, ~pos)
+      //         Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
       //       }
       //   }
       // case TripleEqual(fn, lhs, op, rhs, None) =>
@@ -198,22 +204,21 @@ object AssertionsMacro {
       //         val _left   = ~left
       //         val _right  = ~right
       //         val _result = (~fun)(_left) === _right
-      //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-      //         (~helper)(_bool, ~clue, ~pos)
+      //         Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
       //       }
       //     case "!==" =>
       //       '{
       //         val _left   = ~left
       //         val _right  = ~right
       //         val _result = (~fun)(_left) !== _right
-      //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-      //         (~helper)(_bool, ~clue, ~pos)
+      //         Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
       //       }
       //   }
       case Term.Select(left, "unary_!") =>
-        defaultCase
+        val receiver = parse(left.seal[Boolean], prettifier)
+        '{ !(~receiver) }
       case Term.Literal(_) =>
-        '((~helper)(Bool.simpleMacroBool(~condition, "", ~prettifier), ~clue, ~pos))
+        '(Bool.simpleMacroBool(~condition, "", ~prettifier))
       case _ =>
         defaultCase
     }
