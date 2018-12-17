@@ -71,6 +71,7 @@ class AssertionsSpec extends FunSpec {
       }
     }
 
+    /*
     it("should compare nulls in a satisfying manner") {
       val n1: String = null
       val n2: String = null
@@ -93,7 +94,7 @@ class AssertionsSpec extends FunSpec {
         assert(a === null)
       }
       assert(e1.message === Some(FailureMessages.didNotEqual(prettifier, a, null)))
-    }
+    } */
   }
 
   describe("The intercept method") {

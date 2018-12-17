@@ -23,7 +23,6 @@ import scala.tasty._
  * Macro implementation that provides rich error message for boolean expression assertion.
  */
 object AssertionsMacro {
-
   /**
    * Provides assertion implementation for <code>Assertions.assert(booleanExpr: Boolean)</code>, with rich error message.
    *
@@ -36,6 +35,21 @@ object AssertionsMacro {
 
     val tree = condition.unseal
     def exprStr: String = condition.show
+
+    // AssertionsSpec.this.convertToEqualizer[scala.Int](a).===(5)(scalactic.Equality.default[scala.Int])
+    object TripleEqual {
+      def isEqualizer(tp: Type): Boolean = true // tp <:< typeOf[TripleEqualsSupport#Equalizer[_]]
+
+      def unapply(tree: Term): Option[(Term, Term, String, Term, Option[Term])] = tree match {
+        case Term.Apply(Term.Select(Term.Apply(fun, lhs :: Nil), op), rhs :: Nil) if isEqualizer(fun.tpe) =>
+          Some((fun, lhs, op, rhs, None))
+        case Term.Apply(Term.Apply(Term.Select(Term.Apply(fun, lhs :: Nil), op), rhs :: Nil), equality :: Nil) if isEqualizer(fun.tpe)  =>
+          Some((fun, lhs, op, rhs, Some(equality)))
+        case _ => None
+      }
+    }
+
+    def defaultCase = '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), ~clue, ~pos))
 
     tree.underlyingArgument match {
       case Term.Apply(Term.Select(lhs, op), rhs :: Nil) =>
@@ -108,16 +122,6 @@ object AssertionsMacro {
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
               Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
             }
-          case "===" =>
-            val left = lhs.seal[TripleEqualsSupport#Equalizer[_]]
-            val right = rhs.seal[Any]
-            '{
-              val _left   = ~left
-              val _right  = ~right
-              val _result = _left === _right
-              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
-            }
           case "eq" =>
             val left = lhs.seal[AnyRef]
             val right = rhs.seal[AnyRef]
@@ -128,15 +132,71 @@ object AssertionsMacro {
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
               Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
             }
+          case "ne" =>
+            val left = lhs.seal[AnyRef]
+            val right = rhs.seal[AnyRef]
+            '{
+              val _left   = ~left
+              val _right  = ~right
+              val _result = _left `ne` _right
+              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+            }
           case _ =>
-            '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), ~clue, ~pos))
+            defaultCase
         }
+      // case TripleEqual(fn, lhs, op, rhs, Some(eq)) =>
+      //   val fun = fn.seal[Any => TripleEqualsSupport#Equalizer[_]]
+      //   val left = lhs.seal[Any]
+      //   val right = rhs.seal[Any]
+      //   val equality = eq.seal[Equality[Any]]
+      //   op match {
+      //     case "===" =>
+      //       '{
+      //         val _left   = ~left
+      //         val _right  = ~right
+      //         val _result = (~fun)(_left).===(_right)(~equality)
+      //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+      //         Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+      //       }
+      //     case "!==" =>
+      //       '{
+      //         val _left   = ~left
+      //         val _right  = ~right
+      //         val _result = (~fun)(_left).!==(_right)(~equality)
+      //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+      //         Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+      //       }
+      //   }
+      // case TripleEqual(fn, lhs, op, rhs, None) =>
+      //   val fun = fn.seal[Any => TripleEqualsSupport#Equalizer[_]]
+      //   val left = lhs.seal[Any]
+      //   val right = rhs.seal[Any]
+
+      //   op match {
+      //     case "===" =>
+      //       '{
+      //         val _left   = ~left
+      //         val _right  = ~right
+      //         val _result = (~fun)(_left) === _right
+      //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+      //         Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+      //       }
+      //     case "!==" =>
+      //       '{
+      //         val _left   = ~left
+      //         val _right  = ~right
+      //         val _result = (~fun)(_left) !== _right
+      //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+      //         Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+      //       }
+      //   }
       case Term.Select(left, "unary_!") =>
-        '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), ~clue, ~pos))
+        defaultCase
       case Term.Literal(_) =>
         '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, "", ~prettifier), ~clue, ~pos))
       case _ =>
-        '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), ~clue, ~pos))
+        defaultCase
     }
 
   }
