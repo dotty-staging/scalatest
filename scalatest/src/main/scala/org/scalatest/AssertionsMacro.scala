@@ -29,7 +29,26 @@ object AssertionsMacro {
    * @param condition original condition expression
    * @return transformed expression that performs the assertion check and throw <code>TestFailedException</code> with rich error message if assertion failed
    */
-  def assert(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(implicit refl: Reflection): Expr[Assertion] = {
+  def assert(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(implicit refl: Reflection): Expr[Assertion] =
+    transform('(Assertions.assertionsHelper.macroAssert), condition, prettifier, pos, clue)
+
+  /**
+   * Provides implementation for <code>Assertions.assume(booleanExpr: Boolean)</code>, with rich error message.
+   *
+   * @param context macro context
+   * @param condition original condition expression
+   * @return transformed expression that performs the assumption check and throw <code>TestCanceledException</code> with rich error message if assumption failed
+   */
+  def assume(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(implicit refl: Reflection): Expr[Assertion] =
+    transform('(Assertions.assertionsHelper.macroAssume), condition, prettifier, pos, clue)
+
+  def transform(
+    helper:Expr[(Bool, Any, source.Position) => Assertion],
+    condition: Expr[Boolean], prettifier: Expr[Prettifier],
+    pos: Expr[source.Position], clue: Expr[Any]
+  )
+  (implicit refl: Reflection): Expr[Assertion] = {
+
     import refl._
     import quoted.Toolbox.Default._
 
@@ -49,7 +68,7 @@ object AssertionsMacro {
       }
     }
 
-    def defaultCase = '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), ~clue, ~pos))
+    def defaultCase = '((~helper)(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), ~clue, ~pos))
 
     tree.underlyingArgument match {
       case Term.Apply(Term.Select(lhs, op), rhs :: Nil) =>
@@ -62,7 +81,7 @@ object AssertionsMacro {
               val _right  = ~right
               val _result = _left == _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+              (~helper)(_bool, ~clue, ~pos)
             }
           case "!=" =>
             val left = lhs.seal[Any]
@@ -72,7 +91,7 @@ object AssertionsMacro {
               val _right  = ~right
               val _result = _left != _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+              (~helper)(_bool, ~clue, ~pos)
             }
           case ">" =>
             // blocked by tasty constructors
@@ -84,7 +103,7 @@ object AssertionsMacro {
               val _right  = ~right
               val _result = _left > _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+              (~helper)(_bool, ~clue, ~pos)
             }
           case "<" =>
             // blocked by tasty constructors
@@ -96,7 +115,7 @@ object AssertionsMacro {
               val _right  = ~right
               val _result = _left < _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+              (~helper)(_bool, ~clue, ~pos)
             }
           case ">=" =>
             // blocked by tasty constructors
@@ -108,7 +127,7 @@ object AssertionsMacro {
               val _right  = ~right
               val _result = _left >= _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+              (~helper)(_bool, ~clue, ~pos)
             }
           case "<=" =>
             // blocked by tasty constructors
@@ -120,7 +139,7 @@ object AssertionsMacro {
               val _right  = ~right
               val _result = _left <= _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+              (~helper)(_bool, ~clue, ~pos)
             }
           case "eq" =>
             val left = lhs.seal[AnyRef]
@@ -130,7 +149,7 @@ object AssertionsMacro {
               val _right  = ~right
               val _result = _left `eq` _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+              (~helper)(_bool, ~clue, ~pos)
             }
           case "ne" =>
             val left = lhs.seal[AnyRef]
@@ -140,7 +159,7 @@ object AssertionsMacro {
               val _right  = ~right
               val _result = _left `ne` _right
               val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+              (~helper)(_bool, ~clue, ~pos)
             }
           case _ =>
             defaultCase
@@ -157,7 +176,7 @@ object AssertionsMacro {
       //         val _right  = ~right
       //         val _result = (~fun)(_left).===(_right)(~equality)
       //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-      //         Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+      //         (~helper)(_bool, ~clue, ~pos)
       //       }
       //     case "!==" =>
       //       '{
@@ -165,7 +184,7 @@ object AssertionsMacro {
       //         val _right  = ~right
       //         val _result = (~fun)(_left).!==(_right)(~equality)
       //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-      //         Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+      //         (~helper)(_bool, ~clue, ~pos)
       //       }
       //   }
       // case TripleEqual(fn, lhs, op, rhs, None) =>
@@ -180,7 +199,7 @@ object AssertionsMacro {
       //         val _right  = ~right
       //         val _result = (~fun)(_left) === _right
       //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-      //         Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+      //         (~helper)(_bool, ~clue, ~pos)
       //       }
       //     case "!==" =>
       //       '{
@@ -188,48 +207,17 @@ object AssertionsMacro {
       //         val _right  = ~right
       //         val _result = (~fun)(_left) !== _right
       //         val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-      //         Assertions.assertionsHelper.macroAssert(_bool, ~clue, ~pos)
+      //         (~helper)(_bool, ~clue, ~pos)
       //       }
       //   }
       case Term.Select(left, "unary_!") =>
         defaultCase
       case Term.Literal(_) =>
-        '(Assertions.assertionsHelper.macroAssert(Bool.simpleMacroBool(~condition, "", ~prettifier), ~clue, ~pos))
+        '((~helper)(Bool.simpleMacroBool(~condition, "", ~prettifier), ~clue, ~pos))
       case _ =>
         defaultCase
     }
-
   }
-
-//   /**
-//    * Provides implementation for <code>Assertions.assume(booleanExpr: Boolean)</code>, with rich error message.
-//    *
-//    * @param context macro context
-//    * @param condition original condition expression
-//    * @return transformed expression that performs the assumption check and throw <code>TestCanceledException</code> with rich error message if assumption failed
-//    */
-//   def assume(context: Context)(condition: context.Expr[Boolean])(prettifier: context.Expr[Prettifier], pos: context.Expr[source.Position]): context.Expr[Assertion] = {
-//     import context.universe._
-//     new BooleanMacro[context.type](context).genMacro[Assertion](
-//       Select(
-//         Select(
-//           Select(
-//             Select(
-//               Ident(newTermName("_root_")),
-//               newTermName("org")
-//             ),
-//             newTermName("scalatest")
-//           ),
-//           newTermName("Assertions")
-//         ),
-//         newTermName("assertionsHelper")
-//       ),
-//       condition,
-//       "macroAssume",
-//       context.literal(""),
-//       prettifier,
-//       pos)
-//   }
 
 //   /**
 //    * Provides implementation for <code>Assertions.assume(booleanExpr: Boolean, clue: Any)</code>, with rich error message.

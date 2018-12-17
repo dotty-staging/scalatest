@@ -571,7 +571,8 @@ trait Assertions extends TripleEquals  {
    * @param condition the boolean condition to assume
    * @throws TestCanceledException if the condition is <code>false</code>.
    */
-  def assume(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ??? //AssertionsMacro.assume
+  inline def assume(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion =
+    ~AssertionsMacro.assume('(condition), '(prettifier), '(pos), '(""))
 
   /**
    * Assume that a boolean condition, described in <code>String</code>
@@ -623,7 +624,8 @@ trait Assertions extends TripleEquals  {
    * @throws TestCanceledException if the condition is <code>false</code>.
    * @throws NullArgumentException if <code>message</code> is <code>null</code>.
    */
-  def assume(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion = ??? //AssertionsMacro.assumeWithClue
+  inline def assume(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion =
+    ~AssertionsMacro.assume('(condition), '(prettifier), '(pos), '(clue))
 
   /**
    * Asserts that a given string snippet of code does not pass the Scala type checker, failing if the given
