@@ -255,10 +255,10 @@ class AssertionsSpec extends FunSpec {
     FailureMessages.wasLessThanOrEqualTo(prettifier, left, right)
 
   def commaAnd(left: String, right: String): String =
-    FailureMessages.commaAnd(prettifier, UnquotedString(left), UnquotedString(right))
+    FailureMessages.commaAnd(prettifier, left, right)
 
   def commaBut(left: String, right: String): String =
-    FailureMessages.commaBut(prettifier, UnquotedString(left), UnquotedString(right))
+    FailureMessages.commaBut(prettifier, left, right)
 
   def wasFalse(left: String): String =
     left + " was false"
@@ -703,7 +703,7 @@ class AssertionsSpec extends FunSpec {
       assert(e.message === Some(equaled(3, 3)))
       assert(e.failedCodeFileName === (Some(fileName)))
       assert(e.failedCodeLineNumber === (Some(thisLineNumber - 4)))
-    }
+    } */
 
     it("should do nothing when is used to check a == 3 && b == 5") {
       assert(a == 3 && b == 5)
@@ -888,7 +888,7 @@ class AssertionsSpec extends FunSpec {
     it("should do nothing when it is used to check a == 3 && { println(\"hi\"); b == 5}") {
       assert(a == 3 && { println("hi"); b == 5})
     }
-
+    /*
     it("should throw TestFailedException with correct message and stack depth when is usesd to check a == 3 && { println(\"hi\"); b == 3}") {
       val e = intercept[TestFailedException] {
         assert(a == 3 && { println("hi"); b == 3})

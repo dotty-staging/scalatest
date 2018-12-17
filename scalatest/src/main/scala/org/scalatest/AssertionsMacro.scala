@@ -163,10 +163,18 @@ object AssertionsMacro {
             val left = parse(lhs.seal[Boolean], prettifier)
             val right = parse(rhs.seal[Boolean], prettifier)
             '(~left || ~right)
+          case "|" =>
+            val left = parse(lhs.seal[Boolean], prettifier)
+            val right = parse(rhs.seal[Boolean], prettifier)
+            '(~left | ~right)
           case "&&" =>
             val left = parse(lhs.seal[Boolean], prettifier)
             val right = parse(rhs.seal[Boolean], prettifier)
             '(~left && ~right)
+          case "&" =>
+            val left = parse(lhs.seal[Boolean], prettifier)
+            val right = parse(rhs.seal[Boolean], prettifier)
+            '(~left & ~right)
           case _ =>
             defaultCase
         }
