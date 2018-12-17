@@ -52,9 +52,7 @@ object AssertionsMacro {
     import refl._
     import quoted.Toolbox.Default._
 
-    val tree = condition.unseal
-
-    val bool = parse(tree.underlyingArgument.seal[Boolean], prettifier)
+    val bool = parse(condition, prettifier)
     '{ (~helper)(~bool, ~clue, ~pos) }
   }
 
@@ -78,7 +76,7 @@ object AssertionsMacro {
       }
     }
 
-    condition.unseal match {
+    condition.unseal.underlyingArgument match {
       case Term.Apply(Term.Select(lhs, op), rhs :: Nil) =>
         op match {
           case "==" =>
