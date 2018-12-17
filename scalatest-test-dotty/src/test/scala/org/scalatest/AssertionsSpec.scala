@@ -3250,7 +3250,7 @@ class AssertionsSpec extends FunSpec {
       val x = 1
       assert(assert(x + 1 == 2, "clue") eq Succeeded)
     }
-  }
+  } */
 
   describe("The assume(boolean) method") {
     val a = 3
@@ -3536,7 +3536,7 @@ class AssertionsSpec extends FunSpec {
     it("should do nothing when is used to check a === 3") {
       assume(a === 3)
     }
-
+   /*
     it("should throw TestFailedException with correct message and stack depth when is used to check a === 5") {
       val e = intercept[TestCanceledException] {
         assume(a === 5)
@@ -4685,9 +4685,10 @@ class AssertionsSpec extends FunSpec {
     it("should result in type Assertion and, on success, return the Succeeded value") {
       val x = 1
       assert(assume(x + 1 == 2) eq Succeeded)
-    }
+    } */
   }
 
+  /*
   describe("The assume(boolean, clue) method") {
     val a = 3
     val b = 5
