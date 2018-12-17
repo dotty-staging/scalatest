@@ -356,6 +356,7 @@ object RequirementsMacro {
   def requireNonNull(arguments: Expr[Seq[Any]], prettifier: Expr[Prettifier], pos: Expr[source.Position])(implicit reflect: Reflection): Expr[Unit] = {
     import reflect._
     import Term._
+    import quoted.Toolbox.Default._
 
     def liftSeq(args: Seq[Expr[String]]): Expr[Seq[String]] = args match {
       case x :: xs  => '{ (~x) +: ~(liftSeq(xs))  }
@@ -364,7 +365,7 @@ object RequirementsMacro {
 
     val argStr: List[Expr[String]] = arguments.unseal.underlyingArgument match {
       case Typed(Repeated(args), _) => // only sequence literal
-        args.map(arg => arg.show.toExpr)
+        args.map(arg => arg.seal[Any].show.toExpr)
       case _ =>
         throw QuoteError("requireNonNull can only be used with sequence literal, not `seq : _*`")
     }

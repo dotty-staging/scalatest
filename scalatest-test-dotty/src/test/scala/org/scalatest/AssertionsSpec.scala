@@ -1808,7 +1808,7 @@ class AssertionsSpec extends FunSpec {
       assert(assert(x + 1 == 2) eq Succeeded)
     } */
   }
-  /*
+
   describe("The assert(boolean, clue) method") {
     val a = 3
     val b = 5
@@ -2096,7 +2096,7 @@ class AssertionsSpec extends FunSpec {
     // TripleEquals tests
     // currently these tests are not calling TripleEquals's === and !== yet, import org.scalactic.TripleEquals does not seems to work
     // Should make Assertions to extend TripleEquals instead of LegacyTripleEquals instead.
-
+    /*
     it("should do nothing when is used to check a === 3") {
       assert(a === 3, "dude")
     }
@@ -3250,7 +3250,8 @@ class AssertionsSpec extends FunSpec {
       val x = 1
       assert(assert(x + 1 == 2, "clue") eq Succeeded)
     }
-  } */
+    */
+  }
 
   describe("The assume(boolean) method") {
     val a = 3
