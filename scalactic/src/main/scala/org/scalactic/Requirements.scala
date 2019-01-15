@@ -145,7 +145,7 @@ trait Requirements {
    * @throws IllegalArgumentException if the condition is <code>false</code>.
    */
   inline def require(condition: Boolean)(implicit prettifier: Prettifier): Unit =
-    ~RequirementsMacro.require('(condition), '(prettifier))
+    ~RequirementsMacro.require('(condition), '(prettifier), '(""))
 
   /**
    * Require that a boolean condition about an argument passed to a method, function, or constructor,
@@ -162,7 +162,10 @@ trait Requirements {
    * @throws IllegalArgumentException if the condition is <code>false</code>.
    * @throws NullPointerException if <code>message</code> is <code>null</code>.
    */
-  def require(condition: Boolean, clue: Any)(implicit prettifier: Prettifier): Unit = () //RequirementsMacro.requireWithClue
+  inline def require(condition: Boolean, clue: Any)(implicit prettifier: Prettifier): Unit = ()
+    // blocked by tasty constructors
+    // https://github.com/lampepfl/dotty/issues/5567
+    // ~RequirementsMacro.require('(condition), '(prettifier), '(clue))
 
   /**
    * Require that a boolean condition is true about the state of an object on which a method has been invoked.
@@ -179,7 +182,7 @@ trait Requirements {
    * @param condition the boolean condition to check as requirement
    * @throws IllegalStateException if the condition is <code>false</code>.
    */
-  def requireState(condition: Boolean)(implicit prettifier: Prettifier): Unit = ??? //RequirementsMacro.requireState
+  def requireState(condition: Boolean)(implicit prettifier: Prettifier): Unit = () // RequirementsMacro.requireState
 
   /**
    * Require that a boolean condition about the state of an object on which a method has been
@@ -228,64 +231,13 @@ object RequirementsMacro {
    * @param condition original condition expression
    * @return transformed expression that performs the requirement check and throw <code>IllegalArgumentException</code> with rich error message if requirement failed
    */
-  def require(condition: Expr[Boolean], prettifier: Expr[Prettifier])(implicit tasty: Reflection): Expr[Unit] = {
-    import tasty._
+  def require(condition: Expr[Boolean], prettifier: Expr[Prettifier], clue: Expr[Any])(implicit refl: Reflection): Expr[Unit] = {
+    import refl._
+    import quoted.Toolbox.Default._
 
-    val tree = condition.unseal
-    def exprStr: String = tree.show
-
-    tree match {
-      case Term.Apply(Term.Select(lhs, op), rhs :: Nil) =>
-        val left = lhs.seal[Any]
-        val right = rhs.seal[Any]
-        op match {
-          case "==" =>
-            '{
-              val _left   = ~left
-              val _right  = ~right
-              val _result = _left == _right
-              val _bool = Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-              Requirements.requirementsHelper.macroRequire(_bool, None)
-            }
-          case "!=" =>
-            '(Requirements.requirementsHelper.macroRequire(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None))
-        }
-      case Term.Select(left, "unary_!") =>
-        '(Requirements.requirementsHelper.macroRequire(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None))
-      case _ =>
-        '(Requirements.requirementsHelper.macroRequire(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier), None))
-    }
+    val bool = BooleanMacro.parse(condition, prettifier)
+    '{ Requirements.requirementsHelper.macroRequire(~bool, ~clue) }
   }
-
-//   /**
-//    * Provides requirement implementation for <code>Requirements.require(booleanExpr: Boolean, clue: Any)</code>, with rich error message.
-//    *
-//    * @param context macro context
-//    * @param condition original condition expression
-//    * @param clue original clue expression
-//    * @return transformed expression that performs the requirement check and throw <code>IllegalArgumentException</code> with rich error message (clue included) if requirement failed
-//    */
-//   def requireWithClue(context: Context)(condition: context.Expr[Boolean], clue: context.Expr[Any])(prettifier: context.Expr[Prettifier]): context.Expr[Unit] = {
-//     import context.universe._
-//     new BooleanMacro[context.type](context).genMacro(
-//       Select(
-//         Select(
-//           Select(
-//             Select(
-//               Ident(newTermName("_root_")),
-//               newTermName("org")
-//             ),
-//             newTermName("scalactic")
-//           ),
-//           newTermName("Requirements")
-//         ),
-//         newTermName("requirementsHelper")
-//       ),
-//       condition,
-//       "macroRequire",
-//       clue,
-//       prettifier)
-//   }
 
 //   /**
 //    * Provides requirement implementation for <code>Requirements.requireState(booleanExpr: Boolean)</code>, with rich error message.
