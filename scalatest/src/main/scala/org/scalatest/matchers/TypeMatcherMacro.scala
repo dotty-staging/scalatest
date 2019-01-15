@@ -22,38 +22,33 @@ package org.scalatest.matchers
 // import org.scalactic.Prettifier
 // import org.scalatest.{UnquotedString, Resources, Suite, FailureMessages, Assertions}
 
-// private[scalatest] object TypeMatcherMacro {
+import scala.quoted._
+import scala.tasty._
+
+private[scalatest] object TypeMatcherMacro {
 
 //   // Check that no type parameter is specified, if any does, give a friendly compiler warning.
-//   def checkTypeParameter(context: Context)(tree: context.Tree, methodName: String): Unit = {
+  def checkTypeParameter(refl: Reflection)(tree: refl.Term, methodName: String): Unit = {
+    import refl._
+    import Term._
+    import TypeTree._
+    import quoted.Toolbox.Default._
 
-//     import context.universe._
+    tree.underlyingArgument match {
+      case Apply(TypeApply(Select(_,methodNameTermName), typeList: List[TypeTree]), _)
+      if methodNameTermName.decoded == methodName =>
+        // Got a type list, let's go through it
+        typeList.foreach {
+          case Applied(tpt, args) => // type is specified, let's give warning.
+            // Blocked by error reporting API
+            // context.warning(args(0).pos, "Type parameter should not be specified because it will be erased at runtime, please use _ instead.  Note that in future version of ScalaTest this will give a compiler error.")
 
-//     tree match {
-//       case Apply(
-//              TypeApply(
-//                Select(
-//                  _,
-//                  methodNameTermName
-//                ),
-//                typeList: List[TypeTree]
-//              ),
-//              _
-//            ) if methodNameTermName.decoded == methodName =>
-//         // Got a type list, let's go through it
-//         typeList.foreach { t =>
-//           t.original match {
-//             case AppliedTypeTree(tpt, args) => // type is specified, let's give warning.
-//               context.warning(args(0).pos, "Type parameter should not be specified because it will be erased at runtime, please use _ instead.  Note that in future version of ScalaTest this will give a compiler error.")
+          case _ => // otherwise don't do anything
+        }
+      case _ => // otherwise don't do anything
+    }
 
-//             case _ => // otherwise don't do anything
-//           }
-//         }
-
-//       case _ => // otherwise don't do anything
-//     }
-
-//   }
+  }
 
 //   // Do checking on type parameter and generate AST that create a 'a type' matcher
 //   def aTypeMatcherImpl(context: Context)(aType: context.Expr[ResultOfATypeInvocation[_]]): context.Expr[Matcher[Any]] = {
@@ -127,73 +122,37 @@ package org.scalatest.matchers
 
 //   }
 
-//   // Do checking on type parameter and generate AST that create a negated 'a type' matcher
-//   def notATypeMatcher(context: Context)(aType: context.Expr[ResultOfATypeInvocation[_]]): context.Expr[Matcher[Any]] = {
-//     import context.universe._
+  // Do checking on type parameter and generate AST that create a negated 'a type' matcher
+  def notATypeMatcher(aType: Expr[ResultOfATypeInvocation[_]])(implicit refl: Reflection): Expr[Matcher[Any]] = {
+    import refl._
+    import quoted.Toolbox.Default._
 
-//     val tree = aType.tree
+    // check type parameter
+    checkTypeParameter(refl)(aType.unseal, "a")
 
-//     // check type parameter
-//     checkTypeParameter(context)(tree, "a")
+    /**
+     * Generate AST that does the following code:
+     *
+     * org.scalatest.matchers.TypeMatcherHelper.notATypeMatcher(aType)
+     */
+    'TypeMatcherHelper.notATypeMatcher(~aType)
+  }
 
-//     /**
-//      * Generate AST that does the following code:
-//      *
-//      * org.scalatest.matchers.TypeMatcherHelper.notATypeMatcher(aType)
-//      */
-//     context.Expr(
-//       Apply(
-//         Select(
-//           Select(
-//             Select(
-//               Select(
-//                 Ident(newTermName("org")),
-//                 newTermName("scalatest")
-//               ),
-//               newTermName("matchers")
-//             ),
-//             newTermName("TypeMatcherHelper")
-//           ),
-//           newTermName("notATypeMatcher")
-//         ),
-//         List(tree)
-//       )
-//     )
-//   }
+  // Do checking on type parameter and generate AST that create a negated 'an type' matcher
+  def notAnTypeMatcher(anType: Expr[ResultOfAnTypeInvocation[_]])(implicit refl: Reflection): Expr[Matcher[Any]] = {
+    import refl._
+    import quoted.Toolbox.Default._
 
-//   // Do checking on type parameter and generate AST that create a negated 'an type' matcher
-//   def notAnTypeMatcher(context: Context)(anType: context.Expr[ResultOfAnTypeInvocation[_]]): context.Expr[Matcher[Any]] = {
-//     import context.universe._
+    // check type parameter
+    checkTypeParameter(context)(anType.unseal, "an")
 
-//     val tree = anType.tree
-
-//     // check type parameter
-//     checkTypeParameter(context)(tree, "an")
-
-//     /**
-//      * Generate AST that does the following code:
-//      *
-//      * org.scalatest.matchers.TypeMatcherHelper.notAnTypeMatcher(anType)
-//      */
-//     context.Expr(
-//       Apply(
-//         Select(
-//           Select(
-//             Select(
-//               Select(
-//                 Ident(newTermName("org")),
-//                 newTermName("scalatest")
-//               ),
-//               newTermName("matchers")
-//             ),
-//             newTermName("TypeMatcherHelper")
-//           ),
-//           newTermName("notAnTypeMatcher")
-//         ),
-//         List(tree)
-//       )
-//     )
-//   }
+    /**
+     * Generate AST that does the following code:
+     *
+     * org.scalatest.matchers.TypeMatcherHelper.notAnTypeMatcher(anType)
+     */
+    'TypeMatcherHelper.notAnTypeMatcher(~anType)
+  }
 
 //   // Do checking on type parameter and generate AST that does a 'and not' logical expression matcher for 'a type' matcher.
 //   def andNotATypeMatcher(context: Context)(aType: context.Expr[ResultOfATypeInvocation[_]]): context.Expr[Matcher[Any]] = {
@@ -532,4 +491,4 @@ package org.scalatest.matchers
 //   def expectAnTypeWillBeTrueImpl(context: Context)(anType: context.Expr[FactResultOfAnTypeInvocation[_]]): context.Expr[org.scalatest.Fact] =
 //     expectTypeWillBeTrueImpl(context)(anType.tree, "will not be an", "expectAnTypeWillBeTrue")*/
 
-// }
+}
