@@ -2814,7 +2814,7 @@ $endif$
      * </pre>
      */
     inline def matchPattern(right: PartialFunction[Any, _]) =
-      ~MatchPatternMacro.orNotMatchPatternMatcher('(right))
+      ~MatchPatternMacro.orNotMatchPatternMatcher('(this), '(right))
   }
 
   /**
@@ -2873,8 +2873,8 @@ object MatcherFactory$arity$ {
   /**
    * This method is called by macro that supports 'and not a [Type]' syntax.
    */
-  def andNotATypeMatcherFactory$arity$[SC, $typeConstructors$](aType: Expr[ResultOfATypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] =
-    new MatcherFactory$arity$Macro[SC, $commaSeparatedTCNs$].andNotATypeMatcherFactory$arity$(aType)
+  def andNotATypeMatcherFactory$arity$[SC, $typeConstructors$](self: Expr[AndNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] =
+    new MatcherFactory$arity$Macro[SC, $commaSeparatedTCNs$].andNotATypeMatcherFactory$arity$(self, aType)
 
   /**
    * This method is called by macro that supports 'or not a [Type]' syntax.
@@ -2885,14 +2885,14 @@ object MatcherFactory$arity$ {
   /**
    * This method is called by macro that supports 'and not a [Type]' syntax.
    */
-  def andNotAnTypeMatcherFactory$arity$[SC, $typeConstructors$](anType: Expr[ResultOfAnTypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] =
-    new MatcherFactory$arity$Macro[SC, $commaSeparatedTCNs$].andNotAnTypeMatcherFactory$arity$(anType)
+  def andNotAnTypeMatcherFactory$arity$[SC, $typeConstructors$](self: Expr[AndNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] =
+    new MatcherFactory$arity$Macro[SC, $commaSeparatedTCNs$].andNotAnTypeMatcherFactory$arity$(self, anType)
 
   /**
    * This method is called by macro that supports 'or not a [Type]' syntax.
    */
-  def orNotAnTypeMatcherFactory$arity$[SC, $typeConstructors$](anType: Expr[ResultOfAnTypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] =
-    new MatcherFactory$arity$Macro[SC, $commaSeparatedTCNs$].orNotAnTypeMatcherFactory$arity$(anType)
+  def orNotAnTypeMatcherFactory$arity$[SC, $typeConstructors$](self: Expr[OrNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] =
+    new MatcherFactory$arity$Macro[SC, $commaSeparatedTCNs$].orNotAnTypeMatcherFactory$arity$(self, anType)
 }
 
 private[scalatest] class MatcherFactory$arity$Macro[-SC, $typeConstructors$] {
@@ -2900,28 +2900,13 @@ private[scalatest] class MatcherFactory$arity$Macro[-SC, $typeConstructors$] {
   import scala.quoted._
   import scala.tasty._
 
-  def andNotATypeMatcherFactory$arity$(aType: Expr[ResultOfATypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
+  def andNotATypeMatcherFactory$arity$(self: Expr[AndNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
     import refl._
     import Term._
 
     val rhs = TypeMatcherMacro.notATypeMatcher(refl)(aType)
 
-    context.macroApplication match {
-      case Apply(Select(qualifier, _), _) =>
-        context.Expr(
-          Apply(
-            Select(
-              Select(
-                qualifier,
-                "owner"
-              ),
-              newTermName("and")
-            ),
-            List(rhs.tree)
-          )
-        )
-      case _ => context.abort(context.macroApplication.pos, "This macro should be used with 'and not' syntax only.")
-    }
+    '{ self.owner.and(~rhs) }
   }
 
   def orNotATypeMatcherFactory$arity$(self: Expr[OrNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
@@ -2929,74 +2914,23 @@ private[scalatest] class MatcherFactory$arity$Macro[-SC, $typeConstructors$] {
     import Term._
 
     val rhs = TypeMatcherMacro.notATypeMatcher(refl)(aType)
-
-    self.unseal match {
-      case Apply(Select(qualifier, _), _) =>
-        context.Expr(
-          Apply(
-            Select(
-              Select(
-                qualifier,
-                "owner"
-              ),
-              newTermName("or")
-            ),
-            List(rhs.tree)
-          )
-        )
-
-      case _ =>
-        throw QuoteError("This macro should be used with 'or not' syntax only.")
-        // context.abort(context.macroApplication.pos, "This macro should be used with 'or not' syntax only.")
-    }
+    '{ self.owner.or(~rhs) }
   }
 
-  def andNotAnTypeMatcherFactory$arity$(anType: Expr[ResultOfAnTypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
+  def andNotAnTypeMatcherFactory$arity$(self: Expr[AndNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
     import refl._
     import Term._
 
     val rhs = TypeMatcherMacro.notAnTypeMatcher(refl)(anType)
-
-    context.macroApplication match {
-      case Apply(Select(qualifier, _), _) =>
-        context.Expr(
-          Apply(
-            Select(
-              Select(
-                qualifier,
-                "owner"
-              ),
-              newTermName("and")
-            ),
-            List(rhs.tree)
-          )
-        )
-      case _ => context.abort(context.macroApplication.pos, "This macro should be used with 'and not' syntax only.")
-    }
+    '{ self.owner.and(~rhs) }
   }
 
-  def orNotAnTypeMatcherFactory$arity$(anType: Expr[ResultOfAnTypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
+  def orNotAnTypeMatcherFactory$arity$(self: Expr[OrNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit refl: Reflection): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
     import refl._
     import Term._
 
     val rhs = TypeMatcherMacro.notAnTypeMatcher(refl)(anType)
-
-    context.macroApplication match {
-      case Apply(Select(qualifier, _), _) =>
-        context.Expr(
-          Apply(
-            Select(
-              Select(
-                qualifier,
-                "owner"
-              ),
-              newTermName("or")
-            ),
-            List(rhs.tree)
-          )
-        )
-      case _ => context.abort(context.macroApplication.pos, "This macro should be used with 'or not' syntax only.")
-    }
+    '{ self.owner.or(~rhs) }
   }
 
 }
