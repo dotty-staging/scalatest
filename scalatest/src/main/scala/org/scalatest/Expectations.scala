@@ -22,7 +22,7 @@ import scala.concurrent.Future
 import scala.reflect.ClassTag
 
 private[scalatest] trait Expectations {
-  
+
   // TODO: Need to make this and assertResult use custom equality I think.
   def expectResult(expected: Any)(actual: Any)(implicit prettifier: Prettifier, pos: source.Position): Fact = {
     if (!DefaultEquality.areEqualComparingArraysStructurally(actual, expected)) {
@@ -108,7 +108,8 @@ private[scalatest] trait Expectations {
 
   import language.experimental.macros
 
-  def expect(expression: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Fact = ??? //ExpectationsMacro.expect
+  inline def expect(expression: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Fact =
+    ~ExpectationsMacro.expect('(expression))('(prettifier), '(pos))
 
   def expectDoesNotCompile(code: String)(implicit prettifier: Prettifier, pos: source.Position): Fact = ??? //CompileMacro.expectDoesNotCompileImpl
 
@@ -122,7 +123,7 @@ private[scalatest] trait Expectations {
     * Implicit conversion that makes (x &gt; 0) implies expect(x &gt; -1) syntax works
     */
   implicit def booleanToFact(expression: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Fact = ??? //ExpectationsMacro.expect
-  
+
   implicit def convertExpectationToAssertion(exp: Expectation): Assertion = exp.toAssertion
 }
 

@@ -15,35 +15,20 @@
  */
 package org.scalatest
 
-// import org.scalactic._
-// import reflect.macros.Context
+import org.scalactic._
+import scala.quoted._
+import scala.tasty._
 
-// /**
-//  * Macro implementation that provides rich error message for boolean expression assertion.
-//  */
-// private[scalatest] object ExpectationsMacro {
+/**
+ * Macro implementation that provides rich error message for boolean expression assertion.
+ */
+private[scalatest] object ExpectationsMacro {
 
-//   def expect(context: Context)(expression: context.Expr[Boolean])(prettifier: context.Expr[Prettifier], pos: context.Expr[source.Position]): context.Expr[Fact] = {
-//     import context.universe._
-//     new BooleanMacro[context.type](context).genMacro[Fact](
-//       Select(
-//         Select(
-//           Select(
-//             Select(
-//               Ident(newTermName("_root_")),
-//               newTermName("org")
-//             ),
-//             newTermName("scalatest")
-//           ),
-//           newTermName("Expectations")
-//         ),
-//         newTermName("expectationsHelper")
-//       ),
-//       expression,
-//       "macroExpect",
-//       context.literal(""),
-//       prettifier,
-//       pos)
-//   }
+  def expect(condition: Expr[Boolean])(prettifier: Expr[Prettifier], pos: Expr[source.Position])(implicit refl: Reflection): Expr[Fact] = {
+    import refl._
+    import quoted.Toolbox.Default._
 
-// }
+    val bool = BooleanMacro.parse(condition, prettifier)
+    '{ Expectations.expectationsHelper.macroExpect(~bool, "", ~prettifier, ~pos) }
+  }
+}
