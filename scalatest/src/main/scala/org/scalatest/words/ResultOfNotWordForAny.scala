@@ -227,7 +227,8 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    *                   ^
    * </pre>
    **/
-  def be(aType: ResultOfATypeInvocation[_]): Assertion = ??? //TypeMatcherMacro.assertATypeShouldBeTrueImpl
+  inline def be(aType: ResultOfATypeInvocation[_]): Assertion =
+    ~TypeMatcherMacro.assertATypeShouldBeTrueImpl('(this), '(aType))
 
   /**
    * This method enables the following syntax:
@@ -237,7 +238,8 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    *                   ^
    * </pre>
    **/
-  def be(anType: ResultOfAnTypeInvocation[_]): Assertion = ??? //TypeMatcherMacro.assertAnTypeShouldBeTrueImpl
+  inline def be(anType: ResultOfAnTypeInvocation[_]): Assertion =
+    ~TypeMatcherMacro.assertAnTypeShouldBeTrueImpl('(this), '(anType))
 
   /**
    * This method enables the following syntax:
@@ -1080,8 +1082,6 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
     else
       indicateSuccess(shouldBeTrue, FailureMessages.endedWith(prettifier, left, expectedSubstring), FailureMessages.didNotEndWith(prettifier, left, expectedSubstring))
   }
-
-  import scala.language.experimental.macros
 
   /**
    * This method enables the following syntax:
