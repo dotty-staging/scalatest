@@ -27,8 +27,6 @@ import org.scalatest.matchers.{MatchResult, Matcher}
  */
 final class MatchPatternWord {
 
-  import scala.language.experimental.macros
-
   /**
    * This method enables the following syntax:
    *
@@ -37,7 +35,8 @@ final class MatchPatternWord {
    *               ^
    * </pre>
    */
-  def apply(right: PartialFunction[Any, _]) = ??? //MatchPatternMacro.matchPatternMatcher
+  inline def apply(right: PartialFunction[Any, _]) =
+    ~org.scalatest.matchers.MatchPatternMacro.matchPatternMatcher('(right))
 
   /**
    * Overrides toString to return "matchPattern"
