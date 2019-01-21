@@ -16,6 +16,7 @@
 package org.scalatest.matchers
 
 import org.scalatest.Resources
+import org.scalatest.words.ResultOfNotWordForAny
 import scala.quoted._
 import scala.tasty._
 
@@ -52,62 +53,20 @@ private[scalatest] object MatchPatternMacro {
 //   }
 
   // Do checking on case definition and generate AST that returns a match pattern matcher
-  def matchPatternMatcher(right: Expr[PartialFunction[Any, _]]): Expr[Matcher[Any]] = {
+  def matchPatternMatcher(right: Expr[PartialFunction[Any, _]])(implicit refl: Reflection): Expr[Matcher[Any]] = {
     // checkCaseDefinitions(context)(tree)
 
-    '{ MatchPatternHelper.matchPatternHelper(~right) }
-  }
-
-  // Do checking on case definition and generate AST that returns a negated match pattern matcher
-  def notMatchPatternMatcherTree(right: Expr[PartialFunction[Any, _]]): Expr[Matcher[Any]] = {
-    // checkCaseDefinitions(context)(tree)
-
-    '{ MatchPatternHelper.notMatchPatternMatcher(~right) }
-  }
-
-  // Generate AST that returns a negated match pattern matcher expression
-  def notMatchPatternMatcher(right: Expr[PartialFunction[Any, _]]): Expr[Matcher[Any]] =
-    notMatchPatternMatcherTree(right)
-
-  // Do checking on case definition and generate AST that does a 'and not' logical expression matcher.
-  def andNotMatchPatternMatcher(self: Expr[AndNotWord], right: Expr[PartialFunction[Any, _]])(implicit refl: Reflection): Expr[Matcher[Any]] = {
-    import refl._
-    import Term._
-
-    // Generate a negated matcher by calling notMatchPatternMatcher
-    val notMatcher = notMatchPatternMatcherTree(right)
-
-    /**
-     * Generate AST for code that call the 'and' method on the Matcher instance (reference through 'owner'):
-     *
-     * owner.and(notMatcher)
-     */
-    '{ self.owner.and(~notMatcher) }
-  }
-
-  def orNotMatchPatternMatcher(self: Expr[OrNotWord], right: Expr[PartialFunction[Any, _]])(implicit refl: Reflection): context.Expr[Matcher[Any]] = {
-    import refl._
-    import Term._
-
-    // Generate a negated matcher by calling notMatchPatternMatcher
-    val notMatcher = notMatchPatternMatcherTree(right)
-
-    /**
-     * Generate AST for code that call the 'and' method on the Matcher instance (reference through 'owner'):
-     *
-     * owner.or(notMatcher)
-     */
-    '{ self.owner.or(~notMatcher) }
+    '{ MatchPatternHelper.matchPatternMatcher(~right) }
   }
 
   /**
    * Check case definitions and generate AST for code that check that the left match the pattern given on the right, which code looks like this:
    *
-   * org.scalatest.matchers.MatchPatternHelper.checkPatternMatcher(left, right)
+   * org.scalatest.matchers.MatchPatternHelper.checkMatchPattern(left, right)
    */
-  def matchPattern(left: Expr[ResultOfNotWordForAny], right: Expr[PartialFunction[Any, _]]): Expr[Unit] = {
+  def matchPattern(left: Expr[ResultOfNotWordForAny[_]], right: Expr[PartialFunction[Any, _]]): Expr[Unit] = {
     // checkCaseDefinitions(context)(tree)
 
-    '{ MatchPatternHelper.checkPatternMatcher(~left, ~right) }
+    '{ MatchPatternHelper.checkMatchPattern(~left, ~right) }
   }
 }

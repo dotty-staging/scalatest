@@ -1979,6 +1979,7 @@ object ScalatestBuild {
   lazy val dottySettings = List(
     scalaVersion := dottyVersion,
     libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)),
+    // scalacOptions := List("-language:Scala2,implicitConversions", "-Xprint:frontend,staging")
     scalacOptions := List("-language:Scala2,implicitConversions")
   )
 }

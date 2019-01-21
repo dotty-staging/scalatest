@@ -15,8 +15,7 @@
  */
 package org.scalatest.matchers
 
-// import org.scalatest.words.{ResultOfAnTypeInvocation, MatcherWords, ResultOfATypeInvocation}
-// import scala.reflect.macros.Context
+import org.scalatest.words.{ResultOfAnTypeInvocation, MatcherWords, ResultOfATypeInvocation}
 
 // //import org.scalatest.words.{FactResultOfAnTypeInvocation, FactResultOfATypeInvocation}
 // import org.scalactic.Prettifier
@@ -34,19 +33,21 @@ private[scalatest] object TypeMatcherMacro {
     import TypeTree._
     import quoted.Toolbox.Default._
 
+    // TODO#Macros: Select lack unapply
+    /*
     tree.underlyingArgument match {
       case Apply(TypeApply(Select(_,methodNameTermName), typeList: List[TypeTree]), _)
       if methodNameTermName.decoded == methodName =>
         // Got a type list, let's go through it
         typeList.foreach {
           case Applied(tpt, args) => // type is specified, let's give warning.
-            // Blocked by error reporting API
+            // TODO#Macros: Blocked by error reporting API
             // context.warning(args(0).pos, "Type parameter should not be specified because it will be erased at runtime, please use _ instead.  Note that in future version of ScalaTest this will give a compiler error.")
 
           case _ => // otherwise don't do anything
         }
       case _ => // otherwise don't do anything
-    }
+    } */
 
   }
 
@@ -135,7 +136,7 @@ private[scalatest] object TypeMatcherMacro {
      *
      * org.scalatest.matchers.TypeMatcherHelper.notATypeMatcher(aType)
      */
-    'TypeMatcherHelper.notATypeMatcher(~aType)
+    '{ TypeMatcherHelper.notATypeMatcher(~aType) }
   }
 
   // Do checking on type parameter and generate AST that create a negated 'an type' matcher
@@ -144,14 +145,14 @@ private[scalatest] object TypeMatcherMacro {
     import quoted.Toolbox.Default._
 
     // check type parameter
-    checkTypeParameter(context)(anType.unseal, "an")
+    checkTypeParameter(refl)(anType.unseal, "an")
 
     /**
      * Generate AST that does the following code:
      *
      * org.scalatest.matchers.TypeMatcherHelper.notAnTypeMatcher(anType)
      */
-    'TypeMatcherHelper.notAnTypeMatcher(~anType)
+    '{ TypeMatcherHelper.notAnTypeMatcher(~anType) }
   }
 
 //   // Do checking on type parameter and generate AST that does a 'and not' logical expression matcher for 'a type' matcher.
