@@ -115,182 +115,118 @@ private[scalatest] object TypeMatcherMacro {
     '{ TypeMatcherHelper.notAnTypeMatcher(~anType) }
   }
 
-//   // Do checking on type parameter and generate AST that does a 'and not' logical expression matcher for 'a type' matcher.
-//   def andNotATypeMatcher(context: Context)(aType: context.Expr[ResultOfATypeInvocation[_]]): context.Expr[Matcher[Any]] = {
+  // Do checking on type parameter and generate AST that does a 'and not' logical expression matcher for 'a type' matcher.
+  def andNotATypeMatcher[T:Type](self: Expr[Matcher[T]#AndNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit refl: Reflection): Expr[Matcher[T]] = {
+    import refl._
+    import quoted.Toolbox.Default._
 
-//     import context.universe._
+    // create a negated matcher from notATypeMatcher
+    val rhs = notATypeMatcher(aType)
 
-//     // create a negated matcher from notATypeMatcher
-//     val rhs = notATypeMatcher(context)(aType)
+    /**
+     * Generate AST for code that call the 'and' method on the Matcher instance (reference through 'owner'):
+     *
+     * owner.and(rhs)
+     */
+    '{ (~self).owner.and(~rhs) }
+  }
 
-//     /**
-//      * Generate AST for code that call the 'and' method on the Matcher instance (reference through 'owner'):
-//      *
-//      * owner.and(rhs)
-//      */
-//     context.macroApplication match {
-//       case Apply(Select(qualifier, _), _) =>
-//         context.Expr(
-//           Apply(
-//             Select(
-//               Select(
-//                 qualifier,
-//                 "owner"
-//               ),
-//               newTermName("and")
-//             ),
-//             List(rhs.tree)
-//           )
-//         )
-//       case _ => context.abort(context.macroApplication.pos, "This macro should be used with 'and not' syntax only.")
-//     }
+  // Do checking on type parameter and generate AST that does a 'and not' logical expression matcher for 'an type' matcher.
+  def andNotAnTypeMatcher[T:Type](self: Expr[Matcher[T]#AndNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit refl: Reflection): Expr[Matcher[T]] = {
+    import refl._
+    import quoted.Toolbox.Default._
 
-//   }
+    // create a negated matcher from notAnTypeMatcher
+    val rhs = notAnTypeMatcher(anType)
 
-//   // Do checking on type parameter and generate AST that does a 'and not' logical expression matcher for 'an type' matcher.
-//   def andNotAnTypeMatcher(context: Context)(anType: context.Expr[ResultOfAnTypeInvocation[_]]): context.Expr[Matcher[Any]] = {
+    /**
+     * Generate AST for code that call the 'and' method on the Matcher instance (reference through 'owner'):
+     *
+     * owner.and(rhs)
+     */
+    '{ (~self).owner.and(~rhs) }
+  }
 
-//     import context.universe._
+  // Do checking on type parameter and generate AST that does a 'or not' logical expression matcher for 'a type' matcher.
+  def orNotATypeMatcher[T:Type](self: Expr[Matcher[T]#OrNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit refl: Reflection): Expr[Matcher[T]] = {
+    import refl._
+    import quoted.Toolbox.Default._
 
-//     // create a negated matcher from notAnTypeMatcher
-//     val rhs = notAnTypeMatcher(context)(anType)
+    // create a negated matcher from notATypeMatcher
+    val rhs = notATypeMatcher(aType)
 
-//     /**
-//      * Generate AST for code that call the 'and' method on the Matcher instance (reference through 'owner'):
-//      *
-//      * owner.and(rhs)
-//      */
-//     context.macroApplication match {
-//       case Apply(Select(qualifier, _), _) =>
-//         context.Expr(
-//           Apply(
-//             Select(
-//               Select(
-//                 qualifier,
-//                 "owner"
-//               ),
-//               newTermName("and")
-//             ),
-//             List(rhs.tree)
-//           )
-//         )
-//       case _ => context.abort(context.macroApplication.pos, "This macro should be used with 'and not' syntax only.")
-//     }
+    /**
+     * Generate AST for code that call the 'or' method on the Matcher instance (reference through 'owner'):
+     *
+     * owner.or(rhs)
+     */
+    '{ (~self).owner.or(~rhs) }
+  }
 
-//   }
+  // Do checking on type parameter and generate AST that does a 'or not' logical expression matcher for 'an type' matcher.
+  def orNotAnTypeMatcher[T:Type](self: Expr[Matcher[T]#OrNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit refl: Reflection): Expr[Matcher[T]] = {
+    import refl._
+    import quoted.Toolbox.Default._
 
-//   // Do checking on type parameter and generate AST that does a 'or not' logical expression matcher for 'a type' matcher.
-//   def orNotATypeMatcher(context: Context)(aType: context.Expr[ResultOfATypeInvocation[_]]): context.Expr[Matcher[Any]] = {
+    // create a negated matcher from notAnTypeMatcher
+    val rhs = notAnTypeMatcher(anType)
 
-//     import context.universe._
+    /**
+     * Generate AST for code that call the 'or' method on the Matcher instance (reference through 'owner'):
+     *
+     * owner.or(rhs)
+     */
+    '{ (~self).owner.or(~rhs) }
+  }
 
-//     // create a negated matcher from notATypeMatcher
-//     val rhs = notATypeMatcher(context)(aType)
+  // // Do checking on type parameter and generate AST to call TypeMatcherHelper.<methodName>, used by 'shouldBe a [type]' and 'shouldBe an [type]' syntax
+  // def assertTypeImpl(context: Context)(tree: context.Tree, beMethodName: String, assertMethodName: String): context.Expr[org.scalatest.Assertion] = {
+  //   import context.universe._
 
-//     /**
-//      * Generate AST for code that call the 'or' method on the Matcher instance (reference through 'owner'):
-//      *
-//      * owner.or(rhs)
-//      */
-//     context.macroApplication match {
-//       case Apply(Select(qualifier, _), _) =>
-//         context.Expr(
-//           Apply(
-//             Select(
-//               Select(
-//                 qualifier,
-//                 "owner"
-//               ),
-//               newTermName("or")
-//             ),
-//             List(rhs.tree)
-//           )
-//         )
-//       case _ => context.abort(context.macroApplication.pos, "This macro should be used with 'or not' syntax only.")
-//     }
+  //   def valDef(name: String, rhs: Tree): ValDef =
+  //     ValDef(
+  //       Modifiers(),
+  //       newTermName(name),
+  //       TypeTree(),
+  //       rhs
+  //     )
 
-//   }
+  //   // check type parameter
+  //   checkTypeParameter(context)(tree, "a")
 
-//   // Do checking on type parameter and generate AST that does a 'or not' logical expression matcher for 'an type' matcher.
-//   def orNotAnTypeMatcher(context: Context)(anType: context.Expr[ResultOfAnTypeInvocation[_]]): context.Expr[Matcher[Any]] = {
+  //   /**
+  //    * Generate AST to call TypeMatcherHelper.checkAType:
+  //    *
+  //    * org.scalatest.matchers.TypeMatcherHelper.checkAType(lhs, aType)
+  //    */
+  //   val callHelper =
+  //     context.macroApplication match {
+  //       case Apply(Select(qualifier, _), _) =>
+  //         Block(
+  //           valDef("$org_scalatest_type_matcher_macro_left", qualifier.duplicate),
+  //           Apply(
+  //             Select(
+  //               Select(
+  //                 Select(
+  //                   Select(
+  //                     Ident(newTermName("org")),
+  //                     newTermName("scalatest")
+  //                   ),
+  //                   newTermName("matchers")
+  //                 ),
+  //                 newTermName("TypeMatcherHelper")
+  //               ),
+  //               newTermName(assertMethodName)
+  //             ),
+  //             List(Select(Ident(newTermName("$org_scalatest_type_matcher_macro_left")), newTermName("leftSideValue")), tree, Select(Ident(newTermName("$org_scalatest_type_matcher_macro_left")), newTermName("prettifier")), Select(Ident(newTermName("$org_scalatest_type_matcher_macro_left")), newTermName("pos")))
+  //           )
+  //         )
 
-//     import context.universe._
+  //       case _ => context.abort(context.macroApplication.pos, s"This macro should be used with $beMethodName [Type] syntax only.")
+  //     }
 
-//     // create a negated matcher from notAnTypeMatcher
-//     val rhs = notAnTypeMatcher(context)(anType)
-
-//     /**
-//      * Generate AST for code that call the 'or' method on the Matcher instance (reference through 'owner'):
-//      *
-//      * owner.or(rhs)
-//      */
-//     context.macroApplication match {
-//       case Apply(Select(qualifier, _), _) =>
-//         context.Expr(
-//           Apply(
-//             Select(
-//               Select(
-//                 qualifier,
-//                 "owner"
-//               ),
-//               newTermName("or")
-//             ),
-//             List(rhs.tree)
-//           )
-//         )
-//       case _ => context.abort(context.macroApplication.pos, "This macro should be used with 'or not' syntax only.")
-//     }
-
-//   }
-
-//   // Do checking on type parameter and generate AST to call TypeMatcherHelper.<methodName>, used by 'shouldBe a [type]' and 'shouldBe an [type]' syntax
-//   def assertTypeImpl(context: Context)(tree: context.Tree, beMethodName: String, assertMethodName: String): context.Expr[org.scalatest.Assertion] = {
-//     import context.universe._
-
-//     def valDef(name: String, rhs: Tree): ValDef =
-//       ValDef(
-//         Modifiers(),
-//         newTermName(name),
-//         TypeTree(),
-//         rhs
-//       )
-
-//     // check type parameter
-//     checkTypeParameter(context)(tree, "a")
-
-//     /**
-//      * Generate AST to call TypeMatcherHelper.checkAType:
-//      *
-//      * org.scalatest.matchers.TypeMatcherHelper.checkAType(lhs, aType)
-//      */
-//     val callHelper =
-//       context.macroApplication match {
-//         case Apply(Select(qualifier, _), _) =>
-//           Block(
-//             valDef("$org_scalatest_type_matcher_macro_left", qualifier.duplicate),
-//             Apply(
-//               Select(
-//                 Select(
-//                   Select(
-//                     Select(
-//                       Ident(newTermName("org")),
-//                       newTermName("scalatest")
-//                     ),
-//                     newTermName("matchers")
-//                   ),
-//                   newTermName("TypeMatcherHelper")
-//                 ),
-//                 newTermName(assertMethodName)
-//               ),
-//               List(Select(Ident(newTermName("$org_scalatest_type_matcher_macro_left")), newTermName("leftSideValue")), tree, Select(Ident(newTermName("$org_scalatest_type_matcher_macro_left")), newTermName("prettifier")), Select(Ident(newTermName("$org_scalatest_type_matcher_macro_left")), newTermName("pos")))
-//             )
-//           )
-
-//         case _ => context.abort(context.macroApplication.pos, s"This macro should be used with $beMethodName [Type] syntax only.")
-//       }
-
-//     context.Expr(callHelper)
-//   }
+  //   context.Expr(callHelper)
+  // }
 
 //   // Do checking on type parameter and generate AST to call TypeMatcherHelper.checkAType, used by 'shouldBe a [type]' syntax
 //   def shouldBeATypeImpl(context: Context)(aType: context.Expr[ResultOfATypeInvocation[_]]): context.Expr[org.scalatest.Assertion] =
