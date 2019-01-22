@@ -42,7 +42,7 @@ object AssertionsMacro {
   def assume(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(implicit refl: Reflection): Expr[Assertion] =
     transform('(Assertions.assertionsHelper.macroAssume), condition, prettifier, pos, clue)
 
-  private def transform(
+  def transform(
     helper:Expr[(Bool, Any, source.Position) => Assertion],
     condition: Expr[Boolean], prettifier: Expr[Prettifier],
     pos: Expr[source.Position], clue: Expr[Any]
