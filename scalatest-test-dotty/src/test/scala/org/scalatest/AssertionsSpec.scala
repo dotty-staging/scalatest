@@ -2147,7 +2147,7 @@ class AssertionsSpec extends FunSpec {
       assert(e.message === Some(equaled(3, 3) + "; dude"))
       assert(e.failedCodeFileName === (Some(fileName)))
       assert(e.failedCodeLineNumber === (Some(thisLineNumber - 4)))
-    }
+    }*/
 
     it("should do nothing when is used to check a == 3 && b == 5") {
       assert(a == 3 && b == 5, ", dude")
@@ -2332,7 +2332,7 @@ class AssertionsSpec extends FunSpec {
     it("should do nothing when it is used to check a == 3 && { println(\"hi\"); b == 5}") {
       assert(a == 3 && { println("hi"); b == 5}, ", dude")
     }
-
+    /*
     it("should throw TestFailedException with correct message and stack depth when is usesd to check a == 3 && { println(\"hi\"); b == 3}") {
       val e = intercept[TestFailedException] {
         assert(a == 3 && { println("hi"); b == 3}, ", dude")
@@ -2343,12 +2343,12 @@ class AssertionsSpec extends FunSpec {
         assert(e.message == Some(commaBut(equaled(3, 3), wasFalse("{" + Prettifier.lineSeparator + "  scala.this.Predef.println(\"hi\");" + Prettifier.lineSeparator + "  b.==(3)" + Prettifier.lineSeparator + "}")) + ", dude"))
       assert(e.failedCodeFileName == (Some(fileName)))
       assert(e.failedCodeLineNumber == (Some(thisLineNumber - 7)))
-    }
+    } */
 
     it("should do nothing when it is used to check { println(\"hi\"); b == 5} && a == 3 ") {
       assert({ println("hi"); b == 5} && a == 3, ", dude")
     }
-
+    /*
     it("should throw TestFailedException with correct message and stack depth when is usesd to check { println(\"hi\"); b == 5} && a == 5") {
       val e = intercept[TestFailedException] {
         assert({ println("hi"); b == 5} && a == 5, ", dude")
@@ -2359,7 +2359,7 @@ class AssertionsSpec extends FunSpec {
         assert(e.message == Some(commaBut(wasTrue("{" + Prettifier.lineSeparator + "  scala.this.Predef.println(\"hi\");" + Prettifier.lineSeparator + "  b.==(5)" + Prettifier.lineSeparator + "}"), didNotEqual(3, 5)) + ", dude"))
       assert(e.failedCodeFileName == (Some(fileName)))
       assert(e.failedCodeLineNumber == (Some(thisLineNumber - 7)))
-    }
+    } */
 
     it("should preserve side effects when Apply with single argument is passed in") {
       assert(neverRuns1(sys.error("Sad times 1")), "should not fail!")
@@ -2397,7 +2397,7 @@ class AssertionsSpec extends FunSpec {
       assert(s1 startsWith "hi", ", dude")
       assert(s1.startsWith("hi"), ", dude")
     }
-
+    /*
     it("should throw TestFailedException with correct message and stack depth when is used to check s2 startsWith \"hi\"") {
       val e1 = intercept[TestFailedException] {
         assert(s2 startsWith "hi", ", dude")
@@ -3745,26 +3745,26 @@ class AssertionsSpec extends FunSpec {
       }
       assert(s.state == false)
     }
-    /*
+
     it("should short-circuit & when first condition was false") {
       val s = new Stateful
       intercept[TestCanceledException] {
         assume(a == 5 & s.changeState)
       }
       assert(s.state == false)
-    }*/
+    }
 
     it("should short-circuit || when first condition was true") {
       val s = new Stateful
       assume(a == 3 || s.changeState)
       assert(s.state == false)
     }
-    /*
+
     it("should short-circuit | when first condition was true") {
       val s = new Stateful
       assume(a == 3 | s.changeState)
       assert(s.state == false)
-    }*/
+    }
 
     it("should do nothing when it is used to check a == 3 && { println(\"hi\"); b == 5}") {
       assume(a == 3 && { println("hi"); b == 5})
@@ -5188,26 +5188,26 @@ class AssertionsSpec extends FunSpec {
       }
       assert(s.state == false)
     }
-    /* block by https://github.com/lampepfl/dotty/issues/5491
+
     it("should short-circuit & when first condition was false") {
       val s = new Stateful
       intercept[TestCanceledException] {
         assume(a == 5 & s.changeState, ", dude")
       }
       assert(s.state == false)
-    } */
+    }
 
     it("should short-circuit || when first condition was true") {
       val s = new Stateful
       assume(a == 3 || s.changeState, ", dude")
       assert(s.state == false)
     }
-    /* block by https://github.com/lampepfl/dotty/issues/5491
+
     it("should short-circuit | when first condition was true") {
       val s = new Stateful
       assume(a == 3 | s.changeState, ", dude")
       assert(s.state == false)
-    } */
+    }
 
     it("should do nothing when it is used to check a == 3 && { println(\"hi\"); b == 5}") {
       assume(a == 3 && { println("hi"); b == 5}, ", dude")
