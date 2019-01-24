@@ -30,7 +30,7 @@ private[org] case class AnchorValue(anchor: Int, value: Any)
  * so that the generated code can be compiled.  It is expected that ScalaTest users would ever need to use <code>DiagrammedExpr</code>
  * directly.
  */
-trait DiagrammedExpr[T] {
+trait DiagrammedExpr[+T] {
   val anchor: Int
   def anchorValues: List[AnchorValue]
   def value: T
