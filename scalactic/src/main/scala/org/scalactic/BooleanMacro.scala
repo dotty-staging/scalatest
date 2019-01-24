@@ -869,6 +869,8 @@ object BooleanMacro {
 
     def exprStr: String = condition.show
     def defaultCase = '(Bool.simpleMacroBool(~condition, ~exprStr.toExpr, ~prettifier))
+    def isImplicitMethodType(tp: Type): Boolean =
+      Type.IsMethodType.unapply(tp).flatMap(tp => if tp.isImplicit then Some(true) else None).nonEmpty
 
     // AssertionsSpec.this.convertToEqualizer[scala.Int](a).===(5)(scalactic.Equality.default[scala.Int])
     object TripleEqual {
@@ -920,48 +922,20 @@ object BooleanMacro {
                 }.seal[Bool]
             }
         }
-      // case TripleEqual(fn, lhs, op, rhs, Some(eq)) =>
-      //   val fun = fn.seal[Any => TripleEqualsSupport#Equalizer[_]]
-      //   val left = lhs.seal[Any]
-      //   val right = rhs.seal[Any]
-      //   val equality = eq.seal[Equality[Any]]
-      //   op match {
-      //     case "===" =>
-      //       '{
-      //         val _left   = ~left
-      //         val _right  = ~right
-      //         val _result = (~fun)(_left).===(_right)(~equality)
-      //         Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
+      // TODO: blocked by https://github.com/lampepfl/dotty/issues/5786
+      // case Term.Apply(f @ Term.Apply(Term.IsSelect(sel @ Term.Select(Term.Apply(qual, lhs :: Nil), "===")), rhs :: Nil), implicits)
+      // if isImplicitMethodType(f.tpe) =>
+      //   let(lhs) { left =>
+      //     let(rhs) { right =>
+      //       let(Term.Apply(Term.Apply(Term.Select.copy(sel)(Term.Apply(qual, left :: Nil), "==="), right :: Nil), implicits)) { result =>
+      //         val l = left.seal[Any]
+      //         val r = right.seal[Any]
+      //         val b = result.seal[Boolean]
+      //         val code = '{ Bool.binaryMacroBool(~l, "===", ~r, ~b, ~prettifier) }
+      //         code.unseal
       //       }
-      //     case "!==" =>
-      //       '{
-      //         val _left   = ~left
-      //         val _right  = ~right
-      //         val _result = (~fun)(_left).!==(_right)(~equality)
-      //         Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-      //       }
-      //   }
-      // case TripleEqual(fn, lhs, op, rhs, None) =>
-      //   val fun = fn.seal[Any => TripleEqualsSupport#Equalizer[_]]
-      //   val left = lhs.seal[Any]
-      //   val right = rhs.seal[Any]
-
-      //   op match {
-      //     case "===" =>
-      //       '{
-      //         val _left   = ~left
-      //         val _right  = ~right
-      //         val _result = (~fun)(_left) === _right
-      //         Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-      //       }
-      //     case "!==" =>
-      //       '{
-      //         val _left   = ~left
-      //         val _right  = ~right
-      //         val _result = (~fun)(_left) !== _right
-      //         Bool.binaryMacroBool(_left, ~op.toExpr, _right, _result, ~prettifier)
-      //       }
-      //   }
+      //     }
+      //   }.seal[Bool]
       case Term.Select(left, "unary_!") =>
         val receiver = parse(left.seal[Boolean], prettifier)
         '{ !(~receiver) }
