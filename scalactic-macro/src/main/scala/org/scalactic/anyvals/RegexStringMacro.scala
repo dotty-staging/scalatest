@@ -15,13 +15,16 @@
 */
 package org.scalactic.anyvals
 
-import reflect.macros.Context
 import java.util.regex.Pattern
 // SKIP-SCALATESTJS,NATIVE-START
 import java.util.regex.PatternSyntaxException
 // SKIP-SCALATESTJS,NATIVE-END
 
+import scala.quoted._
+import scala.tasty._
+
 import CompileTimeAssertions._
+
 private[scalactic] object RegexStringMacro {
 
   def isValid(s: String): Boolean =
@@ -40,13 +43,12 @@ private[scalactic] object RegexStringMacro {
         (false, "\n" + e.getMessage)
     }
 
-  def apply(c: Context)(value: c.Expr[String]): c.Expr[RegexString] = {
+  def apply(value: Expr[String])(implicit refl: Reflection): Expr[RegexString] = {
+    import refl._
 
     val notValidExceptionMsg: String = {
-      import c.universe._
-
-      value.tree match {
-          case Literal(stringConst) =>
+      value.unseal match {
+          case Term.Literal(stringConst) =>
             checkIsValid(stringConst.value.toString)._2
           case _ =>
             ""
@@ -60,7 +62,8 @@ private[scalactic] object RegexStringMacro {
       "RegexString.apply can only be invoked on String literals that " +
       "represent valid regular expressions. Please use RegexString.from " +
       "instead."
-    ensureValidStringLiteral(c)(value, notValidMsg, notLiteralMsg)(isValid)
-    c.universe.reify { RegexString.ensuringValid(value.splice) }
-  } 
+    ensureValidStringLiteral(value, notValidMsg, notLiteralMsg)(isValid)
+
+    '{ RegexString.ensuringValid(~value) }
+  }
 }

@@ -16,7 +16,9 @@
 package org.scalactic.anyvals
 
 import org.scalactic.Resources
-import reflect.macros.Context
+
+import scala.quoted._
+import scala.tasty._
 
 /**
  * Trait providing assertion methods that can be called at compile time from macros
@@ -49,7 +51,7 @@ import reflect.macros.Context
  * you can avoid boxing the <code>Int</code>, which may be more efficient.
  * This might look like:
  * </p>
- * 
+ *
  * <pre class="stHighlight">
  * final class OddInt private (val value: Int) extends AnyVal {
  *   override def toString: String = s"OddInt($value)"
@@ -148,11 +150,11 @@ import reflect.macros.Context
  *           "OddInt(3). Please use OddInt.from instead."
  *
  *     // Validate via a compile-time assertion
- *     ensureValidIntLiteral(c)(value, notValidMsg, notLiteralMsg)(isValid) 
+ *     ensureValidIntLiteral(c)(value, notValidMsg, notLiteralMsg)(isValid)
  *
  *     // Validated, so rewrite the apply call to a from call
  *     c.universe.reify { OddInt.ensuringValid(value.splice) }
- *   } 
+ *   }
  * }
  * </pre>
  *
@@ -199,19 +201,18 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidIntLiteral(c: Context)(value: c.Expr[Int], notValidMsg: String, notLiteralMsg: String)(isValid: Int => Boolean): Unit = {
+  def ensureValidIntLiteral(value: Expr[Int], notValidMsg: String, notLiteralMsg: String)(isValid: Int => Boolean)(implicit refl: Reflection): Unit = {
+    import refl._
 
-    import c.universe._
-
-    value.tree match {
-      case Literal(intConst) =>
+    value.unseal match {
+      case Term.Literal(intConst) =>
         val literalValue = intConst.value.toString.toInt
         if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
+          throw new TastyTypecheckError(notValidMsg)
       case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+        throw new TastyTypecheckError(notLiteralMsg)
+    }
+  }
 
   /**
    * Ensures a given expression of type <code>Long</code> is a literal with a valid value according to a given validation function.
@@ -235,19 +236,18 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidLongLiteral(c: Context)(value: c.Expr[Long], notValidMsg: String, notLiteralMsg: String)(isValid: Long => Boolean): Unit = {
+  def ensureValidLongLiteral(value: Expr[Long], notValidMsg: String, notLiteralMsg: String)(isValid: Long => Boolean)(implicit refl: Reflection): Unit = {
+    import refl._
 
-    import c.universe._
-
-    value.tree match {
-      case Literal(longConst) =>
+    value.unseal match {
+      case Term.Literal(longConst) =>
         val literalValue = longConst.value.toString.toLong
         if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
+          throw new TastyTypecheckError(notValidMsg)
       case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+        throw new TastyTypecheckError(notLiteralMsg)
+    }
+  }
 
   /**
    * Ensures a given expression of type <code>Float</code> is a literal with a valid value according to a given validation function.
@@ -271,19 +271,18 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidFloatLiteral(c: Context)(value: c.Expr[Float], notValidMsg: String, notLiteralMsg: String)(isValid: Float => Boolean): Unit = {
+  def ensureValidFloatLiteral(value: Expr[Float], notValidMsg: String, notLiteralMsg: String)(isValid: Float => Boolean)(implicit refl: Reflection): Unit = {
+    import refl._
 
-    import c.universe._
-
-    value.tree match {
-      case Literal(floatConst) =>
+    value.unseal match {
+      case Term.Literal(floatConst) =>
         val literalValue = floatConst.value.toString.toFloat
         if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
+          throw new TastyTypecheckError(notValidMsg)
       case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+        throw new TastyTypecheckError(notLiteralMsg)
+    }
+  }
 
   /**
    * Ensures a given expression of type <code>Double</code> is a literal with a valid value according to a given validation function.
@@ -307,19 +306,18 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidDoubleLiteral(c: Context)(value: c.Expr[Double], notValidMsg: String, notLiteralMsg: String)(isValid: Double => Boolean): Unit = {
+  def ensureValidDoubleLiteral(value: Expr[Double], notValidMsg: String, notLiteralMsg: String)(isValid: Double => Boolean)(implicit refl: Reflection): Unit = {
+    import refl._
 
-    import c.universe._
-
-    value.tree match {
-      case Literal(doubleConst) =>
+    value.unseal match {
+      case Term.Literal(doubleConst) =>
         val literalValue = doubleConst.value.toString.toDouble
         if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
+          throw new TastyTypecheckError(notValidMsg)
       case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+        throw new TastyTypecheckError(notLiteralMsg)
+    }
+  }
 
   /**
    * Ensures a given expression of type <code>String</code> is a literal with a valid value according to a given validation function.
@@ -343,19 +341,18 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidStringLiteral(c: Context)(value: c.Expr[String], notValidMsg: String, notLiteralMsg: String)(isValid: String => Boolean): Unit = {
+  def ensureValidStringLiteral(value: Expr[String], notValidMsg: String, notLiteralMsg: String)(isValid: String => Boolean)(implicit refl: Reflection): Unit = {
+    import refl._
 
-    import c.universe._
-
-    value.tree match {
-      case Literal(stringConst) =>
+    value.unseal match {
+      case Term.Literal(stringConst) =>
         val literalValue = stringConst.value.toString
         if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
+          throw new TastyTypecheckError(notValidMsg)
       case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+        throw new TastyTypecheckError(notLiteralMsg)
+    }
+  }
 
   /**
    * Ensures a given expression of type <code>Char</code> is a literal with a valid value according to a given validation function.
@@ -379,23 +376,22 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidCharLiteral(c: Context)(value: c.Expr[Char], notValidMsg: String, notLiteralMsg: String)(isValid: Char => Boolean): Unit = {
+  def ensureValidCharLiteral(value: Expr[Char], notValidMsg: String, notLiteralMsg: String)(isValid: Char => Boolean)(implicit refl: Reflection): Unit = {
+    import refl._
 
-    import c.universe._
-
-    value.tree match {
-      case Literal(charConst) =>
+    value.unseal match {
+      case Term.Literal(charConst) =>
         val literalValue = charConst.value.toString.head
         if (!isValid(literalValue))
-          c.abort(c.enclosingPosition, notValidMsg)
+          throw new TastyTypecheckError(notValidMsg)
       case _ =>
-        c.abort(c.enclosingPosition, notLiteralMsg)
-    } 
-  } 
+        throw new TastyTypecheckError(notLiteralMsg)
+    }
+  }
 }
 
 /**
- * Companion object that facilitates the importing of <code>CompileTimeAssertions</code> members as 
+ * Companion object that facilitates the importing of <code>CompileTimeAssertions</code> members as
  * an alternative to mixing in the trait.
- */ 
+ */
 object CompileTimeAssertions extends CompileTimeAssertions

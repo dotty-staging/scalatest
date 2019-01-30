@@ -742,7 +742,7 @@ object $typeName$ {
    *     literal, the invocation of this method will not
    *     compile.)
    */
-  implicit def apply(value: Float): $typeName$ = ??? //$typeName$Macro.apply
+  inline implicit def apply(value: Float): $typeName$ = ~$typeName$Macro('(value))
 
   /**
    * Implicit widening conversion from <code>$typeName$</code> to

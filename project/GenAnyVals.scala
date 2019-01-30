@@ -44,20 +44,20 @@ object GenAnyVals {
            |package org.scalactic.anyvals
            |
            |import org.scalactic.Resources
-           |import reflect.macros.Context
+           |import scala.quoted._
+           |import scala.tasty._
            |
-           |private[anyvals] object ${typeName}Macro extends CompileTimeAssertions {
+           |object ${typeName}Macro extends CompileTimeAssertions {
            |
            |  def isValid(i: $primitiveTypeName): Boolean = $typeBooleanExpr
            |
-           |  def apply(c: Context)(value: c.Expr[$primitiveTypeName]): c.Expr[$typeName] = {
+           |  def apply(value: Expr[$primitiveTypeName])(implicit refl: Reflection): Expr[$typeName] = {
+           |    import refl._
            |    val notValidMsg = Resources.notValid$typeName
            |    val notLiteralMsg = Resources.notLiteral$typeName
            |
-           |    import c.universe._
-           |
-           |    ensureValid${primitiveTypeName}Literal(c)(value, notValidMsg, notLiteralMsg)(isValid)
-           |    reify { $typeName.ensuringValid(value.splice) }
+           |    ensureValid${primitiveTypeName}Literal(value, notValidMsg, notLiteralMsg)(isValid)
+           |    '{ $typeName.ensuringValid(~value) }
            |  }
            |}
       """.stripMargin

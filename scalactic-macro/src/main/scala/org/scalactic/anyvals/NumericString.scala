@@ -318,7 +318,7 @@ final class NumericString private (val value: String) extends AnyVal {
     value.indexOf(ch, fromIndex)
 
   /**
-   * Returns zero-based index (in Unicode code units: logical index of characters) of starting-character position 
+   * Returns zero-based index (in Unicode code units: logical index of characters) of starting-character position
    * of first-encountered match of `str` within `NumericString`;
    * returns -1 if no fully-matching substring is found.
    *
@@ -332,7 +332,7 @@ final class NumericString private (val value: String) extends AnyVal {
     value.indexOf(str)
 
   /**
-   * Returns zero-based index (in Unicode code units: logical index of characters) of starting-character position 
+   * Returns zero-based index (in Unicode code units: logical index of characters) of starting-character position
    * of first-encountered match of `str` within `NumericString`, beginning search at zero-based index `fromIndex`;
    * returns -1 if no fully-matching substring is found, or if `fromIndex` is outside the bounds of `NumericString`.
    *
@@ -340,7 +340,7 @@ final class NumericString private (val value: String) extends AnyVal {
    *
    * @param str          Unicode string to look for
    * @param fromIndex    zero-based integer index at which to begin search for match of `str` string
-   * @return             zero-based integer index in Unicode code units, of starting position of 
+   * @return             zero-based integer index in Unicode code units, of starting position of
    *                     first-encountered instance of `str` in `NumericString` at/beyond `fromIndex`
    */
   def indexOf(str: String, fromIndex: Int): Int =
@@ -395,7 +395,7 @@ final class NumericString private (val value: String) extends AnyVal {
     value.lastIndexOf(ch, fromIndex)
 
   /**
-   * Returns zero-based index from the beginning of `NumericString` of the first character position for where the string `str` 
+   * Returns zero-based index from the beginning of `NumericString` of the first character position for where the string `str`
    * fully matched rightmost within `NumericString`.
    *
    * For more detail, see the documentation for the corresponding method in the Javadoc documentation for java.lang.String.
@@ -434,7 +434,7 @@ final class NumericString private (val value: String) extends AnyVal {
     value.matches(regex)
 
   // SKIP-SCALATESTJS,NATIVE-START
-  // This method returns the index of the character that is sitting at the position 
+  // This method returns the index of the character that is sitting at the position
   // computed by starting at index, and hopping over to the right codePointOffset code points.
 
   /**
@@ -613,7 +613,7 @@ final class NumericString private (val value: String) extends AnyVal {
    * For more detail, see the documentation for the corresponding method in the Javadoc documentation for java.lang.String.
    *
    * @param beginIndex    zero-based integer offset at which substring extraction begins
-   * @param endIndex      zero-based integer offset before which substring extraction ends 
+   * @param endIndex      zero-based integer offset before which substring extraction ends
    * @return              returns string extracted from `NumericString`
    */
   def substring(beginIndex: Int, endIndex: Int): String =
@@ -780,7 +780,7 @@ final class NumericString private (val value: String) extends AnyVal {
    * Applies a binary operator to all elements of this
    * `NumericString` and a start value, going right to
    * left.
-   * 
+   *
    * Note: :\ is alternate syntax for foldRight; xs :\ z is the
    * same as xs foldRight z.
    *
@@ -1955,7 +1955,7 @@ final class NumericString private (val value: String) extends AnyVal {
    */
   def scanRight[B, That](z: B)(op: (Char, B) ⇒ B)(implicit bf: CanBuildFrom[String, B, That]): That =
     value.scanRight(z)(op)
-                    
+
 
   /** Computes length of longest segment whose elements all
    * satisfy some predicate.
@@ -2203,7 +2203,7 @@ final class NumericString private (val value: String) extends AnyVal {
   def stripMargin: String =
     value.stripMargin
 
-  /** 
+  /**
    *  Strip a leading prefix consisting of blanks or control characters
    *  followed by `marginChar` from the line.
    */
@@ -2330,7 +2330,7 @@ final class NumericString private (val value: String) extends AnyVal {
     value.toFloat
 
   /** Converts this `NumericString` to an indexed sequence.
-   * 
+   *
    *  @return an indexed sequence containing all elements of
    *    this `NumericString`.
    */
@@ -2345,7 +2345,7 @@ final class NumericString private (val value: String) extends AnyVal {
   def toInt: Int =
     value.toInt
 
-  /** Converts this `NumericString` to an iterable collection.  
+  /** Converts this `NumericString` to an iterable collection.
    *
    *  @return an `Iterable` containing all elements of this `NumericString`.
    */
@@ -2360,7 +2360,7 @@ final class NumericString private (val value: String) extends AnyVal {
     value.toIterator
 
   /** Converts this `NumericString` to a list.
-   * 
+   *
    *  @return a list containing all elements of this `NumericString`.
    */
   def toList: scala.List[Char] =
@@ -2382,7 +2382,7 @@ final class NumericString private (val value: String) extends AnyVal {
     value.toSeq
 
   /** Converts this `NumericString` to a set.
-   * 
+   *
    *  @return      a set containing all elements of this `NumericString`.
    */
   def toSet[B >: Char]: Set[B] =
@@ -2722,8 +2722,6 @@ object NumericString {
   def fromOrElse(value: String, default: => NumericString): NumericString =
     if (NumericStringMacro.isValid(value)) new NumericString(value) else default
 
-  import scala.language.experimental.macros
-
   /**
    * A factory method, implemented via a macro, that produces a
    * <code>NumericString</code> if passed a valid <code>String</code> literal,
@@ -2754,7 +2752,7 @@ object NumericString {
    *     a valid <code>String</code> literal, the invocation of this method
    *     will not compile.)
    */
-  def apply(value: String): NumericString = ???
+  inline def apply(value: => String): NumericString = ~NumericStringMacro('(value))
 
   /**
    * A factory/validation method that produces a <code>NumericString</code>,

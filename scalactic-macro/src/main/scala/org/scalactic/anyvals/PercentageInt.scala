@@ -30,7 +30,6 @@ private[scalactic] object PercentageInt {
       throw new AssertionError(s"$value was not a valid PercentageInt")
     }
 
-  import scala.language.experimental.macros
-  def apply(value: Int): PercentageInt = ???
+  inline def apply(value: => Int): PercentageInt = ~PercentageIntMacro('(value))
 }
 

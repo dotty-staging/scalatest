@@ -15,21 +15,25 @@
 */
 package org.scalactic.anyvals
 
-import reflect.macros.Context
+import scala.quoted._
+import scala.tasty._
 
 import CompileTimeAssertions._
+
 private[scalactic] object PercentageIntMacro {
 
   def isValid(i: Int): Boolean = i >= 0 && i <= 100
 
-  def apply(c: Context)(value: c.Expr[Int]): c.Expr[PercentageInt] = {
+  def apply(value: Expr[Int])(implicit refl: Reflection): Expr[PercentageInt] = {
+    import refl._
+
     val notValidMsg =
       "PercentageInt.apply can only be invoked on Int literals between 0 and 100, "+
       "inclusive, like PercentageInt(8)."
     val notLiteralMsg =
       "PercentageInt.apply can only be invoked on Int literals, like PercentageInt(8)."+
       " Please use PercentageInt.from instead."
-    ensureValidIntLiteral(c)(value, notValidMsg, notLiteralMsg)(isValid)
-    c.universe.reify { PercentageInt.ensuringValid(value.splice) }
-  } 
+    ensureValidIntLiteral(value, notValidMsg, notLiteralMsg)(isValid)
+    '{ PercentageInt.ensuringValid(~value) }
+  }
 }

@@ -15,22 +15,27 @@
 */
 package org.scalactic.anyvals
 
-import reflect.macros.Context
 import org.scalactic.Resources
+import scala.quoted._
+import scala.tasty._
 
 import CompileTimeAssertions._
+
 private[anyvals] object NumericStringMacro {
 
   def isValid(s: String): Boolean = s.forall(c => c >= '0' && c <= '9')
 
-  def apply(c: Context)(value: c.Expr[String]): c.Expr[NumericString] = {
+  def apply(value: Expr[String])(implicit refl: Reflection): Expr[NumericString] = {
+    import refl._
+
     val notValidMsg =
       "NumericString.apply can only be invoked on String literals that contain numeric characters, i.e., decimal digits '0' through '9', " +
       "like \"123\"."
     val notLiteralMsg =
       "NumericString.apply can only be invoked on String literals that contain only numeric characters, i.e., decimal digits '0' through '9', like \"123\"" +
       " Please use NumericString.from instead."
-    ensureValidStringLiteral(c)(value, notValidMsg, notLiteralMsg)(isValid)
-    c.universe.reify { NumericString.ensuringValid(value.splice) }
-  } 
+    ensureValidStringLiteral(value, notValidMsg, notLiteralMsg)(isValid)
+
+    '{ NumericString.ensuringValid(~value) }
+  }
 }
