@@ -220,7 +220,7 @@ class ScalaTestFramework extends SbtFramework {
 
               val module = runtimeMirror.staticModule("org.scalatest.tools.Runner$")
               val obj = runtimeMirror.reflectModule(module)
-              obj.instance.asInstanceOf[Runner.type]
+              obj.`instance`.asInstanceOf[Runner.type]
             }
 
           runnerInstance.spanScaleFactor = parseDoubleArgument(spanScaleFactors, "-F", 1.0)
