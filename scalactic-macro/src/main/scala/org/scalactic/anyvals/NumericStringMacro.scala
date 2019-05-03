@@ -31,6 +31,6 @@ private[anyvals] object NumericStringMacro {
       "NumericString.apply can only be invoked on String literals that contain only numeric characters, i.e., decimal digits '0' through '9', like \"123\"" +
       " Please use NumericString.from instead."
     ensureValidStringLiteral(c)(value, notValidMsg, notLiteralMsg)(isValid)
-    c.universe.reify { NumericString.ensuringValid(value.splice) }
+    ??? // c.universe.reify { NumericString.ensuringValid(value.splice) }
   } 
 }

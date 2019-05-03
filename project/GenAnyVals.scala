@@ -57,7 +57,7 @@ object GenAnyVals {
            |    import c.universe._
            |
            |    ensureValid${primitiveTypeName}Literal(c)(value, notValidMsg, notLiteralMsg)(isValid)
-           |    reify { $typeName.ensuringValid(value.splice) }
+           |    ??? // reify { $typeName.ensuringValid(value.splice) }
            |  }
            |}
       """.stripMargin

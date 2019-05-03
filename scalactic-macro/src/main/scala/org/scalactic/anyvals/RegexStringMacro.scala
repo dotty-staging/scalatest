@@ -61,6 +61,6 @@ private[scalactic] object RegexStringMacro {
       "represent valid regular expressions. Please use RegexString.from " +
       "instead."
     ensureValidStringLiteral(c)(value, notValidMsg, notLiteralMsg)(isValid)
-    c.universe.reify { RegexString.ensuringValid(value.splice) }
+    ???// c.universe.reify { RegexString.ensuringValid(value.splice) }
   } 
 }

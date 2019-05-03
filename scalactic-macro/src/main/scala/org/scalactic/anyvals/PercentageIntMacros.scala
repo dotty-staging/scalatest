@@ -30,6 +30,6 @@ private[scalactic] object PercentageIntMacro {
       "PercentageInt.apply can only be invoked on Int literals, like PercentageInt(8)."+
       " Please use PercentageInt.from instead."
     ensureValidIntLiteral(c)(value, notValidMsg, notLiteralMsg)(isValid)
-    c.universe.reify { PercentageInt.ensuringValid(value.splice) }
+    ??? // c.universe.reify { PercentageInt.ensuringValid(value.splice) }
   } 
 }
