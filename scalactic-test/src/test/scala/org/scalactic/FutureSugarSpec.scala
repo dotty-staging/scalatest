@@ -34,6 +34,9 @@ class FutureSugarSpec extends UnitSpec with Accumulation with FutureSugar with S
 
   case class SomeException(msg: String) extends Exception(msg)
 
+  // SKIP-DOTTY-START
+  // This test times out on the Dotty CI sometimes
+
   "FutureSugar" should "offer a validating method that takes a T => Validation" in {
     Future.successful(12).validating(isRound).failed.futureValue shouldBe ValidationFailedException("12 was not a round number")
     Future.successful(10).validating(isRound).futureValue shouldBe 10
@@ -49,6 +52,8 @@ class FutureSugarSpec extends UnitSpec with Accumulation with FutureSugar with S
     // Future.failed(SomeException("oops")).validating(isRound).failed.futureValue shouldBe SomeException("oops")
     Future.failed[Int](SomeException("oops")).validating(isRound).failed.futureValue shouldBe SomeException("oops")
   }
+
+  // SKIP-DOTTY-END
 
   it should "require at least one parameter to be passed to validating" in {
     "Try(30).validating()" shouldNot compile
