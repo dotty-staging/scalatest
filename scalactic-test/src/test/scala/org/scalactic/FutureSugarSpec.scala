@@ -45,8 +45,6 @@ class FutureSugarSpec extends UnitSpec with Accumulation with FutureSugar with S
     Future.failed[Int](SomeException("oops")).validating(isRound).failed.futureValue shouldBe SomeException("oops")
   }
 
-  // SKIP-DOTTY-END
-
   it should "allow multiple validation functions to be passed to validating" in {
     Future.successful(12).validating(isRound, isDivBy3).failed.futureValue shouldBe ValidationFailedException("12 was not a round number")
     Future.successful(10).validating(isRound, isDivBy3).failed.futureValue shouldBe ValidationFailedException("10 was not divisible by 3")
@@ -54,6 +52,8 @@ class FutureSugarSpec extends UnitSpec with Accumulation with FutureSugar with S
     // Future.failed(SomeException("oops")).validating(isRound).failed.futureValue shouldBe SomeException("oops")
     Future.failed[Int](SomeException("oops")).validating(isRound).failed.futureValue shouldBe SomeException("oops")
   }
+
+  // SKIP-DOTTY-END
 
   it should "require at least one parameter to be passed to validating" in {
     "Try(30).validating()" shouldNot compile
