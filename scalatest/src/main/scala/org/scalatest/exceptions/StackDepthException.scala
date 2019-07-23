@@ -154,9 +154,9 @@ abstract class StackDepthException(
    * stack depth, such as the failed file name and line number.
    * </p>
    */
-  lazy val message: Option[String] = messageFun(this)
+  /*lazy*/ val message: Option[String] = messageFun(this)
  
-  lazy val failedCodeFilePathname: Option[String] = position.map(_.filePathname)
+  /*lazy*/ val failedCodeFilePathname: Option[String] = position.map(_.filePathname)
 
   /**
    * The depth in the stack trace of this exception at which the line of test code that failed resides.
@@ -170,7 +170,7 @@ abstract class StackDepthException(
    * stack depth, such as the failed file name and line number.
    * </p>
    */
-  lazy val failedCodeStackDepth: Int = {
+  /*lazy*/ val failedCodeStackDepth: Int = {
     val stackDepthFun =
       posOrStackDepthFun match {
         case Left(pos) => getStackDepthFun(pos)

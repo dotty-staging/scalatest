@@ -391,15 +391,15 @@ private[scalatest] final case class ShellImpl(
   statsPassed: Boolean = false
 ) extends Shell {
 
-  lazy val color: Shell = copy(colorPassed = true)
-  lazy val durations: Shell = copy(durationsPassed = true)
-  lazy val shortstacks: Shell = copy(shortstacksPassed = true, fullstacksPassed = false)
-  lazy val fullstacks: Shell = copy(fullstacksPassed = true, shortstacksPassed = false)
-  lazy val stats: Shell = copy(statsPassed = true)
-  lazy val nocolor: Shell = copy(colorPassed = false)
-  lazy val nodurations: Shell = copy(durationsPassed = false)
-  lazy val nostacks: Shell = copy(shortstacksPassed = false, fullstacksPassed = false)
-  lazy val nostats: Shell = copy(statsPassed = false)
+  /*lazy*/ val color: Shell = copy(colorPassed = true)
+  /*lazy*/ val durations: Shell = copy(durationsPassed = true)
+  /*lazy*/ val shortstacks: Shell = copy(shortstacksPassed = true, fullstacksPassed = false)
+  /*lazy*/ val fullstacks: Shell = copy(fullstacksPassed = true, shortstacksPassed = false)
+  /*lazy*/ val stats: Shell = copy(statsPassed = true)
+  /*lazy*/ val nocolor: Shell = copy(colorPassed = false)
+  /*lazy*/ val nodurations: Shell = copy(durationsPassed = false)
+  /*lazy*/ val nostacks: Shell = copy(shortstacksPassed = false, fullstacksPassed = false)
+  /*lazy*/ val nostats: Shell = copy(statsPassed = false)
 
   def run(suite: Suite, testName: String = null, configMap: ConfigMap = ConfigMap.empty): Unit = {
     suite.execute(testName, configMap, colorPassed, durationsPassed, shortstacksPassed, fullstacksPassed, statsPassed)
