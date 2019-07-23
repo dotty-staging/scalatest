@@ -2225,7 +2225,7 @@ object ScalatestBuild {
     scalaVersion := dottyVersion,
     libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)),
     libraryDependencies --= scalaLibraries(scalaVersion.value),
-    scalacOptions := List("-language:Scala2,implicitConversions")
+    scalacOptions := List("-language:implicitConversions")
   )
 }
 // set scalacOptions in (Compile, console) += "-Xlog-implicits"
