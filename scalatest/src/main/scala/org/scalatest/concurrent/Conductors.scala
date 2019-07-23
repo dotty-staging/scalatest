@@ -579,7 +579,7 @@ trait Conductors extends PatienceConfiguration {
           testThreadsStartingCounter.decrement()
 
           // wait for the main thread to say its ok to go.
-          greenLightForTestThreads.await
+          greenLightForTestThreads.await()
 
           // go
           f()

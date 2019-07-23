@@ -950,7 +950,7 @@ object Runner {
         propertiesMap + (CHOSEN_STYLES -> chosenStyleSet)
 
     if (chosenStyleSet.nonEmpty)
-      println(Resources.deprecatedChosenStyleWarning())
+      println(Resources.deprecatedChosenStyleWarning)
 
     val (detectSlowpokes: Boolean, slowpokeDetectionDelay: Long, slowpokeDetectionPeriod: Long) =
       slowpokeConfig match {
@@ -1332,7 +1332,7 @@ object Runner {
                   val statuses = for (suiteConfig <- suiteInstances) yield {
                     val tagsToInclude = if (suiteConfig.requireSelectedTag) tagsToIncludeSet ++ Set(SELECTED_TAG) else tagsToIncludeSet
                     val filter = Filter(if (tagsToInclude.isEmpty) None else Some(tagsToInclude), tagsToExcludeSet, suiteConfig.excludeNestedSuites, suiteConfig.dynaTags)
-                    val runArgs = Args(concurrentDispatch, stopper, filter, configMap, Some(distributor), tracker.nextTracker, chosenStyleSet, false, None, distributedSuiteSorter)
+                    val runArgs = Args(concurrentDispatch, stopper, filter, configMap, Some(distributor), tracker.nextTracker(), chosenStyleSet, false, None, distributedSuiteSorter)
                     distributor.apply(suiteConfig.suite, runArgs)
                   }
                   distributor.waitUntilDone()
@@ -1343,7 +1343,7 @@ object Runner {
                 val statuses = for (suiteConfig <- suiteInstances) yield {
                   val tagsToInclude = if (suiteConfig.requireSelectedTag) tagsToIncludeSet ++ Set(SELECTED_TAG) else tagsToIncludeSet
                   val filter = Filter(if (tagsToInclude.isEmpty) None else Some(tagsToInclude), tagsToExcludeSet, suiteConfig.excludeNestedSuites, suiteConfig.dynaTags)
-                  val runArgs = Args(concurrentDispatch, stopper, filter, configMap, Some(distributor), tracker.nextTracker, chosenStyleSet, false, None, distributedSuiteSorter)
+                  val runArgs = Args(concurrentDispatch, stopper, filter, configMap, Some(distributor), tracker.nextTracker(), chosenStyleSet, false, None, distributedSuiteSorter)
                   distributor.apply(suiteConfig.suite, runArgs)
                 }
                 distributor.waitUntilDone()
@@ -1429,7 +1429,7 @@ object Runner {
     for (memento <- unrerunnables)
       reporter.apply(
         AlertProvided(
-          tracker.nextOrdinal,
+          tracker.nextOrdinal(),
           Resources.cannotRerun(memento.eventName, memento.suiteId,
                     memento.testName),
           None))

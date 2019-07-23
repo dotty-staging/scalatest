@@ -2216,7 +2216,7 @@ object Randomizer {
     *
     * @return A Randomizer, ready to begin producing random values.
     */
-  def default(): Randomizer =
+  def default: Randomizer =
     apply(
       defaultSeed.get() match {
         case Some(seed) => seed
