@@ -110,7 +110,12 @@ object ScalatestBuild {
     version := releaseVersion,
     scalacOptions ++= Seq("-feature"),
     resolvers += "Sonatype Public" at "https://oss.sonatype.org/content/groups/public",
-    libraryDependencies ++= scalaLibraries(scalaVersion.value),
+    libraryDependencies ++= {
+      if (isDotty.value)
+        Seq()
+      else
+        scalaLibraries(scalaVersion.value),
+    },
     /*publishTo <<= version { v: String =>
       val nexus = "https://oss.sonatype.org/"
       if (v.trim.endsWith("SNAPSHOT")) Some("publish-snapshots" at nexus + "content/repositories/snapshots")
@@ -2224,7 +2229,6 @@ object ScalatestBuild {
   lazy val dottySettings = List(
     scalaVersion := dottyVersion,
     libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)),
-    libraryDependencies --= scalaLibraries(scalaVersion.value),
     scalacOptions := List("-language:implicitConversions")
   )
 }
