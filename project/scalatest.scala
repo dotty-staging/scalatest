@@ -116,11 +116,6 @@ object ScalatestBuild {
       else
         scalaLibraries(scalaVersion.value),
     },
-    /*publishTo <<= version { v: String =>
-      val nexus = "https://oss.sonatype.org/"
-      if (v.trim.endsWith("SNAPSHOT")) Some("publish-snapshots" at nexus + "content/repositories/snapshots")
-      else                             Some("publish-releases" at nexus + "service/local/staging/deploy/maven2")
-    },*/
     publishTo := {
       val nexus = "https://oss.sonatype.org/"
       if (version.value.trim.endsWith("SNAPSHOT"))
@@ -846,7 +841,7 @@ object ScalatestBuild {
         "org.scalatest.time",
         "org.scalatest.tools",
         "org.scalatest.verb",
-        "org.scalatest.words", 
+        "org.scalatest.words",
         "org.scalatest.wordspec"
       ),
       OsgiKeys.importPackage := Seq(
@@ -960,7 +955,7 @@ object ScalatestBuild {
         "org.scalatest.time",
         "org.scalatest.tools",
         "org.scalatest.verb",
-        "org.scalatest.words", 
+        "org.scalatest.words",
         "org.scalatest.wordspec"
       ),
       OsgiKeys.importPackage := Seq(
@@ -1064,7 +1059,7 @@ object ScalatestBuild {
       "org.scalatest.time",
       "org.scalatest.tools",
       "org.scalatest.verb",
-      "org.scalatest.words", 
+      "org.scalatest.words",
       "org.scalatest.wordspec"
     ),
     OsgiKeys.importPackage := Seq(
@@ -1220,7 +1215,7 @@ object ScalatestBuild {
       "org.scalatest.time",
       "org.scalatest.tools",
       "org.scalatest.verb",
-      "org.scalatest.words", 
+      "org.scalatest.words",
       "org.scalatest.wordspec"
     ),
     OsgiKeys.importPackage := Seq(
@@ -2229,7 +2224,7 @@ object ScalatestBuild {
   lazy val dottySettings = List(
     scalaVersion := dottyVersion,
     libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)),
-    scalacOptions := List("-language:implicitConversions")
+    scalacOptions := List("-language:implicitConversions, "-noindent")
   )
 }
 // set scalacOptions in (Compile, console) += "-Xlog-implicits"
