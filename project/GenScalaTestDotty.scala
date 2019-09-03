@@ -144,9 +144,9 @@ object GenScalaTestDotty {
     ) ++
     copyDir("scalatest/src/main/scala/org/scalatest/compatible", "org/scalatest/compatible", targetDir, List.empty) ++
     copyDir("scalatest/src/main/scala/org/scalatest/concurrent", "org/scalatest/concurrent", targetDir, List.empty) ++
-    copyDir("scalatest/src/main/scala/org/scalatest/diagrams", "org/scalatest/diagrams", targetDir, 
+    copyDir("scalatest/src/main/scala/org/scalatest/diagrams", "org/scalatest/diagrams", targetDir,
       List(
-        "Diagrams.scala", 
+        "Diagrams.scala",
         "DiagramsMacro.scala"
       )
     ) ++
@@ -166,13 +166,13 @@ object GenScalaTestDotty {
         "TypeMatcherMacro.scala"   // Re-implemented with new macro
       )
     ) ++
-    copyDir("scalatest/src/main/scala/org/scalatest/matchers/dsl", "org/scalatest/matchers/dsl", targetDir, 
+    copyDir("scalatest/src/main/scala/org/scalatest/matchers/dsl", "org/scalatest/matchers/dsl", targetDir,
       List(
-        "BeWord.scala", 
+        "BeWord.scala",
         "JavaCollectionWrapper.scala",
-        "JavaMapWrapper.scala", 
+        "JavaMapWrapper.scala",
         "MatchPatternWord.scala",
-        "NotWord.scala", 
+        "NotWord.scala",
         "ResultOfNotWordForAny.scala"
       )
     ) ++
@@ -184,7 +184,7 @@ object GenScalaTestDotty {
     copyDir("scalatest/src/main/scala/org/scalatest/verbs", "org/scalatest/verbs", targetDir, List.empty) ++
     copyDir("scalatest/src/main/scala/org/scalatest/tools", "org/scalatest/tools", targetDir, List.empty) ++
     copyDir("scalatest/src/main/scala/org/scalatest/refspec", "org/scalatest/refspec", targetDir, List.empty) ++
-    copyDir("scalatest/src/main/scala/org/scalatest/words", "org/scalatest/words", targetDir, List.empty) ++ 
+    copyDir("scalatest/src/main/scala/org/scalatest/words", "org/scalatest/words", targetDir, List.empty) ++
     copyDir("scalatest/src/main/scala/org/scalatest/wordspec", "org/scalatest/wordspec", targetDir, List.empty)
   }
 
@@ -192,17 +192,17 @@ object GenScalaTestDotty {
     copyFiles("scalatest-test/src/test/scala/org/scalatest", "org/scalatest", targetDir,
       List(
         "AssertionsSpec.scala",
-        "ShouldCompileSpec.scala",
-        "ShouldNotCompileSpec.scala"/*,
-        "ShouldNotTypeCheckSpec.scala"*/
+        // "ShouldCompileSpec.scala",
+        // "ShouldNotCompileSpec.scala",
+        // "ShouldNotTypeCheckSpec.scala"
       )
-    ) ++ 
-    copyDir("scalatest-test/src/test/scala/org/scalatest/diagrams", "org/scalatest/diagrams", targetDir, List.empty) ++ 
-    copyDir("scalatest-test/src/test/scala/org/scalatest/expectations", "org/scalatest/expectations", targetDir, 
+    ) ++
+    copyDir("scalatest-test/src/test/scala/org/scalatest/diagrams", "org/scalatest/diagrams", targetDir, List.empty) ++
+    copyDir("scalatest-test/src/test/scala/org/scalatest/expectations", "org/scalatest/expectations", targetDir,
       List(
         "DirectExpectationsSpec.scala"
       )
-    ) 
+    )
     /*++
       copyDir("scalatest-test/src/test/scala/org/scalatest/concurrent", "org/scalatest/concurrent", targetDir,
         List(
