@@ -17,6 +17,7 @@ package org.scalatest.diagrams
 
 import org.scalactic._
 import scala.quoted._
+import given scala.quoted._
 import org.scalatest.{Assertions, DiagrammedExpr}
 import org.scalatest.compatible.Assertion
 

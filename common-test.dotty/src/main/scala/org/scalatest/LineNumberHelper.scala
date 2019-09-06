@@ -1,6 +1,7 @@
 package org.scalatest
 
 import scala.quoted._
+import given scala.quoted._
 import scala.tasty._
 
 private[scalatest] trait LineNumberHelper {

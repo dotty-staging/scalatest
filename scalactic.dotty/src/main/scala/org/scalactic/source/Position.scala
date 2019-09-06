@@ -16,6 +16,7 @@
 package org.scalactic.source
 
 import scala.quoted._
+import given scala.quoted._
 
 /**
  * A source file position consisting of a simple source file name, the

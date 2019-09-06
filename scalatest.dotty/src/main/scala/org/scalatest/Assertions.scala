@@ -27,6 +27,7 @@ import org.scalatest.exceptions.TestFailedException
 import org.scalatest.exceptions.TestPendingException
 import org.scalactic.anyvals.NonEmptyArray
 import scala.quoted._
+import given scala.quoted._
 import scala.compiletime.testing.typeChecks
 import org.scalatest.compatible.Assertion
 import ArrayHelper.deep

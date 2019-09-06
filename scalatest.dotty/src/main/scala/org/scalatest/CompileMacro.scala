@@ -20,6 +20,7 @@ import org.scalatest.words.{TypeCheckWord, CompileWord}
 import org.scalatest.exceptions._
 
 import scala.quoted._
+import given scala.quoted._
 
 object CompileMacro {
 

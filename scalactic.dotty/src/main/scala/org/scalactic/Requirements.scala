@@ -18,6 +18,7 @@ package org.scalactic
 import exceptions.NullArgumentException
 
 import scala.quoted._
+import given scala.quoted._
 
 /**
  * Trait that contains <code>require</code>, and <code>requireState</code>, and <code>requireNonNull</code> methods for checking pre-conditions
