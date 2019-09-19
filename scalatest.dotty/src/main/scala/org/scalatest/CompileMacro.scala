@@ -19,7 +19,7 @@ import org.scalactic._
 import org.scalatest.words.{TypeCheckWord, CompileWord}
 import org.scalatest.exceptions._
 
-import scala.quoted._
+import scala.quoted.{_, given}
 
 object CompileMacro {
 

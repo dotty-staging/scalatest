@@ -17,7 +17,7 @@ package org.scalactic.anyvals
 
 import org.scalactic.Resources
 
-import scala.quoted._
+import scala.quoted.{_, given}
 
 /**
  * Trait providing assertion methods that can be called at compile time from macros

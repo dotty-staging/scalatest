@@ -15,7 +15,7 @@
 */
 package org.scalactic.anyvals
 
-import scala.quoted._
+import scala.quoted.{_, given}
 
 import CompileTimeAssertions._
 

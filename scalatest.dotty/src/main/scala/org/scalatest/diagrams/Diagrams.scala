@@ -157,7 +157,7 @@ import org.scalatest.compatible.Assertion
 trait Diagrams extends Assertions {
 
   import scala.tasty._
-  import scala.quoted._
+  import scala.quoted.{_, given}
 
   /**
    * Assert that a boolean condition is true.

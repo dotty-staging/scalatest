@@ -15,7 +15,7 @@
  */
 package org.scalactic.source
 
-import scala.quoted._
+import scala.quoted.{_, given}
 
 /**
   * Helper class for Position macro. (Will be removed from the public API if possible in a subsequent 3.0.0-RCx release.)

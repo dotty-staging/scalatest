@@ -26,7 +26,7 @@ import org.scalatest.exceptions.StackDepthException.toExceptionFunction
 import org.scalatest.exceptions.TestFailedException
 import org.scalatest.exceptions.TestPendingException
 import org.scalactic.anyvals.NonEmptyArray
-import scala.quoted._
+import scala.quoted.{_, given}
 import scala.compiletime.testing.typeChecks
 import org.scalatest.compatible.Assertion
 import ArrayHelper.deep
@@ -1340,7 +1340,7 @@ trait Assertions extends TripleEquals  {
  * @author Bill Venners
  */
 object Assertions extends Assertions {
-  import scala.quoted._
+  import scala.quoted.{_, given}
 
   def stripMarginImpl(x: String)(implicit qctx: QuoteContext): Expr[String] =
     new scala.collection.immutable.StringOps(x).stripMargin.toExpr

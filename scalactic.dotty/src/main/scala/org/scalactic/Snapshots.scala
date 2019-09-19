@@ -15,7 +15,7 @@
  */
 package org.scalactic
 
-import scala.quoted._
+import scala.quoted.{_, given}
 
 /**
  * Case class that stores the name and value of a variable or expression.

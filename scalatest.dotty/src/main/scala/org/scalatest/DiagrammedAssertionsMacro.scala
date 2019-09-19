@@ -16,7 +16,7 @@
 package org.scalatest
 
 import org.scalactic._
-import scala.quoted._
+import scala.quoted.{_, given}
 import org.scalatest.diagrams._
 
 object DiagrammedAssertionsMacro {

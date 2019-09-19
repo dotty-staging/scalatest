@@ -15,7 +15,7 @@
  */
 package org.scalactic
 
-import scala.quoted._
+import scala.quoted.{_, given}
 
 object BooleanMacro {
   private val logicOperators = Set("&&", "||", "&", "|")
