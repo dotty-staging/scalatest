@@ -167,7 +167,7 @@ object CompileMacro {
     def checkNotCompile(code: String): Expr[Assertion] =
       if (/*!typeChecks(code)*/ true) '{ Succeeded } // FIXME
       else '{
-        val messageExpr = Resources.expectedCompileErrorButGotNone(${ code.toExpr })
+        val messageExpr = Resources.expectedCompileErrorButGotNone(${ Expr(code) })
         throw new TestFailedException((_: StackDepthException) => Some(messageExpr), None, $pos)
       }
 
@@ -218,7 +218,7 @@ object CompileMacro {
     def checkNotTypeCheck(code: String): Expr[Assertion] =
       if (/*!typeChecks(code)*/ true) '{ Succeeded } // FIXME
       else '{
-        val messageExpr = Resources.expectedTypeErrorButGotNone(${ code.toExpr })
+        val messageExpr = Resources.expectedTypeErrorButGotNone(${ Expr(code) })
         throw new TestFailedException((_: StackDepthException) => Some(messageExpr), None, $pos)
       }
 
@@ -271,7 +271,7 @@ object CompileMacro {
     def checkCompile(code: String): Expr[Assertion] =
       if (/*typeChecks(code)*/ true) '{ Succeeded } // FIXME
       else '{
-        val messageExpr = Resources.expectedNoErrorButGotTypeError("", ${ code.toExpr })
+        val messageExpr = Resources.expectedNoErrorButGotTypeError("", ${ Expr(code) })
         throw new TestFailedException((_: StackDepthException) => Some(messageExpr), None, $pos)
       }
 
