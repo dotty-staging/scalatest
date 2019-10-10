@@ -2876,13 +2876,13 @@ object MatcherFactory$arity$ {
    * @param matcherFactory a MatcherFactory$arity$ to convert
    * @return a Matcher produced by the passed MatcherFactory$arity$
    */
-  implicit def produceMatcher[SC: Type, $typeConstructors$, T <: SC : $colonSeparatedTCNs$](matcherFactory: MatcherFactory$arity$[SC, $commaSeparatedTCNs$]): Matcher[T] =
+  implicit def produceMatcher[SC: TypeTag, $typeConstructors$, T <: SC : $colonSeparatedTCNs$](matcherFactory: MatcherFactory$arity$[SC, $commaSeparatedTCNs$]): Matcher[T] =
     matcherFactory.matcher
 
   /**
    * This method is called by macro that supports 'and not a [Type]' syntax.
    */
-  def andNotATypeMatcherFactory$arity$[SC: Type, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#AndNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
+  def andNotATypeMatcherFactory$arity$[SC: TypeTag, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#AndNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
     val rhs = TypeMatcherMacro.notATypeMatcher(aType)
 
     '{ (\$self).owner.and(\$rhs) }
@@ -2891,7 +2891,7 @@ object MatcherFactory$arity$ {
   /**
    * This method is called by macro that supports 'or not a [Type]' syntax.
    */
-  def orNotATypeMatcherFactory$arity$[SC: Type, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#OrNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
+  def orNotATypeMatcherFactory$arity$[SC: TypeTag, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#OrNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
     val rhs = TypeMatcherMacro.notATypeMatcher(aType)
     '{ (\$self).owner.or(\$rhs) }
   }
@@ -2899,7 +2899,7 @@ object MatcherFactory$arity$ {
   /**
    * This method is called by macro that supports 'and not a [Type]' syntax.
    */
-  def andNotAnTypeMatcherFactory$arity$[SC: Type, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#AndNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
+  def andNotAnTypeMatcherFactory$arity$[SC: TypeTag, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#AndNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
     val rhs = TypeMatcherMacro.notAnTypeMatcher(anType)
     '{ (\$self).owner.and(\$rhs) }
   }
@@ -2907,17 +2907,17 @@ object MatcherFactory$arity$ {
   /**
    * This method is called by macro that supports 'or not a [Type]' syntax.
    */
-  def orNotAnTypeMatcherFactory$arity$[SC: Type, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#OrNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
+  def orNotAnTypeMatcherFactory$arity$[SC: TypeTag, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#OrNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
     val rhs = TypeMatcherMacro.notAnTypeMatcher(anType)
     '{ (\$self).owner.or(\$rhs) }
   }
 
-  def andNotMatchPattern[SC: Type, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#AndNotWord], right: Expr[PartialFunction[Any, _]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
+  def andNotMatchPattern[SC: TypeTag, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#AndNotWord], right: Expr[PartialFunction[Any, _]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
     val notMatcher = '{ MatchPatternHelper.notMatchPatternMatcher(\$right) }
     '{ (\$self).owner.and(\$notMatcher) }
   }
 
-  def orNotMatchPattern[SC: Type, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#OrNotWord], right: Expr[PartialFunction[Any, _]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
+  def orNotMatchPattern[SC: TypeTag, $typeConstructors$](self: Expr[MatcherFactory$arity$[SC & AnyRef, $commaSeparatedTCNs$]#OrNotWord], right: Expr[PartialFunction[Any, _]])(implicit qctx: QuoteContext, $typeConstructorsWithType$): Expr[MatcherFactory$arity$[SC with AnyRef, $commaSeparatedTCNs$]] = {
     val notMatcher = '{ MatchPatternHelper.notMatchPatternMatcher(\$right) }
     '{ (\$self).owner.or(\$notMatcher) }
   }
@@ -2987,7 +2987,7 @@ object MatcherFactory$arity$ {
       st.setAttribute("arity", arity);
       val typeConstructors = (1 to arity).map("TC" + _ + "[_]").mkString(", ")
       st.setAttribute("typeConstructors", typeConstructors);
-      val typeConstructorsWithType = (1 to arity).map(i => s"tp$i: Type[TC$i]").mkString(", ")
+      val typeConstructorsWithType = (1 to arity).map(i => s"tp$i: TypeTag[TC$i]").mkString(", ")
       st.setAttribute("typeConstructorsWithType", typeConstructorsWithType);
       val colonSeparatedTCNs = (1 to arity).map("TC" + _).mkString(" : ")
       st.setAttribute("colonSeparatedTCNs", colonSeparatedTCNs);

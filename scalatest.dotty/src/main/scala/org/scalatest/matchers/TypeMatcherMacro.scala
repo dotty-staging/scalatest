@@ -109,7 +109,7 @@ object TypeMatcherMacro {
   }
 
   // Do checking on type parameter and generate AST that does a 'and not' logical expression matcher for 'a type' matcher.
-  def andNotATypeMatcher[T:Type](self: Expr[Matcher[T]#AndNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
+  def andNotATypeMatcher[T:TypeTag](self: Expr[Matcher[T]#AndNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
     import qctx.tasty.{_, given}
 
     // create a negated matcher from notATypeMatcher
@@ -124,7 +124,7 @@ object TypeMatcherMacro {
   }
 
   // Do checking on type parameter and generate AST that does a 'and not' logical expression matcher for 'an type' matcher.
-  def andNotAnTypeMatcher[T:Type](self: Expr[Matcher[T]#AndNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
+  def andNotAnTypeMatcher[T:TypeTag](self: Expr[Matcher[T]#AndNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
     import qctx.tasty.{_, given}
 
     // create a negated matcher from notAnTypeMatcher
@@ -139,7 +139,7 @@ object TypeMatcherMacro {
   }
 
   // Do checking on type parameter and generate AST that does a 'or not' logical expression matcher for 'a type' matcher.
-  def orNotATypeMatcher[T:Type](self: Expr[Matcher[T]#OrNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
+  def orNotATypeMatcher[T:TypeTag](self: Expr[Matcher[T]#OrNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
     import qctx.tasty.{_, given}
 
     // create a negated matcher from notATypeMatcher
@@ -154,7 +154,7 @@ object TypeMatcherMacro {
   }
 
   // Do checking on type parameter and generate AST that does a 'or not' logical expression matcher for 'an type' matcher.
-  def orNotAnTypeMatcher[T:Type](self: Expr[Matcher[T]#OrNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
+  def orNotAnTypeMatcher[T:TypeTag](self: Expr[Matcher[T]#OrNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
     import qctx.tasty.{_, given}
 
     // create a negated matcher from notAnTypeMatcher

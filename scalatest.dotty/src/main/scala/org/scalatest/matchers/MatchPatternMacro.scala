@@ -70,14 +70,14 @@ private[scalatest] object MatchPatternMacro {
     '{ MatchPatternHelper.checkMatchPattern($left, $right) }
   }
 
-  def andNotMatchPatternMatcher[T:Type](self: Expr[Matcher[T]#AndNotWord], right: Expr[PartialFunction[Any, _]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
+  def andNotMatchPatternMatcher[T:TypeTag](self: Expr[Matcher[T]#AndNotWord], right: Expr[PartialFunction[Any, _]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
     import qctx.tasty.{_, given}
 
     val notMatcher = '{ MatchPatternHelper.notMatchPatternMatcher($right) }
     '{ ($self).owner.and($notMatcher) }
   }
 
-  def orNotMatchPatternMatcher[T:Type](self: Expr[Matcher[T]#OrNotWord], right: Expr[PartialFunction[Any, _]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
+  def orNotMatchPatternMatcher[T:TypeTag](self: Expr[Matcher[T]#OrNotWord], right: Expr[PartialFunction[Any, _]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
     import qctx.tasty.{_, given}
 
     val notMatcher = '{ MatchPatternHelper.notMatchPatternMatcher($right) }
