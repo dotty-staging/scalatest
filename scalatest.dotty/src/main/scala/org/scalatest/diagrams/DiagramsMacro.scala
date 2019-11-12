@@ -32,7 +32,7 @@ object DiagramsMacro {
 
     def isXmlSugar(apply: Apply): Boolean = apply.tpe <:< typeOf[scala.xml.Elem]
     def isJavaStatic(tree: Tree): Boolean = tree.symbol.flags.is(Flags.Static)
-    def isImplicitMethodType(tp: Type): Boolean =
+    def isImplicitMethodType(tp: Tpe): Boolean =
       IsMethodType.unapply(tp).flatMap(tp => if tp.isImplicit then Some(true) else None).nonEmpty
 
     def selectField(o: Term, name: String): Term = Select.unique(o, name)
@@ -58,7 +58,7 @@ object DiagramsMacro {
       Expr(expr.pos.startColumn - rootPosition.startColumn)
     }
 
-    def handleArgs(argTps: List[Type], args: List[Term]): (List[Term], List[Term]) =
+    def handleArgs(argTps: List[Tpe], args: List[Term]): (List[Term], List[Term]) =
       args.zip(argTps).foldLeft(Nil -> Nil : (List[Term], List[Term])) { case ((diagrams, others), pair) =>
         pair match {
           case (arg, ByNameType(_)) =>
