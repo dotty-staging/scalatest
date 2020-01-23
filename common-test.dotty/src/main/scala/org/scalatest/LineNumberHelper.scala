@@ -3,7 +3,7 @@ package org.scalatest
 import scala.quoted._
 import scala.tasty._
 
-private[scalatest] trait LineNumberHelper {
+trait LineNumberHelper {
   inline def thisLineNumber = ${ LineNumberMacro.thisLineNumberImpl }
 }
 
