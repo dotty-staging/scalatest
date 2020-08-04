@@ -31,6 +31,7 @@ import scala.language.higherKinds
 import scala.util.{Try, Success, Failure}
 import org.scalactic.{Validation, Pass, Fail}
 import org.scalactic.{Or, Good, Bad}
+import scala.jdk.CollectionConverters._
 
 /**
  * An <code>AnyVal</code> for numeric <code>String</code>s.
@@ -1538,7 +1539,7 @@ final class NumericString private (val value: String) extends AnyVal {
    * returns a single string for `NumericString`.
    */
   def lines: Iterator[String] =
-    value.lines
+    value.lines.iterator().asScala
 
   /** Return all lines in this `NumericString` in an iterator,
    *  including trailing line end characters.  Always returns a
