@@ -228,11 +228,11 @@ object SnapshotsMacro {
       case Nil => '{ Seq(): Seq[Snapshot] }
     }
 
-    val snapshots: List[Expr[Snapshot]] = expressions.unseal.underlyingArgument match {
+    val snapshots: List[Expr[Snapshot]] = expressions.asTerm.underlyingArgument match {
       case Typed(Repeated(args, _), _) => // only sequence literal
         args.map { arg =>
-          val str = Expr(arg.seal.cast[Any].show)
-          '{ Snapshot($str, ${ arg.seal.cast[Any] }) }
+          val str = Expr(arg.asExprOf[Any].show)
+          '{ Snapshot($str, ${ arg.asExprOf[Any] }) }
         }
       case arg =>
         report.throwError("snap can only be used with sequence literal, not `seq : _*`")

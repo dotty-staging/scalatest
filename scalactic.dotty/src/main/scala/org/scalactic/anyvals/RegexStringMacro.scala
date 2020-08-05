@@ -46,7 +46,7 @@ object RegexStringMacro {
     import qctx.tasty._
 
     val notValidExceptionMsg: String = {
-      value.unseal match {
+      value.asTerm match {
           case Literal(stringConst) =>
             checkIsValid(stringConst.value.toString)._2
           case _ =>
