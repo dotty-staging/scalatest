@@ -28,7 +28,7 @@ object DiagramsMacro {
     import util._
 
     type R
-    implicit val resTp: quoted.Type[R] = expr.tpe.seal.asInstanceOf[quoted.Type[R]]
+    implicit val resTp: quoted.Type[R] = expr.tpe.asQuotedType.asInstanceOf[quoted.Type[R]]
 
     def isXmlSugar(apply: Apply): Boolean = apply.tpe <:< typeOf[scala.xml.Elem]
     def isJavaStatic(tree: Tree): Boolean = tree.symbol.flags.is(Flags.Static)
@@ -41,7 +41,7 @@ object DiagramsMacro {
 
     def default(term: Term): Term = {
       type T
-      implicit val resTp: quoted.Type[T] = term.tpe.seal.asInstanceOf[quoted.Type[T]]
+      implicit val resTp: quoted.Type[T] = term.tpe.asQuotedType.asInstanceOf[quoted.Type[T]]
       '{ DiagrammedExpr.simpleExpr[T](${term.asExprOf[T]}, ${ getAnchor(term) } ) }.asTerm
     }
 
@@ -86,7 +86,7 @@ object DiagramsMacro {
 
       case sel @ Select(qual, name) =>
         type T
-        implicit val objTp: quoted.Type[T] = qual.tpe.seal.asInstanceOf[quoted.Type[T]]
+        implicit val objTp: quoted.Type[T] = qual.tpe.asQuotedType.asInstanceOf[quoted.Type[T]]
         val obj = parse(qctx)(qual).asExprOf[DiagrammedExpr[T]]
         val anchor = getAnchorForSelect(sel.asInstanceOf[Select])
 
@@ -126,7 +126,7 @@ object DiagramsMacro {
             }.asTerm
           case _ =>
             type T
-            implicit val tpT: quoted.Type[T] = lhs.tpe.seal.asInstanceOf[quoted.Type[T]]
+            implicit val tpT: quoted.Type[T] = lhs.tpe.asQuotedType.asInstanceOf[quoted.Type[T]]
             val left = parse(qctx)(lhs)
 
             val methTp = sel.tpe.widen.asInstanceOf[MethodType]
@@ -144,7 +144,7 @@ object DiagramsMacro {
 
       case Apply(sel @ Select(lhs, op), args) =>
         type T
-        implicit val tpT: quoted.Type[T] = lhs.tpe.seal.asInstanceOf[quoted.Type[T]]
+        implicit val tpT: quoted.Type[T] = lhs.tpe.asQuotedType.asInstanceOf[quoted.Type[T]]
 
         val left = parse(qctx)(lhs)
         val anchor = getAnchorForSelect(sel.asInstanceOf[Select])
@@ -164,7 +164,7 @@ object DiagramsMacro {
       case Apply(f @ Apply(sel @ Select(Apply(qual, lhs :: Nil), op @ ("===" | "!==")), rhs :: Nil), implicits)
       if isImplicitMethodType(f.tpe) =>
         type T
-        implicit val tpT: quoted.Type[T] = lhs.tpe.seal.asInstanceOf[quoted.Type[T]]
+        implicit val tpT: quoted.Type[T] = lhs.tpe.asQuotedType.asInstanceOf[quoted.Type[T]]
         val left = parse(qctx)(lhs)
         val right = parse(qctx)(rhs)
 
@@ -185,7 +185,7 @@ object DiagramsMacro {
 
       case Apply(fun @ TypeApply(sel @ Select(lhs, op), targs), args) =>
         type T
-        implicit val tpT: quoted.Type[T] = lhs.tpe.seal.asInstanceOf[quoted.Type[T]]
+        implicit val tpT: quoted.Type[T] = lhs.tpe.asQuotedType.asInstanceOf[quoted.Type[T]]
 
         val left = parse(qctx)(lhs)
         val anchor = getAnchorForSelect(sel.asInstanceOf[Select])
@@ -205,7 +205,7 @@ object DiagramsMacro {
 
       case TypeApply(sel @ Select(lhs, op), targs) =>
         type T
-        implicit val tpT: quoted.Type[T] = lhs.tpe.seal.asInstanceOf[quoted.Type[T]]
+        implicit val tpT: quoted.Type[T] = lhs.tpe.asQuotedType.asInstanceOf[quoted.Type[T]]
 
         val left = parse(qctx)(lhs)
         val anchor = getAnchorForSelect(sel.asInstanceOf[Select])
