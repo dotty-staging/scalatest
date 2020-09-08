@@ -30,7 +30,7 @@ object DiagramsMacro {
     type R
     implicit val resTp: quoted.Type[R] = expr.tpe.seal.asInstanceOf[quoted.Type[R]]
 
-    def isXmlSugar(apply: Apply): Boolean = apply.tpe <:< typeOf[scala.xml.Elem]
+    def isXmlSugar(apply: Apply): Boolean = apply.tpe <:< Type.of[scala.xml.Elem]
     def isJavaStatic(tree: Tree): Boolean = tree.symbol.flags.is(Flags.Static)
     def isImplicitMethodType(tp: Type): Boolean = tp match {
       case tp: MethodType => tp.isImplicit
