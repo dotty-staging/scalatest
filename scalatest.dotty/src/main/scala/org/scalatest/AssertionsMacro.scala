@@ -55,9 +55,6 @@ object AssertionsMacro {
     pos: Expr[source.Position], clue: Expr[Any]
   )
   (implicit qctx: QuoteContext): Expr[Assertion] = {
-
-    import qctx.tasty._
-
     val bool = BooleanMacro.parse(condition, prettifier)
     '{ ($helper)($bool, $clue, $pos) }
   }
