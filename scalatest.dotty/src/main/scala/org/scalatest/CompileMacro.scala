@@ -177,7 +177,7 @@ object CompileMacro {
              Apply(
                Select(_, shouldOrMustTerconvertToStringShouldOrMustWrapperTermName),
                List(
-                 Literal(Constant(code: String))
+                 Literal(Constant.String(code))
                )
              ),
              _
@@ -189,7 +189,7 @@ object CompileMacro {
              Apply(
                Ident(shouldOrMustTerconvertToStringShouldOrMustWrapperTermName),
                List(
-                 Literal(Constant(code: String))
+                 Literal(Constant.String(code))
                )
              ),
              _
@@ -240,13 +240,13 @@ object CompileMacro {
              Apply(
                Ident(shouldOrMustTerconvertToStringShouldOrMustWrapperTermName),
                List(
-                 Literal(Constant(code: String))
+                 Literal(Constant.String(code))
                )
              ),
              _
            ) if shouldOrMustTerconvertToStringShouldOrMustWrapperTermName ==  "convertToString" + shouldOrMust.capitalize + "Wrapper" =>
         // LHS is a normal string literal, call checkNotTypeCheck with the extracted code string to generate code
-        checkNotTypeCheck(code.toString)
+        checkNotTypeCheck(code)
 
       case _ =>
         report.throwError("The '" + shouldOrMust + "Not typeCheck' syntax only works with String literals.")
@@ -279,25 +279,25 @@ object CompileMacro {
              Apply(
                Select(_, shouldOrMustTerconvertToStringShouldOrMustWrapperTermName),
                List(
-                 Literal(Constant(code: String))
+                 Literal(Constant.String(code))
                )
              ),
              _
            ) if shouldOrMustTerconvertToStringShouldOrMustWrapperTermName ==  "convertToString" + shouldOrMust.capitalize + "Wrapper" =>
         // LHS is a normal string literal, call checkCompile with the extracted code string to generate code
-        checkCompile(code.toString)
+        checkCompile(code)
 
       case Apply(
              Apply(
                Ident(shouldOrMustTerconvertToStringShouldOrMustWrapperTermName),
                List(
-                 Literal(Constant(code: String))
+                 Literal(Constant.String(code))
                )
              ),
              _
            ) if shouldOrMustTerconvertToStringShouldOrMustWrapperTermName ==  "convertToString" + shouldOrMust.capitalize + "Wrapper" =>
         // LHS is a normal string literal, call checkCompile with the extracted code string to generate code
-        checkCompile(code.toString)
+        checkCompile(code)
 
       case other =>
         println("###other: " + other)
