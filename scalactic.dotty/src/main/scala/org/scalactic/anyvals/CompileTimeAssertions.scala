@@ -202,6 +202,7 @@ trait CompileTimeAssertions {
    */
   def ensureValidIntLiteral(value: Expr[Int], notValidMsg: String, notLiteralMsg: String)(isValid: Int => Boolean)(implicit qctx: QuoteContext): Unit = {
     import qctx.tasty._
+    import qctx.tasty.Reporting._
 
     value.unseal.underlyingArgument match {
       case Literal(intConst) =>
@@ -237,6 +238,7 @@ trait CompileTimeAssertions {
    */
   def ensureValidLongLiteral(value: Expr[Long], notValidMsg: String, notLiteralMsg: String)(isValid: Long => Boolean)(implicit qctx: QuoteContext): Unit = {
     import qctx.tasty._
+    import qctx.tasty.Reporting._
 
     value.unseal.underlyingArgument match {
       case Literal(longConst) =>
@@ -272,6 +274,7 @@ trait CompileTimeAssertions {
    */
   def ensureValidFloatLiteral(value: Expr[Float], notValidMsg: String, notLiteralMsg: String)(isValid: Float => Boolean)(implicit qctx: QuoteContext): Unit = {
     import qctx.tasty._
+    import qctx.tasty.Reporting._
 
     value.unseal.underlyingArgument match {
       case Literal(floatConst) =>
@@ -307,6 +310,7 @@ trait CompileTimeAssertions {
    */
   def ensureValidDoubleLiteral(value: Expr[Double], notValidMsg: String, notLiteralMsg: String)(isValid: Double => Boolean)(implicit qctx: QuoteContext): Unit = {
     import qctx.tasty._
+    import qctx.tasty.Reporting._
 
     value.unseal.underlyingArgument match {
       case Literal(doubleConst) =>
@@ -342,6 +346,7 @@ trait CompileTimeAssertions {
    */
   def ensureValidStringLiteral(value: Expr[String], notValidMsg: String, notLiteralMsg: String)(isValid: String => Boolean)(implicit qctx: QuoteContext): Unit = {
     import qctx.tasty._
+    import qctx.tasty.Reporting._
 
     value.unseal.underlyingArgument match {
       case Literal(stringConst) =>
@@ -377,6 +382,7 @@ trait CompileTimeAssertions {
    */
   def ensureValidCharLiteral(value: Expr[Char], notValidMsg: String, notLiteralMsg: String)(isValid: Char => Boolean)(implicit qctx: QuoteContext): Unit = {
     import qctx.tasty._
+    import qctx.tasty.Reporting._
 
     value.unseal.underlyingArgument match {
       case Literal(charConst) =>
