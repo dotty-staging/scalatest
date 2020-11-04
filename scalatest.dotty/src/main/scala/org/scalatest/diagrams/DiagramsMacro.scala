@@ -44,17 +44,17 @@ object DiagramsMacro {
 
     def getAnchorForSelect(sel: Select): Expr[Int] = {
       if (sel.name == "unary_!")
-        Expr(sel.pos.startColumn - rootPosition.startColumn)
+        Expr(sel.pos.startColumn - Position.ofMacroExpansion.startColumn)
       else {
         val selOffset = sel.pos.endColumn - sel.qualifier.pos.endColumn - sel.name.length
-        Expr(sel.qualifier.pos.endColumn + selOffset - rootPosition.startColumn)
+        Expr(sel.qualifier.pos.endColumn + selOffset - Position.ofMacroExpansion.startColumn)
       }
     }
 
     def getAnchor(expr: Term): Expr[Int] = {
       // -1 to match scala2 position
-      // Expr((expr.unseal.pos.endColumn + expr.unseal.pos.startColumn - 1) / 2 - rootPosition.startColumn)
-      Expr(expr.pos.startColumn - rootPosition.startColumn)
+      // Expr((expr.unseal.pos.endColumn + expr.unseal.pos.startColumn - 1) / 2 - Position.ofMacroExpansion.startColumn)
+      Expr(expr.pos.startColumn - Position.ofMacroExpansion.startColumn)
     }
 
     def handleArgs(argTps: List[TypeRepr], args: List[Term]): (List[Term], List[Term]) =

@@ -30,13 +30,13 @@ object DiagrammedAssertionsMacro {
     condition: Expr[Boolean], clue: Expr[Any],
     prettifier: Expr[Prettifier],
     pos: Expr[source.Position])(implicit qctx: QuoteContext): Expr[Assertion] = {
-    import qctx.reflect._
 
-    val startLine = rootPosition.startLine // Get the expression first line number
-    val endLine = rootPosition.endLine // Get the expression last line number
+    val macroPos = qctx.reflect.Position.ofMacroExpansion
+    val startLine = macroPos.startLine // Get the expression first line number
+    val endLine = macroPos.endLine // Get the expression last line number
 
     if (startLine == endLine) // Only use diagram macro if it is one line, where startLine will be equaled to endLine
-      DiagramsMacro.transform(helper, condition, pos, clue, rootPosition.sourceCode)
+      DiagramsMacro.transform(helper, condition, pos, clue, macroPos.sourceCode)
     else // otherwise we'll just fallback to use BooleanMacro
       AssertionsMacro.transform(fallback, condition, prettifier, pos, clue)
   }
