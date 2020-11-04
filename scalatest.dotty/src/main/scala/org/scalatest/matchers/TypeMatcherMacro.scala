@@ -26,8 +26,8 @@ import scala.quoted._
 object TypeMatcherMacro {
 
 //   // Check that no type parameter is specified, if any does, give a friendly compiler warning.
-  def checkTypeParameter(using qctx: QuoteContext)(tree: qctx.tasty.Term, methodName: String): Unit = {
-    import qctx.tasty._
+  def checkTypeParameter(using qctx: QuoteContext)(tree: qctx.reflect.Term, methodName: String): Unit = {
+    import qctx.reflect._
 
     // TODO#Macros: Select lack unapply
     /*
@@ -49,7 +49,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST that create a 'a type' matcher
   def aTypeMatcherImpl(aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[Any]] = {
-    import qctx.tasty._
+    import qctx.reflect._
 
     // check type parameter
     checkTypeParameter(aType.unseal, "a")
@@ -64,7 +64,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST that create a 'an type' matcher
   def anTypeMatcherImpl(anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[Any]] = {
-    import qctx.tasty._
+    import qctx.reflect._
 
     // check type parameter
     checkTypeParameter(anType.unseal, "an")
@@ -79,7 +79,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST that create a negated 'a type' matcher
   def notATypeMatcher(aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[Any]] = {
-    import qctx.tasty._
+    import qctx.reflect._
 
     // check type parameter
     checkTypeParameter(aType.unseal, "a")
@@ -94,7 +94,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST that create a negated 'an type' matcher
   def notAnTypeMatcher(anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[Any]] = {
-    import qctx.tasty._
+    import qctx.reflect._
 
     // check type parameter
     checkTypeParameter(anType.unseal, "an")
@@ -109,7 +109,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST that does a 'and not' logical expression matcher for 'a type' matcher.
   def andNotATypeMatcher[T:Type](self: Expr[Matcher[T]#AndNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
-    import qctx.tasty._
+    import qctx.reflect._
 
     // create a negated matcher from notATypeMatcher
     val rhs = notATypeMatcher(aType)
@@ -124,7 +124,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST that does a 'and not' logical expression matcher for 'an type' matcher.
   def andNotAnTypeMatcher[T:Type](self: Expr[Matcher[T]#AndNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
-    import qctx.tasty._
+    import qctx.reflect._
 
     // create a negated matcher from notAnTypeMatcher
     val rhs = notAnTypeMatcher(anType)
@@ -139,7 +139,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST that does a 'or not' logical expression matcher for 'a type' matcher.
   def orNotATypeMatcher[T:Type](self: Expr[Matcher[T]#OrNotWord], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
-    import qctx.tasty._
+    import qctx.reflect._
 
     // create a negated matcher from notATypeMatcher
     val rhs = notATypeMatcher(aType)
@@ -154,7 +154,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST that does a 'or not' logical expression matcher for 'an type' matcher.
   def orNotAnTypeMatcher[T:Type](self: Expr[Matcher[T]#OrNotWord], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext): Expr[Matcher[T]] = {
-    import qctx.tasty._
+    import qctx.reflect._
 
     // create a negated matcher from notAnTypeMatcher
     val rhs = notAnTypeMatcher(anType)
@@ -169,7 +169,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST to call TypeMatcherHelper.checkAType, used by 'shouldBe a [type]' syntax
   def shouldBeATypeImpl(self: Expr[org.scalatest.matchers.should.Matchers#AnyShouldWrapper[_]], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext): Expr[org.scalatest.Assertion] = {
-    import qctx.tasty._
+    import qctx.reflect._
     checkTypeParameter(aType.unseal, "a")
     '{
       TypeMatcherHelper.assertAType(($self).leftSideValue, $aType, ($self).prettifier, ($self).pos)
@@ -178,7 +178,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST to call TypeMatcherHelper.checkAType, used by 'mustBe a [type]' syntax
   def mustBeATypeImpl(self: Expr[org.scalatest.matchers.must.Matchers#AnyMustWrapper[_]], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext): Expr[org.scalatest.Assertion] = {
-    import qctx.tasty._
+    import qctx.reflect._
     checkTypeParameter(aType.unseal, "a")
     '{
       TypeMatcherHelper.assertAType(($self).leftSideValue, $aType, ($self).prettifier, ($self).pos)
@@ -187,7 +187,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST to call TypeMatcherHelper.checkAType, used by 'shouldBe an [type]' syntax
   def shouldBeAnTypeImpl(self: Expr[org.scalatest.matchers.should.Matchers#AnyShouldWrapper[_]], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext): Expr[org.scalatest.Assertion] = {
-    import qctx.tasty._
+    import qctx.reflect._
     checkTypeParameter(anType.unseal, "an")
     '{
       TypeMatcherHelper.assertAnType(($self).leftSideValue, $anType, ($self).prettifier, ($self).pos)
@@ -196,7 +196,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST to call TypeMatcherHelper.checkAnType, used by 'mustBe an [type]' syntax
   def mustBeAnTypeImpl(self: Expr[org.scalatest.matchers.must.Matchers#AnyMustWrapper[_]], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext): Expr[org.scalatest.Assertion] = {
-    import qctx.tasty._
+    import qctx.reflect._
     checkTypeParameter(anType.unseal, "an")
     '{
       TypeMatcherHelper.assertAnType(($self).leftSideValue, $anType, ($self).prettifier, ($self).pos)
@@ -248,7 +248,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST to call TypeMatcherHelper.assertATypeShouldBeTrue
   def assertATypeShouldBeTrueImpl(self: Expr[ResultOfNotWordForAny[_]], aType: Expr[ResultOfATypeInvocation[_]])(implicit qctx: QuoteContext): Expr[org.scalatest.Assertion] = {
-    import qctx.tasty._
+    import qctx.reflect._
     checkTypeParameter(aType.unseal, "a")
     '{
       TypeMatcherHelper.assertATypeShouldBeTrue(($self).left, $aType, ($self).shouldBeTrue, ($self).prettifier, ($self).pos)
@@ -257,7 +257,7 @@ object TypeMatcherMacro {
 
   // Do checking on type parameter and generate AST to call TypeMatcherHelper.assertAnTypeShouldBeTrue
   def assertAnTypeShouldBeTrueImpl(self: Expr[ResultOfNotWordForAny[_]], anType: Expr[ResultOfAnTypeInvocation[_]])(implicit qctx: QuoteContext): Expr[org.scalatest.Assertion] = {
-    import qctx.tasty._
+    import qctx.reflect._
     checkTypeParameter(anType.unseal, "an")
     '{
       TypeMatcherHelper.assertAnTypeShouldBeTrue(($self).left, $anType, ($self).shouldBeTrue, ($self).prettifier, ($self).pos)
