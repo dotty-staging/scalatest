@@ -83,9 +83,9 @@ object BooleanMacro {
 
     condition.unseal.underlyingArgument match {
       case Apply(sel @ Select(Apply(qual, lhs :: Nil), op @ ("===" | "!==")), rhs :: Nil) =>
-        let(lhs) { left =>
-          let(rhs) { right =>
-            let(qual.appliedTo(left).select(sel.symbol).appliedTo(right)) { result =>
+        Block.let(lhs) { left =>
+          Block.let(rhs) { right =>
+            Block.let(qual.appliedTo(left).select(sel.symbol).appliedTo(right)) { result =>
               val l = left.seal
               val r = right.seal
               val b = result.seal.cast[Boolean]
@@ -99,10 +99,10 @@ object BooleanMacro {
         def binaryDefault =
           if (isByNameMethodType(sel.tpe)) defaultCase
           else if (supportedBinaryOperations.contains(op))
-            let(lhs) { left =>
-              let(rhs) { right =>
+            Block.let(lhs) { left =>
+              Block.let(rhs) { right =>
                 val app = left.select(sel.symbol).appliedTo(right)
-                let(app) { result =>
+                Block.let(app) { result =>
                   val l = left.seal
                   val r = right.seal
                   val b = result.seal.cast[Boolean]
@@ -133,10 +133,10 @@ object BooleanMacro {
           case "==" =>
             lhs match {
               case Apply(sel @ Select(lhs0, op @ ("length" | "size")), Nil) =>
-                let(lhs0) { left =>
-                  let(rhs) { right =>
+                Block.let(lhs0) { left =>
+                  Block.let(rhs) { right =>
                     val actual = left.select(sel.symbol).appliedToArgs(Nil)
-                    let(actual) { result =>
+                    Block.let(actual) { result =>
                       val l = left.seal
                       val r = right.seal
                       val res = result.seal
@@ -147,10 +147,10 @@ object BooleanMacro {
                 }.seal.cast[Bool]
 
               case sel @ Select(lhs0, op @ ("length" | "size")) =>
-                let(lhs0) { left =>
-                  let(rhs) { right =>
+                Block.let(lhs0) { left =>
+                  Block.let(rhs) { right =>
                     val actual = left.select(sel.symbol)
-                    let(actual) { result =>
+                    Block.let(actual) { result =>
                       val l = left.seal
                       val r = right.seal
                       val res = result.seal
@@ -166,9 +166,9 @@ object BooleanMacro {
           case "exists" =>
             rhs match {
               case AnonFunction(rhsInner) => // see the assumption for `rhsInner` in `AnonFunction`
-                let(lhs) { left =>
+                Block.let(lhs) { left =>
                   val app = left.select(sel.symbol).appliedTo(rhs)
-                  let(app) { result =>
+                  Block.let(app) { result =>
                     val l = left.seal
                     val r = rhsInner.seal
                     val res = result.seal.cast[Boolean]
@@ -184,10 +184,10 @@ object BooleanMacro {
 
       case Apply(f @ Apply(sel @ Select(Apply(qual, lhs :: Nil), op @ ("===" | "!==")), rhs :: Nil), implicits)
       if isImplicitMethodType(f.tpe) =>
-        let(lhs) { left =>
-          let(rhs) { right =>
+        Block.let(lhs) { left =>
+          Block.let(rhs) { right =>
             val app = qual.appliedTo(left).select(sel.symbol).appliedTo(right).appliedToArgs(implicits)
-            let(app) { result =>
+            Block.let(app) { result =>
               val l = left.seal
               val r = right.seal
               val b = result.seal.cast[Boolean]
@@ -198,10 +198,10 @@ object BooleanMacro {
         }.seal.cast[Bool]
 
       case Apply(TypeApply(sel @ Select(lhs, op), targs), rhs :: Nil) =>
-        let(lhs) { left =>
-          let(rhs) { right =>
+        Block.let(lhs) { left =>
+          Block.let(rhs) { right =>
             val app = left.select(sel.symbol).appliedToTypes(targs.map(_.tpe)).appliedTo(right)
-            let(app) { result =>
+            Block.let(app) { result =>
               val l = left.seal
               val r = right.seal
               val b = result.seal.cast[Boolean]
@@ -212,7 +212,7 @@ object BooleanMacro {
         }.seal.cast[Bool]
 
       case Apply(sel @ Select(lhs, op @ ("isEmpty" | "nonEmpty")), Nil) =>
-        let(lhs) { l =>
+        Block.let(lhs) { l =>
           val res = l.select(sel.symbol).appliedToArgs(Nil).seal.cast[Boolean]
           '{ Bool.unaryMacroBool(${l.seal}, ${ Expr(op) }, $res, $prettifier) }.unseal
         }.seal.cast[Bool]
@@ -222,13 +222,13 @@ object BooleanMacro {
         '{ !($receiver) }
 
       case sel @ Select(left, op @ ("isEmpty" | "nonEmpty")) =>
-        let(left) { l =>
+        Block.let(left) { l =>
           val res = l.select(sel.symbol).seal.cast[Boolean]
           '{ Bool.unaryMacroBool(${l.seal}, ${ Expr(op) }, $res, $prettifier) }.unseal
         }.seal.cast[Bool]
 
       case TypeApply(sel @ Select(lhs, "isInstanceOf"), targs) =>
-        let(lhs) { l =>
+        Block.let(lhs) { l =>
           val res = l.select(sel.symbol).appliedToTypeTrees(targs).seal.cast[Boolean]
           val name = Expr(targs.head.tpe.show)
           '{ Bool.isInstanceOfMacroBool(${l.seal}, "isInstanceOf", $name, $res, $prettifier) }.unseal

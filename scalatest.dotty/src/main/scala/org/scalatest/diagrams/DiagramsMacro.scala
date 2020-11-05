@@ -126,8 +126,8 @@ object DiagramsMacro {
             val methTp = sel.tpe.widen.asInstanceOf[MethodType]
             val (diagrams, others) = handleArgs(methTp.paramTypes, rhs :: Nil)
 
-            let(left) { l =>
-              lets(diagrams) { rs =>
+            Block.let(left) { l =>
+              Block.let(diagrams) { rs =>
                 l.seal match {
                   case '{ $left: DiagrammedExpr[$_] } =>
                     val rights = rs.map(_.seal.cast[DiagrammedExpr[_]])
@@ -145,8 +145,8 @@ object DiagramsMacro {
         val methTp = sel.tpe.widen.asInstanceOf[MethodType]
         val (diagrams, others) = handleArgs(methTp.paramTypes, args)
 
-        let(left) { l =>
-          lets(diagrams) { rs =>
+        Block.let(left) { l =>
+          Block.let(diagrams) { rs =>
             l.seal match {
               case '{ $left: DiagrammedExpr[$_] } =>
                 val rights = rs.map(_.seal.cast[DiagrammedExpr[_]])
@@ -162,11 +162,11 @@ object DiagramsMacro {
         val right = parse(rhs)
         val anchor = getAnchorForSelect(sel)
 
-        let(left) { left =>
-          let(right) { right =>
+        Block.let(left) { left =>
+          Block.let(right) { right =>
             val app = qual.appliedTo(Select.unique(left, "value")).select(sel.symbol)
                           .appliedTo(Select.unique(right, "value")).appliedToArgs(implicits)
-            let(app) { result =>
+            Block.let(app) { result =>
               val l = left.seal.cast[DiagrammedExpr[_]]
               val r = right.seal.cast[DiagrammedExpr[_]]
               val b = result.seal.cast[Boolean]
@@ -182,8 +182,8 @@ object DiagramsMacro {
         val methTp = fun.tpe.widen.asInstanceOf[MethodType]
         val (diagrams, others) = handleArgs(methTp.paramTypes, args)
 
-        let(left) { l =>
-          lets(diagrams) { rs =>
+        Block.let(left) { l =>
+          Block.let(diagrams) { rs =>
             l.seal match {
               case '{ $left: DiagrammedExpr[$_] } =>
                 val rights = rs.map(_.seal.cast[DiagrammedExpr[_]])
@@ -198,7 +198,7 @@ object DiagramsMacro {
         val left = parse(lhs)
         val anchor = getAnchorForSelect(sel)
 
-        let(left) { l =>
+        Block.let(left) { l =>
           l.seal match {
             case '{ $left: DiagrammedExpr[$_] } =>
               val res = Select.unique(l, "value").select(sel.symbol).appliedToTypes(targs.map(_.tpe)).seal.cast[R]
