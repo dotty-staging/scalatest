@@ -25,6 +25,7 @@ object DiagramsMacro {
   def parse(using QuoteContext)(expr: qctx.reflect.Term): qctx.reflect.Term = {
     import qctx.reflect._
     import util._
+    import ValDef.let
 
     type R
     implicit val resTp: Type[R] = expr.tpe.seal.asInstanceOf[Type[R]] // TODO use expr match case '{ $e : $R } =>
@@ -127,7 +128,7 @@ object DiagramsMacro {
             val (diagrams, others) = handleArgs(methTp.paramTypes, rhs :: Nil)
 
             let(left) { l =>
-              lets(diagrams) { rs =>
+              let(diagrams) { rs =>
                 l.seal match {
                   case '{ $left: DiagrammedExpr[$_] } =>
                     val rights = rs.map(_.seal.cast[DiagrammedExpr[_]])
@@ -146,7 +147,7 @@ object DiagramsMacro {
         val (diagrams, others) = handleArgs(methTp.paramTypes, args)
 
         let(left) { l =>
-          lets(diagrams) { rs =>
+          let(diagrams) { rs =>
             l.seal match {
               case '{ $left: DiagrammedExpr[$_] } =>
                 val rights = rs.map(_.seal.cast[DiagrammedExpr[_]])
@@ -183,7 +184,7 @@ object DiagramsMacro {
         val (diagrams, others) = handleArgs(methTp.paramTypes, args)
 
         let(left) { l =>
-          lets(diagrams) { rs =>
+          let(diagrams) { rs =>
             l.seal match {
               case '{ $left: DiagrammedExpr[$_] } =>
                 val rights = rs.map(_.seal.cast[DiagrammedExpr[_]])

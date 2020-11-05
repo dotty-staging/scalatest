@@ -40,6 +40,7 @@ object BooleanMacro {
   def parse(condition: Expr[Boolean], prettifier: Expr[Prettifier])(implicit qctx: QuoteContext): Expr[Bool] = {
     import qctx.reflect._
     import util._
+    import ValDef.let
 
     def exprStr: String = condition.show
     def defaultCase = '{ Bool.simpleMacroBool($condition, ${Expr(exprStr)}, $prettifier) }
