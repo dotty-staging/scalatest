@@ -25,8 +25,8 @@ object TypeInfoMacro {
   /**
     * Helper method for TypeInfo macro.
     */
-  def genTypeInfo[T](using tp: Type[T])(implicit qctx: QuoteContext): Expr[TypeInfo[T]] = {
-    val name = Expr(tp.show)
+  def genTypeInfo[T](using Type[T])(using QuoteContext): Expr[TypeInfo[T]] = {
+    val name = Expr(Type.show[T])
     '{ TypeInfo[T]($name) }
   }
 }
