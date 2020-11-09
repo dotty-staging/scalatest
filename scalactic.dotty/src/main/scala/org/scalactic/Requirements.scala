@@ -268,7 +268,7 @@ object RequirementsMacro {
 
     val argStr: List[Expr[String]] = arguments.unseal.underlyingArgument match {
       case Typed(Repeated(args, _), _) => // only sequence literal
-        args.map(arg => Expr(arg.seal.cast[Any].show))
+        args.map(arg => Expr(arg.asExpr.show))
       case _ =>
         report.throwError("requireNonNull can only be used with sequence literal, not `seq : _*`")
     }

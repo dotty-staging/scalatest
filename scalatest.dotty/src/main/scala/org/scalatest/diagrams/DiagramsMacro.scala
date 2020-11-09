@@ -88,7 +88,7 @@ object DiagramsMacro {
             val anchor = getAnchorForSelect(sel)
             '{
               val o = $obj
-              DiagrammedExpr.selectExpr[R](o, ${ selectField('{o.value}.unseal, name).seal.cast[R] }, $anchor)
+              DiagrammedExpr.selectExpr[R](o, ${ selectField('{o.value}.unseal, name).asExprOf[R] }, $anchor)
             }.unseal
         }
 
@@ -99,8 +99,8 @@ object DiagramsMacro {
         val anchor = getAnchorForSelect(sel)
         op match {
           case "||" | "|" =>
-            val left = parse(lhs).seal.cast[DiagrammedExpr[Boolean]]
-            val right = parse(rhs).seal.cast[DiagrammedExpr[Boolean]]
+            val left = parse(lhs).asExprOf[DiagrammedExpr[Boolean]]
+            val right = parse(rhs).asExprOf[DiagrammedExpr[Boolean]]
 
             '{
               val l = $left
@@ -111,8 +111,8 @@ object DiagramsMacro {
               }
             }.unseal
           case "&&" | "&" =>
-            val left = parse(lhs).seal.cast[DiagrammedExpr[Boolean]]
-            val right = parse(rhs).seal.cast[DiagrammedExpr[Boolean]]
+            val left = parse(lhs).asExprOf[DiagrammedExpr[Boolean]]
+            val right = parse(rhs).asExprOf[DiagrammedExpr[Boolean]]
             '{
               val l = $left
               if (!l.value) l
@@ -131,8 +131,8 @@ object DiagramsMacro {
               let(diagrams) { rs =>
                 l.seal match {
                   case '{ $left: DiagrammedExpr[t] } =>
-                    val rights = rs.map(_.seal.cast[DiagrammedExpr[_]])
-                    val res = Select.unique(l, "value").select(sel.symbol).appliedToArgs(diagrams.map(r => Select.unique(r, "value")) ++ others).seal.cast[R]
+                    val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
+                    val res = Select.unique(l, "value").select(sel.symbol).appliedToArgs(diagrams.map(r => Select.unique(r, "value")) ++ others).asExprOf[R]
                     '{ DiagrammedExpr.applyExpr[R]($left, ${Expr.ofList(rights)}, $res, $anchor) }.unseal
                 }
               }
@@ -150,8 +150,8 @@ object DiagramsMacro {
           let(diagrams) { rs =>
             l.seal match {
               case '{ $left: DiagrammedExpr[t] } =>
-                val rights = rs.map(_.seal.cast[DiagrammedExpr[_]])
-                val res = Select.unique(l, "value").select(sel.symbol).appliedToArgs(diagrams.map(r => Select.unique(r, "value")) ++ others).seal.cast[R]
+                val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
+                val res = Select.unique(l, "value").select(sel.symbol).appliedToArgs(diagrams.map(r => Select.unique(r, "value")) ++ others).asExprOf[R]
                 '{ DiagrammedExpr.applyExpr[R]($left, ${Expr.ofList(rights)}, $res, $anchor) }.unseal
             }
           }
@@ -168,9 +168,9 @@ object DiagramsMacro {
             val app = qual.appliedTo(Select.unique(left, "value")).select(sel.symbol)
                           .appliedTo(Select.unique(right, "value")).appliedToArgs(implicits)
             let(app) { result =>
-              val l = left.seal.cast[DiagrammedExpr[_]]
-              val r = right.seal.cast[DiagrammedExpr[_]]
-              val b = result.seal.cast[Boolean]
+              val l = left.asExprOf[DiagrammedExpr[_]]
+              val r = right.asExprOf[DiagrammedExpr[_]]
+              val b = result.asExprOf[Boolean]
               '{ DiagrammedExpr.applyExpr[Boolean]($l, $r :: Nil, $b, $anchor) }.unseal
             }
           }
@@ -187,9 +187,9 @@ object DiagramsMacro {
           let(diagrams) { rs =>
             l.seal match {
               case '{ $left: DiagrammedExpr[t] } =>
-                val rights = rs.map(_.seal.cast[DiagrammedExpr[_]])
+                val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
                 val res = Select.unique(l, "value").select(sel.symbol).appliedToTypes(targs.map(_.tpe))
-                                .appliedToArgs(diagrams.map(r => Select.unique(r, "value")) ++ others).seal.cast[R]
+                                .appliedToArgs(diagrams.map(r => Select.unique(r, "value")) ++ others).asExprOf[R]
                 '{ DiagrammedExpr.applyExpr[R]($left, ${Expr.ofList(rights)}, $res, $anchor) }.unseal
             }
           }
@@ -202,7 +202,7 @@ object DiagramsMacro {
         let(left) { l =>
           l.seal match {
             case '{ $left: DiagrammedExpr[t] } =>
-              val res = Select.unique(l, "value").select(sel.symbol).appliedToTypes(targs.map(_.tpe)).seal.cast[R]
+              val res = Select.unique(l, "value").select(sel.symbol).appliedToTypes(targs.map(_.tpe)).asExprOf[R]
               '{ DiagrammedExpr.applyExpr[R]($left, Nil, $res, $anchor) }.unseal
           }
         }
@@ -217,7 +217,7 @@ object DiagramsMacro {
     condition: Expr[Boolean], pos: Expr[source.Position], clue: Expr[Any], sourceText: String
   )(using QuoteContext): Expr[Assertion] = {
     import qctx.reflect._
-    val diagExpr = parse(condition.unseal.underlyingArgument).seal.cast[DiagrammedExpr[Boolean]]
+    val diagExpr = parse(condition.unseal.underlyingArgument).asExprOf[DiagrammedExpr[Boolean]]
     '{ $helper($diagExpr, $clue, ${Expr(sourceText)}, $pos) }
   }
 }

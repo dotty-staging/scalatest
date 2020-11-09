@@ -89,12 +89,12 @@ object BooleanMacro {
             let(qual.appliedTo(left).select(sel.symbol).appliedTo(right)) { result =>
               val l = left.seal
               val r = right.seal
-              val b = result.seal.cast[Boolean]
+              val b = result.asExprOf[Boolean]
               val code = '{ Bool.binaryMacroBool($l, ${ Expr(op) }, $r, $b, $prettifier) }
               code.unseal
             }
           }
-        }.seal.cast[Bool]
+        }.asExprOf[Bool]
 
       case Apply(sel @ Select(lhs, op), rhs :: Nil) =>
         def binaryDefault =
@@ -106,30 +106,30 @@ object BooleanMacro {
                 let(app) { result =>
                   val l = left.seal
                   val r = right.seal
-                  val b = result.seal.cast[Boolean]
+                  val b = result.asExprOf[Boolean]
                   val code = '{ Bool.binaryMacroBool($l, ${Expr(op)}, $r, $b, $prettifier) }
                   code.unseal
                 }
               }
-            }.seal.cast[Bool]
+            }.asExprOf[Bool]
           else defaultCase
 
         op match {
           case "||" =>
-            val left = parse(lhs.seal.cast[Boolean], prettifier)
-            val right = parse(rhs.seal.cast[Boolean], prettifier)
+            val left = parse(lhs.asExprOf[Boolean], prettifier)
+            val right = parse(rhs.asExprOf[Boolean], prettifier)
             '{ $left || $right }
           case "|" =>
-            val left = parse(lhs.seal.cast[Boolean], prettifier)
-            val right = parse(rhs.seal.cast[Boolean], prettifier)
+            val left = parse(lhs.asExprOf[Boolean], prettifier)
+            val right = parse(rhs.asExprOf[Boolean], prettifier)
             '{ $left | $right }
           case "&&" =>
-            val left = parse(lhs.seal.cast[Boolean], prettifier)
-            val right = parse(rhs.seal.cast[Boolean], prettifier)
+            val left = parse(lhs.asExprOf[Boolean], prettifier)
+            val right = parse(rhs.asExprOf[Boolean], prettifier)
             '{ $left && $right }
           case "&" =>
-            val left = parse(lhs.seal.cast[Boolean], prettifier)
-            val right = parse(rhs.seal.cast[Boolean], prettifier)
+            val left = parse(lhs.asExprOf[Boolean], prettifier)
+            val right = parse(rhs.asExprOf[Boolean], prettifier)
             '{ $left & $right }
           case "==" =>
             lhs match {
@@ -145,7 +145,7 @@ object BooleanMacro {
                       code.unseal
                     }
                   }
-                }.seal.cast[Bool]
+                }.asExprOf[Bool]
 
               case sel @ Select(lhs0, op @ ("length" | "size")) =>
                 let(lhs0) { left =>
@@ -159,7 +159,7 @@ object BooleanMacro {
                       code.unseal
                     }
                   }
-                }.seal.cast[Bool]
+                }.asExprOf[Bool]
 
               case _ =>
                 binaryDefault
@@ -172,11 +172,11 @@ object BooleanMacro {
                   let(app) { result =>
                     val l = left.seal
                     val r = rhsInner.seal
-                    val res = result.seal.cast[Boolean]
+                    val res = result.asExprOf[Boolean]
                     val code = '{ Bool.existsMacroBool($l, $r, $res, $prettifier) }
                     code.unseal
                   }
-                }.seal.cast[Bool]
+                }.asExprOf[Bool]
               case _ => defaultCase
             }
           case _ =>
@@ -191,12 +191,12 @@ object BooleanMacro {
             let(app) { result =>
               val l = left.seal
               val r = right.seal
-              val b = result.seal.cast[Boolean]
+              val b = result.asExprOf[Boolean]
               val code = '{ Bool.binaryMacroBool($l, ${ Expr(op) }, $r, $b, $prettifier) }
               code.unseal
             }
           }
-        }.seal.cast[Bool]
+        }.asExprOf[Bool]
 
       case Apply(TypeApply(sel @ Select(lhs, op), targs), rhs :: Nil) =>
         let(lhs) { left =>
@@ -205,35 +205,35 @@ object BooleanMacro {
             let(app) { result =>
               val l = left.seal
               val r = right.seal
-              val b = result.seal.cast[Boolean]
+              val b = result.asExprOf[Boolean]
               val code = '{ Bool.binaryMacroBool($l, ${Expr(op)}, $r, $b, $prettifier) }
               code.unseal
             }
           }
-        }.seal.cast[Bool]
+        }.asExprOf[Bool]
 
       case Apply(sel @ Select(lhs, op @ ("isEmpty" | "nonEmpty")), Nil) =>
         let(lhs) { l =>
-          val res = l.select(sel.symbol).appliedToArgs(Nil).seal.cast[Boolean]
+          val res = l.select(sel.symbol).appliedToArgs(Nil).asExprOf[Boolean]
           '{ Bool.unaryMacroBool(${l.seal}, ${ Expr(op) }, $res, $prettifier) }.unseal
-        }.seal.cast[Bool]
+        }.asExprOf[Bool]
 
       case Select(left, "unary_!") =>
-        val receiver = parse(left.seal.cast[Boolean], prettifier)
+        val receiver = parse(left.asExprOf[Boolean], prettifier)
         '{ !($receiver) }
 
       case sel @ Select(left, op @ ("isEmpty" | "nonEmpty")) =>
         let(left) { l =>
-          val res = l.select(sel.symbol).seal.cast[Boolean]
+          val res = l.select(sel.symbol).asExprOf[Boolean]
           '{ Bool.unaryMacroBool(${l.seal}, ${ Expr(op) }, $res, $prettifier) }.unseal
-        }.seal.cast[Bool]
+        }.asExprOf[Bool]
 
       case TypeApply(sel @ Select(lhs, "isInstanceOf"), targs) =>
         let(lhs) { l =>
-          val res = l.select(sel.symbol).appliedToTypeTrees(targs).seal.cast[Boolean]
+          val res = l.select(sel.symbol).appliedToTypeTrees(targs).asExprOf[Boolean]
           val name = Expr(targs.head.tpe.show)
           '{ Bool.isInstanceOfMacroBool(${l.seal}, "isInstanceOf", $name, $res, $prettifier) }.unseal
-        }.seal.cast[Bool]
+        }.asExprOf[Bool]
 
       case Literal(_) =>
         '{ Bool.simpleMacroBool($condition, "", $prettifier) }
