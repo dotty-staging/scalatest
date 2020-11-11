@@ -38,7 +38,7 @@ object DiagramsMacro {
 
         def selectField(o: Term, name: String): Term = Select.unique(o, name)
 
-        def default(term: Term): Term = term.seal match {
+        def default(term: Term): Term = term.asExpr match {
           case '{ $x: t } => '{ DiagrammedExpr.simpleExpr[t]($x, ${ getAnchor(term) } ) }.unseal
         }
 
@@ -82,7 +82,7 @@ object DiagramsMacro {
           case x: Select if isJavaStatic(x) => default(expr)
 
           case sel @ Select(qual, name) =>
-            parse(qual).seal match {
+            parse(qual).asExpr match {
               case '{ $obj: DiagrammedExpr[t] } =>
                 val anchor = getAnchorForSelect(sel)
                 '{
@@ -128,7 +128,7 @@ object DiagramsMacro {
 
                 let(left) { l =>
                   let(diagrams) { rs =>
-                    l.seal match {
+                    l.asExpr match {
                       case '{ $left: DiagrammedExpr[t] } =>
                         val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
                         val res = Select.unique(l, "value").select(sel.symbol).appliedToArgs(diagrams.map(r => Select.unique(r, "value")) ++ others).asExprOf[r]
@@ -147,7 +147,7 @@ object DiagramsMacro {
 
             let(left) { l =>
               let(diagrams) { rs =>
-                l.seal match {
+                l.asExpr match {
                   case '{ $left: DiagrammedExpr[t] } =>
                     val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
                     val res = Select.unique(l, "value").select(sel.symbol).appliedToArgs(diagrams.map(r => Select.unique(r, "value")) ++ others).asExprOf[r]
@@ -184,7 +184,7 @@ object DiagramsMacro {
 
             let(left) { l =>
               let(diagrams) { rs =>
-                l.seal match {
+                l.asExpr match {
                   case '{ $left: DiagrammedExpr[t] } =>
                     val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
                     val res = Select.unique(l, "value").select(sel.symbol).appliedToTypes(targs.map(_.tpe))
@@ -199,7 +199,7 @@ object DiagramsMacro {
             val anchor = getAnchorForSelect(sel)
 
             let(left) { l =>
-              l.seal match {
+              l.asExpr match {
                 case '{ $left: DiagrammedExpr[t] } =>
                   val res = Select.unique(l, "value").select(sel.symbol).appliedToTypes(targs.map(_.tpe)).asExprOf[r]
                   '{ DiagrammedExpr.applyExpr[r]($left, Nil, $res, $anchor) }.unseal
