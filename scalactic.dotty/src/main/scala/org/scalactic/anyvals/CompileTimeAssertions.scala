@@ -204,13 +204,13 @@ trait CompileTimeAssertions {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 
-    value.unseal.underlyingArgument match {
+    value.asReflectTree.underlyingArgument match {
       case Literal(intConst) =>
         val literalValue = intConst.value.toString.toInt
         if (!isValid(literalValue))
-          error(notValidMsg, value.unseal.pos)
+          error(notValidMsg, value.asReflectTree.pos)
       case _ =>
-        error(notLiteralMsg, value.unseal.pos)
+        error(notLiteralMsg, value.asReflectTree.pos)
     }
   }
 
@@ -240,13 +240,13 @@ trait CompileTimeAssertions {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 
-    value.unseal.underlyingArgument match {
+    value.asReflectTree.underlyingArgument match {
       case Literal(longConst) =>
         val literalValue = longConst.value.toString.toLong
         if (!isValid(literalValue))
-          error(notValidMsg, value.unseal.pos)
+          error(notValidMsg, value.asReflectTree.pos)
       case _ =>
-        error(notLiteralMsg, value.unseal.pos)
+        error(notLiteralMsg, value.asReflectTree.pos)
     }
   }
 
@@ -276,13 +276,13 @@ trait CompileTimeAssertions {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 
-    value.unseal.underlyingArgument match {
+    value.asReflectTree.underlyingArgument match {
       case Literal(floatConst) =>
         val literalValue = floatConst.value.toString.toFloat
         if (!isValid(literalValue))
-          error(notValidMsg, value.unseal.pos)
+          error(notValidMsg, value.asReflectTree.pos)
       case _ =>
-        error(notLiteralMsg, value.unseal.pos)
+        error(notLiteralMsg, value.asReflectTree.pos)
     }
   }
 
@@ -312,13 +312,13 @@ trait CompileTimeAssertions {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 
-    value.unseal.underlyingArgument match {
+    value.asReflectTree.underlyingArgument match {
       case Literal(doubleConst) =>
         val literalValue = doubleConst.value.toString.toDouble
         if (!isValid(literalValue))
-          error(notValidMsg, value.unseal.pos)
+          error(notValidMsg, value.asReflectTree.pos)
       case _ =>
-        error(notLiteralMsg, value.unseal.pos)
+        error(notLiteralMsg, value.asReflectTree.pos)
     }
   }
 
@@ -348,13 +348,13 @@ trait CompileTimeAssertions {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 
-    value.unseal.underlyingArgument match {
+    value.asReflectTree.underlyingArgument match {
       case Literal(stringConst) =>
         val literalValue = stringConst.value.toString
         if (!isValid(literalValue))
-          error(notValidMsg, value.unseal.pos)
+          error(notValidMsg, value.asReflectTree.pos)
       case _ =>
-        error(notLiteralMsg, value.unseal.pos)
+        error(notLiteralMsg, value.asReflectTree.pos)
     }
   }
 
@@ -384,13 +384,13 @@ trait CompileTimeAssertions {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 
-    value.unseal.underlyingArgument match {
+    value.asReflectTree.underlyingArgument match {
       case Literal(charConst) =>
         val literalValue = charConst.value.toString.head
         if (!isValid(literalValue))
-          error(notValidMsg, value.unseal.pos)
+          error(notValidMsg, value.asReflectTree.pos)
       case _ =>
-        error(notLiteralMsg, value.unseal.pos)
+        error(notLiteralMsg, value.asReflectTree.pos)
     }
   }
 }

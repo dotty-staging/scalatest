@@ -228,7 +228,7 @@ object SnapshotsMacro {
       case Nil => '{ Seq(): Seq[Snapshot] }
     }
 
-    val snapshots: List[Expr[Snapshot]] = expressions.unseal.underlyingArgument match {
+    val snapshots: List[Expr[Snapshot]] = expressions.asReflectTree.underlyingArgument match {
       case Typed(Repeated(args, _), _) => // only sequence literal
         args.map { arg =>
           val str = Expr(arg.asExpr.show)

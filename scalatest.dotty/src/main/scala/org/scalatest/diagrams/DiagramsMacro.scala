@@ -39,7 +39,7 @@ object DiagramsMacro {
         def selectField(o: Term, name: String): Term = Select.unique(o, name)
 
         def default(term: Term): Term = term.asExpr match {
-          case '{ $x: t } => '{ DiagrammedExpr.simpleExpr[t]($x, ${ getAnchor(term) } ) }.unseal
+          case '{ $x: t } => '{ DiagrammedExpr.simpleExpr[t]($x, ${ getAnchor(term) } ) }.asReflectTree
         }
 
         def getAnchorForSelect(sel: Select): Expr[Int] = {
@@ -53,7 +53,7 @@ object DiagramsMacro {
 
         def getAnchor(expr: Term): Expr[Int] = {
           // -1 to match scala2 position
-          // Expr((expr.unseal.pos.endColumn + expr.unseal.pos.startColumn - 1) / 2 - Position.ofMacroExpansion.startColumn)
+          // Expr((expr.asReflectTree.pos.endColumn + expr.asReflectTree.pos.startColumn - 1) / 2 - Position.ofMacroExpansion.startColumn)
           Expr(expr.pos.startColumn - Position.ofMacroExpansion.startColumn)
         }
 
@@ -87,8 +87,8 @@ object DiagramsMacro {
                 val anchor = getAnchorForSelect(sel)
                 '{
                   val o = $obj
-                  DiagrammedExpr.selectExpr[r](o, ${ selectField('{o.value}.unseal, name).asExprOf[r] }, $anchor)
-                }.unseal
+                  DiagrammedExpr.selectExpr[r](o, ${ selectField('{o.value}.asReflectTree, name).asExprOf[r] }, $anchor)
+                }.asReflectTree
             }
 
           case Block(stats, expr) =>
@@ -108,7 +108,7 @@ object DiagramsMacro {
                     val r = $right
                     DiagrammedExpr.applyExpr[Boolean](l, r :: Nil, r.value, $anchor)
                   }
-                }.unseal
+                }.asReflectTree
               case "&&" | "&" =>
                 val left = parse(lhs).asExprOf[DiagrammedExpr[Boolean]]
                 val right = parse(rhs).asExprOf[DiagrammedExpr[Boolean]]
@@ -119,7 +119,7 @@ object DiagramsMacro {
                     val r = $right
                     DiagrammedExpr.applyExpr[Boolean](l, r :: Nil, r.value, $anchor)
                   }
-                }.unseal
+                }.asReflectTree
               case _ =>
                 val left = parse(lhs)
 
@@ -132,7 +132,7 @@ object DiagramsMacro {
                       case '{ $left: DiagrammedExpr[t] } =>
                         val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
                         val res = Select.unique(l, "value").select(sel.symbol).appliedToArgs(diagrams.map(r => Select.unique(r, "value")) ++ others).asExprOf[r]
-                        '{ DiagrammedExpr.applyExpr[r]($left, ${Expr.ofList(rights)}, $res, $anchor) }.unseal
+                        '{ DiagrammedExpr.applyExpr[r]($left, ${Expr.ofList(rights)}, $res, $anchor) }.asReflectTree
                     }
                   }
                 }
@@ -151,7 +151,7 @@ object DiagramsMacro {
                   case '{ $left: DiagrammedExpr[t] } =>
                     val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
                     val res = Select.unique(l, "value").select(sel.symbol).appliedToArgs(diagrams.map(r => Select.unique(r, "value")) ++ others).asExprOf[r]
-                    '{ DiagrammedExpr.applyExpr[r]($left, ${Expr.ofList(rights)}, $res, $anchor) }.unseal
+                    '{ DiagrammedExpr.applyExpr[r]($left, ${Expr.ofList(rights)}, $res, $anchor) }.asReflectTree
                 }
               }
             }
@@ -170,7 +170,7 @@ object DiagramsMacro {
                   val l = left.asExprOf[DiagrammedExpr[_]]
                   val r = right.asExprOf[DiagrammedExpr[_]]
                   val b = result.asExprOf[Boolean]
-                  '{ DiagrammedExpr.applyExpr[Boolean]($l, $r :: Nil, $b, $anchor) }.unseal
+                  '{ DiagrammedExpr.applyExpr[Boolean]($l, $r :: Nil, $b, $anchor) }.asReflectTree
                 }
               }
             }
@@ -189,7 +189,7 @@ object DiagramsMacro {
                     val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
                     val res = Select.unique(l, "value").select(sel.symbol).appliedToTypes(targs.map(_.tpe))
                                     .appliedToArgs(diagrams.map(r => Select.unique(r, "value")) ++ others).asExprOf[r]
-                    '{ DiagrammedExpr.applyExpr[r]($left, ${Expr.ofList(rights)}, $res, $anchor) }.unseal
+                    '{ DiagrammedExpr.applyExpr[r]($left, ${Expr.ofList(rights)}, $res, $anchor) }.asReflectTree
                 }
               }
             }
@@ -202,7 +202,7 @@ object DiagramsMacro {
               l.asExpr match {
                 case '{ $left: DiagrammedExpr[t] } =>
                   val res = Select.unique(l, "value").select(sel.symbol).appliedToTypes(targs.map(_.tpe)).asExprOf[r]
-                  '{ DiagrammedExpr.applyExpr[r]($left, Nil, $res, $anchor) }.unseal
+                  '{ DiagrammedExpr.applyExpr[r]($left, Nil, $res, $anchor) }.asReflectTree
               }
             }
 
@@ -217,7 +217,7 @@ object DiagramsMacro {
     condition: Expr[Boolean], pos: Expr[source.Position], clue: Expr[Any], sourceText: String
   )(using QuoteContext): Expr[Assertion] = {
     import qctx.reflect._
-    val diagExpr = parse(condition.unseal.underlyingArgument).asExprOf[DiagrammedExpr[Boolean]]
+    val diagExpr = parse(condition.asReflectTree.underlyingArgument).asExprOf[DiagrammedExpr[Boolean]]
     '{ $helper($diagExpr, $clue, ${Expr(sourceText)}, $pos) }
   }
 }

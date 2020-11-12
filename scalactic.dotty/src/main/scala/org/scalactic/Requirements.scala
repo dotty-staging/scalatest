@@ -266,7 +266,7 @@ object RequirementsMacro {
       case Nil => '{ Seq(): Seq[String] }
     }
 
-    val argStr: List[Expr[String]] = arguments.unseal.underlyingArgument match {
+    val argStr: List[Expr[String]] = arguments.asReflectTree.underlyingArgument match {
       case Typed(Repeated(args, _), _) => // only sequence literal
         args.map(arg => Expr(arg.asExpr.show))
       case _ =>

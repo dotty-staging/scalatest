@@ -46,7 +46,7 @@ object RegexStringMacro {
     import qctx.reflect._
 
     val notValidExceptionMsg: String = {
-      value.unseal match {
+      value.asReflectTree match {
           case Literal(stringConst) =>
             checkIsValid(stringConst.value.toString)._2
           case _ =>

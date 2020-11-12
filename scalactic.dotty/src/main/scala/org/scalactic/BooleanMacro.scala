@@ -82,7 +82,7 @@ object BooleanMacro {
       }
     }
 
-    condition.unseal.underlyingArgument match {
+    condition.asReflectTree.underlyingArgument match {
       case Apply(sel @ Select(Apply(qual, lhs :: Nil), op @ ("===" | "!==")), rhs :: Nil) =>
         let(lhs) { left =>
           let(rhs) { right =>
@@ -91,7 +91,7 @@ object BooleanMacro {
               val r = right.asExpr
               val b = result.asExprOf[Boolean]
               val code = '{ Bool.binaryMacroBool($l, ${ Expr(op) }, $r, $b, $prettifier) }
-              code.unseal
+              code.asReflectTree
             }
           }
         }.asExprOf[Bool]
@@ -108,7 +108,7 @@ object BooleanMacro {
                   val r = right.asExpr
                   val b = result.asExprOf[Boolean]
                   val code = '{ Bool.binaryMacroBool($l, ${Expr(op)}, $r, $b, $prettifier) }
-                  code.unseal
+                  code.asReflectTree
                 }
               }
             }.asExprOf[Bool]
@@ -142,7 +142,7 @@ object BooleanMacro {
                       val r = right.asExpr
                       val res = result.asExpr
                       val code = '{ Bool.lengthSizeMacroBool($l, ${Expr(op)}, $res, $r, $prettifier) }
-                      code.unseal
+                      code.asReflectTree
                     }
                   }
                 }.asExprOf[Bool]
@@ -156,7 +156,7 @@ object BooleanMacro {
                       val r = right.asExpr
                       val res = result.asExpr
                       val code = '{ Bool.lengthSizeMacroBool($l, ${Expr(op)}, $res, $r, $prettifier) }
-                      code.unseal
+                      code.asReflectTree
                     }
                   }
                 }.asExprOf[Bool]
@@ -174,7 +174,7 @@ object BooleanMacro {
                     val r = rhsInner.asExpr
                     val res = result.asExprOf[Boolean]
                     val code = '{ Bool.existsMacroBool($l, $r, $res, $prettifier) }
-                    code.unseal
+                    code.asReflectTree
                   }
                 }.asExprOf[Bool]
               case _ => defaultCase
@@ -193,7 +193,7 @@ object BooleanMacro {
               val r = right.asExpr
               val b = result.asExprOf[Boolean]
               val code = '{ Bool.binaryMacroBool($l, ${ Expr(op) }, $r, $b, $prettifier) }
-              code.unseal
+              code.asReflectTree
             }
           }
         }.asExprOf[Bool]
@@ -207,7 +207,7 @@ object BooleanMacro {
               val r = right.asExpr
               val b = result.asExprOf[Boolean]
               val code = '{ Bool.binaryMacroBool($l, ${Expr(op)}, $r, $b, $prettifier) }
-              code.unseal
+              code.asReflectTree
             }
           }
         }.asExprOf[Bool]
@@ -215,7 +215,7 @@ object BooleanMacro {
       case Apply(sel @ Select(lhs, op @ ("isEmpty" | "nonEmpty")), Nil) =>
         let(lhs) { l =>
           val res = l.select(sel.symbol).appliedToArgs(Nil).asExprOf[Boolean]
-          '{ Bool.unaryMacroBool(${l.asExpr}, ${ Expr(op) }, $res, $prettifier) }.unseal
+          '{ Bool.unaryMacroBool(${l.asExpr}, ${ Expr(op) }, $res, $prettifier) }.asReflectTree
         }.asExprOf[Bool]
 
       case Select(left, "unary_!") =>
@@ -225,14 +225,14 @@ object BooleanMacro {
       case sel @ Select(left, op @ ("isEmpty" | "nonEmpty")) =>
         let(left) { l =>
           val res = l.select(sel.symbol).asExprOf[Boolean]
-          '{ Bool.unaryMacroBool(${l.asExpr}, ${ Expr(op) }, $res, $prettifier) }.unseal
+          '{ Bool.unaryMacroBool(${l.asExpr}, ${ Expr(op) }, $res, $prettifier) }.asReflectTree
         }.asExprOf[Bool]
 
       case TypeApply(sel @ Select(lhs, "isInstanceOf"), targs) =>
         let(lhs) { l =>
           val res = l.select(sel.symbol).appliedToTypeTrees(targs).asExprOf[Boolean]
           val name = Expr(targs.head.tpe.show)
-          '{ Bool.isInstanceOfMacroBool(${l.asExpr}, "isInstanceOf", $name, $res, $prettifier) }.unseal
+          '{ Bool.isInstanceOfMacroBool(${l.asExpr}, "isInstanceOf", $name, $res, $prettifier) }.asReflectTree
         }.asExprOf[Bool]
 
       case Literal(_) =>
