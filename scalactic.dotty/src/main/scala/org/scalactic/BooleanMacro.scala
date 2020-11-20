@@ -84,9 +84,9 @@ object BooleanMacro {
 
     Term.of(condition).underlyingArgument match {
       case Apply(sel @ Select(Apply(qual, lhs :: Nil), op @ ("===" | "!==")), rhs :: Nil) =>
-        let(lhs) { left =>
-          let(rhs) { right =>
-            let(qual.appliedTo(left).select(sel.symbol).appliedTo(right)) { result =>
+        let(Symbol.spliceOwner, lhs) { left =>
+          let(Symbol.spliceOwner, rhs) { right =>
+            let(Symbol.spliceOwner, qual.appliedTo(left).select(sel.symbol).appliedTo(right)) { result =>
               val l = left.asExpr
               val r = right.asExpr
               val b = result.asExprOf[Boolean]
@@ -100,10 +100,10 @@ object BooleanMacro {
         def binaryDefault =
           if (isByNameMethodType(sel.tpe)) defaultCase
           else if (supportedBinaryOperations.contains(op))
-            let(lhs) { left =>
-              let(rhs) { right =>
+            let(Symbol.spliceOwner, lhs) { left =>
+              let(Symbol.spliceOwner, rhs) { right =>
                 val app = left.select(sel.symbol).appliedTo(right)
-                let(app) { result =>
+                let(Symbol.spliceOwner, app) { result =>
                   val l = left.asExpr
                   val r = right.asExpr
                   val b = result.asExprOf[Boolean]
@@ -134,10 +134,10 @@ object BooleanMacro {
           case "==" =>
             lhs match {
               case Apply(sel @ Select(lhs0, op @ ("length" | "size")), Nil) =>
-                let(lhs0) { left =>
-                  let(rhs) { right =>
+                let(Symbol.spliceOwner, lhs0) { left =>
+                  let(Symbol.spliceOwner, rhs) { right =>
                     val actual = left.select(sel.symbol).appliedToArgs(Nil)
-                    let(actual) { result =>
+                    let(Symbol.spliceOwner, actual) { result =>
                       val l = left.asExpr
                       val r = right.asExpr
                       val res = result.asExpr
@@ -148,10 +148,10 @@ object BooleanMacro {
                 }.asExprOf[Bool]
 
               case sel @ Select(lhs0, op @ ("length" | "size")) =>
-                let(lhs0) { left =>
-                  let(rhs) { right =>
+                let(Symbol.spliceOwner, lhs0) { left =>
+                  let(Symbol.spliceOwner, rhs) { right =>
                     val actual = left.select(sel.symbol)
-                    let(actual) { result =>
+                    let(Symbol.spliceOwner, actual) { result =>
                       val l = left.asExpr
                       val r = right.asExpr
                       val res = result.asExpr
@@ -167,9 +167,9 @@ object BooleanMacro {
           case "exists" =>
             rhs match {
               case AnonFunction(rhsInner) => // see the assumption for `rhsInner` in `AnonFunction`
-                let(lhs) { left =>
+                let(Symbol.spliceOwner, lhs) { left =>
                   val app = left.select(sel.symbol).appliedTo(rhs)
-                  let(app) { result =>
+                  let(Symbol.spliceOwner, app) { result =>
                     val l = left.asExpr
                     val r = rhsInner.asExpr
                     val res = result.asExprOf[Boolean]
@@ -185,10 +185,10 @@ object BooleanMacro {
 
       case Apply(f @ Apply(sel @ Select(Apply(qual, lhs :: Nil), op @ ("===" | "!==")), rhs :: Nil), implicits)
       if isImplicitMethodType(f.tpe) =>
-        let(lhs) { left =>
-          let(rhs) { right =>
+        let(Symbol.spliceOwner, lhs) { left =>
+          let(Symbol.spliceOwner, rhs) { right =>
             val app = qual.appliedTo(left).select(sel.symbol).appliedTo(right).appliedToArgs(implicits)
-            let(app) { result =>
+            let(Symbol.spliceOwner, app) { result =>
               val l = left.asExpr
               val r = right.asExpr
               val b = result.asExprOf[Boolean]
@@ -199,10 +199,10 @@ object BooleanMacro {
         }.asExprOf[Bool]
 
       case Apply(TypeApply(sel @ Select(lhs, op), targs), rhs :: Nil) =>
-        let(lhs) { left =>
-          let(rhs) { right =>
+        let(Symbol.spliceOwner, lhs) { left =>
+          let(Symbol.spliceOwner, rhs) { right =>
             val app = left.select(sel.symbol).appliedToTypes(targs.map(_.tpe)).appliedTo(right)
-            let(app) { result =>
+            let(Symbol.spliceOwner, app) { result =>
               val l = left.asExpr
               val r = right.asExpr
               val b = result.asExprOf[Boolean]
@@ -213,7 +213,7 @@ object BooleanMacro {
         }.asExprOf[Bool]
 
       case Apply(sel @ Select(lhs, op @ ("isEmpty" | "nonEmpty")), Nil) =>
-        let(lhs) { l =>
+        let(Symbol.spliceOwner, lhs) { l =>
           val res = l.select(sel.symbol).appliedToArgs(Nil).asExprOf[Boolean]
           Term.of('{ Bool.unaryMacroBool(${l.asExpr}, ${ Expr(op) }, $res, $prettifier) })
         }.asExprOf[Bool]
@@ -223,13 +223,13 @@ object BooleanMacro {
         '{ !($receiver) }
 
       case sel @ Select(left, op @ ("isEmpty" | "nonEmpty")) =>
-        let(left) { l =>
+        let(Symbol.spliceOwner, left) { l =>
           val res = l.select(sel.symbol).asExprOf[Boolean]
           Term.of('{ Bool.unaryMacroBool(${l.asExpr}, ${ Expr(op) }, $res, $prettifier) })
         }.asExprOf[Bool]
 
       case TypeApply(sel @ Select(lhs, "isInstanceOf"), targs) =>
-        let(lhs) { l =>
+        let(Symbol.spliceOwner, lhs) { l =>
           val res = l.select(sel.symbol).appliedToTypeTrees(targs).asExprOf[Boolean]
           val name = Expr(targs.head.tpe.show)
           Term.of('{ Bool.isInstanceOfMacroBool(${l.asExpr}, "isInstanceOf", $name, $res, $prettifier) })

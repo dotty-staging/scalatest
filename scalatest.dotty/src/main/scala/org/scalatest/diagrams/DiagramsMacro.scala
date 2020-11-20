@@ -126,8 +126,8 @@ object DiagramsMacro {
                 val methTp = sel.tpe.widen.asInstanceOf[MethodType]
                 val (diagrams, others) = handleArgs(methTp.paramTypes, rhs :: Nil)
 
-                let(left) { l =>
-                  let(diagrams) { rs =>
+                let(Symbol.spliceOwner, left) { l =>
+                  let(Symbol.spliceOwner, diagrams) { rs =>
                     l.asExpr match {
                       case '{ $left: DiagrammedExpr[t] } =>
                         val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
@@ -145,8 +145,8 @@ object DiagramsMacro {
             val methTp = sel.tpe.widen.asInstanceOf[MethodType]
             val (diagrams, others) = handleArgs(methTp.paramTypes, args)
 
-            let(left) { l =>
-              let(diagrams) { rs =>
+            let(Symbol.spliceOwner, left) { l =>
+              let(Symbol.spliceOwner, diagrams) { rs =>
                 l.asExpr match {
                   case '{ $left: DiagrammedExpr[t] } =>
                     val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
@@ -162,11 +162,11 @@ object DiagramsMacro {
             val right = parse(rhs)
             val anchor = getAnchorForSelect(sel)
 
-            let(left) { left =>
-              let(right) { right =>
+            let(Symbol.spliceOwner, left) { left =>
+              let(Symbol.spliceOwner, right) { right =>
                 val app = qual.appliedTo(Select.unique(left, "value")).select(sel.symbol)
                               .appliedTo(Select.unique(right, "value")).appliedToArgs(implicits)
-                let(app) { result =>
+                let(Symbol.spliceOwner, app) { result =>
                   val l = left.asExprOf[DiagrammedExpr[_]]
                   val r = right.asExprOf[DiagrammedExpr[_]]
                   val b = result.asExprOf[Boolean]
@@ -182,8 +182,8 @@ object DiagramsMacro {
             val methTp = fun.tpe.widen.asInstanceOf[MethodType]
             val (diagrams, others) = handleArgs(methTp.paramTypes, args)
 
-            let(left) { l =>
-              let(diagrams) { rs =>
+            let(Symbol.spliceOwner, left) { l =>
+              let(Symbol.spliceOwner, diagrams) { rs =>
                 l.asExpr match {
                   case '{ $left: DiagrammedExpr[t] } =>
                     val rights = rs.map(_.asExprOf[DiagrammedExpr[_]])
@@ -198,7 +198,7 @@ object DiagramsMacro {
             val left = parse(lhs)
             val anchor = getAnchorForSelect(sel)
 
-            let(left) { l =>
+            let(Symbol.spliceOwner, left) { l =>
               l.asExpr match {
                 case '{ $left: DiagrammedExpr[t] } =>
                   val res = Select.unique(l, "value").select(sel.symbol).appliedToTypes(targs.map(_.tpe)).asExprOf[r]
