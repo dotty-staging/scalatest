@@ -24,7 +24,7 @@ object NumericStringMacro {
 
   def isValid(s: String): Boolean = s.forall(c => c >= '0' && c <= '9')
 
-  def apply(value: Expr[String])(implicit qctx: QuoteContext): Expr[NumericString] = {
+  def apply(value: Expr[String])(using Quotes): Expr[NumericString] = {
     import qctx.reflect._
 
     val notValidMsg =

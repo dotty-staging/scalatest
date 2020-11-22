@@ -29,7 +29,7 @@ object DiagrammedAssertionsMacro {
     fallback: Expr[(Bool, Any, source.Position) => Assertion],
     condition: Expr[Boolean], clue: Expr[Any],
     prettifier: Expr[Prettifier],
-    pos: Expr[source.Position])(implicit qctx: QuoteContext): Expr[Assertion] = {
+    pos: Expr[source.Position])(using Quotes): Expr[Assertion] = {
 
     val macroPos = qctx.reflect.Position.ofMacroExpansion
     val startLine = macroPos.startLine // Get the expression first line number
@@ -41,14 +41,14 @@ object DiagrammedAssertionsMacro {
       AssertionsMacro.transform(fallback, condition, prettifier, pos, clue)
   }
 
-  def assert(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(implicit qctx: QuoteContext): Expr[Assertion] = {
+  def assert(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(using Quotes): Expr[Assertion] = {
     macroImpl(
       '{ Diagrams.diagrammedAssertionsHelper.macroAssert },
       '{ Assertions.assertionsHelper.macroAssert },
       condition, clue, prettifier, pos)
   }
 
-  def assume(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(implicit qctx: QuoteContext): Expr[Assertion] = {
+  def assume(condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(using Quotes): Expr[Assertion] = {
     macroImpl(
       '{ Diagrams.diagrammedAssertionsHelper.macroAssume },
       '{ Assertions.assertionsHelper.macroAssume },

@@ -22,7 +22,7 @@ import org.scalatest.compatible.Assertion
 
 object DiagramsMacro {
   // Transform the input expression by parsing out the anchor and generate expression that can support diagram rendering
-  def parse(using QuoteContext)(expr: qctx.reflect.Term): qctx.reflect.Term = {
+  def parse(using Quotes)(expr: qctx.reflect.Term): qctx.reflect.Term = {
     import qctx.reflect._
     import util._
     import ValDef.let
@@ -215,7 +215,7 @@ object DiagramsMacro {
   def transform(
     helper: Expr[(DiagrammedExpr[Boolean], Any, String, source.Position) => Assertion],
     condition: Expr[Boolean], pos: Expr[source.Position], clue: Expr[Any], sourceText: String
-  )(using QuoteContext): Expr[Assertion] = {
+  )(using Quotes): Expr[Assertion] = {
     import qctx.reflect._
     val diagExpr = parse(Term.of(condition).underlyingArgument).asExprOf[DiagrammedExpr[Boolean]]
     '{ $helper($diagExpr, $clue, ${Expr(sourceText)}, $pos) }

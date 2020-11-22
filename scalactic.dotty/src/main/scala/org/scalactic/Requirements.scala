@@ -230,7 +230,7 @@ object RequirementsMacro {
    * @param condition original condition expression
    * @return transformed expression that performs the requirement check and throw <code>IllegalArgumentException</code> with rich error message if requirement failed
    */
-  def require(condition: Expr[Boolean], prettifier: Expr[Prettifier], clue: Expr[Any])(implicit qctx: QuoteContext): Expr[Unit] = {
+  def require(condition: Expr[Boolean], prettifier: Expr[Prettifier], clue: Expr[Any])(using Quotes): Expr[Unit] = {
     import qctx.reflect._
 
     val bool = BooleanMacro.parse(condition, prettifier)
@@ -244,7 +244,7 @@ object RequirementsMacro {
    * @param condition original condition expression
    * @return transformed expression that performs the requirement check and throw <code>IllegalStateException</code> with rich error message if requirement failed
    */
-  def requireState(condition: Expr[Boolean], prettifier: Expr[Prettifier], clue: Expr[Any])(implicit qctx: QuoteContext): Expr[Unit] = {
+  def requireState(condition: Expr[Boolean], prettifier: Expr[Prettifier], clue: Expr[Any])(using Quotes): Expr[Unit] = {
     import qctx.reflect._
 
     val bool = BooleanMacro.parse(condition, prettifier)
@@ -258,7 +258,7 @@ object RequirementsMacro {
    * @param prettifier <code>Prettifier</code> to be used for error message
    * @return transformed expression that performs the requirement check and throw <code>NullArgumentException</code> with rich error message if requirement failed
    */
-  def requireNonNull(arguments: Expr[Seq[Any]], prettifier: Expr[Prettifier], pos: Expr[source.Position])(implicit qctx: QuoteContext): Expr[Unit] = {
+  def requireNonNull(arguments: Expr[Seq[Any]], prettifier: Expr[Prettifier], pos: Expr[source.Position])(using Quotes): Expr[Unit] = {
     import qctx.reflect._
 
     def liftSeq(args: Seq[Expr[String]]): Expr[Seq[String]] = args match {

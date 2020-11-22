@@ -42,7 +42,7 @@ object RegexStringMacro {
         (false, "\n" + e.getMessage)
     }
 
-  def apply(value: Expr[String])(implicit qctx: QuoteContext): Expr[RegexString] = {
+  def apply(value: Expr[String])(using Quotes): Expr[RegexString] = {
     import qctx.reflect._
 
     val notValidExceptionMsg: String = {

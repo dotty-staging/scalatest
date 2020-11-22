@@ -29,7 +29,7 @@ object AssertionsMacro {
    * @param condition original condition expression
    * @return transformed expression that performs the assertion check and throw <code>TestFailedException</code> with rich error message if assertion failed
    */
-  def assert(ths: Expr[Assertions], condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(implicit qctx: QuoteContext): Expr[Assertion] =
+  def assert(ths: Expr[Assertions], condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(using Quotes): Expr[Assertion] =
     ths match {
       case '{ $ths: diagrams.Diagrams } => org.scalatest.DiagrammedAssertionsMacro.assert(condition, prettifier, pos, clue)
       case _ => transform('{Assertions.assertionsHelper.macroAssert}, condition, prettifier, pos, clue)
@@ -42,7 +42,7 @@ object AssertionsMacro {
    * @param condition original condition expression
    * @return transformed expression that performs the assumption check and throw <code>TestCanceledException</code> with rich error message if assumption failed
    */
-  def assume(ths: Expr[Assertions], condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(implicit qctx: QuoteContext): Expr[Assertion] =
+  def assume(ths: Expr[Assertions], condition: Expr[Boolean], prettifier: Expr[Prettifier], pos: Expr[source.Position], clue: Expr[Any])(using Quotes): Expr[Assertion] =
     ths match {
       case '{ $ths: diagrams.Diagrams } => org.scalatest.DiagrammedAssertionsMacro.assume(condition, prettifier, pos, clue)
       case _ => transform('{Assertions.assertionsHelper.macroAssume}, condition, prettifier, pos, clue)
@@ -54,7 +54,7 @@ object AssertionsMacro {
     condition: Expr[Boolean], prettifier: Expr[Prettifier],
     pos: Expr[source.Position], clue: Expr[Any]
   )
-  (implicit qctx: QuoteContext): Expr[Assertion] = {
+  (using Quotes): Expr[Assertion] = {
     val bool = BooleanMacro.parse(condition, prettifier)
     '{ ($helper)($bool, $clue, $pos) }
   }

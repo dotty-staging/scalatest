@@ -37,7 +37,7 @@ object BooleanMacro {
       "ne",
       "exists") ++ logicOperators
 
-  def parse(condition: Expr[Boolean], prettifier: Expr[Prettifier])(implicit qctx: QuoteContext): Expr[Bool] = {
+  def parse(condition: Expr[Boolean], prettifier: Expr[Prettifier])(using Quotes): Expr[Bool] = {
     import qctx.reflect._
     import util._
     import ValDef.let

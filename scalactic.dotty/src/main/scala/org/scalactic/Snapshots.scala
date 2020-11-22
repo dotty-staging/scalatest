@@ -220,7 +220,7 @@ object Snapshots extends Snapshots
 
 object SnapshotsMacro {
 
-  def snap(expressions: Expr[Seq[Any]])(using QuoteContext): Expr[SnapshotSeq] = {
+  def snap(expressions: Expr[Seq[Any]])(using Quotes): Expr[SnapshotSeq] = {
     import qctx.reflect._
 
     def liftSeq(args: Seq[Expr[Snapshot]]): Expr[Seq[Snapshot]] = args match {

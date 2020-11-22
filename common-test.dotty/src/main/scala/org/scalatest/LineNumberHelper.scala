@@ -7,6 +7,6 @@ private[scalatest] trait LineNumberHelper {
 }
 
 object LineNumberMacro {
-  def thisLineNumberImpl(implicit qctx: QuoteContext): Expr[Int] =
+  def thisLineNumberImpl(using Quotes): Expr[Int] =
     Expr(qctx.reflect.Position.ofMacroExpansion.startLine)
 }

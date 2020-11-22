@@ -200,7 +200,7 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidIntLiteral(value: Expr[Int], notValidMsg: String, notLiteralMsg: String)(isValid: Int => Boolean)(implicit qctx: QuoteContext): Unit = {
+  def ensureValidIntLiteral(value: Expr[Int], notValidMsg: String, notLiteralMsg: String)(isValid: Int => Boolean)(using Quotes): Unit = {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 
@@ -236,7 +236,7 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidLongLiteral(value: Expr[Long], notValidMsg: String, notLiteralMsg: String)(isValid: Long => Boolean)(implicit qctx: QuoteContext): Unit = {
+  def ensureValidLongLiteral(value: Expr[Long], notValidMsg: String, notLiteralMsg: String)(isValid: Long => Boolean)(using Quotes): Unit = {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 
@@ -272,7 +272,7 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidFloatLiteral(value: Expr[Float], notValidMsg: String, notLiteralMsg: String)(isValid: Float => Boolean)(implicit qctx: QuoteContext): Unit = {
+  def ensureValidFloatLiteral(value: Expr[Float], notValidMsg: String, notLiteralMsg: String)(isValid: Float => Boolean)(using Quotes): Unit = {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 
@@ -308,7 +308,7 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidDoubleLiteral(value: Expr[Double], notValidMsg: String, notLiteralMsg: String)(isValid: Double => Boolean)(implicit qctx: QuoteContext): Unit = {
+  def ensureValidDoubleLiteral(value: Expr[Double], notValidMsg: String, notLiteralMsg: String)(isValid: Double => Boolean)(using Quotes): Unit = {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 
@@ -344,7 +344,7 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidStringLiteral(value: Expr[String], notValidMsg: String, notLiteralMsg: String)(isValid: String => Boolean)(implicit qctx: QuoteContext): Unit = {
+  def ensureValidStringLiteral(value: Expr[String], notValidMsg: String, notLiteralMsg: String)(isValid: String => Boolean)(using Quotes): Unit = {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 
@@ -380,7 +380,7 @@ trait CompileTimeAssertions {
    * @param notLiteralMsg a <code>String</code> message to include in the exception thrown if the expression is not a literal
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
-  def ensureValidCharLiteral(value: Expr[Char], notValidMsg: String, notLiteralMsg: String)(isValid: Char => Boolean)(implicit qctx: QuoteContext): Unit = {
+  def ensureValidCharLiteral(value: Expr[Char], notValidMsg: String, notLiteralMsg: String)(isValid: Char => Boolean)(using Quotes): Unit = {
     import qctx.reflect._
     import qctx.reflect.Reporting._
 

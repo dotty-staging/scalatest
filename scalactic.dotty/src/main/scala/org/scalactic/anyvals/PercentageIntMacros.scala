@@ -23,7 +23,7 @@ object PercentageIntMacro {
 
   def isValid(i: Int): Boolean = i >= 0 && i <= 100
 
-  def apply(value: Expr[Int])(implicit qctx: QuoteContext): Expr[PercentageInt] = {
+  def apply(value: Expr[Int])(using Quotes): Expr[PercentageInt] = {
     import qctx.reflect._
 
     val notValidMsg =
