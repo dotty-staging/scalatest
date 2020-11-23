@@ -32,7 +32,7 @@ object GenAnyVals {
              |  def apply(value: Expr[$primitiveTypeName])(using Quotes): Expr[$typeName] = {
              |    val notValidMsg = Resources.notValid$typeName
              |    val notLiteralMsg = Resources.notLiteral$typeName
-             |    import qctx.reflect._
+             |    import quotes.reflect._
              |    ensureValid${primitiveTypeName}Literal(value, notValidMsg, notLiteralMsg)(isValid)
              |    '{ $typeName.ensuringValid($$value) }
              |  }

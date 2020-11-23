@@ -43,7 +43,7 @@ object RegexStringMacro {
     }
 
   def apply(value: Expr[String])(using Quotes): Expr[RegexString] = {
-    import qctx.reflect._
+    import quotes.reflect._
 
     val notValidExceptionMsg: String = {
       Term.of(value) match {

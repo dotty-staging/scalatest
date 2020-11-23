@@ -221,7 +221,7 @@ object Snapshots extends Snapshots
 object SnapshotsMacro {
 
   def snap(expressions: Expr[Seq[Any]])(using Quotes): Expr[SnapshotSeq] = {
-    import qctx.reflect._
+    import quotes.reflect._
 
     def liftSeq(args: Seq[Expr[Snapshot]]): Expr[Seq[Snapshot]] = args match {
       case x :: xs  => '{ ($x) +: ${ liftSeq(xs) }  }

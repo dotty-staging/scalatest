@@ -31,7 +31,7 @@ object DiagrammedAssertionsMacro {
     prettifier: Expr[Prettifier],
     pos: Expr[source.Position])(using Quotes): Expr[Assertion] = {
 
-    val macroPos = qctx.reflect.Position.ofMacroExpansion
+    val macroPos = quotes.reflect.Position.ofMacroExpansion
     val startLine = macroPos.startLine // Get the expression first line number
     val endLine = macroPos.endLine // Get the expression last line number
 

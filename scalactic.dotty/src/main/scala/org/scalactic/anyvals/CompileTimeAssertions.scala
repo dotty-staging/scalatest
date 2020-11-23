@@ -201,8 +201,8 @@ trait CompileTimeAssertions {
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
   def ensureValidIntLiteral(value: Expr[Int], notValidMsg: String, notLiteralMsg: String)(isValid: Int => Boolean)(using Quotes): Unit = {
-    import qctx.reflect._
-    import qctx.reflect.Reporting._
+    import quotes.reflect._
+    import quotes.reflect.Reporting._
 
     Term.of(value).underlyingArgument match {
       case Literal(intConst) =>
@@ -237,8 +237,8 @@ trait CompileTimeAssertions {
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
   def ensureValidLongLiteral(value: Expr[Long], notValidMsg: String, notLiteralMsg: String)(isValid: Long => Boolean)(using Quotes): Unit = {
-    import qctx.reflect._
-    import qctx.reflect.Reporting._
+    import quotes.reflect._
+    import quotes.reflect.Reporting._
 
     Term.of(value).underlyingArgument match {
       case Literal(longConst) =>
@@ -273,8 +273,8 @@ trait CompileTimeAssertions {
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
   def ensureValidFloatLiteral(value: Expr[Float], notValidMsg: String, notLiteralMsg: String)(isValid: Float => Boolean)(using Quotes): Unit = {
-    import qctx.reflect._
-    import qctx.reflect.Reporting._
+    import quotes.reflect._
+    import quotes.reflect.Reporting._
 
     Term.of(value).underlyingArgument match {
       case Literal(floatConst) =>
@@ -309,8 +309,8 @@ trait CompileTimeAssertions {
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
   def ensureValidDoubleLiteral(value: Expr[Double], notValidMsg: String, notLiteralMsg: String)(isValid: Double => Boolean)(using Quotes): Unit = {
-    import qctx.reflect._
-    import qctx.reflect.Reporting._
+    import quotes.reflect._
+    import quotes.reflect.Reporting._
 
     Term.of(value).underlyingArgument match {
       case Literal(doubleConst) =>
@@ -345,8 +345,8 @@ trait CompileTimeAssertions {
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
   def ensureValidStringLiteral(value: Expr[String], notValidMsg: String, notLiteralMsg: String)(isValid: String => Boolean)(using Quotes): Unit = {
-    import qctx.reflect._
-    import qctx.reflect.Reporting._
+    import quotes.reflect._
+    import quotes.reflect.Reporting._
 
     Term.of(value).underlyingArgument match {
       case Literal(stringConst) =>
@@ -381,8 +381,8 @@ trait CompileTimeAssertions {
    * @param isValid a function used to validate a literal value parsed from the given expression
    */
   def ensureValidCharLiteral(value: Expr[Char], notValidMsg: String, notLiteralMsg: String)(isValid: Char => Boolean)(using Quotes): Unit = {
-    import qctx.reflect._
-    import qctx.reflect.Reporting._
+    import quotes.reflect._
+    import quotes.reflect.Reporting._
 
     Term.of(value).underlyingArgument match {
       case Literal(charConst) =>

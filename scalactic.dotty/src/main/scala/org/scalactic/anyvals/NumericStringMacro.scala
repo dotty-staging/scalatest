@@ -25,7 +25,7 @@ object NumericStringMacro {
   def isValid(s: String): Boolean = s.forall(c => c >= '0' && c <= '9')
 
   def apply(value: Expr[String])(using Quotes): Expr[NumericString] = {
-    import qctx.reflect._
+    import quotes.reflect._
 
     val notValidMsg =
       "NumericString.apply can only be invoked on String literals that contain numeric characters, i.e., decimal digits '0' through '9', " +
