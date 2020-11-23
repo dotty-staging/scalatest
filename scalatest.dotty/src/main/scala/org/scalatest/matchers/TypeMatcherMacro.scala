@@ -26,7 +26,7 @@ import scala.quoted._
 object TypeMatcherMacro {
 
 //   // Check that no type parameter is specified, if any does, give a friendly compiler warning.
-  def checkTypeParameter(using qctx: Quotes)(tree: qctx.reflect.Term, methodName: String): Unit = {
+  def checkTypeParameter(using Quotes)(tree: qctx.reflect.Term, methodName: String): Unit = {
     import qctx.reflect._
 
     // TODO#Macros: Select lack unapply
