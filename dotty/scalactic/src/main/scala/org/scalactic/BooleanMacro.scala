@@ -68,14 +68,14 @@ object BooleanMacro {
       def unapply(t: Term): Option[Term] = t match {
         case Block(
           ddef @
-            DefDef(_, Nil, (ValDef(name, _, _) :: Nil) :: Nil, _,
+            DefDef(_, TermParamClause(param :: Nil) :: Nil, _,
               Some(Apply(Select(lhs, "=="), rhs :: Nil))
             ) :: Nil,
           clos
         ) if (clos.tpe.isFunctionType) => // walkaround: https://github.com/lampepfl/dotty/issues/6720
           (lhs, rhs) match {
-            case (Ident(refName), _) if refName == name => Some(rhs)
-            case (_, Ident(refName)) if refName == name => Some(lhs)
+            case (Ident(refName), _) if refName == param.name => Some(rhs)
+            case (_, Ident(refName)) if refName == param.name => Some(lhs)
             case _ => None
           }
         case _ => None
