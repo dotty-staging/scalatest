@@ -1,4 +1,3 @@
-import dotty.tools.sbtplugin.DottyPlugin.autoImport._
 import sbt._
 import Keys._
 import com.typesafe.tools.mima.plugin.MimaKeys.{mimaPreviousArtifacts, mimaCurrentClassfiles, mimaBinaryIssueFilters}
@@ -15,7 +14,10 @@ trait DottyBuild { this: BuildCommons =>
   lazy val dottyVersion = System.getProperty("scalatest.dottyVersion", "3.0.0-M2")
   lazy val dottySettings = List(
     scalaVersion := dottyVersion,
-    libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)),
+    libraryDependencies := libraryDependencies.value.map { module =>
+      if (module.name != ScalaArtifacts.Scala3LibraryID) module.cross(CrossVersion.for3Use2_13)
+      else module
+    },
     scalacOptions ++= List("-language:implicitConversions", "-noindent", "-Xprint-suspension")
   )
 

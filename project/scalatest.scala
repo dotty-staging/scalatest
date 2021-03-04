@@ -17,8 +17,6 @@ import com.typesafe.tools.mima.plugin.MimaKeys.{mimaPreviousArtifacts, mimaCurre
 import com.typesafe.tools.mima.core._
 import com.typesafe.tools.mima.core.ProblemFilters._
 
-import dotty.tools.sbtplugin.DottyPlugin.autoImport._
-
 import xerial.sbt.Sonatype.autoImport.sonatypePublishToBundle
 
 object ScalatestBuild extends BuildCommons with DottyBuild with NativeBuild with JsBuild {
@@ -127,7 +125,7 @@ object ScalatestBuild extends BuildCommons with DottyBuild with NativeBuild with
   def sharedSettings: Seq[Setting[_]] = 
     commonSharedSettings ++ scalaVersionsSettings ++ Seq(
       libraryDependencies ++= {
-        if (isDotty.value)
+        if (scalaVersion.value.startsWith("3"))
           Seq()
         else
           scalaLibraries(scalaVersion.value),
@@ -147,7 +145,7 @@ object ScalatestBuild extends BuildCommons with DottyBuild with NativeBuild with
   def scalaXmlDependency(theScalaVersion: String): Seq[ModuleID] =
     CrossVersion.partialVersion(theScalaVersion) match {
       case Some((scalaEpoch, scalaMajor)) if scalaEpoch != 2 || scalaMajor >= 11 =>
-        Seq(("org.scala-lang.modules" %% "scala-xml" % "1.2.0").withDottyCompat(theScalaVersion))
+        Seq(("org.scala-lang.modules" %% "scala-xml" % "1.2.0").cross(CrossVersion.for3Use2_13))
       case other =>
         Seq.empty
     }
