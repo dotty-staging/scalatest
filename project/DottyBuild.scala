@@ -1,4 +1,3 @@
-import dotty.tools.sbtplugin.DottyPlugin.autoImport._
 import scalanative.sbtplugin.ScalaNativePlugin.autoImport.nativeVersion
 import sbt._
 import Keys._
