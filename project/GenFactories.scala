@@ -137,7 +137,7 @@ $if (arityIsOne)$
    * result should equal (1) (decided by defaultEquality)
    * </pre>
    */
-  def apply[T <: SC](explicit: TC1[T]): Matcher[T] = matcher[T](explicit)
+  def apply[T <: SC](explicit: TC1[T]): Matcher[T] = matcher[T](using explicit)
 
 $endif$
 
