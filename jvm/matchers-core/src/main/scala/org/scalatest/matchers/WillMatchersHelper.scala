@@ -68,6 +68,6 @@ private[scalatest] object WillMatchersHelper {
     )(prettifier)
 
   def indicateFailure(e: TestFailedException)(implicit prettifier: Prettifier): Fact =
-    Fact.No(e.getMessage)(prettifier)
+    Fact.No(e.getMessage.nn)(prettifier)
 
 }

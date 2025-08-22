@@ -98,7 +98,7 @@ val InternalServerError =
  *
  * @param partial the partial function that is used by this extractor to determine matches
  */
-class Catcher(partial: PartialFunction[Throwable, Boolean]) {
+class Catcher(partial: PartialFunction[Throwable, Boolean] | Null) {
   if (partial == null) throw new NullPointerException("partial was null")
 
   /**
@@ -108,7 +108,7 @@ class Catcher(partial: PartialFunction[Throwable, Boolean]) {
    * @param exception the exception on which to match
    */
   def unapply(exception: Throwable): Option[Throwable] = {
-    if (partial.isDefinedAt(exception) && partial(exception)) Some(exception) else None
+    if (partial.nn.isDefinedAt(exception) && partial.nn(exception)) Some(exception) else None
   }
 }
 
@@ -122,6 +122,6 @@ object Catcher {
    *
    * @param partial the partial function that is used by returned extractor to determine matches
    */
-  def apply(partial: PartialFunction[Throwable, Boolean]): Catcher = new Catcher(partial)
+  def apply(partial: PartialFunction[Throwable, Boolean] | Null): Catcher = new Catcher(partial)
 }
 

@@ -893,7 +893,8 @@ trait DottyBuild { this: BuildCommons =>
       sourceGenerators in Test += Def.task {
         GenScalacticDotty.genTest((sourceManaged in Test).value, version.value, scalaVersion.value) /*++
         GenAnyVals.genTest((sourceManaged in Test).value / "scala" / "org" / "scalactic" / "anyvals", version.value, scalaVersion.value)*/
-      }.taskValue
+      }.taskValue,
+      scalacOptions -= "-Yexplicit-nulls",
     ).dependsOn(scalacticDotty, scalatestDotty % "test", commonTestDotty % "test")
 
   lazy val scalacticTestDottyJS = project.in(file("dotty/scalactic-test.js"))
@@ -952,6 +953,7 @@ trait DottyBuild { this: BuildCommons =>
       //parallelExecution in Test := true,
       //testForkedParallel in Test := true,
       baseDirectory in Test := file("./"),
+      scalacOptions -= "-Yexplicit-nulls",
     ) ++ noPublishSettings
 
   lazy val scalatestTestDotty = project.in(file("dotty/scalatest-test"))

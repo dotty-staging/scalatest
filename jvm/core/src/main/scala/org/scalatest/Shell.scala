@@ -377,7 +377,7 @@ sealed trait Shell {
    * this method is invoked.
    * </p>
    */
-  def run(suite: Suite, testName: String = null, configMap: ConfigMap = ConfigMap.empty): Unit
+  def run(suite: Suite, testName: String | Null = null, configMap: ConfigMap = ConfigMap.empty): Unit
 }
 
 // parameters were private, but after pulling out the trait so I don't import copy() as part
@@ -401,7 +401,7 @@ private[scalatest] final case class ShellImpl(
   lazy val nostacks: Shell = copy(shortstacksPassed = false, fullstacksPassed = false)
   lazy val nostats: Shell = copy(statsPassed = false)
 
-  def run(suite: Suite, testName: String = null, configMap: ConfigMap = ConfigMap.empty): Unit = {
+  def run(suite: Suite, testName: String | Null = null, configMap: ConfigMap = ConfigMap.empty): Unit = {
     suite.execute(testName, configMap, colorPassed, durationsPassed, shortstacksPassed, fullstacksPassed, statsPassed)
   }
 }

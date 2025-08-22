@@ -853,7 +853,7 @@ private[scalatest] class PathEngine(concurrentBundleModMessageFun: => String, si
   // Used in each instance to track the paths of things encountered, so can figure out
   // the next path. Each instance must use their own copies of currentPath and usedPathSet.
   def getNextPath() = {
-    var next: List[Int] = null
+    var next: List[Int] | Null = null
     var count = 0
     while (next == null) {
       val candidate = currentPath ::: List(count)

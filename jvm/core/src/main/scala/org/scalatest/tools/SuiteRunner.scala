@@ -70,9 +70,9 @@ private[scalatest] class SuiteRunner(suite: Suite, args: Args, status: ScalaTest
       }
       catch {
         case e: NotAllowedException =>
-          val formatter = Suite.formatterForSuiteAborted(suite, e.getMessage)
+          val formatter = Suite.formatterForSuiteAborted(suite, e.getMessage.nn)
           val duration = System.currentTimeMillis - suiteStartTime
-          dispatch(SuiteAborted(tracker.nextOrdinal(), e.getMessage, suite.suiteName, suite.suiteId, Some(suite.getClass.getName), Some(e), Some(duration), formatter, Some(SeeStackDepthException), suite.rerunner))
+          dispatch(SuiteAborted(tracker.nextOrdinal(), e.getMessage.nn, suite.suiteName, suite.suiteId, Some(suite.getClass.getName), Some(e), Some(duration), formatter, Some(SeeStackDepthException), suite.rerunner))
           status.setFailed()
           status.setCompleted()
         case e: RuntimeException => { // Do fire SuiteAborted even if a DistributedTestRunnerSuite 

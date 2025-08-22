@@ -1527,7 +1527,7 @@ abstract class ExpectationPropCheckerAsserting extends UnitPropCheckerAsserting 
             None,
             scalaCheckLabels.toList
           )
-        val message: String = gdpcfe.getMessage
+        val message: String = gdpcfe.getMessage.nn
         Fact.No(message)(prettifier)
       }
     }

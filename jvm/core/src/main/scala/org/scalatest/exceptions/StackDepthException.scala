@@ -184,7 +184,7 @@ abstract class StackDepthException(
    *
    * @return the detail message string of this <code>StackDepthException</code> instance (which may be <code>null</code>).
    */
-  override def getMessage: String = message.orNull
+  override def getMessage: String | Null = message.orNull
 
   /*
   * Throws <code>IllegalStateException</code>, because <code>StackDepthException</code>s are

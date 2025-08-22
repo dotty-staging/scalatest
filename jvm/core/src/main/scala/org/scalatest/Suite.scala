@@ -756,7 +756,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    *     exists in this <code>Suite</code>
    */
   final def execute(
-    testName: String = null,
+    testName: String | Null = null,
     configMap: ConfigMap = ConfigMap.empty,
     color: Boolean = true,
     durations: Boolean = false,

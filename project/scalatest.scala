@@ -302,7 +302,8 @@ object ScalatestBuild extends BuildCommons with DottyBuild with NativeBuild with
       publishArtifact := false,
       publish := {},
       publishLocal := {},
-      scalacOptions ++= (if (scalaBinaryVersion.value == "2.10" || scalaVersion.value.startsWith("2.13")) Seq.empty[String] else Seq("-Ypartial-unification"))
+      scalacOptions ++= (if (scalaBinaryVersion.value == "2.10" || scalaVersion.value.startsWith("2.13")) Seq.empty[String] else Seq("-Ypartial-unification")),
+      scalacOptions -= "-Yexplicit-nulls",
     )
 
   lazy val scalatestTest = Project("scalatest-test", file("jvm/scalatest-test"))

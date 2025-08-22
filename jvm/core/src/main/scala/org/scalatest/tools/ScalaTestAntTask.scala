@@ -21,6 +21,7 @@ import org.apache.tools.ant.Task
 import org.apache.tools.ant.types.Path
 import org.apache.tools.ant.AntClassLoader
 import org.apache.tools.ant.taskdefs.Java
+import scala.annotation
 
 /**
  * <p>
@@ -295,8 +296,8 @@ import org.apache.tools.ant.taskdefs.Java
 class ScalaTestAntTask extends Task {
   private var includes:  String = ""
   private var excludes:  String = ""
-  private var maxMemory: String = null
-  private var suffixes:  String = null
+  private var maxMemory: String | Null = null
+  private var suffixes:  String | Null = null
 
   private var parallel      = false
   private var sortSuites    = false
@@ -427,7 +428,7 @@ class ScalaTestAntTask extends Task {
   private def addSuffixesArg(args: ListBuffer[String]): Unit = {
     if (suffixes != null) {
       args += "-q"
-      args += suffixes
+      args += suffixes.nn
     }
   }
 
@@ -485,7 +486,7 @@ class ScalaTestAntTask extends Task {
         throw new BuildException(
           "missing classname attribute for <suite> element")
       args += "-s"
-      args += suite.getClassName
+      args += suite.getClassName.nn
       suite.getTestNames.foreach { tn => 
         if (tn == null)
           throw new BuildException("missing name attribute for <test> element")
@@ -496,7 +497,7 @@ class ScalaTestAntTask extends Task {
         if (ns.getSuiteId == null)
           throw new BuildException("missing suiteId attribute for <nested> element")
         args += "-i"
-        args += ns.getSuiteId
+        args += ns.getSuiteId.nn
         ns.getTestNames.foreach { tn => 
           if (tn == null)
             throw new BuildException("missing name attribute for <test> element")
@@ -531,11 +532,11 @@ class ScalaTestAntTask extends Task {
     for (test <- tests) {
       if (test.getName != null) {
         args += "-t"
-        args += test.getName
+        args += test.getName.nn
       }
       else if (test.getSubstring != null) {
         args += "-z"
-        args += test.getSubstring
+        args += test.getSubstring.nn
       }
       else
         throw new BuildException(
@@ -599,7 +600,7 @@ class ScalaTestAntTask extends Task {
       throw new BuildException(
         "reporter type 'file' requires 'filename' attribute")
 
-    args += reporter.getFilename
+    args += reporter.getFilename.nn
   }
 
   //
@@ -615,7 +616,7 @@ class ScalaTestAntTask extends Task {
       throw new BuildException(
         "reporter type 'memory' requires 'filename' attribute")
 
-    args += reporter.getFilename
+    args += reporter.getFilename.nn
   }
 
   //
@@ -632,7 +633,7 @@ class ScalaTestAntTask extends Task {
       throw new BuildException(
         "reporter type 'xml' requires 'directory' attribute")
 
-    args += reporter.getDirectory
+    args += reporter.getDirectory.nn
   }
 
   //
@@ -648,7 +649,7 @@ class ScalaTestAntTask extends Task {
       throw new BuildException(
         "reporter type 'junitxml' requires 'directory' attribute")
 
-    args += reporter.getDirectory
+    args += reporter.getDirectory.nn
   }
 
   //
@@ -664,7 +665,7 @@ class ScalaTestAntTask extends Task {
       throw new BuildException(
         "reporter type 'dashboard' requires 'directory' attribute")
 
-    args += reporter.getDirectory
+    args += reporter.getDirectory.nn
 
     if (reporter.getNumfiles >= 0) {
       args += "-a"
@@ -686,11 +687,11 @@ class ScalaTestAntTask extends Task {
       throw new BuildException(
         "reporter type 'html' requires 'directory' attribute")
 
-    args += reporter.getDirectory
+    args += reporter.getDirectory.nn
     
     if (reporter.getCss != null) {
       args += "-Y"
-      args += reporter.getCss
+      args += reporter.getCss.nn
     }
   }
 
@@ -709,7 +710,7 @@ class ScalaTestAntTask extends Task {
       throw new BuildException(
         "reporter type 'reporterclass' requires 'classname' attribute")
 
-    args += reporter.getClassName
+    args += reporter.getClassName.nn
   }
 
   /**
@@ -826,14 +827,14 @@ class ScalaTestAntTask extends Task {
    * Sets value from nested element <code>runpathurl</code>.
    */
   def addConfiguredRunpathUrl(runpathurl: RunpathUrl): Unit = {
-    runpath += runpathurl.getUrl
+    runpath += runpathurl.getUrl.nn
   }
 
   /**
    * Sets value from nested element <code>jvmarg</code>.
    */
   def addConfiguredJvmArg(arg: JvmArg): Unit = {
-    jvmArgs += arg.getValue
+    jvmArgs += arg.getValue.nn
   }
 
   /**
@@ -889,14 +890,14 @@ class ScalaTestAntTask extends Task {
    * Sets value from nested element <code>membersonly</code>.
    */
   def addConfiguredMembersOnly(membersonly: PackageElement): Unit = {
-    membersonlys += membersonly.getPackage
+    membersonlys += membersonly.getPackage.nn
   }
 
   /**
    * Sets value from nested element <code>wildcard</code>.
    */
   def addConfiguredWildcard(wildcard: PackageElement): Unit = {
-    wildcards += wildcard.getPackage
+    wildcards += wildcard.getPackage.nn
   }
 
   /**
@@ -914,14 +915,14 @@ class ScalaTestAntTask extends Task {
   }
   
   def addConfiguredStyle(style: StyleElement): Unit = {
-    this.chosenStyles += style.getName
+    this.chosenStyles += style.getName.nn
   }
 
   /**
    * Sets value from nested element <code>testsfile</code>.
    */
   def addConfiguredTestsfile(testsfile: TestsfileElement): Unit = {
-    this.testsfiles += testsfile.getFilename
+    this.testsfiles += testsfile.getFilename.nn
   }
 
   /**
@@ -956,7 +957,7 @@ class ScalaTestAntTask extends Task {
   // Class to hold data from <style> elements.
   //
   private class StyleElement {
-    private var name: String = null
+    private var name: String | Null = null
     
     def setName(name: String): Unit = {
       this.name = name
@@ -969,7 +970,7 @@ class ScalaTestAntTask extends Task {
   // Class to hold data from <testsfile> elements.
   //
   private class TestsfileElement {
-    private var filename: String = null
+    private var filename: String | Null = null
     
     def setFilename(filename: String): Unit = {
       this.filename = filename
@@ -982,7 +983,7 @@ class ScalaTestAntTask extends Task {
   // Class to hold data from <membersonly> and <wildcard> elements.
   //
   private class PackageElement {
-    private var packageName: String = null
+    private var packageName: String | Null = null
 
     def setPackage(packageName: String): Unit = {
       this.packageName = packageName
@@ -995,7 +996,7 @@ class ScalaTestAntTask extends Task {
   // Class to hold data from <suite> elements.
   //
   private class SuiteElement {
-    private var className: String = null
+    private var className: String | Null = null
     private val testNamesBuffer = new ListBuffer[String]()
     private val nestedSuitesBuffer = new ListBuffer[NestedSuiteElement]()
     
@@ -1004,7 +1005,7 @@ class ScalaTestAntTask extends Task {
     }
 
     def addConfiguredTest(test: TestElement): Unit = {
-      testNamesBuffer += test.getName
+      testNamesBuffer += test.getName.nn
     }
     
     def addConfiguredNested(nestedSuite: NestedSuiteElement): Unit = {
@@ -1017,8 +1018,8 @@ class ScalaTestAntTask extends Task {
   }
   
   private[tools] class TestElement {
-    private var name: String = null
-    private var substring: String = null
+    private var name: String | Null = null
+    private var substring: String | Null = null
     
     def setName(name: String): Unit = {
       this.name = name
@@ -1033,7 +1034,7 @@ class ScalaTestAntTask extends Task {
   }
   
   private class NestedSuiteElement {
-    private var suiteId: String = null
+    private var suiteId: String | Null = null
     private val testNamesBuffer = new ListBuffer[String]()
     
     def setSuiteId(suiteId: String): Unit = {
@@ -1041,7 +1042,7 @@ class ScalaTestAntTask extends Task {
     }
     
     def addConfiguredTest(test: TestElement): Unit = {
-      testNamesBuffer += test.getName
+      testNamesBuffer += test.getName.nn
     }
     
     def getSuiteId = suiteId
@@ -1052,7 +1053,7 @@ class ScalaTestAntTask extends Task {
   // Class to hold data from tagsToInclude and tagsToExclude elements.
   //
   private class TextElement {
-      private var text: String = null
+      private var text: String | Null = null
 
       def addText(text: String): Unit = {
         this.text = text
@@ -1065,8 +1066,8 @@ class ScalaTestAntTask extends Task {
   // Class to hold data from <property> elements.
   //
   private class NameValuePair {
-    private var name  : String = null
-    private var value : String = null
+    private var name  : String | Null = null
+    private var value : String | Null = null
 
     def setName(name   : String): Unit = { this.name  = name  }
     def setValue(value : String): Unit = { this.value = value }
@@ -1079,7 +1080,7 @@ class ScalaTestAntTask extends Task {
   // Class to hold data from <runpathurl> elements.
   //
   private class RunpathUrl {
-    private var url: String = null
+    private var url: String | Null = null
 
     def setUrl(url: String): Unit = { this.url = url }
     def getUrl = url
@@ -1089,7 +1090,7 @@ class ScalaTestAntTask extends Task {
   // Class to hold data from <jvmarg> elements.
   //
   private class JvmArg {
-    private var value: String = null
+    private var value: String | Null = null
 
     def setValue(value: String): Unit = { this.value = value }
     def getValue = value
@@ -1099,13 +1100,13 @@ class ScalaTestAntTask extends Task {
   // Class to hold data from <reporter> elements.
   //
   private class ReporterElement {
-    private var rtype     : String = null
-    private var config    : String = null
-    private var filename  : String = null
-    private var directory : String = null
-    private var classname : String = null
+    private var rtype     : String | Null = null
+    private var config    : String | Null = null
+    private var filename  : String | Null = null
+    private var directory : String | Null = null
+    private var classname : String | Null = null
     private var numfiles  : Int    = -1
-    private var css       : String = null
+    private var css       : String | Null = null
 
     def setType(rtype          : String): Unit = { this.rtype     = rtype     }
     def setConfig(config       : String): Unit = { this.config    = config    }
