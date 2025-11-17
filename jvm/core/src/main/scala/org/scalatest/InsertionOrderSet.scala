@@ -17,7 +17,7 @@ package org.scalatest
 
 private[scalatest] object InsertionOrderSet {
   def apply[A](elements: List[A]): Set[A] =
-    scala.collection.immutable.SortedSet(elements: _*)(new Ordering[A] {
+    scala.collection.immutable.SortedSet(elements*)(using new Ordering[A] {
       def compare(x: A, y: A): Int = elements.indexOf(x) compare elements.indexOf(y)
     })
 }
